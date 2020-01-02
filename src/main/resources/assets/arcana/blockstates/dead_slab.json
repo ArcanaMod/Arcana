@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": {"model": "arcana:block/dead_slab"},
+    "type=top": {"model": "arcana:block/dead_slab_top"},
+    "type=double": {"model": "arcana:block/dead_planks"}
+  }
+}

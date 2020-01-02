@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "arcana:block/stripped_tainted_greatwood_log_top",
+    "side": "arcana:block/stripped_tainted_greatwood_log"
+  }
+}

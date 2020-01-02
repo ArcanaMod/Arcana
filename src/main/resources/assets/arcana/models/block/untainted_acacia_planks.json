@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arcana:block/tainted_acacia_planks"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "block/template_trapdoor_top",
+  "textures": {
+    "texture": "arcana:block/hawthorn_trapdoor"
+  }
+}
+
+
+

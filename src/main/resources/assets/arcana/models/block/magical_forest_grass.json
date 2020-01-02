@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "arcana:block/magical_forest_grass"
+  }
+}

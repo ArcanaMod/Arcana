@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "arcana:block/tainted_jack_olantern" },
+    "facing=south": { "model": "arcana:block/tainted_jack_olantern", "y": 180 },
+    "facing=west":  { "model": "arcana:block/tainted_jack_olantern", "y": 270 },
+    "facing=east":  { "model": "arcana:block/tainted_jack_olantern", "y": 90 }
+  }
+}

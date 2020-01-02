@@ -1,0 +1,9 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "arcana:block/tainted_redstone_block"
+      }
+    ]
+  }
+}

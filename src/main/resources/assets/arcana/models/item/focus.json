@@ -1,0 +1,45 @@
+{
+  "parent":"item/handheld",
+  "textures": {
+    "layer0":"arcana:foci/focus_style_1",
+    "layer1":"arcana:foci/focus_overlay_style_1"
+  },
+  "overrides": [
+    { "predicate": { "custom_model_data": 1 }, "model": "arcana:item/focus_style_2" },
+    { "predicate": { "custom_model_data": 2 }, "model": "arcana:item/focus_style_3" },
+    { "predicate": { "custom_model_data": 3 }, "model": "arcana:item/focus_style_4" },
+    { "predicate": { "custom_model_data": 4 }, "model": "arcana:item/focus_style_5" },
+    { "predicate": { "custom_model_data": 5 }, "model": "arcana:item/focus_style_6" },
+    { "predicate": { "custom_model_data": 6 }, "model": "arcana:item/focus_style_7" },
+    { "predicate": { "custom_model_data": 7 }, "model": "arcana:item/focus_style_8" },
+    { "predicate": { "custom_model_data": 8 }, "model": "arcana:item/focus_style_9" },
+    { "predicate": { "custom_model_data": 9 }, "model": "arcana:item/focus_style_10" },
+    { "predicate": { "custom_model_data": 10 }, "model": "arcana:item/focus_style_11" },
+    { "predicate": { "custom_model_data": 11 }, "model": "arcana:item/focus_style_12" },
+    { "predicate": { "custom_model_data": 12 }, "model": "arcana:item/focus_style_13" },
+    { "predicate": { "custom_model_data": 13 }, "model": "arcana:item/focus_style_14" },
+    { "predicate": { "custom_model_data": 14 }, "model": "arcana:item/focus_style_15" },
+    { "predicate": { "custom_model_data": 15 }, "model": "arcana:item/focus_style_16" },
+    { "predicate": { "custom_model_data": 16 }, "model": "arcana:item/focus_style_17" },
+    { "predicate": { "custom_model_data": 17 }, "model": "arcana:item/focus_style_18" },
+    { "predicate": { "custom_model_data": 18 }, "model": "arcana:item/focus_style_19" },
+    { "predicate": { "custom_model_data": 19 }, "model": "arcana:item/focus_style_20" },
+    { "predicate": { "custom_model_data": 20 }, "model": "arcana:item/focus_style_21" },
+    { "predicate": { "custom_model_data": 21 }, "model": "arcana:item/focus_style_22" },
+    { "predicate": { "custom_model_data": 22 }, "model": "arcana:item/focus_style_23" },
+    { "predicate": { "custom_model_data": 23 }, "model": "arcana:item/focus_style_24" },
+    { "predicate": { "custom_model_data": 24 }, "model": "arcana:item/focus_style_25" },
+    { "predicate": { "custom_model_data": 25 }, "model": "arcana:item/focus_style_26" },
+    { "predicate": { "custom_model_data": 26 }, "model": "arcana:item/focus_style_27" },
+    { "predicate": { "custom_model_data": 27 }, "model": "arcana:item/focus_style_28" },
+    { "predicate": { "custom_model_data": 28 }, "model": "arcana:item/focus_style_29" },
+    { "predicate": { "custom_model_data": 29 }, "model": "arcana:item/focus_style_30" },
+    { "predicate": { "custom_model_data": 30 }, "model": "arcana:item/focus_style_31" },
+    { "predicate": { "custom_model_data": 31 }, "model": "arcana:item/focus_style_32" },
+    { "predicate": { "custom_model_data": 32 }, "model": "arcana:item/focus_style_33" },
+    { "predicate": { "custom_model_data": 33 }, "model": "arcana:item/focus_style_34" },
+    { "predicate": { "custom_model_data": 34 }, "model": "arcana:item/focus_style_35" },
+    { "predicate": { "custom_model_data": 35 }, "model": "arcana:item/focus_style_36" }
+
+  ]
+}

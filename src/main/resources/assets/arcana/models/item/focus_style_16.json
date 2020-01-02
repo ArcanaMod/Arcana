@@ -1,0 +1,7 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "arcana:foci/focus_style_16",
+    "layer1": "arcana:foci/focus_overlay_style_16"
+  }
+}

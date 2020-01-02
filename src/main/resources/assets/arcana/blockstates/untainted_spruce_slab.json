@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": {"model": "arcana:block/untainted_spruce_slab"},
+    "type=top": {"model": "arcana:block/untainted_spruce_slab_top"},
+    "type=double": {"model": "arcana:block/tainted_spruce_planks"}
+  }
+}

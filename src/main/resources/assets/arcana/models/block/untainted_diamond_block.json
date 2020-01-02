@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arcana:block/tainted_diamond_block"
+  }
+}

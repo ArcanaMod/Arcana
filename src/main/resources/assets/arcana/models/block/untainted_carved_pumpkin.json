@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "arcana:block/tainted_pumpkin_top",
+    "front": "arcana:block/tainted_pumpkin_face",
+    "side": "arcana:block/tainted_pumpkin"
+
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": {"model": "arcana:block/trypophobius_slab"},
+    "type=top": {"model": "arcana:block/trypophobius_slab_top"},
+    "type=double": {"model": "arcana:block/trypophobius_planks"}
+  }
+}

@@ -1,0 +1,7 @@
+
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "arcana:particles/6"
+  }
+}

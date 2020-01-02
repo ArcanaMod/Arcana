@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "arcana:block/tainted_greatwood_log"
+    },
+    "axis=z": {
+      "model": "arcana:block/tainted_greatwood_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "arcana:block/tainted_greatwood_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

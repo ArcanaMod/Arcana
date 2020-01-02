@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "type=bottom": {"model": "arcana:block/tainted_acacia_slab"},
+    "type=top": {"model": "arcana:block/tainted_acacia_slab_top"},
+    "type=double": {"model": "arcana:block/tainted_acacia_planks"}
+  }
+}

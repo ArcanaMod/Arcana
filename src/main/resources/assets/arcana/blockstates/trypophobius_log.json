@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "arcana:block/trypophobius_log"
+    },
+    "axis=z": {
+      "model": "arcana:block/trypophobius_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "arcana:block/trypophobius_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}
