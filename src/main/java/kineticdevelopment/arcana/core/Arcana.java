@@ -1,2 +1,0 @@
-package kineticdevelopment.arcana.core;
-
