@@ -1,62 +1,62 @@
--------------------------------------------
-Source installation information for modders
--------------------------------------------
-This code follows the Minecraft Forge installation methodology. It will apply
-some small patches to the vanilla MCP source code, giving you and it access 
-to some of the data and functions you need to build a successful mod.
 
-Note also that the patches are built against "unrenamed" MCP source code (aka
-srgnames) - this means that you will not be able to read them directly against
-normal code.
+![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge&logo=appveyor)
+![Issues](https://img.shields.io/github/issues/SleepingTea98/Arcana?style=for-the-badge&logo=appveyor)
 
-Source pack installation information:
+<p align="center">
+    <img width="768" height="256" src="https://media.discordapp.net/attachments/604720893654073388/627505379399434241/logo_animated.gif" />
+</p>
 
-Standalone source installation
-==============================
 
-See the Forge Documentation online for more detailed instructions:
-http://mcforge.readthedocs.io/en/latest/gettingstarted/
+## Arcana Mod
+Before we dive in, first of all, Arcana is in Beta testing at the moment and this is not the full mod! Arcana shouldn't cause anything world ending, but it won't have all the features that we have planned.
 
-Step 1: Open your command-line and browse to the folder where you extracted the zip file.
+At the moment this build is to only test our taint system.
 
-Step 2: Once you have a command window up in the folder that the downloaded material was placed, type:
+## About Arcana
+Arcana is a magic mod inspired by Thaumcraft. We're looking at all the versions of Thaumcraft and our own idea for inspiration. Please don't look at this as the next Thaumcraft, as it isn't, but you will find similar ideas and concepts here. The mod is being built from the ground up with our own textures.
 
-Windows: "gradlew setupDecompWorkspace"
-Linux/Mac OS: "./gradlew setupDecompWorkspace"
+## What's Here At The Moment
+Taint the world, every part of it. Every block, mob. flower and bush. You can see your world being tainted in real-time. We want taint the be a real issue in Arcana, so taint can spread underground and on the surface. This build at the moment looks at our taint system, as we refind it and make sure it is lag-free.  
 
-Step 3: After all that finished, you're left with a choice.
-For eclipse, run "gradlew eclipse" (./gradlew eclipse if you are on Mac/Linux)
+You can find a full rundown of how the taint system will work in Arcana here: https://arcanamod.net/category/taint/
 
-If you prefer to use IntelliJ, steps are a little different.
-1. Open IDEA, and import project.
-2. Select your build.gradle file and have it import.
-3. Once it's finished you must close IntelliJ and run the following command:
+## Coming Soon!
 
-"gradlew genIntellijRuns" (./gradlew genIntellijRuns if you are on Mac/Linux)
+### Custom spell system: 
+Arcana will allow for you to make your very own custom spells out of the Aspect and Elements in the game, by mixing and matching them you'll be able to come up with 100s of unique and custom spells.
 
-Step 4: The final step is to open Eclipse and switch your workspace to /eclipse/ (if you use IDEA, it should automatically start on your project)
+### Fieldwork and Quests
+We want to make research interesting, so we're building a quest system and fieldwork into it. Quests will allow for you to find out small parts of the lore and story along with helping you with your own research.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can run "gradlew --refresh-dependencies" to refresh the local cache. "gradlew clean" to reset everything {this does not affect your code} and then start the processs again.
+### Dungeons 
+Arcana will come with randomly generating dungeons with unique bosses, traps and loot.
 
-Should it still not work, 
-Refer to #ForgeGradle on EsperNet for more information about the gradle environment.
+### Tainted Magic
+Maybe you like a bit of taint. Check out the Tainted Codex magic book for a new path in magic, and even open up an all-new dimension 
 
-Tip:
-If you do not care about seeing Minecraft's source code you can replace "setupDecompWorkspace" with one of the following:
-"setupDevWorkspace": Will patch, deobfuscate, and gather required assets to run minecraft, but will not generate human readable source code.
-"setupCIWorkspace": Same as Dev but will not download any assets. This is useful in build servers as it is the fastest because it does the least work.
+### Create Your Own Life
+Give life to items with magic. Enchant your own golems and set them to work doing any manner of tasks for you.
 
-Tip:
-When using Decomp workspace, the Minecraft source code is NOT added to your workspace in a editable way. Minecraft is treated like a normal Library. Sources are there for documentation and research purposes and usually can be accessed under the 'referenced libraries' section of your IDE.
+### Node Manipulation 
+Manipulate nodes to generate aspects, elements and help you with other parts of the game. However, make sure you don't push it too far, or it could have consequences for your world.
 
-Forge source installation
-=========================
-MinecraftForge ships with this code and installs it as part of the forge
-installation process, no further action is required on your part.
+### And so much more. This is just to stuff that will be added over the next few months, we have so much more planned, so if you feel there is something missing, don't worry, it most likely just isn't listed here. 
 
-LexManos' Install Video
-=======================
-https://www.youtube.com/watch?v=8VEdtQLuLO0&feature=youtu.be
+## Links
+Join over 1500 people on our Discord and keep updated with news updates and streams.
 
-For more details update more often refer to the Forge Forums:
-http://www.minecraftforge.net/forum/index.php/topic,14048.0.html
+Discord:https://discord.gg/kFYmxrP
+
+Dev Log: https://arcanamod.net/
+
+Patreon: https://www.patreon.com/arcanamod
+
+Download: https://www.curseforge.com/minecraft/mc-mods/arcana
+
+
+## License
+
+Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) https://creativecommons.org/licenses/by-nc/4.0/
+
+© Kinetic Development 2019 - 2020
+
