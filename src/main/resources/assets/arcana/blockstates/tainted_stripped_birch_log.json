@@ -1,14 +1,14 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:block/tainted_stripped_birch_log"
+      "model": "arcana:tainted_stripped_birch_log"
     },
     "axis=z": {
-      "model": "arcana:block/tainted_stripped_birch_log",
+      "model": "arcana:tainted_stripped_birch_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:block/tainted_stripped_birch_log",
+      "model": "arcana:tainted_stripped_birch_log",
       "x": 90,
       "y": 90
     }

@@ -1,7 +1,7 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:block/dair_slab"},
-    "type=top": {"model": "arcana:block/dair_slab_top"},
-    "type=double": {"model": "arcana:block/dair_planks"}
+    "type=bottom": {"model": "arcana:dair_slab"},
+    "type=top": {"model": "arcana:dair_slab_top"},
+    "type=double": {"model": "arcana:dair_planks"}
   }
 }

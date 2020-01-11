@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/untainted_redstone_block"
+        "model": "arcana:untainted_redstone_block"
       }
     ]
   }

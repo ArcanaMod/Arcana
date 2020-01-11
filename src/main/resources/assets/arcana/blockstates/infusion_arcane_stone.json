@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/infusion_arcane_stone"
+        "model": "arcana:infusion_arcane_stone"
       }
     ]
   }

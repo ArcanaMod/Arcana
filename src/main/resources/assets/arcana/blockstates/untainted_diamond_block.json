@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/untainted_diamond_block"
+        "model": "arcana:untainted_diamond_block"
       }
     ]
   }

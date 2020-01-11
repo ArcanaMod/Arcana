@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_sand"
+        "model": "arcana:tainted_sand"
       }
     ]
   }

@@ -1,14 +1,14 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:block/untainted_stripped_darkoak_log"
+      "model": "arcana:untainted_stripped_darkoak_log"
     },
     "axis=z": {
-      "model": "arcana:block/untainted_stripped_darkoak_log",
+      "model": "arcana:untainted_stripped_darkoak_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:block/untainted_stripped_darkoak_log",
+      "model": "arcana:untainted_stripped_darkoak_log",
       "x": 90,
       "y": 90
     }

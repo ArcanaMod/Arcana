@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_emerald_ore"
+        "model": "arcana:tainted_emerald_ore"
       }
     ]
   }

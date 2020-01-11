@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_grass_block"
+        "model": "arcana:tainted_grass_block"
       }
     ]
   }

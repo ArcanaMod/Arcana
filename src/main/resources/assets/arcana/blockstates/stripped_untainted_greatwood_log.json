@@ -1,14 +1,14 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:block/stripped_tainted_greatwood_log"
+      "model": "arcana:stripped_tainted_greatwood_log"
     },
     "axis=z": {
-      "model": "arcana:block/stripped_tainted_greatwood_log",
+      "model": "arcana:stripped_tainted_greatwood_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:block/stripped_tainted_greatwood_log",
+      "model": "arcana:stripped_tainted_greatwood_log",
       "x": 90,
       "y": 90
     }

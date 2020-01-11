@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/amber_ore"
+        "model": "arcana:amber_ore"
       }
     ]
   }

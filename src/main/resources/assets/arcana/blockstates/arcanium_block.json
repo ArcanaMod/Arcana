@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/arcanium_block"
+        "model": "arcana:arcanium_block"
       }
     ]
   }

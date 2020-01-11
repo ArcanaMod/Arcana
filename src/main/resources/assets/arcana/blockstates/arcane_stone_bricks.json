@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/arcane_stone_bricks"
+        "model": "arcana:arcane_stone_bricks"
       }
     ]
   }

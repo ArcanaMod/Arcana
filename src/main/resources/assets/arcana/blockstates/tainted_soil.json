@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_soil"
+        "model": "arcana:tainted_soil"
       }
     ]
   }

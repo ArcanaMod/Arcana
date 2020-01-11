@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/greatwood_planks"
+        "model": "arcana:greatwood_planks"
       }
     ]
   }

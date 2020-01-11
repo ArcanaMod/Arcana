@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_goo"
+        "model": "arcana:tainted_goo"
       }
     ]
   }

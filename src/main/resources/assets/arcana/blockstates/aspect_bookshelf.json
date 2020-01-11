@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/aspect_bookshelf"
+        "model": "arcana:aspect_bookshelf"
       }
     ]
   }

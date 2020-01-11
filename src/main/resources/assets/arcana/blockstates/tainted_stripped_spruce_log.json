@@ -1,14 +1,14 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:block/tainted_stripped_spruce_log"
+      "model": "arcana:tainted_stripped_spruce_log"
     },
     "axis=z": {
-      "model": "arcana:block/tainted_stripped_spruce_log",
+      "model": "arcana:tainted_stripped_spruce_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:block/tainted_stripped_spruce_log",
+      "model": "arcana:tainted_stripped_spruce_log",
       "x": 90,
       "y": 90
     }

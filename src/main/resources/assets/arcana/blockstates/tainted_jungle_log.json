@@ -1,14 +1,14 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:block/tainted_jungle_log"
+      "model": "arcana:tainted_jungle_log"
     },
     "axis=z": {
-      "model": "arcana:block/tainted_jungle_log",
+      "model": "arcana:tainted_jungle_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:block/tainted_jungle_log",
+      "model": "arcana:tainted_jungle_log",
       "x": 90,
       "y": 90
     }

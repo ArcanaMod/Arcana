@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/dair_leaves"
+        "model": "arcana:dair_leaves"
       }
     ]
   }

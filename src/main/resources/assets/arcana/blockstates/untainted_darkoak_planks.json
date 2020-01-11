@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/untainted_darkoak_planks"
+        "model": "arcana:untainted_darkoak_planks"
       }
     ]
   }

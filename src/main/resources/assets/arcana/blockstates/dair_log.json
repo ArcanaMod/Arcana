@@ -1,14 +1,14 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:block/dair_log"
+      "model": "arcana:dair_log"
     },
     "axis=z": {
-      "model": "arcana:block/dair_log",
+      "model": "arcana:dair_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:block/dair_log",
+      "model": "arcana:dair_log",
       "x": 90,
       "y": 90
     }

@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_jungle_planks"
+        "model": "arcana:tainted_jungle_planks"
       }
     ]
   }

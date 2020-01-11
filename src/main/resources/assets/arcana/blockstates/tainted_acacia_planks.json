@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_acacia_planks"
+        "model": "arcana:tainted_acacia_planks"
       }
     ]
   }

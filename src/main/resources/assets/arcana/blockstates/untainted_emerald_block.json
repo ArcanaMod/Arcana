@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/untainted_emerald_block"
+        "model": "arcana:untainted_emerald_block"
       }
     ]
   }

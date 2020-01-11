@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/untainted_gold_block"
+        "model": "arcana:untainted_gold_block"
       }
     ]
   }

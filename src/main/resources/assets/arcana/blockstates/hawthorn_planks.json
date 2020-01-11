@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/hawthorn_planks"
+        "model": "arcana:hawthorn_planks"
       }
     ]
   }

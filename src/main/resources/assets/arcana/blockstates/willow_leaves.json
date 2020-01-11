@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/willow_leaves"
+        "model": "arcana:willow_leaves"
       }
     ]
   }

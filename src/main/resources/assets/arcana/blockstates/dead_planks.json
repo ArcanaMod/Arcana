@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/dead_planks"
+        "model": "arcana:dead_planks"
       }
     ]
   }

@@ -1,7 +1,7 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:block/untainted_dair_slab"},
-    "type=top": {"model": "arcana:block/untainted_dair_slab_top"},
-    "type=double": {"model": "arcana:block/tainted_dair_planks"}
+    "type=bottom": {"model": "arcana:untainted_dair_slab"},
+    "type=top": {"model": "arcana:untainted_dair_slab_top"},
+    "type=double": {"model": "arcana:tainted_dair_planks"}
   }
 }

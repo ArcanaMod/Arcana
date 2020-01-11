@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_pumpkin"
+        "model": "arcana:tainted_pumpkin"
       }
     ]
   }

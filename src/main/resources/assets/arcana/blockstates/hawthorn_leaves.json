@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/hawthorn_leaves"
+        "model": "arcana:hawthorn_leaves"
       }
     ]
   }

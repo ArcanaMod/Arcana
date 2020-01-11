@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_melon"
+        "model": "arcana:tainted_melon"
       }
     ]
   }

@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_redstone_block"
+        "model": "arcana:tainted_redstone_block"
       }
     ]
   }

@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/tainted_farmland"
+        "model": "arcana:tainted_farmland"
       }
     ]
   }

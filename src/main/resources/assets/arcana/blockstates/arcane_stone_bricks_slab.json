@@ -1,7 +1,7 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:block/arcane_stone_bricks_slab"},
-    "type=top": {"model": "arcana:block/arcane_stone_bricks_slab_top"},
-    "type=double": {"model": "arcana:block/arcane_stone_bricks"}
+    "type=bottom": {"model": "arcana:arcane_stone_bricks_slab"},
+    "type=top": {"model": "arcana:arcane_stone_bricks_slab_top"},
+    "type=double": {"model": "arcana:arcane_stone_bricks"}
   }
 }

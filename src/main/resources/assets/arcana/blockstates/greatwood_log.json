@@ -1,14 +1,14 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:block/greatwood_log"
+      "model": "arcana:greatwood_log"
     },
     "axis=z": {
-      "model": "arcana:block/greatwood_log",
+      "model": "arcana:greatwood_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:block/greatwood_log",
+      "model": "arcana:greatwood_log",
       "x": 90,
       "y": 90
     }

@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:block/hawthorn_sapling"
+        "model": "arcana:hawthorn_sapling"
       }
     ]
   }
