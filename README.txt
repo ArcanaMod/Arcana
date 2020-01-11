@@ -58,5 +58,5 @@ Download: https://www.curseforge.com/minecraft/mc-mods/arcana
 
 Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) https://creativecommons.org/licenses/by-nc/4.0/
 
-© Kinetic Development 2019 - 2020
+©Kinetic Development 2019 - 2020
 
