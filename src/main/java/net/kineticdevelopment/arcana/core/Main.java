@@ -6,6 +6,9 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.kineticdevelopment.arcana.common.init.ItemInit;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 
@@ -40,7 +43,11 @@ public class Main {
 	public void onPostInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 	}
-
-
-
+	
+	public static CreativeTabs ARCANA = (new CreativeTabs("tabArcana") {
+        @Override
+        public ItemStack getTabIconItem() {
+            return new ItemStack(ItemInit.WAND);
+        }
+    });
 }

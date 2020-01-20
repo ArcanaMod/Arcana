@@ -1,7 +1,6 @@
-package net.kineticdevelopment.arcana.common.items;
+package net.kineticdevelopment.arcana.common.objects.items;
 
 import net.kineticdevelopment.arcana.api.spells.Spell;
-import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;

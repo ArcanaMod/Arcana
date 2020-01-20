@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.common.items;
+package net.kineticdevelopment.arcana.common.objects.items;
 
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.minecraft.client.gui.GuiScreen;
