@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.api.spells;
+package net.kineticdevelopment.arcana.api.wand;
 
 public enum CoreType {
     ERROR(0),

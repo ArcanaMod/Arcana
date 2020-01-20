@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.core;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -47,7 +48,22 @@ public class Main {
 	public static CreativeTabs ARCANA = (new CreativeTabs("tabArcana") {
         @Override
         public ItemStack getTabIconItem() {
-            return new ItemStack(ItemInit.WAND);
+        	ItemStack stack = new ItemStack(ItemInit.WOOD_WAND);
+			NBTTagCompound compound = getNBT(stack);
+			compound.setInteger("cap", 1);
+			stack.setTagCompound(compound);
+            return stack;
         }
     });
+
+
+	public static NBTTagCompound getNBT(ItemStack itemStack)
+	{
+		if(!itemStack.hasTagCompound())
+		{
+			itemStack.setTagCompound(new NBTTagCompound());
+		}
+
+		return itemStack.getTagCompound();
+	}
 }

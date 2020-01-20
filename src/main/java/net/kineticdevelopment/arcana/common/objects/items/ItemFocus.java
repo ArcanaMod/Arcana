@@ -2,7 +2,6 @@ package net.kineticdevelopment.arcana.common.objects.items;
 
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
@@ -150,7 +149,7 @@ public class ItemFocus extends Item {
         NBTTagCompound tag = stack.getTagCompound();
         StringBuilder sb = new StringBuilder();
         String result = "None, Focus is empty.";
-        if(tag != null && !tag.getTag("foci").hasNoTags()) {
+        if(tag != null && tag.hasKey("foci")) {
             String[] effects = tag.getCompoundTag("foci").getString("effects").split(";");
             for(String effect : effects) {
                 effect = effect.toLowerCase();

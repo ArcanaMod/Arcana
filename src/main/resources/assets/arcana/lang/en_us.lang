@@ -2,5 +2,5 @@
 itemGroup.tabArcana=Arcana
 
 # Items
-item.wand.name=Magical Wand
+item.wood_wand.name=Wooden Wand
 item.focus.name=Wand Focus
