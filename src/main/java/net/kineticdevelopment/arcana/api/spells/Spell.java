@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.api.spells;
 
+import com.typesafe.config.ConfigException;
 import net.kineticdevelopment.arcana.api.aspects.Aspect;
 import net.kineticdevelopment.arcana.common.entities.SpellEntity;
 import net.minecraft.entity.EntityLiving;
@@ -120,7 +121,11 @@ public class Spell {
     public static Spell fromNBT(NBTTagCompound spell) {
         List<ISpellEffect> effects = new ArrayList<>();
         for (String effect : spell.getString("effects").split(";")) {
-            effects.add(SpellEffectHandler.getEffect(effect));
+            ISpellEffect effectObj = SpellEffectHandler.getEffect(effect);
+            if(effectObj == null) {
+                throw new NullPointerException("Spell Effect cannot be null!");
+            }
+            effects.add(effectObj);
         }
         Aspect.AspectType core = Aspect.AspectType.valueOf(spell.getString("core").toUpperCase());
         int power = spell.getInteger("power");

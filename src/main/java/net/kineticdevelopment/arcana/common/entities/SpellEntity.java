@@ -97,7 +97,8 @@ public class SpellEntity extends Entity implements IProjectile {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        Minecraft.getMinecraft().player.getEntityWorld().spawnParticle(EnumParticleTypes.FLAME, this.getPositionVector().x, this.getPositionVector().y, this.getPositionVector().z, 0, 0,0);
+        //Minecraft.getMinecraft().player.getEntityWorld().spawnParticle(EnumParticleTypes.FLAME, this.getPositionVector().x, this.getPositionVector().y, this.getPositionVector().z, 0, 0,0);
+        this.getEntityWorld().spawnParticle(EnumParticleTypes.FLAME, this.getPositionVector().x, this.getPositionVector().y, this.getPositionVector().z, 0, 0,0);
 
         Vec3d vec3d = new Vec3d(this.posX, this.posY, this.posZ);
         Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);

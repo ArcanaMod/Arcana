@@ -87,45 +87,42 @@ public class ItemFocus extends Item {
                 focus31, focus32, focus33, focus34, focus35, focus36
         );
 
-        ModelLoader.setCustomMeshDefinition(this, new ItemMeshDefinition() {
-            @Override
-            public ModelResourceLocation getModelLocation(ItemStack stack) {
-                if(getTagCompoundSafe(stack).hasKey("variant")) {
-                    switch(getTagCompoundSafe(stack).getInteger("variant")) {
-                        case 2: return focus2;
-                        case 3: return focus3;
-                        case 4: return focus4;
-                        case 5: return focus5;
-                        case 6: return focus6;
-                        case 7: return focus7;
-                        case 8: return focus8;
-                        case 9: return focus9;
-                        case 10: return focus10;
-                        case 11: return focus11;
-                        case 12: return focus12;
-                        case 13: return focus13;
-                        case 14: return focus14;
-                        case 15: return focus15;
-                        case 16: return focus16;
-                        case 17: return focus17;
-                        case 18: return focus18;
-                        case 19: return focus19;
-                        case 20: return focus20;
-                        case 21: return focus21;
-                        case 22: return focus22;
-                        case 23: return focus23;
-                        case 24: return focus24;
-                        case 25: return focus25;
-                        case 26: return focus26;
-                        case 27: return focus27;
-                        case 28: return focus28;
-                        case 29: return focus29;
-                        case 30: return focus30;
-                        default: return focus1;
-                    }
+        ModelLoader.setCustomMeshDefinition(this, stack -> {
+            if(getTagCompoundSafe(stack).hasKey("variant")) {
+                switch(getTagCompoundSafe(stack).getInteger("variant")) {
+                    case 2: return focus2;
+                    case 3: return focus3;
+                    case 4: return focus4;
+                    case 5: return focus5;
+                    case 6: return focus6;
+                    case 7: return focus7;
+                    case 8: return focus8;
+                    case 9: return focus9;
+                    case 10: return focus10;
+                    case 11: return focus11;
+                    case 12: return focus12;
+                    case 13: return focus13;
+                    case 14: return focus14;
+                    case 15: return focus15;
+                    case 16: return focus16;
+                    case 17: return focus17;
+                    case 18: return focus18;
+                    case 19: return focus19;
+                    case 20: return focus20;
+                    case 21: return focus21;
+                    case 22: return focus22;
+                    case 23: return focus23;
+                    case 24: return focus24;
+                    case 25: return focus25;
+                    case 26: return focus26;
+                    case 27: return focus27;
+                    case 28: return focus28;
+                    case 29: return focus29;
+                    case 30: return focus30;
+                    default: return focus1;
                 }
-                return null;
             }
+            return null;
         });
     }
 
