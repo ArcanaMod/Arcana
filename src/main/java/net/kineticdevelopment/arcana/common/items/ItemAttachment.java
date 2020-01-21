@@ -3,11 +3,17 @@ package net.kineticdevelopment.arcana.common.items;
 import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
 import net.minecraft.item.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class ItemAttachment extends Item {
+
+    public static List<ItemAttachment> ATTACHMENTS = new ArrayList<>();
 
     public ItemAttachment(String name) {
         setUnlocalizedName(name);
         setRegistryName(name);
+        ATTACHMENTS.add(this);
     }
 
 

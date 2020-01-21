@@ -13,7 +13,7 @@ public enum EnumAttachmentType {
     private int slot;
     private String key;
 
-    private EnumAttachmentType(String key, int slot, ItemAttachment _default) {
+    EnumAttachmentType(String key, int slot, ItemAttachment _default) {
         this._default = _default;
         this.slot = slot;
         this.key = key;

@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.objects.items;
 import net.kineticdevelopment.arcana.api.spells.Spell;
 import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
+import net.kineticdevelopment.arcana.core.Main;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -70,7 +71,13 @@ public class ItemWand extends Item {
     }
 
     public ItemAttachment getAttachment(ItemStack itemStack, EnumAttachmentType type) {
-        return this.getAttachment(type, itemStack.getTagCompound().getInteger(type.getKey()));
+        return this.getAttachment(type, Main.getNBT(itemStack).getInteger(type.getKey()));
+    }
+
+    public ItemWand setAttachments(Supplier<ItemAttachment[][]> attachments) {
+        this.supplierAttachments = attachments;
+        this.attachments = null;
+        return this;
     }
 
 

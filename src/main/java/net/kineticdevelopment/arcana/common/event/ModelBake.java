@@ -23,7 +23,6 @@ public class ModelBake {
         int i;
         int j;
 
-
         for(ItemWand wand : ItemWand.WANDS) {
             models = new IBakedModel[EnumAttachmentType.values().length][];
 
