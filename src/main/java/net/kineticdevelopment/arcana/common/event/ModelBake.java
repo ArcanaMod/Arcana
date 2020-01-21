@@ -33,13 +33,13 @@ public class ModelBake {
 
                 for(j = 0; j < models[i].length; ++j)  {
                     attachment = wand.getAttachment(type, j);
-                    models[i][j] = event.getModelRegistry().getObject(new ModelResourceLocation(Main.MODID + ":wands/" + attachment.getRegistryName().getResourcePath(), "inventory")); //Add ItemAttachment model to the array
+                    models[i][j] = event.getModelRegistry().getObject(new ModelResourceLocation(Main.MODID + ":wands/" + attachment.getRegistryName().getResourcePath(), "inventory"));
                 }
             }
 
-            mrl = new ModelResourceLocation(Main.MODID + ":wands/" + wand.getRegistryName().getResourcePath(), "inventory"); //This is the MRL of the main item (gun)
+            mrl = new ModelResourceLocation(Main.MODID + ":wands/" + wand.getRegistryName().getResourcePath(), "inventory");
 
-            main = event.getModelRegistry().getObject(mrl); //Get the model of the gun
+            main = event.getModelRegistry().getObject(mrl);
 
             event.getModelRegistry().putObject(mrl, new BakedModelWand(main, models));
 

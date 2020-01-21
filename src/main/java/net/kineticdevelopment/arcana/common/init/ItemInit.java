@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.common.init;
 
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
+import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.core.Main;
@@ -40,7 +41,63 @@ public class ItemInit {
 			}
 			attachments[0][i] = attachment;
 		}
-		attachments[1] = new ItemAttachment[] {ItemAttachment.ATTACHMENTS.get(CAPS.length)};
+		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
 		return attachments;
 	}).setCreativeTab(Main.ARCANA);
+
+	public static Item GREATWOOD_WAND = new ItemWand("greatwood_wand").setAttachments(() -> {
+		ItemAttachment[][] attachments = new ItemAttachment[2][CAPS.length];
+
+		attachments[0] = new ItemAttachment[] {IRON_CAP, COPPER_CAP, GOLD_CAP, SILVER_CAP, MANASTEEL_CAP};
+
+		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
+		return attachments;
+	}).setCreativeTab(Main.ARCANA);
+
+	public static Item TAINTED_WAND = new ItemWand("tainted_wand").setAttachments(() -> {
+		ItemAttachment[][] attachments = new ItemAttachment[2][CAPS.length];
+
+		attachments[0] = new ItemAttachment[] {IRON_CAP, COPPER_CAP, GOLD_CAP, SILVER_CAP, MANASTEEL_CAP};
+
+		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
+		return attachments;
+	}).setCreativeTab(Main.ARCANA);
+
+	public static Item DAIR_WAND = new ItemWand("dair_wand").setAttachments(() -> {
+		ItemAttachment[][] attachments = new ItemAttachment[2][CAPS.length];
+
+		attachments[0] = new ItemAttachment[] {IRON_CAP, GOLD_CAP, THAUMIUM_CAP, COPPER_CAP, SILVER_CAP, MANASTEEL_CAP, ELEMENTIUM_CAP};
+
+		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
+		return attachments;
+	}).setCreativeTab(Main.ARCANA);
+
+	public static Item HAWTHORN_WAND = new ItemWand("hawthorn_wand").setAttachments(() -> {
+		ItemAttachment[][] attachments = new ItemAttachment[2][CAPS.length];
+
+		attachments[0] = new ItemAttachment[] {IRON_CAP, COPPER_CAP, GOLD_CAP, SILVER_CAP, MANASTEEL_CAP, ELEMENTIUM_CAP, THAUMIUM_CAP};
+
+		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
+		return attachments;
+	}).setCreativeTab(Main.ARCANA);
+
+	public static Item SILVERWOOD_WAND = new ItemWand("silverwood_wand").setAttachments(() -> {
+		ItemAttachment[][] attachments = new ItemAttachment[2][CAPS.length];
+
+		attachments[0] = CAPS;
+
+		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
+		return attachments;
+	}).setCreativeTab(Main.ARCANA);
+
+	public static Item ARCANIUM_WAND = new ItemWand("arcanium_wand").setAttachments(() -> {
+		ItemAttachment[][] attachments = new ItemAttachment[2][CAPS.length];
+
+		attachments[0] = CAPS;
+
+		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
+		return attachments;
+	}).setCreativeTab(Main.ARCANA);
+
+
 }
