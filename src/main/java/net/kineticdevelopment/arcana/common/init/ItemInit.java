@@ -20,11 +20,12 @@ public class ItemInit {
 	public static ItemAttachment THAUMIUM_CAP = new Cap("thaumium_cap").setId(2);
 	public static ItemAttachment VOID_CAP = new Cap("void_cap").setId(3);
 	public static ItemAttachment COPPER_CAP = new Cap("copper_cap").setId(4);
-	public static ItemAttachment ELEMENTIUM_CAP = new Cap("elementium_cap").setId(5);
-	public static ItemAttachment MANASTEEL_CAP = new Cap("manasteel_cap").setId(6);
-	public static ItemAttachment TERRASTEEL_CAP = new Cap("terrasteel_cap").setId(7);
+	public static ItemAttachment SILVER_CAP = new Cap("silver_cap").setId(5);
+	public static ItemAttachment ELEMENTIUM_CAP = new Cap("elementium_cap").setId(6);
+	public static ItemAttachment MANASTEEL_CAP = new Cap("manasteel_cap").setId(7);
+	public static ItemAttachment TERRASTEEL_CAP = new Cap("terrasteel_cap").setId(8);
 
-	public static ItemAttachment[] CAPS = new ItemAttachment[] {IRON_CAP, GOLD_CAP, THAUMIUM_CAP, VOID_CAP, COPPER_CAP, ELEMENTIUM_CAP, MANASTEEL_CAP, TERRASTEEL_CAP};
+	public static ItemAttachment[] CAPS = new ItemAttachment[] {IRON_CAP, GOLD_CAP, THAUMIUM_CAP, VOID_CAP, COPPER_CAP, SILVER_CAP ,ELEMENTIUM_CAP, MANASTEEL_CAP, TERRASTEEL_CAP};
 
 	public static Item FOCUS = new ItemFocus("focus");
 
