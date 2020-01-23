@@ -24,6 +24,15 @@ public class ItemInit {
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 
 	public static Item FOCUS_PARTS = new ItemBase("focus_parts").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_IRON_CAPS = new ItemBase("item_iron_cap").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_GOLD_CAPS = new ItemBase("item_gold_cap").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_THAUMIUM_CAPS = new ItemBase("item_thaumium_cap").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_VOID_CAPS = new ItemBase("item_void_cap").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_COPPER_CAPS = new ItemBase("item_copper_cap").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_SILVER_CAPS = new ItemBase("item_silver_cap").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_MANASTEEL_CAPS = new ItemBase("item_manasteel_cap").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_ELEMENTIUM_CAPS = new ItemBase("item_elementium_cap").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ITEM_TERRASTEEL_CAPS = new ItemBase("item_terrasteel_cap").setCreativeTab(Main.TAB_ARCANA);
 
 
 	// Wand Attachments

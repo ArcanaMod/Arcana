@@ -14,6 +14,17 @@ item.silverwood_wand.name=Silverwood Wand
 item.focus_pars.name=Focus Parts
 item.focus.name=Wand Focus
 
+item.item_cap_iron.name=Iron wand cap
+item.item_cap_gold.name=Gold wand cap
+item.item_cap_thaumium.name=Thaumium wand cap
+item.item_cap_void.name=Void wand cap
+item.item_cap_copper.name=Copper wand cap
+item.item_cap_silver.name=Silver wand cap
+item.item_cap_manasteel.name=Manasteel wand cap
+item.item_cap_elementium.name=Elementium wand cap
+item.item_cap_terrasteel.name=Terrasteel wand cap
+
+
 #Blocks
 
 ##Tainted
