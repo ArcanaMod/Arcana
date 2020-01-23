@@ -8,13 +8,16 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
+/**
+ * Common Proxy
+ * 
+ * @author Atlas
+ */
 public class CommonProxy {
 	public void registerItemRenderer(Item item, int meta, String id) {}
 
 	public void preInit(FMLPreInitializationEvent event) {
-
 		EntityInit.init();
-
 	}
 
 	public void init(FMLInitializationEvent event) {}

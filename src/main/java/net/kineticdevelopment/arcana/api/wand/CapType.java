@@ -1,5 +1,10 @@
 package net.kineticdevelopment.arcana.api.wand;
 
+/**
+ * Enumeration for cap types
+ * 
+ * @author Merijn
+ */
 public enum CapType {
 
     ERROR(0,0, 0),

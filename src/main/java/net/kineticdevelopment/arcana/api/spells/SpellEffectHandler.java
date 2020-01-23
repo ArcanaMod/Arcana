@@ -4,6 +4,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Handles Spell Effects
+ * 
+ * @author Merijn
+ */
 public class SpellEffectHandler {
 
     private static List<ISpellEffect> effects = new ArrayList<>();

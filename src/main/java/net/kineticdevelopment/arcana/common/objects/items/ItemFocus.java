@@ -25,6 +25,11 @@ import static com.mojang.realmsclient.gui.ChatFormatting.GRAY;
 import static net.minecraft.util.text.TextFormatting.GOLD;
 import static net.minecraft.util.text.TextFormatting.GREEN;
 
+/**
+ * Focus Item
+ * 
+ * @author Merijn
+ */
 public class ItemFocus extends Item {
 
     public ItemFocus(String name) {

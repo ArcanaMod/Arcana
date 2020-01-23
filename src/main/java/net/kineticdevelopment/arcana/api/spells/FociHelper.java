@@ -5,6 +5,10 @@ import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+/**
+ * Helper for foci
+ * @author Merijn
+ */
 public class FociHelper {
 
     public static ItemStack generateFoci(int skin, ISpellEffect[] effects, int power, Aspect.AspectType core, String name) {

@@ -1,5 +1,10 @@
 package net.kineticdevelopment.arcana.api.wand;
 
+/**
+ * Enumeration for Core Types
+ * 
+ * @author Merijn
+ */
 public enum CoreType {
     ERROR(0),
     WOOD(25),

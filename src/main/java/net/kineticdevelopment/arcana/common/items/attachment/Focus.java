@@ -3,6 +3,13 @@ package net.kineticdevelopment.arcana.common.items.attachment;
 import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 
+/**
+ * Wand Focus Item
+ * 
+ * @author Merijn
+ * @see Cap
+ * @see ItemAttachment
+ */
 public class Focus extends ItemAttachment {
 
     private int id;

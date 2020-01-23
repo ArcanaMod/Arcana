@@ -11,8 +11,13 @@ import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 
+/**
+ * Base Arcana Class
+ * @author Atlas
+ */
 @Mod(modid = Main.MODID, name = Main.NAME, version = Main.VERSION)
 public class Main {
 	public static final String MODID = "arcana";
@@ -29,22 +34,36 @@ public class Main {
     public static CommonProxy proxy;
 
 
-
-	@Mod.EventHandler
+	/**
+	 * Preintialization Event
+	 * @param event
+	 */
+	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent event) {
 		proxy.preInit(event);
 	}
-
-	@Mod.EventHandler
+	
+	/**
+	 * Initialization Event
+	 * @param event
+	 */
+	@EventHandler
 	public void onInit(FMLInitializationEvent event) {
 		proxy.init(event);
 	}
-
-	@Mod.EventHandler
+	
+	/**
+	 * Post Initialization Event
+	 * @param event
+	 */
+	@EventHandler
 	public void onPostInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 	}
 	
+	/**
+	 * Main Arcana Creative Tab
+	 */
 	public static CreativeTabs ARCANA = (new CreativeTabs("tabArcana") {
         @Override
         public ItemStack getTabIconItem() {
@@ -55,12 +74,16 @@ public class Main {
             return stack;
         }
     });
-
-
-	public static NBTTagCompound getNBT(ItemStack itemStack)
-	{
-		if(!itemStack.hasTagCompound())
-		{
+	
+	
+	//Why is this here? This is very redundant
+	/**
+	 * Retrieves NBT Tag
+	 * @param itemStack
+	 * @return
+	 */
+	public static NBTTagCompound getNBT(ItemStack itemStack) {
+		if (!itemStack.hasTagCompound()) {
 			itemStack.setTagCompound(new NBTTagCompound());
 		}
 

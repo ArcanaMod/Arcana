@@ -5,6 +5,11 @@ import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
 import net.minecraft.item.Item;
 
+/**
+ * Basic Item, all Items should either be this, or extend it
+ * 
+ * @author Atlas
+ */
 public class ItemBase extends Item implements IHasModel {
 	
 	public ItemBase(String name) {

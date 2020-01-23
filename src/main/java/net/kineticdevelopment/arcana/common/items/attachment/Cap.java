@@ -3,6 +3,13 @@ package net.kineticdevelopment.arcana.common.items.attachment;
 import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 
+/**
+ * Wand Cap Item
+ * 
+ * @author Merijn
+ * @see ItemAttachment
+ * @see Focus
+ */
 public class Cap extends ItemAttachment {
 
     private int id;

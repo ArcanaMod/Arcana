@@ -4,6 +4,11 @@ import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 
+/**
+ * Enumeration for Attachment Types
+ * 
+ * @author Merijn
+ */
 public enum EnumAttachmentType {
 
     CAP("cap",0, Cap.DEFAULT),

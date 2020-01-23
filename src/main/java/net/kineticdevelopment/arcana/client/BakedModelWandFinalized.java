@@ -15,6 +15,11 @@ import net.minecraft.util.EnumFacing;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Finalized Baked model for wands
+ * 
+ * @author Merijn
+ */
 public class BakedModelWandFinalized implements IBakedModel {
 
     private IBakedModel modelMain;

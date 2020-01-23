@@ -1,6 +1,5 @@
 package net.kineticdevelopment.arcana.api.spells;
 
-import com.typesafe.config.ConfigException;
 import net.kineticdevelopment.arcana.api.aspects.Aspect;
 import net.kineticdevelopment.arcana.common.entities.SpellEntity;
 import net.minecraft.entity.EntityLiving;
@@ -13,6 +12,11 @@ import net.minecraft.util.math.MathHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Base class for spells
+ * 
+ * @author Merijn
+ */
 public class Spell {
 
     private ISpellEffect[] effects;

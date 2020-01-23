@@ -6,6 +6,13 @@ import net.minecraft.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Item Attachment Utility Class
+ * 
+ * @author Merijn
+ * @see Cap
+ * @see Focus
+ */
 public abstract class ItemAttachment extends Item {
 
     public static List<ItemAttachment> ATTACHMENTS = new ArrayList<>();

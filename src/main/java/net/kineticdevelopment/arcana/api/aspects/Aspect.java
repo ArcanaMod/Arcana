@@ -4,8 +4,17 @@ import net.kineticdevelopment.arcana.api.exception.AspectNotFoundException;
 
 import javax.annotation.Nullable;
 
+/**
+ * Contains enum and utilities for aspects
+ * @author Atlas
+ */
 public class Aspect {
-
+	
+	/**
+	 * Enumeration containing all aspect types
+	 * 
+	 * @author Atlas
+	 */
     public enum AspectType {
         AIR,
         ARMOR,
@@ -64,7 +73,13 @@ public class Aspect {
         WIND,
         WRATH
     }
-
+    
+    /**
+     * Utility for getting an aspect by name
+     * @param name
+     * @return AspectType
+     * @throws AspectNotFoundException
+     */
     @Nullable
     public static AspectType getAspectByName(@Nullable String name) throws AspectNotFoundException {
         switch (name.toUpperCase()) {

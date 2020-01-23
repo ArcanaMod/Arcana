@@ -11,6 +11,13 @@ import net.minecraft.item.Item;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Initialize Items here
+ * @author Merijn
+ * @see BlockStateInit
+ * @see EntityInit
+ * @see BlockInit
+ */
 public class ItemInit {
 
 	public static final List<Item> ITEMS = new ArrayList<Item>();

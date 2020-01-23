@@ -9,9 +9,15 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod.EventBusSubscriber
+/**
+ * Event Handler for ModelBake
+ * 
+ * @author Merijn
+ */
+@EventBusSubscriber
 public class ModelBake {
 
     @SubscribeEvent

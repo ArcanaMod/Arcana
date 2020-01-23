@@ -14,6 +14,11 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
 
+/**
+ * Client Proxy
+ * 
+ * @author Atlas
+ */
 public class ClientProxy extends CommonProxy {
 	@Override
 	public void registerItemRenderer(Item item, int meta, String id) {

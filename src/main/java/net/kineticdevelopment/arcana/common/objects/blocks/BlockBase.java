@@ -9,6 +9,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
+/**
+ * Basic Block, all blocks should either be this, or extend it
+ * 
+ * @author Atlas
+ * @see TaintedBlockBase
+ */
 public class BlockBase extends Block implements IHasModel {
 	public BlockBase(String name, Material material) {
 		super(material);

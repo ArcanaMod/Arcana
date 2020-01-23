@@ -11,3 +11,11 @@ item.arcanium_wand.name=Arcanium Wand
 item.silverwood_wand.name=Silverwood Wand
 
 item.focus.name=Wand Focus
+
+#Blocks
+
+##Tainted
+tile.tainted_crust.name=Tainted Crust
+tile.tainted_rock.name=Tainted Rock
+tile.tainted_grass.name=Tainted Grass
+tile.tainted_soil.name=Tainted Soil

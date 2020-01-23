@@ -12,9 +12,18 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+/**
+ * Register objects here
+ * 
+ * @author Atlas
+ */
 @EventBusSubscriber
 public class RegistryHandler {
 	
+	/**
+	 * Register Items here
+	 * @param event
+	 */
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
 		event.getRegistry().registerAll(ItemInit.ITEMS.toArray(new Item[0]));
@@ -22,12 +31,20 @@ public class RegistryHandler {
 			Main.proxy.registerWand(event.getRegistry(), wand);
 		}
 	}
-
+	
+	/**
+	 * Register Blocks here
+	 * @param event
+	 */
 	@SubscribeEvent
 	public static void onBlockRegister(RegistryEvent.Register<Block> event) {
 		event.getRegistry().registerAll(BlockInit.BLOCKS.toArray(new Block[0]));
 	}
-
+	
+	/**
+	 * Register Models Here
+	 * @param event
+	 */
 	@SubscribeEvent
 	public static void onModelRegister(ModelRegistryEvent event) {
 		for (Item item : ItemInit.ITEMS) {

@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+/**
+ * Wand Item
+ * 
+ * @author Merijn
+ */
 public class ItemWand extends Item {
 
     public static List<ItemWand> WANDS = new ArrayList<>();

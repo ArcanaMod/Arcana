@@ -6,6 +6,13 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Earth Spell Effect
+ * 
+ * @author Merijn
+ * @see SpellEffectFire
+ * @see SpellEffectHandler
+ */
 public class SpellEffectEarth implements ISpellEffect {
 
     @Override

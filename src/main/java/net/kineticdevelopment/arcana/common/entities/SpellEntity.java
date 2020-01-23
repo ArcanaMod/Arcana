@@ -21,6 +21,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+/**
+ * Spell Projectile Entity
+ * 
+ * @author Merijn
+ */
 public class SpellEntity extends Entity implements IProjectile {
 
     private Spell spell;

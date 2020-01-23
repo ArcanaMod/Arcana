@@ -4,6 +4,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * Interface for spell effect
+ * 
+ * @author Merijn
+ */
 public interface ISpellEffect {
 
     String getName();

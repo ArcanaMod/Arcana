@@ -13,6 +13,11 @@ import net.minecraft.world.World;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Baked Model for wands
+ * 
+ * @author Merijn
+ */
 public class BakedModelWand implements IBakedModel {
 
     private final IBakedModel modelMain;
