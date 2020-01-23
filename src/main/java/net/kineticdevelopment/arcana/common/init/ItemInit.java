@@ -34,6 +34,13 @@ public class ItemInit {
 	public static Item ITEM_ELEMENTIUM_CAPS = new ItemBase("item_elementium_cap").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ITEM_TERRASTEEL_CAPS = new ItemBase("item_terrasteel_cap").setCreativeTab(Main.TAB_ARCANA);
 
+	public static Item GREATWOOD_WAND_CORE = new ItemBase("greatwood_wand_core").setCreativeTab(Main.TAB_ARCANA);
+	public static Item TAINTED_WAND_CORE = new ItemBase("tainted_wand_core").setCreativeTab(Main.TAB_ARCANA);
+	public static Item DAIR_WAND_CORE = new ItemBase("dair_wand_core").setCreativeTab(Main.TAB_ARCANA);
+	public static Item HAWTHORN_WAND_CORE = new ItemBase("hawthorn_wand_core").setCreativeTab(Main.TAB_ARCANA);
+	public static Item SILVERWOOD_WAND_CORE = new ItemBase("silverwood_wand_core").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_WAND_CORE = new ItemBase("arcanium_wand_core").setCreativeTab(Main.TAB_ARCANA);
+
 
 	// Wand Attachments
 	public static ItemAttachment IRON_CAP = new Cap("iron_cap").setId(0);
@@ -54,13 +61,8 @@ public class ItemInit {
 	public static Item WOOD_WAND = new ItemWand("wood_wand").setAttachments(() -> {
 		ItemAttachment[][] attachments = new ItemAttachment[2][CAPS.length];
 
-		for (int i = 0; i < CAPS.length; i++) {
-			ItemAttachment attachment = CAPS[i];
-			if(attachments[0] == null) {
-				attachments[0] = new ItemAttachment[] {attachment};
-			}
-			attachments[0][i] = attachment;
-		}
+		attachments[0] = new ItemAttachment[] {IRON_CAP};
+
 		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
 		return attachments;
 	}).setCreativeTab(Main.TAB_ARCANA);

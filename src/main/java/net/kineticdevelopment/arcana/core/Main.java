@@ -67,11 +67,7 @@ public class Main {
 	public static CreativeTabs TAB_ARCANA = (new CreativeTabs("tabArcana") {
         @Override
         public ItemStack getTabIconItem() {
-        	ItemStack stack = new ItemStack(ItemInit.WOOD_WAND);
-			NBTTagCompound compound = getNBT(stack);
-			compound.setInteger("cap", 1);
-			stack.setTagCompound(compound);
-            return stack;
+			return new ItemStack(ItemInit.ARCANIUM_WAND_CORE);
         }
     });
 	

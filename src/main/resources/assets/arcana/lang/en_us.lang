@@ -14,16 +14,22 @@ item.silverwood_wand.name=Silverwood Wand
 item.focus_pars.name=Focus Parts
 item.focus.name=Wand Focus
 
-item.item_cap_iron.name=Iron wand cap
-item.item_cap_gold.name=Gold wand cap
-item.item_cap_thaumium.name=Thaumium wand cap
-item.item_cap_void.name=Void wand cap
-item.item_cap_copper.name=Copper wand cap
-item.item_cap_silver.name=Silver wand cap
-item.item_cap_manasteel.name=Manasteel wand cap
-item.item_cap_elementium.name=Elementium wand cap
-item.item_cap_terrasteel.name=Terrasteel wand cap
+item.item_iron_cap.name=Iron wand cap
+item.item_gold_cap.name=Gold wand cap
+item.item_thaumium_cap.name=Thaumium wand cap
+item.item_void_cap.name=Void wand cap
+item.item_copper_cap.name=Copper wand cap
+item.item_silver_cap.name=Silver wand cap
+item.item_manasteel_cap.name=Manasteel wand cap
+item.item_elementium_cap.name=Elementium wand cap
+item.item_terrateel_cap.name=Terrasteel wand cap
 
+item.greatwood_wand_core.name=Greatwood Wand Core
+item.tainted_wand_core.name=Tainted Wand Core
+item.dair_wand_core.name=Dair Wand Core
+item.hawthorn_wand_core.name=Hawthorn Wand Core
+item.silverwood_wand_core.name=Silverwood Wand Core
+item.arcanium_wand_core.name=Arcanium Wand Core
 
 #Blocks
 

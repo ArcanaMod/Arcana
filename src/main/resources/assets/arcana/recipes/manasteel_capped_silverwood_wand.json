@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "arcana",
+  "pattern": [
+    "  C",
+    " R ",
+    "C  "
+  ],
+  "key": {
+    "C":
+    {
+      "item": "arcana:item_manasteel_cap"
+    },
+    "R": {
+      "item": "arcana:silverwood_wand_core"
+    }
+  },
+  "result": {
+    "type": "minecraft:item_nbt",
+    "item": "arcana:silverwood_wand",
+    "count": 1,
+    "nbt": {
+      "cap" : 7,
+      "focus": 1
+    }
+  }
+}

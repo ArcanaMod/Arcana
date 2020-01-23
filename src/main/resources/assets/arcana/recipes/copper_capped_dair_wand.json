@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "arcana",
+  "pattern": [
+    "  C",
+    " R ",
+    "C  "
+  ],
+  "key": {
+    "C":
+    {
+      "item": "arcana:item_copper_cap"
+    },
+    "R": {
+      "item": "arcana:dair_wand_core"
+    }
+  },
+  "result": {
+    "type": "minecraft:item_nbt",
+    "item": "arcana:dair_wand",
+    "count": 1,
+    "nbt": {
+      "cap" : 4,
+      "focus": 1
+    }
+  }
+}
