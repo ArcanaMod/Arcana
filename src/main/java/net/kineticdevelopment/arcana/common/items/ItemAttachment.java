@@ -10,10 +10,11 @@ import java.util.List;
  * Item Attachment Utility Class
  * 
  * @author Merijn
- * @see Cap
- * @see Focus
+ * @see net.kineticdevelopment.arcana.common.items.attachment.Cap
+ * @see net.kineticdevelopment.arcana.common.items.attachment.Focus
  */
 public abstract class ItemAttachment extends Item {
+
 
     public static List<ItemAttachment> ATTACHMENTS = new ArrayList<>();
 
@@ -23,7 +24,10 @@ public abstract class ItemAttachment extends Item {
         ATTACHMENTS.add(this);
     }
 
-
+    /**
+     * Builds an array with the default attachments.
+     * @return Array with the default attachments
+     */
     public static ItemAttachment[][] buildDefaultArray() {
         ItemAttachment[][] attachments = new ItemAttachment[EnumAttachmentType.values().length][];
 

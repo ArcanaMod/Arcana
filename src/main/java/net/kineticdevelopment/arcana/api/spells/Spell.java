@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Base class for spells
+ * Spell object class.
  * 
  * @author Merijn
  */
@@ -24,6 +24,14 @@ public class Spell {
     private String name;
     private int power;
 
+    /**
+     * Default constructor
+     * @param effects Array of {@link ISpellEffect}
+     * @param core Value of {@link net.kineticdevelopment.arcana.api.aspects.Aspect.AspectType}
+     * @param name Name of the spell
+     * @param power Determines the strength of the spell
+     */
+
     public Spell(ISpellEffect[] effects, Aspect.AspectType core, String name, int power) {
         this.effects = effects;
         this.core = core;
@@ -31,24 +39,44 @@ public class Spell {
         this.power = power;
     }
 
+    /**
+     * Getter for the effects of the spell
+     * @return Array of {@link ISpellEffect}
+     */
+
     public ISpellEffect[] getEffects() {
         return effects;
     }
 
+    /**
+     * Getter of the spell core
+     * @return Value of {@link net.kineticdevelopment.arcana.api.aspects.Aspect.AspectType}
+     */
     public Aspect.AspectType getCore() {
         return core;
     }
 
+    /**
+     * Getter of the spell name
+     * @return Name of the spell
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Getter of the power value
+     * @return Power of the spell
+     */
     public int getPower() {
         return power;
     }
 
+    /**
+     * Casts the spell
+     * @param player Caster of the spell
+     */
     public void cast(EntityPlayer player) {
-
         switch(core) {
             case EARTH:
                 for (ISpellEffect effect : effects) {
@@ -121,7 +149,11 @@ public class Spell {
     }
 
 
-
+    /**
+     * Creates an spell object based of NBT
+     * @param spell NBTTagCompound of the spell
+     * @return {@link Spell} object
+     */
     public static Spell fromNBT(NBTTagCompound spell) {
         List<ISpellEffect> effects = new ArrayList<>();
         for (String effect : spell.getString("effects").split(";")) {

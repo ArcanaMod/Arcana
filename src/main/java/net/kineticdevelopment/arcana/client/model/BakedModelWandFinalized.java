@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.client;
+package net.kineticdevelopment.arcana.client.model;
 
 
 import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
@@ -71,12 +71,12 @@ public class BakedModelWandFinalized implements IBakedModel {
         for(int i = 0; i < EnumAttachmentType.values().length; ++i) {
             try {
                 attachment = wand.getAttachment(itemStack, EnumAttachmentType.values()[i]);
-
-
-
+                if(attachment == null) {
+                    continue;
+                }
                 model = this.attachmentModels[i][attachment.getID()];
                 } catch (ArrayIndexOutOfBoundsException ignored) {
-                    model = null;
+                        model = null;
                 }
                 if(model != null) {
                     list2 = model.getQuads(arg0, arg1, arg2);

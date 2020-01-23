@@ -1,5 +1,7 @@
-package net.kineticdevelopment.arcana.api.spells;
+package net.kineticdevelopment.arcana.api.spells.effects;
 
+import net.kineticdevelopment.arcana.api.spells.ISpellEffect;
+import net.kineticdevelopment.arcana.api.spells.SpellEffectHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
@@ -10,7 +12,6 @@ import net.minecraft.world.World;
  * Earth Spell Effect
  * 
  * @author Merijn
- * @see SpellEffectFire
  * @see SpellEffectHandler
  */
 public class SpellEffectEarth implements ISpellEffect {

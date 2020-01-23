@@ -11,7 +11,16 @@ import net.minecraft.nbt.NBTTagCompound;
  */
 public class FociHelper {
 
-    public static ItemStack generateFoci(int skin, ISpellEffect[] effects, int power, Aspect.AspectType core, String name) {
+    /**
+     * Used to generate a focus item.
+     * @param skin Skin variant
+     * @param effects Array of {@link ISpellEffect} with the effects
+     * @param power Integer of how strong the effect is
+     * @param core Value of {@link net.kineticdevelopment.arcana.api.aspects.Aspect.AspectType}
+     * @param name Name of the spell
+     * @return ItemStack with the focus properties.
+     */
+    public static ItemStack generateFocus(int skin, ISpellEffect[] effects, int power, Aspect.AspectType core, String name) {
 
         ItemStack is = new ItemStack(ItemInit.FOCUS);
 
@@ -26,8 +35,9 @@ public class FociHelper {
         tag.setInteger("power", power);
         tag.setString("core", core.toString());
         tag.setString("name", name);
-        NBTTagCompound newtag = is.getTagCompound();
+        NBTTagCompound newtag = new NBTTagCompound();
         newtag.setTag("foci", tag);
+        newtag.setInteger("variant", skin);
 
         is.setStackDisplayName(name);
         is.setTagCompound(newtag);

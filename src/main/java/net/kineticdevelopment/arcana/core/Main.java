@@ -64,7 +64,7 @@ public class Main {
 	/**
 	 * Main Arcana Creative Tab
 	 */
-	public static CreativeTabs ARCANA = (new CreativeTabs("tabArcana") {
+	public static CreativeTabs TAB_ARCANA = (new CreativeTabs("tabArcana") {
         @Override
         public ItemStack getTabIconItem() {
         	ItemStack stack = new ItemStack(ItemInit.WOOD_WAND);

@@ -12,7 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,7 +22,6 @@ import java.util.List;
 
 import static com.mojang.realmsclient.gui.ChatFormatting.GRAY;
 import static net.minecraft.util.text.TextFormatting.GOLD;
-import static net.minecraft.util.text.TextFormatting.GREEN;
 
 /**
  * Focus Item
@@ -44,6 +42,9 @@ public class ItemFocus extends Item {
         ItemInit.ITEMS.add(this);
     }
 
+    /**
+     * Adds all of the focus types to register.
+     */
     @SideOnly(Side.CLIENT)
     public void initModel() {
         ModelResourceLocation focus1 = new ModelResourceLocation(getRegistryName() + "_style_1", "inventory");
@@ -83,7 +84,7 @@ public class ItemFocus extends Item {
         ModelResourceLocation focus35 = new ModelResourceLocation(getRegistryName() + "_style_35", "inventory");
         ModelResourceLocation focus36 = new ModelResourceLocation(getRegistryName() + "_style_36", "inventory");
 
-
+        // Register the variants
         ModelBakery.registerItemVariants(this,
                 focus1, focus2, focus3, focus4, focus5, focus6, focus7, focus8, focus9, focus10,
                 focus11, focus12, focus13, focus14, focus15, focus16, focus17, focus18, focus19, focus20,
@@ -91,6 +92,7 @@ public class ItemFocus extends Item {
                 focus31, focus32, focus33, focus34, focus35, focus36
         );
 
+        // CustomMeshDefenition
         ModelLoader.setCustomMeshDefinition(this, stack -> {
             if(getTagCompoundSafe(stack).hasKey("variant")) {
                 switch(getTagCompoundSafe(stack).getInteger("variant")) {
@@ -130,6 +132,7 @@ public class ItemFocus extends Item {
         });
     }
 
+    // Used to clear a focus and changes it back to focus parts
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         if(worldIn.isRemote) {
@@ -139,22 +142,18 @@ public class ItemFocus extends Item {
         ItemStack item = playerIn.getHeldItem(handIn);
 
         if(playerIn.isSneaking()) {
-            NBTTagCompound tag = item.getTagCompound();
-            if(tag != null) {
-                tag.removeTag("foci");
-                item.setTagCompound(tag);
-                playerIn.sendMessage(new TextComponentString(GREEN + "Emptied focus."));
-            }
+            playerIn.inventory.addItemStackToInventory(new ItemStack(ItemInit.FOCUS_PARTS));
+            playerIn.inventory.removeStackFromSlot(playerIn.inventory.getSlotFor(item));
         }
         return new ActionResult<>(EnumActionResult.PASS, item);
     }
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-        NBTTagCompound tag = stack.getTagCompound();
+        NBTTagCompound tag = getTagCompoundSafe(stack);
         StringBuilder sb = new StringBuilder();
         String result = "None, Focus is empty.";
-        if(tag != null && tag.hasKey("foci")) {
+        if(tag.hasKey("foci")) {
             String[] effects = tag.getCompoundTag("foci").getString("effects").split(";");
             for(String effect : effects) {
                 effect = effect.toLowerCase();

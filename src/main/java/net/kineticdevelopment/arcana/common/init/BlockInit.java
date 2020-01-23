@@ -1,12 +1,11 @@
 package net.kineticdevelopment.arcana.common.init;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.kineticdevelopment.arcana.common.objects.blocks.TaintedBlockBase;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Initialize Blocks here
  * @author Atlas

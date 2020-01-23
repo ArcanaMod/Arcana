@@ -4,7 +4,7 @@ import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 
 /**
- * Wand Cap Item
+ * Wand Cap Attachment
  * 
  * @author Merijn
  * @see ItemAttachment
