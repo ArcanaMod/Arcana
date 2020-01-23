@@ -142,8 +142,7 @@ public class ItemFocus extends Item {
         ItemStack item = playerIn.getHeldItem(handIn);
 
         if(playerIn.isSneaking()) {
-            playerIn.inventory.addItemStackToInventory(new ItemStack(ItemInit.FOCUS_PARTS));
-            playerIn.inventory.removeStackFromSlot(playerIn.inventory.getSlotFor(item));
+            playerIn.inventory.setInventorySlotContents(playerIn.inventory.getSlotFor(item), new ItemStack(ItemInit.FOCUS_PARTS));
         }
         return new ActionResult<>(EnumActionResult.PASS, item);
     }

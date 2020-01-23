@@ -23,6 +23,11 @@ public class ItemInit {
 
 	public static final List<Item> ITEMS = new ArrayList<Item>();
 
+
+	public static Item THAUMIUM_INGOT = new ItemBase("thaumium_ingot").setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_INGOT = new ItemBase("arcanium_ingot").setCreativeTab(Main.TAB_ARCANA);
+
+
 	public static Item FOCUS_PARTS = new ItemBase("focus_parts").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ITEM_IRON_CAPS = new ItemBase("item_iron_cap").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ITEM_GOLD_CAPS = new ItemBase("item_gold_cap").setCreativeTab(Main.TAB_ARCANA);

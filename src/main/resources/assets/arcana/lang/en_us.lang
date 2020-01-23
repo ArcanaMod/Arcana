@@ -11,7 +11,7 @@ item.arcanium_wand.name=Arcanium Wand
 item.silverwood_wand.name=Silverwood Wand
 
 
-item.focus_pars.name=Focus Parts
+item.focus_parts.name=Focus Parts
 item.focus.name=Wand Focus
 
 item.item_iron_cap.name=Iron wand cap
@@ -22,7 +22,7 @@ item.item_copper_cap.name=Copper wand cap
 item.item_silver_cap.name=Silver wand cap
 item.item_manasteel_cap.name=Manasteel wand cap
 item.item_elementium_cap.name=Elementium wand cap
-item.item_terrateel_cap.name=Terrasteel wand cap
+item.item_terrasteel_cap.name=Terrasteel wand cap
 
 item.greatwood_wand_core.name=Greatwood Wand Core
 item.tainted_wand_core.name=Tainted Wand Core
@@ -31,7 +31,12 @@ item.hawthorn_wand_core.name=Hawthorn Wand Core
 item.silverwood_wand_core.name=Silverwood Wand Core
 item.arcanium_wand_core.name=Arcanium Wand Core
 
+item.thaumium_ingot.name=Thaumium Ingot
+item.arcanium_ingot.name=Arcanium Ingot
+
 #Blocks
+tile.thaumium_block.name=Block of Thaumium
+tile.arcanium_block.name=Block of Arcanium
 
 ##Tainted
 tile.tainted_crust.name=Tainted Crust
