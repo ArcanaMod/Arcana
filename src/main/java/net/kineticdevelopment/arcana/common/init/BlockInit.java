@@ -22,5 +22,5 @@ public class BlockInit {
 	public static final Block TAINTED_GRAVEL = new TaintedBlockBase("tainted_gravel", Material.GROUND);
 	public static final Block TAINTED_ROCK = new TaintedBlockBase("tainted_rock", Material.ROCK);
 	public static final Block TAINTED_SOIL = new TaintedBlockBase("tainted_soil", Material.GROUND);
-	public static final Block TAINTED_GRASS = new TaintedBlockBase("tainted_grass", Material.GRASS);
+	public static final Block TAINTED_GRASS = new TaintedBlockBase("tainted_grass_block", Material.GRASS);
 }

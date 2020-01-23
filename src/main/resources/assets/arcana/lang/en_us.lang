@@ -17,5 +17,5 @@ item.focus.name=Wand Focus
 ##Tainted
 tile.tainted_crust.name=Tainted Crust
 tile.tainted_rock.name=Tainted Rock
-tile.tainted_grass.name=Tainted Grass
+tile.tainted_grass_block.name=Tainted Grass
 tile.tainted_soil.name=Tainted Soil
