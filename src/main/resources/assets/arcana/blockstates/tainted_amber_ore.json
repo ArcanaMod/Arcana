@@ -1,9 +1,6 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_amber_ore"
-      }
-    ]
+    "fullytainted=false": [{ "model": "arcana:tainted_amber_ore" }],
+    "fullytainted=true": [{ "model": "arcana:tainted_amber_ore" }]
   }
 }

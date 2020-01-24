@@ -1,9 +1,5 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:infusion_arcane_stone"
-      }
-    ]
+    "normal": { "model": "arcana:infusion_arcane_stone" }
   }
 }

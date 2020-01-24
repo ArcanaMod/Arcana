@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": {"model": "arcana:magical_forest_grass"}
+    "normal": {"model": "arcana:magical_forest_grass"}
   }
 }
