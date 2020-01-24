@@ -1,9 +1,5 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:dair_planks"
-      }
-    ]
+    "normal": { "model": "arcana:dair_planks" }
   }
 }

@@ -1,9 +1,5 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:arcanium_block"
-      }
-    ]
+    "normal": { "model": "arcana:arcanium_block" }
   }
 }

@@ -1,9 +1,5 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:arcane_stone_bricks"
-      }
-    ]
+    "normal": { "model": "arcana:arcane_stone_bricks" }
   }
 }

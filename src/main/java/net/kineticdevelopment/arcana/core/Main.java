@@ -70,6 +70,13 @@ public class Main {
 			return new ItemStack(ItemInit.ARCANIUM_WAND_CORE);
         }
     });
+
+	public static CreativeTabs TAB_TAINTARCANA = (new CreativeTabs("tabTaintArcana") {
+		@Override
+		public ItemStack getTabIconItem() {
+			return new ItemStack(ItemInit.ARCANIUM_WAND_CORE);
+		}
+	});
 	
 	
 	//Why is this here? This is very redundant
