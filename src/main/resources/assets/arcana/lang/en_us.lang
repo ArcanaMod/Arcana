@@ -1,5 +1,6 @@
 # Creativetabs
 itemGroup.tabArcana=Arcana
+itemGroup.tabTaintArcana=Tainted Blocks
 
 # Items
 item.wood_wand.name=Wooden Wand
