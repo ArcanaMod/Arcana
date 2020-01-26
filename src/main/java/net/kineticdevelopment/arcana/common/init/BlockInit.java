@@ -7,6 +7,7 @@ import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LogBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.PlanksBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.StairsBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.tainted.TaintedLogBlock;
 import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.minecraft.block.Block;
@@ -33,10 +34,10 @@ public class BlockInit {
 	public static final Block TAINTED_ARCANIUM_ORE = new TaintedBlockBase("tainted_arcanium_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
 
 	//Tainted Logs
-	public static final Block STRIPPED_TAINTED_GREATWOOD_LOG = new TaintedBlockBase("stripped_tainted_greatwood_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block STRIPPED_TAINTED_HAWTHORN_LOG = new TaintedBlockBase("stripped_tainted_hawthorn_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block STRIPPED_TAINTED_WILLOW_LOG = new TaintedBlockBase("stripped_tainted_willow_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block TAINTED_ACACIA_LOG = new TaintedBlockBase("tainted_acacia_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block STRIPPED_TAINTED_GREATWOOD_LOG = new TaintedLogBlock("stripped_tainted_greatwood_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block STRIPPED_TAINTED_HAWTHORN_LOG = new TaintedLogBlock("stripped_tainted_hawthorn_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block STRIPPED_TAINTED_WILLOW_LOG = new TaintedLogBlock("stripped_tainted_willow_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_ACACIA_LOG = new TaintedLogBlock("tainted_acacia_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
 
 	//Tainted Stairs
 	public static final Block TAINTED_ACACIA_STAIRS = new StairsBase("tainted_acacia_stairs", TAINTED_ACACIA_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);

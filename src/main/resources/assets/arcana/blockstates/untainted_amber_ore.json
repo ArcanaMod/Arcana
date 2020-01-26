@@ -1,9 +1,5 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_amber_ore"
-      }
-    ]
+    "normal": { "model": "arcana:amber_ore" }
   }
 }

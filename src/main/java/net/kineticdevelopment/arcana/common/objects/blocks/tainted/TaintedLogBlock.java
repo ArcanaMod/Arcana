@@ -15,6 +15,7 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -26,7 +27,7 @@ public class TaintedLogBlock extends LogBase implements IHasModel {
 
     public TaintedLogBlock(String name, Material material) {
         super(name, material);
-        this.setDefaultState(this.getDefaultState().withProperty(BlockStateInit.FULLYTAINTED, false));
+        this.setDefaultState(this.getStateFromMeta(0));
         this.setTickRandomly(true);
     }
 
@@ -90,35 +91,53 @@ public class TaintedLogBlock extends LogBase implements IHasModel {
         }
     }
 
+    @Override
     public int getMetaFromState(IBlockState state) {
         int i = 0;
         boolean tainted = state.getValue(FULLYTAINTED);
+        EnumFacing.Axis enumfacing$axis = (EnumFacing.Axis)state.getValue(AXIS);
 
+        // Log Axis Variations are even
+        if (enumfacing$axis == EnumFacing.Axis.X)
+        {
+            i = 2;
+        }
+        else if (enumfacing$axis == EnumFacing.Axis.Z)
+        {
+            i = 4;
+        }
+
+        // Adding Fully Tainted Variants are Odd
         if(tainted) {
-            i = 1;
-        } else {
-            i = 0;
+            i += 1;
         }
 
         return i;
     }
 
+    @Override
     public IBlockState getStateFromMeta(int meta) {
+        EnumFacing.Axis enumfacing$axis = EnumFacing.Axis.Y;
         boolean tainted = false;
         int i = meta;
 
-        if(i == 1) {
-            tainted = true;
-        } else if(i == 0) {
-            tainted = false;
+        // Axis's are Even and Fully Tainted Variants are Odd
+        if(i < 2) {
+            tainted = (i % 2 == 1);
+        } else if(i < 4) {
+            enumfacing$axis = EnumFacing.Axis.X;
+            tainted = (i % 2 == 1);
+        } else if(i < 6) {
+            enumfacing$axis = EnumFacing.Axis.Z;
+            tainted = (i % 2 == 1);
         }
 
-        return this.getDefaultState().withProperty(FULLYTAINTED, tainted);
+        return this.getDefaultState().withProperty(FULLYTAINTED, tainted).withProperty(AXIS, enumfacing$axis);
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {FULLYTAINTED});
+        return new BlockStateContainer(this, new IProperty[] {FULLYTAINTED, AXIS});
     }
 
     @Override
