@@ -20,7 +20,7 @@
     "item": "arcana:dair_wand",
     "count": 1,
     "nbt": {
-      "cap" : 3,
+      "cap" : 2,
       "focus": 1
     }
   }

@@ -9,7 +9,7 @@
   "key": {
     "C":
     {
-      "item": "arcana:item_copper_cap"
+      "item": "arcana:item_iron_cap"
     },
     "R": {
       "item": "arcana:hawthorn_wand_core"
@@ -20,7 +20,7 @@
     "item": "arcana:hawthorn_wand",
     "count": 1,
     "nbt": {
-      "cap" : 4,
+      "cap" : 0,
       "focus": 1
     }
   }

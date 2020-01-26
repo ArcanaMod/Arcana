@@ -9,7 +9,7 @@
   "key": {
     "C":
     {
-      "item": "arcana:item_manasteel_cap"
+      "item": "arcana:item_thaumium_cap"
     },
     "R": {
       "item": "arcana:hawthorn_wand_core"
@@ -20,7 +20,7 @@
     "item": "arcana:hawthorn_wand",
     "count": 1,
     "nbt": {
-      "cap" : 3,
+      "cap" : 2,
       "focus": 1
     }
   }
