@@ -1,7 +1,8 @@
-package net.kineticdevelopment.arcana.api.spells;
+package net.kineticdevelopment.arcana.core.spells;
 
-import net.kineticdevelopment.arcana.api.aspects.Aspect;
-import net.kineticdevelopment.arcana.common.entities.SpellEntity;
+import net.kineticdevelopment.arcana.common.objects.entities.SpellEntity;
+import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.core.spells.effects.ISpellEffect;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,7 +28,7 @@ public class Spell {
     /**
      * Default constructor
      * @param effects Array of {@link ISpellEffect}
-     * @param core Value of {@link net.kineticdevelopment.arcana.api.aspects.Aspect.AspectType}
+     * @param core Value of {@link net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType}
      * @param name Name of the spell
      * @param power Determines the strength of the spell
      */
@@ -50,7 +51,7 @@ public class Spell {
 
     /**
      * Getter of the spell core
-     * @return Value of {@link net.kineticdevelopment.arcana.api.aspects.Aspect.AspectType}
+     * @return Value of {@link net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType}
      */
     public Aspect.AspectType getCore() {
         return core;

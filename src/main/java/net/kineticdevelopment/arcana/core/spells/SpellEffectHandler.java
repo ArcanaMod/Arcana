@@ -1,11 +1,13 @@
-package net.kineticdevelopment.arcana.api.spells;
+package net.kineticdevelopment.arcana.core.spells;
 
-import net.kineticdevelopment.arcana.api.spells.effects.SpellEffectEarth;
-import net.kineticdevelopment.arcana.api.spells.effects.SpellEffectFire;
-
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.annotation.Nullable;
+
+import net.kineticdevelopment.arcana.core.spells.effects.ISpellEffect;
+import net.kineticdevelopment.arcana.core.spells.effects.SpellEffectEarth;
+import net.kineticdevelopment.arcana.core.spells.effects.SpellEffectFire;
 
 /**
  * Handles Spell Effects

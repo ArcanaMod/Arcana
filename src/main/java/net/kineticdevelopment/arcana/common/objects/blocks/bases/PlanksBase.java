@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.common.objects.blocks;
+package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;

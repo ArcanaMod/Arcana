@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.api.aspects;
+package net.kineticdevelopment.arcana.core.aspects;
 
 import javax.annotation.Nullable;
 

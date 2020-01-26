@@ -1,13 +1,17 @@
-package net.kineticdevelopment.arcana.common.objects.blocks;
+package net.kineticdevelopment.arcana.common.objects.blocks.tainted;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import net.kineticdevelopment.arcana.common.init.BlockStateInit;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.StairsBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
 import net.kineticdevelopment.arcana.utilities.taint.TaintHandler;
 import net.kineticdevelopment.arcana.utilities.taint.TaintLevelHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -15,9 +19,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class TaintedStairsBlock extends StairsBase implements IHasModel {
     public static final PropertyBool FULLYTAINTED = BlockStateInit.FULLYTAINTED;
@@ -75,7 +76,6 @@ public class TaintedStairsBlock extends StairsBase implements IHasModel {
 
                     if(!(b instanceof TaintedBlockBase) && !(b instanceof BlockAir)) {
                         surrounded = false;
-                        System.out.println("Yeet");
                     }
                 }
             }
@@ -85,8 +85,6 @@ public class TaintedStairsBlock extends StairsBase implements IHasModel {
 
             worldIn.setBlockState(pos, state.withProperty(BlockStateInit.FULLYTAINTED, true));
             this.setTickRandomly(false);
-            System.out.println("Yote");
-
         }
     }
 

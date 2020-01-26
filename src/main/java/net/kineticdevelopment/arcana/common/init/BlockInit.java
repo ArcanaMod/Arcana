@@ -3,11 +3,11 @@ package net.kineticdevelopment.arcana.common.init;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.kineticdevelopment.arcana.common.objects.blocks.BlockBase;
-import net.kineticdevelopment.arcana.common.objects.blocks.LogsBase;
-import net.kineticdevelopment.arcana.common.objects.blocks.PlanksBase;
-import net.kineticdevelopment.arcana.common.objects.blocks.StairsBase;
-import net.kineticdevelopment.arcana.common.objects.blocks.TaintedBlockBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.LogBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.PlanksBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.StairsBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -55,14 +55,14 @@ public class BlockInit {
 	public static final Block MAGICAL_GRASS = new BlockBase("magical_grass", Material.GRASS).setCreativeTab(Main.TAB_ARCANA);
 
 	//Logs
-	public static final Block DAIR_LOG = new LogsBase("dair_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block DEAD_LOG = new LogsBase("dead_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block GREATWOOD_LOG = new LogsBase("greatwood_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block HAWTHORN_LOG = new LogsBase("hawthorn_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block STRIPPED_DAIR_LOG = new LogsBase("stripped_dair_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block STRIPPED_GREATWOOD_LOG = new LogsBase("stripped_greatwood_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block STRIPPED_HAWTHORN_LOG = new LogsBase("stripped_hawthorn_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block STRIPPED_WILLOW_LOG = new LogsBase("stripped_willow_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block DAIR_LOG = new LogBase("dair_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block DEAD_LOG = new LogBase("dead_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block GREATWOOD_LOG = new LogBase("greatwood_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block HAWTHORN_LOG = new LogBase("hawthorn_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block STRIPPED_DAIR_LOG = new LogBase("stripped_dair_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block STRIPPED_GREATWOOD_LOG = new LogBase("stripped_greatwood_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block STRIPPED_HAWTHORN_LOG = new LogBase("stripped_hawthorn_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block STRIPPED_WILLOW_LOG = new LogBase("stripped_willow_log", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
 
 
 	//Wood
@@ -78,10 +78,6 @@ public class BlockInit {
 	public static final Block DEAD_STAIRS = new StairsBase("dead_stairs", DEAD_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block GREATWOOD_STAIRS = new StairsBase("greatwood_stairs", GREATWOOD_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block HAWTHORN_STAIRS = new StairsBase("hawthorn_stairs", HAWTHORN_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);
-
-
-
-
 
 }
 

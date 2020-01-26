@@ -1,7 +1,6 @@
-package net.kineticdevelopment.arcana.api.spells.effects;
+package net.kineticdevelopment.arcana.core.spells.effects;
 
-import net.kineticdevelopment.arcana.api.spells.ISpellEffect;
-import net.kineticdevelopment.arcana.api.spells.SpellEffectHandler;
+import net.kineticdevelopment.arcana.core.spells.SpellEffectHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;

@@ -1,8 +1,8 @@
 package net.kineticdevelopment.arcana.core;
 
-import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;

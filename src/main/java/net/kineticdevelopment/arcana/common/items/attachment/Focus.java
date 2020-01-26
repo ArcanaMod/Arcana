@@ -1,7 +1,7 @@
 package net.kineticdevelopment.arcana.common.items.attachment;
 
-import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
+import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 
 /**
  * Wand Focus Attachment

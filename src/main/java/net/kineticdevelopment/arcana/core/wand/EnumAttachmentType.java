@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.api.wand;
+package net.kineticdevelopment.arcana.core.wand;
 
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;

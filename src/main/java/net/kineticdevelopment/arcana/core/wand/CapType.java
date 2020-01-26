@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.api.wand;
+package net.kineticdevelopment.arcana.core.wand;
 
 /**
  * Enumeration for cap types
@@ -18,7 +18,8 @@ public enum CapType {
     TERRASTEEL(7, 3, 8);
 
 
-    private int maxPower, maxEffects, id;
+    @SuppressWarnings("unused")
+	private int maxPower, maxEffects, id;
 
     CapType(int maxPower, int maxEffects, int id) {
         this.maxPower = maxPower;

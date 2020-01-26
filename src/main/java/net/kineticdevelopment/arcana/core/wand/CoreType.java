@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.api.wand;
+package net.kineticdevelopment.arcana.core.wand;
 
 /**
  * Enumeration for Core Types

@@ -80,7 +80,7 @@ private static class OverridesList extends ItemOverrideList
 
     public OverridesList(BakedModelWand modelGun)
     {
-        super(Collections.EMPTY_LIST);
+        super(Collections.emptyList());
         this.modelWand = modelGun;
     }
 

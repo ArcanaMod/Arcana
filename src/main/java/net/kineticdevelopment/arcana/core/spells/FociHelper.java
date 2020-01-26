@@ -1,7 +1,8 @@
-package net.kineticdevelopment.arcana.api.spells;
+package net.kineticdevelopment.arcana.core.spells;
 
-import net.kineticdevelopment.arcana.api.aspects.Aspect;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
+import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.core.spells.effects.ISpellEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -16,7 +17,7 @@ public class FociHelper {
      * @param skin Skin variant
      * @param effects Array of {@link ISpellEffect} with the effects
      * @param power Integer of how strong the effect is
-     * @param core Value of {@link net.kineticdevelopment.arcana.api.aspects.Aspect.AspectType}
+     * @param core Value of {@link net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType}
      * @param name Name of the spell
      * @return ItemStack with the focus properties.
      */

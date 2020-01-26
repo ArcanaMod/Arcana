@@ -1,9 +1,10 @@
-package net.kineticdevelopment.arcana.common.objects.blocks;
+package net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.kineticdevelopment.arcana.common.init.BlockStateInit;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
 import net.kineticdevelopment.arcana.utilities.taint.TaintHandler;
@@ -81,7 +82,6 @@ public class TaintedBlockBase extends BlockBase implements IHasModel {
 
                     if(!(b instanceof TaintedBlockBase) && !(b instanceof BlockAir)) {
                     	surrounded = false;
-                    	System.out.println("Yeet");
                     }
                 }
             }
@@ -91,7 +91,6 @@ public class TaintedBlockBase extends BlockBase implements IHasModel {
 
         	worldIn.setBlockState(pos, state.withProperty(BlockStateInit.FULLYTAINTED, true));
         	this.setTickRandomly(false);
-        	System.out.println("Yote");
 
         }
     }

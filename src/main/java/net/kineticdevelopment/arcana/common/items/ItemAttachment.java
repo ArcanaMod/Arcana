@@ -1,6 +1,6 @@
 package net.kineticdevelopment.arcana.common.items;
 
-import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
+import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.minecraft.item.Item;
 
 import java.util.ArrayList;

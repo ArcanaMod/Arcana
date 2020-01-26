@@ -1,9 +1,9 @@
 package net.kineticdevelopment.arcana.common.objects.items;
 
-import net.kineticdevelopment.arcana.api.spells.Spell;
-import net.kineticdevelopment.arcana.api.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.core.spells.Spell;
+import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

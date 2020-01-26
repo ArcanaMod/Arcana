@@ -1,7 +1,7 @@
-package net.kineticdevelopment.arcana.common.entities;
+package net.kineticdevelopment.arcana.common.objects.entities;
 
-import net.kineticdevelopment.arcana.api.spells.ISpellEffect;
-import net.kineticdevelopment.arcana.api.spells.Spell;
+import net.kineticdevelopment.arcana.core.spells.Spell;
+import net.kineticdevelopment.arcana.core.spells.effects.ISpellEffect;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -156,8 +156,10 @@ public class SpellEntity extends Entity implements IProjectile {
 
         this.rotationPitch = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * 0.2F;
         this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
-        float f1 = 0.99F;
-        float f2 = 0.06F;
+        @SuppressWarnings("unused")
+		float f1 = 0.99F;
+        @SuppressWarnings("unused")
+		float f2 = 0.06F;
 
         if (!this.world.isMaterialInBB(this.getEntityBoundingBox(), Material.AIR))
         {

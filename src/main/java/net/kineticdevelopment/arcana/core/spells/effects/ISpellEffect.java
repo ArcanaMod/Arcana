@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.api.spells;
+package net.kineticdevelopment.arcana.core.spells.effects;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
