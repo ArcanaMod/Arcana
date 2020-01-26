@@ -1,18 +1,16 @@
 package net.kineticdevelopment.arcana.common.init;
 
-import net.kineticdevelopment.arcana.common.objects.blocks.*;
-import net.kineticdevelopment.arcana.core.Main;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.kineticdevelopment.arcana.common.objects.blocks.BlockBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.LogsBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.PlanksBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.StairsBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.TaintedBlockBase;
+import net.kineticdevelopment.arcana.core.Main;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 /**
  * Initialize Blocks here
  * @author Atlas
@@ -85,5 +83,5 @@ public class BlockInit {
 
 
 
-	}
+}
 

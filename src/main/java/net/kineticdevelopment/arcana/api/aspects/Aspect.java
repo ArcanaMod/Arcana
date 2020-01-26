@@ -1,8 +1,8 @@
 package net.kineticdevelopment.arcana.api.aspects;
 
-import net.kineticdevelopment.arcana.api.exception.AspectNotFoundException;
-
 import javax.annotation.Nullable;
+
+import net.kineticdevelopment.arcana.utilities.exception.AspectNotFoundException;
 
 /**
  * Contains enum and utilities for aspects

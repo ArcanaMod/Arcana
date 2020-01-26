@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.api.exception;
+package net.kineticdevelopment.arcana.utilities.exception;
 
 /**
  * A Throw for when an aspect cannot be found
