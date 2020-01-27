@@ -1,5 +1,13 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+/**
+ * Basic Planks, all planks should either be this, or extend it
+ *
+ * @author Tea
+ *
+ */
+
+
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 

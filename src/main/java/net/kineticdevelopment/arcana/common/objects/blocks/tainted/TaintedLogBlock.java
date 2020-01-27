@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.tainted;
 
 import net.kineticdevelopment.arcana.common.init.BlockStateInit;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LogBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
@@ -21,6 +22,14 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+
+/**
+ * Basic Tainted Log, all tainted log block should either be this, or extend it
+ *
+ * @author Tea
+ * @see LogBase
+ */
+
 
 public class TaintedLogBlock extends LogBase implements IHasModel {
     public static final PropertyBool FULLYTAINTED = BlockStateInit.FULLYTAINTED;

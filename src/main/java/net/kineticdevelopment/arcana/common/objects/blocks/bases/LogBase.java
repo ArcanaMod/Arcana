@@ -10,6 +10,13 @@ import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 
+/**
+ * Basic Logs, all logs should either be this, or extend it
+ *
+ * @author Tea
+ *
+ */
+
 public class LogBase extends BlockRotatedPillar implements IHasModel {
 
     public LogBase(String name, Material material) {

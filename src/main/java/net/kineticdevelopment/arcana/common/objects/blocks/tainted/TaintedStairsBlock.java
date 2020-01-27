@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.kineticdevelopment.arcana.common.init.BlockStateInit;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.StairsBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
@@ -19,6 +20,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+
+/**
+ * Basic Tainted Stairs Block, all tainted stairs block should either be this, or extend it
+ *
+ * @author Atlas
+ * @see StairsBase
+ */
 
 public class TaintedStairsBlock extends StairsBase implements IHasModel {
     public static final PropertyBool FULLYTAINTED = BlockStateInit.FULLYTAINTED;

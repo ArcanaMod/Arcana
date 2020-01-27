@@ -2,12 +2,21 @@ package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
+import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+/**
+ * Basic Stairs, all stairs should either be this, or extend it
+ *
+ * @author Tea
+ *
+ */
+
+
 
 public class StairsBase extends BlockStairs implements IHasModel {
 
