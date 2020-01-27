@@ -1,6 +1,5 @@
 package net.kineticdevelopment.arcana.common.commands;
 
-import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -15,6 +14,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 
+/**
+ * Command for changing taint level
+ * @author Atlas
+ *
+ */
 public class TaintLevelCommand extends CommandBase {
 
 	@Override
@@ -44,10 +48,6 @@ public class TaintLevelCommand extends CommandBase {
 		zero.add("lower");
 		zero.add("set");
 		
-        if(args.length == 0) {
-        	return zero;
-        } else {
-        	return Collections.emptyList();
-        }
+        return zero;
     }
 }

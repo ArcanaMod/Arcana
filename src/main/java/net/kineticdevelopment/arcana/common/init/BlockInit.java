@@ -20,7 +20,7 @@ public class BlockInit {
 	public static final List<Block> BLOCKS = new ArrayList<Block>();
 	
 	//Tainted
-	public static final Block TAINTED_CRUST = new TaintedBlockBase("tainted_crust", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_CRUST = new TaintedBlockBase("tainted_crust", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA).setTickRandomly(true);
 	public static final Block TAINTED_GRAVEL = new TaintedBlockBase("tainted_gravel", Material.GROUND).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_ROCK = new TaintedBlockBase("tainted_rock", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_SOIL = new TaintedBlockBase("tainted_soil", Material.GROUND).setCreativeTab(Main.TAB_TAINTARCANA);

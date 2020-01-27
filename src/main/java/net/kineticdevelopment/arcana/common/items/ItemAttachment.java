@@ -10,8 +10,8 @@ import java.util.List;
  * Item Attachment Utility Class
  * 
  * @author Merijn
- * @see net.kineticdevelopment.arcana.common.items.attachment.Cap
- * @see net.kineticdevelopment.arcana.common.items.attachment.Focus
+ * @see Cap
+ * @see Focus
  */
 public abstract class ItemAttachment extends Item {
 

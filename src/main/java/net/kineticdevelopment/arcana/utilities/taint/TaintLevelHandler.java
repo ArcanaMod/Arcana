@@ -33,6 +33,7 @@ public class TaintLevelHandler {
 			if (Minecraft.getMinecraft().isSingleplayer()) {
 
 				final File file = new File(dir, "Arcana/TaintLevel.taint");
+				file.mkdirs();
 
 				NBTTagCompound nbt;
 
@@ -73,6 +74,7 @@ public class TaintLevelHandler {
 		if (world.isRemote) {
 
 			final File file = new File(dir, "Arcana/TaintLevel.taint");
+			file.mkdirs();
 
 			NBTTagCompound nbt;
 

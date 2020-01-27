@@ -1,22 +1,18 @@
 package net.kineticdevelopment.arcana.core;
 
+import java.util.ArrayList;
+
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
-
-import java.util.ArrayList;
 
 /**
  * Client Proxy
@@ -55,19 +51,4 @@ public class ClientProxy extends CommonProxy {
 
 		ModelBakery.registerItemVariants(wand, list.toArray(new ModelResourceLocation[list.size()]));
 	}
-
-	private static void drawParticle(World worldObj, Particle particle) {
-		if(particle != null)
-			Minecraft.getMinecraft().effectRenderer.addEffect(particle);
-	}
-/* PLEASE MAKE SURE YOU DON'T PUSH BROKEN BUILDS :D
-	public static Particle getParticle(World worldObj, BlockPos eventAt, int id, String textureloc) {
-		Particle particle = null;
-		if(id == 0) {
-			particle = new NormalNodeParticle(worldObj, eventAt.getX(), eventAt.getY(), eventAt.getZ(), 0, 0, 0, textureloc);//3, 20
-		}
-		return particle;
-	}
-
- */
 }

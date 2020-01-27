@@ -1,12 +1,10 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
-import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
