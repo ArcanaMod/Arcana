@@ -16,9 +16,6 @@ import net.minecraft.item.ItemStack;
  * @see HalfSlabBase
  * @see DoubleSlabBase
  */
-
-
-
 public abstract class SlabBase extends BlockSlab {
 
     public SlabBase(String name) {

@@ -29,8 +29,6 @@ import java.util.concurrent.ThreadLocalRandom;
  * @author Tea
  * @see LogBase
  */
-
-
 public class TaintedLogBlock extends LogBase implements IHasModel {
     public static final PropertyBool FULLYTAINTED = BlockStateInit.FULLYTAINTED;
 

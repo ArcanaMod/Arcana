@@ -6,7 +6,6 @@ package net.kineticdevelopment.arcana.common.objects.blocks.bases;
  * @author Tea
  *
  */
-
 public class DoubleSlabBase extends SlabBase {
 
     public DoubleSlabBase(String name) {

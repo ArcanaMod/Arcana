@@ -7,7 +7,6 @@ import net.kineticdevelopment.arcana.common.objects.blocks.bases.SlabBase;
  * @author Tea
  *
  */
-
 public class HalfSlabBase extends SlabBase {
 
     public HalfSlabBase(String name) {

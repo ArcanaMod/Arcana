@@ -15,9 +15,6 @@ import net.minecraft.item.ItemBlock;
  * @author Tea
  *
  */
-
-
-
 public class StairsBase extends BlockStairs implements IHasModel {
 
     public StairsBase(String name, IBlockState state) {

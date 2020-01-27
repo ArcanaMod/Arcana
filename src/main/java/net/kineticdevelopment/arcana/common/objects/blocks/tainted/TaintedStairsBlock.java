@@ -24,10 +24,9 @@ import net.minecraft.world.World;
 /**
  * Basic Tainted Stairs Block, all tainted stairs block should either be this, or extend it
  *
- * @author Atlas
+ * @author Tea
  * @see StairsBase
  */
-
 public class TaintedStairsBlock extends StairsBase implements IHasModel {
     public static final PropertyBool FULLYTAINTED = BlockStateInit.FULLYTAINTED;
 

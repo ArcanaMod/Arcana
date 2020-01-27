@@ -16,7 +16,6 @@ import net.minecraft.item.ItemBlock;
  * @author Tea
  *
  */
-
 public class LogBase extends BlockRotatedPillar implements IHasModel {
 
     public LogBase(String name, Material material) {
