@@ -3,10 +3,7 @@ package net.kineticdevelopment.arcana.common.init;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
-import net.kineticdevelopment.arcana.common.objects.blocks.bases.LogBase;
-import net.kineticdevelopment.arcana.common.objects.blocks.bases.PlanksBase;
-import net.kineticdevelopment.arcana.common.objects.blocks.bases.StairsBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.*;
 import net.kineticdevelopment.arcana.common.objects.blocks.tainted.TaintedLogBlock;
 import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
@@ -68,6 +65,8 @@ public class BlockInit {
 
 	//Wood
 	public static final Block DAIR_PLANKS = new PlanksBase("dair_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	
+
 	public static final Block DEAD_PLANKS = new PlanksBase("dead_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block GREATWOOD_PLANKS = new PlanksBase("greatwood_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block HAWTHORN_PLANKS = new PlanksBase("hawthorn_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);

@@ -1,6 +1,5 @@
 package net.kineticdevelopment.arcana.core;
 
-import net.kineticdevelopment.arcana.client.particle.NormalNodeParticle;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
@@ -61,7 +60,7 @@ public class ClientProxy extends CommonProxy {
 		if(particle != null)
 			Minecraft.getMinecraft().effectRenderer.addEffect(particle);
 	}
-
+/* PLEASE MAKE SURE YOU DON'T PUSH BROKEN BUILDS :D
 	public static Particle getParticle(World worldObj, BlockPos eventAt, int id, String textureloc) {
 		Particle particle = null;
 		if(id == 0) {
@@ -69,4 +68,6 @@ public class ClientProxy extends CommonProxy {
 		}
 		return particle;
 	}
+
+ */
 }
