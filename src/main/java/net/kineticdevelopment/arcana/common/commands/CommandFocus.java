@@ -57,7 +57,8 @@ public class CommandFocus extends CommandBase {
             }
         }
     }
-
+    
+    //Add node before final build
     @Override
     public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
         return true;

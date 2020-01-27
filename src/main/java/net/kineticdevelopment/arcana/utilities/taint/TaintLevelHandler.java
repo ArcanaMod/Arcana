@@ -124,6 +124,7 @@ public class TaintLevelHandler {
 			NBTTagCompound nbt;
 
 			final File file = new File(dir, "Arcana/TaintLevel.taint");
+			file.mkdirs();
 
 			try {
 
@@ -169,6 +170,7 @@ public class TaintLevelHandler {
 		if (!world.isRemote) {
 
 			final File file = new File(dir, "Arcana/TaintLevel.taint");
+			file.mkdirs();
 
 			NBTTagCompound nbt;
 
@@ -191,6 +193,63 @@ public class TaintLevelHandler {
 				nbt.setFloat("TaintLevel", getTaintLevel(world) + amount);
 
 				System.out.println((getTaintLevel(world) + amount));
+
+				try (FileOutputStream fileoutputstream = new FileOutputStream(file)) {
+
+					CompressedStreamTools.writeCompressed(nbt, fileoutputstream);
+
+				} catch (IOException e) {
+
+					e.printStackTrace();
+
+				}
+
+			}
+
+			catch (IOException e) {
+
+				e.printStackTrace();
+
+			}
+
+		}
+
+	}
+	
+	public static void setTaintLevel(World world, float amount) {
+
+		if (world instanceof WorldClient) {
+
+			return;
+
+		}
+
+		File dir = ArcanaFileUtils.getWorldDirectory(world);
+
+		if (!world.isRemote) {
+
+			final File file = new File(dir, "Arcana/TaintLevel.taint");
+			file.mkdirs();
+
+			NBTTagCompound nbt;
+
+			try {
+
+				if (!file.exists()) {
+
+					file.createNewFile();
+
+					nbt = new NBTTagCompound();
+
+				}
+
+				else {
+
+					nbt = CompressedStreamTools.readCompressed(new FileInputStream(file));
+
+				}
+
+				nbt.setFloat("TaintLevel", amount);
 
 				try (FileOutputStream fileoutputstream = new FileOutputStream(file)) {
 

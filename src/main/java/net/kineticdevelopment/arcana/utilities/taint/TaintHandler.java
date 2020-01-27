@@ -189,6 +189,12 @@ public class TaintHandler {
 
     }};
     
+    /**
+     * Spreads taint in a full cube around it
+     * 
+     * @param worldIn
+     * @param pos
+     */
 	@SuppressWarnings("serial")
 	public static void spreadTaint(World worldIn, BlockPos pos) {
 

@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.core;
 
 import net.kineticdevelopment.arcana.common.commands.CommandFocus;
+import net.kineticdevelopment.arcana.common.commands.TaintLevelCommand;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -83,6 +84,7 @@ public class Main {
 	@Mod.EventHandler
 	public void serverLoad(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandFocus());
+		event.registerServerCommand(new TaintLevelCommand());
 	}
 
 	//Why is this here? This is very redundant
