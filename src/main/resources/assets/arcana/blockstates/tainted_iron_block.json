@@ -1,6 +1,6 @@
 {
   "variants": {
-    "fullytainted=false": [{ "model": "arcana::tainted_iron_block" }],
-    "fullytainted=true": [{ "model": "arcana::tainted_iron_block" }]
+    "fullytainted=false": [{ "model": "arcana:tainted_iron_block" }],
+    "fullytainted=true": [{ "model": "arcana:tainted_iron_block" }]
   }
 }

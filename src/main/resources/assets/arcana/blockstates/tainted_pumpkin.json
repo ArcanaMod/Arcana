@@ -1,6 +1,6 @@
 {
   "variants": {
-    "fullytainted=false": [{ "model": "arcana::tainted_pumpkin" }],
-    "fullytainted=true": [{ "model": "arcana::tainted_pumpkin" }]
+    "fullytainted=false": [{ "model": "arcana:tainted_pumpkin" }],
+    "fullytainted=true": [{ "model": "arcana:tainted_pumpkin" }]
   }
 }
