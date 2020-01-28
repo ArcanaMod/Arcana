@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.core;
 
 import net.kineticdevelopment.arcana.common.commands.CommandFocus;
 import net.kineticdevelopment.arcana.common.commands.TaintLevelCommand;
+import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
@@ -76,7 +77,7 @@ public class Main {
 	public static CreativeTabs TAB_TAINTARCANA = (new CreativeTabs("tabTaintArcana") {
 		@Override
 		public ItemStack getTabIconItem() {
-			return new ItemStack(ItemInit.ARCANIUM_WAND_CORE);
+			return new ItemStack(BlockInit.TAINTED_GRASS);
 		}
 	});
 

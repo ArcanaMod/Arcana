@@ -26,14 +26,14 @@ public class TaintLevelHandler {
 	 */
 	public static void createTaintLevelFile(World world) {
 
-		File dir = ArcanaFileUtils.getWorldDirectory(world);
+		File dir = new File(ArcanaFileUtils.getWorldDirectory(world), "Arcana");
+		dir.mkdirs();
 
 		if (!world.isRemote) {
 
 			if (Minecraft.getMinecraft().isSingleplayer()) {
 
-				final File file = new File(dir, "Arcana/TaintLevel.taint");
-				file.mkdirs();
+				final File file = new File(dir, "TaintLevel.taint");
 
 				NBTTagCompound nbt;
 
@@ -74,7 +74,6 @@ public class TaintLevelHandler {
 		if (world.isRemote) {
 
 			final File file = new File(dir, "Arcana/TaintLevel.taint");
-			file.mkdirs();
 
 			NBTTagCompound nbt;
 
@@ -119,15 +118,15 @@ public class TaintLevelHandler {
 	 */
 	public static float getTaintLevel(World world) {
 
-		File dir = ArcanaFileUtils.getWorldDirectory(world);
+		File dir = new File(ArcanaFileUtils.getWorldDirectory(world), "Arcana");
+		dir.mkdirs();
 
 		if (!world.isRemote) {
 
 			NBTTagCompound nbt;
 
-			final File file = new File(dir, "Arcana/TaintLevel.taint");
-			file.mkdirs();
-
+			final File file = new File(dir, "TaintLevel.taint");
+			
 			try {
 
 				nbt = CompressedStreamTools.readCompressed(new FileInputStream(file));
@@ -167,12 +166,12 @@ public class TaintLevelHandler {
 
 		}
 
-		File dir = ArcanaFileUtils.getWorldDirectory(world);
+		File dir = new File(ArcanaFileUtils.getWorldDirectory(world), "Arcana");
+		dir.mkdirs();
 
 		if (!world.isRemote) {
 
-			final File file = new File(dir, "Arcana/TaintLevel.taint");
-			file.mkdirs();
+			final File file = new File(dir, "TaintLevel.taint");
 
 			NBTTagCompound nbt;
 
@@ -226,12 +225,12 @@ public class TaintLevelHandler {
 
 		}
 
-		File dir = ArcanaFileUtils.getWorldDirectory(world);
+		File dir = new File(ArcanaFileUtils.getWorldDirectory(world), "Arcana");
+		dir.mkdirs();
 
 		if (!world.isRemote) {
 
-			final File file = new File(dir, "Arcana/TaintLevel.taint");
-			file.mkdirs();
+			final File file = new File(dir, "TaintLevel.taint");
 
 			NBTTagCompound nbt;
 
@@ -282,11 +281,12 @@ public class TaintLevelHandler {
 	 */
 	public static void decreaseTaintLevel(World world, float amount) {
 
-		File dir = ArcanaFileUtils.getWorldDirectory(world);
+		File dir = new File(ArcanaFileUtils.getWorldDirectory(world), "Arcana");
+		dir.mkdirs();
 
 		if (!world.isRemote) {
 
-			final File file = new File(dir, "Arcana/TaintLevel.taint");
+			final File file = new File(dir, "TaintLevel.taint");
 
 			NBTTagCompound nbt;
 
