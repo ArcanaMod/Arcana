@@ -1,10 +1,11 @@
-package net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases;
+package net.kineticdevelopment.arcana.common.objects.blocks.tainted;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.kineticdevelopment.arcana.common.init.BlockStateInit;
-import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
 import net.kineticdevelopment.arcana.utilities.taint.TaintHandler;
@@ -16,23 +17,30 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 
-/**
- * Basic Tainted Block, all tainted block should either be this, or extend it
- * 
- * @author Atlas
- * @see BlockBase
- */
-public class TaintedBlockBase extends BlockBase implements IHasModel {
+public class TaintedGrass extends TaintedBlockBase implements IHasModel {
 	public static final PropertyBool FULLYTAINTED = BlockStateInit.FULLYTAINTED;
 
-	public TaintedBlockBase(String name, Material material) {
+	public TaintedGrass(String name, Material material) {
 		super(name, material);
 		this.setDefaultState(this.getDefaultState().withProperty(BlockStateInit.FULLYTAINTED, false));
 		setTickRandomly(true);
+	}
+	
+	@Override
+	public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable) {
+		ArrayList<IPlantable> plants = new ArrayList<IPlantable>();
+		plants.add(Blocks.TALLGRASS);
+		plants.add(Blocks.RED_FLOWER);
+		plants.add(Blocks.YELLOW_FLOWER);
+		return plants.contains(plantable);
 	}
 	
 	@Override
@@ -93,7 +101,6 @@ public class TaintedBlockBase extends BlockBase implements IHasModel {
 
         if(surrounded == true) {
         	worldIn.setBlockState(pos, state.withProperty(BlockStateInit.FULLYTAINTED, true));
-        	this.needsRandomTick = !surrounded;
         	System.out.println(pos + ": Ticking? "+this.needsRandomTick);
         }
 	}

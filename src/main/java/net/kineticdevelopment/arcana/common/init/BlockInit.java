@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.*;
+import net.kineticdevelopment.arcana.common.objects.blocks.tainted.TaintedGrass;
 import net.kineticdevelopment.arcana.common.objects.blocks.tainted.TaintedLogBlock;
 import net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases.TaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
@@ -22,7 +23,7 @@ public class BlockInit {
 	//Tainted
 	public static final Block TAINTED_ACACIA_PLANKS = new TaintedBlockBase("tainted_acacia_planks", Material.GRASS).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_CRUST = new TaintedBlockBase("tainted_crust", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA).setTickRandomly(true);
-	public static final Block TAINTED_GRASS = new TaintedBlockBase("tainted_grass_block", Material.GRASS).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_GRASS = new TaintedGrass("tainted_grass_block", Material.GRASS).setCreativeTab(Main.TAB_TAINTARCANA).setTickRandomly(true);
 	public static final Block TAINTED_GRAVEL = new TaintedBlockBase("tainted_gravel", Material.GROUND).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_ROCK = new TaintedBlockBase("tainted_rock", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_SAND = new TaintedBlockBase("tainted_sand", Material.SAND).setCreativeTab(Main.TAB_TAINTARCANA);

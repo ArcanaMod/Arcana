@@ -8,6 +8,7 @@ import java.io.IOException;
 import net.kineticdevelopment.arcana.utilities.ArcanaFileUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
