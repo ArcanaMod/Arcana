@@ -30,18 +30,19 @@ public class BlockInit {
 	public static final Block TAINTED_SOIL = new TaintedBlockBase("tainted_soil", Material.GROUND).setCreativeTab(Main.TAB_TAINTARCANA);
 	
 	//Tainted Ore
-	public static final Block TAINTED_SILVER_ORE = new TaintedBlockBase("tainted_silver_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block TAINTED_RUBY_ORE = new TaintedBlockBase("tainted_ruby_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block TAINTED_IRON_ORE = new TaintedBlockBase("tainted_iron_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block TAINTED_LAPIS_ORE = new TaintedBlockBase("tainted_lapis_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block TAINTED_REDSTONE_ORE = new TaintedBlockBase("tainted_redstone_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_AMBER_ORE = new TaintedBlockBase("tainted_amber_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_ARCANIUM_ORE = new TaintedBlockBase("tainted_arcanium_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_CINNABAR_ORE = new TaintedBlockBase("tainted_cinnabar_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_COAL_ORE = new TaintedBlockBase("tainted_coal_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_DESTROYED_ORE = new TaintedBlockBase("tainted_destroyed_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_DIAMOND_ORE = new TaintedBlockBase("tainted_diamond_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_EMERALD_ORE = new TaintedBlockBase("tainted_emerald_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_GOLD_ORE = new TaintedBlockBase("tainted_gold_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block TAINTED_AMBER_ORE = new TaintedBlockBase("tainted_amber_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block TAINTED_ARCANIUM_ORE = new TaintedBlockBase("tainted_arcanium_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block TAINTED_CINNABAR_ORE = new TaintedBlockBase("tainted_cinnabar_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_IRON_ORE = new TaintedBlockBase("tainted_iron_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_LAPIS_ORE = new TaintedBlockBase("tainted_lapis_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_REDSTONE_ORE = new TaintedBlockBase("tainted_redstone_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_RUBY_ORE = new TaintedBlockBase("tainted_ruby_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block TAINTED_SILVER_ORE = new TaintedBlockBase("tainted_silver_ore", Material.ROCK).setCreativeTab(Main.TAB_TAINTARCANA);
 
 	//Tainted Logs
 	public static final Block STRIPPED_TAINTED_GREATWOOD_LOG = new TaintedLogBlock("stripped_tainted_greatwood_log", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
