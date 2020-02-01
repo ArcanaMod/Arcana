@@ -7,7 +7,9 @@ import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.core.Main;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSlab;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,6 @@ import java.util.List;
 public class ItemInit {
 
 	public static final List<Item> ITEMS = new ArrayList<Item>();
-
 
 	public static Item THAUMIUM_INGOT = new ItemBase("thaumium_ingot").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_INGOT = new ItemBase("arcanium_ingot").setCreativeTab(Main.TAB_ARCANA);

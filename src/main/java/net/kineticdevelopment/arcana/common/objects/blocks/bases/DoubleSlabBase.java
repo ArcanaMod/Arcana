@@ -1,15 +1,17 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+import net.minecraft.block.material.Material;
+
 /**
  * Basic Double Slabs, all double slabs should either be this, or extend it
  *
- * @author Tea
+ * @author Tea, Mozaran
  *
  */
 public class DoubleSlabBase extends SlabBase {
 
-    public DoubleSlabBase(String name) {
-        super(name);
+    public DoubleSlabBase(String name, Material material) {
+        super(name, material);
     }
 
     @Override

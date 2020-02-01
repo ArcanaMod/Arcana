@@ -1,25 +1,36 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+import net.kineticdevelopment.arcana.common.init.BlockInit;
+import net.kineticdevelopment.arcana.core.Main;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Slab Base. To be extended by double slab base and half slab base.
  *
- * @author Tea
+ * @author Tea, Mozaran
  * @see HalfSlabBase
  * @see DoubleSlabBase
  */
 public abstract class SlabBase extends BlockSlab {
+    private String name;
 
-    public SlabBase(String name) {
-        super(Material.WOOD);
+    public SlabBase(String name, Material material) {
+        super(material);
         setUnlocalizedName(name);
         setRegistryName(name);
+        this.name = name;
 
 
         IBlockState state = this.blockState.getBaseState();
@@ -31,6 +42,8 @@ public abstract class SlabBase extends BlockSlab {
 
         setDefaultState(state);
         this.useNeighborBrightness = true;
+
+        BlockInit.BLOCKS.add(this);
     }
 
     @Override
@@ -72,14 +85,19 @@ public abstract class SlabBase extends BlockSlab {
         return ((EnumBlockHalf)state.getValue(HALF)).ordinal() +1;
     }
 
-   /* @Override
-    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(BlockInit.)
+    @Override
+    public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+        Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Main.MODID, name.replace("_double", "")));
+        if(block != null) {
+            Item item = Item.getItemFromBlock(block);
+            drops.add(new ItemStack(item, isDouble() ? 2 : 1, this.damageDropped(state)));
+        }
     }
 
-    */
-   @Override
+    @Override
     protected BlockStateContainer createBlockState() {
-       return new BlockStateContainer(this, new IProperty[] {HALF});
-   }
+        return new BlockStateContainer(this, new IProperty[] {HALF});
+    }
+
+
 }

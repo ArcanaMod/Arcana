@@ -1,17 +1,24 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
-import net.kineticdevelopment.arcana.common.objects.blocks.bases.SlabBase;
+import net.kineticdevelopment.arcana.common.init.ItemInit;
+import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.utilities.IHasModel;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemSlab;
 
 /**
  * Basic Half Slab, all half slabs should either be this, or extend it
  *
- * @author Tea
+ * @author Tea, Mozaran
  *
  */
-public class HalfSlabBase extends SlabBase {
+public class HalfSlabBase extends SlabBase implements IHasModel {
 
-    public HalfSlabBase(String name) {
-        super(name);
-
+    public HalfSlabBase(String name, Material material, Block doubleSlab) {
+        super(name, material);
+        ItemInit.ITEMS.add(new ItemSlab(this, this, (BlockSlab) doubleSlab).setRegistryName(this.getRegistryName()));
     }
 
     @Override
@@ -19,4 +26,8 @@ public class HalfSlabBase extends SlabBase {
         return false;
     }
 
+    @Override
+    public void registerModels() {
+        Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+    }
 }

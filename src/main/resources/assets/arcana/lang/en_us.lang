@@ -37,6 +37,7 @@ item.arcanium_ingot.name=Arcanium Ingot
 
 #Arcana Blocks
 tile.arcane_stone.name=Arcane Stone
+tile.arcane_stone_slab.name=Arcane Stone Slab
 tile.arcane_stone_stairs.name=Arcane Stone Stairs
 tile.arcane_stone_bricks.name=Arcane Stone Bricks
 tile.arcane_stone_bricks_stairs.name=Arcane Stone Brick Stairs
