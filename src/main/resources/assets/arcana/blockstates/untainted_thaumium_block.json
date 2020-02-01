@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:untainted_thaumium_block"
+        "model": "arcana:tainted_thaumium_block"
       }
     ]
   }

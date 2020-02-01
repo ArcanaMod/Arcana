@@ -1,7 +1,6 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:dair_slab"},
-    "type=top": {"model": "arcana:dair_slab_top"},
-    "type=double": {"model": "arcana:dair_planks"}
+    "half=bottom": {"model": "arcana:dair_slab_bottom"},
+    "half=top": {"model": "arcana:dair_slab_top"}
   }
 }

@@ -1,7 +1,6 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:dead_slab"},
-    "type=top": {"model": "arcana:dead_slab_top"},
-    "type=double": {"model": "arcana:dead_planks"}
+    "half=bottom": {"model": "arcana:dead_slab_bottom"},
+    "half=top": {"model": "arcana:dead_slab_top"}
   }
 }

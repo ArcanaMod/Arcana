@@ -1,7 +1,6 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:tainted_crust_slab"},
-    "type=top": {"model": "arcana:tainted_crust_slab_top"},
-    "type=double": {"model": "arcana:tainted_crust"}
+    "half=bottom": {"model": "arcana:tainted_crust_slab_bottom"},
+    "half=top": {"model": "arcana:tainted_crust_slab_top"}
   }
 }

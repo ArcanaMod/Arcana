@@ -2,7 +2,7 @@
   "variants": {
     "": [
       {
-        "model": "arcana:untainted_lapis_block"
+        "model": "arcana:tainted_lapis_block"
       }
     ]
   }

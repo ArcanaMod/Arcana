@@ -1,7 +1,6 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:tainted_willow_slab"},
-    "type=top": {"model": "arcana:tainted_willow_slab_top"},
-    "type=double": {"model": "arcana:tainted_willow_planks"}
+    "half=bottom": {"model": "arcana:tainted_willow_slab_bottom"},
+    "half=top": {"model": "arcana:tainted_willow_slab_top"}
   }
 }

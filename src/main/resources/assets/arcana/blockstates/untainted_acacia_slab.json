@@ -1,7 +1,6 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:untainted_acacia_slab"},
-    "type=top": {"model": "arcana:untainted_acacia_slab_top"},
-    "type=double": {"model": "arcana:tainted_acacia_planks"}
+    "half=bottom": {"model": "arcana:tainted_acacia_slab_bottom"},
+    "half=top": {"model": "arcana:tainted_acacia_slab_top"}
   }
 }

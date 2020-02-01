@@ -1,9 +1,5 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:trypophobius_planks"
-      }
-    ]
+    "normal": { "model": "arcana:trypophobius_planks" }
   }
 }

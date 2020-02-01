@@ -1,7 +1,6 @@
 {
   "variants": {
-    "type=bottom": {"model": "arcana:hawthorn_slab"},
-    "type=top": {"model": "arcana:hawthorn_slab_top"},
-    "type=double": {"model": "arcana:hawthorn_planks"}
+    "half=bottom": {"model": "arcana:hawthorn_slab_bottom"},
+    "half=top": {"model": "arcana:hawthorn_slab_top"}
   }
 }

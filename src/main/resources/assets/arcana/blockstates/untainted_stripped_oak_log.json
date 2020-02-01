@@ -1,14 +1,14 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:untainted_stripped_oak_log"
+      "model": "arcana:tainted_stripped_oak_log"
     },
     "axis=z": {
-      "model": "arcana:untainted_stripped_oak_log",
+      "model": "arcana:tainted_stripped_oak_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:untainted_stripped_oak_log",
+      "model": "arcana:tainted_stripped_oak_log",
       "x": 90,
       "y": 90
     }

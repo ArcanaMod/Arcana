@@ -1,8 +1,0 @@
-{
-  "parent": "block/slab",
-  "textures": {
-    "bottom": "arcana:block/hawthorn_planks",
-    "top": "arcana:block/hawthorn_planks",
-    "side": "arcana:block/hawthorn_planks"
-  }
-}
