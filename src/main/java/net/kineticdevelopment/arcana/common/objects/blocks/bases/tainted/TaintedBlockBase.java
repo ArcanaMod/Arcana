@@ -1,38 +1,39 @@
-package net.kineticdevelopment.arcana.common.objects.blocks.tainted.bases;
+package net.kineticdevelopment.arcana.common.objects.blocks.bases.tainted;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import net.kineticdevelopment.arcana.common.init.BlockStateInit;
-import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.untainted.UntaintedBlockBase;
 import net.kineticdevelopment.arcana.core.Main;
-import net.kineticdevelopment.arcana.utilities.IHasModel;
 import net.kineticdevelopment.arcana.utilities.taint.TaintHandler;
 import net.kineticdevelopment.arcana.utilities.taint.TaintLevelHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockAir;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
  * Basic Tainted Block, all tainted block should either be this, or extend it
  * 
- * @author Atlas
- * @see BlockBase
+ * @author Atlas, Mozaran
+ * @see UntaintedBlockBase
  */
-public class TaintedBlockBase extends BlockBase implements IHasModel {
-	public static final PropertyBool FULLYTAINTED = BlockStateInit.FULLYTAINTED;
+public class TaintedBlockBase extends UntaintedBlockBase {
+	protected String name;
 
 	public TaintedBlockBase(String name, Material material) {
 		super(name, material);
-		this.setDefaultState(this.getDefaultState().withProperty(BlockStateInit.FULLYTAINTED, false));
 		setTickRandomly(true);
+		this.name = name;
 	}
 	
 	@Override
@@ -97,42 +98,13 @@ public class TaintedBlockBase extends BlockBase implements IHasModel {
         	System.out.println(pos + ": Ticking? "+this.needsRandomTick);
         }
 	}
-	
-	@Override
-	public int getMetaFromState(IBlockState state) {
-        int i = 0;
-        boolean tainted = state.getValue(FULLYTAINTED);
 
-        if(tainted) {
-        	i = 1;
-        } else {
-        	i = 0;
-        }
-
-        return i;
-    }
-	
 	@Override
-	public IBlockState getStateFromMeta(int meta) {
-        boolean tainted = false;
-        int i = meta;
-
-        if(i == 1) {
-        	tainted = true;
-        } else if(i == 0) {
-        	tainted = false;
-        }
-        
-        return this.getDefaultState().withProperty(FULLYTAINTED, tainted);
-    }
-	
-	@Override
-	protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {FULLYTAINTED});
-    }
-	
-	@Override
-	public void registerModels() {
-		Main.proxy.registerItemRenderer(Item.getItemFromBlock(this), 0, "inventory");
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Main.MODID, "un" + name));
+		if(block != null) {
+			Item item = Item.getItemFromBlock(block);
+			drops.add(new ItemStack(item, 1, this.damageDropped(state)));
+		}
 	}
 }

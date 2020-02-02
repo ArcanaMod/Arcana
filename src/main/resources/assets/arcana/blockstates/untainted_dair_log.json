@@ -1,16 +1,10 @@
 {
   "variants": {
-    "axis=y": {
-      "model": "arcana:tainted_dair_log"
-    },
-    "axis=z": {
-      "model": "arcana:tainted_dair_log",
-      "x": 90
-    },
-    "axis=x": {
-      "model": "arcana:tainted_dair_log",
-      "x": 90,
-      "y": 90
-    }
+    "axis=y,fullytainted=false": [{"model": "arcana:tainted_dair_log"}],
+    "axis=z,fullytainted=false": [{"model": "arcana:tainted_dair_log", "x": 90}],
+    "axis=x,fullytainted=false": [{"model": "arcana:tainted_dair_log", "x": 90, "y": 90}],
+    "axis=y,fullytainted=true": [{"model": "arcana:tainted_dair_log"}],
+    "axis=z,fullytainted=true": [{"model": "arcana:tainted_dair_log", "x": 90}],
+    "axis=x,fullytainted=true": [{"model": "arcana:tainted_dair_log", "x": 90, "y": 90}]
   }
 }

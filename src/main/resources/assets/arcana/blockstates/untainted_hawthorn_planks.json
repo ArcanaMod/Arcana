@@ -1,9 +1,7 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_hawthorn_planks"
-      }
-    ]
+    "fullytainted=false": [{ "model": "arcana:tainted_hawthorn_planks" }],
+    "fullytainted=true": [{ "model": "arcana:tainted_hawthorn_planks" }]
   }
 }
+

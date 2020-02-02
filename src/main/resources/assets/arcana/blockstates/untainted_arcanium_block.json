@@ -1,9 +1,7 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_arcanium_block"
-      }
-    ]
+    "fullytainted=false": [{ "model": "arcana:tainted_arcanium_block" }],
+    "fullytainted=true": [{ "model": "arcana:tainted_arcanium_block" }]
   }
 }
+

@@ -1,9 +1,6 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_acacia_planks"
-      }
-    ]
+    "fullytainted=false": [{ "model": "arcana:tainted_acacia_planks" }],
+    "fullytainted=true": [{ "model": "arcana:tainted_acacia_planks" }]
   }
 }

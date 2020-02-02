@@ -98,6 +98,4 @@ public abstract class SlabBase extends BlockSlab {
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, new IProperty[] {HALF});
     }
-
-
 }
