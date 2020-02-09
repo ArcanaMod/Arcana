@@ -98,7 +98,7 @@ public class TaintedLeavesBase extends LeavesBase {
             System.out.println(pos + ": Ticking? "+this.needsRandomTick);
         }
     }
-    
+
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {

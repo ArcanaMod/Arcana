@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "arcana:greatwood_stripped_log"
+    },
+    "axis=z": {
+      "model": "arcana:greatwood_stripped_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "arcana:greatwood_stripped_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

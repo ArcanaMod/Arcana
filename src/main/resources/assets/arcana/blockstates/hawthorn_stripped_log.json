@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "arcana:hawthorn_stripped_log"
+    },
+    "axis=z": {
+      "model": "arcana:hawthorn_stripped_log",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "arcana:hawthorn_stripped_log",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "arcana:block/tainted_dair_sapling"
+  }
+}

@@ -1,14 +1,14 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+
 /**
  * Basic Planks, all planks should either be this, or extend it
  *
  * @author Tea
  *
  */
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-
 public class PlanksBase extends BlockBase {
 
     public PlanksBase(String name, Material material) {
@@ -18,7 +18,6 @@ public class PlanksBase extends BlockBase {
         setHardness(2.0f);
         setResistance(2.0f);
         setHarvestLevel("axe",0);
-
     }
 }
 
