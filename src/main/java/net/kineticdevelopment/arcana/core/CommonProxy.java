@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.core;
 
 import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
 import net.kineticdevelopment.arcana.common.init.EntityInit;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
 import net.minecraft.item.Item;
@@ -39,4 +40,9 @@ public class CommonProxy {
 		registry.register(wand);
 	}
 
+	/**
+	 * @param parBlock -
+	 * @param parFancyEnabled
+	 */
+	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled) {}
 }

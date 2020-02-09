@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.core;
 import java.util.ArrayList;
 
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -58,5 +59,17 @@ public class ClientProxy extends CommonProxy {
 		}
 
 		ModelBakery.registerItemVariants(wand, list.toArray(new ModelResourceLocation[list.size()]));
+	}
+
+	/**
+	 * Sets leaves to be tansparent
+	 *
+	 * @param parBlock - Block to Make Transparent
+	 * @param parFancyEnabled - Fancy Mode State
+	 */
+	@Override
+	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled)
+	{
+		parBlock.setGraphicsLevel(parFancyEnabled);
 	}
 }

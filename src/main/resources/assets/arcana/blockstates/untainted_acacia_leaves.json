@@ -1,9 +1,17 @@
 {
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "arcana:block/tainted_acacia_log"
+    },
+    "model": "arcana:tainted_acacia_leaves",
+    "uvlock": true
+  },
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_acacia_leaves"
-      }
-    ]
+    "normal": [{ }],
+    "check_decay=true,decayable=true": [{ }],
+    "check_decay=true,decayable=false": [{ }],
+    "check_decay=false,decayable=true": [{ }],
+    "check_decay=false,decayable=false": [{ }]
   }
 }
