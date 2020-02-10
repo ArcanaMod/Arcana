@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=bottom": {"model": "arcana:silverwood_slab_bottom"},
+    "half=top": {"model": "arcana:silverwood_slab_top"}
+  }
+}
