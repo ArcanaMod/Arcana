@@ -3,9 +3,10 @@
     "axis=y,fullytainted=false": [{"model": "arcana:tainted_willow_log"}],
     "axis=z,fullytainted=false": [{"model": "arcana:tainted_willow_log", "x": 90}],
     "axis=x,fullytainted=false": [{"model": "arcana:tainted_willow_log", "x": 90, "y": 90}],
+    "axis=none,fullytainted=false": [{"model": "arcana:tainted_willow_log"}],
     "axis=y,fullytainted=true": [{"model": "arcana:tainted_willow_log"}],
     "axis=z,fullytainted=true": [{"model": "arcana:tainted_willow_log", "x": 90}],
-    "axis=x,fullytainted=true": [{"model": "arcana:tainted_willow_log", "x": 90, "y": 90}]
+    "axis=x,fullytainted=true": [{"model": "arcana:tainted_willow_log", "x": 90, "y": 90}],
+    "axis=none,fullytainted=true": [{"model": "arcana:tainted_willow_log"}]
   }
 }
-

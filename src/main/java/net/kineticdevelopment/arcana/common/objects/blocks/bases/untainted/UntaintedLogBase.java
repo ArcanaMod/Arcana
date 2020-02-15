@@ -4,6 +4,7 @@ import net.kineticdevelopment.arcana.common.init.BlockStateInit;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LogBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
@@ -21,8 +22,8 @@ import net.minecraft.util.EnumFacing;
 public class UntaintedLogBase extends LogBase implements IHasModel {
     public static final PropertyBool FULLYTAINTED = BlockStateInit.FULLYTAINTED;
 
-    public UntaintedLogBase(String name, Material material) {
-        super(name, material);
+    public UntaintedLogBase(String name) {
+        super(name);
         this.setDefaultState(this.getStateFromMeta(0));
     }
 
@@ -30,16 +31,18 @@ public class UntaintedLogBase extends LogBase implements IHasModel {
     public int getMetaFromState(IBlockState state) {
         int i = 0;
         boolean tainted = state.getValue(FULLYTAINTED);
-        EnumFacing.Axis enumfacing$axis = (EnumFacing.Axis)state.getValue(AXIS);
+        EnumAxis enumfacing$axis = state.getValue(LOG_AXIS);
 
         // Log Axis Variations are even
-        if (enumfacing$axis == EnumFacing.Axis.X)
+        if (enumfacing$axis == EnumAxis.X)
         {
             i = 2;
         }
-        else if (enumfacing$axis == EnumFacing.Axis.Z)
+        else if (enumfacing$axis == EnumAxis.Z)
         {
             i = 4;
+        } else if (enumfacing$axis == EnumAxis.NONE){
+            i = 6;
         }
 
         // Adding Fully Tainted Variants are Odd
@@ -52,27 +55,30 @@ public class UntaintedLogBase extends LogBase implements IHasModel {
 
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        EnumFacing.Axis enumfacing$axis = EnumFacing.Axis.Y;
-        boolean tainted = false;
+        EnumAxis enumfacing$axis = EnumAxis.Y;
+        boolean tainted;
         int i = meta;
 
         // Axis's are Even and Fully Tainted Variants are Odd
         if(i < 2) {
             tainted = (i % 2 == 1);
         } else if(i < 4) {
-            enumfacing$axis = EnumFacing.Axis.X;
+            enumfacing$axis = EnumAxis.X;
             tainted = (i % 2 == 1);
         } else if(i < 6) {
-            enumfacing$axis = EnumFacing.Axis.Z;
+            enumfacing$axis = EnumAxis.Z;
+            tainted = (i % 2 == 1);
+        } else {
+            enumfacing$axis = EnumAxis.NONE;
             tainted = (i % 2 == 1);
         }
 
-        return this.getDefaultState().withProperty(FULLYTAINTED, tainted).withProperty(AXIS, enumfacing$axis);
+        return this.getDefaultState().withProperty(FULLYTAINTED, tainted).withProperty(LOG_AXIS, enumfacing$axis);
     }
 
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {FULLYTAINTED, AXIS});
+        return new BlockStateContainer(this, new IProperty[] {FULLYTAINTED, LOG_AXIS});
     }
 
     @Override

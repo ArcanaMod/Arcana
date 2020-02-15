@@ -1,16 +1,8 @@
 {
   "variants": {
-    "axis=y": {
-      "model": "arcana:silverwood_log"
-    },
-    "axis=z": {
-      "model": "arcana:silverwood_log",
-      "x": 90
-    },
-    "axis=x": {
-      "model": "arcana:silverwood_log",
-      "x": 90,
-      "y": 90
-    }
+    "axis=y": {"model": "arcana:silverwood_log"},
+    "axis=z": {"model": "arcana:silverwood_log", "x": 90},
+    "axis=x": {"model": "arcana:silverwood_log", "x": 90, "y": 90},
+    "axis=none": {"model": "arcana:silverwood_log", "x": 90, "y": 90}
   }
 }

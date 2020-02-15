@@ -31,8 +31,8 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TaintedLogBase extends UntaintedLogBase {
     private String name;
 
-    public TaintedLogBase(String name, Material material) {
-        super(name, material);
+    public TaintedLogBase(String name) {
+        super(name);
         this.setTickRandomly(true);
         this.name = name;
     }

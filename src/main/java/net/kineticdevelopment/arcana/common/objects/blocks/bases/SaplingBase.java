@@ -29,7 +29,7 @@ import java.util.Random;
  * @author Mozaran
  *
  */
-public class SaplingBase extends BlockBush implements IGrowable, IHasModel {
+public abstract class SaplingBase extends BlockBush implements IGrowable, IHasModel {
 
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
     protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
@@ -64,23 +64,7 @@ public class SaplingBase extends BlockBush implements IGrowable, IHasModel {
         }
     }
 
-    /**
-     * Generate tree.
-     *
-     * @param worldIn the world in
-     * @param pos the pos
-     * @param state the state
-     * @param rand the rand
-     */
-    public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand)
-    {
-        if (!TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
-        //WorldGenerator worldgenerator = new WorldGenTreesCloud(true);
-
-        worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
-
-        //worldgenerator.generate(worldIn, rand, pos);
-    }
+    public abstract void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand);
 
     @Override
     public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
