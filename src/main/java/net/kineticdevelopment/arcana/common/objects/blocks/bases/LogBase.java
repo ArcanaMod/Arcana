@@ -27,7 +27,7 @@ import net.minecraft.world.IBlockAccess;
  * @author Tea, Mozaran
  *
  */
-public class LogBase extends BlockLog implements IHasModel,  {
+public class LogBase extends BlockLog implements IHasModel {
 
     public LogBase(String name) {
         setUnlocalizedName(name);

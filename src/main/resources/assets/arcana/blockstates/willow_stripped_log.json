@@ -1,8 +1,0 @@
-{
-  "variants": {
-    "axis=y": {"model": "arcana:willow_stripped_log"},
-    "axis=z": {"model": "arcana:willow_stripped_log", "x": 90},
-    "axis=x": {"model": "arcana:willow_stripped_log", "x": 90, "y": 90},
-    "axis=none": {"model": "arcana:willow_stripped_log", "x": 90, "y": 90}
-  }
-}
