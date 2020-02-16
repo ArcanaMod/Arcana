@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.common.worldgen;
+package net.kineticdevelopment.arcana.common.worldgen.trees;
 
 import com.google.common.collect.Lists;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
@@ -17,7 +17,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import java.util.List;
 import java.util.Random;
 
-public class DairTreeGenerator extends WorldGenAbstractTree {
+public class TaintedLargeOakGenerator extends WorldGenAbstractTree {
     private Random rand;
     private World world;
     private BlockPos basePos = BlockPos.ORIGIN;
@@ -33,8 +33,16 @@ public class DairTreeGenerator extends WorldGenAbstractTree {
     int leafDistanceLimit = 4;
     List<FoliageCoordinates> foliageCoords;
 
-    public DairTreeGenerator(boolean notify) {
+    Block leavesBlock;
+    Block logBlock;
+    Block saplingBlock;
+
+    public TaintedLargeOakGenerator(boolean notify, boolean fullyTainted) {
         super(notify);
+
+        leavesBlock = fullyTainted ? BlockInit.TAINTED_OAK_LEAVES : BlockInit.UNTAINTED_OAK_LEAVES;
+        logBlock = fullyTainted ? BlockInit.TAINTED_OAK_LOG : BlockInit.UNTAINTED_OAK_LOG;
+        saplingBlock = fullyTainted ? BlockInit.TAINTED_OAK_SAPLING : BlockInit.UNTAINTED_OAK_SAPLING;
     }
 
     void generateLeafNodeList()
@@ -160,7 +168,7 @@ public class DairTreeGenerator extends WorldGenAbstractTree {
     {
         for (int i = 0; i < this.leafDistanceLimit; ++i)
         {
-            this.crosSection(pos.up(i), this.leafSize(i), BlockInit.DAIR_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false)));
+            this.crosSection(pos.up(i), this.leafSize(i), leavesBlock.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false)));
         }
     }
 
@@ -247,7 +255,7 @@ public class DairTreeGenerator extends WorldGenAbstractTree {
     {
         BlockPos blockpos = this.basePos;
         BlockPos blockpos1 = this.basePos.up(this.height);
-        Block block = BlockInit.DAIR_LOG;
+        Block block = logBlock;
         this.limb(blockpos, blockpos1, block);
 
         if (this.trunkSize == 2)
@@ -270,7 +278,7 @@ public class DairTreeGenerator extends WorldGenAbstractTree {
 
             if (!blockpos.equals(worldgenbigtree$foliagecoordinates) && this.leafNodeNeedsBase(i - this.basePos.getY()))
             {
-                this.limb(blockpos, worldgenbigtree$foliagecoordinates, BlockInit.DAIR_LOG);
+                this.limb(blockpos, worldgenbigtree$foliagecoordinates, logBlock);
             }
         }
     }
@@ -347,7 +355,7 @@ public class DairTreeGenerator extends WorldGenAbstractTree {
     {
         BlockPos down = this.basePos.down();
         IBlockState state = this.world.getBlockState(down);
-        boolean isSoil = state.getBlock().canSustainPlant(state, this.world, down, EnumFacing.UP, ((SaplingBase)BlockInit.DAIR_SAPLING));
+        boolean isSoil = state.getBlock().canSustainPlant(state, this.world, down, EnumFacing.UP, ((SaplingBase)saplingBlock));
 
         if (!isSoil)
         {
