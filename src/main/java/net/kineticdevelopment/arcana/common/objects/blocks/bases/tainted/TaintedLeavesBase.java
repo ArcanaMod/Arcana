@@ -102,7 +102,9 @@ public class TaintedLeavesBase extends LeavesBase {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Main.MODID, "un" + name));
+        String untaintedName = "un" + name;
+        Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Main.MODID, untaintedName.replace("leaves", "sapling")));
+        if(block == null) return Item.getItemFromBlock(this);
         return Item.getItemFromBlock(block);
     }
 

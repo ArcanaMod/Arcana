@@ -30,6 +30,7 @@ import net.minecraft.world.IBlockAccess;
 public class LogBase extends BlockLog implements IHasModel {
 
     public LogBase(String name) {
+        this.setDefaultState(this.getStateFromMeta(0));
         setUnlocalizedName(name);
         setRegistryName(name);
         setSoundType(SoundType.WOOD);

@@ -4,6 +4,7 @@ import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.properties.IProperty;
@@ -18,8 +19,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -31,8 +34,10 @@ import java.util.Random;
  * @see LeavesBase
  */
 public class LeavesBase extends BlockLeaves implements IHasModel {
+    String name;
 
     public LeavesBase(String name) {
+        this.name = name;
         Main.proxy.setGraphicsLevel(this, true);
         setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
         setUnlocalizedName(name);
@@ -50,7 +55,9 @@ public class LeavesBase extends BlockLeaves implements IHasModel {
     @Override
     public Item getItemDropped(IBlockState state, Random rand, int fortune)
     {
-        return Item.getItemFromBlock(this);
+        Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Main.MODID, name.replace("leaves", "sapling")));
+        if(block == null) return Item.getItemFromBlock(this);
+        return Item.getItemFromBlock(block);
     }
 
     @Override
