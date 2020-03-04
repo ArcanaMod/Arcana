@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * Initialize Items here
- * @author Merijn
+ * @author Merijn, Tea
  * @see BlockStateInit
  * @see EntityInit
  * @see BlockInit
@@ -24,6 +24,17 @@ import java.util.List;
 public class ItemInit {
 
 	public static final List<Item> ITEMS = new ArrayList<Item>();
+
+	//Items With Function
+
+	public static Item RESEARCH_NOTE_COMPLETE = new ItemBase("research_note_complete").setCreativeTab(Main.TAB_ARCANA);
+	public static Item RESEARCH_NOTE = new ItemBase("research_note").setCreativeTab(Main.TAB_ARCANA);
+
+	//Food - Will add food class soon --Tea :D
+	public static Item CAT_MEAT_COOKED = new ItemBase("cooked_cat_meat").setCreativeTab(Main.TAB_ARCANA);
+	public static Item CAT_MEAT_UNCOOKED = new ItemBase("cat_meat").setCreativeTab(Main.TAB_ARCANA);
+	public static Item DOG_MEAT_COOKED = new ItemBase("cooked_dog_meat").setCreativeTab(Main.TAB_ARCANA);
+	public static Item DOG_MEAT_UNCOOKED = new ItemBase("dog_meat").setCreativeTab(Main.TAB_ARCANA);
 
 	public static Item THAUMIUM_INGOT = new ItemBase("thaumium_ingot").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_INGOT = new ItemBase("arcanium_ingot").setCreativeTab(Main.TAB_ARCANA);
