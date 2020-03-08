@@ -76,3 +76,10 @@ processResources {
     }
 }
 
+// Uncomment this for testing the game, or assets won't load
+// Comment this when building jars, because it breaks jar packaging
+// sourceSets{
+//     main{
+//         output.resourcesDir = output.classesDir
+//     }
+// }
