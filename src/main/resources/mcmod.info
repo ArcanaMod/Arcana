@@ -7,8 +7,8 @@
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["..."],
+  "credits": "The Arcana team",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
