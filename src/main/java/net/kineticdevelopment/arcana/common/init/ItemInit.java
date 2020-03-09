@@ -6,10 +6,10 @@ import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.objects.items.ResearchBookItem;
 import net.kineticdevelopment.arcana.core.Main;
-import net.minecraft.block.BlockSlab;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSlab;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +23,17 @@ import java.util.List;
  */
 public class ItemInit {
 
-	public static final List<Item> ITEMS = new ArrayList<Item>();
+	public static final List<Item> ITEMS = new ArrayList<>();
 
 	//Items With Function
 
 	public static Item RESEARCH_NOTE_COMPLETE = new ItemBase("research_note_complete").setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_NOTE = new ItemBase("research_note").setCreativeTab(Main.TAB_ARCANA);
+
+	public static Item ARCANOMICON = new ResearchBookItem("arcanomicon", new ResourceLocation(Main.MODID, "arcana")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item GRIMOIRE = new ResearchBookItem("illusterous_grimoire", new ResourceLocation(Main.MODID, "grimoire")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item CODEX = new ResearchBookItem("tainted_codex", new ResourceLocation(Main.MODID, "codex")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item RITES = new ResearchBookItem("crimson_rites", new ResourceLocation(Main.MODID, "rites")).setCreativeTab(Main.TAB_ARCANA);
 
 	//Food - Will add food class soon --Tea :D
 	public static Item CAT_MEAT_COOKED = new ItemBase("cooked_cat_meat").setCreativeTab(Main.TAB_ARCANA);

@@ -6,6 +6,7 @@ import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -45,4 +46,6 @@ public class CommonProxy {
 	 * @param parFancyEnabled
 	 */
 	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled) {}
+	
+	public void openResearchBookUI(ResourceLocation book){}
 }
