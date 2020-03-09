@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  */
 public class ResearchBook{
 	
-	private Map<ResourceLocation, ResearchCategory> categories;
+	protected Map<ResourceLocation, ResearchCategory> categories;
 	private ResourceLocation key;
 	
 	public ResearchBook(ResourceLocation key, Map<ResourceLocation, ResearchCategory> categories){

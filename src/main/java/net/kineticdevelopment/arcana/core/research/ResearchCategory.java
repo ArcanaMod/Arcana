@@ -11,8 +11,8 @@ import java.util.stream.Stream;
  * Represents a research tab. Contains a number of research entries, stored by key.
  */
 public class ResearchCategory{
-
-	private Map<ResourceLocation, ResearchEntry> entries;
+	
+	protected Map<ResourceLocation, ResearchEntry> entries;
 	private ResourceLocation key;
 	
 	public ResearchCategory(ResourceLocation key, Map<ResourceLocation, ResearchEntry> entries){
