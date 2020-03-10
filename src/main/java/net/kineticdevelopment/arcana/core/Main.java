@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.core;
 
 import net.kineticdevelopment.arcana.common.commands.CommandFocus;
+import net.kineticdevelopment.arcana.common.commands.ReloadResearchCommand;
 import net.kineticdevelopment.arcana.common.commands.TaintLevelCommand;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
@@ -86,6 +87,7 @@ public class Main {
 	public void serverLoad(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandFocus());
 		event.registerServerCommand(new TaintLevelCommand());
+		event.registerServerCommand(new ReloadResearchCommand());
 	}
 
 	//Why is this here? This is very redundant

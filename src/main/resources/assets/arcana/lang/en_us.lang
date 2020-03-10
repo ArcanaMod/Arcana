@@ -310,3 +310,6 @@ tile.untainted_willow_sapling.name=Tainted Willow Sapling
 tile.untainted_willow_slab.name=Tainted Willow Slab
 tile.untainted_willow_slab_double.name=Tainted Willow Double Slab
 tile.untainted_willow_stairs.name=Tainted Willow Stairs
+
+# Commands
+commands.arcanaresearch.usage=arcana-research [<entry> <player> <operation> | reload]

@@ -33,7 +33,7 @@ public class CommandFocus extends CommandBase {
 
     @Override
     public List<String> getAliases() {
-        return new ArrayList<String>(Arrays.asList("focus", "forgefocus"));
+        return new ArrayList<>(Arrays.asList("focus", "forgefocus"));
     }
 
     @Override
