@@ -1,0 +1,57 @@
+{
+  "books": [
+    {
+      "key": "arcana:arcana"
+    },
+    {
+      "key": "arcana:tainted_codex"
+    },
+    {
+      "key": "arcana:crimson_rites"
+    },
+    {
+      "key": "arcana:illustrious_grimoire"
+    }
+  ],
+  "categories": [
+    {
+      "key": "arcana:basics",
+      "in": "arcana:arcana"
+    },
+    {
+      "key": "arcana:artifice",
+      "in": "arcana:arcana"
+    },
+    {
+      "key": "arcana:alchemy",
+      "in": "arcana:arcana"
+    },
+    {
+      "key": "arcana:infusion",
+      "in": "arcana:arcana"
+    },
+    {
+      "key": "arcana:golemancy",
+      "in": "arcana:arcana"
+    },
+    {
+      "key": "arcana:eldritch",
+      "in": "arcana:arcana"
+    },
+
+
+
+    {
+      "key": "arcana:tainted_basics",
+      "in": "arcana:tainted_codex"
+    },
+    {
+      "key": "arcana:crimson_basics",
+      "in": "arcana:crimson_rites"
+    },
+    {
+      "key": "arcana:illustrious_basics",
+      "in": "arcana:illustrious_grimoire"
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import net.kineticdevelopment.arcana.common.init.EntityInit;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
+import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -33,6 +34,8 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
+		
+		ResearchLoader.load();
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {}

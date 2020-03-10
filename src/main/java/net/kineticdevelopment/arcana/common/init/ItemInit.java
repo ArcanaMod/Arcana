@@ -31,9 +31,9 @@ public class ItemInit {
 	public static Item RESEARCH_NOTE = new ItemBase("research_note").setCreativeTab(Main.TAB_ARCANA);
 
 	public static Item ARCANOMICON = new ResearchBookItem("arcanomicon", new ResourceLocation(Main.MODID, "arcana")).setCreativeTab(Main.TAB_ARCANA);
-	public static Item GRIMOIRE = new ResearchBookItem("illusterous_grimoire", new ResourceLocation(Main.MODID, "grimoire")).setCreativeTab(Main.TAB_ARCANA);
-	public static Item CODEX = new ResearchBookItem("tainted_codex", new ResourceLocation(Main.MODID, "codex")).setCreativeTab(Main.TAB_ARCANA);
-	public static Item RITES = new ResearchBookItem("crimson_rites", new ResourceLocation(Main.MODID, "rites")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item GRIMOIRE = new ResearchBookItem("illustrious_grimoire", new ResourceLocation(Main.MODID, "illustrious_grimoire")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item CODEX = new ResearchBookItem("tainted_codex", new ResourceLocation(Main.MODID, "tainted_codex")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item RITES = new ResearchBookItem("crimson_rites", new ResourceLocation(Main.MODID, "crimson_rites")).setCreativeTab(Main.TAB_ARCANA);
 
 	//Food - Will add food class soon --Tea :D
 	public static Item CAT_MEAT_COOKED = new ItemBase("cooked_cat_meat").setCreativeTab(Main.TAB_ARCANA);
