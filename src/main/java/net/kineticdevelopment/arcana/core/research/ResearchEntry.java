@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.core.research;
 
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
@@ -11,6 +12,10 @@ public interface ResearchEntry{
 	
 	ResourceLocation key();
 	List<EntrySection> sections();
+	List<Item> icons();
+	List<String> meta();
+	List<ResearchEntry> parents();
+	ResearchCategory category();
 	
 	String name();
 	String description();

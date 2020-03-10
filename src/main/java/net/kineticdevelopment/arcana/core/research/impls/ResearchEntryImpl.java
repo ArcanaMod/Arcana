@@ -1,7 +1,9 @@
 package net.kineticdevelopment.arcana.core.research.impls;
 
 import net.kineticdevelopment.arcana.core.research.EntrySection;
+import net.kineticdevelopment.arcana.core.research.ResearchCategory;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;
@@ -14,14 +16,22 @@ public class ResearchEntryImpl implements ResearchEntry{
 	
 	private ResourceLocation key;
 	private List<EntrySection> sections;
+	private List<Item> icons;
+	private List<String> meta;
+	private List<ResearchEntry> parents;
+	private ResearchCategory category;
 	
 	private String name, desc;
 	
 	private int x, y;
 	
-	public ResearchEntryImpl(ResourceLocation key, List<EntrySection> sections, String name, String desc, int x, int y){
+	public ResearchEntryImpl(ResourceLocation key, List<EntrySection> sections, List<Item> icons, List<String> meta, List<ResearchEntry> parents, ResearchCategory category, String name, String desc, int x, int y){
 		this.key = key;
 		this.sections = sections;
+		this.icons = icons;
+		this.meta = meta;
+		this.parents = parents;
+		this.category = category;
 		this.name = name;
 		this.desc = desc;
 		this.x = x;
@@ -30,6 +40,22 @@ public class ResearchEntryImpl implements ResearchEntry{
 	
 	public List<EntrySection> sections(){
 		return Collections.unmodifiableList(sections);
+	}
+	
+	public List<Item> icons(){
+		return icons;
+	}
+	
+	public List<String> meta(){
+		return meta;
+	}
+	
+	public List<ResearchEntry> parents(){
+		return parents;
+	}
+	
+	public ResearchCategory category(){
+		return category;
 	}
 	
 	public ResourceLocation key(){

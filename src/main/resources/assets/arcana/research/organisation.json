@@ -1,7 +1,7 @@
 {
   "books": [
     {
-      "key": "arcana:arcana"
+      "key": "arcana:arcanum"
     },
     {
       "key": "arcana:tainted_codex"
@@ -16,27 +16,27 @@
   "categories": [
     {
       "key": "arcana:basics",
-      "in": "arcana:arcana"
+      "in": "arcana:arcanum"
     },
     {
       "key": "arcana:artifice",
-      "in": "arcana:arcana"
+      "in": "arcana:arcanum"
     },
     {
       "key": "arcana:alchemy",
-      "in": "arcana:arcana"
+      "in": "arcana:arcanum"
     },
     {
       "key": "arcana:infusion",
-      "in": "arcana:arcana"
+      "in": "arcana:arcanum"
     },
     {
       "key": "arcana:golemancy",
-      "in": "arcana:arcana"
+      "in": "arcana:arcanum"
     },
     {
       "key": "arcana:eldritch",
-      "in": "arcana:arcana"
+      "in": "arcana:arcanum"
     },
 
 

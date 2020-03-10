@@ -1,3 +1,29 @@
 {
-
+  "entries": [
+    {
+      "key": "arcana:root",
+      "name": "research.arcana.root",
+      "desc": "research.arcana.root.desc",
+      "icons": ["arcana:arcanum"],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [],
+      "x": 0,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.root.stage.1"
+        },
+        {
+          "type": "guesswork",
+          "content": "<figure out the guesswork format // probably a recipe reference + some annotations>"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.root.complete"
+        }
+      ]
+    }
+  ]
 }

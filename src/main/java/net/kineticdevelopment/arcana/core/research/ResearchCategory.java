@@ -14,10 +14,12 @@ public class ResearchCategory{
 	
 	protected Map<ResourceLocation, ResearchEntry> entries;
 	private ResourceLocation key;
+	private ResearchBook in;
 	
-	public ResearchCategory(ResourceLocation key, Map<ResourceLocation, ResearchEntry> entries){
-		this.key = key;
+	public ResearchCategory(Map<ResourceLocation, ResearchEntry> entries, ResourceLocation key, ResearchBook in){
 		this.entries = entries;
+		this.key = key;
+		this.in = in;
 	}
 	
 	public ResourceLocation getKey(){
@@ -34,5 +36,9 @@ public class ResearchCategory{
 	
 	public Stream<ResearchEntry> streamEntries(){
 		return entries.values().stream();
+	}
+	
+	public ResearchBook getBook(){
+		return in;
 	}
 }
