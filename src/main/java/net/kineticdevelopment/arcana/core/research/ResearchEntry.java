@@ -14,7 +14,7 @@ public interface ResearchEntry{
 	List<EntrySection> sections();
 	List<Item> icons();
 	List<String> meta();
-	List<ResearchEntry> parents();
+	List<ResourceLocation> parents();
 	ResearchCategory category();
 	
 	String name();

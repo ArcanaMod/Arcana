@@ -3,13 +3,14 @@ package net.kineticdevelopment.arcana.core.research;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Represents a whole research book, such as the Arcanomicon or Tainted Codex.
+ * Represents a whole research book, such as the Arcanum or Tainted Codex.
  * Contains a number of research categories, stored by key.
  */
 public class ResearchBook{
@@ -48,5 +49,9 @@ public class ResearchBook{
 	
 	public ResourceLocation getKey(){
 		return key;
+	}
+	
+	public Map<ResourceLocation, ResearchCategory> getCategoriesMap(){
+		return Collections.unmodifiableMap(categories);
 	}
 }

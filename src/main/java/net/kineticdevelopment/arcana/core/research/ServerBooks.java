@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.core.research;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class ServerBooks{
 
 	// public
 	// thats a bad idea I think
-	public static Map<ResourceLocation, ResearchBook> books;
+	public static Map<ResourceLocation, ResearchBook> books = new LinkedHashMap<>();
 	
 	public static List<ResearchBook> getBooks(){
 		return new ArrayList<>(books.values());

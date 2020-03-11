@@ -18,14 +18,14 @@ public class ResearchEntryImpl implements ResearchEntry{
 	private List<EntrySection> sections;
 	private List<Item> icons;
 	private List<String> meta;
-	private List<ResearchEntry> parents;
+	private List<ResourceLocation> parents;
 	private ResearchCategory category;
 	
 	private String name, desc;
 	
 	private int x, y;
 	
-	public ResearchEntryImpl(ResourceLocation key, List<EntrySection> sections, List<Item> icons, List<String> meta, List<ResearchEntry> parents, ResearchCategory category, String name, String desc, int x, int y){
+	public ResearchEntryImpl(ResourceLocation key, List<EntrySection> sections, List<Item> icons, List<String> meta, List<ResourceLocation> parents, ResearchCategory category, String name, String desc, int x, int y){
 		this.key = key;
 		this.sections = sections;
 		this.icons = icons;
@@ -50,7 +50,7 @@ public class ResearchEntryImpl implements ResearchEntry{
 		return meta;
 	}
 	
-	public List<ResearchEntry> parents(){
+	public List<ResourceLocation> parents(){
 		return parents;
 	}
 	
