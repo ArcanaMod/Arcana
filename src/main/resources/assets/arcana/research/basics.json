@@ -13,11 +13,12 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.root.stage.1"
+          "content": "research.arcana.root.stage.1",
+          "requirements": ["5*arcana::xp", "arcana:arcanum"]
         },
         {
           "type": "guesswork",
-          "content": "<figure out the guesswork format // probably a recipe reference + some annotations>"
+          "content": "idk if this is even an entry section of requirement anymore lmao"
         },
         {
           "type": "string",

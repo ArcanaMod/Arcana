@@ -82,7 +82,7 @@ public class ResearchLoader{
 				ResearchCategory category = ServerBooks.getCategory(new ResourceLocation(entry.get("category").getAsString()));
 				int x = entry.get("x").getAsInt();
 				int y = entry.get("y").getAsInt();
-				List<EntrySection> sections = new ArrayList<>();
+				List<EntrySection> sections = jsonToSections(entry.getAsJsonArray("sections"), rl);
 				
 				// optionally parents, meta
 				List<ResourceLocation> parents = new ArrayList<>();
@@ -120,6 +120,27 @@ public class ResearchLoader{
 				.map(element -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(element.getAsString())))
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
+	}
+	
+	private static List<EntrySection> jsonToSections(JsonArray sections, ResourceLocation file){
+		List<EntrySection> ret = new ArrayList<>();
+		for(JsonElement sectionElement : sections){
+			// expecting type, content
+			if(sectionElement.isJsonObject()){
+				JsonObject section = sectionElement.getAsJsonObject();
+				String type = section.get("type").getAsString();
+				String content = section.get("content").getAsString();
+				EntrySection es = EntrySection.makeSection(type, content);
+				if(es != null)
+					ret.add(es);
+				else if(EntrySection.getFactory(type) == null)
+					LOGGER.error("Invalid EntrySection type \"" + type + "\" referenced in " + file + "!");
+				else
+					LOGGER.error("Invalid EntrySection content \"" + content + "\" for type \"" + type + "\" used in file " + file + "!");
+			}else
+				LOGGER.error("Non-object found in sections array in " + file + "!");
+		}
+		return ret;
 	}
 	
 	public static void load(){

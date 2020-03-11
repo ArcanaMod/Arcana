@@ -313,3 +313,9 @@ tile.untainted_willow_stairs.name=Tainted Willow Stairs
 
 # Commands
 commands.arcanaresearch.usage=arcana-research [<entry> <player> <operation> | reload]
+
+# Research
+research.arcana.root=Root Entry
+research.arcana.root.desc=(The start of something magical!)
+research.arcana.root.stage.1=<actual lore stuff, I don't know>
+research.arcana.root.complete=Good enough for me ¯\_(ツ)_/¯

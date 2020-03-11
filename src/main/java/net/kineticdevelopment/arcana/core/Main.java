@@ -5,6 +5,7 @@ import net.kineticdevelopment.arcana.common.commands.ReloadResearchCommand;
 import net.kineticdevelopment.arcana.common.commands.TaintLevelCommand;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
+import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -45,6 +46,7 @@ public class Main {
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent event) {
 		proxy.preInit(event);
+		EntrySection.init();
 	}
 	
 	/**
