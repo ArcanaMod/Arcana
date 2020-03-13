@@ -319,3 +319,6 @@ research.arcana.root=Root Entry
 research.arcana.root.desc=(The start of something magical!)
 research.arcana.root.stage.1=<actual lore stuff, I don't know>
 research.arcana.root.complete=Good enough for me ¯\_(ツ)_/¯
+research.arcana.root.guesswork.ench.hint.diamond=A pure crystal
+research.arcana.root.guesswork.ench.hint.book=A storage of text
+research.arcana.root.guesswork.ench.hint.obsidian=A dark, hard rock

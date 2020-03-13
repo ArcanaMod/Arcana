@@ -3,6 +3,9 @@ package net.kineticdevelopment.arcana.core.research.impls;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.minecraft.nbt.NBTTagCompound;
 
+/**
+ * An entry section that displays text over any number of pages.
+ */
 public class StringSection extends EntrySection{
 	
 	public static final String TYPE = "StringSection";

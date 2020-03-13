@@ -18,11 +18,22 @@
         },
         {
           "type": "guesswork",
-          "content": "idk if this is even an entry section of requirement anymore lmao"
+          "content": "enchanting_table"
         },
         {
           "type": "string",
           "content": "research.arcana.root.complete"
+        }
+      ],
+      "guessworks": [
+        {
+          "name": "enchanting_table",
+          "recipe": "minecraft:enchanting_table",
+          "hints": [
+            "minecraft:book=research.arcana.root.guesswork.ench.hint.book",
+            "minecraft:diamond=research.arcana.root.guesswork.ench.hint.diamond",
+            "minecraft:obsidian=research.arcana.root.guesswork.ench.hint.obsidian"
+          ]
         }
       ]
     }

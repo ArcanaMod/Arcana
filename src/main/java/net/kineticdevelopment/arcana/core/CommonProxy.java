@@ -2,9 +2,11 @@ package net.kineticdevelopment.arcana.core;
 
 import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
 import net.kineticdevelopment.arcana.common.init.EntityInit;
+import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
+import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
@@ -30,11 +32,13 @@ public class CommonProxy {
 		GameRegistry.registerWorldGenerator(OreGenerator.instance, 5);
 
 		MinecraftForge.EVENT_BUS.register(OreGenerator.instance);
+		EntrySection.init();
 	}
 
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
 		
+		Connection.init();
 		ResearchLoader.load();
 	}
 

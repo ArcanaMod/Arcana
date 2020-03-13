@@ -1,13 +1,14 @@
 package net.kineticdevelopment.arcana.core.research;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Represents a whole research book, such as the Arcanum or Tainted Codex.
@@ -53,5 +54,34 @@ public class ResearchBook{
 	
 	public Map<ResourceLocation, ResearchCategory> getCategoriesMap(){
 		return Collections.unmodifiableMap(categories);
+	}
+	
+	
+	public NBTTagCompound serialize(ResourceLocation tag){
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setString("id", tag.toString());
+		NBTTagList list = new NBTTagList();
+		categories.forEach((location, category) -> list.appendTag(category.serialize(location)));
+		nbt.setTag("categories", list);
+		return nbt;
+	}
+	
+	public static ResearchBook deserialize(NBTTagCompound nbt){
+		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
+		NBTTagList categoryList = nbt.getTagList("categories", 10);
+		// need to have a book to put them *in*
+		// book isn't in ClientBooks until all categories have been deserialized, so this is needed
+		Map<ResourceLocation, ResearchCategory> c = new LinkedHashMap<>();
+		ResearchBook book = new ResearchBook(key, c);
+		
+		Map<ResourceLocation, ResearchCategory> categories = StreamSupport.stream(categoryList.spliterator(), false)
+				.map(NBTTagCompound.class::cast)
+				.map(nbt1 -> ResearchCategory.deserialize(nbt1, book))
+				.collect(Collectors.toMap(ResearchCategory::getKey, Function.identity(), (a, b) -> a));
+		
+		// this could be replaced by adding c to ClientBooks before deserializing, but it wouldn't be very different
+		// and would leave a broken book in if an exception occurs.
+		c.putAll(categories);
+		return book;
 	}
 }

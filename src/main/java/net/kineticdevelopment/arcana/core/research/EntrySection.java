@@ -1,11 +1,11 @@
 package net.kineticdevelopment.arcana.core.research;
 
+import net.kineticdevelopment.arcana.core.research.impls.GuessworkSection;
 import net.kineticdevelopment.arcana.core.research.impls.StringSection;
 import net.minecraft.nbt.NBTTagCompound;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * Represents one section of content - for example, continuous text, an image, or an inline recipe.
@@ -38,8 +38,10 @@ public abstract class EntrySection{
 	}
 	
 	public static void init(){
-		factories.put(StringSection.TYPE, StringSection::new);
+		factories.put("string", StringSection::new);
 		deserializers.put(StringSection.TYPE, nbt -> new StringSection(nbt.getString("text")));
+		factories.put("guesswork", GuessworkSection::new);
+		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getString("guesswork")));
 	}
 	
 	public void addRequirement(Requirement requirement){

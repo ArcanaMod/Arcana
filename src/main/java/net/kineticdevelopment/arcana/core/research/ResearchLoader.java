@@ -1,11 +1,14 @@
 package net.kineticdevelopment.arcana.core.research;
 
 import com.google.gson.*;
+import net.kineticdevelopment.arcana.common.network.Connection;
+import net.kineticdevelopment.arcana.common.network.PktSyncBooks;
 import net.kineticdevelopment.arcana.core.research.impls.ResearchEntryImpl;
 import net.minecraft.item.Item;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -175,5 +178,8 @@ public class ResearchLoader{
 		bookQueue.forEach(ResearchLoader::applyBooksArray);
 		categoryQueue.forEach(ResearchLoader::applyCategoriesArray);
 		entryQueue.forEach(ResearchLoader::applyEntriesArray);
+		
+		if(FMLCommonHandler.instance().getMinecraftServerInstance() != null)
+			Connection.network.sendToAll(new PktSyncBooks());
 	}
 }
