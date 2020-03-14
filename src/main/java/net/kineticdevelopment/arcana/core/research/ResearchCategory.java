@@ -23,6 +23,8 @@ public class ResearchCategory{
 	private ResearchBook in;
 	private String name;
 	
+	protected int serializationIndex = 0;
+	
 	public ResearchCategory(Map<ResourceLocation, ResearchEntry> entries, ResourceLocation key, ResourceLocation icon, String name, ResearchBook in){
 		this.entries = entries;
 		this.key = key;
@@ -59,11 +61,16 @@ public class ResearchCategory{
 		return name;
 	}
 	
-	public NBTTagCompound serialize(ResourceLocation tag){
+	int getSerializationIndex(){
+		return serializationIndex;
+	}
+	
+	public NBTTagCompound serialize(ResourceLocation tag, int index){
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("id", tag.toString());
 		nbt.setString("icon", icon.toString());
 		nbt.setString("name", name);
+		nbt.setInteger("index", index);
 		NBTTagList list = new NBTTagList();
 		entries.forEach((location, entry) -> list.appendTag(entry.serialize(location)));
 		nbt.setTag("entries", list);
@@ -78,6 +85,7 @@ public class ResearchCategory{
 		// same story as ResearchBook
 		Map<ResourceLocation, ResearchEntry> c = new LinkedHashMap<>();
 		ResearchCategory category = new ResearchCategory(c, key, icon, name, in);
+		category.serializationIndex = nbt.getInteger("index");
 		
 		Map<ResourceLocation, ResearchEntry> entries = StreamSupport.stream(entriesList.spliterator(), false)
 				.map(NBTTagCompound.class::cast)

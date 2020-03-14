@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.core.research;
 
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
@@ -9,6 +10,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
+
+import static java.util.stream.Collectors.toMap;
 
 /**
  * Represents a whole research book, such as the Arcanum or Tainted Codex.
@@ -67,7 +70,12 @@ public class ResearchBook{
 		nbt.setString("id", tag.toString());
 		nbt.setString("prefix", prefix);
 		NBTTagList list = new NBTTagList();
-		categories.forEach((location, category) -> list.appendTag(category.serialize(location)));
+		int index = 0;
+		for(Map.Entry<ResourceLocation, ResearchCategory> entry : categories.entrySet()){
+			// enforce a specific order so things are transferred correctly
+			list.appendTag(entry.getValue().serialize(entry.getKey(), index));
+			index++;
+		}
 		nbt.setTag("categories", list);
 		return nbt;
 	}
@@ -84,7 +92,8 @@ public class ResearchBook{
 		Map<ResourceLocation, ResearchCategory> categories = StreamSupport.stream(categoryList.spliterator(), false)
 				.map(NBTTagCompound.class::cast)
 				.map(nbt1 -> ResearchCategory.deserialize(nbt1, book))
-				.collect(Collectors.toMap(ResearchCategory::getKey, Function.identity(), (a, b) -> a));
+				.sorted(Comparator.comparingInt(ResearchCategory::getSerializationIndex))
+				.collect(toMap(ResearchCategory::getKey, Function.identity(), (a, b) -> a, LinkedHashMap::new));
 		
 		// this could be replaced by adding c to ClientBooks before deserializing, but this wouldn't look any different
 		// and would leave a broken book in if an exception occurs.
