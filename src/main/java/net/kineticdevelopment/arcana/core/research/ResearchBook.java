@@ -18,10 +18,12 @@ public class ResearchBook{
 	
 	protected Map<ResourceLocation, ResearchCategory> categories;
 	private ResourceLocation key;
+	private String prefix;
 	
-	public ResearchBook(ResourceLocation key, Map<ResourceLocation, ResearchCategory> categories){
+	public ResearchBook(ResourceLocation key, Map<ResourceLocation, ResearchCategory> categories, String prefix){
 		this.categories = categories;
 		this.key = key;
+		this.prefix = prefix;
 	}
 	
 	public ResearchCategory getCategory(ResourceLocation key){
@@ -56,10 +58,14 @@ public class ResearchBook{
 		return Collections.unmodifiableMap(categories);
 	}
 	
+	public String getPrefix(){
+		return prefix;
+	}
 	
 	public NBTTagCompound serialize(ResourceLocation tag){
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("id", tag.toString());
+		nbt.setString("prefix", prefix);
 		NBTTagList list = new NBTTagList();
 		categories.forEach((location, category) -> list.appendTag(category.serialize(location)));
 		nbt.setTag("categories", list);
@@ -68,18 +74,19 @@ public class ResearchBook{
 	
 	public static ResearchBook deserialize(NBTTagCompound nbt){
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
+		String prefix = nbt.getString("prefix");
 		NBTTagList categoryList = nbt.getTagList("categories", 10);
 		// need to have a book to put them *in*
 		// book isn't in ClientBooks until all categories have been deserialized, so this is needed
 		Map<ResourceLocation, ResearchCategory> c = new LinkedHashMap<>();
-		ResearchBook book = new ResearchBook(key, c);
+		ResearchBook book = new ResearchBook(key, c, prefix);
 		
 		Map<ResourceLocation, ResearchCategory> categories = StreamSupport.stream(categoryList.spliterator(), false)
 				.map(NBTTagCompound.class::cast)
 				.map(nbt1 -> ResearchCategory.deserialize(nbt1, book))
 				.collect(Collectors.toMap(ResearchCategory::getKey, Function.identity(), (a, b) -> a));
 		
-		// this could be replaced by adding c to ClientBooks before deserializing, but it wouldn't be very different
+		// this could be replaced by adding c to ClientBooks before deserializing, but this wouldn't look any different
 		// and would leave a broken book in if an exception occurs.
 		c.putAll(categories);
 		return book;

@@ -16,7 +16,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.core.jmx.Server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
- * TODO: once we update to 1.14 - which I hope is soon - change this to use JsonReloadManager so we can use datapacks instead.
+ * TODO: once we update to 1.14, change this to use JsonReloadManager so we can use datapacks instead.
  */
 public class ResearchLoader{
 	
@@ -38,7 +37,9 @@ public class ResearchLoader{
 	private static Map<ResourceLocation, JsonArray> entryQueue = new LinkedHashMap<>();
 	
 	public static void applyJson(String json, ResourceLocation rl){
-		applyJson((JsonObject)JsonUtils.fromJson(GSON, json, JsonObject.class, false), rl);
+		JsonObject jsonObject = JsonUtils.fromJson(GSON, json, JsonObject.class, false);
+		if(jsonObject != null)
+			applyJson(jsonObject, rl);
 	}
 	
 	private static void applyBooksArray(ResourceLocation rl, JsonArray books){
@@ -47,9 +48,10 @@ public class ResearchLoader{
 				LOGGER.error("Non-object found in books array in " + rl + "!");
 			else{
 				JsonObject book = bookElement.getAsJsonObject();
-				// expecting key
+				// expecting key, prefix
 				ResourceLocation key = new ResourceLocation(book.get("key").getAsString());
-				ResearchBook bookObject = new ResearchBook(key, new LinkedHashMap<>());
+				String prefix = book.get("prefix").getAsString();
+				ResearchBook bookObject = new ResearchBook(key, new LinkedHashMap<>(), prefix);
 				ServerBooks.books.putIfAbsent(key, bookObject);
 			}
 		}
@@ -61,10 +63,13 @@ public class ResearchLoader{
 				LOGGER.error("Non-object found in categories array in " + rl + "!");
 			else{
 				JsonObject category = categoryElement.getAsJsonObject();
-				// expecting key, in, (later) icon, background?
+				// expecting key, in, icon, (later) background
 				ResourceLocation key = new ResourceLocation(category.get("key").getAsString());
+				ResourceLocation icon = new ResourceLocation(category.get("icon").getAsString());
+				String name = category.get("name").getAsString();
+				icon = new ResourceLocation(icon.getResourceDomain(), "textures/" + icon.getResourcePath());
 				ResearchBook in = ServerBooks.books.get(new ResourceLocation(category.get("in").getAsString()));
-				ResearchCategory categoryObject = new ResearchCategory(new LinkedHashMap<>(), key, in);
+				ResearchCategory categoryObject = new ResearchCategory(new LinkedHashMap<>(), key, icon, name, in);
 				in.categories.putIfAbsent(key, categoryObject);
 			}
 		}
@@ -175,6 +180,7 @@ public class ResearchLoader{
 				return false;
 				}, true, true);
 		}
+		
 		bookQueue.forEach(ResearchLoader::applyBooksArray);
 		categoryQueue.forEach(ResearchLoader::applyCategoriesArray);
 		entryQueue.forEach(ResearchLoader::applyEntriesArray);

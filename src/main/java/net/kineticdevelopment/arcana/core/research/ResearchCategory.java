@@ -19,13 +19,16 @@ import java.util.stream.StreamSupport;
 public class ResearchCategory{
 	
 	protected Map<ResourceLocation, ResearchEntry> entries;
-	private ResourceLocation key;
+	private ResourceLocation key, icon;
 	private ResearchBook in;
+	private String name;
 	
-	public ResearchCategory(Map<ResourceLocation, ResearchEntry> entries, ResourceLocation key, ResearchBook in){
+	public ResearchCategory(Map<ResourceLocation, ResearchEntry> entries, ResourceLocation key, ResourceLocation icon, String name, ResearchBook in){
 		this.entries = entries;
 		this.key = key;
 		this.in = in;
+		this.icon = icon;
+		this.name = name;
 	}
 	
 	public ResourceLocation getKey(){
@@ -48,22 +51,33 @@ public class ResearchCategory{
 		return in;
 	}
 	
+	public ResourceLocation getIcon(){
+		return icon;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
 	public NBTTagCompound serialize(ResourceLocation tag){
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("id", tag.toString());
+		nbt.setString("icon", icon.toString());
+		nbt.setString("name", name);
 		NBTTagList list = new NBTTagList();
 		entries.forEach((location, entry) -> list.appendTag(entry.serialize(location)));
 		nbt.setTag("entries", list);
-		
 		return nbt;
 	}
 	
 	public static ResearchCategory deserialize(NBTTagCompound nbt, ResearchBook in){
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
+		ResourceLocation icon = new ResourceLocation(nbt.getString("icon"));
+		String name = nbt.getString("name");
 		NBTTagList entriesList = nbt.getTagList("entries", 10);
 		// same story as ResearchBook
 		Map<ResourceLocation, ResearchEntry> c = new LinkedHashMap<>();
-		ResearchCategory category = new ResearchCategory(c, key, in);
+		ResearchCategory category = new ResearchCategory(c, key, icon, name, in);
 		
 		Map<ResourceLocation, ResearchEntry> entries = StreamSupport.stream(entriesList.spliterator(), false)
 				.map(NBTTagCompound.class::cast)

@@ -1,57 +1,85 @@
 {
   "books": [
     {
-      "key": "arcana:arcanum"
+      "key": "arcana:arcanum",
+      "prefix": "arcanum"
     },
     {
-      "key": "arcana:tainted_codex"
+      "key": "arcana:tainted_codex",
+      "prefix": "book_of_taint"
     },
     {
-      "key": "arcana:crimson_rites"
+      "key": "arcana:crimson_rites",
+      "prefix": "crimson_rites"
     },
     {
-      "key": "arcana:illustrious_grimoire"
+      "key": "arcana:illustrious_grimoire",
+      "prefix": "arcanum"
     }
   ],
   "categories": [
     {
       "key": "arcana:basics",
-      "in": "arcana:arcanum"
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/light.png",
+      "name": "research.arcana.category.basics"
     },
     {
       "key": "arcana:artifice",
-      "in": "arcana:arcanum"
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/research_goggles.png",
+      "name": "research.arcana.category.artifice"
     },
     {
       "key": "arcana:alchemy",
-      "in": "arcana:arcanum"
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/crucible_item.png",
+      "name": "research.arcana.category.alchemy"
     },
     {
       "key": "arcana:infusion",
-      "in": "arcana:arcanum"
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/mana.png",
+      "name": "research.arcana.category.infusion"
     },
     {
       "key": "arcana:golemancy",
-      "in": "arcana:arcanum"
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/human.png",
+      "name": "research.arcana.category.golemancy"
+    },
+    {
+      "key": "arcana:auromancy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/focus_parts.png",
+      "name": "research.arcana.category.auromancy"
     },
     {
       "key": "arcana:eldritch",
-      "in": "arcana:arcanum"
+      "in": "arcana:arcanum",
+      "icon": "arcana:research/eldritch.png",
+      "name": "research.arcana.category.eldritch"
     },
 
 
 
     {
       "key": "arcana:tainted_basics",
-      "in": "arcana:tainted_codex"
+      "in": "arcana:tainted_codex",
+      "icon": "arcana:research/tainted_basics.png",
+      "name": "research.arcana.category.taint"
     },
     {
       "key": "arcana:crimson_basics",
-      "in": "arcana:crimson_rites"
+      "in": "arcana:crimson_rites",
+      "icon": "arcana:research/crimson_basics.png",
+      "name": "research.arcana.category.crimson"
     },
     {
       "key": "arcana:illustrious_basics",
-      "in": "arcana:illustrious_grimoire"
+      "in": "arcana:illustrious_grimoire",
+      "icon": "arcana:research/illustrious_basics.png",
+      "name": "research.arcana.category.illustrious"
     }
   ]
 }

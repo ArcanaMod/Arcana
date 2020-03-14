@@ -315,6 +315,18 @@ tile.untainted_willow_stairs.name=Tainted Willow Stairs
 commands.arcanaresearch.usage=arcana-research [<entry> <player> <operation> | reload]
 
 # Research
+# NOTE: none of these names are final, or even more than a working name
+research.arcana.category.basics=Basics
+research.arcana.category.artifice=Artifice
+research.arcana.category.alchemy=Alchemy
+research.arcana.category.infusion=Infusion
+research.arcana.category.golemancy=Golemancy
+research.arcana.category.auromancy=Auromancy
+research.arcana.category.eldritch=Eldritch
+research.arcana.category.taint=Taint
+research.arcana.category.crimson=Crimson Rites
+research.arcana.category.illustrious=Cleansing
+
 research.arcana.root=Root Entry
 research.arcana.root.desc=(The start of something magical!)
 research.arcana.root.stage.1=<actual lore stuff, I don't know>

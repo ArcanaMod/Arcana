@@ -2,14 +2,18 @@ package net.kineticdevelopment.arcana.core;
 
 import java.util.ArrayList;
 
+import net.kineticdevelopment.arcana.client.model.gui.ResearchBookGUI;
+import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -73,5 +77,9 @@ public class ClientProxy extends CommonProxy {
 	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled)
 	{
 		parBlock.setGraphicsLevel(parFancyEnabled);
+	}
+	
+	public void openResearchBookUI(ResourceLocation book){
+		Minecraft.getMinecraft().displayGuiScreen(new ResearchBookGUI(ClientBooks.books.get(book)));
 	}
 }
