@@ -19,18 +19,19 @@ import java.util.stream.StreamSupport;
 public class ResearchCategory{
 	
 	protected Map<ResourceLocation, ResearchEntry> entries;
-	private ResourceLocation key, icon;
+	private ResourceLocation key, icon, bg;
 	private ResearchBook in;
 	private String name;
 	
 	protected int serializationIndex = 0;
 	
-	public ResearchCategory(Map<ResourceLocation, ResearchEntry> entries, ResourceLocation key, ResourceLocation icon, String name, ResearchBook in){
+	public ResearchCategory(Map<ResourceLocation, ResearchEntry> entries, ResourceLocation key, ResourceLocation icon, ResourceLocation bg, String name, ResearchBook in){
 		this.entries = entries;
 		this.key = key;
 		this.in = in;
 		this.icon = icon;
 		this.name = name;
+		this.bg = bg;
 	}
 	
 	public ResourceLocation getKey(){
@@ -61,6 +62,10 @@ public class ResearchCategory{
 		return name;
 	}
 	
+	public ResourceLocation getBg(){
+		return bg;
+	}
+	
 	int getSerializationIndex(){
 		return serializationIndex;
 	}
@@ -69,6 +74,7 @@ public class ResearchCategory{
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("id", tag.toString());
 		nbt.setString("icon", icon.toString());
+		nbt.setString("bg", bg.toString());
 		nbt.setString("name", name);
 		nbt.setInteger("index", index);
 		NBTTagList list = new NBTTagList();
@@ -80,11 +86,12 @@ public class ResearchCategory{
 	public static ResearchCategory deserialize(NBTTagCompound nbt, ResearchBook in){
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
 		ResourceLocation icon = new ResourceLocation(nbt.getString("icon"));
+		ResourceLocation bg = new ResourceLocation(nbt.getString("bg"));
 		String name = nbt.getString("name");
 		NBTTagList entriesList = nbt.getTagList("entries", 10);
 		// same story as ResearchBook
 		Map<ResourceLocation, ResearchEntry> c = new LinkedHashMap<>();
-		ResearchCategory category = new ResearchCategory(c, key, icon, name, in);
+		ResearchCategory category = new ResearchCategory(c, key, icon, bg, name, in);
 		category.serializationIndex = nbt.getInteger("index");
 		
 		Map<ResourceLocation, ResearchEntry> entries = StreamSupport.stream(entriesList.spliterator(), false)

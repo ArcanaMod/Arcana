@@ -65,11 +65,13 @@ public class ResearchLoader{
 				JsonObject category = categoryElement.getAsJsonObject();
 				// expecting key, in, icon, (later) background
 				ResourceLocation key = new ResourceLocation(category.get("key").getAsString());
+				ResourceLocation bg = new ResourceLocation(category.get("bg").getAsString());
+				bg = new ResourceLocation(bg.getResourceDomain(), "textures/" + bg.getResourcePath());
 				ResourceLocation icon = new ResourceLocation(category.get("icon").getAsString());
-				String name = category.get("name").getAsString();
 				icon = new ResourceLocation(icon.getResourceDomain(), "textures/" + icon.getResourcePath());
+				String name = category.get("name").getAsString();
 				ResearchBook in = ServerBooks.books.get(new ResourceLocation(category.get("in").getAsString()));
-				ResearchCategory categoryObject = new ResearchCategory(new LinkedHashMap<>(), key, icon, name, in);
+				ResearchCategory categoryObject = new ResearchCategory(new LinkedHashMap<>(), key, icon, bg, name, in);
 				in.categories.putIfAbsent(key, categoryObject);
 			}
 		}

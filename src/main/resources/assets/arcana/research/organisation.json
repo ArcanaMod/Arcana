@@ -22,43 +22,50 @@
       "key": "arcana:basics",
       "in": "arcana:arcanum",
       "icon": "arcana:item/light.png",
-      "name": "research.arcana.category.basics"
+      "name": "research.arcana.category.basics",
+      "bg": "arcana:research/basics_bg.png"
     },
     {
       "key": "arcana:artifice",
       "in": "arcana:arcanum",
       "icon": "arcana:item/research_goggles.png",
-      "name": "research.arcana.category.artifice"
+      "name": "research.arcana.category.artifice",
+      "bg": "arcana:research/starry_bg.png"
     },
     {
       "key": "arcana:alchemy",
       "in": "arcana:arcanum",
       "icon": "arcana:item/crucible_item.png",
-      "name": "research.arcana.category.alchemy"
+      "name": "research.arcana.category.alchemy",
+      "bg": "arcana:research/basics_bg.png"
     },
     {
       "key": "arcana:infusion",
       "in": "arcana:arcanum",
       "icon": "arcana:item/mana.png",
-      "name": "research.arcana.category.infusion"
+      "name": "research.arcana.category.infusion",
+      "bg": "arcana:research/starry_bg.png"
     },
     {
       "key": "arcana:golemancy",
       "in": "arcana:arcanum",
       "icon": "arcana:item/human.png",
-      "name": "research.arcana.category.golemancy"
+      "name": "research.arcana.category.golemancy",
+      "bg": "arcana:research/starry_bg.png"
     },
     {
       "key": "arcana:auromancy",
       "in": "arcana:arcanum",
       "icon": "arcana:item/focus_parts.png",
-      "name": "research.arcana.category.auromancy"
+      "name": "research.arcana.category.auromancy",
+      "bg": "arcana:research/colourvoid_bg.png"
     },
     {
       "key": "arcana:eldritch",
       "in": "arcana:arcanum",
       "icon": "arcana:research/eldritch.png",
-      "name": "research.arcana.category.eldritch"
+      "name": "research.arcana.category.eldritch",
+      "bg": "arcana:research/static_bg.png"
     },
 
 
@@ -67,19 +74,22 @@
       "key": "arcana:tainted_basics",
       "in": "arcana:tainted_codex",
       "icon": "arcana:research/tainted_basics.png",
-      "name": "research.arcana.category.taint"
+      "name": "research.arcana.category.taint",
+      "bg": "arcana:research/static_bg.png"
     },
     {
       "key": "arcana:crimson_basics",
       "in": "arcana:crimson_rites",
       "icon": "arcana:research/crimson_basics.png",
-      "name": "research.arcana.category.crimson"
+      "name": "research.arcana.category.crimson",
+      "bg": "arcana:research/static_bg.png"
     },
     {
       "key": "arcana:illustrious_basics",
       "in": "arcana:illustrious_grimoire",
       "icon": "arcana:research/illustrious_basics.png",
-      "name": "research.arcana.category.illustrious"
+      "name": "research.arcana.category.illustrious",
+      "bg": "arcana:research/colourvoid_bg.png"
     }
   ]
 }
