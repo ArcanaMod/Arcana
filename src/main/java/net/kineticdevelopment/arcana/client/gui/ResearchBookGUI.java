@@ -125,7 +125,10 @@ public class ResearchBookGUI extends GuiScreen{
 	private boolean hovering(ResearchEntry entry, int mouseX, int mouseY){
 		int x = (int)(entry.x() * 30 + getXOffset() + 15);
 		int y = (int)(entry.y() * 30 + getYOffset() + 15);
-		return mouseX >= x && mouseX <= x + 16 && mouseY >= y && mouseY <= y + 16;
+		// 224x196 viewing area
+		int scrx = (width - fWidth) / 2 + 16, scry = (height - fHeight) / 2 + 17;
+		return mouseX >= x && mouseX <= x + 16 && mouseY >= y && mouseY <= y + 16
+				&& mouseX >= scrx && mouseX <= scrx + 224 && mouseY >= scry && mouseY <= scry + 196;
 	}
 	
 	private void renderFrame(){
