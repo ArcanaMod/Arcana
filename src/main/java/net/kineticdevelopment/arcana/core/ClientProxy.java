@@ -2,7 +2,7 @@ package net.kineticdevelopment.arcana.core;
 
 import java.util.ArrayList;
 
-import net.kineticdevelopment.arcana.client.model.gui.ResearchBookGUI;
+import net.kineticdevelopment.arcana.client.gui.ResearchBookGUI;
 import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
