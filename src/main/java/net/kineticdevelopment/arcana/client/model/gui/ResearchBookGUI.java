@@ -3,18 +3,19 @@ package net.kineticdevelopment.arcana.client.model.gui;
 import com.google.common.collect.Lists;
 import net.kineticdevelopment.arcana.core.research.ResearchBook;
 import net.kineticdevelopment.arcana.core.research.ResearchCategory;
+import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import org.lwjgl.input.Mouse;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.IOException;
 import java.util.List;
 
 import static java.lang.Math.max;
@@ -29,7 +30,7 @@ public class ResearchBookGUI extends GuiScreen{
 	
 	public static final String SUFFIX = "_menu_gui.png";
 	private static final int fWidth = 256, fHeight = 230;
-	private static final int MAX_PAN = 64;
+	private static final int MAX_PAN = 256;
 	
 	static float xPan = 0, yPan = 0;
 	
@@ -40,11 +41,11 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	public float getXOffset(){
-		return width / 2f + xPan * 4f;
+		return (width / 2f) + (yPan / 2f);
 	}
 	
 	public float getYOffset(){
-		return height / 2f + yPan * 4f;
+		return (height / 2f) - (xPan / 2f);
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
@@ -78,11 +79,13 @@ public class ResearchBookGUI extends GuiScreen{
 		// let's scale is up x2, and also pan with half speed (which is what I'd do anyways) so we get 128 pan
 		// TODO: use larger (512^2) textures so I can pan more
 		mc.getTextureManager().bindTexture(categories.get(tab).getBg());
-		drawModalRectWithCustomSizedTexture((width - fWidth) / 2 + 16, (height - fHeight) / 2 + 17, xPan + MAX_PAN, yPan + MAX_PAN, 224, 196, 256, 256);
+		drawModalRectWithCustomSizedTexture((width - fWidth) / 2 + 16, (height - fHeight) / 2 + 17, -xPan / 4f + MAX_PAN, yPan / 4f + MAX_PAN, 224, 196, 256, 256);
 	}
 	
 	private void renderEntries(){
-	
+		for(ResearchEntry entry : categories.get(tab).getEntries()){
+			itemRender.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get(0)), (int)(entry.x() * 30 + getXOffset() + 15), (int)(entry.y() * 30 + getYOffset()) + 15);
+		}
 	}
 	
 	private void renderFrame(){
@@ -93,8 +96,9 @@ public class ResearchBookGUI extends GuiScreen{
 	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick){
 		// in 1.14, there's a nice _-delta as parameters
 		// but here I use Mouse.getD_()
-		xPan -= Mouse.getDX() / 4f;
-		yPan += Mouse.getDY() / 4f;
+		// TODO: the mouse and panning offset aren't fully in sync, why?
+		xPan += Mouse.getDX();
+		yPan += Mouse.getDY();
 		xPan = min(max(xPan, -MAX_PAN), MAX_PAN);
 		yPan = min(max(yPan, -MAX_PAN), MAX_PAN);
 		super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);

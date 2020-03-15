@@ -50,15 +50,15 @@ public interface ResearchEntry{
 		nbt.setTag("sections", list);
 		// icons
 		NBTTagList icons = new NBTTagList();
-		icons().forEach((icon) -> list.appendTag(new NBTTagString(ForgeRegistries.ITEMS.getKey(icon).toString())));
+		icons().forEach((icon) -> icons.appendTag(new NBTTagString(ForgeRegistries.ITEMS.getKey(icon).toString())));
 		nbt.setTag("icons", icons);
 		// parents
 		NBTTagList parents = new NBTTagList();
-		parents().forEach((parent) -> list.appendTag(new NBTTagString(parent.toString())));
+		parents().forEach((parent) -> parents.appendTag(new NBTTagString(parent.toString())));
 		nbt.setTag("parents", parents);
 		// meta
 		NBTTagList meta = new NBTTagList();
-		meta().forEach((met) -> list.appendTag(new NBTTagString(met)));
+		meta().forEach((met) -> meta.appendTag(new NBTTagString(met)));
 		nbt.setTag("meta", meta);
 		return nbt;
 	}
