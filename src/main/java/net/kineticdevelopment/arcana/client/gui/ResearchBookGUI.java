@@ -102,7 +102,7 @@ public class ResearchBookGUI extends GuiScreen{
 	private void renderEntries(){
 		for(ResearchEntry entry : categories.get(tab).getEntries()){
 			// render base
-			itemRender.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get(0)), (int)(entry.x() * 30 + getXOffset() + 15), (int)(entry.y() * 30 + getYOffset()) + 15);
+			itemRender.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get((mc.player.ticksExisted / 30) % entry.icons().size())), (int)(entry.x() * 30 + getXOffset() + 15), (int)(entry.y() * 30 + getYOffset()) + 15);
 			// for every visible parent
 				// draw an arrow & arrowhead
 		}

@@ -36,6 +36,22 @@
           ]
         }
       ]
+    },
+    {
+      "key": "arcana:trailing",
+      "name": "research.arcana.trailing",
+      "desc": "research.arcana.trailing.desc",
+      "icons": ["arcana:thaumium_ingot", "arcana:arcanium_ingot"],
+      "category": "arcana:basics",
+      "parents": ["arcana:root"],
+      "x": 1,
+      "y": 1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.trailing.all"
+        }
+      ]
     }
   ]
 }

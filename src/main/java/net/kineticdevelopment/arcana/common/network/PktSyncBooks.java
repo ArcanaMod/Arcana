@@ -30,7 +30,7 @@ public class PktSyncBooks implements IMessage{
 		ByteBufInputStream stream = new ByteBufInputStream(buf);
 		NBTTagCompound nbt = null;
 		try{
-			nbt = CompressedStreamTools.read(stream, new NBTSizeTracker(10000));
+			nbt = CompressedStreamTools.read(stream, NBTSizeTracker.INFINITE);
 		}catch(IOException e){
 			e.printStackTrace();
 		}

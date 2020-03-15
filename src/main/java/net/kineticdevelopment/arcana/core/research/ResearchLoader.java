@@ -97,7 +97,7 @@ public class ResearchLoader{
 				// optionally parents, meta
 				List<ResourceLocation> parents = new ArrayList<>();
 				if(entry.has("parents"))
-					parents = StreamSupport.stream(entry.getAsJsonArray("meta").spliterator(), false).map(JsonElement::getAsString).map(ResourceLocation::new).collect(Collectors.toList());
+					parents = StreamSupport.stream(entry.getAsJsonArray("parents").spliterator(), false).map(JsonElement::getAsString).map(ResourceLocation::new).collect(Collectors.toList());
 				
 				List<String> meta = new ArrayList<>();
 				if(entry.has("meta"))
