@@ -8,6 +8,7 @@ import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.ResearchLoader;
+import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,15 +30,17 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
 		EntityInit.init();
-		GameRegistry.registerWorldGenerator(OreGenerator.instance, 5);
 
+		GameRegistry.registerWorldGenerator(OreGenerator.instance, 5);
 		MinecraftForge.EVENT_BUS.register(OreGenerator.instance);
+
 		EntrySection.init();
+		ResearcherCapability.init();
 	}
 
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
-		
+
 		Connection.init();
 		ResearchLoader.load();
 	}

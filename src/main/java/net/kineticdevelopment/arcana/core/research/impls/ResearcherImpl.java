@@ -35,8 +35,7 @@ public class ResearcherImpl implements Researcher{
 		data.put(entry.key(), entry.sections().size());
 	}
 	
-	public void markDirty(){
-	}
+	public void markDirty(){}
 	
 	public Map<ResourceLocation, Integer> getData(){
 		return Collections.unmodifiableMap(data);

@@ -77,7 +77,7 @@ public class ResearchBookGUI extends GuiScreen{
 		renderEntryTooltip(mouseX, mouseY);
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		GlStateManager.disableBlend();
+		GlStateManager.enableBlend();
 	}
 	
 	public void initGui(){
