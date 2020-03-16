@@ -19,6 +19,7 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.IOException;
 import java.util.List;
 
 import static java.lang.Math.max;
@@ -145,6 +146,17 @@ public class ResearchBookGUI extends GuiScreen{
 		xPan = min(max(xPan, -MAX_PAN), MAX_PAN);
 		yPan = min(max(yPan, -MAX_PAN), MAX_PAN);
 		super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
+	}
+	
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+		for(ResearchEntry entry : categories.get(tab).getEntries()){
+			if(hovering(entry, mouseX, mouseY)){
+				// open page
+				mc.displayGuiScreen(new ResearchEntryGUI(entry));
+				break;
+			}
+		}
+		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 	
 	public boolean doesGuiPauseGame(){
