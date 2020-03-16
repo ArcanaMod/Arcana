@@ -140,7 +140,7 @@ public class ResearchBookGUI extends GuiScreen{
 	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick){
 		// in 1.14, there's a nice _-delta as parameters
 		// but here I use Mouse.getD_()
-		// TODO: the mouse and panning offset aren't fully in sync, why? calculate delta manually?
+		// TODO: the mouse and panning offset aren't fully in sync, why? --> calculate delta manually
 		xPan += Mouse.getDX();
 		yPan += Mouse.getDY();
 		xPan = min(max(xPan, -MAX_PAN), MAX_PAN);

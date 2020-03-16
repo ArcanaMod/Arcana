@@ -39,6 +39,9 @@ item.arcanium_wand_core.name=Arcanium Wand Core
 item.thaumium_ingot.name=Thaumium Ingot
 item.arcanium_ingot.name=Arcanium Ingot
 
+item.research_note=Research Note
+item.research_note_complete=Complete Research Note
+
 #Arcana Blocks
 tile.arcane_stone.name=Arcane Stone
 tile.arcane_stone_slab.name=Arcane Stone Slab
@@ -338,3 +341,11 @@ research.arcana.root.guesswork.ench.hint.obsidian=A dark, hard rock
 research.arcana.trailing=Trailing Entry
 research.arcana.trailing.desc=Nothing here but us chickens!
 research.arcana.trailing.all=That's all, folks!
+
+research.arcana.crimson=Crimson Rites
+research.arcana.crimson.desc=i see things
+research.arcana.crimson.all=look deeper -- see what you see -- look further, look harder, try harder -- what do you see?? -- go further -- there's more to it -- try again again\nagain\nagain
+
+research.arcana.tainted=Tainted Exploration
+research.arcana.tainted.desc=A Second Look at the Common Fiend
+research.arcana.tainted.all=Taint, in it's natural state, is unweildly and unusable, corrupting all in its path and twisting them into husks of their former selves. Despite my best efforts to contain it, its spread seems inevitable at times, with only diligent cleanup and harsh work keeping it in check. Perhaps there's a better way -- perhaps I can instead tame the beast, and put it to my own uses.\n\nTo that end, I have created the §otainted codex§r: a safe store for my research, to contain whatever revelations or ramblings I create.

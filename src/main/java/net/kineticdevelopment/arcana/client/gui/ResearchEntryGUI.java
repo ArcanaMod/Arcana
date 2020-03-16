@@ -4,6 +4,7 @@ import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 
 public class ResearchEntryGUI extends GuiScreen{
 	
@@ -18,7 +19,7 @@ public class ResearchEntryGUI extends GuiScreen{
 	public static final int PAGE_Y = 10;
 	public static final int PAGE_WIDTH = 105;
 	public static final int PAGE_HEIGHT = 155;
-	public static final int RIGHT_X_OFFSET = 102 - PAGE_X;
+	public static final int RIGHT_X_OFFSET = 119;
 	
 	public ResearchEntryGUI(ResearchEntry entry){
 		this.entry = entry;
@@ -27,17 +28,19 @@ public class ResearchEntryGUI extends GuiScreen{
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		drawDefaultBackground();
+		// 256 x 181 @ 0,0
+		mc.getTextureManager().bindTexture(new ResourceLocation(entry.key().getResourceDomain(), "textures/gui/research/" + entry.category().getBook().getPrefix() + SUFFIX));
+		drawTexturedModalRect((width - 256) / 2, (height - 181) / 2, 0, 0, 256, 181);
 		
-		
-		if(entry.sections().size() > index){
-			EntrySection section = entry.sections().get(index);
+		if(totalLength() > index){
+			EntrySection section = getSectionAtIndex(index);
 			if(section != null)
-				EntrySectionRenderer.get(section.getType()).render(section, /*pageIndex*/0, width, height, mouseX, mouseY, false, mc.player);
+				EntrySectionRenderer.get(section.getType()).render(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
 		}
-		if(entry.sections().size() > index + 1){
-			EntrySection section = entry.sections().get(index = 1);
+		if(totalLength() > index + 1){
+			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section.getType()).render(section, /*pageIndex*/0, width, height, mouseX, mouseY, false, mc.player);
+				EntrySectionRenderer.get(section.getType()).render(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
 		}
 	}
 	
@@ -50,16 +53,40 @@ public class ResearchEntryGUI extends GuiScreen{
 	}
 	
 	private int totalLength(){
-		int sum = 0;
-		for(int x = 0; index < entry.sections().size(); x++){
-			EntrySection section = entry.sections().get(x);
-			int span = EntrySectionRenderer.get(section).span(section, mc.player);
-			sum += span;
-		}
-		return sum;
+		return entry.sections().stream().mapToInt(this::span).sum();
 	}
 	
 	public void initGui(){
 		super.initGui();
+	}
+	
+	private EntrySection getSectionAtIndex(int index){
+		if(index == 0)
+			return entry.sections().get(0);
+		int cur = 0;
+		for(EntrySection section : entry.sections()){
+			if(cur <= index && cur + span(section) > index)
+				return section;
+			cur += span(section);
+		}
+		return null;
+	}
+	
+	private int sectionIndex(int index){
+		int cur = 0;
+		for(EntrySection section : entry.sections()){
+			if(cur <= index && cur + span(section) > index)
+				return index - cur;
+			cur += span(section);
+		}
+		return 0; // throw/show an error
+	}
+	
+	private int span(EntrySection section){
+		return EntrySectionRenderer.get(section).span(section, mc.player);
+	}
+	
+	public boolean doesGuiPauseGame(){
+		return false;
 	}
 }

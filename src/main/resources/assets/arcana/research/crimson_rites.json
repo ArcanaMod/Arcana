@@ -1,0 +1,26 @@
+{
+  "entries": [
+    {
+      "key": "arcana:crimson_trailing",
+      "name": "research.arcana.crimson",
+      "desc": "research.arcana.crimson.desc",
+      "icons": [
+        "arcana:crimson_rites",
+        "arcana:item_void_cap",
+        "arcana:hawthorn_log"
+      ],
+      "category": "arcana:crimson_basics",
+      "parents": [
+        "arcana:root"
+      ],
+      "x": 1,
+      "y": 1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.crimson.all"
+        }
+      ]
+    }
+  ]
+}
