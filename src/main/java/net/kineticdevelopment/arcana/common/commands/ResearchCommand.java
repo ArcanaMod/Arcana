@@ -10,7 +10,6 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
@@ -36,7 +35,6 @@ public class ResearchCommand extends CommandBase{
 		if(args.length == 1 && args[0].equals("reload"))
 			ResearchLoader.load();
 		else if(args.length == 3){
-			// TODO: entry- player- operation-
 			ResourceLocation entryKey = new ResourceLocation(args[0]);
 			ResearchEntry entry = ServerBooks.getEntry(entryKey);
 			if(entry != null){
