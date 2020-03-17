@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.core.research;
 
+import net.kineticdevelopment.arcana.common.event.ResearchEvent;
 import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
@@ -27,7 +28,7 @@ public interface Researcher{
 	 * <p>If the new section has no requirements, this continues to increment the stage
 	 * until it reaches either a section with requirements, or the end of the entry.
 	 *
-	 * <p>Fires (TODO!) @link ResearchAdvancedEvent} if the page is not already complete.
+	 * <p>Fires {@link ResearchEvent} if the page is not already complete.
 	 *
 	 * <p>Has no effect if the page is already complete.
 	 *
@@ -42,11 +43,21 @@ public interface Researcher{
 	 * Sets this researchers progress for an entry to its maximum progress
 	 *
 	 * <p>Has no effect if this entry is already complete.
+	 * Fires {@link ResearchEvent} if the page is not already complete.
 	 *
 	 * @param entry
 	 * 		The research entry to complete.
 	 */
 	void complete(ResearchEntry entry);
+	
+	/**
+	 * Removes all progress on the given entry.
+	 *
+	 * <p>Fires {@link ResearchEvent} if the page is not already incomplete.
+	 *
+	 * @param entry The research entry to reset.
+	 */
+	void reset(ResearchEntry entry);
 	
 	void markDirty();
 	
@@ -78,6 +89,11 @@ public interface Researcher{
 	
 	static boolean canAdvance(Researcher r, ResearchEntry entry, EntityPlayer player){
 		return entry.sections().get(r.stage(entry)).getRequirements().stream().allMatch(x -> x.satisfied(player));
+	}
+	
+	static void takeAndAdvance(Researcher r, ResearchEntry entry, EntityPlayer player){
+		if(canAdvance(r, entry, player))
+			entry.sections().get(r.stage(entry)).getRequirements().forEach(requirement -> requirement.take(player));
 	}
 	
 	/**

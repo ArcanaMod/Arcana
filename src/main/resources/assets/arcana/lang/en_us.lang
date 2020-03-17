@@ -316,6 +316,8 @@ tile.untainted_willow_stairs.name=Tainted Willow Stairs
 
 # Commands
 commands.arcanaresearch.usage=arcana-research [<entry> <player> <operation> | reload]
+commands.arcanaresearch.operations=Operations: reset (sets progress to zero), complete (sets progress to maximum), tryAdvance (advances if requirements are met), forceAdvance (advances regardless of if requirements are met).
+commands.arcanaresearch.invalid_entry=Invalid entry "%s"!
 
 # Research
 # NOTE: none of these names are final, or even more than a working name

@@ -1,9 +1,11 @@
 package net.kineticdevelopment.arcana.core.research.impls;
 
+import net.kineticdevelopment.arcana.common.event.ResearchEvent;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +22,7 @@ public class ResearcherImpl implements Researcher{
 	
 	public void advance(ResearchEntry entry){
 		// if we can advance
-		if(Researcher.canAdvance(this, entry, player))
+		if(Researcher.canAdvance(this, entry, player)){
 			do{
 				// increment stage
 				data.put(entry.key(), stage(entry) + 1);
@@ -29,10 +31,22 @@ public class ResearcherImpl implements Researcher{
 				// this ends up on entry.sections().size(); an entry with 1 section is on stage 0 by default and can be incremented to 1.
 				// TODO: don't skip through addenda
 			}while(stage(entry) < entry.sections().size() && entry.sections().get(stage(entry)).getRequirements().size() == 0);
+			MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
+		}
 	}
 	
 	public void complete(ResearchEntry entry){
-		data.put(entry.key(), entry.sections().size());
+		if(stage(entry) < entry.sections().size()){
+			data.put(entry.key(), entry.sections().size());
+			MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.COMPLETE));
+		}
+	}
+	
+	public void reset(ResearchEntry entry){
+		if(stage(entry) > 0){
+			data.remove(entry.key());
+			MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.RESET));
+		}
 	}
 	
 	public void markDirty(){}

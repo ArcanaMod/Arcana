@@ -1,11 +1,10 @@
 package net.kineticdevelopment.arcana.core;
 
 import net.kineticdevelopment.arcana.common.commands.CommandFocus;
-import net.kineticdevelopment.arcana.common.commands.ReloadResearchCommand;
+import net.kineticdevelopment.arcana.common.commands.ResearchCommand;
 import net.kineticdevelopment.arcana.common.commands.TaintLevelCommand;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
-import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,8 +15,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -90,7 +87,7 @@ public class Main {
 	public void serverLoad(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandFocus());
 		event.registerServerCommand(new TaintLevelCommand());
-		event.registerServerCommand(new ReloadResearchCommand());
+		event.registerServerCommand(new ResearchCommand());
 	}
 
 	//Why is this here? This is very redundant
