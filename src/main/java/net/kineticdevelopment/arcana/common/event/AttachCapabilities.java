@@ -15,8 +15,9 @@ public class AttachCapabilities{
 	@SubscribeEvent
 	public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event){
 		if(event.getObject() instanceof EntityPlayer){
-			event.addCapability(ResearcherCapability.KEY, new ResearcherCapability.Provider());
-			Researcher.getFrom((EntityPlayer)event.getObject()).setPlayer((EntityPlayer)event.getObject());
+			ResearcherCapability.Provider cap = new ResearcherCapability.Provider();
+			event.addCapability(ResearcherCapability.KEY, cap);
+			cap.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null).setPlayer((EntityPlayer)event.getObject());
 		}
 	}
 	

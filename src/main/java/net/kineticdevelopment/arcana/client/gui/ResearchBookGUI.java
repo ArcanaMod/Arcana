@@ -65,10 +65,12 @@ public class ResearchBookGUI extends GuiScreen{
 		int visibleWidth = 224, visibleHeight = 196;
 		GL11.glScissor(x * scale, y * scale, visibleWidth * scale, visibleHeight * scale);
 		GL11.glEnable(GL_SCISSOR_TEST);
+		// scissors on
 		
 		renderBackground();
 		renderEntries();
 		
+		// scissors off
 		GL11.glDisable(GL_SCISSOR_TEST);
 		
 		zLevel = 400;
@@ -103,7 +105,10 @@ public class ResearchBookGUI extends GuiScreen{
 	private void renderEntries(){
 		for(ResearchEntry entry : categories.get(tab).getEntries()){
 			// render base
+			// render item
 			itemRender.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get((mc.player.ticksExisted / 30) % entry.icons().size())), (int)(entry.x() * 30 + getXOffset() + 15), (int)(entry.y() * 30 + getYOffset()) + 15);
+			// if it should have an overlay, render one on top
+			
 			// for every visible parent
 				// draw an arrow & arrowhead
 		}
