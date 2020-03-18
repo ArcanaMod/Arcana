@@ -21,18 +21,16 @@ public class ResearcherImpl implements Researcher{
 	}
 	
 	public void advance(ResearchEntry entry){
-		// if we can advance
-		if(Researcher.canAdvance(this, entry, player)){
-			do{
-				// increment stage
-				data.put(entry.key(), stage(entry) + 1);
-				// as long as there are more stages
-				// and the current stage has no requirements
-				// this ends up on entry.sections().size(); an entry with 1 section is on stage 0 by default and can be incremented to 1.
-				// TODO: don't skip through addenda
-			}while(stage(entry) < entry.sections().size() && entry.sections().get(stage(entry)).getRequirements().size() == 0);
-			MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
-		}
+		// whether or not we can advance is already checked
+		do{
+			// increment stage
+			data.put(entry.key(), stage(entry) + 1);
+			// as long as there are more stages
+			// and the current stage has no requirements
+			// this ends up on entry.sections().size(); an entry with 1 section is on stage 0 by default and can be incremented to 1.
+			// TODO: don't skip through addenda
+		}while(stage(entry) < entry.sections().size() && entry.sections().get(stage(entry)).getRequirements().size() == 0);
+		MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
 	}
 	
 	public void complete(ResearchEntry entry){

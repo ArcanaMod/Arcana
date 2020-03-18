@@ -4,17 +4,26 @@
       "key": "arcana:root",
       "name": "research.arcana.root",
       "desc": "research.arcana.root.desc",
-      "icons": ["arcana:arcanum"],
+      "icons": [
+        "arcana:arcanum"
+      ],
       "category": "arcana:basics",
       "parents": [],
-      "meta": [],
+      "meta": [
+        "root",
+        "yellow_base",
+        "round_base"
+      ],
       "x": 0,
       "y": 0,
       "sections": [
         {
           "type": "string",
           "content": "research.arcana.root.stage.1",
-          "requirements": ["5*arcana::xp", "arcana:arcanum"]
+          "requirements": [
+            "5*arcana::xp",
+            "arcana:arcanum"
+          ]
         },
         {
           "type": "guesswork",
@@ -41,9 +50,17 @@
       "key": "arcana:trailing",
       "name": "research.arcana.trailing",
       "desc": "research.arcana.trailing.desc",
-      "icons": ["arcana:thaumium_ingot", "arcana:arcanium_ingot"],
+      "icons": [
+        "arcana:thaumium_ingot",
+        "arcana:arcanium_ingot"
+      ],
       "category": "arcana:basics",
-      "parents": ["arcana:root"],
+      "parents": [
+        "arcana:root"
+      ],
+      "meta": [
+        "hexagon_base"
+      ],
       "x": 1,
       "y": 1,
       "sections": [
