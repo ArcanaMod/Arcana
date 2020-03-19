@@ -3,9 +3,13 @@ package net.kineticdevelopment.arcana.core.research;
 import net.kineticdevelopment.arcana.core.research.impls.GuessworkSection;
 import net.kineticdevelopment.arcana.core.research.impls.StringSection;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static net.kineticdevelopment.arcana.utilities.StreamUtils.streamAndApply;
 
 /**
  * Represents one section of content - for example, continuous text, an image, or an inline recipe.
@@ -34,8 +38,13 @@ public abstract class EntrySection{
 	public static EntrySection deserialze(NBTTagCompound passData){
 		String type = passData.getString("type");
 		NBTTagCompound data = passData.getCompoundTag("data");
-		if(deserializers.get(type) != null)
-			return deserializers.get(type).apply(data);
+		List<Requirement> requirements = streamAndApply(passData.getTagList("requirements", 10), NBTTagCompound.class, Requirement::deserialze)
+				.collect(Collectors.toList());
+		if(deserializers.get(type) != null){
+			EntrySection section = deserializers.get(type).apply(data);
+			requirements.forEach(section::addRequirement);
+			return section;
+		}
 		return null;
 	}
 	
@@ -60,6 +69,11 @@ public abstract class EntrySection{
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("type", getType());
 		nbt.setTag("data", getData());
+		
+		NBTTagList list = new NBTTagList();
+		getRequirements().forEach((requirement) -> list.appendTag(requirement.getPassData()));
+		nbt.setTag("requirements", list);
+		
 		return nbt;
 	}
 	

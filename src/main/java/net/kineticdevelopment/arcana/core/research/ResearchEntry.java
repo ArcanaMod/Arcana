@@ -1,8 +1,8 @@
 package net.kineticdevelopment.arcana.core.research;
 
 import net.kineticdevelopment.arcana.core.research.impls.ResearchEntryImpl;
+import net.kineticdevelopment.arcana.utilities.StreamUtils;
 import net.minecraft.item.Item;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -11,10 +11,9 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Function;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
+
+import static net.kineticdevelopment.arcana.utilities.StreamUtils.*;
 
 /**
  * Represents a node in the research tree. Provides an ordered list of entry sections representing its content.
@@ -84,10 +83,4 @@ public interface ResearchEntry{
 		return new ResearchEntryImpl(key, sections, icons, meta, parents, in, name, desc, x, y);
 	}
 	
-	static <X extends NBTBase, Z> Stream<Z> streamAndApply(NBTTagList list, Class<X> filterType, Function<X, Z> applicator){
-		return StreamSupport.stream(list.spliterator(), false)
-				.filter(filterType::isInstance)
-				.map(filterType::cast)
-				.map(applicator);
-	}
 }

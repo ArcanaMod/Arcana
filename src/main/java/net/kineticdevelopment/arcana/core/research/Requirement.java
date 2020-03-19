@@ -31,8 +31,12 @@ public abstract class Requirement{
 	public static Requirement deserialze(NBTTagCompound passData){
 		ResourceLocation type = new ResourceLocation(passData.getString("type"));
 		NBTTagCompound data = passData.getCompoundTag("data");
-		if(deserializers.get(type) != null)
-			return deserializers.get(type).apply(data);
+		int amount = passData.getInteger("amount");
+		if(deserializers.get(type) != null){
+			Requirement requirement = deserializers.get(type).apply(data);
+			requirement.amount = amount;
+			return requirement;
+		}
 		return null;
 	}
 	
