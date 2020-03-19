@@ -15,8 +15,8 @@ public class PktTryAdvanceHandler implements IMessageHandler<PktTryAdvance, PktA
 		ResearchEntry entry = ServerBooks.getEntry(message.getKey());
 		if(entry != null){
 			EntityPlayerMP sender = ctx.getServerHandler().player;
-			if(Researcher.canAdvance(Researcher.getFrom(sender), entry, sender)){
-				Researcher.takeAndAdvance(Researcher.getFrom(sender), entry, sender);
+			if(Researcher.canAdvance(Researcher.getFrom(sender), entry)){
+				Researcher.takeAndAdvance(Researcher.getFrom(sender), entry);
 				return new PktAdvanceResearch(message.getKey());
 			}
 		}

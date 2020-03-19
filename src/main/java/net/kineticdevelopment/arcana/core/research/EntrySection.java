@@ -12,6 +12,8 @@ import java.util.function.Function;
  */
 public abstract class EntrySection{
 	
+	// static stuff
+	
 	// when addon support is to be added: change this from strings to ResourceLocations so mods can register more
 	private static Map<String, Function<String, EntrySection>> factories = new LinkedHashMap<>();
 	private static Map<String, Function<NBTTagCompound, EntrySection>> deserializers = new LinkedHashMap<>();
@@ -44,6 +46,8 @@ public abstract class EntrySection{
 		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getString("guesswork")));
 	}
 	
+	// instance stuff
+	
 	public void addRequirement(Requirement requirement){
 		requirements.add(requirement);
 	}
@@ -61,4 +65,5 @@ public abstract class EntrySection{
 	
 	public abstract String getType();
 	public abstract NBTTagCompound getData();
+	public void addOwnRequirements(){}
 }

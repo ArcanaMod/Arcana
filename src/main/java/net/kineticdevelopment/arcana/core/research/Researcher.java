@@ -87,16 +87,16 @@ public interface Researcher{
 		setData(dat);
 	}
 	
-	static boolean canAdvance(Researcher r, ResearchEntry entry, EntityPlayer player){
+	static boolean canAdvance(Researcher r, ResearchEntry entry){
 		if(entry.sections().size() > r.stage(entry))
-			return entry.sections().get(r.stage(entry)).getRequirements().stream().allMatch(x -> x.satisfied(player));
+			return entry.sections().get(r.stage(entry)).getRequirements().stream().allMatch(x -> x.satisfied(r.getPlayer()));
 		// at maximum
 		return false;
 	}
 	
-	static void takeAndAdvance(Researcher r, ResearchEntry entry, EntityPlayer player){
-		if(canAdvance(r, entry, player)){
-			entry.sections().get(r.stage(entry)).getRequirements().forEach(requirement -> requirement.take(player));
+	static void takeAndAdvance(Researcher r, ResearchEntry entry){
+		if(canAdvance(r, entry)){
+			entry.sections().get(r.stage(entry)).getRequirements().forEach(requirement -> requirement.take(r.getPlayer()));
 			r.advance(entry);
 		}
 	}

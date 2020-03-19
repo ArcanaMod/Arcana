@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.core.research;
 import com.google.gson.*;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.PktSyncBooks;
+import net.kineticdevelopment.arcana.core.research.impls.ItemRequirement;
 import net.kineticdevelopment.arcana.core.research.impls.ResearchEntryImpl;
 import net.minecraft.item.Item;
 import net.minecraft.util.JsonUtils;
@@ -26,6 +27,8 @@ import java.util.stream.StreamSupport;
 
 /**
  * TODO: once we update to 1.14, change this to use JsonReloadManager so we can use datapacks instead.
+ * This class has some rather verbose logging, since this will probably be a source of problems or
+ * confusion for addon makers. (If you don't think its verbose, add more logging.)
  */
 public class ResearchLoader{
 	
@@ -110,7 +113,6 @@ public class ResearchLoader{
 	}
 	
 	public static void applyJson(JsonObject json, ResourceLocation rl){
-		// LOGGER.info(json);
 		if(json.has("books")){
 			JsonArray books = json.getAsJsonArray("books");
 			bookQueue.put(rl, books);
@@ -141,14 +143,66 @@ public class ResearchLoader{
 				String type = section.get("type").getAsString();
 				String content = section.get("content").getAsString();
 				EntrySection es = EntrySection.makeSection(type, content);
-				if(es != null)
+				if(es != null){
+					if(section.has("requirements"))
+						if(section.get("requirements").isJsonArray()){
+							for(Requirement requirement : jsonToRequirements(section.get("requirements").getAsJsonArray(), file))
+								if(requirement != null)
+									es.addRequirement(requirement);
+						}else LOGGER.error("Non-array named \"requirements\" found in " + file + "!");
+					es.addOwnRequirements();
 					ret.add(es);
-				else if(EntrySection.getFactory(type) == null)
+				}else if(EntrySection.getFactory(type) == null)
 					LOGGER.error("Invalid EntrySection type \"" + type + "\" referenced in " + file + "!");
 				else
 					LOGGER.error("Invalid EntrySection content \"" + content + "\" for type \"" + type + "\" used in file " + file + "!");
 			}else
 				LOGGER.error("Non-object found in sections array in " + file + "!");
+		}
+		return ret;
+	}
+	
+	private static List<Requirement> jsonToRequirements(JsonArray requirements, ResourceLocation file){
+		List<Requirement> ret = new ArrayList<>();
+		for(JsonElement requirementElement : requirements){
+			if(requirementElement.isJsonPrimitive()){
+				String desc = requirementElement.getAsString();
+				int amount = 1;
+				// if it has * in it, then its amount is not one
+				if(desc.contains("*")){
+					String[] parts = desc.split("\\*");
+					if(parts.length != 2)
+						LOGGER.error("Multiple \"*\"s found in requirement in " + file + "!");
+					desc = parts[parts.length - 1];
+					amount = Integer.parseInt(parts[0]);
+				}
+				List<String> params = new ArrayList<>();
+				// document this better.
+				if(desc.contains("{") && desc.endsWith("}")){
+					String[] paramparts = desc.split("\\{");
+					if(paramparts.length != 2)
+						LOGGER.error("Multiple \"{\"s found in requirement in " + file + "!");
+					desc = paramparts[0];
+					params = Arrays.asList(paramparts[1].substring(0, paramparts[1].length() - 1).split(", "));
+				}
+				if(desc.contains("::")){
+					String[] parts = desc.split("::");
+					if(parts.length != 2)
+						LOGGER.error("Multiple \"::\"s found in requirement in " + file + "!");
+					ResourceLocation type = new ResourceLocation(parts[0], parts[1]);
+					Requirement add = Requirement.makeRequirement(type, params);
+					if(add != null){
+						add.amount = amount;
+						ret.add(add);
+					}else
+						LOGGER.error("Invalid requirement type " + type + " found in file " + file + "!");
+				}else{
+					// its an item
+					ResourceLocation item = new ResourceLocation(desc);
+					Requirement add = new ItemRequirement(ForgeRegistries.ITEMS.getValue(item));
+					add.amount = amount;
+				}
+			}
 		}
 		return ret;
 	}

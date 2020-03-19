@@ -7,6 +7,7 @@ import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
+import net.kineticdevelopment.arcana.core.research.Requirement;
 import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
 import net.minecraft.item.Item;
@@ -35,6 +36,7 @@ public class CommonProxy {
 		MinecraftForge.EVENT_BUS.register(OreGenerator.instance);
 
 		EntrySection.init();
+		Requirement.init();
 		ResearcherCapability.init();
 	}
 

@@ -1,6 +1,5 @@
 package net.kineticdevelopment.arcana.common.commands;
 
-import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
@@ -12,14 +11,12 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,7 +50,7 @@ public class ResearchCommand extends CommandBase{
 					Researcher.getFrom(player).complete(entry);
 					Connection.sendComplete(entry, player);
 				}else if(args[2].equalsIgnoreCase("tryAdvance")){
-					if(Researcher.canAdvance(Researcher.getFrom(player), entry, player)){
+					if(Researcher.canAdvance(Researcher.getFrom(player), entry)){
 						Researcher.getFrom(player).advance(entry);
 						Connection.sendAdvance(entry, player);
 					}
