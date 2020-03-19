@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.common.commands;
 
+import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
@@ -11,10 +12,16 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Allows for the reloading, granting, removal and completion of research.
@@ -54,11 +61,32 @@ public class ResearchCommand extends CommandBase{
 					Researcher.getFrom(player).advance(entry);
 					Connection.sendAdvance(entry, player);
 				}else
-					// document these somewhere that doesn't require an error
 					throw new WrongUsageException("commands.arcanaresearch.operations");
 			}else
 				throw new WrongUsageException("commands.arcanaresearch.invalid_entry", entryKey);
 		}else
 			throw new WrongUsageException("commands.arcanaresearch.usage");
+	}
+	
+	public boolean isUsernameIndex(String[] args, int index){
+		return index == 1 && !args[0].equalsIgnoreCase("reload");
+	}
+	
+	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos){
+		// if args-length = 1: reload OR entries
+		// if args-length = 2 AND we're not reloading: players
+		// if args-length = 3 AND we're not reloading: operations
+		// can't wait for brigadier to do this all for me :)
+		if(args.length == 1){
+			List<String> possibilties = getListOfStringsMatchingLastWord(args, ServerBooks.streamEntries().map(ResearchEntry::key).collect(Collectors.toList()));
+			possibilties.addAll(getListOfStringsMatchingLastWord(args, "reload"));
+			return possibilties;
+		}else if(args.length == 2 && !args[0].equalsIgnoreCase("reload")){
+			return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+		}else if(args.length == 3 && !args[0].equalsIgnoreCase("reload")){
+			return getListOfStringsMatchingLastWord(args, "reset", "tryAdvance", "forceAdvance", "complete");
+		}
+		
+		return super.getTabCompletions(server, sender, args, targetPos);
 	}
 }
