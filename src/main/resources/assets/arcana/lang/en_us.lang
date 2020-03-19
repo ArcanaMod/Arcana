@@ -322,6 +322,7 @@ commands.arcanaresearch.invalid_entry=Invalid entry "%s"!
 # Research
 requirement.guesswork=Complete the guesswork
 requirement.experience=%sx Experience Levels
+requirement.fieldwork=Do ___ (TODO)
 
 # NOTE: none of these names are final, or even more than a working name
 research.arcana.category.basics=Basics

@@ -19,13 +19,11 @@ public class GuessworkRequirementRenderer implements RequirementRenderer<Guesswo
 	private static final ResourceLocation COMPLETE_TEXTURE = new ResourceLocation(Main.MODID, "textures/item/research_note_complete.png");
 	
 	public void render(int x, int y, GuessworkRequirement requirement, int ticks, float partialTicks, EntityPlayer player){
-		if(requirement.satisfied(player)){
+		if(requirement.satisfied(player))
 			Minecraft.getMinecraft().getTextureManager().bindTexture(COMPLETE_TEXTURE);
-			Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
-		}else{
+		else
 			Minecraft.getMinecraft().getTextureManager().bindTexture(INCOMPLETE_TEXTURE);
-			Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
-		}
+		Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 	}
 	
 	public List<String> tooltip(GuessworkRequirement requirement, EntityPlayer player){

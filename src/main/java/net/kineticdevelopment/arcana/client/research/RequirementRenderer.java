@@ -1,9 +1,11 @@
 package net.kineticdevelopment.arcana.client.research;
 
+import net.kineticdevelopment.arcana.client.research.impls.FieldworkRequirementRenderer;
 import net.kineticdevelopment.arcana.client.research.impls.GuessworkRequirementRenderer;
 import net.kineticdevelopment.arcana.client.research.impls.ItemRequirementRenderer;
 import net.kineticdevelopment.arcana.client.research.impls.XpRequirementRenderer;
 import net.kineticdevelopment.arcana.core.research.Requirement;
+import net.kineticdevelopment.arcana.core.research.impls.FieldworkRequirement;
 import net.kineticdevelopment.arcana.core.research.impls.GuessworkRequirement;
 import net.kineticdevelopment.arcana.core.research.impls.ItemRequirement;
 import net.kineticdevelopment.arcana.core.research.impls.XpRequirement;
@@ -26,6 +28,7 @@ public interface RequirementRenderer<T extends Requirement>{
 		map.put(ItemRequirement.TYPE, cached(ItemRequirementRenderer::new));
 		map.put(XpRequirement.TYPE, cached(XpRequirementRenderer::new));
 		map.put(GuessworkRequirement.TYPE, cached(GuessworkRequirementRenderer::new));
+		map.put(FieldworkRequirement.TYPE, cached(FieldworkRequirementRenderer::new));
 	}
 	
 	void render(int x, int y, T requirement, int ticks, float partialTicks, EntityPlayer player);
