@@ -45,24 +45,24 @@ public class ResearchEntryGUI extends GuiScreen{
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);
 			if(section != null)
-				EntrySectionRenderer.get(section.getType()).render(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
+				EntrySectionRenderer.get(section).render(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
 		}
 		if(totalLength() > index + 1){
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section.getType()).render(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
+				EntrySectionRenderer.get(section).render(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
 		}
 		
 		// After-renders (such as tooltips)
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);
 			if(section != null)
-				EntrySectionRenderer.get(section.getType()).renderAfter(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
+				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
 		}
 		if(totalLength() > index + 1){
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section.getType()).renderAfter(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
+				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
 		}
 	}
 	

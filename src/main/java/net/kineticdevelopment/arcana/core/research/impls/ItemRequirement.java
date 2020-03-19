@@ -4,6 +4,7 @@ import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Requirement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
@@ -12,6 +13,7 @@ public class ItemRequirement extends Requirement{
 	
 	// perhaps support NBT in the future? will be required for enchantments in the future at least.
 	protected Item item;
+	protected ItemStack stack;
 	
 	public static final ResourceLocation TYPE = new ResourceLocation(Main.MODID, "item");
 	
@@ -35,5 +37,13 @@ public class ItemRequirement extends Requirement{
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setString("itemType", String.valueOf(ForgeRegistries.ITEMS.getKey(item)));
 		return compound;
+	}
+	
+	public Item getItem(){
+		return item;
+	}
+	
+	public ItemStack getStack(){
+		return stack == null? stack = new ItemStack(getItem()): stack;
 	}
 }

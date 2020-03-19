@@ -5,6 +5,7 @@ import net.kineticdevelopment.arcana.client.research.impls.StringSectionRenderer
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.impls.GuessworkSection;
 import net.kineticdevelopment.arcana.core.research.impls.StringSection;
+import net.kineticdevelopment.arcana.utilities.StreamUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,13 +14,15 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
+import static net.kineticdevelopment.arcana.utilities.StreamUtils.cached;
+
 public interface EntrySectionRenderer<T extends EntrySection>{
 	
 	Map<String, Supplier<EntrySectionRenderer<?>>> map = new LinkedHashMap<>();
 	
 	static void init(){
-		map.put(StringSection.TYPE, StringSectionRenderer::new);
-		map.put(GuessworkSection.TYPE, GuessworkSectionRenderer::new);
+		map.put(StringSection.TYPE, cached(StringSectionRenderer::new));
+		map.put(GuessworkSection.TYPE, cached(GuessworkSectionRenderer::new));
 	}
 	
 	void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player);

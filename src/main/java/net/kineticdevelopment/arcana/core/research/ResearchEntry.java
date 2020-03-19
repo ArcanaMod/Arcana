@@ -1,7 +1,6 @@
 package net.kineticdevelopment.arcana.core.research;
 
 import net.kineticdevelopment.arcana.core.research.impls.ResearchEntryImpl;
-import net.kineticdevelopment.arcana.utilities.StreamUtils;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static net.kineticdevelopment.arcana.utilities.StreamUtils.*;
+import static net.kineticdevelopment.arcana.utilities.StreamUtils.streamAndApply;
 
 /**
  * Represents a node in the research tree. Provides an ordered list of entry sections representing its content.
@@ -49,7 +48,7 @@ public interface ResearchEntry{
 		nbt.setTag("sections", list);
 		// icons
 		NBTTagList icons = new NBTTagList();
-		icons().forEach((icon) -> icons.appendTag(new NBTTagString(ForgeRegistries.ITEMS.getKey(icon).toString())));
+		icons().forEach((icon) -> icons.appendTag(new NBTTagString(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(icon), "Invalid item for icon on client side.").toString())));
 		nbt.setTag("icons", icons);
 		// parents
 		NBTTagList parents = new NBTTagList();
@@ -82,5 +81,4 @@ public interface ResearchEntry{
 				.collect(Collectors.toList());
 		return new ResearchEntryImpl(key, sections, icons, meta, parents, in, name, desc, x, y);
 	}
-	
 }
