@@ -7,23 +7,45 @@ import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.items.ResearchBookItem;
+import net.kineticdevelopment.arcana.common.objects.items.tools.*;
 import net.kineticdevelopment.arcana.core.Main;
+import net.minecraft.block.BlockSlab;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.item.ItemSword;
+import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Initialize Items here
- * @author Merijn, Tea
+ * @author Merijn, Tea, Wilkon
  * @see BlockStateInit
  * @see EntityInit
  * @see BlockInit
  */
 public class ItemInit {
 
-	public static final List<Item> ITEMS = new ArrayList<>();
+	public static final List<Item> ITEMS = new ArrayList<Item>();
+
+	// Materials - Values
+	public static Item.ToolMaterial MATERIAL_ARCANIUM = EnumHelper.addToolMaterial("material_arcanium",4,1987,9.0F,4.0F, 20);
+	public static Item.ToolMaterial MATERIAL_VOID_METAL = EnumHelper.addToolMaterial("material_void_metal",5,250, 10.0F, 4.5F,8);
+
+	//Weapons
+	public static Item ARCANIUM_AXE = new AxeBase("arcanium_axe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_SWORD = new SwordBase("arcanium_sword", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_AXE = new AxeBase("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_SWORD = new SwordBase("void_metal_sword", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+
+	//Tools
+	public static Item ARCANIUM_HOE = new HoeBase("arcanium_hoe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_PICKAXE = new PickaxeBase("arcanium_pickaxe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_SHOVEL = new ShovelBase("arcanium_shovel", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_HOE = new HoeBase("void_metal_hoe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_PICKAXE = new PickaxeBase("void_metal_pickaxe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_SHOVEL = new ShovelBase("void_metal_shovel", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
 
 	//Items With Function
 
@@ -41,10 +63,15 @@ public class ItemInit {
 	public static Item DOG_MEAT_COOKED = new ItemBase("cooked_dog_meat").setCreativeTab(Main.TAB_ARCANA);
 	public static Item DOG_MEAT_UNCOOKED = new ItemBase("dog_meat").setCreativeTab(Main.TAB_ARCANA);
 
+	// Ingots
 	public static Item THAUMIUM_INGOT = new ItemBase("thaumium_ingot").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_INGOT = new ItemBase("arcanium_ingot").setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_INGOT = new ItemBase("void_metal_ingot").setCreativeTab(Main.TAB_ARCANA);
 
+	// Materials - Items
+	public static Item SILVERWOOD_STICK = new ItemBase("silverwood_stick").setCreativeTab(Main.TAB_ARCANA);
 
+	// Wand Parts
 	public static Item FOCUS_PARTS = new ItemBase("focus_parts").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ITEM_IRON_CAPS = new ItemBase("item_iron_cap").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ITEM_GOLD_CAPS = new ItemBase("item_gold_cap").setCreativeTab(Main.TAB_ARCANA);
