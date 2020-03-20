@@ -201,6 +201,7 @@ public class ResearchLoader{
 					ResourceLocation item = new ResourceLocation(desc);
 					Requirement add = new ItemRequirement(ForgeRegistries.ITEMS.getValue(item));
 					add.amount = amount;
+					ret.add(add);
 				}
 			}
 		}

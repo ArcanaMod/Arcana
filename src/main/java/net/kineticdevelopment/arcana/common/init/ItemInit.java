@@ -7,12 +7,9 @@ import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.items.ResearchBookItem;
-import net.kineticdevelopment.arcana.common.objects.items.tools.*;
 import net.kineticdevelopment.arcana.core.Main;
-import net.minecraft.block.BlockSlab;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.ArrayList;
@@ -34,18 +31,18 @@ public class ItemInit {
 	public static Item.ToolMaterial MATERIAL_VOID_METAL = EnumHelper.addToolMaterial("material_void_metal",5,250, 10.0F, 4.5F,8);
 
 	//Weapons
-	public static Item ARCANIUM_AXE = new AxeBase("arcanium_axe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item ARCANIUM_SWORD = new SwordBase("arcanium_sword", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_AXE = new AxeBase("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_SWORD = new SwordBase("void_metal_sword", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_AXE = new net.kineticdevelopment.arcana.common.objects.items.tools.AxeBase("arcanium_axe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_SWORD = new net.kineticdevelopment.arcana.common.objects.items.tools.SwordBase("arcanium_sword", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_AXE = new net.kineticdevelopment.arcana.common.objects.items.tools.AxeBase("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_SWORD = new net.kineticdevelopment.arcana.common.objects.items.tools.SwordBase("void_metal_sword", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
 
 	//Tools
-	public static Item ARCANIUM_HOE = new HoeBase("arcanium_hoe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item ARCANIUM_PICKAXE = new PickaxeBase("arcanium_pickaxe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item ARCANIUM_SHOVEL = new ShovelBase("arcanium_shovel", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_HOE = new HoeBase("void_metal_hoe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_PICKAXE = new PickaxeBase("void_metal_pickaxe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_SHOVEL = new ShovelBase("void_metal_shovel", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_HOE = new net.kineticdevelopment.arcana.common.objects.items.tools.HoeBase("arcanium_hoe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_PICKAXE = new net.kineticdevelopment.arcana.common.objects.items.tools.PickaxeBase("arcanium_pickaxe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_SHOVEL = new net.kineticdevelopment.arcana.common.objects.items.tools.ShovelBase("arcanium_shovel", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_HOE = new net.kineticdevelopment.arcana.common.objects.items.tools.HoeBase("void_metal_hoe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_PICKAXE = new net.kineticdevelopment.arcana.common.objects.items.tools.PickaxeBase("void_metal_pickaxe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_SHOVEL = new net.kineticdevelopment.arcana.common.objects.items.tools.ShovelBase("void_metal_shovel", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
 
 	//Items With Function
 

@@ -58,7 +58,7 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
-		drawWorldBackground(0);
+		drawDefaultBackground();
 		GlStateManager.enableBlend();
 		
 		// draw stuff

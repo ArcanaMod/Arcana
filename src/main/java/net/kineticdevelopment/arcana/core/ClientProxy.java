@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.kineticdevelopment.arcana.client.gui.ResearchBookGUI;
 import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
+import net.kineticdevelopment.arcana.client.research.RequirementRenderer;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
@@ -35,6 +36,7 @@ public class ClientProxy extends CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 		EntrySectionRenderer.init();
+		RequirementRenderer.init();
 	}
 	@Override
 	public void init(FMLInitializationEvent event) {

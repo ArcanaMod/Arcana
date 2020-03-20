@@ -1,15 +1,20 @@
 package net.kineticdevelopment.arcana.client.gui;
 
 import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
+import net.kineticdevelopment.arcana.client.research.RequirementRenderer;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
+import net.kineticdevelopment.arcana.core.research.Requirement;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
+import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.config.GuiUtils;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 
 public class ResearchEntryGUI extends GuiScreen{
 	
@@ -51,6 +56,27 @@ public class ResearchEntryGUI extends GuiScreen{
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
 				EntrySectionRenderer.get(section).render(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
+		}
+		
+		// Requirements
+		Researcher r = Researcher.getFrom(mc.player);
+		if(r.stage(entry) < entry.sections().size() && entry.sections().get(r.stage(entry)).getRequirements().size() > 0){
+			List<Requirement> requirements = entry.sections().get(r.stage(entry)).getRequirements();
+			int y = (height - 181) / 2 + 190;
+			if(requirements.size() > 10)
+				y += 10;
+			final int baseX = (width / 2) - (10 * requirements.size());
+			for(int i = 0, size = requirements.size(); i < size; i++){
+				Requirement requirement = requirements.get(i);
+				renderer(requirement).render(baseX + i * 20, y, requirement, mc.player.ticksExisted, partialTicks, mc.player);
+				renderAmount(baseX + i * 20, y, requirement.getAmount(), requirement.satisfied(mc.player));
+			}
+			// Show tooltips
+			for(int i = 0, size = requirements.size(); i < size; i++)
+				if(mouseX >= 20 * i + baseX && mouseX <= 20 * i + baseX + 16 && mouseY >= y && mouseY <= y + 16){
+					GuiUtils.drawHoveringText(renderer(requirements.get(i)).tooltip(requirements.get(i), mc.player), mouseX, mouseY, width, height, -1, mc.fontRenderer);
+					break;
+				}
 		}
 		
 		// After-renders (such as tooltips)
@@ -121,6 +147,25 @@ public class ResearchEntryGUI extends GuiScreen{
 			cur += span(section);
 		}
 		return 0; // throw/show an error
+	}
+	
+	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){
+		return RequirementRenderer.get(requirement);
+	}
+	
+	private void renderAmount(int x, int y, int amount, boolean complete){
+		if(amount == 1){
+			//display tick or cross
+		}else{
+			String s = String.valueOf(amount);
+			GlStateManager.disableLighting();
+			GlStateManager.disableDepth();
+			GlStateManager.disableBlend();
+			mc.fontRenderer.drawStringWithShadow(s, (float)(x + 19 - 2 - mc.fontRenderer.getStringWidth(s)), (float)(y + 6 + 3), complete ? 0xaaffaa : 0xffaaaa);
+			GlStateManager.enableBlend();
+			GlStateManager.enableLighting();
+			GlStateManager.enableDepth();
+		}
 	}
 	
 	private int span(EntrySection section){
