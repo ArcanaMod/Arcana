@@ -59,8 +59,6 @@ public interface Researcher{
 	 */
 	void reset(ResearchEntry entry);
 	
-	void markDirty();
-	
 	void setPlayer(EntityPlayer player);
 	EntityPlayer getPlayer();
 	
@@ -88,8 +86,9 @@ public interface Researcher{
 	}
 	
 	static boolean canAdvance(Researcher r, ResearchEntry entry){
-		if(entry.sections().size() > r.stage(entry))
-			return entry.sections().get(r.stage(entry)).getRequirements().stream().allMatch(x -> x.satisfied(r.getPlayer()));
+		if(visible(entry, r))
+			if(entry.sections().size() > r.stage(entry))
+				return entry.sections().get(r.stage(entry)).getRequirements().stream().allMatch(x -> x.satisfied(r.getPlayer()));
 		// at maximum
 		return false;
 	}
@@ -110,5 +109,20 @@ public interface Researcher{
 	 */
 	static Researcher getFrom(EntityPlayer p){
 		return p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null);
+	}
+	
+	static boolean visible(ResearchEntry entry, Researcher r){
+		// TODO: document meta tags: "root" makes an entry always in progress if it has no parents; "hidden" makes an entry always invisible unless it has progress.
+		// abridged version of ResearchBookGUI#style
+		
+		if(r.stage(entry) >= entry.sections().size())
+			return true;
+		if(r.stage(entry) > 0)
+			return true;
+		if(entry.meta().contains("root") && entry.parents().size() == 0)
+			return true;
+		if(!entry.meta().contains("hidden"))
+			return entry.parents().stream().allMatch(x -> visible(ServerBooks.getEntry(x), r));
+		return false;
 	}
 }

@@ -47,8 +47,6 @@ public class ResearcherImpl implements Researcher{
 		}
 	}
 	
-	public void markDirty(){}
-	
 	public Map<ResourceLocation, Integer> getData(){
 		return Collections.unmodifiableMap(data);
 	}
