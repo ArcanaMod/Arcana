@@ -1,8 +1,13 @@
 package net.kineticdevelopment.arcana.common.network;
 
+import net.kineticdevelopment.arcana.common.network.PktAdvanceHandler.PktAdvanceResearch;
+import net.kineticdevelopment.arcana.common.network.PktCompleteHandler.PktCompleteResearch;
+import net.kineticdevelopment.arcana.common.network.PktResetHandler.PktResetResearch;
+import net.kineticdevelopment.arcana.common.network.PktSyncBooksHandler.PktSyncBooks;
+import net.kineticdevelopment.arcana.common.network.PktSyncClientResearchHandler.PktSyncClientResearch;
+import net.kineticdevelopment.arcana.common.network.PktTryAdvanceHandler.PktTryAdvance;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -17,6 +22,7 @@ public class Connection{
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(Main.MODID);
 		
 		network.registerMessage(PktSyncBooksHandler.class, PktSyncBooks.class, id++, Side.CLIENT);
+		network.registerMessage(PktSyncClientResearchHandler.class, PktSyncClientResearch.class, id++, Side.CLIENT);
 		network.registerMessage(PktTryAdvanceHandler.class, PktTryAdvance.class, id++, Side.SERVER);
 		network.registerMessage(PktAdvanceHandler.class, PktAdvanceResearch.class, id++, Side.CLIENT);
 		network.registerMessage(PktCompleteHandler.class, PktCompleteResearch.class, id++, Side.CLIENT);

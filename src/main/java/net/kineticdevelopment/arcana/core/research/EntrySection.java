@@ -52,7 +52,7 @@ public abstract class EntrySection{
 		factories.put("string", StringSection::new);
 		deserializers.put(StringSection.TYPE, nbt -> new StringSection(nbt.getString("text")));
 		factories.put("guesswork", GuessworkSection::new);
-		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getString("guesswork")));
+		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getInteger("guesswork")));
 	}
 	
 	// instance stuff

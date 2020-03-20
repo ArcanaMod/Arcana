@@ -319,6 +319,9 @@ commands.arcanaresearch.usage=arcana-research [<entry> <player> <operation> | re
 commands.arcanaresearch.operations=Operations: reset (sets progress to zero), complete (sets progress to maximum), tryAdvance (advances if requirements are met), forceAdvance (advances regardless of if requirements are met).
 commands.arcanaresearch.invalid_entry=Invalid entry "%s"!
 
+# Guis
+researchEntry.continue=Continue
+
 # Research
 requirement.guesswork=Complete the guesswork
 requirement.experience=%sx Experience Levels
@@ -350,7 +353,11 @@ research.arcana.trailing.all=That's all, folks!
 
 research.arcana.crimson=introduction
 research.arcana.crimson.desc=welcome to the crimson.
-research.arcana.crimson.all=look deeper -- see what you see -- look further, look harder, try harder -- what do you see?? -- go further -- there's more to it -- try again again\nagain\nagain
+research.arcana.crimson.all=we have all seen things that we might not want to have seen. we have all found out some piece of critical info that doesn't fit our worldview. perhaps something as magical as a revelation from beyond, or something as mundane as a broken heart. whatever it is that lead you to the crimson, you're welcome here. you will be useful here.
+
+research.arcana.crimson_initiation=initiation
+research.arcana.crimson_initiation.desc=pacing yourself.
+research.arcana.crimson_initiation.all=some say there is a thin line between insanity and genius. some will proudly exclaim it having seen the eventual fate of their heroes or idols.\n\nthese people are nearly correct. but rather: genius and insanity feed into eachother.\n\nyou cannot have genius without first understanding insanity, and the knowledge you gain makes many incoherent to those not in the know. we know, though;\n\nand, soon, so will you.\n\nthese pages contain information that, while now difficult to fully understand, will soon become second nature to you; information that will widen your understanding of everything.\n\njust   o p e n   y o u r   e y e s   .
 
 research.arcana.tainted=Tainted Exploration
 research.arcana.tainted.desc=A Second Look at the Common Fiend

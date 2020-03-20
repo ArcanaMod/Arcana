@@ -4,8 +4,8 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import net.kineticdevelopment.arcana.client.research.ClientBooks;
-import net.kineticdevelopment.arcana.core.research.ResearchBook;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.Researcher;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -13,26 +13,24 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class PktSyncBooksHandler implements IMessageHandler<PktSyncBooksHandler.PktSyncBooks, IMessage>{
+public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClientResearchHandler.PktSyncClientResearch, IMessage>{
 	
-	public IMessage onMessage(PktSyncBooks message, MessageContext ctx){
+	public IMessage onMessage(PktSyncClientResearch message, MessageContext ctx){
 		// from server -> client
-		// TODO: this should probably be made into something somewhat better
-		ClientBooks.books = message.data;
+		Researcher.getFrom(Minecraft.getMinecraft().player).setData(message.data);
 		return null;
 	}
 	
-	public static class PktSyncBooks implements IMessage{
+	public static class PktSyncClientResearch implements IMessage{
 		
-		Map<ResourceLocation, ResearchBook> data = new LinkedHashMap<>();
+		Map<ResourceLocation, Integer> data = new LinkedHashMap<>();
 		
-		public PktSyncBooks(){}
+		public PktSyncClientResearch(){}
 		
-		public PktSyncBooks(Map<ResourceLocation, ResearchBook> data){
+		public PktSyncClientResearch(Map<ResourceLocation, Integer> data){
 			this.data = data;
 		}
 		
@@ -48,14 +46,9 @@ public class PktSyncBooksHandler implements IMessageHandler<PktSyncBooksHandler.
 			}
 			
 			if(nbt != null){
-				//
-				NBTTagList books = nbt.getTagList("books", 10);
-				for(NBTBase bookElement : books){
-					NBTTagCompound book = (NBTTagCompound)bookElement;
-					// deserialize book
-					ResearchBook book1 = ResearchBook.deserialize(book);
-					data.put(book1.getKey(), book1);
-				}
+				NBTTagCompound researches = (NBTTagCompound)nbt.getTag("researches");
+				for(String key : researches.getKeySet())
+					data.put(new ResourceLocation(key), researches.getInteger(key));
 			}
 		}
 		
@@ -64,10 +57,10 @@ public class PktSyncBooksHandler implements IMessageHandler<PktSyncBooksHandler.
 			// used with ByteBufOutputStream
 			ByteBufOutputStream stream = new ByteBufOutputStream(buf);
 			NBTTagCompound nbt = new NBTTagCompound();
-			NBTTagList books = new NBTTagList();
+			NBTTagCompound researches = new NBTTagCompound();
 			// add each book
-			data.forEach((location, book) -> books.appendTag(book.serialize(location)));
-			nbt.setTag("books", books);
+			data.forEach((entry, stage) -> researches.setInteger(entry.toString(), stage));
+			nbt.setTag("researches", researches);
 			try{
 				CompressedStreamTools.write(nbt, stream);
 			}catch(IOException e){

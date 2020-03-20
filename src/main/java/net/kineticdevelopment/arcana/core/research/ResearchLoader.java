@@ -2,7 +2,7 @@ package net.kineticdevelopment.arcana.core.research;
 
 import com.google.gson.*;
 import net.kineticdevelopment.arcana.common.network.Connection;
-import net.kineticdevelopment.arcana.common.network.PktSyncBooks;
+import net.kineticdevelopment.arcana.common.network.PktSyncBooksHandler;
 import net.kineticdevelopment.arcana.core.research.impls.ItemRequirement;
 import net.kineticdevelopment.arcana.core.research.impls.ResearchEntryImpl;
 import net.minecraft.item.Item;
@@ -243,6 +243,6 @@ public class ResearchLoader{
 		entryQueue.forEach(ResearchLoader::applyEntriesArray);
 		
 		if(FMLCommonHandler.instance().getMinecraftServerInstance() != null)
-			Connection.network.sendToAll(new PktSyncBooks());
+			Connection.network.sendToAll(new PktSyncBooksHandler.PktSyncBooks(ServerBooks.books));
 	}
 }

@@ -19,7 +19,9 @@
         {
           "type": "string",
           "content": "research.arcana.tainted.stage.1",
-          "requirements": ["arcana:tainted_wand_core"]
+          "requirements": [
+            "arcana:tainted_wand_core"
+          ]
         }
       ]
     }

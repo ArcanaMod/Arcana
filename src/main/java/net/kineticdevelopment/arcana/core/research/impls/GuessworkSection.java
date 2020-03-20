@@ -11,10 +11,14 @@ public class GuessworkSection extends EntrySection{
 	
 	public static final String TYPE = "GuessworkSection";
 	
-	String guessworkName;
+	int guessworkIndex;
 	
-	public GuessworkSection(String guessworkName){
-		this.guessworkName = guessworkName;
+	public GuessworkSection(String guessworkIndex){
+		this.guessworkIndex = Integer.parseInt(guessworkIndex);
+	}
+	
+	public GuessworkSection(int guessworkIndex){
+		this.guessworkIndex = guessworkIndex;
 	}
 	
 	public String getType(){
@@ -23,11 +27,15 @@ public class GuessworkSection extends EntrySection{
 	
 	public NBTTagCompound getData(){
 		NBTTagCompound tag = new NBTTagCompound();
-		tag.setString("guesswork", getGuessworkName());
+		tag.setInteger("guesswork", getGuessworkIndex());
 		return tag;
 	}
 	
-	public String getGuessworkName(){
-		return guessworkName;
+	public int getGuessworkIndex(){
+		return guessworkIndex;
+	}
+	
+	public void addOwnRequirements(){
+		addRequirement(new GuessworkRequirement(guessworkIndex));
 	}
 }

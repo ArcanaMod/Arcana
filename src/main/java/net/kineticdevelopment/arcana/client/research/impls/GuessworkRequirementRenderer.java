@@ -5,6 +5,7 @@ import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.impls.GuessworkRequirement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -23,6 +24,7 @@ public class GuessworkRequirementRenderer implements RequirementRenderer<Guesswo
 			Minecraft.getMinecraft().getTextureManager().bindTexture(COMPLETE_TEXTURE);
 		else
 			Minecraft.getMinecraft().getTextureManager().bindTexture(INCOMPLETE_TEXTURE);
+		GlStateManager.color(1f, 1f, 1f, 1f);
 		Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 	}
 	

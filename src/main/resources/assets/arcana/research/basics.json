@@ -27,7 +27,7 @@
         },
         {
           "type": "guesswork",
-          "content": "enchanting_table"
+          "content": "0"
         },
         {
           "type": "string",
@@ -36,7 +36,6 @@
       ],
       "guessworks": [
         {
-          "name": "enchanting_table",
           "recipe": "minecraft:enchanting_table",
           "hints": [
             "minecraft:book=research.arcana.root.guesswork.ench.hint.book",

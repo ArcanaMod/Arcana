@@ -55,7 +55,7 @@ public abstract class Requirement{
 	
 	////////// instance stuff
 	
-	protected int amount;
+	protected int amount = 1;
 	
 	public int getAmount(){
 		return amount;
@@ -67,6 +67,11 @@ public abstract class Requirement{
 		nbt.setTag("data", data());
 		nbt.setInteger("amount", getAmount());
 		return nbt;
+	}
+	
+	public Requirement setAmount(int amount){
+		this.amount = amount;
+		return this;
 	}
 	
 	public abstract boolean satisfied(EntityPlayer player);
