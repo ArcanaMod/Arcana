@@ -18,7 +18,8 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.tainted.all"
+          "content": "research.arcana.tainted.stage.1",
+          "requirements": ["arcana:tainted_wand_core"]
         }
       ]
     }

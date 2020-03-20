@@ -109,7 +109,6 @@ public interface Researcher{
 	 * @return The player's researcher capability.
 	 */
 	static Researcher getFrom(EntityPlayer p){
-		// An exception should *not* be thrown, since every player gets one, but just in case.
 		return p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null);
 	}
 }

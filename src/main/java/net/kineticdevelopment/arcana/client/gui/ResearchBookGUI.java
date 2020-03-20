@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.client.gui;
 
 import com.google.common.collect.Lists;
 import net.kineticdevelopment.arcana.client.research.ClientBooks;
+import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.ResearchBook;
 import net.kineticdevelopment.arcana.core.research.ResearchCategory;
@@ -221,10 +222,15 @@ public class ResearchBookGUI extends GuiScreen{
 	
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
 		for(ResearchEntry entry : categories.get(tab).getEntries()){
-			PageStyle style = null;
-			if(hovering(entry, mouseX, mouseY) && (style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS){
-				// open page
-				mc.displayGuiScreen(new ResearchEntryGUI(entry));
+			PageStyle style;
+			if(hovering(entry, mouseX, mouseY)){
+				if(mouseButton != 2){
+					if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS)
+						// left/right (& other) click: open page
+						mc.displayGuiScreen(new ResearchEntryGUI(entry));
+				}else
+					// middle click: try advance
+					Connection.sendTryAdvance(entry);
 				break;
 			}
 		}

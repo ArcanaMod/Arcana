@@ -156,12 +156,17 @@ public class ResearchEntryGUI extends GuiScreen{
 	private void renderAmount(int x, int y, int amount, boolean complete){
 		if(amount == 1){
 			//display tick or cross
+			mc.getTextureManager().bindTexture(bg);
+			// lowest it can be to ensure it renders over items, apparently
+			zLevel = 300;
+			drawTexturedModalRect(x + 10, y + 9, complete ? 0 : 8, 247, 8, 9);
+			zLevel = 0;
 		}else{
 			String s = String.valueOf(amount);
 			GlStateManager.disableLighting();
 			GlStateManager.disableDepth();
 			GlStateManager.disableBlend();
-			mc.fontRenderer.drawStringWithShadow(s, (float)(x + 19 - 2 - mc.fontRenderer.getStringWidth(s)), (float)(y + 6 + 3), complete ? 0xaaffaa : 0xffaaaa);
+			mc.fontRenderer.drawStringWithShadow(s, (float)(x + 17 - mc.fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa);
 			GlStateManager.enableBlend();
 			GlStateManager.enableLighting();
 			GlStateManager.enableDepth();
