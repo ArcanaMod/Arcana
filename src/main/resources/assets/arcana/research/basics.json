@@ -32,6 +32,10 @@
         {
           "type": "string",
           "content": "research.arcana.root.complete"
+        },
+        {
+          "type": "recipe",
+          "content": "arcana:R_arcanium_sword"
         }
       ],
       "guessworks": [

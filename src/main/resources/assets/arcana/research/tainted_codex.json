@@ -18,7 +18,11 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.tainted.stage.1",
+          "content": "research.arcana.tainted.stage.1"
+        },
+        {
+          "type": "recipe",
+          "content": "arcana:__furnace__arcana-tainted_oak_log.arcana-tainted_wand_core",
           "requirements": [
             "arcana:tainted_wand_core"
           ]

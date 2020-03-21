@@ -1,9 +1,11 @@
 package net.kineticdevelopment.arcana.client.research;
 
 import net.kineticdevelopment.arcana.client.research.impls.GuessworkSectionRenderer;
+import net.kineticdevelopment.arcana.client.research.impls.RecipeSectionRenderer;
 import net.kineticdevelopment.arcana.client.research.impls.StringSectionRenderer;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.impls.GuessworkSection;
+import net.kineticdevelopment.arcana.core.research.impls.RecipeSection;
 import net.kineticdevelopment.arcana.core.research.impls.StringSection;
 import net.kineticdevelopment.arcana.utilities.StreamUtils;
 import net.minecraft.client.Minecraft;
@@ -23,6 +25,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	static void init(){
 		map.put(StringSection.TYPE, cached(StringSectionRenderer::new));
 		map.put(GuessworkSection.TYPE, cached(GuessworkSectionRenderer::new));
+		map.put(RecipeSection.TYPE, cached(RecipeSectionRenderer::new));
 	}
 	
 	void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player);

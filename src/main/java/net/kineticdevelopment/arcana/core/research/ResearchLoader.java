@@ -26,9 +26,14 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 /**
- * TODO: once we update to 1.14, change this to use JsonReloadManager so we can use datapacks instead.
- * This class has some rather verbose logging, since this will probably be a source of problems or
+ * This class handles loading research entries, categories, and books from JSON files. Specifically, it looks
+ * for JSON files in assets/&lt;modid&gt;/research/, and looks for arrays named "books", "categories", and "entries"
+ * at the root level.
+ *
+ * <p>This class has some rather verbose logging, since this will probably be a source of problems or
  * confusion for addon makers. (If you don't think its verbose, add more logging.)
+ *
+ * <p>TODO: once we update to 1.14, change this to use JsonReloadManager so we can use datapacks instead.
  */
 public class ResearchLoader{
 	
@@ -108,6 +113,7 @@ public class ResearchLoader{
 				
 				ResearchEntry entryObject = new ResearchEntryImpl(key, sections, icons, meta, parents, category, name, desc, x, y);
 				category.entries.putIfAbsent(key, entryObject);
+				sections.forEach(section -> section.entry = entryObject.key());
 			}
 		}
 	}

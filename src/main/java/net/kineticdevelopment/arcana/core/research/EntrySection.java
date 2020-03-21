@@ -1,9 +1,12 @@
 package net.kineticdevelopment.arcana.core.research;
 
+import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.core.research.impls.GuessworkSection;
+import net.kineticdevelopment.arcana.core.research.impls.RecipeSection;
 import net.kineticdevelopment.arcana.core.research.impls.StringSection;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
 import java.util.function.Function;
@@ -21,9 +24,6 @@ public abstract class EntrySection{
 	// when addon support is to be added: change this from strings to ResourceLocations so mods can register more
 	private static Map<String, Function<String, EntrySection>> factories = new LinkedHashMap<>();
 	private static Map<String, Function<NBTTagCompound, EntrySection>> deserializers = new LinkedHashMap<>();
-	
-	protected List<Requirement> requirements = new ArrayList<>();
-	
 	public static Function<String, EntrySection> getFactory(String type){
 		return factories.get(type);
 	}
@@ -43,6 +43,8 @@ public abstract class EntrySection{
 		if(deserializers.get(type) != null){
 			EntrySection section = deserializers.get(type).apply(data);
 			requirements.forEach(section::addRequirement);
+			// recieving on client
+			section.entry = new ResourceLocation(passData.getString("entry"));
 			return section;
 		}
 		return null;
@@ -53,9 +55,14 @@ public abstract class EntrySection{
 		deserializers.put(StringSection.TYPE, nbt -> new StringSection(nbt.getString("text")));
 		factories.put("guesswork", GuessworkSection::new);
 		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getInteger("guesswork")));
+		factories.put("recipe", RecipeSection::new);
+		deserializers.put(RecipeSection.TYPE, nbt -> new RecipeSection(new ResourceLocation(nbt.getString("recipe"))));
 	}
 	
 	// instance stuff
+	
+	protected List<Requirement> requirements = new ArrayList<>();
+	protected ResourceLocation entry;
 	
 	public void addRequirement(Requirement requirement){
 		requirements.add(requirement);
@@ -69,12 +76,17 @@ public abstract class EntrySection{
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("type", getType());
 		nbt.setTag("data", getData());
+		nbt.setString("entry", getEntry().toString());
 		
 		NBTTagList list = new NBTTagList();
 		getRequirements().forEach((requirement) -> list.appendTag(requirement.getPassData()));
 		nbt.setTag("requirements", list);
 		
 		return nbt;
+	}
+	
+	public ResourceLocation getEntry(){
+		return entry;
 	}
 	
 	public abstract String getType();
