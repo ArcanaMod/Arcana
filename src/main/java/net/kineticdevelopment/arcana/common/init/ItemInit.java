@@ -8,9 +8,8 @@ import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.items.tools.*;
 import net.kineticdevelopment.arcana.core.Main;
-import net.minecraft.block.BlockSlab;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemSlab;
+
 import net.minecraft.item.ItemSword;
 import net.minecraftforge.common.util.EnumHelper;
 

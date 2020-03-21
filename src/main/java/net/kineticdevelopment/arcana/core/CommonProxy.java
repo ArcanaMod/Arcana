@@ -32,6 +32,7 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
+
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {}
