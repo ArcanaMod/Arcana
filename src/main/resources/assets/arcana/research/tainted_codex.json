@@ -22,7 +22,7 @@
         },
         {
           "type": "recipe",
-          "content": "arcana:__furnace__arcana-tainted_oak_log.arcana-tainted_wand_core",
+          "content": "__furnace__:arcana-tainted_oak_log.arcana-tainted_wand_core",
           "requirements": [
             "arcana:tainted_wand_core"
           ]
