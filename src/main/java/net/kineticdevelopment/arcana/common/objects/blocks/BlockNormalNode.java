@@ -29,6 +29,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TextComponentScore;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
@@ -134,31 +136,33 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
                 NodeTileEntity tileEntity = (NodeTileEntity) entity;
                 Aspect.AspectType[] coreAspects = new Aspect.AspectType[]{Aspect.AspectType.EARTH, Aspect.AspectType.AIR, Aspect.AspectType.WATER, Aspect.AspectType.ORDER, Aspect.AspectType.CHAOS, Aspect.AspectType.FIRE};
                 NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
-                if(!itemActivated.getTagCompound().hasKey("aspects")) {
-                    aspectList = new NBTTagList();
-                }
                 for(Aspect.AspectType coreAspect : coreAspects) {
                     if(tileEntity.storedAspects.containsKey(coreAspect)) {
+                        NBTTagList newAspects = new NBTTagList();
                         if(aspectList.hasNoTags()) {
                             tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
                             NBTTagCompound compound = new NBTTagCompound();
                             compound.setString("type", coreAspect.toString());
                             compound.setInteger("amount", 1);
-                            aspectList.appendTag(compound);
-                        }
-                        Iterator<NBTBase> iter = aspectList.iterator();
-                        while (iter.hasNext()) {
-                            if(iter.next() instanceof NBTTagCompound) {
-                                NBTTagCompound compound = (NBTTagCompound) iter.next();
-                                if(coreAspect.toString().equals(compound.getString("type"))) {
-                                    if(compound.getInteger("amount") < core.getMaxVis()) {
-                                        compound.setInteger("amount", compound.getInteger("amount") + 1);
-                                        iter.remove();
-                                        aspectList.appendTag(compound);
+                            newAspects.appendTag(compound);
+                        } else {
+                            for (NBTBase base : aspectList) {
+                                if (base instanceof NBTTagCompound) {
+                                    NBTTagCompound compound = (NBTTagCompound) base;
+                                    if (coreAspect.toString().equals(compound.getString("type"))) {
+                                        tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
+                                        if (compound.getInteger("amount") < core.getMaxVis()) {
+                                            compound.setInteger("amount", compound.getInteger("amount") + 1);
+                                            newAspects.appendTag(compound);
+                                        }
                                     }
                                 }
                             }
                         }
+                        NBTTagCompound newTag = itemActivated.getTagCompound();
+                        newTag.setTag("aspects", newAspects);
+                        itemActivated.setTagCompound(newTag);
+                        tileEntity.markDirty();
                     }
                 }
             }

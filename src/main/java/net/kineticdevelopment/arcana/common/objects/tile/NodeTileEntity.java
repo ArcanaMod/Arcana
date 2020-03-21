@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.objects.tile;
 import net.kineticdevelopment.arcana.client.particles.EnumArcanaParticles;
 import net.kineticdevelopment.arcana.client.particles.ParticleSpawner;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.minecraft.block.BlockGlass;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagByteArray;
