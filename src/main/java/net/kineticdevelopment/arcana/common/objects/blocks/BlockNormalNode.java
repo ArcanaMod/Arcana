@@ -11,6 +11,7 @@ import net.kineticdevelopment.arcana.core.wand.CoreType;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.utilities.WandUtil;
 import net.minecraft.block.BlockBarrier;
+import net.minecraft.block.BlockGlass;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -86,7 +87,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
 
     @Override
     public BlockRenderLayer getBlockLayer() {
-        return BlockRenderLayer.TRANSLUCENT;
+        return BlockRenderLayer.CUTOUT;
     }
 
     @Override
@@ -98,6 +99,11 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
     @Override
     public float getAmbientOcclusionLightValue(IBlockState state) {
         return 1.0f;
+    }
+
+    @Override
+    public boolean isFullCube(IBlockState state) {
+        return false;
     }
 
     @Override
