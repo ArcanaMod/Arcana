@@ -94,7 +94,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
 
     @Override
     public boolean isOpaqueCube(IBlockState state) {
-        return true;
+        return false;
     }
 
     @SideOnly(Side.CLIENT)
