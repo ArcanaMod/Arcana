@@ -126,7 +126,12 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-
+        if(worldIn.isRemote) {
+            return false;
+        }
+        if(hand != EnumHand.MAIN_HAND) {
+            return false;
+        }
         ItemStack itemActivated = playerIn.getHeldItem(hand);
         CoreType core = WandUtil.getCore(itemActivated);
         CapType cap = WandUtil.getCap(itemActivated);
@@ -136,9 +141,9 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
                 NodeTileEntity tileEntity = (NodeTileEntity) entity;
                 Aspect.AspectType[] coreAspects = new Aspect.AspectType[]{Aspect.AspectType.EARTH, Aspect.AspectType.AIR, Aspect.AspectType.WATER, Aspect.AspectType.ORDER, Aspect.AspectType.CHAOS, Aspect.AspectType.FIRE};
                 NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
+                NBTTagList newAspects = new NBTTagList();
                 for(Aspect.AspectType coreAspect : coreAspects) {
                     if(tileEntity.storedAspects.containsKey(coreAspect)) {
-                        NBTTagList newAspects = new NBTTagList();
                         if(aspectList.hasNoTags()) {
                             tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
                             NBTTagCompound compound = new NBTTagCompound();
@@ -167,6 +172,6 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
                 }
             }
         }
-        return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+        return true;
     }
 }
