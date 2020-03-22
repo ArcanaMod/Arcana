@@ -1,7 +1,7 @@
 package net.kineticdevelopment.arcana.common.event;
 
-import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.Researcher;
+import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;

@@ -1,8 +1,8 @@
 package net.kineticdevelopment.arcana.common.network;
 
-import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;

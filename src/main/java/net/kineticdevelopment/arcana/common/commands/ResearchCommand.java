@@ -2,10 +2,10 @@ package net.kineticdevelopment.arcana.common.commands;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.common.network.Connection;
-import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;

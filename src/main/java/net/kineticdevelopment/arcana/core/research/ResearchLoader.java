@@ -4,7 +4,6 @@ import com.google.gson.*;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.PktSyncBooksHandler;
 import net.kineticdevelopment.arcana.core.research.impls.ItemRequirement;
-import net.kineticdevelopment.arcana.core.research.impls.ResearchEntryImpl;
 import net.minecraft.item.Item;
 import net.minecraft.util.JsonUtils;
 import net.minecraft.util.ResourceLocation;
@@ -111,7 +110,7 @@ public class ResearchLoader{
 				if(entry.has("meta"))
 					meta = StreamSupport.stream(entry.getAsJsonArray("meta").spliterator(), false).map(JsonElement::getAsString).collect(Collectors.toList());
 				
-				ResearchEntry entryObject = new ResearchEntryImpl(key, sections, icons, meta, parents, category, name, desc, x, y);
+				ResearchEntry entryObject = new ResearchEntry(key, sections, icons, meta, parents, category, name, desc, x, y);
 				category.entries.putIfAbsent(key, entryObject);
 				sections.forEach(section -> section.entry = entryObject.key());
 			}
