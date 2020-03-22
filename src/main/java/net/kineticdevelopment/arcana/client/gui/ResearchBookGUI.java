@@ -102,7 +102,7 @@ public class ResearchBookGUI extends GuiScreen{
 		// pans up to (256 - 224) x, (256 - 196) y
 		// which is only 32
 		// let's scale is up x2, and also pan with half speed (which is what I'd do anyways) so we get 128 pan
-		// TODO: use larger (512^2) textures so I can pan more
+		// TODO: use larger (512^2) textures
 		mc.getTextureManager().bindTexture(categories.get(tab).getBg());
 		drawModalRectWithCustomSizedTexture((width - fWidth) / 2 + 16, (height - fHeight) / 2 + 17, -xPan / 4f + MAX_PAN, yPan / 4f + MAX_PAN, 224, 196, 256, 256);
 	}
@@ -237,13 +237,18 @@ public class ResearchBookGUI extends GuiScreen{
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 	
+	protected void actionPerformed(GuiButton button){
+		if(button instanceof CategoryButton)
+			tab = min(((CategoryButton)button).categoryNum, categories.size());
+	}
+	
 	public boolean doesGuiPauseGame(){
 		return false;
 	}
 	
-	protected void actionPerformed(GuiButton button){
-		if(button instanceof CategoryButton)
-			tab = min(((CategoryButton)button).categoryNum, categories.size());
+	protected void keyTyped(char typedChar, int keyCode){
+		if(keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode))
+			mc.displayGuiScreen(null);
 	}
 	
 	class CategoryButton extends GuiButton{

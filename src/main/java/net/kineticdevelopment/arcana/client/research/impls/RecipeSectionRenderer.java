@@ -92,7 +92,7 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 	private void renderSmeltingRecipe(int x, int y, ItemStack input, ItemStack output, int screenWidth, int screenHeight){
 		renderResult(x, y, output, screenWidth, screenHeight);
 		
-		int inputX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 + 20;
+		int inputX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 + 8;
 		mc().getTextureManager().bindTexture(textures);
 		drawTexturedModalRect(inputX - 9, inputY - 9, 219, 1, 34, 48);
 		Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(input, inputX, inputY);
@@ -162,7 +162,7 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 		}
 		// Check input
 		else{
-			int inputX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 + 20;
+			int inputX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 + 8;
 			if(mouseX >= inputX && mouseX <= inputX + 16 && mouseY >= inputY && mouseY <= inputY + 16){
 				GuiUtils.drawGradientRect(299, inputX, inputY, inputX + 16, inputY + 16, slotColor, slotColor);
 				GuiUtils.drawHoveringText(input, getTooltipFromItem(input), mouseX, mouseY, screenWidth, screenHeight, -1, mc().fontRenderer);

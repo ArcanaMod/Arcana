@@ -136,6 +136,16 @@ public class ResearchEntryGUI extends GuiScreen{
 		cont.visible = Researcher.getFrom(mc.player).stage(entry) < entry.sections().size();
 	}
 	
+	protected void keyTyped(char typedChar, int keyCode){
+		if(keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)){
+			ResearchBookGUI gui = new ResearchBookGUI(entry.category().getBook());
+			gui.tab = entry.category().getBook().getCategories().indexOf(entry.category());
+			if(gui.tab < 0)
+				gui.tab = 0;
+			mc.displayGuiScreen(gui);
+		}
+	}
+	
 	private boolean canTurnRight(){
 		return index < totalLength() - 2;
 	}
