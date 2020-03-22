@@ -1,11 +1,14 @@
 package net.kineticdevelopment.arcana.core;
 
+import net.kineticdevelopment.arcana.client.Sounds;
 import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
 import net.kineticdevelopment.arcana.common.init.EntityInit;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
+import net.kineticdevelopment.arcana.core.spells.SpellEffectHandler;
 import net.minecraft.item.Item;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -32,7 +35,8 @@ public class CommonProxy {
 
 	public void init(FMLInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
-
+		Sounds.registerSounds();
+		SpellEffectHandler.init();
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {}

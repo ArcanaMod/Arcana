@@ -2,6 +2,10 @@
 itemGroup.tabArcana=Arcana
 itemGroup.tabTaintArcana=Tainted Blocks
 
+
+# Subtitles
+arcana.sounds.spell_cast=Spell Cast
+
 # Items
 item.wood_wand.name=Wooden Wand
 item.greatwood_wand.name=Greatwood Wand
