@@ -110,7 +110,11 @@ public class ResearchLoader{
 				if(entry.has("meta"))
 					meta = StreamSupport.stream(entry.getAsJsonArray("meta").spliterator(), false).map(JsonElement::getAsString).collect(Collectors.toList());
 				
-				ResearchEntry entryObject = new ResearchEntry(key, sections, icons, meta, parents, category, name, desc, x, y);
+				List<Guesswork> guessworks = new ArrayList<>();
+				if(entry.has("guessworks"))
+					guessworks = jsonToGuessworks(entry.getAsJsonArray("guessworks"), rl);
+				
+				ResearchEntry entryObject = new ResearchEntry(key, sections, icons, meta, parents, guessworks, category, name, desc, x, y);
 				category.entries.putIfAbsent(key, entryObject);
 				sections.forEach(section -> section.entry = entryObject.key());
 			}
@@ -137,6 +141,33 @@ public class ResearchLoader{
 				.map(element -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(element.getAsString())))
 				.filter(Objects::nonNull)
 				.collect(Collectors.toList());
+	}
+	
+	private static List<Guesswork> jsonToGuessworks(JsonArray guessworks, ResourceLocation file){
+		List<Guesswork> ret = new ArrayList<>();
+		for(JsonElement guessworkElement : guessworks){
+			if(guessworkElement.isJsonObject()){
+				JsonObject guesswork = guessworkElement.getAsJsonObject();
+				// expecting recipe (string), hints (array)
+				ResourceLocation recipe = new ResourceLocation(guesswork.get("recipe").getAsString());
+				JsonArray hints = guesswork.getAsJsonArray("hints");
+				Map<ResourceLocation, String> hintMap = new LinkedHashMap<>();
+				for(JsonElement hint : hints){
+					if(hint.isJsonPrimitive()){
+						String hintSt = hint.getAsString();
+						if(hintSt.contains("=")){
+							ResourceLocation key = new ResourceLocation(hintSt.split("=")[0]);
+							String value = hintSt.split("=")[1];
+							hintMap.put(key, value);
+						}else
+							LOGGER.error("String not containing \"=\" found in guesswork in " + file + "!");
+					}else
+						LOGGER.error("Non-String found in hints array in guesswork in " + file + "!");
+				}
+				ret.add(new Guesswork(recipe, hintMap));
+			}
+		}
+		return ret;
 	}
 	
 	private static List<EntrySection> jsonToSections(JsonArray sections, ResourceLocation file){

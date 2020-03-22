@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.core.research;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;
@@ -22,5 +23,13 @@ public class Guesswork{
 	
 	public Map<ResourceLocation, String> getHints(){
 		return Collections.unmodifiableMap(hints);
+	}
+	
+	public NBTTagCompound getPassData(){
+		return new NBTTagCompound();
+	}
+	
+	public static Guesswork deserialize(NBTTagCompound passData){
+		return null;
 	}
 }
