@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -27,11 +28,21 @@ public class Guesswork{
 	}
 	
 	public NBTTagCompound getPassData(){
-		return new NBTTagCompound();
+		NBTTagCompound compound = new NBTTagCompound();
+		NBTTagCompound hints = new NBTTagCompound();
+		getHints().forEach((location, s) -> hints.setString(location.toString(), s));
+		compound.setTag("hints", hints);
+		compound.setString("recipe", getRecipe().toString());
+		return compound;
 	}
 	
 	public static Guesswork deserialize(NBTTagCompound passData){
-		return null;
+		ResourceLocation recipe = new ResourceLocation(passData.getString("recipe"));
+		Map<ResourceLocation, String> hints = new HashMap<>();
+		NBTTagCompound serialHints = passData.getCompoundTag("hints");
+		for(String s : serialHints.getKeySet())
+			hints.put(new ResourceLocation(s), serialHints.getString(s));
+		return new Guesswork(recipe, hints);
 	}
 	
 	public boolean equals(Object o){
