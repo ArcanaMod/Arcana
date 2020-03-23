@@ -40,8 +40,8 @@
       "meta": [
         "purple_base"
       ],
-      "x": 1,
-      "y": 2,
+      "x": 2,
+      "y": -2,
       "sections": [
         {
           "type": "string",

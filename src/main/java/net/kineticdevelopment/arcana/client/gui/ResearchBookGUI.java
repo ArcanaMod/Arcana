@@ -145,8 +145,16 @@ public class ResearchBookGUI extends GuiScreen{
 						if(xdiff == 0 || ydiff == 0)
 							if(xdiff == 0){
 								arrows.drawVerticalLine(parent.x(), entry.y(), parent.y());
+								if(parent.y() > entry.y())
+									arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								else
+									arrows.drawUpArrow(entry.x(), entry.y() + 1);
 							}else{
 								arrows.drawHorizontalLine(parent.y(), entry.x(), parent.x());
+								if(parent.y() > entry.y())
+									arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								else
+									arrows.drawUpArrow(entry.x(), entry.y() + 1);
 							}
 						// if there is a y-difference & x-difference of 1, draw a small curve
 						else if(xdiff == 1 && ydiff == 1)
@@ -154,14 +162,18 @@ public class ResearchBookGUI extends GuiScreen{
 							if(entry.x() > parent.x())
 								if(entry.y() > parent.y()){
 									arrows.drawLdCurve(entry.x(), parent.y());
+									arrows.drawDownArrow(entry.x(), entry.y() - 1);
 								}else{
 									arrows.drawLuCurve(entry.x(), parent.y());
+									arrows.drawUpArrow(entry.x(), entry.y() + 1);
 								}
 							else{
 								if(entry.y() > parent.y()){
 									arrows.drawRdCurve(entry.x(), parent.y());
+									arrows.drawDownArrow(entry.x(), entry.y() - 1);
 								}else{
 									arrows.drawRuCurve(entry.x(), parent.y());
+									arrows.drawUpArrow(entry.x(), entry.y() + 1);
 								}
 							}
 						// else if there is a y-difference or x-difference of 1, draw a line then small curve
@@ -172,14 +184,18 @@ public class ResearchBookGUI extends GuiScreen{
 								if(entry.x() > parent.x()){
 									if(entry.y() > parent.y()){
 										arrows.drawLdCurve(entry.x(), parent.y());
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
 									}else{
 										arrows.drawLuCurve(entry.x(), parent.y());
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
 									}
 								}else{
 									if(entry.y() > parent.y()){
 										arrows.drawRdCurve(entry.x(), parent.y());
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
 									}else{
 										arrows.drawRuCurve(entry.x(), parent.y());
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
 									}
 								}
 							}else{
@@ -187,28 +203,105 @@ public class ResearchBookGUI extends GuiScreen{
 								if(entry.x() > parent.x())
 									if(entry.y() > parent.y()){
 										arrows.drawLdCurve(entry.x(), parent.y());
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
 									}else{
 										arrows.drawLuCurve(entry.x(), parent.y());
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
 									}
 								else{
 									if(entry.y() > parent.y()){
 										arrows.drawRdCurve(entry.x(), parent.y());
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
 									}else{
 										arrows.drawRuCurve(entry.x(), parent.y());
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
 									}
 								}
 							}
 						// else if there is a y-difference & x-difference of 2, draw a large curve
 						else if(xdiff == 2 && ydiff == 2){
-						
+							// from entry's POV
+							if(entry.x() > parent.x())
+								if(entry.y() > parent.y()){
+									arrows.drawLargeLdCurve(entry.x() - 1, parent.y());
+									arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								}else{
+									arrows.drawLargeLuCurve(entry.x() - 1, parent.y() - 1);
+									arrows.drawUpArrow(entry.x(), entry.y() + 1);
+								}
+							else{
+								if(entry.y() > parent.y()){
+									arrows.drawLargeRdCurve(entry.x(), parent.y());
+									arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								}else{
+									arrows.drawLargeRuCurve(entry.x(), parent.y() - 1);
+									arrows.drawUpArrow(entry.x(), entry.y() + 1);
+								}
+							}
 						}
 						// else if there is a y-difference or x-difference of 2, draw a line then large curve
-						else if(xdiff == 2 || ydiff == 2){
-						
-						}
+						else if(xdiff == 2 || ydiff == 2)
+							// from entry's POV
+							if(xdiff == 2){
+								arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
+								if(entry.x() > parent.x()){
+									if(entry.y() > parent.y()){
+										arrows.drawLargeLdCurve(entry.x() - 1, parent.y());
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+									}else{
+										arrows.drawLargeLuCurve(entry.x() - 1, parent.y() - 1);
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+									}
+								}else{
+									if(entry.y() > parent.y()){
+										arrows.drawLargeRdCurve(entry.x(), parent.y());
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+									}else{
+										arrows.drawLargeRuCurve(entry.x(), parent.y() - 1);
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+									}
+								}
+							}else{
+								arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
+								if(entry.x() > parent.x())
+									if(entry.y() > parent.y()){
+										arrows.drawLargeLdCurve(entry.x(), parent.y());
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+									}else{
+										arrows.drawLargeLuCurve(entry.x(), parent.y());
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+									}
+								else{
+									if(entry.y() > parent.y()){
+										arrows.drawLargeRdCurve(entry.x(), parent.y());
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+									}else{
+										arrows.drawLargeRuCurve(entry.x(), parent.y());
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+									}
+								}
+							}
 						// else (x-difference & y-difference > 2), draw a line, then large curve, then line
 						else{
-						
+							arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
+							arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
+							if(entry.x() > parent.x()){
+								if(entry.y() > parent.y()){
+									arrows.drawLargeLdCurve(entry.x() - 1, parent.y());
+									arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								}else{
+									arrows.drawLargeLuCurve(entry.x() - 1, parent.y() - 1);
+									arrows.drawUpArrow(entry.x(), entry.y() + 1);
+								}
+							}else{
+								if(entry.y() > parent.y()){
+									arrows.drawLargeRdCurve(entry.x(), parent.y());
+									arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								}else{
+									arrows.drawLargeRuCurve(entry.x(), parent.y() - 1);
+									arrows.drawUpArrow(entry.x(), entry.y() + 1);
+								}
+							}
 						}
 					}
 				}
@@ -374,31 +467,38 @@ public class ResearchBookGUI extends GuiScreen{
 			startGY = Math.min(startGY, endGY);
 			endGY = Math.max(endGY, temp);
 			// *exclusive*
-			for(int j = startGY + 1; j < endGY; j++){
+			for(int j = startGY + 1; j < endGY; j++)
 				drawVerticalSegment(x, j);
-			}
 		}
 		
 		void drawHorizontalLineMinus1(int y, int startGX, int endGX){
 			int temp = startGX;
+			// take one
+			if(startGX > endGX)
+				endGX++;
+			else
+				endGX--;
 			// *possibly* swap them
-			startGX = Math.min(startGX, endGX);
-			endGX = Math.max(endGX, temp);
+			startGX = min(startGX, endGX);
+			endGX = max(endGX, temp);
 			// *exclusive*
-			for(int j = startGX + 1; j < endGX - 1; j++){
+			for(int j = startGX + 1; j < endGX; j++)
 				drawHorizontalSegment(j, y);
-			}
 		}
 		
 		void drawVerticalLineMinus1(int x, int startGY, int endGY){
 			int temp = startGY;
+			// take one
+			if(startGY > endGY)
+				endGY++;
+			else
+				endGY--;
 			// *possibly* swap them
-			startGY = Math.min(startGY, endGY);
-			endGY = Math.max(endGY, temp);
+			startGY = min(startGY, endGY);
+			endGY = max(endGY, temp);
 			// *exclusive*
-			for(int j = startGY + 1; j < endGY - 1; j++){
+			for(int j = startGY + 1; j < endGY; j++)
 				drawVerticalSegment(x, j);
-			}
 		}
 		
 		void drawLuCurve(int gX, int gY){
@@ -434,20 +534,23 @@ public class ResearchBookGUI extends GuiScreen{
 		}
 		
 		void drawDownArrow(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 60, 30, 30);
-		}
-		
-		void drawLeftArrow(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 90, 30, 30);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30);
 		}
 		
 		void drawUpArrow(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 120, 30, 30);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30);
+		}
+		
+		/* so I messed up somehow and these are never used, yay.
+		
+		void drawLeftArrow(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30);
 		}
 		
 		void drawRightArrow(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 150, 30, 30);
+			drawTexturedModalRect(gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30);
 		}
+		*/
 	}
 	
 	class CategoryButton extends GuiButton{
