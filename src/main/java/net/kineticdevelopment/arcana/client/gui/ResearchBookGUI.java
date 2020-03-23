@@ -423,9 +423,13 @@ public class ResearchBookGUI extends GuiScreen{
 		return false;
 	}
 	
-	protected void keyTyped(char typedChar, int keyCode){
-		if(keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode))
+	protected void keyTyped(char typedChar, int keyCode) throws IOException{
+		if(this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)){
 			mc.displayGuiScreen(null);
+			if(mc.currentScreen == null)
+				mc.setIngameFocus();
+		}
+		super.keyTyped(typedChar, keyCode);
 	}
 	
 	/**

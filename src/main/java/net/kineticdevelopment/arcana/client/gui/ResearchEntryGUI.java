@@ -20,6 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.IOException;
 import java.util.List;
 
 @Mod.EventBusSubscriber
@@ -136,14 +137,15 @@ public class ResearchEntryGUI extends GuiScreen{
 		cont.visible = Researcher.getFrom(mc.player).stage(entry) < entry.sections().size();
 	}
 	
-	protected void keyTyped(char typedChar, int keyCode){
-		if(keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)){
+	protected void keyTyped(char typedChar, int keyCode) throws IOException{
+		if(this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)){
 			ResearchBookGUI gui = new ResearchBookGUI(entry.category().getBook());
 			gui.tab = entry.category().getBook().getCategories().indexOf(entry.category());
 			if(gui.tab < 0)
 				gui.tab = 0;
 			mc.displayGuiScreen(gui);
 		}
+		super.keyTyped(typedChar, keyCode);
 	}
 	
 	private boolean canTurnRight(){
