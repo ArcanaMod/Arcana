@@ -29,28 +29,27 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentScore;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.opencl.CL;
 
 import javax.annotation.Nullable;
 import javax.xml.soap.Node;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
 
 
     private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.25d, 0.25d, 0.25d, 0.75d, 0.75d, 0.75d);
 
-    public boolean isOn = true;
+    public boolean isOn = false;
 
     public BlockNormalNode() {
         super("normal_node", Material.BARRIER);
@@ -70,8 +69,17 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
         NodeTileEntity entity = new NodeTileEntity();
-        entity.storedAspects.put(Aspect.AspectType.EARTH, 100);
-        entity.storedAspects.put(Aspect.AspectType.AIR, 100);
+
+        Random rand = worldIn.rand;
+
+        for (int i = 0; i < rand.nextInt((5 - 2) + 1) + 5; i++) {
+
+            int randomAspect = rand.nextInt(5);
+            Aspect.AspectType[] aspects = new Aspect.AspectType[] {Aspect.AspectType.EARTH, Aspect.AspectType.FIRE, Aspect.AspectType.WATER, Aspect.AspectType.AIR, Aspect.AspectType.CHAOS, Aspect.AspectType.ORDER};
+
+            entity.storedAspects.putIfAbsent(aspects[randomAspect], rand.nextInt((80 - 30) + 1) + 30);
+        }
+
         entity.markDirty();
         return entity;
     }

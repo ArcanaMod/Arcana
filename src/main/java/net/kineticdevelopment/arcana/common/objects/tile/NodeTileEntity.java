@@ -2,7 +2,9 @@ package net.kineticdevelopment.arcana.common.objects.tile;
 
 import net.kineticdevelopment.arcana.client.particles.EnumArcanaParticles;
 import net.kineticdevelopment.arcana.client.particles.ParticleSpawner;
+import net.kineticdevelopment.arcana.common.objects.blocks.BlockNormalNode;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.utilities.NodeHelper;
 import net.minecraft.block.BlockGlass;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
@@ -24,6 +26,8 @@ public class NodeTileEntity extends TileEntity implements ITickable {
 
     public Map<Aspect.AspectType, Integer> storedAspects = new HashMap<>();
 
+    public boolean isOn = false;
+
     public boolean canInteractWith(EntityPlayer playerIn) {
         // If we are too far away from this tile entity you cannot use it
         return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
@@ -32,7 +36,34 @@ public class NodeTileEntity extends TileEntity implements ITickable {
 
     @Override
     public void update() {
+        if(this.world.isRemote) {
+            switch (NodeHelper.getGogglePriority()) {
+                case SHOW_NONE:
+                    this.getNode().hitboxOff();
+                    break;
+                case SHOW_NODE:
+                    this.showNodes();
+                    break;
+                case SHOW_ASPECTS:
+                    this.showNodes();
+//                    if(ArcanaHelper.isNodeOnCursor(this)) {
+//                        this.showAspects();
+//                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void showNodes() {
+        this.getNode().hitboxOn();
         ParticleSpawner.spawnParticle(EnumArcanaParticles.NORMAL_NODE, this.pos.getX() + 0.5f, this.pos.getY() + 0.5f, this.pos.getZ() + 0.5f);
+    }
+
+
+    public BlockNormalNode getNode() {
+        return ((BlockNormalNode)this.getBlockType());
     }
 
     @Override

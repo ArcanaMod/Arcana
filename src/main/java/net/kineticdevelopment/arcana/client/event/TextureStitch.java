@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.common.event;
+package net.kineticdevelopment.arcana.client.event;
 
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.Sprites;
