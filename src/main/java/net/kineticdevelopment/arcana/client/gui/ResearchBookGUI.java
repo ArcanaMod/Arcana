@@ -9,6 +9,7 @@ import net.kineticdevelopment.arcana.core.research.ResearchCategory;
 import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
@@ -38,9 +39,13 @@ public class ResearchBookGUI extends GuiScreen{
 	int tab = 0;
 	
 	public static final String SUFFIX = "_menu_gui.png";
+	public static final ResourceLocation ARROWS_AND_BASES = new ResourceLocation(Main.MODID, "textures/gui/research/research_bases.png");
+	
 	private static final int fWidth = 256, fHeight = 230;
 	private static final int MAX_PAN = 512;
-	public static final ResourceLocation ARROWS_AND_BASES = new ResourceLocation(Main.MODID, "textures/gui/research/research_bases.png");
+	
+	// drawing helper
+	private final Arrows arrows = new Arrows();
 	
 	static float xPan = 0, yPan = 0;
 	
@@ -128,6 +133,85 @@ public class ResearchBookGUI extends GuiScreen{
 				
 				// for every visible parent
 				// draw an arrow & arrowhead
+				// THIS CODE IS NOT VERY GOOD, BY THE WAY
+				// PLEASE BE CAREFUL
+				for(ResourceLocation parentKey : entry.parents()){
+					ResearchEntry parent = ClientBooks.getEntry(parentKey);
+					if(parent != null && parent.category().equals(entry.category()) && style(parent) != PageStyle.NONE){
+						mc.getTextureManager().bindTexture(ARROWS_AND_BASES);
+						int xdiff = abs(entry.x() - parent.x());
+						int ydiff = abs(entry.y() - parent.y());
+						// if there is a y-difference or x-difference of 0, draw a line
+						if(xdiff == 0 || ydiff == 0)
+							if(xdiff == 0){
+								arrows.drawVerticalLine(parent.x(), entry.y(), parent.y());
+							}else{
+								arrows.drawHorizontalLine(parent.y(), entry.x(), parent.x());
+							}
+						// if there is a y-difference & x-difference of 1, draw a small curve
+						else if(xdiff == 1 && ydiff == 1)
+							// from entry's POV
+							if(entry.x() > parent.x())
+								if(entry.y() > parent.y()){
+									arrows.drawLdCurve(entry.x(), parent.y());
+								}else{
+									arrows.drawLuCurve(entry.x(), parent.y());
+								}
+							else{
+								if(entry.y() > parent.y()){
+									arrows.drawRdCurve(entry.x(), parent.y());
+								}else{
+									arrows.drawRuCurve(entry.x(), parent.y());
+								}
+							}
+						// else if there is a y-difference or x-difference of 1, draw a line then small curve
+						else if(xdiff == 1 || ydiff == 1)
+							// from entry's POV
+							if(xdiff == 1){
+								arrows.drawVerticalLine(entry.x(), parent.y(), entry.y());
+								if(entry.x() > parent.x()){
+									if(entry.y() > parent.y()){
+										arrows.drawLdCurve(entry.x(), parent.y());
+									}else{
+										arrows.drawLuCurve(entry.x(), parent.y());
+									}
+								}else{
+									if(entry.y() > parent.y()){
+										arrows.drawRdCurve(entry.x(), parent.y());
+									}else{
+										arrows.drawRuCurve(entry.x(), parent.y());
+									}
+								}
+							}else{
+								arrows.drawHorizontalLine(parent.y(), parent.x(), entry.x());
+								if(entry.x() > parent.x())
+									if(entry.y() > parent.y()){
+										arrows.drawLdCurve(entry.x(), parent.y());
+									}else{
+										arrows.drawLuCurve(entry.x(), parent.y());
+									}
+								else{
+									if(entry.y() > parent.y()){
+										arrows.drawRdCurve(entry.x(), parent.y());
+									}else{
+										arrows.drawRuCurve(entry.x(), parent.y());
+									}
+								}
+							}
+						// else if there is a y-difference & x-difference of 2, draw a large curve
+						else if(xdiff == 2 && ydiff == 2){
+						
+						}
+						// else if there is a y-difference or x-difference of 2, draw a line then large curve
+						else if(xdiff == 2 || ydiff == 2){
+						
+						}
+						// else (x-difference & y-difference > 2), draw a line, then large curve, then line
+						else{
+						
+						}
+					}
+				}
 			}
 		}
 	}
@@ -249,6 +333,121 @@ public class ResearchBookGUI extends GuiScreen{
 	protected void keyTyped(char typedChar, int keyCode){
 		if(keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode))
 			mc.displayGuiScreen(null);
+	}
+	
+	/**
+	 * Helper class containing methods to draw segments of lines. Made to avoid cluttering up the namespace.
+	 * The lines texture must be bound before calling these methods.
+	 */
+	private final class Arrows extends Gui{
+		
+		int gX2SX(int gX){
+			return (int)(gX * 30 + getXOffset());
+		}
+		
+		int gY2SY(int gY){
+			return (int)(gY * 30 + getYOffset());
+		}
+		
+		void drawHorizontalSegment(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 0, 30, 30);
+		}
+		
+		void drawVerticalSegment(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 0, 30, 30);
+		}
+		
+		void drawHorizontalLine(int y, int startGX, int endGX){
+			int temp = startGX;
+			// *possibly* swap them
+			startGX = Math.min(startGX, endGX);
+			endGX = Math.max(endGX, temp);
+			// *exclusive*
+			for(int j = startGX + 1; j < endGX; j++){
+				drawHorizontalSegment(j, y);
+			}
+		}
+		
+		void drawVerticalLine(int x, int startGY, int endGY){
+			int temp = startGY;
+			// *possibly* swap them
+			startGY = Math.min(startGY, endGY);
+			endGY = Math.max(endGY, temp);
+			// *exclusive*
+			for(int j = startGY + 1; j < endGY; j++){
+				drawVerticalSegment(x, j);
+			}
+		}
+		
+		void drawHorizontalLineMinus1(int y, int startGX, int endGX){
+			int temp = startGX;
+			// *possibly* swap them
+			startGX = Math.min(startGX, endGX);
+			endGX = Math.max(endGX, temp);
+			// *exclusive*
+			for(int j = startGX + 1; j < endGX - 1; j++){
+				drawHorizontalSegment(j, y);
+			}
+		}
+		
+		void drawVerticalLineMinus1(int x, int startGY, int endGY){
+			int temp = startGY;
+			// *possibly* swap them
+			startGY = Math.min(startGY, endGY);
+			endGY = Math.max(endGY, temp);
+			// *exclusive*
+			for(int j = startGY + 1; j < endGY - 1; j++){
+				drawVerticalSegment(x, j);
+			}
+		}
+		
+		void drawLuCurve(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 164, 0, 30, 30);
+		}
+		
+		void drawRuCurve(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 0, 30, 30);
+		}
+		
+		void drawLdCurve(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 224, 0, 30, 30);
+		}
+		
+		void drawRdCurve(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 30, 30, 30);
+		}
+		
+		void drawLargeLuCurve(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 30, 60, 60);
+		}
+		
+		void drawLargeRuCurve(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 30, 60, 60);
+		}
+		
+		void drawLargeLdCurve(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 90, 60, 60);
+		}
+		
+		void drawLargeRdCurve(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 90, 60, 60);
+		}
+		
+		void drawDownArrow(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 60, 30, 30);
+		}
+		
+		void drawLeftArrow(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 90, 30, 30);
+		}
+		
+		void drawUpArrow(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 120, 30, 30);
+		}
+		
+		void drawRightArrow(int gX, int gY){
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 150, 30, 30);
+		}
 	}
 	
 	class CategoryButton extends GuiButton{
