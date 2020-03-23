@@ -144,4 +144,17 @@ public class ResearchEntry{
 				.collect(Collectors.toList());
 		return new ResearchEntry(key, sections, icons, meta, parents, guessworks, in, name, desc, x, y);
 	}
+	
+	public boolean equals(Object o){
+		if(this == o)
+			return true;
+		if(!(o instanceof ResearchEntry))
+			return false;
+		ResearchEntry entry = (ResearchEntry)o;
+		return key.equals(entry.key);
+	}
+	
+	public int hashCode(){
+		return Objects.hash(key);
+	}
 }

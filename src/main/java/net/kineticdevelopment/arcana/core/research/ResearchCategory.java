@@ -4,10 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -101,5 +98,18 @@ public class ResearchCategory{
 		
 		c.putAll(entries);
 		return category;
+	}
+	
+	public boolean equals(Object o){
+		if(this == o)
+			return true;
+		if(!(o instanceof ResearchCategory))
+			return false;
+		ResearchCategory category = (ResearchCategory)o;
+		return getKey().equals(category.getKey());
+	}
+	
+	public int hashCode(){
+		return Objects.hash(getKey());
 	}
 }

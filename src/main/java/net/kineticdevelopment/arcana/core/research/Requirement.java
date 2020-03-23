@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 public abstract class Requirement{
@@ -78,4 +79,17 @@ public abstract class Requirement{
 	public abstract void take(EntityPlayer player);
 	public abstract ResourceLocation type();
 	public abstract NBTTagCompound data();
+	
+	public boolean equals(Object o){
+		if(this == o)
+			return true;
+		if(!(o instanceof Requirement))
+			return false;
+		Requirement that = (Requirement)o;
+		return getAmount() == that.getAmount() && type().equals(that.type());
+	}
+	
+	public int hashCode(){
+		return Objects.hash(getAmount(), type());
+	}
 }

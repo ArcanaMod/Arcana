@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 
 public class Guesswork{
 	
@@ -31,5 +32,18 @@ public class Guesswork{
 	
 	public static Guesswork deserialize(NBTTagCompound passData){
 		return null;
+	}
+	
+	public boolean equals(Object o){
+		if(this == o)
+			return true;
+		if(!(o instanceof Guesswork))
+			return false;
+		Guesswork guesswork = (Guesswork)o;
+		return getRecipe().equals(guesswork.getRecipe()) && getHints().equals(guesswork.getHints());
+	}
+	
+	public int hashCode(){
+		return Objects.hash(getRecipe(), getHints());
 	}
 }

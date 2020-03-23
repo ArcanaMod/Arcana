@@ -99,4 +99,17 @@ public class ResearchBook{
 		c.putAll(categories);
 		return book;
 	}
+	
+	public boolean equals(Object o){
+		if(this == o)
+			return true;
+		if(!(o instanceof ResearchBook))
+			return false;
+		ResearchBook book = (ResearchBook)o;
+		return getKey().equals(book.getKey());
+	}
+	
+	public int hashCode(){
+		return Objects.hash(getKey());
+	}
 }
