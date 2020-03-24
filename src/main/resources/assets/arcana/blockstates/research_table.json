@@ -1,7 +1,19 @@
 {
   "variants": {
-    "normal": {
+    "facing=north": {
       "model": "arcana:research_table"
+    },
+    "facing=south": {
+      "model": "arcana:research_table",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "arcana:research_table",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "arcana:research_table",
+      "y": 270
     }
   }
 }
