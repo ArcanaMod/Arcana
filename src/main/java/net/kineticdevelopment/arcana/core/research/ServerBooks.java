@@ -19,6 +19,7 @@ public class ServerBooks{
 	// public
 	// thats a bad idea I think
 	public static Map<ResourceLocation, ResearchBook> books = new LinkedHashMap<>();
+	public static Map<ResourceLocation, Puzzle> puzzles = new LinkedHashMap<>();
 	
 	public static List<ResearchBook> getBooks(){
 		return new ArrayList<>(books.values());

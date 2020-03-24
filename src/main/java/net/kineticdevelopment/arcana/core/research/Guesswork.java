@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Guesswork{
+public class Guesswork extends Puzzle{
 	
 	// Check RecipeSectionRenderer for how non-crafting recipes are handled.
 	protected ResourceLocation recipe;

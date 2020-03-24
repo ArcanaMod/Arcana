@@ -42,8 +42,9 @@ public interface Researcher{
 	/**
 	 * Sets this researchers progress for an entry to its maximum progress
 	 *
-	 * <p>Has no effect if this entry is already complete.
-	 * Fires {@link ResearchEvent} if the page is not already complete.
+	 * <p>Fires {@link ResearchEvent} if the page is not already complete.
+	 *
+	 * <p>Has no effect if the page is already complete.
 	 *
 	 * @param entry
 	 * 		The research entry to complete.
@@ -55,7 +56,8 @@ public interface Researcher{
 	 *
 	 * <p>Fires {@link ResearchEvent} if the page is not already incomplete.
 	 *
-	 * @param entry The research entry to reset.
+	 * @param entry
+	 * 		The research entry to reset.
 	 */
 	void reset(ResearchEntry entry);
 	
@@ -64,7 +66,9 @@ public interface Researcher{
 	
 	/**
 	 * Returns a map containing this researcher's data, where the keys are the keys of all sections
-	 * that have a stage greater than 0 (possibly including some that don't), and the values are the current stage of that entry.
+	 * that have a stage greater than 0 and the keys of every completed puzzle,and the values are the
+	 * current stage of that entry, or "1" for a completed puzzle. Incomplete puzzles, and entries with
+	 * 0 progress may be included in this map.
 	 *
 	 * @return A Map containing the data of this researcher.
 	 */

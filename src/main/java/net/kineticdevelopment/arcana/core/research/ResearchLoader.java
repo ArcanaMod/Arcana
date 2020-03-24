@@ -42,6 +42,7 @@ public class ResearchLoader{
 	private static Map<ResourceLocation, JsonArray> bookQueue = new LinkedHashMap<>();
 	private static Map<ResourceLocation, JsonArray> categoryQueue = new LinkedHashMap<>();
 	private static Map<ResourceLocation, JsonArray> entryQueue = new LinkedHashMap<>();
+	private static Map<ResourceLocation, JsonArray> puzzleQueue = new LinkedHashMap<>();
 	
 	public static void applyJson(String json, ResourceLocation rl){
 		JsonObject jsonObject = JsonUtils.fromJson(GSON, json, JsonObject.class, false);
@@ -121,6 +122,10 @@ public class ResearchLoader{
 		}
 	}
 	
+	private static void applyPuzzlesArray(ResourceLocation rl, JsonArray puzzles){
+	
+	}
+	
 	public static void applyJson(JsonObject json, ResourceLocation rl){
 		if(json.has("books")){
 			JsonArray books = json.getAsJsonArray("books");
@@ -133,6 +138,10 @@ public class ResearchLoader{
 		if(json.has("entries")){
 			JsonArray entries = json.getAsJsonArray("entries");
 			entryQueue.put(rl, entries);
+		}
+		if(json.has("puzzles")){
+			JsonArray puzzles = json.getAsJsonArray("puzzles");
+			puzzleQueue.put(rl, puzzles);
 		}
 	}
 	

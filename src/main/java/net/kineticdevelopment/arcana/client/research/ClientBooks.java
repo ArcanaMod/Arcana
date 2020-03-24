@@ -1,11 +1,13 @@
 package net.kineticdevelopment.arcana.client.research;
 
+import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.ResearchBook;
 import net.kineticdevelopment.arcana.core.research.ResearchCategory;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,6 +21,7 @@ public class ClientBooks{
 	// public
 	// thats still a bad idea
 	public static Map<ResourceLocation, ResearchBook> books;
+	public static Map<ResourceLocation, Puzzle> puzzles = new LinkedHashMap<>();
 	
 	public static List<ResearchBook> getBooks(){
 		return new ArrayList<>(books.values());
