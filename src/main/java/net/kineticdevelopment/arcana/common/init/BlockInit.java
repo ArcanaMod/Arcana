@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.kineticdevelopment.arcana.common.objects.blocks.BlockNormalNode;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.*;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.DoubleSlabBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.HalfSlabBase;
@@ -36,6 +37,7 @@ public class BlockInit {
 	public static final Block INFUSION_ARCANE_STONE = new BlockBase("infusion_arcane_stone", Material.ROCK).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block MAGICAL_GRASS = new BlockBase("magical_grass", Material.GRASS).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block TABLE = new BlockBase("table", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block NORMAL_NODE = new BlockNormalNode().setCreativeTab(Main.TAB_ARCANA);
 
 	//Blocks with function
 

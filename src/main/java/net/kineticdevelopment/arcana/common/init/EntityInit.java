@@ -16,6 +16,5 @@ public class EntityInit {
     public static void init() {
         int id = 1;
         EntityRegistry.registerModEntity(new ResourceLocation(Main.MODID, "spellentity"), SpellEntity.class, "spellentity", id++, Main.instance, 0 , 3, true);
-
     }
 }

@@ -13,9 +13,10 @@ public enum CapType {
     THAUMIUM(6,  4,3),
     VOID(8,  4,4),
     COPPER(2,  1, 5),
-    ELEMENTIUM(4,  3, 6),
-    MANASTEEL(4, 1, 7),
-    TERRASTEEL(7, 3, 8);
+    SILVER(3, 2, 6),
+    ELEMENTIUM(4,  3, 7),
+    MANASTEEL(4, 1, 8),
+    TERRASTEEL(7, 3, 9);
 
 
     @SuppressWarnings("unused")

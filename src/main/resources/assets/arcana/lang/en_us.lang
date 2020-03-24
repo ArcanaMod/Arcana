@@ -2,6 +2,10 @@
 itemGroup.tabArcana=Arcana
 itemGroup.tabTaintArcana=Tainted Blocks
 
+
+# Subtitles
+arcana.sounds.spell_cast=Spell Cast
+
 # Items
 item.wood_wand.name=Wooden Wand
 item.greatwood_wand.name=Greatwood Wand
@@ -10,6 +14,7 @@ item.dair_wand.name=Dair Wand
 item.hawthorn_wand.name=Hawthorn Wand
 item.arcanium_wand.name=Arcanium Wand
 item.silverwood_wand.name=Silverwood Wand
+item.goggles_of_revealing.name=Goggles Of Revealing
 
 item.arcanum.name=Arcanum
 item.illustrious_grimoire.name=Illustrious Grimoire

@@ -1,15 +1,18 @@
 package net.kineticdevelopment.arcana.common.objects.items;
 
+import net.kineticdevelopment.arcana.client.Sounds;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.spells.Spell;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
@@ -58,6 +61,7 @@ public class ItemWand extends Item {
                 if (!item.getTagCompound().getCompoundTag("foci").hasNoTags()) {
                     Spell spell = Spell.fromNBT(item.getTagCompound().getCompoundTag("foci"));
                     spell.cast(player);
+                    world.playSound(null, player.getPosition(), Sounds.SPELL_CAST, SoundCategory.PLAYERS, 0.5f, 0f);
                 }
             }
         }

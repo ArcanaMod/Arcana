@@ -1,0 +1,15 @@
+{
+  "spell_cast": {
+    "subtitle": "arcana.sounds.spell_cast",
+    "sounds": [
+      "arcana:spell/spell_cast_1",
+      "arcana:spell/spell_cast_2",
+      "arcana:spell/spell_cast_3",
+      "arcana:spell/spell_cast_4",
+      "arcana:spell/spell_cast_5",
+      "arcana:spell/spell_cast_6",
+      "arcana:spell/spell_cast_7",
+      "arcana:spell/spell_cast_8"
+    ]
+  }
+}

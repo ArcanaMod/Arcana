@@ -10,13 +10,14 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 /**
  * Event Handler for ModelBakeEvent
  * 
  * @author Merijn
  */
-@EventBusSubscriber
+@EventBusSubscriber(Side.CLIENT)
 public class ModelBake {
 
     @SubscribeEvent

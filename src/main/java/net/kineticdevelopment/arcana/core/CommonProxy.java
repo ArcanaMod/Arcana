@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.core;
 
+import net.kineticdevelopment.arcana.client.Sounds;
 import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
 import net.kineticdevelopment.arcana.common.init.EntityInit;
 import net.kineticdevelopment.arcana.common.network.Connection;
@@ -10,8 +11,10 @@ import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.Requirement;
 import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
+import net.kineticdevelopment.arcana.core.spells.SpellEffectHandler;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -45,6 +48,8 @@ public class CommonProxy {
 
 		Connection.init();
 		ResearchLoader.load();
+		Sounds.registerSounds();
+		SpellEffectHandler.init();
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {}

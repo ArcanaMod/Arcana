@@ -7,8 +7,16 @@ import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.items.ResearchBookItem;
+import net.kineticdevelopment.arcana.common.objects.items.armor.GoggleBase;
+import net.kineticdevelopment.arcana.common.objects.items.tools.*;
 import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.utilities.GogglePriority;
+import net.minecraft.client.particle.ParticleDrip;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 
@@ -29,6 +37,7 @@ public class ItemInit {
 	// Materials - Values
 	public static Item.ToolMaterial MATERIAL_ARCANIUM = EnumHelper.addToolMaterial("material_arcanium",4,1987,9.0F,4.0F, 20);
 	public static Item.ToolMaterial MATERIAL_VOID_METAL = EnumHelper.addToolMaterial("material_void_metal",5,250, 10.0F, 4.5F,8);
+	public static ItemArmor.ArmorMaterial MATERIAL_GOGGLES_REVEALING = EnumHelper.addArmorMaterial("material_goggles", Main.MODID + ":goggles_of_revealing", 50, new int[] {0, 0, 0, 2}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F);
 
 	//Weapons
 	public static Item ARCANIUM_AXE = new net.kineticdevelopment.arcana.common.objects.items.tools.AxeBase("arcanium_axe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
@@ -86,6 +95,10 @@ public class ItemInit {
 	public static Item HAWTHORN_WAND_CORE = new ItemBase("hawthorn_wand_core").setCreativeTab(Main.TAB_ARCANA);
 	public static Item SILVERWOOD_WAND_CORE = new ItemBase("silverwood_wand_core").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_WAND_CORE = new ItemBase("arcanium_wand_core").setCreativeTab(Main.TAB_ARCANA);
+
+
+	// Armor/Goggles
+	public static GoggleBase GOGGLES_OF_REVEALING = new GoggleBase("goggles_of_revealing", MATERIAL_GOGGLES_REVEALING, 1, GogglePriority.SHOW_NODE);
 
 
 	// Wand Attachments
