@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.kineticdevelopment.arcana.common.objects.blocks.BlockNormalNode;
+import net.kineticdevelopment.arcana.common.objects.blocks.BlockResearchTable;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.*;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.DoubleSlabBase;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.HalfSlabBase;
@@ -22,7 +23,7 @@ import net.minecraft.block.material.Material;
  * @see ItemInit
  */
 public class BlockInit {
-	public static final List<Block> BLOCKS = new ArrayList<Block>();
+	public static final List<Block> BLOCKS = new ArrayList<>();
 
 	// General
 	public static final Block ARCANE_STONE = new BlockBase("arcane_stone", Material.ROCK).setCreativeTab(Main.TAB_ARCANA);
@@ -41,8 +42,9 @@ public class BlockInit {
 
 	//Blocks with function
 
-	public static final Block RESEARCH_TABLE = new BlockBase("research_table", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block RESEARCH_TABLE = new BlockResearchTable().setCreativeTab(Main.TAB_ARCANA);
 	public static final Block ASPECT_BOOKSHELF = new BlockBase ("aspect_bookshelf", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+
 	// Logs
 	public static final Block DAIR_LEAVES = new LeavesBase("dair_leaves").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block DAIR_LOG = new LogBase("dair_log").setCreativeTab(Main.TAB_ARCANA);

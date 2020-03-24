@@ -14,7 +14,6 @@ import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
 import net.kineticdevelopment.arcana.core.spells.SpellEffectHandler;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -48,6 +47,7 @@ public class CommonProxy {
 
 		Connection.init();
 		ResearchLoader.load();
+		
 		Sounds.registerSounds();
 		SpellEffectHandler.init();
 	}
@@ -57,11 +57,7 @@ public class CommonProxy {
 	public void registerWand(IForgeRegistry<Item> registry, ItemWand wand) {
 		registry.register(wand);
 	}
-
-	/**
-	 * @param parBlock -
-	 * @param parFancyEnabled
-	 */
+	
 	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled) {}
 	
 	public void openResearchBookUI(ResourceLocation book){}

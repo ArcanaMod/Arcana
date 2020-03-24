@@ -254,6 +254,11 @@ public class ResearchLoader{
 	}
 	
 	public static void load(){
+		bookQueue.clear();
+		categoryQueue.clear();
+		entryQueue.clear();
+		puzzleQueue.clear();
+		
 		for(ModContainer mod : Loader.instance().getActiveModList()){
 			CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + "/research", /*pre-processing?*/ null, (root, file) -> {
 				String relative = root.relativize(file).toString();
@@ -286,6 +291,7 @@ public class ResearchLoader{
 		bookQueue.forEach(ResearchLoader::applyBooksArray);
 		categoryQueue.forEach(ResearchLoader::applyCategoriesArray);
 		entryQueue.forEach(ResearchLoader::applyEntriesArray);
+		puzzleQueue.forEach(ResearchLoader::applyPuzzlesArray);
 		
 		if(FMLCommonHandler.instance().getMinecraftServerInstance() != null)
 			Connection.network.sendToAll(new PktSyncBooksHandler.PktSyncBooks(ServerBooks.books));

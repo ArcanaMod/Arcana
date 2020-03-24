@@ -5,6 +5,7 @@ import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.objects.blocks.BlockNormalNode;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.NodeTileEntity;
+import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
 import net.minecraft.block.Block;
@@ -44,6 +45,7 @@ public class RegistryHandler {
 	public static void onBlockRegister(RegistryEvent.Register<Block> event) {
 		event.getRegistry().registerAll(BlockInit.BLOCKS.toArray(new Block[0]));
 		GameRegistry.registerTileEntity(NodeTileEntity.class, new ResourceLocation(Main.MODID, "tile_normalnode"));
+		GameRegistry.registerTileEntity(ResearchTableTileEntity.class, ResearchTableTileEntity.ID);
 	}
 	
 	/**
