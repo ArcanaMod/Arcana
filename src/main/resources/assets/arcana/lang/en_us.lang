@@ -111,6 +111,9 @@ tile.willow_slab.name=Willow Slab
 tile.willow_slab_double.name=Willow Double Slab
 tile.willow_stairs.name=Willow Stairs
 
+##Functional
+tile.research_table.name=Research Table
+
 ##Tainted
 tile.tainted_acacia_leaves.name=Tainted Acacia Leaves
 tile.tainted_acacia_log.name=Tainted Acacia Wood
