@@ -1,19 +1,31 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,part=left": {
       "model": "arcana:research_table"
     },
-    "facing=south": {
+    "facing=south,part=left": {
       "model": "arcana:research_table",
       "y": 180
     },
-    "facing=east": {
+    "facing=east,part=left": {
       "model": "arcana:research_table",
       "y": 90
     },
-    "facing=west": {
+    "facing=west,part=left": {
       "model": "arcana:research_table",
       "y": 270
+    },
+    "facing=north,part=right": {
+      "model": ""
+    },
+    "facing=south,part=right": {
+      "model": ""
+    },
+    "facing=east,part=right": {
+      "model": ""
+    },
+    "facing=west,part=right": {
+      "model": ""
     }
   }
 }

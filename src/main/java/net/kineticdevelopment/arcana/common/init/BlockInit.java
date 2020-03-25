@@ -42,7 +42,7 @@ public class BlockInit {
 
 	//Blocks with function
 
-	public static final Block RESEARCH_TABLE = new BlockResearchTable().setCreativeTab(Main.TAB_ARCANA);
+	public static final Block RESEARCH_TABLE = new BlockResearchTable();
 	public static final Block ASPECT_BOOKSHELF = new BlockBase ("aspect_bookshelf", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
 
 	// Logs

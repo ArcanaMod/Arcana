@@ -3,10 +3,7 @@ package net.kineticdevelopment.arcana.common.init;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.Focus;
-import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
-import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
-import net.kineticdevelopment.arcana.common.objects.items.ResearchBookItem;
+import net.kineticdevelopment.arcana.common.objects.items.*;
 import net.kineticdevelopment.arcana.common.objects.items.armor.GoggleBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.GogglePriority;
@@ -53,6 +50,7 @@ public class ItemInit {
 
 	public static Item RESEARCH_NOTE_COMPLETE = new ItemBase("research_note_complete").setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_NOTE = new ItemBase("research_note").setCreativeTab(Main.TAB_ARCANA);
+	public static Item RESEARCH_TABLE_PLACER = new ItemResearchTable().setCreativeTab(Main.TAB_ARCANA);
 
 	public static Item ARCANUM = new ResearchBookItem("arcanum", new ResourceLocation(Main.MODID, "arcanum")).setCreativeTab(Main.TAB_ARCANA);
 	public static Item GRIMOIRE = new ResearchBookItem("illustrious_grimoire", new ResourceLocation(Main.MODID, "illustrious_grimoire")).setCreativeTab(Main.TAB_ARCANA);
