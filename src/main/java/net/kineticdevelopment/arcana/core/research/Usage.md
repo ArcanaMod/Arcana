@@ -104,18 +104,16 @@ Every element of a `sections` array is loaded as an entry section, and should be
  - `content`: the content of this section. The format used for this is based on the
   type. String sections use a translation key, and simply display that text. `\n` may
   be used in these translations. Guesswork sections are WIP. Recipe sections use the ID
-  of a recipe JSON. (1.12 only supports crafting recipes in JSON files, so cooking
-  recipes instead currently use their own format, described in addendum 1. This will be
-  changed with 1.14.)
+  of a recipe JSON. (Check addendum 1.)
  - (Optionally) `requirements`: an array of strings that will be loaded as requirements
   added to this section.
 
 #### Requirements
-A requirement string is in the following format: `amount*Item ID` OR `amount*domain
-::name{args}`. The first format refers to item requirements, and the second refers to
+A requirement string is in the following format: `amount*Item ID{arga}` OR `amount*domain::name{args}`.
+ The first format refers to item requirements, and the second refers to
  requirements that have been registered by a mod. If `amount` is 1, `amount*` can be
  omitted. If `args` is empty, `{args}` can be omitted. Arcana registers `xp`,`guesswork`,
- and `fieldwork` requirements (although the latter two are subject to change very soon).
+ and `fieldwork` requirements (although the latter two are subject to change soon).
 
 Here're some examples: `minecraft:sponge`, `3*minecraft:stick`, `88*arcana::xp`,
  `arcana::guesswork{0}`.
@@ -124,8 +122,12 @@ NBT tags may be added in a future update to item requirements.
 
 ###### Addendum 1
 
+1.12 only supports crafting recipes in JSON files, so cooking
+ recipes instead currently use their own format. This will be
+ changed with 1.14.
+
 Cooking recipes are in the format `__furnace__:ingredient.result`, where `ingredient` is
  the ID of the ingredient item (with the colon replaced by a dash), and `result` is the
  ID of the result item (with the colon replaced by a dash). It's not possible to
- specify multiple inputs or outputs, and that's not planned to be added, since this is
+ specify multiple inputs or outputs, and that is not planned to be added, as this is
  a temporary format.
