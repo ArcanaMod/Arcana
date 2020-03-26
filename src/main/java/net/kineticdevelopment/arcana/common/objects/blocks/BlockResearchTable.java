@@ -4,8 +4,8 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
+import net.kineticdevelopment.arcana.core.Main;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
@@ -48,7 +48,30 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 	@Nullable
 	@ParametersAreNonnullByDefault
 	public TileEntity createNewTileEntity(World worldIn, int meta){
-		return new ResearchTableTileEntity();
+		return (meta & 8) > 0 ? null : new ResearchTableTileEntity();
+	}
+	
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+		if(world.isRemote)
+			return true;
+		TileEntity te = getTE(pos, world);
+		if(te instanceof ResearchTableTileEntity)
+			Main.proxy.openResearchTableUI((ResearchTableTileEntity)te);
+		return true;
+	}
+	
+	@Nullable
+	private TileEntity getTE(BlockPos pos, World world){
+		if(world.getBlockState(pos).getValue(PART).equals(LEFT))
+			return world.getTileEntity(pos);
+		else
+			return world.getTileEntity(pos.offset(world.getBlockState(pos).getValue(FACING).rotateYCCW()));
+	}
+	
+	public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int param){
+		super.eventReceived(state, worldIn, pos, id, param);
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+		return tileentity != null && tileentity.receiveClientEvent(id, param);
 	}
 	
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player){
@@ -139,25 +162,21 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
-	public enum EnumSide implements IStringSerializable
-	{
+	public enum EnumSide implements IStringSerializable{
 		LEFT("left"),
 		RIGHT("right");
 		
 		private final String name;
 		
-		EnumSide(String name)
-		{
+		EnumSide(String name){
 			this.name = name;
 		}
 		
-		public String toString()
-		{
+		public String toString(){
 			return this.name;
 		}
 		
-		public String getName()
-		{
+		public String getName(){
 			return this.name;
 		}
 	}

@@ -116,7 +116,6 @@ public interface Researcher{
 	}
 	
 	static boolean visible(ResearchEntry entry, Researcher r){
-		// TODO: document meta tags: "root" makes an entry always in progress if it has no parents; "hidden" makes an entry always invisible unless it has progress.
 		// abridged version of ResearchBookGUI#style
 		
 		if(r.stage(entry) >= entry.sections().size())

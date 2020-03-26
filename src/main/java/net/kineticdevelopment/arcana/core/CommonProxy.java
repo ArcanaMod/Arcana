@@ -6,6 +6,7 @@ import net.kineticdevelopment.arcana.common.init.EntityInit;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.Requirement;
@@ -61,4 +62,5 @@ public class CommonProxy {
 	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled) {}
 	
 	public void openResearchBookUI(ResourceLocation book){}
+	public void openResearchTableUI(ResearchTableTileEntity te){}
 }

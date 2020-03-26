@@ -310,7 +310,6 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	private PageStyle style(ResearchEntry entry){
-		// TODO: document meta tags: "root" makes an entry always in progress if it has no parents; "hidden" makes an entry always invisible unless it has progress.
 		
 		// if the page is at full progress, its complete.
 		Researcher r = Researcher.getFrom(mc.player);
@@ -337,7 +336,6 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	private int base(ResearchEntry entry){
-		// TODO: document base metas
 		int base = 8;
 		if(entry.meta().contains("purple_base"))
 			base = 0;
