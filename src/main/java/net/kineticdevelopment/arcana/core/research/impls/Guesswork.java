@@ -1,5 +1,7 @@
-package net.kineticdevelopment.arcana.core.research;
+package net.kineticdevelopment.arcana.core.research.impls;
 
+import com.google.gson.JsonObject;
+import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
@@ -14,9 +16,21 @@ public class Guesswork extends Puzzle{
 	protected ResourceLocation recipe;
 	protected Map<ResourceLocation, String> hints;
 	
+	public Guesswork(){
+		// empty for loading
+	}
+	
 	public Guesswork(ResourceLocation recipe, Map<ResourceLocation, String> hints){
 		this.recipe = recipe;
 		this.hints = hints;
+	}
+	
+	public void load(JsonObject data){
+	
+	}
+	
+	public String type(){
+		return "guesswork";
 	}
 	
 	public ResourceLocation getRecipe(){
@@ -27,12 +41,12 @@ public class Guesswork extends Puzzle{
 		return Collections.unmodifiableMap(hints);
 	}
 	
-	public NBTTagCompound getPassData(){
+	public NBTTagCompound getData(){
 		NBTTagCompound compound = new NBTTagCompound();
 		NBTTagCompound hints = new NBTTagCompound();
 		getHints().forEach((location, s) -> hints.setString(location.toString(), s));
-		compound.setTag("hints", hints);
 		compound.setString("recipe", getRecipe().toString());
+		compound.setTag("hints", hints);
 		return compound;
 	}
 	

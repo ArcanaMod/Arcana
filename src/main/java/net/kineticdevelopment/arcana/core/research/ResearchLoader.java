@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.core.research;
 import com.google.gson.*;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.PktSyncBooksHandler;
+import net.kineticdevelopment.arcana.core.research.impls.Guesswork;
 import net.kineticdevelopment.arcana.core.research.impls.ItemRequirement;
 import net.minecraft.item.Item;
 import net.minecraft.util.JsonUtils;
@@ -111,11 +112,7 @@ public class ResearchLoader{
 				if(entry.has("meta"))
 					meta = StreamSupport.stream(entry.getAsJsonArray("meta").spliterator(), false).map(JsonElement::getAsString).collect(Collectors.toList());
 				
-				List<Guesswork> guessworks = new ArrayList<>();
-				if(entry.has("guessworks"))
-					guessworks = jsonToGuessworks(entry.getAsJsonArray("guessworks"), rl);
-				
-				ResearchEntry entryObject = new ResearchEntry(key, sections, icons, meta, parents, guessworks, category, name, desc, x, y);
+				ResearchEntry entryObject = new ResearchEntry(key, sections, icons, meta, parents, category, name, desc, x, y);
 				category.entries.putIfAbsent(key, entryObject);
 				sections.forEach(section -> section.entry = entryObject.key());
 			}
@@ -152,14 +149,14 @@ public class ResearchLoader{
 				.collect(Collectors.toList());
 	}
 	
-	private static List<Guesswork> jsonToGuessworks(JsonArray guessworks, ResourceLocation file){
+	private static List<Guesswork> jsonToGuessworks(JsonArray puzzles, ResourceLocation file){
 		List<Guesswork> ret = new ArrayList<>();
-		for(JsonElement guessworkElement : guessworks){
-			if(guessworkElement.isJsonObject()){
-				JsonObject guesswork = guessworkElement.getAsJsonObject();
+		for(JsonElement puzzleElement : puzzles){
+			if(puzzleElement.isJsonObject()){
+				JsonObject puzzle = puzzleElement.getAsJsonObject();
 				// expecting recipe (string), hints (array)
-				ResourceLocation recipe = new ResourceLocation(guesswork.get("recipe").getAsString());
-				JsonArray hints = guesswork.getAsJsonArray("hints");
+				ResourceLocation recipe = new ResourceLocation(puzzle.get("recipe").getAsString());
+				JsonArray hints = puzzle.getAsJsonArray("hints");
 				Map<ResourceLocation, String> hintMap = new LinkedHashMap<>();
 				for(JsonElement hint : hints){
 					if(hint.isJsonPrimitive()){
@@ -169,9 +166,9 @@ public class ResearchLoader{
 							String value = hintSt.split("=")[1];
 							hintMap.put(key, value);
 						}else
-							LOGGER.error("String not containing \"=\" found in guesswork in " + file + "!");
+							LOGGER.error("String not containing \"=\" found in puzzle in " + file + "!");
 					}else
-						LOGGER.error("Non-String found in hints array in guesswork in " + file + "!");
+						LOGGER.error("Non-String found in hints array in puzzle in " + file + "!");
 				}
 				ret.add(new Guesswork(recipe, hintMap));
 			}

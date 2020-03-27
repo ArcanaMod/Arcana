@@ -2,17 +2,17 @@ package net.kineticdevelopment.arcana.core.aspects;
 
 import javax.annotation.Nullable;
 
-import net.kineticdevelopment.arcana.utilities.exception.AspectNotFoundException;
-
 /**
  * Contains enum and utilities for aspects
  * @author Atlas
  */
 public class Aspect {
 	
+    // TODO: DON'T USE AN ENUM, use an ItemBase-like constructor to allow addons to add aspects.
+    // Update research system to match.
 	/**
 	 * Enumeration containing all aspect types
-	 * 
+	 *
 	 * @author Atlas
 	 */
     public enum AspectType {
@@ -75,15 +75,21 @@ public class Aspect {
     }
     
     /**
-     * Utility for getting an aspect by name
-     * @param name
-     * @return AspectType
-     * @throws AspectNotFoundException
-     */
+	 * Utility for getting an aspect by name. If there is no aspect with the given name,
+	 * this returns null.
+	 * <p>
+	 * If `name` is null, returns null. This method is not case sensitive.
+	 *
+	 * @param name
+	 * 		The name of the aspect.
+	 * @return The aspect with that name, or null.
+	 */
     @Nullable
-    public static AspectType getAspectByName(@Nullable String name) throws AspectNotFoundException {
-        switch (name.toUpperCase()) {
-            default: throw new AspectNotFoundException("Aspect "+name+" does not exist!");
+    public static AspectType getAspectByName(@Nullable String name){
+        if(name == null)
+            return null;
+        switch(name.toUpperCase()){
+            default: return null;
             case "AIR": return AspectType.AIR;
             case "ARMOR": return AspectType.ARMOR;
             case "AURA": return AspectType.AURA;

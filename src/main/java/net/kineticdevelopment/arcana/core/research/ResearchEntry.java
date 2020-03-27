@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.core.research;
 
+import net.kineticdevelopment.arcana.core.research.impls.Guesswork;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -24,20 +25,18 @@ public class ResearchEntry{
 	private List<Item> icons;
 	private List<String> meta;
 	private List<ResourceLocation> parents;
-	private List<Guesswork> guessworks;
 	private ResearchCategory category;
 	
 	private String name, desc;
 	
 	private int x, y;
 	
-	public ResearchEntry(ResourceLocation key, List<EntrySection> sections, List<Item> icons, List<String> meta, List<ResourceLocation> parents, List<Guesswork> guessworks, ResearchCategory category, String name, String desc, int x, int y){
+	public ResearchEntry(ResourceLocation key, List<EntrySection> sections, List<Item> icons, List<String> meta, List<ResourceLocation> parents, ResearchCategory category, String name, String desc, int x, int y){
 		this.key = key;
 		this.sections = sections;
 		this.icons = icons;
 		this.meta = meta;
 		this.parents = parents;
-		this.guessworks = guessworks;
 		this.category = category;
 		this.name = name;
 		this.desc = desc;
@@ -59,10 +58,6 @@ public class ResearchEntry{
 	
 	public List<ResourceLocation> parents(){
 		return parents;
-	}
-	
-	public List<Guesswork> guessworks(){
-		return guessworks;
 	}
 	
 	public ResearchCategory category(){
@@ -103,10 +98,6 @@ public class ResearchEntry{
 		NBTTagList list = new NBTTagList();
 		sections().forEach((section) -> list.appendTag(section.getPassData()));
 		nbt.setTag("sections", list);
-		// guessworks
-		NBTTagList guessworks = new NBTTagList();
-		guessworks().forEach((guesswork) -> guessworks.appendTag(guesswork.getPassData()));
-		nbt.setTag("guessworks", list);
 		// icons
 		NBTTagList icons = new NBTTagList();
 		icons().forEach((icon) -> icons.appendTag(new NBTTagString(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(icon), "Invalid item for icon on client side.").toString())));
@@ -133,8 +124,6 @@ public class ResearchEntry{
 		List<ResourceLocation> parents = streamAndApply(nbt.getTagList("parents", 8), NBTTagString.class, NBTTagString::getString)
 				.map(ResourceLocation::new)
 				.collect(Collectors.toList());
-		List<Guesswork> guessworks = streamAndApply(nbt.getTagList("guessworks", 10), NBTTagCompound.class, Guesswork::deserialize)
-				.collect(Collectors.toList());
 		List<Item> icons = streamAndApply(nbt.getTagList("icons", 8), NBTTagString.class, NBTTagString::getString)
 				.map(ResourceLocation::new)
 				.map(ForgeRegistries.ITEMS::getValue)
@@ -142,7 +131,7 @@ public class ResearchEntry{
 				.collect(Collectors.toList());
 		List<String> meta = streamAndApply(nbt.getTagList("meta", 8), NBTTagString.class, NBTTagString::getString)
 				.collect(Collectors.toList());
-		return new ResearchEntry(key, sections, icons, meta, parents, guessworks, in, name, desc, x, y);
+		return new ResearchEntry(key, sections, icons, meta, parents, in, name, desc, x, y);
 	}
 	
 	public boolean equals(Object o){

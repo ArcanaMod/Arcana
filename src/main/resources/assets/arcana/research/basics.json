@@ -27,7 +27,7 @@
         },
         {
           "type": "guesswork",
-          "content": "0"
+          "content": "arcana:guesswork_enchanting_table"
         },
         {
           "type": "string",
@@ -36,16 +36,6 @@
         {
           "type": "recipe",
           "content": "arcana:R_arcanium_sword"
-        }
-      ],
-      "guessworks": [
-        {
-          "recipe": "minecraft:enchanting_table",
-          "hints": [
-            "minecraft:book=research.arcana.root.guesswork.ench.hint.book",
-            "minecraft:diamond=research.arcana.root.guesswork.ench.hint.diamond",
-            "minecraft:obsidian=research.arcana.root.guesswork.ench.hint.obsidian"
-          ]
         }
       ]
     },
@@ -71,6 +61,31 @@
           "type": "string",
           "content": "research.arcana.trailing.all"
         }
+      ]
+    }
+  ],
+  "puzzles": [
+    {
+      "key": "arcana:gw_enchanting_table",
+      "type": "guesswork",
+      "recipe": "minecraft:enchanting_table",
+      "hints": [
+        "minecraft:book=research.arcana.root.guesswork.ench.hint.book",
+        "minecraft:diamond=research.arcana.root.guesswork.ench.hint.diamond",
+        "minecraft:obsidian=research.arcana.root.guesswork.ench.hint.obsidian"
+      ]
+    },
+    {
+      "key": "arcana:fw_place_node",
+      "type": "fieldwork"
+    },
+    {
+      "key": "arcana:chemistry_trailing",
+      "type": "chemistry",
+      "nodes": [
+        "MANA",
+        "ORDER",
+        "CHAOS"
       ]
     }
   ]

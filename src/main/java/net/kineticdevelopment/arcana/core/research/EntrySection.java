@@ -1,6 +1,5 @@
 package net.kineticdevelopment.arcana.core.research;
 
-import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.core.research.impls.GuessworkSection;
 import net.kineticdevelopment.arcana.core.research.impls.RecipeSection;
 import net.kineticdevelopment.arcana.core.research.impls.StringSection;
@@ -24,6 +23,7 @@ public abstract class EntrySection{
 	// when addon support is to be added: change this from strings to ResourceLocations so mods can register more
 	private static Map<String, Function<String, EntrySection>> factories = new LinkedHashMap<>();
 	private static Map<String, Function<NBTTagCompound, EntrySection>> deserializers = new LinkedHashMap<>();
+	
 	public static Function<String, EntrySection> getFactory(String type){
 		return factories.get(type);
 	}

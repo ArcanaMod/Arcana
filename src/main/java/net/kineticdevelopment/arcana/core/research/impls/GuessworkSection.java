@@ -14,7 +14,7 @@ public class GuessworkSection extends EntrySection{
 	int guessworkIndex;
 	
 	public GuessworkSection(String guessworkIndex){
-		this.guessworkIndex = Integer.parseInt(guessworkIndex);
+		this.guessworkIndex = /*Integer.parseInt(guessworkIndex)*/0;
 	}
 	
 	public GuessworkSection(int guessworkIndex){
