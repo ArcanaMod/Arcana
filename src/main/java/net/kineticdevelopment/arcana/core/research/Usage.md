@@ -26,8 +26,8 @@ The research system separates the task of representing these parts from displayi
 
 The research system pulls data from .json files. Any .json files found in the
  `assets/<modid>/research` directory will be loaded as research JSONs during the main
- initialisation stage of the mod. A reload can also be forced by running `/arcana
- -research reload` during the game's runtime.
+ initialisation stage of the mod. A reload can also be forced by running `/arcana-research reload`
+ during the game's runtime.
 
 A research JSON can contain up to four root entries: an array named `books`, an array
  named `categories`, an array named `entries`, and an array named `puzzles`. All of

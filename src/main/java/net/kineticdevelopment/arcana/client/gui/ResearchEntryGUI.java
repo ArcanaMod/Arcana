@@ -22,6 +22,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
 public class ResearchEntryGUI extends GuiScreen{
@@ -134,7 +135,7 @@ public class ResearchEntryGUI extends GuiScreen{
 	protected void updateButtonVisibility(){
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
-		cont.visible = Researcher.getFrom(mc.player).stage(entry) < entry.sections().size();
+		cont.visible = Researcher.getFrom(mc.player).stage(entry) < getVisibleSections().size();
 	}
 	
 	protected void keyTyped(char typedChar, int keyCode) throws IOException{
@@ -157,14 +158,14 @@ public class ResearchEntryGUI extends GuiScreen{
 	}
 	
 	private int totalLength(){
-		return entry.sections().stream().mapToInt(this::span).sum();
+		return entry.sections().stream().filter(this::visible).mapToInt(this::span).sum();
 	}
 	
 	private EntrySection getSectionAtIndex(int index){
 		if(index == 0)
 			return entry.sections().get(0);
 		int cur = 0;
-		for(EntrySection section : entry.sections()){
+		for(EntrySection section : getVisibleSections()){
 			if(cur <= index && cur + span(section) > index)
 				return section;
 			cur += span(section);
@@ -174,12 +175,20 @@ public class ResearchEntryGUI extends GuiScreen{
 	
 	private int sectionIndex(int index){
 		int cur = 0;
-		for(EntrySection section : entry.sections()){
+		for(EntrySection section : getVisibleSections()){
 			if(cur <= index && cur + span(section) > index)
 				return index - cur;
 			cur += span(section);
 		}
 		return 0; // throw/show an error
+	}
+	
+	private List<EntrySection> getVisibleSections(){
+		return entry.sections().stream().filter(this::visible).collect(Collectors.toList());
+	}
+	
+	private boolean visible(EntrySection section){
+		return Researcher.getFrom(Minecraft.getMinecraft().player).stage(entry) >= entry.sections().indexOf(section);
 	}
 	
 	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){
