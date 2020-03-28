@@ -3,7 +3,6 @@ package net.kineticdevelopment.arcana.core.research;
 import com.google.gson.*;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.PktSyncBooksHandler;
-import net.kineticdevelopment.arcana.core.research.impls.Guesswork;
 import net.kineticdevelopment.arcana.core.research.impls.ItemRequirement;
 import net.minecraft.item.Item;
 import net.minecraft.util.JsonUtils;
@@ -120,7 +119,21 @@ public class ResearchLoader{
 	}
 	
 	private static void applyPuzzlesArray(ResourceLocation rl, JsonArray puzzles){
-	
+		for(JsonElement puzzleElement : puzzles)
+			if(!puzzleElement.isJsonObject())
+				LOGGER.error("Non-object found in puzzles array in " + rl + "!");
+			else{
+				JsonObject puzzle = puzzleElement.getAsJsonObject();
+				// expecting key, type
+				// then I pass the object along
+				ResourceLocation key = new ResourceLocation(puzzle.get("key").getAsString());
+				String type = puzzle.get("type").getAsString();
+				Puzzle puzzleObject = Puzzle.makePuzzle(type, key, puzzle);
+				if(puzzleObject != null)
+					ServerBooks.puzzles.putIfAbsent(key, puzzleObject);
+				else if(Puzzle.getBlank(type) == null)
+					LOGGER.error("Invalid Puzzle type \"" + type + "\" in file " + rl + "!");
+			}
 	}
 	
 	public static void applyJson(JsonObject json, ResourceLocation rl){
@@ -149,7 +162,7 @@ public class ResearchLoader{
 				.collect(Collectors.toList());
 	}
 	
-	private static List<Guesswork> jsonToGuessworks(JsonArray puzzles, ResourceLocation file){
+	/*private static List<Guesswork> jsonToGuessworks(JsonArray puzzles, ResourceLocation file){
 		List<Guesswork> ret = new ArrayList<>();
 		for(JsonElement puzzleElement : puzzles){
 			if(puzzleElement.isJsonObject()){
@@ -174,13 +187,13 @@ public class ResearchLoader{
 			}
 		}
 		return ret;
-	}
+	}*/
 	
 	private static List<EntrySection> jsonToSections(JsonArray sections, ResourceLocation file){
 		List<EntrySection> ret = new ArrayList<>();
-		for(JsonElement sectionElement : sections){
-			// expecting type, content
+		for(JsonElement sectionElement : sections)
 			if(sectionElement.isJsonObject()){
+				// expecting type, content
 				JsonObject section = sectionElement.getAsJsonObject();
 				String type = section.get("type").getAsString();
 				String content = section.get("content").getAsString();
@@ -191,7 +204,8 @@ public class ResearchLoader{
 							for(Requirement requirement : jsonToRequirements(section.get("requirements").getAsJsonArray(), file))
 								if(requirement != null)
 									es.addRequirement(requirement);
-						}else LOGGER.error("Non-array named \"requirements\" found in " + file + "!");
+						}else
+							LOGGER.error("Non-array named \"requirements\" found in " + file + "!");
 					es.addOwnRequirements();
 					ret.add(es);
 				}else if(EntrySection.getFactory(type) == null)
@@ -200,7 +214,6 @@ public class ResearchLoader{
 					LOGGER.error("Invalid EntrySection content \"" + content + "\" for type \"" + type + "\" used in file " + file + "!");
 			}else
 				LOGGER.error("Non-object found in sections array in " + file + "!");
-		}
 		return ret;
 	}
 	
@@ -291,6 +304,6 @@ public class ResearchLoader{
 		puzzleQueue.forEach(ResearchLoader::applyPuzzlesArray);
 		
 		if(FMLCommonHandler.instance().getMinecraftServerInstance() != null)
-			Connection.network.sendToAll(new PktSyncBooksHandler.PktSyncBooks(ServerBooks.books));
+			Connection.network.sendToAll(new PktSyncBooksHandler.PktSyncBooks(ServerBooks.books, ServerBooks.puzzles));
 	}
 }

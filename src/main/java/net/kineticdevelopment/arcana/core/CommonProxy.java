@@ -9,6 +9,7 @@ import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
+import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.Requirement;
 import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
@@ -38,9 +39,11 @@ public class CommonProxy {
 		GameRegistry.registerWorldGenerator(OreGenerator.instance, 5);
 		MinecraftForge.EVENT_BUS.register(OreGenerator.instance);
 
+		// might want to group these together somehow...
 		EntrySection.init();
 		Requirement.init();
 		ResearcherCapability.init();
+		Puzzle.init();
 	}
 
 	public void init(FMLInitializationEvent event) {

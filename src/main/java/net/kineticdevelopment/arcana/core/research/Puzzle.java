@@ -20,9 +20,10 @@ public abstract class Puzzle{
 	private static Map<String, Supplier<Puzzle>> factories = new LinkedHashMap<>();
 	private static Map<String, Function<NBTTagCompound, Puzzle>> deserializers = new LinkedHashMap<>();
 	
-	public static Puzzle makePuzzle(String type, JsonObject content){
+	public static Puzzle makePuzzle(String type, ResourceLocation key, JsonObject content){
 		if(getBlank(type) != null){
 			Puzzle puzzle = getBlank(type).get();
+			puzzle.key = key;
 			puzzle.load(content);
 			return puzzle;
 		}else
