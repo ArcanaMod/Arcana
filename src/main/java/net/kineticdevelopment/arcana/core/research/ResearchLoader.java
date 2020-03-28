@@ -128,7 +128,11 @@ public class ResearchLoader{
 				// then I pass the object along
 				ResourceLocation key = new ResourceLocation(puzzle.get("key").getAsString());
 				String type = puzzle.get("type").getAsString();
-				Puzzle puzzleObject = Puzzle.makePuzzle(type, key, puzzle);
+				// optionally desc, icon
+				ResourceLocation icon = puzzle.has("icon") ? new ResourceLocation(puzzle.get("icon").getAsString()) : null;
+				String desc = puzzle.has("desc") ? puzzle.get("desc").getAsString() : null;
+				// make it
+				Puzzle puzzleObject = Puzzle.makePuzzle(type, desc, key, icon, puzzle);
 				if(puzzleObject != null)
 					ServerBooks.puzzles.putIfAbsent(key, puzzleObject);
 				else if(Puzzle.getBlank(type) == null)

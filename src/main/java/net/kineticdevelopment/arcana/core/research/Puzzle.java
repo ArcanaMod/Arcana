@@ -6,6 +6,7 @@ import net.kineticdevelopment.arcana.core.research.impls.Guesswork;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -13,17 +14,19 @@ import java.util.function.Supplier;
 
 public abstract class Puzzle{
 	
-	// STATIC STUFF
+	////////////////////// STATIC STUFF
 	
 	// I can't bother to add addon support for custom puzzles,
-	// if anyone wants to do that *then* I'll add it
+	// if anyone wants to do that, *then* I'll add it
 	private static Map<String, Supplier<Puzzle>> factories = new LinkedHashMap<>();
 	private static Map<String, Function<NBTTagCompound, Puzzle>> deserializers = new LinkedHashMap<>();
 	
-	public static Puzzle makePuzzle(String type, ResourceLocation key, JsonObject content){
+	public static Puzzle makePuzzle(String type, @Nullable String desc, ResourceLocation key, @Nullable ResourceLocation icon, JsonObject content){
 		if(getBlank(type) != null){
 			Puzzle puzzle = getBlank(type).get();
 			puzzle.key = key;
+			puzzle.desc = desc != null ? desc : puzzle.getDefaultDesc();
+			puzzle.icon = icon != null ? icon : puzzle.getDefaultIcon();
 			puzzle.load(content);
 			return puzzle;
 		}else
@@ -55,9 +58,10 @@ public abstract class Puzzle{
 		deserializers.put("chemistry", null);
 	}
 	
-	// INSTANCE STUFF
+	////////////////////// INSTANCE STUFF
 	
-	ResourceLocation key;
+	ResourceLocation key, icon;
+	String desc;
 	
 	public abstract void load(JsonObject data);
 	
@@ -65,10 +69,23 @@ public abstract class Puzzle{
 	
 	public abstract NBTTagCompound getData();
 	
+	public abstract String getDefaultDesc();
+	public abstract ResourceLocation getDefaultIcon();
+	
+	public String getDesc(){
+		return desc;
+	}
+	
+	public ResourceLocation getIcon(){
+		return icon;
+	}
+	
 	public NBTTagCompound getPassData(){
 		NBTTagCompound passData = new NBTTagCompound();
 		passData.setString("type", type());
 		passData.setString("key", getKey().toString());
+		passData.setString("desc", getDesc());
+		passData.setString("icon", getIcon().toString());
 		passData.setTag("data", getData());
 		return passData;
 	}

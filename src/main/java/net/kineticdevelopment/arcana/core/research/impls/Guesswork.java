@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.core.research.impls;
 
 import com.google.gson.JsonObject;
+import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -11,6 +12,8 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Guesswork extends Puzzle{
+	
+	private static final ResourceLocation ICON = new ResourceLocation(Main.MODID, "textures/item/research_note.png");
 	
 	// Check RecipeSectionRenderer for how non-crafting recipes are handled.
 	protected ResourceLocation recipe;
@@ -48,6 +51,14 @@ public class Guesswork extends Puzzle{
 		compound.setString("recipe", getRecipe().toString());
 		compound.setTag("hints", hints);
 		return compound;
+	}
+	
+	public String getDefaultDesc(){
+		return "requirement.guesswork";
+	}
+	
+	public ResourceLocation getDefaultIcon(){
+		return ICON;
 	}
 	
 	public static Guesswork deserialize(NBTTagCompound passData){

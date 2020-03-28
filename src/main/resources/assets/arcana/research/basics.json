@@ -70,14 +70,15 @@
       "type": "guesswork",
       "recipe": "minecraft:enchanting_table",
       "hints": [
-        "minecraft:book=research.arcana.root.guesswork.ench.hint.book",
-        "minecraft:diamond=research.arcana.root.guesswork.ench.hint.diamond",
-        "minecraft:obsidian=research.arcana.root.guesswork.ench.hint.obsidian"
+        "minecraft:book=requirement.guesswork.ench.hint.book",
+        "minecraft:diamond=requirement.guesswork.ench.hint.diamond",
+        "minecraft:obsidian=requirement.guesswork.ench.hint.obsidian"
       ]
     },
     {
       "key": "arcana:fw_place_research_table",
-      "type": "fieldwork"
+      "type": "fieldwork",
+      "desc": "requirement.fieldwork.place_table"
     },
     {
       "key": "arcana:chemistry_trailing",

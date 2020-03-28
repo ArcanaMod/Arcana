@@ -334,7 +334,7 @@ researchEntry.continue=Continue
 # Research
 requirement.guesswork=Complete the guesswork
 requirement.experience=%sx Experience Levels
-requirement.fieldwork=Do ___ (TODO)
+requirement.fieldwork=Do ___
 
 # NOTE: none of these names are final, or even more than a working name
 research.arcana.category.basics=Basics
@@ -352,9 +352,11 @@ research.arcana.root=Root Entry
 research.arcana.root.desc=(The start of something magical!)
 research.arcana.root.stage.1=<actual lore stuff, I don't know>
 research.arcana.root.complete=Good enough for me ¯\_(ツ)_/¯
-research.arcana.root.guesswork.ench.hint.diamond=A pure crystal
-research.arcana.root.guesswork.ench.hint.book=A storage of text
-research.arcana.root.guesswork.ench.hint.obsidian=A dark, hard rock
+
+requirement.guesswork.ench.hint.diamond=A pure crystal
+requirement.guesswork.ench.hint.book=A storage of text
+requirement.guesswork.ench.hint.obsidian=A dark, hard rock
+requirement.fieldwork.place_table=Place a research table
 
 research.arcana.trailing=Trailing Entry
 research.arcana.trailing.desc=Nothing here but us chickens!
