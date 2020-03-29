@@ -88,9 +88,4 @@ public class ClientProxy extends CommonProxy {
 	public void openResearchBookUI(ResourceLocation book){
 		Minecraft.getMinecraft().displayGuiScreen(new ResearchBookGUI(ClientBooks.books.get(book)));
 	}
-
-	public void openResearchTableUI(ResearchTableTileEntity te){
-		// TODO: I should probably open it using IGuiHandler.
-		Minecraft.getMinecraft().displayGuiScreen(new ResearchTableGUI(te));
-	}
 }

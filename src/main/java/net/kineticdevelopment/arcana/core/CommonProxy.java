@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.core;
 
+import net.kineticdevelopment.arcana.ArcanaGuiHandler;
 import net.kineticdevelopment.arcana.client.Sounds;
 import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
 import net.kineticdevelopment.arcana.common.init.EntityInit;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -51,6 +53,7 @@ public class CommonProxy {
 
 		Connection.init();
 		ResearchLoader.load();
+		NetworkRegistry.INSTANCE.registerGuiHandler(Main.instance, new ArcanaGuiHandler());
 		
 		Sounds.registerSounds();
 		SpellEffectHandler.init();
@@ -65,5 +68,4 @@ public class CommonProxy {
 	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled) {}
 	
 	public void openResearchBookUI(ResourceLocation book){}
-	public void openResearchTableUI(ResearchTableTileEntity te){}
 }

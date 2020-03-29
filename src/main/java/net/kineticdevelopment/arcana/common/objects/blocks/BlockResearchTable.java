@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.common.objects.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.kineticdevelopment.arcana.ArcanaGuiHandler;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
@@ -15,6 +16,8 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -54,9 +57,11 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
 		if(world.isRemote)
 			return true;
+		if(state.getValue(PART) == RIGHT)
+			pos = pos.offset(state.getValue(FACING).rotateYCCW());
 		TileEntity te = getTE(pos, world);
 		if(te instanceof ResearchTableTileEntity)
-			Main.proxy.openResearchTableUI((ResearchTableTileEntity)te);
+			player.openGui(Main.instance, ArcanaGuiHandler.RESEARCH_TABLE_ID, world, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
 	
@@ -66,6 +71,17 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 			return world.getTileEntity(pos);
 		else
 			return world.getTileEntity(pos.offset(world.getBlockState(pos).getValue(FACING).rotateYCCW()));
+	}
+	
+	public void breakBlock(World world, BlockPos pos, IBlockState state){
+		TileEntity tileentity = world.getTileEntity(pos);
+		
+		if(tileentity instanceof IInventory){
+			InventoryHelper.dropInventoryItems(world, pos, (IInventory)tileentity);
+			world.updateComparatorOutputLevel(pos, this);
+		}
+		
+		super.breakBlock(world, pos, state);
 	}
 	
 	public boolean eventReceived(IBlockState state, World worldIn, BlockPos pos, int id, int param){
@@ -83,7 +99,7 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 	}
 	
 	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player){
-		if(player.capabilities.isCreativeMode && state.getValue(PART) == RIGHT){
+		if(state.getValue(PART) == RIGHT){
 			BlockPos blockpos = pos.offset(state.getValue(FACING).rotateYCCW());
 			if(worldIn.getBlockState(blockpos).getBlock() == this)
 				worldIn.setBlockToAir(blockpos);
