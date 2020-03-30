@@ -46,14 +46,8 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 		 crafting recipes are easier: CraftingManager...
 		 but smelting is FurnaceRecipes...
 		 and those don't have IDs
-		 and (AFAIK) we can't easily use JSONs for our own recipes without basically rewriting the system (think ResearchLoader, but worse)
-		 so that will need to be handled probably though some convoluted code
 		 
-		 for now, I'll say that recipes with the "arcana" domain & with a path beginning with "__furnace__" are furnace recipes
-		 and are in the format "input.output", where input is the id of the input item w/ ":" replaced with "-", and output is similar
-		 like "__furnace__:minecraft-coal.minecraft-coal_block" for coal -> coal block (makes no sense but whatever)
-		 I know I can make it look better by not using ResourceLocation, but I can't bother tbh
-		 TODO: READ ABOVE & DOCUMENT
+		 apparently I was wrong about custom json recipes, but heck we don't have any yet
 		*/
 		
 		if(section.getRecipe().getResourceDomain().equals("__furnace__")){

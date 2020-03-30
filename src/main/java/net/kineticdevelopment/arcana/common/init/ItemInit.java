@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -173,6 +174,5 @@ public class ItemInit {
 		attachments[1] = new ItemAttachment[] {Focus.DEFAULT};
 		return attachments;
 	}).setCreativeTab(Main.TAB_ARCANA);
-
-
+	
 }

@@ -1,6 +1,9 @@
 package net.kineticdevelopment.arcana.common.objects.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
+import net.kineticdevelopment.arcana.common.init.ItemInit;
+import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -11,6 +14,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -26,40 +30,58 @@ public class ResearchTableContainer extends Container{
 	}
 	
 	private void addPlayerSlots(IInventory playerInventory){
+		int baseX = 139, baseY = ResearchTableGUI.HEIGHT - 61;
 		// Slots for the main inventory
-		for(int row = 0; row < 3; ++row){
-			for(int col = 0; col < 9; ++col){
-				int x = 9 + col * 18;
-				int y = row * 18 + 70;
-				this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 10, x, y));
+		for(int row = 0; row < 3; row++)
+			for(int col = 0; col < 9; col++){
+				int x = baseX + col * 18;
+				int y = row * 18 + baseY;
+				this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
 			}
-		}
 		
-		// Slots for the hotbar
+		/*// Slots for the hotbar
 		for(int row = 0; row < 9; ++row){
-			int x = 9 + row * 18;
-			int y = 58 + 70;
+			int x = baseX + row * 18;
+			int y = 58 + baseY;
 			this.addSlotToContainer(new Slot(playerInventory, row, x, y));
-		}
+		}*/
+		
+		for(int row = 0; row < 3; ++row)
+			for(int col = 0; col < 3; ++col){
+				int x = 79 + col * 18;
+				int y = row * 18 + baseY;
+				this.addSlotToContainer(new Slot(playerInventory, col + row * 3, x, y));
+			}
 	}
 	
 	private void addOwnSlots(){
 		IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		int x = 9;
-		int y = 6;
 		
-		// TODO: move the two slots to appropriate positions & give icons
-		int slotIndex = 0;
-		for(int i = 0; i < itemHandler.getSlots(); i++){
-			addSlotToContainer(new SlotItemHandler(itemHandler, slotIndex, x, y));
-			slotIndex++;
-			x += 18;
-		}
+		// 9, 10
+		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 9, 10){
+			public boolean isItemValid(@Nonnull ItemStack stack){
+				// only wands
+				return super.isItemValid(stack) && stack.getItem() instanceof ItemWand;
+			}
+		});
+		// 137, 11
+		addSlotToContainer(new SlotItemHandler(itemHandler, 1, 137, 11){
+			public boolean isItemValid(@Nonnull ItemStack stack){
+				// only ink TODO
+				return super.isItemValid(stack);
+			}
+		});
+		// 155, 11
+		addSlotToContainer(new SlotItemHandler(itemHandler, 2, 155, 11){
+			public boolean isItemValid(@Nonnull ItemStack stack){
+				// only notes
+				return super.isItemValid(stack) && stack.getItem() == ItemInit.RESEARCH_NOTE || stack.getItem() == ItemInit.RESEARCH_NOTE_COMPLETE;
+			}
+		});
 	}
 	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index){
-		// TODO: this is a copypaste impl, replace with something more specific
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
 		
@@ -67,10 +89,10 @@ public class ResearchTableContainer extends Container{
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			
-			if(index < 2){
-				if(!this.mergeItemStack(itemstack1, 2, inventorySlots.size(), true))
+			if(index < 3){
+				if(!this.mergeItemStack(itemstack1, 3, inventorySlots.size(), true))
 					return ItemStack.EMPTY;
-			}else if(!this.mergeItemStack(itemstack1, 0, 2, false))
+			}else if(!this.mergeItemStack(itemstack1, 0, 3, false))
 				return ItemStack.EMPTY;
 			
 			if(itemstack1.isEmpty())

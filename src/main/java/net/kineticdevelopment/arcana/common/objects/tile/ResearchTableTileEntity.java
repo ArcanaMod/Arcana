@@ -20,14 +20,10 @@ public class ResearchTableTileEntity extends TileEntity{
 	
 	public static final ResourceLocation ID = new ResourceLocation("arcana:research_table");
 	
-	protected ItemStackHandler items = new ItemStackHandler(2){
+	protected ItemStackHandler items = new ItemStackHandler(3){
 		protected void onContentsChanged(int slot){
 			super.onContentsChanged(slot);
 			markDirty();
-		}
-		
-		protected int getStackLimit(int slot, @Nonnull ItemStack stack){
-			return 1;
 		}
 	};
 	
