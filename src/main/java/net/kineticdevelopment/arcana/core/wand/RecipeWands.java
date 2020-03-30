@@ -55,6 +55,7 @@ public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IR
 		return true;
 	}
 	
+	@SuppressWarnings("unused") // Referenced in _factories.json
 	public static class Factory implements IRecipeFactory{
 		
 		public IRecipe parse(JsonContext context, JsonObject json){

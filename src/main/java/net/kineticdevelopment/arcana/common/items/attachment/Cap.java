@@ -13,7 +13,7 @@ import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 public class Cap extends ItemAttachment {
 
     private int id;
-
+    
     public static Cap DEFAULT = new Cap("iron_cap").setId(0);
 
     public Cap(String name) {
@@ -33,5 +33,9 @@ public class Cap extends ItemAttachment {
     public Cap setId(int id) {
         this.id = id;
         return this;
+    }
+    
+    protected boolean shouldRegister(){
+        return this != DEFAULT;
     }
 }

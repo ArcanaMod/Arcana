@@ -29,7 +29,7 @@ public class WandCore extends ItemBase{
 	
 	public ItemStack getWandWithAttachments(@Nonnull Cap cap, @Nullable Focus focus){
 		int c = cap.getID();
-		int f = focus == null ? 1 : focus.getID();
+		int f = focus == null ? 0 : focus.getID();
 		ItemStack stack = new ItemStack(getWand());
 		if(stack.getTagCompound() == null)
 			stack.setTagCompound(new NBTTagCompound());

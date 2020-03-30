@@ -127,7 +127,4 @@ public class ItemWand extends Item {
         this.attachments = null;
         return this;
     }
-
-
-
 }
