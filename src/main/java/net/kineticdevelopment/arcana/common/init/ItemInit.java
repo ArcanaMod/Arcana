@@ -75,15 +75,15 @@ public class ItemInit {
 	public static Item FOCUS_PARTS = new ItemBase("focus_parts").setCreativeTab(Main.TAB_ARCANA);
 
 	// Wand Attachments
-	public static Cap IRON_CAP = (Cap)new Cap("item_iron_cap").setId(0).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap GOLD_CAP = (Cap)new Cap("item_gold_cap").setId(1).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap THAUMIUM_CAP = (Cap)new Cap("item_thaumium_cap").setId(2).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap VOID_CAP = (Cap)new Cap("item_void_cap").setId(3).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap COPPER_CAP = (Cap)new Cap("item_copper_cap").setId(4).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap SILVER_CAP = (Cap)new Cap("item_silver_cap").setId(5).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap ELEMENTIUM_CAP = (Cap)new Cap("item_elementium_cap").setId(6).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap MANASTEEL_CAP = (Cap)new Cap("item_manasteel_cap").setId(7).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap TERRASTEEL_CAP = (Cap)new Cap("item_terrasteel_cap").setId(8).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap IRON_CAP = (Cap)new Cap("iron_cap").setId(0).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap GOLD_CAP = (Cap)new Cap("gold_cap").setId(1).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap THAUMIUM_CAP = (Cap)new Cap("thaumium_cap").setId(2).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap VOID_CAP = (Cap)new Cap("void_cap").setId(3).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap COPPER_CAP = (Cap)new Cap("copper_cap").setId(4).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap SILVER_CAP = (Cap)new Cap("silver_cap").setId(5).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap ELEMENTIUM_CAP = (Cap)new Cap("elementium_cap").setId(6).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap MANASTEEL_CAP = (Cap)new Cap("manasteel_cap").setId(7).setCreativeTab(Main.TAB_ARCANA);
+	public static Cap TERRASTEEL_CAP = (Cap)new Cap("terrasteel_cap").setId(8).setCreativeTab(Main.TAB_ARCANA);
 
 	public static ItemAttachment[] CAPS = new ItemAttachment[]{IRON_CAP, GOLD_CAP, THAUMIUM_CAP, VOID_CAP, COPPER_CAP, SILVER_CAP, ELEMENTIUM_CAP, MANASTEEL_CAP, TERRASTEEL_CAP};
 

@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.common.items.attachment;
 
+import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 
@@ -14,7 +15,7 @@ public class Cap extends ItemAttachment {
 
     private int id;
     
-    public static Cap DEFAULT = new Cap("iron_cap").setId(0);
+    public static Cap DEFAULT = ItemInit.IRON_CAP;
 
     public Cap(String name) {
         super(name);
@@ -33,9 +34,5 @@ public class Cap extends ItemAttachment {
     public Cap setId(int id) {
         this.id = id;
         return this;
-    }
-    
-    protected boolean shouldRegister(){
-        return this != DEFAULT;
     }
 }
