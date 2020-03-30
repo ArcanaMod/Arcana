@@ -49,10 +49,8 @@ public class ClientProxy extends CommonProxy {
 
 		ArrayList<ModelResourceLocation> list = new ArrayList<>();
 		list.add(main);
-
-		int i;
-
-		for(i = 0; i < EnumAttachmentType.values().length; ++i) {
+		
+		for(int i = 0; i < EnumAttachmentType.values().length; ++i) {
 			for(ItemAttachment attachment : wand.getAttachments()[i]) {
 				list.add(new ModelResourceLocation(Main.MODID + ":wands/" + attachment.getRegistryName().getResourcePath(), "inventory"));
 			}
