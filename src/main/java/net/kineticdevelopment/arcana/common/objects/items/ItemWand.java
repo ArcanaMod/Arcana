@@ -2,10 +2,11 @@ package net.kineticdevelopment.arcana.common.objects.items;
 
 import net.kineticdevelopment.arcana.client.Sounds;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
+import net.kineticdevelopment.arcana.common.items.attachment.Cap;
+import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.spells.Spell;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,8 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -28,9 +31,15 @@ public class ItemWand extends Item {
 
     public static List<ItemWand> WANDS = new ArrayList<>();
 
+    protected List<Cap> disallowedCaps = new ArrayList<>();
     protected ItemAttachment[][] attachments;
-
-    public Supplier<ItemAttachment[][]> supplierAttachments;
+    
+    public Supplier<ItemAttachment[][]> supplierAttachments = () -> {
+        List<Cap> allowed = new ArrayList<>(Cap.CAPS);
+        allowed.removeAll(disallowedCaps);
+        List<Focus> allowedFoci = Collections.singletonList(Focus.DEFAULT); //TODO: change with foci
+        return new ItemAttachment[][]{allowed.toArray(new Cap[0]), allowedFoci.toArray(new Focus[0])};
+    };
 
     public ItemWand(String name) {
         setMaxStackSize(1);
@@ -38,7 +47,6 @@ public class ItemWand extends Item {
         setUnlocalizedName(name);
         setRegistryName(name);
 
-        this.supplierAttachments = ItemAttachment::buildDefaultArray;
         this.attachments = null;
 
         WANDS.add(this);
@@ -69,12 +77,11 @@ public class ItemWand extends Item {
     }
 
     /**
-     * Getter of the attached attachments. If none returns the default array in {@link ItemAttachment}
-     * @return Array of the attached attachments
+     * Getter of the attached attachments.
+     * @return an array of the attached attachments
      */
-    public ItemAttachment[][] getAttachments() {
-        if(this.attachments == null)
-        {
+    public ItemAttachment[][] getAttachments(){
+        if(this.attachments == null){
             this.attachments = this.supplierAttachments.get();
         }
 
@@ -103,7 +110,7 @@ public class ItemWand extends Item {
      * @param type Attachement type {@link EnumAttachmentType}
      * @return Amount of the given types
      */
-    public int getAmmountForSlot(EnumAttachmentType type) {
+    public int getAmountForSlot(EnumAttachmentType type) {
         return this.getAttachments()[type.getSlot()].length;
     }
 
@@ -126,5 +133,48 @@ public class ItemWand extends Item {
         this.supplierAttachments = attachments;
         this.attachments = null;
         return this;
+    }
+    
+    /**
+     * Sets the caps disallowed by this wand type. This wand will not be craftable with
+     * any of the specified caps.
+     *
+     * @param disallowedCaps
+     * 		The caps disallowed by this wand.
+     */
+    public ItemWand setDisallowedCaps(Cap... disallowedCaps){
+        this.disallowedCaps = Arrays.asList(disallowedCaps);
+        return this;
+    }
+    
+    /**
+     * Sets the caps disallowed by this wand type. This wand will not be craftable with
+     * any of the specified caps.
+     *
+     * @param disallowedCaps
+     * 		The caps disallowed by this wand.
+     */
+    public ItemWand setDisallowedCaps(List<Cap> disallowedCaps){
+        this.disallowedCaps = disallowedCaps;
+        return this;
+    }
+    
+    /**
+     * Sets the caps allowed by this wand to the specified caps. Specifically,
+     * it sets the caps *disallowed* by this wand to all caps *except* the specified.
+     * <p>
+     * Convenience for the Wooden Wand.
+     *
+     * @param allowedCaps
+     * 		The caps allowed by this wand.
+     */
+    public ItemWand setAllowedCaps(Cap... allowedCaps){
+        List<Cap> disallowed = Cap.CAPS;
+        disallowed.removeAll(Arrays.asList(allowedCaps));
+       return setDisallowedCaps(disallowedCaps);
+    }
+    
+    public boolean capAllowed(Cap cap){
+        return !disallowedCaps.contains(cap);
     }
 }

@@ -20,15 +20,15 @@ item.goggles_of_revealing.name=Goggles Of Revealing
 item.focus_parts.name=Focus Parts
 item.focus.name=Wand Focus
 
-item.item_iron_cap.name=Iron wand cap
-item.item_gold_cap.name=Gold wand cap
-item.item_thaumium_cap.name=Thaumium wand cap
-item.item_void_cap.name=Void wand cap
-item.item_copper_cap.name=Copper wand cap
-item.item_silver_cap.name=Silver wand cap
-item.item_manasteel_cap.name=Manasteel wand cap
-item.item_elementium_cap.name=Elementium wand cap
-item.item_terrasteel_cap.name=Terrasteel wand cap
+item.iron_cap.name=Iron Wand Cap
+item.gold_cap.name=Gold Wand Cap
+item.thaumium_cap.name=Thaumium Wand Cap
+item.void_cap.name=Void Wand Cap
+item.copper_cap.name=Copper Wand Cap
+item.silver_cap.name=Silver Wand Cap
+item.manasteel_cap.name=Manasteel Wand Cap
+item.elementium_cap.name=Elementium Wand Cap
+item.terrasteel_cap.name=Terrasteel Wand Cap
 
 item.greatwood_wand_core.name=Greatwood Wand Core
 item.tainted_wand_core.name=Tainted Wand Core

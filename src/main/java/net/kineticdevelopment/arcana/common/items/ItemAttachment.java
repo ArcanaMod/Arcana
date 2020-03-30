@@ -10,11 +10,8 @@ import java.util.List;
  * Item Attachment Utility Class
  * 
  * @author Merijn
- * @see Cap
- * @see Focus
  */
 public abstract class ItemAttachment extends ItemBase{
-
 
     public static List<ItemAttachment> ATTACHMENTS = new ArrayList<>();
 
@@ -27,13 +24,12 @@ public abstract class ItemAttachment extends ItemBase{
      * Builds an array with the default attachments.
      * @return Array with the default attachments
      */
-    public static ItemAttachment[][] buildDefaultArray() {
+    public static ItemAttachment[][] buildDefaultArray(){
         ItemAttachment[][] attachments = new ItemAttachment[EnumAttachmentType.values().length][];
 
-        for(int i = 0; i < attachments.length; ++i)
-        {
+        for(int i = 0; i < attachments.length; ++i){
             ItemAttachment attachment = EnumAttachmentType.getSlot(i).getDefault();
-            attachments[i] = new ItemAttachment[] {attachment};
+            attachments[i] = new ItemAttachment[]{attachment};
         }
 
         return attachments;
@@ -42,6 +38,4 @@ public abstract class ItemAttachment extends ItemBase{
     public abstract EnumAttachmentType getType();
 
     public abstract int getID();
-
-
 }
