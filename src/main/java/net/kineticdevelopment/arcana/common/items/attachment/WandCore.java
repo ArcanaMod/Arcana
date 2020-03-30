@@ -2,6 +2,7 @@
 // TODO: Why do we have common.items AND common.objects.items? I think we should go with the first only tbh, objects is meaningless.
 package net.kineticdevelopment.arcana.common.items.attachment;
 
+import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.minecraft.item.ItemStack;
@@ -31,6 +32,21 @@ public class WandCore extends ItemBase{
 		int c = cap.getID();
 		int f = focus == null ? 0 : focus.getID();
 		ItemStack stack = new ItemStack(getWand());
+		if(stack.getTagCompound() == null)
+			stack.setTagCompound(new NBTTagCompound());
+		stack.getTagCompound().setInteger("cap", c);
+		stack.getTagCompound().setInteger("focus", f);
+		return stack;
+	}
+	
+	public static ItemStack createWoodenWandWithAttachments(@Nonnull Cap cap){
+		return createWoodenWandWithAttachments(cap, null);
+	}
+	
+	public static ItemStack createWoodenWandWithAttachments(@Nonnull Cap cap, @Nullable Focus focus){
+		int c = cap.getID();
+		int f = focus == null ? 0 : focus.getID();
+		ItemStack stack = new ItemStack(ItemInit.WOOD_WAND);
 		if(stack.getTagCompound() == null)
 			stack.setTagCompound(new NBTTagCompound());
 		stack.getTagCompound().setInteger("cap", c);

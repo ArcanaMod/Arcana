@@ -153,7 +153,7 @@ public class ItemInit {
 		return attachments;
 	}).setCreativeTab(Main.TAB_ARCANA);
 
-	// damn iLlEgAl fOrWaRd rEfErEnCe I don't care
+	// iLlEgAl fOrWaRd rEfErEnCe I don't care
 
 	public static Item GREATWOOD_WAND_CORE = new WandCore("greatwood_wand_core", GREATWOOD_WAND).setCreativeTab(Main.TAB_ARCANA);
 	public static Item TAINTED_WAND_CORE = new WandCore("tainted_wand_core", TAINTED_WAND).setCreativeTab(Main.TAB_ARCANA);
@@ -161,4 +161,5 @@ public class ItemInit {
 	public static Item HAWTHORN_WAND_CORE = new WandCore("hawthorn_wand_core", HAWTHORN_WAND).setCreativeTab(Main.TAB_ARCANA);
 	public static Item SILVERWOOD_WAND_CORE = new WandCore("silverwood_wand_core", SILVERWOOD_WAND).setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_WAND_CORE = new WandCore("arcanium_wand_core", ARCANIUM_WAND).setCreativeTab(Main.TAB_ARCANA);
+	// Wooden wands are supported by RecipeWands.
 }

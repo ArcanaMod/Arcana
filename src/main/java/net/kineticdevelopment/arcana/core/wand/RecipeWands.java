@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.WandCore;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -12,11 +13,14 @@ import net.minecraftforge.common.crafting.IRecipeFactory;
 import net.minecraftforge.common.crafting.JsonContext;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
+	
+	// I can either make WandCore into a capability, or add special support for sticks just here. I prefer the latter.
 	
 	public boolean matches(InventoryCrafting inv, World world){
 		if(inv.getWidth() >= 3 && inv.getHeight() >= 3)
@@ -25,22 +29,22 @@ public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IR
 			// else, TR->BL
 			if(inv.getStackInSlot(0).getItem() instanceof Cap){
 				if(inv.getStackInSlot(0).isItemEqual(inv.getStackInSlot(8)))
-					return inv.getStackInSlot(4).getItem() instanceof WandCore;
+					return isCore(inv.getStackInSlot(4));
 			}else if(inv.getStackInSlot(2).getItem() instanceof Cap)
 				if(inv.getStackInSlot(2).isItemEqual(inv.getStackInSlot(6)))
-					return inv.getStackInSlot(4).getItem() instanceof WandCore;
+					return isCore(inv.getStackInSlot(4));
 		return false;
 	}
 	
 	public ItemStack getCraftingResult(InventoryCrafting inv){
 		Cap caps;
-		WandCore core;
 		if(inv.getStackInSlot(0).getItem() instanceof Cap)
 			caps = (Cap)inv.getStackInSlot(0).getItem();
 		else
 			caps = (Cap)inv.getStackInSlot(2).getItem();
-		core = (WandCore)inv.getStackInSlot(4).getItem();
-		return core.getWandWithAttachments(caps);
+		if(inv.getStackInSlot(4).getItem() == Items.STICK)
+			return WandCore.createWoodenWandWithAttachments(caps);
+		return ((WandCore)inv.getStackInSlot(4).getItem()).getWandWithAttachments(caps);
 	}
 	
 	public boolean canFit(int width, int height){
@@ -53,6 +57,10 @@ public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IR
 	
 	public boolean isDynamic(){
 		return true;
+	}
+	
+	private static boolean isCore(@Nullable ItemStack stack){
+		return stack != null && (stack.getItem() instanceof WandCore || stack.getItem() == Items.STICK);
 	}
 	
 	@SuppressWarnings("unused") // Referenced in _factories.json
