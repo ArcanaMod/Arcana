@@ -2,9 +2,10 @@ package net.kineticdevelopment.arcana.core.wand;
 
 /**
  * Enumeration for cap types
- * 
+ *
  * @author Merijn
  */
+// TODO: please stop using enums for these, and hardcoding references -- use interfaces or classes instead. makes things a chore for addon makers & improving the mod. thanks!
 public enum CapType {
 
     ERROR(0,0, 0),

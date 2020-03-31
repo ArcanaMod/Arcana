@@ -16,11 +16,17 @@ public class ItemBase extends Item implements IHasModel {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 
-		ItemInit.ITEMS.add(this);
+		if(shouldRegister())
+			ItemInit.ITEMS.add(this);
 	}
 
 	@Override
 	public void registerModels() {
 		Main.proxy.registerItemRenderer(this, 0, "inventory");
+	}
+
+	// TODO: stop registering things automatically, its bad design and requires stupid things like this to get around.
+	protected boolean shouldRegister(){
+		return true;
 	}
 }

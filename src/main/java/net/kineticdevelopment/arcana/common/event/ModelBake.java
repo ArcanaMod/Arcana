@@ -34,7 +34,7 @@ public class ModelBake {
             for(EnumAttachmentType type : EnumAttachmentType.values()) {
                 i = type.getSlot();
 
-                models[i] = new IBakedModel[wand.getAmmountForSlot(type)];
+                models[i] = new IBakedModel[wand.getAmountForSlot(type)];
                 int j = 0;
                 for (ItemAttachment attachment: wand.getAttachments()[i]) {
                     models[i][j] = event.getModelRegistry().getObject(new ModelResourceLocation(Main.MODID + ":wands/" + attachment.getRegistryName().getResourcePath(), "inventory"));

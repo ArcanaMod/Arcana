@@ -34,4 +34,8 @@ public class Focus extends ItemAttachment {
         this.id = id;
         return this;
     }
+
+    protected boolean shouldRegister(){
+        return this != DEFAULT;
+    }
 }

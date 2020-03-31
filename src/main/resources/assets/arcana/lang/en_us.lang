@@ -7,13 +7,15 @@ itemGroup.tabTaintArcana=Tainted Blocks
 arcana.sounds.spell_cast=Spell Cast
 
 # Items
-item.wood_wand.name=Wooden Wand
-item.greatwood_wand.name=Greatwood Wand
-item.tainted_wand.name=Tainted Wand
-item.dair_wand.name=Dair Wand
-item.hawthorn_wand.name=Hawthorn Wand
-item.arcanium_wand.name=Arcanium Wand
-item.silverwood_wand.name=Silverwood Wand
+# Wand parts
+item.wood_wand.name=%s Wooden Wand
+item.greatwood_wand.name=%s Greatwood Wand
+item.tainted_wand.name=%s Tainted Wand
+item.dair_wand.name=%s Dair Wand
+item.hawthorn_wand.name=%s Hawthorn Wand
+item.arcanium_wand.name=%s Arcanium Wand
+item.silverwood_wand.name=%s Silverwood Wand
+
 item.goggles_of_revealing.name=Goggles Of Revealing
 
 item.arcanum.name=Arcanum
@@ -24,15 +26,25 @@ item.crimson_rites.name=Crimson Rites
 item.focus_parts.name=Focus Parts
 item.focus.name=Wand Focus
 
-item.item_iron_cap.name=Iron wand cap
-item.item_gold_cap.name=Gold wand cap
-item.item_thaumium_cap.name=Thaumium wand cap
-item.item_void_cap.name=Void wand cap
-item.item_copper_cap.name=Copper wand cap
-item.item_silver_cap.name=Silver wand cap
-item.item_manasteel_cap.name=Manasteel wand cap
-item.item_elementium_cap.name=Elementium wand cap
-item.item_terrasteel_cap.name=Terrasteel wand cap
+item.iron_cap.name=Iron Wand Cap
+item.gold_cap.name=Gold Wand Cap
+item.thaumium_cap.name=Thaumium Wand Cap
+item.void_cap.name=Void Wand Cap
+item.copper_cap.name=Copper Wand Cap
+item.silver_cap.name=Silver Wand Cap
+item.manasteel_cap.name=Manasteel Wand Cap
+item.elementium_cap.name=Elementium Wand Cap
+item.terrasteel_cap.name=Terrasteel Wand Cap
+
+item.iron_cap.prefix=Iron Capped
+item.gold_cap.prefix=Gold Topped
+item.thaumium_cap.prefix=Thaumium Capped
+item.void_cap.prefix=Void Capped
+item.copper_cap.prefix=Copper Capped
+item.silver_cap.prefix=Silver Topped
+item.manasteel_cap.prefix=Manasteel Capped
+item.elementium_cap.prefix=Elementium Capped
+item.terrasteel_cap.prefix=Terrasteel Capped
 
 item.greatwood_wand_core.name=Greatwood Wand Core
 item.tainted_wand_core.name=Tainted Wand Core
