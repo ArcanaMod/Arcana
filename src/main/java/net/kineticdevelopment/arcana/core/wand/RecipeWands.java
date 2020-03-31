@@ -73,8 +73,8 @@ public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IR
 	}
 	
 	private static ItemWand toCore(@Nonnull ItemStack stack){
-		if(stack.getItem() instanceof ItemWand)
-			return (ItemWand)stack.getItem();
+		if(stack.getItem() instanceof WandCore)
+			return ((WandCore)stack.getItem()).getWand();
 		if(stack.getItem() == Items.STICK)
 			return ItemInit.WOOD_WAND;
 		return null;

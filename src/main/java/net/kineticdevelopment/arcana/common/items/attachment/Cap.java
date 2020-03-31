@@ -17,6 +17,7 @@ import java.util.List;
 public class Cap extends ItemAttachment {
 
     private int id;
+    private int level;
     
     public static Cap DEFAULT = ItemInit.IRON_CAP;
     public static List<Cap> CAPS = new ArrayList<>();
@@ -36,8 +37,17 @@ public class Cap extends ItemAttachment {
         return id;
     }
 
+    public int getLevel(){
+        return level;
+    }
+    
     public Cap setId(int id) {
         this.id = id;
+        return this;
+    }
+    
+    public Cap setLevel(int level){
+        this.level = level;
         return this;
     }
 }
