@@ -1,12 +1,14 @@
 package net.kineticdevelopment.arcana.common.init;
 
-import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
-import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.common.items.attachment.WandCore;
 import net.kineticdevelopment.arcana.common.objects.items.*;
 import net.kineticdevelopment.arcana.common.objects.items.armor.GoggleBase;
-import net.kineticdevelopment.arcana.common.objects.items.tools.*;
+import net.kineticdevelopment.arcana.common.objects.items.tools.AxeBase;
+import net.kineticdevelopment.arcana.common.objects.items.tools.HoeBase;
+import net.kineticdevelopment.arcana.common.objects.items.tools.PickaxeBase;
+import net.kineticdevelopment.arcana.common.objects.items.tools.ShovelBase;
+import net.kineticdevelopment.arcana.common.objects.items.tools.SwordBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.GogglePriority;
 import net.minecraft.init.SoundEvents;
@@ -16,7 +18,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ import java.util.List;
  */
 public class ItemInit {
 
-	public static final List<Item> ITEMS = new ArrayList<Item>();
+	public static final List<Item> ITEMS = new ArrayList<>();
 
 	// Materials - Values
 	public static Item.ToolMaterial MATERIAL_ARCANIUM = EnumHelper.addToolMaterial("material_arcanium",4,1987,9.0F,4.0F, 20);
@@ -36,10 +37,10 @@ public class ItemInit {
 	public static ItemArmor.ArmorMaterial MATERIAL_GOGGLES_REVEALING = EnumHelper.addArmorMaterial("material_goggles", Main.MODID + ":goggles_of_revealing", 50, new int[] {0, 0, 0, 2}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F);
 
 	//Weapons
-	public static Item ARCANIUM_AXE = new net.kineticdevelopment.arcana.common.objects.items.tools.AxeBase("arcanium_axe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item ARCANIUM_SWORD = new net.kineticdevelopment.arcana.common.objects.items.tools.SwordBase("arcanium_sword", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_AXE = new net.kineticdevelopment.arcana.common.objects.items.tools.AxeBase("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_SWORD = new net.kineticdevelopment.arcana.common.objects.items.tools.SwordBase("void_metal_sword", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_AXE = new AxeBase("arcanium_axe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_SWORD = new SwordBase("arcanium_sword", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_AXE = new AxeBase("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_SWORD = new SwordBase("void_metal_sword", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
 
 	//Tools
 	public static Item ARCANIUM_HOE = new HoeBase("arcanium_hoe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
