@@ -16,16 +16,19 @@
       "y": 270
     },
     "facing=north,part=right": {
-      "model": ""
+      "model": "arcana:nodes/normal_node"
     },
     "facing=south,part=right": {
-      "model": ""
+      "model": "arcana:nodes/normal_node",
+      "y": 180
     },
     "facing=east,part=right": {
-      "model": ""
+      "model": "arcana:nodes/normal_node",
+      "y": 90
     },
     "facing=west,part=right": {
-      "model": ""
+      "model": "arcana:nodes/normal_node",
+      "y": 270
     }
   }
 }

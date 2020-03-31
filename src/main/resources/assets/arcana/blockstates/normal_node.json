@@ -1,9 +1,5 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:nodes/normal_node"
-      }
-    ]
+    "normal": { "model": "arcana:nodes/normal_node" }
   }
 }
