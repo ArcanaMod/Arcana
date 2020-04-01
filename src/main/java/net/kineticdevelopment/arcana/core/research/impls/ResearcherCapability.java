@@ -47,7 +47,6 @@ public class ResearcherCapability{
 		}
 		
 		public void deserializeNBT(NBTTagCompound nbt){
-			// System.out.println("Deserializing! " + nbt.getKeySet());
 			cap.deserialize(nbt);
 		}
 		

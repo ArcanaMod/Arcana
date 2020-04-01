@@ -16,7 +16,8 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
  * @author Atlas
  */
 @EventBusSubscriber
-public class WorldLoadEvent {
+public class WorldLoadEvent{
+	
 	@SubscribeEvent
 	public static void onWorldLoad(PlayerLoggedInEvent event) {
 		TaintLevelHandler.createTaintLevelFile(event.player.world);

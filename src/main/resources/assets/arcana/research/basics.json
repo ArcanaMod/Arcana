@@ -26,10 +26,6 @@
           ]
         },
         {
-          "type": "guesswork",
-          "content": "arcana:guesswork_enchanting_table"
-        },
-        {
           "type": "string",
           "content": "research.arcana.root.complete"
         },

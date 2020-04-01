@@ -16,11 +16,27 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+// 1.14/15: should be removable I think, deserialisation seems to occur on clients
 public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClientResearchHandler.PktSyncClientResearch, IMessage>{
 	
 	public IMessage onMessage(PktSyncClientResearch message, MessageContext ctx){
 		// from server -> client
-		Researcher.getFrom(Minecraft.getMinecraft().player).setData(message.data);
+		// 1.14/15: almost certainly removal, seems like a bug that its required anyways
+		// wait for player to be nonnull
+		if(Minecraft.getMinecraft().player != null)
+			Researcher.getFrom(Minecraft.getMinecraft().player).setData(message.data);
+		else{
+			Runnable tryDo = new Runnable(){
+				public void run(){
+					if(Minecraft.getMinecraft().player != null)
+						Researcher.getFrom(Minecraft.getMinecraft().player).setData(message.data);
+					else
+						Minecraft.getMinecraft().addScheduledTask(this); // cant use lambdas because of scoping
+				}
+			};
+			// effectively looping until its nonnul
+			Minecraft.getMinecraft().addScheduledTask(tryDo);
+		}
 		return null;
 	}
 	
