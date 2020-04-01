@@ -7,9 +7,11 @@ import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -27,6 +29,18 @@ public class ResearchTableContainer extends Container{
 		this.te = te;
 		addOwnSlots();
 		addPlayerSlots(playerInventory);
+		
+		addListener(new IContainerListener(){
+			public void sendAllContents(Container containerToSend, NonNullList<ItemStack> itemsList){}
+			public void sendWindowProperty(Container container, int varToUpdate, int newValue){}
+			public void sendAllWindowProperties(Container container, IInventory inventory){}
+			
+			public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack){
+				if(slotInd == 2){
+					// reset slots & add new ones
+				}
+			}
+		});
 	}
 	
 	private void addPlayerSlots(IInventory playerInventory){
@@ -67,8 +81,8 @@ public class ResearchTableContainer extends Container{
 		// 137, 11
 		addSlotToContainer(new SlotItemHandler(itemHandler, 1, 137, 11){
 			public boolean isItemValid(@Nonnull ItemStack stack){
-				// only ink TODO
-				return super.isItemValid(stack);
+				// only ink
+				return super.isItemValid(stack) && stack.getItem() == ItemInit.INK;
 			}
 		});
 		// 155, 11

@@ -54,6 +54,7 @@ public class ItemInit {
 
 	public static Item RESEARCH_NOTE_COMPLETE = new ItemBase("research_note_complete").setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_NOTE = new ItemBase("research_note").setCreativeTab(Main.TAB_ARCANA);
+	public static Item INK = new ItemBase("ink").setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_TABLE_PLACER = new ItemResearchTable().setCreativeTab(Main.TAB_ARCANA);
 
 	public static Item ARCANUM = new ResearchBookItem("arcanum", new ResourceLocation(Main.MODID, "arcanum")).setCreativeTab(Main.TAB_ARCANA);

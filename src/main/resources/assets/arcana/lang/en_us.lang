@@ -59,6 +59,7 @@ item.arcanium_ingot.name=Arcanium Ingot
 item.research_note.name=Research Note
 item.research_note_complete.name=Complete Research Note
 item.research_table_placer.name=Research Table
+item.ink.name=Scribing Tools
 
 #Arcana Blocks
 tile.arcane_stone.name=Arcane Stone

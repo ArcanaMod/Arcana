@@ -20,7 +20,15 @@ public class ResearchTableTileEntity extends TileEntity{
 	
 	public static final ResourceLocation ID = new ResourceLocation("arcana:research_table");
 	
-	protected ItemStackHandler items = new ItemStackHandler(3){
+	// Three slots for wand, ink, note
+	// up to 9 for crafting guesswork + 6 elements for arcane crafting
+	// up to, idk, 12 for arcane infusion
+	// golemancy will be weird
+	// so its ~15 max
+	
+	// slots 0-2 are always there, the rest are reserved for the games themselves
+	
+	protected ItemStackHandler items = new ItemStackHandler(15){
 		protected void onContentsChanged(int slot){
 			super.onContentsChanged(slot);
 			markDirty();
