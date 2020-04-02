@@ -1,5 +1,7 @@
 package net.kineticdevelopment.arcana.common.init;
 
+import net.kineticdevelopment.arcana.common.items.ItemResearchBook;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.WandCore;
 import net.kineticdevelopment.arcana.common.objects.items.*;
@@ -57,10 +59,10 @@ public class ItemInit {
 	public static Item INK = new ItemBase("ink").setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_TABLE_PLACER = new ItemResearchTable().setCreativeTab(Main.TAB_ARCANA);
 
-	public static Item ARCANUM = new ResearchBookItem("arcanum", new ResourceLocation(Main.MODID, "arcanum")).setCreativeTab(Main.TAB_ARCANA);
-	public static Item GRIMOIRE = new ResearchBookItem("illustrious_grimoire", new ResourceLocation(Main.MODID, "illustrious_grimoire")).setCreativeTab(Main.TAB_ARCANA);
-	public static Item CODEX = new ResearchBookItem("tainted_codex", new ResourceLocation(Main.MODID, "tainted_codex")).setCreativeTab(Main.TAB_ARCANA);
-	public static Item RITES = new ResearchBookItem("crimson_rites", new ResourceLocation(Main.MODID, "crimson_rites")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANUM = new ItemResearchBook("arcanum", new ResourceLocation(Main.MODID, "arcanum")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item GRIMOIRE = new ItemResearchBook("illustrious_grimoire", new ResourceLocation(Main.MODID, "illustrious_grimoire")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item CODEX = new ItemResearchBook("tainted_codex", new ResourceLocation(Main.MODID, "tainted_codex")).setCreativeTab(Main.TAB_ARCANA);
+	public static Item RITES = new ItemResearchBook("crimson_rites", new ResourceLocation(Main.MODID, "crimson_rites")).setCreativeTab(Main.TAB_ARCANA);
 
 	//Food - Will add food class soon --Tea :D
 	public static Item CAT_MEAT_COOKED = new ItemBase("cooked_cat_meat").setCreativeTab(Main.TAB_ARCANA);

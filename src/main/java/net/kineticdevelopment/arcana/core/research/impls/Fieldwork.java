@@ -10,7 +10,7 @@ public class Fieldwork extends Puzzle{
 	
 	private static final ResourceLocation ICON = new ResourceLocation(Main.MODID, "textures/gui/research/fieldwork.png");
 	
-	public void load(JsonObject data){
+	public void load(JsonObject data, ResourceLocation file){
 		// no-op
 	}
 	

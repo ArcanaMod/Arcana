@@ -5,6 +5,7 @@ import net.kineticdevelopment.arcana.common.commands.ResearchCommand;
 import net.kineticdevelopment.arcana.common.commands.TaintLevelCommand;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
+import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,6 +18,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
 
 /**
  * Base Arcana Class
@@ -40,7 +43,6 @@ public class Main {
 
 	/**
 	 * Preintialization Event
-	 * @param event
 	 */
 	@EventHandler
 	public void onPreInit(FMLPreInitializationEvent event) {
@@ -49,7 +51,6 @@ public class Main {
 	
 	/**
 	 * Initialization Event
-	 * @param event
 	 */
 	@EventHandler
 	public void onInit(FMLInitializationEvent event) {
@@ -58,7 +59,6 @@ public class Main {
 	
 	/**
 	 * Post Initialization Event
-	 * @param event
 	 */
 	@EventHandler
 	public void onPostInit(FMLPostInitializationEvent event) {
@@ -70,6 +70,7 @@ public class Main {
 	 */
 	public static CreativeTabs TAB_ARCANA = (new CreativeTabs("tabArcana") {
         @Override
+		@Nonnull
         public ItemStack getTabIconItem() {
 			return new ItemStack(ItemInit.ARCANIUM_WAND_CORE);
         }
@@ -77,11 +78,23 @@ public class Main {
 
 	public static CreativeTabs TAB_TAINTARCANA = (new CreativeTabs("tabTaintArcana") {
 		@Override
+		@Nonnull
 		public ItemStack getTabIconItem() {
 			return new ItemStack(BlockInit.TAINTED_GRASS);
 		}
 	});
 
+	public static CreativeTabs TAB_ASPECTS_ARCANA = (new CreativeTabs("tabAspectsArcana") {
+		@Override
+		@Nonnull
+		public ItemStack getTabIconItem(){
+			return new ItemStack(Aspect.aspectItems.get(0));
+		}
+		@Nonnull
+		public ItemStack getIconItemStack(){
+			return proxy.getAspectItemStackForDisplay();
+		}
+	});
 
 	@Mod.EventHandler
 	public void serverLoad(FMLServerStartingEvent event) {
@@ -93,8 +106,6 @@ public class Main {
 	//Why is this here? This is very redundant
 	/**
 	 * Retrieves NBT Tag
-	 * @param itemStack
-	 * @return
 	 */
 	public static NBTTagCompound getNBT(ItemStack itemStack) {
 		if (!itemStack.hasTagCompound()) {

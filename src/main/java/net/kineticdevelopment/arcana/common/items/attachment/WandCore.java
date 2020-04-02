@@ -4,7 +4,7 @@ package net.kineticdevelopment.arcana.common.items.attachment;
 
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

@@ -1,6 +1,7 @@
-package net.kineticdevelopment.arcana.common.objects.items;
+package net.kineticdevelopment.arcana.common.items;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.core.Main;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,11 +15,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ResearchBookItem extends ItemBase{
+public class ItemResearchBook extends ItemBase{
 	
 	ResourceLocation book;
 	
-	public ResearchBookItem(String name, ResourceLocation book){
+	public ItemResearchBook(String name, ResourceLocation book){
 		super(name);
 		this.book = book;
 	}

@@ -2,7 +2,7 @@ package net.kineticdevelopment.arcana.utilities;
 
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.core.wand.CapType;
 import net.kineticdevelopment.arcana.core.wand.CoreType;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;

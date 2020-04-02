@@ -2,11 +2,11 @@ package net.kineticdevelopment.arcana.common.handlers;
 
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
-import net.kineticdevelopment.arcana.common.objects.blocks.BlockNormalNode;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.NodeTileEntity;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -31,6 +31,7 @@ public class RegistryHandler {
 	 */
 	@SubscribeEvent
 	public static void onItemRegister(RegistryEvent.Register<Item> event) {
+		Aspect.register();
 		event.getRegistry().registerAll(ItemInit.ITEMS.toArray(new Item[0]));
 		for(ItemWand wand : ItemWand.WANDS) {
 			Main.proxy.registerWand(event.getRegistry(), wand);

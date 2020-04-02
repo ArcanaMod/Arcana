@@ -21,13 +21,13 @@ public abstract class Puzzle{
 	private static Map<String, Supplier<Puzzle>> factories = new LinkedHashMap<>();
 	private static Map<String, Function<NBTTagCompound, Puzzle>> deserializers = new LinkedHashMap<>();
 	
-	public static Puzzle makePuzzle(String type, @Nullable String desc, ResourceLocation key, @Nullable ResourceLocation icon, JsonObject content){
+	public static Puzzle makePuzzle(String type, @Nullable String desc, ResourceLocation key, @Nullable ResourceLocation icon, JsonObject content, ResourceLocation file){
 		if(getBlank(type) != null){
 			Puzzle puzzle = getBlank(type).get();
 			puzzle.key = key;
 			puzzle.desc = desc != null ? desc : puzzle.getDefaultDesc();
 			puzzle.icon = icon != null ? icon : puzzle.getDefaultIcon();
-			puzzle.load(content);
+			puzzle.load(content, file);
 			return puzzle;
 		}else
 			return null;
@@ -63,7 +63,7 @@ public abstract class Puzzle{
 	ResourceLocation key, icon;
 	String desc;
 	
-	public abstract void load(JsonObject data);
+	public abstract void load(JsonObject data, ResourceLocation file);
 	
 	public abstract String type();
 	

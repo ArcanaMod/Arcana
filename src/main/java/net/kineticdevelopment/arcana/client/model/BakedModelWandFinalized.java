@@ -2,7 +2,7 @@ package net.kineticdevelopment.arcana.client.model;
 
 
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.block.model.BakedQuad;

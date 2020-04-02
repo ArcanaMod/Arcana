@@ -1,27 +1,26 @@
 package net.kineticdevelopment.arcana.core;
 
-import java.util.ArrayList;
-
 import net.kineticdevelopment.arcana.client.gui.ResearchBookGUI;
-import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
 import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
 import net.kineticdevelopment.arcana.client.research.RequirementRenderer;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
-import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.registries.IForgeRegistry;
+
+import java.util.ArrayList;
 
 /**
  * Client Proxy
@@ -85,5 +84,11 @@ public class ClientProxy extends CommonProxy {
 	
 	public void openResearchBookUI(ResourceLocation book){
 		Minecraft.getMinecraft().displayGuiScreen(new ResearchBookGUI(ClientBooks.books.get(book)));
+	}
+	
+	public ItemStack getAspectItemStackForDisplay(){
+		if(Minecraft.getMinecraft().player == null)
+			return super.getAspectItemStackForDisplay();
+		else return aspectStacks.get((Minecraft.getMinecraft().player.ticksExisted / 30) % aspectStacks.size());
 	}
 }

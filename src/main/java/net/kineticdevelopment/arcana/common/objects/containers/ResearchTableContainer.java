@@ -3,7 +3,7 @@ package net.kineticdevelopment.arcana.common.objects.containers;
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;

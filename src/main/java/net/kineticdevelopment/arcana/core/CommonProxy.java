@@ -6,9 +6,9 @@ import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
 import net.kineticdevelopment.arcana.common.init.EntityInit;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
-import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
+import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.Requirement;
@@ -16,6 +16,7 @@ import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
 import net.kineticdevelopment.arcana.core.spells.SpellEffectHandler;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -26,6 +27,9 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Common Proxy
  * 
@@ -33,6 +37,9 @@ import net.minecraftforge.registries.IForgeRegistry;
  */
 @Mod.EventBusSubscriber
 public class CommonProxy {
+
+	protected List<ItemStack> aspectStacks;
+
 	public void registerItemRenderer(Item item, int meta, String id) {}
 
 	public void preInit(FMLPreInitializationEvent event) {
@@ -59,7 +66,9 @@ public class CommonProxy {
 		SpellEffectHandler.init();
 	}
 
-	public void postInit(FMLPostInitializationEvent event) {}
+	public void postInit(FMLPostInitializationEvent event){
+		aspectStacks = Aspect.aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
+	}
 
 	public void registerWand(IForgeRegistry<Item> registry, ItemWand wand) {
 		registry.register(wand);
@@ -68,4 +77,8 @@ public class CommonProxy {
 	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled) {}
 	
 	public void openResearchBookUI(ResourceLocation book){}
+
+	public ItemStack getAspectItemStackForDisplay(){
+		return aspectStacks.get(0);
+	}
 }

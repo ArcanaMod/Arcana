@@ -1,8 +1,7 @@
-package net.kineticdevelopment.arcana.common.objects.items;
+package net.kineticdevelopment.arcana.common.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.client.Sounds;
-import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.core.Main;

@@ -1,13 +1,21 @@
 package net.kineticdevelopment.arcana.core.aspects;
 
+import net.kineticdevelopment.arcana.common.items.AspectItem;
+import net.kineticdevelopment.arcana.core.Main;
+import net.minecraft.item.Item;
+
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Contains enum and utilities for aspects
  * @author Atlas
  */
 public class Aspect {
-	
+    
+    public static final List<Item> aspectItems = new ArrayList<>();
+    
     // TODO: DON'T USE AN ENUM, use an ItemBase-like constructor to allow addons to add aspects.
     // Update research system to match.
 	/**
@@ -17,7 +25,7 @@ public class Aspect {
 	 */
     public enum AspectType {
         AIR,
-        ARMOR,
+        ARMOUR,
         AURA,
         BEAST,
         CHAOS,
@@ -73,6 +81,14 @@ public class Aspect {
         WIND,
         WRATH
     }
+
+    public static void register(){
+        // Automatically register all aspects' items
+        // TODO: this might break with addons, not finding the correct resources. maybe.
+        // Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
+        for(AspectType aspect : AspectType.values())
+            aspectItems.add(new AspectItem("aspect_" + aspect.name().toLowerCase(), aspect.name().toLowerCase()).setCreativeTab(Main.TAB_ASPECTS_ARCANA));
+    }
     
     /**
 	 * Utility for getting an aspect by name. If there is no aspect with the given name,
@@ -91,7 +107,7 @@ public class Aspect {
         switch(name.toUpperCase()){
             default: return null;
             case "AIR": return AspectType.AIR;
-            case "ARMOR": return AspectType.ARMOR;
+            case "ARMOR": return AspectType.ARMOUR;
             case "AURA": return AspectType.AURA;
             case "BEAST": return AspectType.BEAST;
             case "CHAOS": return AspectType.CHAOS;

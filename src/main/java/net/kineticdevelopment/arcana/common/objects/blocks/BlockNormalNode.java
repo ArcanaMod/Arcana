@@ -1,21 +1,15 @@
 package net.kineticdevelopment.arcana.common.objects.blocks;
 
-import net.kineticdevelopment.arcana.common.init.ItemInit;
-import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
-import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.NodeTileEntity;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.wand.CapType;
 import net.kineticdevelopment.arcana.core.wand.CoreType;
-import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.utilities.WandUtil;
-import net.minecraft.block.BlockBarrier;
-import net.minecraft.block.BlockGlass;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.particle.Barrier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -29,19 +23,13 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextComponentScore;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.lwjgl.opencl.CL;
 
 import javax.annotation.Nullable;
-import javax.xml.soap.Node;
 import java.util.*;
 
 public class BlockNormalNode extends BlockBase implements ITileEntityProvider {

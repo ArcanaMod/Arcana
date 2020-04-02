@@ -1,19 +1,21 @@
 package net.kineticdevelopment.arcana.core.research.impls;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Guesswork extends Puzzle{
 	
 	private static final ResourceLocation ICON = new ResourceLocation(Main.MODID, "textures/item/research_note.png");
+	private static final Logger LOGGER = LogManager.getLogger();
 	
 	// Check RecipeSectionRenderer for how non-crafting recipes are handled.
 	protected ResourceLocation recipe;
@@ -28,8 +30,24 @@ public class Guesswork extends Puzzle{
 		this.hints = hints;
 	}
 	
-	public void load(JsonObject data){
-	
+	public void load(JsonObject data, ResourceLocation file){
+		ResourceLocation recipe = new ResourceLocation(data.get("recipe").getAsString());
+		JsonArray hints = data.getAsJsonArray("hints");
+		Map<ResourceLocation, String> hintMap = new LinkedHashMap<>();
+		for(JsonElement hint : hints){
+			if(hint.isJsonPrimitive()){
+				String hintSt = hint.getAsString();
+				if(hintSt.contains("=")){
+					ResourceLocation key = new ResourceLocation(hintSt.split("=")[0]);
+					String value = hintSt.split("=")[1];
+					hintMap.put(key, value);
+				}else
+					LOGGER.error("String not containing \"=\" found in puzzle in " + file + "!");
+			}else
+				LOGGER.error("Non-String found in hints array in puzzle in " + file + "!");
+		}
+		this.recipe = recipe;
+		this.hints = hintMap;
 	}
 	
 	public String type(){
