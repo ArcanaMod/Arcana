@@ -1,7 +1,7 @@
 package net.kineticdevelopment.arcana.common.objects.blocks;
 
-import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
+import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.tile.NodeTileEntity;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.wand.CapType;
@@ -30,7 +30,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
+import java.util.Random;
 
 public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
 
@@ -122,37 +123,36 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(worldIn.isRemote) {
+        if(worldIn.isRemote){
             return false;
         }
-        if(hand != EnumHand.MAIN_HAND) {
+        if(hand != EnumHand.MAIN_HAND){
             return false;
         }
         ItemStack itemActivated = playerIn.getHeldItem(hand);
         CoreType core = WandUtil.getCore(itemActivated);
         CapType cap = WandUtil.getCap(itemActivated);
-        if(itemActivated.getItem() instanceof ItemWand) {
+        if(itemActivated.getItem() instanceof ItemWand){
             TileEntity entity = worldIn.getTileEntity(pos);
-            if(entity instanceof NodeTileEntity) {
-                NodeTileEntity tileEntity = (NodeTileEntity) entity;
-                Aspect.AspectType[] coreAspects = new Aspect.AspectType[]{Aspect.AspectType.EARTH, Aspect.AspectType.AIR, Aspect.AspectType.WATER, Aspect.AspectType.ORDER, Aspect.AspectType.CHAOS, Aspect.AspectType.FIRE};
+            if(entity instanceof NodeTileEntity){
+                NodeTileEntity tileEntity = (NodeTileEntity)entity;
                 NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
                 NBTTagList newAspects = new NBTTagList();
-                for(Aspect.AspectType coreAspect : coreAspects) {
-                    if(tileEntity.storedAspects.containsKey(coreAspect)) {
-                        if(aspectList.hasNoTags()) {
+                for(Aspect.AspectType coreAspect : Aspect.primalAspects){
+                    if(tileEntity.storedAspects.containsKey(coreAspect)){
+                        if(aspectList.hasNoTags()){
                             tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
                             NBTTagCompound compound = new NBTTagCompound();
                             compound.setString("type", coreAspect.toString());
                             compound.setInteger("amount", 1);
                             newAspects.appendTag(compound);
-                        } else {
-                            for (NBTBase base : aspectList) {
-                                if (base instanceof NBTTagCompound) {
-                                    NBTTagCompound compound = (NBTTagCompound) base;
-                                    if (coreAspect.toString().equals(compound.getString("type"))) {
+                        }else{
+                            for(NBTBase base : aspectList){
+                                if(base instanceof NBTTagCompound){
+                                    NBTTagCompound compound = (NBTTagCompound)base;
+                                    if(coreAspect.toString().equals(compound.getString("type"))){
                                         tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
-                                        if (compound.getInteger("amount") < core.getMaxVis()) {
+                                        if(compound.getInteger("amount") < core.getMaxVis()){
                                             compound.setInteger("amount", compound.getInteger("amount") + 1);
                                             newAspects.appendTag(compound);
                                         }

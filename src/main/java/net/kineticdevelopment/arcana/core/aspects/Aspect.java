@@ -15,6 +15,7 @@ import java.util.List;
 public class Aspect {
     
     public static final List<Item> aspectItems = new ArrayList<>();
+    public static final AspectType[] primalAspects = new AspectType[]{AspectType.AIR, AspectType.CHAOS, AspectType.EARTH, AspectType.FIRE, AspectType.ORDER, AspectType.WATER};
     
     // TODO: DON'T USE AN ENUM, use an ItemBase-like constructor to allow addons to add aspects.
     // Update research system to match.

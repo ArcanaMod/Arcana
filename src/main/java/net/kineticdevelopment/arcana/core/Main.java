@@ -84,8 +84,7 @@ public class Main {
 		}
 	});
 
-	public static CreativeTabs TAB_ASPECTS_ARCANA = (new CreativeTabs("tabAspectsArcana") {
-		@Override
+	public static CreativeTabs TAB_ASPECTS_ARCANA = (new CreativeTabs("tabAspectsArcana"){
 		@Nonnull
 		public ItemStack getTabIconItem(){
 			return new ItemStack(Aspect.aspectItems.get(0));

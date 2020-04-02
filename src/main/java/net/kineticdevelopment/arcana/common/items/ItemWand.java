@@ -39,11 +39,11 @@ public class ItemWand extends Item{
     protected int level = 2;
     protected ItemAttachment[][] attachments;
     
-    public Supplier<ItemAttachment[][]> supplierAttachments = () -> {
+    // remove at some point
+    public static final Supplier<ItemAttachment[][]> supplierAttachments = () -> {
         List<Cap> allowed = new ArrayList<>(Cap.CAPS);
         // fix models
         allowed.sort(Comparator.comparingInt(Cap::getID));
-        //allowed.removeIf(x -> !capAllowed(x));
         List<Focus> allowedFoci = Collections.singletonList(Focus.DEFAULT); //TODO: change with foci
         return new ItemAttachment[][]{allowed.toArray(new Cap[0]), allowedFoci.toArray(new Focus[0])};
     };

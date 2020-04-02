@@ -9,6 +9,7 @@ import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.Requirement;
@@ -52,6 +53,7 @@ public class CommonProxy {
 		EntrySection.init();
 		Requirement.init();
 		ResearcherCapability.init();
+		AspectHandlerCapability.init();
 		Puzzle.init();
 	}
 
