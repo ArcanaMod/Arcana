@@ -8,7 +8,7 @@ import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
-import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
@@ -69,7 +69,7 @@ public class CommonProxy {
 	}
 
 	public void postInit(FMLPostInitializationEvent event){
-		aspectStacks = Aspect.aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
+		aspectStacks = Aspects.aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
 	}
 
 	public void registerWand(IForgeRegistry<Item> registry, ItemWand wand) {

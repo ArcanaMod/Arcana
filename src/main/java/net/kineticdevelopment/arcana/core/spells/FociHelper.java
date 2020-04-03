@@ -17,11 +17,11 @@ public class FociHelper {
      * @param skin Skin variant
      * @param effects Array of {@link ISpellEffect} with the effects
      * @param power Integer of how strong the effect is
-     * @param core Value of {@link net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType}
+     * @param core Value of {@link Aspect}
      * @param name Name of the spell
      * @return ItemStack with the focus properties.
      */
-    public static ItemStack generateFocus(int skin, ISpellEffect[] effects, int power, Aspect.AspectType core, String name) {
+    public static ItemStack generateFocus(int skin, ISpellEffect[] effects, int power, Aspect core, String name) {
 
         ItemStack is = new ItemStack(ItemInit.FOCUS);
 

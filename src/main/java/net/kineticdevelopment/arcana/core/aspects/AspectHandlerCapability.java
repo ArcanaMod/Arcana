@@ -26,11 +26,11 @@ public class AspectHandlerCapability{
 		
 		@Nullable
 		public NBTBase writeNBT(Capability<AspectHandler> capability, AspectHandler instance, EnumFacing side){
-			return instance.serialize();
+			return instance.serializeNBT();
 		}
 		
 		public void readNBT(Capability<AspectHandler> capability, AspectHandler instance, EnumFacing side, NBTBase nbt){
-			instance.deserialize((NBTTagCompound)nbt);
+			instance.deserializeNBT((NBTTagCompound)nbt);
 		}
 	}
 }

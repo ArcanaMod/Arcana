@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -70,9 +71,12 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 		mc().getTextureManager().bindTexture(textures);
 		drawTexturedModalRect(ulX - 4, ulY - 4, 145, 1, 72, 72);
 		
-		for(int xx = 0; xx < 3; xx++)
-			for(int yy = 0; yy < 3; yy++){
-				int index = xx + yy * 3;
+		int width = recipe instanceof IShapedRecipe ? ((IShapedRecipe)recipe).getRecipeWidth() : 3;
+		int height = recipe instanceof IShapedRecipe ? ((IShapedRecipe)recipe).getRecipeHeight() : 3;
+		
+		for(int xx = 0; xx < width; xx++)
+			for(int yy = 0; yy < height; yy++){
+				int index = xx + yy * width;
 				if(index < recipe.getIngredients().size()){
 					int itemX = ulX + xx * 24;
 					int itemY = ulY + yy * 24;

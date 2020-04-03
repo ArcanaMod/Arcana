@@ -5,26 +5,20 @@ import net.kineticdevelopment.arcana.client.particles.ParticleSpawner;
 import net.kineticdevelopment.arcana.common.objects.blocks.BlockNormalNode;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.utilities.NodeHelper;
-import net.minecraft.block.BlockGlass;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.items.CapabilityItemHandler;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class NodeTileEntity extends TileEntity implements ITickable {
 
-    public Map<Aspect.AspectType, Integer> storedAspects = new HashMap<>();
+    public Map<Aspect, Integer> storedAspects = new HashMap<>();
 
     public boolean isOn = false;
 
@@ -73,7 +67,7 @@ public class NodeTileEntity extends TileEntity implements ITickable {
         NBTTagList aspects = compound.getTagList("aspects", Constants.NBT.TAG_COMPOUND);
          for (NBTBase aspect : aspects) {
             NBTTagCompound aspectCompound = (NBTTagCompound) aspect;
-            storedAspects.put(Aspect.AspectType.valueOf(aspectCompound.getString("type")), aspectCompound.getInteger("amount"));
+            storedAspects.put(Aspect.valueOf(aspectCompound.getString("type")), aspectCompound.getInteger("amount"));
         }
 
     }
@@ -81,10 +75,10 @@ public class NodeTileEntity extends TileEntity implements ITickable {
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         NBTTagList aspects = new NBTTagList();
-        for(Aspect.AspectType aspectType : storedAspects.keySet()) {
+        for(Aspect aspect : storedAspects.keySet()) {
             NBTTagCompound tag = new NBTTagCompound();
-            tag.setString("type", aspectType.toString());
-            tag.setInteger("amount", storedAspects.get(aspectType));
+            tag.setString("type", aspect.toString());
+            tag.setInteger("amount", storedAspects.get(aspect));
             aspects.appendTag(tag);
         }
         compound.setTag("aspects", aspects);

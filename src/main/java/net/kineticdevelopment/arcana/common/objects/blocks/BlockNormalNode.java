@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.objects.blocks;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.tile.NodeTileEntity;
+import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.wand.CapType;
 import net.kineticdevelopment.arcana.core.wand.CoreType;
@@ -64,7 +65,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
         for (int i = 0; i < rand.nextInt((5 - 2) + 1) + 5; i++) {
 
             int randomAspect = rand.nextInt(5);
-            Aspect.AspectType[] aspects = new Aspect.AspectType[] {Aspect.AspectType.EARTH, Aspect.AspectType.FIRE, Aspect.AspectType.WATER, Aspect.AspectType.AIR, Aspect.AspectType.CHAOS, Aspect.AspectType.ORDER};
+            Aspect[] aspects = new Aspect[] {Aspect.EARTH, Aspect.FIRE, Aspect.WATER, Aspect.AIR, Aspect.CHAOS, Aspect.ORDER};
 
             entity.storedAspects.putIfAbsent(aspects[randomAspect], rand.nextInt((80 - 30) + 1) + 30);
         }
@@ -138,7 +139,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
                 NodeTileEntity tileEntity = (NodeTileEntity)entity;
                 NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
                 NBTTagList newAspects = new NBTTagList();
-                for(Aspect.AspectType coreAspect : Aspect.primalAspects){
+                for(Aspect coreAspect : Aspects.primalAspects){
                     if(tileEntity.storedAspects.containsKey(coreAspect)){
                         if(aspectList.hasNoTags()){
                             tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);

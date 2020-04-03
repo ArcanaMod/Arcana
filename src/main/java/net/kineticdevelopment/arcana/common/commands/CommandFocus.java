@@ -49,7 +49,7 @@ public class CommandFocus extends CommandBase {
                             effects.add(effect);
                         }
                     }
-                    player.inventory.addItemStackToInventory(FociHelper.generateFocus(Integer.parseInt(args[0]), effects.toArray(new ISpellEffect[0]), Integer.parseInt(args[1]), Aspect.AspectType.valueOf(args[2]), args[3]));
+                    player.inventory.addItemStackToInventory(FociHelper.generateFocus(Integer.parseInt(args[0]), effects.toArray(new ISpellEffect[0]), Integer.parseInt(args[1]), Aspect.valueOf(args[2]), args[3]));
                     sender.sendMessage(new TextComponentString(TextFormatting.GREEN + "Given a new focus!"));
                 } catch (NumberFormatException ex) {
                     sender.sendMessage(new TextComponentString(TextFormatting.RED + "One of the entered numbers is invalid!"));

@@ -1,9 +1,7 @@
 package net.kineticdevelopment.arcana.core.aspects;
 
-import net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
@@ -17,7 +15,7 @@ import java.util.Map;
  */
 public class VisBattery implements AspectHandler, ICapabilityProvider{
 	
-	private Map<AspectType, Integer> stored = new HashMap<>();
+	private Map<Aspect, Integer> stored = new HashMap<>();
 	private int capacity;
 	
 	public VisBattery(){
@@ -28,14 +26,14 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 		this.capacity = capacity;
 	}
 	
-	public int insert(AspectType aspect, int amount, boolean simulate){
+	public int insert(Aspect aspect, int amount, boolean simulate){
 		int left = getCapacity(aspect) - getCurrentVis(aspect);
 		if(!simulate)
 			stored.put(aspect, getCurrentVis(aspect) + (Math.min(left, amount)));
 		return amount - left;
 	}
 	
-	public int drain(AspectType aspect, int amount, boolean simulate){
+	public int drain(Aspect aspect, int amount, boolean simulate){
 		// if amount >= left, return left & left = 0
 		// if amount < left, return amount & left = left - amount
 		int vis = getCurrentVis(aspect);
@@ -50,19 +48,19 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 		}
 	}
 	
-	public int getCurrentVis(AspectType aspect){
+	public int getCurrentVis(Aspect aspect){
 		return stored.getOrDefault(aspect, 0);
 	}
 	
-	public boolean canInsert(AspectType aspect){
+	public boolean canInsert(Aspect aspect){
 		return getCurrentVis(aspect) < getCapacity(aspect);
 	}
 	
-	public boolean canStore(AspectType aspect){
+	public boolean canStore(Aspect aspect){
 		return true;
 	}
 	
-	public int getCapacity(AspectType aspect){
+	public int getCapacity(Aspect aspect){
 		return capacity;
 	}
 	
@@ -70,16 +68,19 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 		return capacity;
 	}
 	
-	public NBTTagCompound serialize(){
+	public NBTTagCompound serializeNBT(){
 		NBTTagCompound compound = new NBTTagCompound();
-		stored.forEach((aspect, amount) -> compound.setInteger(aspect.name().toLowerCase(), amount));
+		NBTTagCompound storedAspects = new NBTTagCompound();
+		stored.forEach((aspect, amount) -> storedAspects.setInteger(aspect.name().toLowerCase(), amount));
+		compound.setTag("stored", storedAspects);
 		return compound;
 	}
 	
-	public void deserialize(NBTTagCompound data){
-		Map<AspectType, Integer> dat = new HashMap<>();
-		for(String s : data.getKeySet())
-			dat.put(AspectType.valueOf(s), data.getInteger(s));
+	public void deserializeNBT(NBTTagCompound data){
+		Map<Aspect, Integer> dat = new HashMap<>();
+		NBTTagCompound storedAspects = data.getCompoundTag("stored");
+		for(String s : storedAspects.getKeySet())
+			dat.put(Aspect.valueOf(s.toUpperCase()), storedAspects.getInteger(s));
 		stored = dat;
 	}
 	

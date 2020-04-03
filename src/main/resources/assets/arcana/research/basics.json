@@ -58,6 +58,40 @@
           "content": "research.arcana.trailing.all"
         }
       ]
+    },
+    {
+      "key": "arcana:research.arcana.research_intro",
+      "name": "research.arcana.research_intro",
+      "desc": "research.arcana.research_intro.desc",
+      "icons": [
+        "arcana:research_table_placer"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base",
+        "spiky_base"
+      ],
+      "x": -1,
+      "y": -2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.research_intro.stage.1"
+        },
+        {
+          "type": "recipe",
+          "content": "arcana:temp_research_table",
+          "requirements": [
+            "arcana:research_table_placer"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.research_intro.stage.2"
+        }
+      ]
     }
   ],
   "puzzles": [

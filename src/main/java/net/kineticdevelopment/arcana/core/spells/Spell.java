@@ -21,19 +21,19 @@ import java.util.List;
 public class Spell {
 
     private ISpellEffect[] effects;
-    private Aspect.AspectType core;
+    private Aspect core;
     private String name;
     private int power;
 
     /**
      * Default constructor
      * @param effects Array of {@link ISpellEffect}
-     * @param core Value of {@link net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType}
+     * @param core Value of {@link Aspect}
      * @param name Name of the spell
      * @param power Determines the strength of the spell
      */
 
-    public Spell(ISpellEffect[] effects, Aspect.AspectType core, String name, int power) {
+    public Spell(ISpellEffect[] effects, Aspect core, String name, int power) {
         this.effects = effects;
         this.core = core;
         this.name = name;
@@ -51,9 +51,9 @@ public class Spell {
 
     /**
      * Getter of the spell core
-     * @return Value of {@link net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType}
+     * @return Value of {@link Aspect}
      */
-    public Aspect.AspectType getCore() {
+    public Aspect getCore() {
         return core;
     }
 
@@ -164,7 +164,7 @@ public class Spell {
             }
             effects.add(effectObj);
         }
-        Aspect.AspectType core = Aspect.AspectType.valueOf(spell.getString("core").toUpperCase());
+        Aspect core = Aspect.valueOf(spell.getString("core").toUpperCase());
         int power = spell.getInteger("power");
         String name = spell.getString("name");
 

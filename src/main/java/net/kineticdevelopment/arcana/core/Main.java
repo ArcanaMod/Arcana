@@ -5,7 +5,7 @@ import net.kineticdevelopment.arcana.common.commands.ResearchCommand;
 import net.kineticdevelopment.arcana.common.commands.TaintLevelCommand;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
-import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -87,7 +87,7 @@ public class Main {
 	public static CreativeTabs TAB_ASPECTS_ARCANA = (new CreativeTabs("tabAspectsArcana"){
 		@Nonnull
 		public ItemStack getTabIconItem(){
-			return new ItemStack(Aspect.aspectItems.get(0));
+			return new ItemStack(Aspects.aspectItems.get(0));
 		}
 		@Nonnull
 		public ItemStack getIconItemStack(){
