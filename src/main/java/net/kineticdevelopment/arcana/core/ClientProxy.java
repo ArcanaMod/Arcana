@@ -89,6 +89,6 @@ public class ClientProxy extends CommonProxy {
 	public ItemStack getAspectItemStackForDisplay(){
 		if(Minecraft.getMinecraft().player == null)
 			return super.getAspectItemStackForDisplay();
-		else return aspectStacks.get((Minecraft.getMinecraft().player.ticksExisted / 30) % aspectStacks.size());
+		else return aspectStacks.get((Minecraft.getMinecraft().player.ticksExisted / 20) % aspectStacks.size());
 	}
 }

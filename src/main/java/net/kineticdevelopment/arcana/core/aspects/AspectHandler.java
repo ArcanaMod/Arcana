@@ -1,7 +1,12 @@
 package net.kineticdevelopment.arcana.core.aspects;
 
 import net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType;
+import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+
+import javax.annotation.Nonnull;
+import java.util.Optional;
 
 /**
  * Implement this interface as a capability which should handle aspects, especially storing
@@ -84,4 +89,8 @@ public interface AspectHandler{
 	
 	NBTTagCompound serialize();
 	void deserialize(NBTTagCompound data);
+	
+	static Optional<AspectHandler> getFrom(@Nonnull ICapabilityProvider holder){
+		return Optional.ofNullable(holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null));
+	}
 }

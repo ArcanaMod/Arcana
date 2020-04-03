@@ -1,11 +1,18 @@
 package net.kineticdevelopment.arcana.core.aspects;
 
 import net.kineticdevelopment.arcana.core.aspects.Aspect.AspectType;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static net.kineticdevelopment.arcana.utilities.StreamUtils.streamAndApply;
 
 public class TypedVisBattery extends VisBattery{
 	
@@ -52,6 +59,21 @@ public class TypedVisBattery extends VisBattery{
 		if(allowed.contains(aspect))
 		return super.getCapacity(aspect);
 		return 0;
+	}
+	
+	public NBTTagCompound serialize(){
+		NBTTagCompound compound = super.serialize();
+		NBTTagList types = new NBTTagList();
+		allowed.forEach((type) -> types.appendTag(new NBTTagString(type.name().toLowerCase())));
+		compound.setTag("allowed", types);
+		return compound;
+	}
+	
+	public void deserialize(NBTTagCompound data){
+		super.deserialize(data);
+		this.allowed = streamAndApply(data.getTagList("allowed", 8), NBTTagString.class, NBTTagString::getString)
+				.map(AspectType::valueOf)
+				.collect(Collectors.toList());
 	}
 	
 	public static TypedVisBattery primalBattery(){

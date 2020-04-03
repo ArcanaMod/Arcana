@@ -5,17 +5,22 @@ import net.kineticdevelopment.arcana.client.Sounds;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
+import net.kineticdevelopment.arcana.core.aspects.TypedVisBattery;
 import net.kineticdevelopment.arcana.core.spells.Spell;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
+import net.kineticdevelopment.arcana.utilities.WandUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -59,7 +64,12 @@ public class ItemWand extends Item{
         WANDS.add(this);
     }
 
-    /**
+	@Nullable
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt){
+		return TypedVisBattery.primalBattery(WandUtil.getCore(stack).getMaxVis());
+	}
+
+	/**
      * Casts a spell if a focus is assigned
      * @param world World the action is performed in
      * @param player Player that performs the action
