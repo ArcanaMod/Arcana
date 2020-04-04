@@ -6,6 +6,7 @@ import net.kineticdevelopment.arcana.client.Sounds;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
 import net.kineticdevelopment.arcana.core.aspects.TypedVisBattery;
 import net.kineticdevelopment.arcana.core.spells.Spell;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
@@ -68,7 +69,23 @@ public class ItemWand extends Item{
 		return TypedVisBattery.primalBattery(WandUtil.getCore(stack).getMaxVis());
 	}
 
-	/**
+    @Nullable
+    public NBTTagCompound getNBTShareTag(ItemStack stack){
+        NBTTagCompound tag = super.getNBTShareTag(stack);
+        if(tag != null){
+            NBTTagCompound aspectNBT = stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null).serializeNBT();
+            tag.setTag("aspect_handler", aspectNBT);
+        }
+        return tag;
+    }
+
+    public void readNBTShareTag(ItemStack stack, @Nullable NBTTagCompound nbt){
+        super.readNBTShareTag(stack, nbt);
+        if(nbt != null)
+            stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null).deserializeNBT(nbt.getCompoundTag("aspect_handler"));
+    }
+
+    /**
      * Casts a spell if a focus is assigned
      * @param world World the action is performed in
      * @param player Player that performs the action
