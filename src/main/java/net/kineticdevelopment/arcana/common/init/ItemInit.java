@@ -1,15 +1,12 @@
 package net.kineticdevelopment.arcana.common.init;
 
-import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
-import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.common.items.attachment.WandCore;
 import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.items.armor.ArmorBase;
 import net.kineticdevelopment.arcana.common.objects.items.armor.GoggleBase;
-import net.kineticdevelopment.arcana.common.objects.items.armor.shields.ShieldBase;
 import net.kineticdevelopment.arcana.common.objects.items.tools.*;
 import net.kineticdevelopment.arcana.common.objects.items.tools.autorepair.*;
 import net.kineticdevelopment.arcana.core.Main;
@@ -25,14 +22,14 @@ import java.util.List;
 
 /**
  * Initialize Items here
- * @author Merijn, Tea
+ * @author Merijn, Tea, Luna
  * @see BlockStateInit
  * @see EntityInit
  * @see BlockInit
  */
 public class ItemInit {
 
-	public static final List<Item> ITEMS = new ArrayList<Item>();
+	public static final List<Item> ITEMS = new ArrayList<>();
 
 	// Materials - Values
 	public static Item.ToolMaterial MATERIAL_ARCANIUM = EnumHelper.addToolMaterial("material_arcanium",4,1987,9.0F,4.0F, 20);
