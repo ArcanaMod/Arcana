@@ -40,9 +40,9 @@ public class BlockInit {
 	public static final Block NORMAL_NODE = new BlockNormalNode().setCreativeTab(Main.TAB_ARCANA);
 
 	//Blocks with function
-
 	public static final Block RESEARCH_TABLE = new BlockBase("research_table", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block ASPECT_BOOKSHELF = new BlockBase ("aspect_bookshelf", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+
 	// Logs
 	public static final Block DAIR_LEAVES = new LeavesBase("dair_leaves").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block DAIR_LOG = new LogBase("dair_log").setCreativeTab(Main.TAB_ARCANA);

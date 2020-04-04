@@ -86,6 +86,8 @@ tile.arcane_stone_bricks_slab.name=Arcane Stone Bricks Slab
 tile.arcane_stone_bricks_stairs.name=Arcane Stone Brick Stairs
 tile.infusion_arcane_stone.name=Infused Arcane Stone
 tile.magical_grass.name=Magical Grass
+tile.table.name=Table
+tile.research_table.name=Research Table
 
 #Ore
 tile.amber_ore.name=Amber Ore
