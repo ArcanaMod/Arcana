@@ -64,11 +64,8 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
         Random rand = worldIn.rand;
 
         for (int i = 0; i < rand.nextInt((5 - 2) + 1) + 5; i++) {
-
-            int randomAspect = rand.nextInt(5);
-            Aspect[] aspects = new Aspect[] {Aspect.EARTH, Aspect.FIRE, Aspect.WATER, Aspect.AIR, Aspect.CHAOS, Aspect.ORDER};
-
-            entity.storedAspects.putIfAbsent(aspects[randomAspect], rand.nextInt((80 - 30) + 1) + 30);
+            int randomAspect = rand.nextInt(6);
+            entity.storedAspects.putIfAbsent(Aspects.primalAspects[randomAspect], rand.nextInt((80 - 30) + 1) + 30);
         }
 
         entity.markDirty();
@@ -170,6 +167,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
                         final int draw = 1;
                         tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - (AspectHandler.getFrom(itemActivated).insert(coreAspect, draw, false) - draw));
                         tileEntity.markDirty();
+                        
                     }
                 }
             }
