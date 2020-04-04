@@ -7,11 +7,15 @@ import net.kineticdevelopment.arcana.common.items.attachment.WandCore;
 import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.common.objects.items.ItemFocus;
 import net.kineticdevelopment.arcana.common.objects.items.ItemWand;
+import net.kineticdevelopment.arcana.common.objects.items.armor.ArmorBase;
 import net.kineticdevelopment.arcana.common.objects.items.armor.GoggleBase;
+import net.kineticdevelopment.arcana.common.objects.items.armor.shields.ShieldBase;
 import net.kineticdevelopment.arcana.common.objects.items.tools.*;
+import net.kineticdevelopment.arcana.common.objects.items.tools.autorepair.*;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.GogglePriority;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraftforge.common.util.EnumHelper;
@@ -21,7 +25,7 @@ import java.util.List;
 
 /**
  * Initialize Items here
- * @author Merijn, Tea, Wilkon
+ * @author Merijn, Tea
  * @see BlockStateInit
  * @see EntityInit
  * @see BlockInit
@@ -34,20 +38,27 @@ public class ItemInit {
 	public static Item.ToolMaterial MATERIAL_ARCANIUM = EnumHelper.addToolMaterial("material_arcanium",4,1987,9.0F,4.0F, 20);
 	public static Item.ToolMaterial MATERIAL_VOID_METAL = EnumHelper.addToolMaterial("material_void_metal",5,250, 10.0F, 4.5F,8);
 	public static ItemArmor.ArmorMaterial MATERIAL_GOGGLES_REVEALING = EnumHelper.addArmorMaterial("material_goggles", Main.MODID + ":goggles_of_revealing", 50, new int[] {0, 0, 0, 2}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F);
+	public static ItemArmor.ArmorMaterial ARMOR_MATERIAL_ARCANIUM = EnumHelper.addArmorMaterial("armor_material_arcanium", Main.MODID + ":arcanium_armor", 1987, new int[] {4, 7, 9, 4}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.5F);
 
 	//Weapons
 	public static Item ARCANIUM_AXE = new AxeBase("arcanium_axe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_SWORD = new SwordBase("arcanium_sword", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_AXE = new AxeBase("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_SWORD = new SwordBase("void_metal_sword", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_AXE = new AutoRepairAxe("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_SWORD = new AutoRepairSword("void_metal_sword", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
 
 	//Tools
 	public static Item ARCANIUM_HOE = new HoeBase("arcanium_hoe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_PICKAXE = new PickaxeBase("arcanium_pickaxe", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_SHOVEL = new ShovelBase("arcanium_shovel", MATERIAL_ARCANIUM).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_HOE = new HoeBase("void_metal_hoe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_PICKAXE = new PickaxeBase("void_metal_pickaxe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
-	public static Item VOID_METAL_SHOVEL = new ShovelBase("void_metal_shovel", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_HOE = new AutoRepairHoe("void_metal_hoe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_PICKAXE = new AutoRepairPickaxe("void_metal_pickaxe", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+	public static Item VOID_METAL_SHOVEL = new AutoRepairShovel("void_metal_shovel", MATERIAL_VOID_METAL).setCreativeTab(Main.TAB_ARCANA);
+
+	//Armor
+	public static Item ARCANIUM_HELMET = new ArmorBase("arcanium_helmet", ARMOR_MATERIAL_ARCANIUM, 1, EntityEquipmentSlot.HEAD).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_CHESTPLATE = new ArmorBase("arcanium_chestplate", ARMOR_MATERIAL_ARCANIUM, 1, EntityEquipmentSlot.CHEST).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_LEGGINGS = new ArmorBase("arcanium_leggings", ARMOR_MATERIAL_ARCANIUM, 2, EntityEquipmentSlot.LEGS).setCreativeTab(Main.TAB_ARCANA);
+	public static Item ARCANIUM_BOOTS = new ArmorBase("arcanium_boots", ARMOR_MATERIAL_ARCANIUM, 1, EntityEquipmentSlot.FEET).setCreativeTab(Main.TAB_ARCANA);
 
 	//Items With Function
 
@@ -68,7 +79,7 @@ public class ItemInit {
 	// Materials - Items
 	public static Item SILVERWOOD_STICK = new ItemBase("silverwood_stick").setCreativeTab(Main.TAB_ARCANA);
 
-	// Armor/Goggles
+	// Goggle Armor
 	public static GoggleBase GOGGLES_OF_REVEALING = new GoggleBase("goggles_of_revealing", MATERIAL_GOGGLES_REVEALING, 1, GogglePriority.SHOW_NODE);
 
 	// Wand Parts
