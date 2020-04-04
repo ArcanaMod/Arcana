@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "arcana:item/void_metal_axe"
+  }
+}
