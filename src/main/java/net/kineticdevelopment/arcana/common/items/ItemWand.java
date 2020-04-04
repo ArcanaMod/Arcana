@@ -84,7 +84,11 @@ public class ItemWand extends Item{
         if(nbt != null)
             stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null).deserializeNBT(nbt.getCompoundTag("aspect_handler"));
     }
-
+    
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged){
+        return slotChanged;
+    }
+    
     /**
      * Casts a spell if a focus is assigned
      * @param world World the action is performed in
