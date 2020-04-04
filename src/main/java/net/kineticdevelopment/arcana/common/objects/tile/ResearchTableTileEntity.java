@@ -37,7 +37,7 @@ public class ResearchTableTileEntity extends TileEntity{
 		}
 	};
 	
-	protected VisBattery aspects;
+	protected VisBattery aspects = new VisBattery();
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound){

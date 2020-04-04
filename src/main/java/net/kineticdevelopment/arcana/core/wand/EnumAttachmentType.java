@@ -12,7 +12,7 @@ import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 public enum EnumAttachmentType {
     
     CAP("cap", 0, Cap.DEFAULT),
-    FOCUS("focus", 1, Focus.DEFAULT);
+    FOCUS("focus", 1, Focus.NONE);
     
     private ItemAttachment _default;
     private int slot;

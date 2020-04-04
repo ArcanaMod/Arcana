@@ -1,11 +1,11 @@
 package net.kineticdevelopment.arcana.common.items;
 
+import com.google.common.collect.ImmutableList;
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.client.Sounds;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.core.Main;
-import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.TypedVisBattery;
 import net.kineticdevelopment.arcana.core.spells.Spell;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
@@ -25,7 +25,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Supplier;
@@ -49,7 +48,7 @@ public class ItemWand extends Item{
         List<Cap> allowed = new ArrayList<>(Cap.CAPS);
         // fix models
         allowed.sort(Comparator.comparingInt(Cap::getID));
-        List<Focus> allowedFoci = Collections.singletonList(Focus.DEFAULT); //TODO: change with foci
+        List<Focus> allowedFoci = ImmutableList.of(Focus.NONE, Focus.DEFAULT); //TODO: change with foci
         return new ItemAttachment[][]{allowed.toArray(new Cap[0]), allowedFoci.toArray(new Focus[0])};
     };
 

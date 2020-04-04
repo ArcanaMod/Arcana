@@ -129,12 +129,14 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 			GlStateManager.disableLighting();
 		}else{
 			int ulX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 + 8;
-			if(mouseX >= ulX && mouseX <= ulX + 62 && mouseY >= ulY && mouseY <= ulY + 62){
+			int width = recipe instanceof IShapedRecipe ? ((IShapedRecipe)recipe).getRecipeWidth() : 3;
+			int height = recipe instanceof IShapedRecipe ? ((IShapedRecipe)recipe).getRecipeHeight() : 3;
+			if(mouseX >= ulX && mouseX <= ulX + 24 * width && mouseY >= ulY && mouseY <= ulY + 24 * height){
 				// get the item
 				if((mouseX - ulX) % 24 < 16 && (mouseY - ulY) % 24 <= 16){
 					int xx = (mouseX - ulX) / 24;
 					int yy = (mouseY - ulY) / 24;
-					int index = xx + 3 * yy;
+					int index = xx + width * yy;
 					if(recipe.getIngredients().size() > index){
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0){

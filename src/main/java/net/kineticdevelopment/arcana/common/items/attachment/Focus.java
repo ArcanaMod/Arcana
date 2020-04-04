@@ -13,8 +13,9 @@ import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 public class Focus extends ItemAttachment {
 
     private int id;
-
-    public static Focus DEFAULT = new Focus("wand_focus").setId(0);
+    
+    public static Focus NONE = new Focus("no_focus").setId(0);
+    public static Focus DEFAULT = new Focus("wand_focus").setId(1);
 
     public Focus(String name) {
         super(name);
@@ -36,6 +37,6 @@ public class Focus extends ItemAttachment {
     }
 
     protected boolean shouldRegister(){
-        return this != DEFAULT;
+        return this != NONE;
     }
 }

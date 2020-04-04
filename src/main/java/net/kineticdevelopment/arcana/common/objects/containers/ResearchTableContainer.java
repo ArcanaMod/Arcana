@@ -5,6 +5,7 @@ import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
@@ -74,8 +75,8 @@ public class ResearchTableContainer extends Container{
 		// 9, 10
 		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 9, 10){
 			public boolean isItemValid(@Nonnull ItemStack stack){
-				// only wands
-				return super.isItemValid(stack) && stack.getItem() instanceof ItemWand;
+				// only vis storages
+				return super.isItemValid(stack) && stack.hasCapability(AspectHandlerCapability.ASPECT_HANDLER, null);
 			}
 		});
 		// 137, 11
