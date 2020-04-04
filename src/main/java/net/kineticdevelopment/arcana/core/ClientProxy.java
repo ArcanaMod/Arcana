@@ -7,6 +7,7 @@ import net.kineticdevelopment.arcana.client.research.RequirementRenderer;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
+import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -89,6 +90,6 @@ public class ClientProxy extends CommonProxy {
 	public ItemStack getAspectItemStackForDisplay(){
 		if(Minecraft.getMinecraft().player == null)
 			return super.getAspectItemStackForDisplay();
-		else return aspectStacks.get((Minecraft.getMinecraft().player.ticksExisted / 20) % aspectStacks.size());
+		else return Aspects.aspectStacks.get((Minecraft.getMinecraft().player.ticksExisted / 20) % Aspects.aspectStacks.size());
 	}
 }

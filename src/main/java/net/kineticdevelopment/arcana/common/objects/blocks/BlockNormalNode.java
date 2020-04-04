@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.objects.blocks;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.tile.NodeTileEntity;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.wand.CapType;
@@ -131,17 +132,18 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
             return false;
         }
         ItemStack itemActivated = playerIn.getHeldItem(hand);
-        CoreType core = WandUtil.getCore(itemActivated);
-        CapType cap = WandUtil.getCap(itemActivated);
+        /*CoreType core = WandUtil.getCore(itemActivated);
+        CapType cap = WandUtil.getCap(itemActivated);*/
+        // although other items can store aspects, only wands can draw them directly from nodes ATM
         if(itemActivated.getItem() instanceof ItemWand){
             TileEntity entity = worldIn.getTileEntity(pos);
             if(entity instanceof NodeTileEntity){
                 NodeTileEntity tileEntity = (NodeTileEntity)entity;
-                NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
-                NBTTagList newAspects = new NBTTagList();
+                /*NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
+                NBTTagList newAspects = new NBTTagList();*/
                 for(Aspect coreAspect : Aspects.primalAspects){
                     if(tileEntity.storedAspects.containsKey(coreAspect)){
-                        if(aspectList.hasNoTags()){
+                        /*if(aspectList.hasNoTags()){
                             tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
                             NBTTagCompound compound = new NBTTagCompound();
                             compound.setString("type", coreAspect.toString());
@@ -163,7 +165,10 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
                         }
                         NBTTagCompound newTag = itemActivated.getTagCompound();
                         newTag.setTag("aspects", newAspects);
-                        itemActivated.setTagCompound(newTag);
+                        itemActivated.setTagCompound(newTag);*/
+                        // always transfer one for now -- this should work with more though
+                        final int draw = 1;
+                        tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - (AspectHandler.getFrom(itemActivated).insert(coreAspect, draw, false) - draw));
                         tileEntity.markDirty();
                     }
                 }

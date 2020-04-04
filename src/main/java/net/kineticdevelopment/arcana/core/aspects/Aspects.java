@@ -3,10 +3,12 @@ package net.kineticdevelopment.arcana.core.aspects;
 import net.kineticdevelopment.arcana.common.items.AspectItem;
 import net.kineticdevelopment.arcana.core.Main;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Contains enum and utilities for aspects
@@ -16,6 +18,7 @@ public class Aspects{
     
     public static final List<Item> aspectItems = new ArrayList<>();
     public static final Aspect[] primalAspects = new Aspect[]{Aspect.AIR, Aspect.CHAOS, Aspect.EARTH, Aspect.FIRE, Aspect.ORDER, Aspect.WATER};
+    public static List<ItemStack> aspectStacks;
     
     // TODO: DON'T USE AN ENUM, use an ItemBase-like constructor to allow addons to add aspects.
     // Update research system to match.
@@ -26,6 +29,11 @@ public class Aspects{
         // Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
         for(Aspect aspect : Aspect.values())
             aspectItems.add(new AspectItem("aspect_" + aspect.name().toLowerCase(), aspect.name().toLowerCase()).setCreativeTab(Main.TAB_ASPECTS_ARCANA));
+        aspectStacks = aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
+    }
+    
+    public static ItemStack getItemStackForAspect(Aspect aspect){
+        return aspectStacks.get(Aspect.aspects.indexOf(aspect));
     }
     
     /**

@@ -65,11 +65,15 @@ public class ResearchTableTileEntity extends TileEntity{
 		return super.getCapability(capability, facing);
 	}
 	
-	protected ItemStack note(){
+	public ItemStack visItem(){
 		return items.getStackInSlot(0);
 	}
 	
-	protected ItemStack ink(){
+	public ItemStack ink(){
+		return items.getStackInSlot(1);
+	}
+	
+	public ItemStack note(){
 		return items.getStackInSlot(1);
 	}
 }

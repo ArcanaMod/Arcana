@@ -1,5 +1,8 @@
 package net.kineticdevelopment.arcana.core.aspects;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Enumeration containing all aspect types
  *
@@ -61,5 +64,7 @@ public enum Aspect{
 	WATER,
 	WEAPON,
 	WIND,
-	WRATH
+	WRATH;
+	
+	public static final List<Aspect> aspects = Arrays.asList(values());
 }

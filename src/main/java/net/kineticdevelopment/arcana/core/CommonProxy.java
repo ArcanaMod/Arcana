@@ -28,7 +28,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -38,9 +37,7 @@ import java.util.stream.Collectors;
  */
 @Mod.EventBusSubscriber
 public class CommonProxy {
-
-	protected List<ItemStack> aspectStacks;
-
+	
 	public void registerItemRenderer(Item item, int meta, String id) {}
 
 	public void preInit(FMLPreInitializationEvent event) {
@@ -69,7 +66,7 @@ public class CommonProxy {
 	}
 
 	public void postInit(FMLPostInitializationEvent event){
-		aspectStacks = Aspects.aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
+	
 	}
 
 	public void registerWand(IForgeRegistry<Item> registry, ItemWand wand) {
@@ -81,6 +78,6 @@ public class CommonProxy {
 	public void openResearchBookUI(ResourceLocation book){}
 
 	public ItemStack getAspectItemStackForDisplay(){
-		return aspectStacks.get(0);
+		return Aspects.aspectStacks.get(0);
 	}
 }

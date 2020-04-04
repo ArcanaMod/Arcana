@@ -89,7 +89,11 @@ public interface AspectHandler extends INBTSerializable<NBTTagCompound>{
 	NBTTagCompound serializeNBT();
 	void deserializeNBT(NBTTagCompound data);
 	
-	static Optional<AspectHandler> getFrom(@Nonnull ICapabilityProvider holder){
+	static Optional<AspectHandler> getOptional(@Nonnull ICapabilityProvider holder){
 		return Optional.ofNullable(holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null));
+	}
+	
+	static AspectHandler getFrom(@Nonnull ICapabilityProvider holder){
+		return holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null);
 	}
 }

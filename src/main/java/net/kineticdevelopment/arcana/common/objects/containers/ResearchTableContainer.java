@@ -54,13 +54,6 @@ public class ResearchTableContainer extends Container{
 				this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
 			}
 		
-		/*// Slots for the hotbar
-		for(int row = 0; row < 9; ++row){
-			int x = baseX + row * 18;
-			int y = 58 + baseY;
-			this.addSlotToContainer(new Slot(playerInventory, row, x, y));
-		}*/
-		
 		for(int row = 0; row < 3; ++row)
 			for(int col = 0; col < 3; ++col){
 				int x = 79 + col * 18;
