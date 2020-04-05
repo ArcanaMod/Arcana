@@ -66,10 +66,10 @@ public class TaintedLeavesBase extends LeavesBase {
         } else if (f >= 100) {
             h = 1;
         }
-        System.out.println("Spread? "+h);
+//        System.out.println("Spread? "+h);
         if (h == 1) {
             TaintHandler.spreadTaint(worldIn, pos);
-            System.out.println("Spreading Taint...");
+//            System.out.println("Spreading Taint...");
         }
 
         boolean surrounded = true;

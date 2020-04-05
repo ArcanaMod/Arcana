@@ -199,7 +199,7 @@ public class BlockInit {
 	public static final Block TAINTED_SPRUCE_LEAVES = new TaintedLeavesBase("tainted_spruce_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_SPRUCE_LOG = new TaintedLogBase("tainted_spruce_log");
 	public static final Block TAINTED_SPRUCE_PLANKS = new TaintedBlockBase("tainted_spruce_planks", Material.WOOD);
-	public static final Block TAINTED_SPRUCE_SAPLING = new DumbSapling("tainted_spruce_sapling");
+	public static final Block TAINTED_SPRUCE_SAPLING = new TaintedSpruceSapling("tainted_spruce_sapling", false);
 	public static final Block TAINTED_SPRUCE_SLAB_DOUBLE = new TaintedDoubleSlabBase("tainted_spruce_slab_double", Material.WOOD);
 	public static final Block TAINTED_SPRUCE_SLAB_HALF = new TaintedHalfSlabBase("tainted_spruce_slab", Material.WOOD, BlockInit.TAINTED_SPRUCE_SLAB_DOUBLE);
 	public static final Block TAINTED_SPRUCE_STAIRS = new TaintedStairsBase("tainted_spruce_stairs", TAINTED_SPRUCE_PLANKS.getDefaultState());
@@ -298,7 +298,7 @@ public class BlockInit {
 	public static final Block UNTAINTED_SPRUCE_LEAVES = new LeavesBase("untainted_spruce_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_SPRUCE_LOG = new TaintedLogBase("untainted_spruce_log").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_SPRUCE_PLANKS = new TaintedBlockBase("untainted_spruce_planks", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block UNTAINTED_SPRUCE_SAPLING = new DumbSapling("untainted_spruce_sapling").setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_SPRUCE_SAPLING = new TaintedSpruceSapling("untainted_spruce_sapling", true).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_SPRUCE_SLAB_DOUBLE = new DoubleSlabBase("untainted_spruce_slab_double", Material.WOOD);
 	public static final Block UNTAINTED_SPRUCE_SLAB_HALF = new HalfSlabBase("untainted_spruce_slab", Material.WOOD, BlockInit.UNTAINTED_SPRUCE_SLAB_DOUBLE).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_SPRUCE_STAIRS = new TaintedStairsBase("untainted_spruce_stairs", UNTAINTED_SPRUCE_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);

@@ -33,9 +33,10 @@ public class DairSapling extends SaplingBase {
             worldgenerator = new DairGenerator(true, false);
         }
 
-
         worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
 
-        worldgenerator.generate(worldIn, rand, pos);
+        if(!worldgenerator.generate(worldIn, rand, pos)) {
+            worldIn.setBlockState(pos, state, 4);
+        }
     }
 }
