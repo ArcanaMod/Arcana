@@ -1,21 +1,22 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.saplings;
 
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.SaplingBase;
-import net.kineticdevelopment.arcana.common.worldgen.trees.TaintedMegaSpruceGenerator;
-import net.kineticdevelopment.arcana.common.worldgen.trees.TaintedSpruceGenerator;
+import net.kineticdevelopment.arcana.common.worldgen.trees.TaintedJungleGenerator;
+import net.kineticdevelopment.arcana.common.worldgen.trees.TaintedMegaJungleGenerator;
 import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenTrees;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
-public class TaintedSpruceSapling extends SaplingBase {
+public class TaintedJungleSapling extends SaplingBase {
     boolean untainted;
-    public TaintedSpruceSapling(String name, boolean untainted) {
+    public TaintedJungleSapling(String name, boolean untainted) {
         super(name);
         this.untainted = untainted;
     }
@@ -23,33 +24,32 @@ public class TaintedSpruceSapling extends SaplingBase {
     @Override
     public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (!TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
-
+        WorldGenerator worldgenerator = new WorldGenTrees(true);
         int x = 0;
         int z = 0;
         boolean flag = false;
-
-        WorldGenerator worldgenerator = new TaintedSpruceGenerator(true, false, false);
 
         for (x = 0; x >= -1; --x)
         {
             for (z = 0; z >= -1; --z)
             {
-                if (this.isTwoByTwoOfType(worldIn, pos, x, z, BlockPlanks.EnumType.SPRUCE))
+                if (this.isTwoByTwoOfType(worldIn, pos, x, z, BlockPlanks.EnumType.JUNGLE))
                 {
-                    worldgenerator = untainted ? new TaintedMegaSpruceGenerator(false, rand.nextBoolean(), true) :
-                            new TaintedMegaSpruceGenerator(false, rand.nextBoolean(), false);
+                    worldgenerator = untainted ? new TaintedMegaJungleGenerator(true, 10, 20, true) :
+                            new TaintedMegaJungleGenerator(true, 10, 20, false);
                     flag = true;
                     break;
                 }
             }
-            if (flag) break;
+            if(flag) break;
         }
 
         if (!flag)
         {
             x = 0;
             z = 0;
-            worldgenerator = untainted ? new TaintedSpruceGenerator(true, true, true) : new TaintedSpruceGenerator(true, true, false);
+            worldgenerator = untainted ? new TaintedJungleGenerator(true, true, true) :
+                    new TaintedJungleGenerator(true, true, false);
         }
 
         IBlockState iblockstate2 = Blocks.AIR.getDefaultState();

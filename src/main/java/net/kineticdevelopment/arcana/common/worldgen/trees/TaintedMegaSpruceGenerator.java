@@ -14,20 +14,13 @@ import java.util.Random;
 
 public class TaintedMegaSpruceGenerator extends WorldGenHugeTrees {
     private boolean useBaseHeight;
-    private static final IBlockState DEFAULT_TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE);
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_SPRUCE_LOG.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_SPRUCE_LOG.getDefaultState();
-    private static final IBlockState DEFAULT_LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.SPRUCE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
     private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_SPRUCE_LEAVES.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_SPRUCE_LEAVES.getDefaultState();
     private static final IBlockState PODZOL = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
 
-    public TaintedMegaSpruceGenerator(boolean notify, boolean useBaseHeight, boolean tainted)
-    {
-        this(notify, useBaseHeight, tainted, false);
-    }
-
-    public TaintedMegaSpruceGenerator(boolean notify, boolean useBaseHeight, boolean tainted, boolean untainted) {
+    public TaintedMegaSpruceGenerator(boolean notify, boolean useBaseHeight, boolean untainted) {
         super(notify, 13, 15, untainted ? DEFAULT_UNTAINTED_TRUNK : DEFAULT_TAINTED_TRUNK,
                 untainted ? DEFAULT_UNTAINTED_LEAVES : DEFAULT_TAINTED_LEAVES);
         this.useBaseHeight = useBaseHeight;

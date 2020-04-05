@@ -185,7 +185,7 @@ public class BlockInit {
 	public static final Block TAINTED_JUNGLE_LEAVES = new TaintedLeavesBase("tainted_jungle_leaves");
 	public static final Block TAINTED_JUNGLE_LOG = new TaintedLogBase("tainted_jungle_log");
 	public static final Block TAINTED_JUNGLE_PLANKS = new TaintedBlockBase("tainted_jungle_planks", Material.WOOD);
-	public static final Block TAINTED_JUNGLE_SAPLING = new DumbSapling("tainted_jungle_sapling");
+	public static final Block TAINTED_JUNGLE_SAPLING = new TaintedJungleSapling("tainted_jungle_sapling", false);
 	public static final Block TAINTED_JUNGLE_SLAB_DOUBLE = new TaintedDoubleSlabBase("tainted_jungle_slab_double", Material.WOOD);
 	public static final Block TAINTED_JUNGLE_SLAB_HALF = new TaintedHalfSlabBase("tainted_jungle_slab", Material.WOOD, BlockInit.TAINTED_JUNGLE_SLAB_DOUBLE);
 	public static final Block TAINTED_JUNGLE_STAIRS = new TaintedStairsBase("tainted_jungle_stairs", TAINTED_JUNGLE_PLANKS.getDefaultState());
@@ -284,7 +284,7 @@ public class BlockInit {
 	public static final Block UNTAINTED_JUNGLE_LEAVES = new LeavesBase("untainted_jungle_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_JUNGLE_LOG = new TaintedLogBase("untainted_jungle_log").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_JUNGLE_PLANKS = new TaintedBlockBase("untainted_jungle_planks", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block UNTAINTED_JUNGLE_SAPLING = new DumbSapling("untainted_jungle_sapling").setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_JUNGLE_SAPLING = new TaintedJungleSapling("untainted_jungle_sapling", true).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_JUNGLE_SLAB_DOUBLE = new DoubleSlabBase("untainted_jungle_slab_double", Material.WOOD);
 	public static final Block UNTAINTED_JUNGLE_SLAB_HALF = new HalfSlabBase("untainted_jungle_slab", Material.WOOD, BlockInit.UNTAINTED_JUNGLE_SLAB_DOUBLE).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_JUNGLE_STAIRS = new TaintedStairsBase("untainted_jungle_stairs", UNTAINTED_JUNGLE_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);
