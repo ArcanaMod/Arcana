@@ -13,14 +13,26 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 public class DairSapling extends SaplingBase {
-    public DairSapling(String name) {
+    boolean tainted;
+    boolean untainted;
+
+    public DairSapling(String name, boolean tainted, boolean untainted) {
         super(name);
+        this.tainted = tainted;
+        this.untainted = untainted;
     }
 
     @Override
     public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (!TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
-        WorldGenerator worldgenerator = new DairGenerator(true, false);
+
+        WorldGenerator worldgenerator;
+        if (tainted) {
+            worldgenerator = untainted ? new DairGenerator(true, true, true) : new DairGenerator(true, true, false);
+        } else {
+            worldgenerator = new DairGenerator(true, false);
+        }
+
 
         worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
 

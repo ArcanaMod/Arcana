@@ -27,11 +27,11 @@ public class DairGenerator extends WorldGenAbstractTree {
         this(notify, tainted, false);
     }
 
-    public DairGenerator(boolean notify, boolean tainted, boolean fullytainted) {
+    public DairGenerator(boolean notify, boolean tainted, boolean untainted) {
         super(notify);
         if(tainted) {
-            metaWood = fullytainted ? DEFAULT_TAINTED_TRUNK : DEFAULT_UNTAINTED_TRUNK;
-            metaLeaves = fullytainted ? DEFAULT_TAINTED_LEAVES : DEFAULT_UNTAINTED_LEAVES;
+            metaWood = untainted ? DEFAULT_UNTAINTED_TRUNK : DEFAULT_TAINTED_TRUNK;
+            metaLeaves = untainted ? DEFAULT_UNTAINTED_LEAVES : DEFAULT_TAINTED_LEAVES;
         } else {
             metaWood = DEFAULT_TRUNK;
             metaLeaves = DEFAULT_LEAVES;

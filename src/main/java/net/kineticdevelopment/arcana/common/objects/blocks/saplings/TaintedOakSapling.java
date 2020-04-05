@@ -13,8 +13,10 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import java.util.Random;
 
 public class TaintedOakSapling extends SaplingBase {
-    public TaintedOakSapling(String name) {
+    boolean untainted;
+    public TaintedOakSapling(String name, boolean untainted) {
         super(name);
+        this.untainted = untainted;
     }
 
     @Override
@@ -23,7 +25,12 @@ public class TaintedOakSapling extends SaplingBase {
         if (!TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
 
         boolean bigTree = random.nextInt(10) == 0;
-        WorldGenerator worldgenerator = bigTree ? new TaintedLargeOakGenerator(true, true) : new TaintedOakGenerator(true, true);
+        WorldGenerator worldgenerator;
+        if (untainted) {
+            worldgenerator = bigTree ? new TaintedLargeOakGenerator(true, true) : new TaintedOakGenerator(true, true);
+        } else {
+            worldgenerator = bigTree ? new TaintedLargeOakGenerator(true, false) : new TaintedOakGenerator(true, false);
+        }
 
         worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
 

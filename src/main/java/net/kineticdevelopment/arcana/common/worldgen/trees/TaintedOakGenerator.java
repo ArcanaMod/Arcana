@@ -29,8 +29,8 @@ public class TaintedOakGenerator extends WorldGenAbstractTree {
         this(notify, false);
     }
 
-    public TaintedOakGenerator(boolean notify, boolean fullytainted) {
-        this(notify, 4, fullytainted ? DEFAULT_TAINTED_TRUNK : DEFAULT_UNTAINTED_TRUNK, fullytainted ? DEFAULT_TAINTED_LEAVES : DEFAULT_UNTAINTED_LEAVES, false);
+    public TaintedOakGenerator(boolean notify, boolean untainted) {
+        this(notify, 4, untainted ? DEFAULT_UNTAINTED_TRUNK : DEFAULT_TAINTED_TRUNK, untainted ? DEFAULT_UNTAINTED_LEAVES : DEFAULT_TAINTED_LEAVES, false);
     }
 
     public TaintedOakGenerator(boolean notify, int minTreeHeightIn, IBlockState woodMeta, IBlockState leavesMeta, boolean growVines) {
