@@ -1,9 +1,11 @@
 package net.kineticdevelopment.arcana.common.worldgen.trees;
 
 import net.kineticdevelopment.arcana.common.init.BlockInit;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -38,35 +40,38 @@ public class DairGenerator extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) {
-        int minTreeHeight = 6;
-        int i = rand.nextInt(3) + minTreeHeight;
+        int minTreeHeight = 8;
+        int treeHeight = rand.nextInt(3) + minTreeHeight;
         boolean flag = true;
 
-        if (position.getY() >= 1 && position.getY() + i + 1 <= worldIn.getHeight())
+        // Check Placement Valid
+        if (position.getY() >= 1 && position.getY() + treeHeight + 1 <= worldIn.getHeight())
         {
-            for (int j = position.getY(); j <= position.getY() + 1 + i; ++j)
+            // Check trunk placement
+            for (int y = position.getY(); y <= position.getY() + 1 + treeHeight; ++y)
             {
                 int k = 1;
 
-                if (j == position.getY())
+                if (y == position.getY())
                 {
                     k = 0;
                 }
 
-                if (j >= position.getY() + 1 + i - 2)
+                if (y >= position.getY() + 1 + treeHeight - 2)
                 {
                     k = 2;
                 }
 
                 BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos();
 
-                for (int l = position.getX() - k; l <= position.getX() + k && flag; ++l)
+                // Check around trunk
+                for (int x = position.getX() - k; x <= position.getX() + k && flag; ++x)
                 {
-                    for (int i1 = position.getZ() - k; i1 <= position.getZ() + k && flag; ++i1)
+                    for (int z = position.getZ() - k; z <= position.getZ() + k && flag; ++z)
                     {
-                        if (j >= 0 && j < worldIn.getHeight())
+                        if (y >= 0 && y < worldIn.getHeight())
                         {
-                            if (!this.isReplaceable(worldIn,blockpos$mutableblockpos.setPos(l, j, i1)))
+                            if (!this.isReplaceable(worldIn,blockpos$mutableblockpos.setPos(x, y, z)))
                             {
                                 flag = false;
                             }
@@ -81,37 +86,42 @@ public class DairGenerator extends WorldGenAbstractTree {
 
             if (!flag)
             {
+                // Placement Invalid
                 return false;
             }
             else
             {
+                // Placement Valid
                 IBlockState state = worldIn.getBlockState(position.down());
 
-                if (state.getBlock().canSustainPlant(state, worldIn, position.down(), net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling) Blocks.SAPLING) && position.getY() < worldIn.getHeight() - i - 1)
+                if (state.getBlock().canSustainPlant(state, worldIn, position.down(), EnumFacing.UP,
+                        (BlockSapling) Blocks.SAPLING) && position.getY() < worldIn.getHeight() - treeHeight - 1)
                 {
                     state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
-                    int k2 = 3;
-                    int l2 = 0;
 
-                    for (int i3 = position.getY() - 3 + i; i3 <= position.getY() + i; ++i3)
+                    // Generate leaves
+                    for (int y = position.getY() - 3 + treeHeight; y <= position.getY() + treeHeight; ++y)
                     {
-                        int i4 = i3 - (position.getY() + i);
-                        int j1 = 1 - i4 / 2;
+                        int adjHeight = y - (position.getY() + treeHeight);
+                        int leavesWidth = 1 - adjHeight / 2;
 
-                        for (int k1 = position.getX() - j1; k1 <= position.getX() + j1; ++k1)
+                        for (int x = position.getX() - leavesWidth; x <= position.getX() + leavesWidth; ++x)
                         {
-                            int l1 = k1 - position.getX();
+                            int l1 = x - position.getX();
 
-                            for (int i2 = position.getZ() - j1; i2 <= position.getZ() + j1; ++i2)
+                            for (int z = position.getZ() - leavesWidth; z <= position.getZ() + leavesWidth; ++z)
                             {
-                                int j2 = i2 - position.getZ();
+                                int j2 = z - position.getZ();
 
-                                if (Math.abs(l1) != j1 || Math.abs(j2) != j1 || rand.nextInt(2) != 0 && i4 != 0)
+                                if (Math.abs(l1) != leavesWidth || Math.abs(j2) != leavesWidth
+                                        || rand.nextInt(2) != 0 && adjHeight != 0)
                                 {
-                                    BlockPos blockpos = new BlockPos(k1, i3, i2);
+                                    BlockPos blockpos = new BlockPos(x, y, z);
                                     state = worldIn.getBlockState(blockpos);
 
-                                    if (state.getBlock().isAir(state, worldIn, blockpos) || state.getBlock().isLeaves(state, worldIn, blockpos) || state.getMaterial() == Material.VINE)
+                                    if (state.getBlock().isAir(state, worldIn, blockpos)
+                                            || state.getBlock().isLeaves(state, worldIn, blockpos)
+                                            || state.getMaterial() == Material.VINE)
                                     {
                                         this.setBlockAndNotifyAdequately(worldIn, blockpos, this.metaLeaves);
                                     }
@@ -120,14 +130,43 @@ public class DairGenerator extends WorldGenAbstractTree {
                         }
                     }
 
-                    for (int j3 = 0; j3 < i; ++j3)
+                    int leavesWidth = 1;
+                    for (int x = position.getX() - leavesWidth; x <= position.getX() + leavesWidth; ++x)
                     {
-                        BlockPos upN = position.up(j3);
+                        for (int z = position.getZ() - leavesWidth; z <= position.getZ() + leavesWidth; ++z)
+                        {
+                            BlockPos blockpos = new BlockPos(x, position.getY() - 4 + treeHeight, z);
+                            state = worldIn.getBlockState(blockpos);
+
+                            if (state.getBlock().isAir(state, worldIn, blockpos)
+                                    || state.getBlock().isLeaves(state, worldIn, blockpos)
+                                    || state.getMaterial() == Material.VINE)
+                            {
+                                this.setBlockAndNotifyAdequately(worldIn, blockpos, this.metaLeaves);
+                            }
+
+                        }
+                    }
+                    BlockPos blockpos = new BlockPos(position.getX(), position.getY() - 5 + treeHeight, position.getZ() - 1);
+                    this.setBlockAndNotifyAdequately(worldIn, blockpos, this.metaLeaves);
+                    blockpos = new BlockPos(position.getX(), position.getY() - 5 + treeHeight, position.getZ() + 1);
+                    this.setBlockAndNotifyAdequately(worldIn, blockpos, this.metaLeaves);
+                    blockpos = new BlockPos(position.getX() - 1, position.getY() - 5 + treeHeight, position.getZ());
+                    this.setBlockAndNotifyAdequately(worldIn, blockpos, this.metaLeaves);
+                    blockpos = new BlockPos(position.getX() + 1, position.getY() - 5 + treeHeight, position.getZ());
+                    this.setBlockAndNotifyAdequately(worldIn, blockpos, this.metaLeaves);
+
+                    // Generate Trunk
+                    for (int y = 0; y < treeHeight; ++y)
+                    {
+                        BlockPos upN = position.up(y);
                         state = worldIn.getBlockState(upN);
 
-                        if (state.getBlock().isAir(state, worldIn, upN) || state.getBlock().isLeaves(state, worldIn, upN) || state.getMaterial() == Material.VINE)
+                        if (state.getBlock().isAir(state, worldIn, upN)
+                                || state.getBlock().isLeaves(state, worldIn, upN)
+                                || state.getMaterial() == Material.VINE)
                         {
-                            this.setBlockAndNotifyAdequately(worldIn, position.up(j3), this.metaWood);
+                            this.setBlockAndNotifyAdequately(worldIn, position.up(y), this.metaWood);
                         }
                     }
 
