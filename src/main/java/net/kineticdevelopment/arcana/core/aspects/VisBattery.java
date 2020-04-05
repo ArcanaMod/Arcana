@@ -7,8 +7,10 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Simple implementation of {@link AspectHandler} that stores any aspect up to the given amount.
@@ -27,10 +29,20 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 	}
 	
 	public int insert(Aspect aspect, int amount, boolean simulate){
-		int left = getCapacity(aspect) - getCurrentVis(aspect);
+		/*int left = getCapacity(aspect) - getCurrentVis(aspect);
 		if(!simulate)
 			stored.put(aspect, getCurrentVis(aspect) + (Math.min(left, amount)));
-		return amount - left;
+		return amount - left;*/
+		int capacityRemaining = getCapacity(aspect) - getCurrentVis(aspect);
+		if(amount <= capacityRemaining){
+			if(!simulate)
+				stored.put(aspect, getCurrentVis(aspect) + amount);
+			return 0;
+		}else{
+			if(!simulate)
+				stored.put(aspect, getCapacity(aspect));
+			return amount - capacityRemaining;
+		}
 	}
 	
 	public int drain(Aspect aspect, int amount, boolean simulate){
@@ -39,7 +51,7 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 		int vis = getCurrentVis(aspect);
 		if(amount >= vis){
 			if(!simulate)
-				stored.put(aspect, 0);
+				stored.remove(aspect);
 			return vis;
 		}else{
 			if(!simulate)
@@ -66,6 +78,10 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 	
 	public int getCapacity(){
 		return capacity;
+	}
+	
+	public Set<Aspect> getAllAspects(){
+		return Collections.unmodifiableSet(stored.keySet());
 	}
 	
 	public NBTTagCompound serializeNBT(){

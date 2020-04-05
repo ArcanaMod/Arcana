@@ -6,6 +6,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * Implement this interface as a capability which should handle aspects, especially storing
@@ -85,6 +86,8 @@ public interface AspectHandler extends INBTSerializable<NBTTagCompound>{
 	 * @return The maximum amount of vis stored by this handler.
 	 */
 	int getCapacity();
+	
+	Set<Aspect> getAllAspects();
 	
 	NBTTagCompound serializeNBT();
 	void deserializeNBT(NBTTagCompound data);

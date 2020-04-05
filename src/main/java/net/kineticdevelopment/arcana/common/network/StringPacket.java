@@ -13,6 +13,7 @@ public abstract class StringPacket implements IMessage{
 		// note: here I use buf.readableBytes() because only a string is encoded. If I wanted to store other data,
 		// I should handle this more appropriately.
 		// 1.14's PacketBuffer will handle this for me.
+		// ~~this is actually a packetbuffer already~~
 		entryKey = buf.readCharSequence(buf.readableBytes(), StandardCharsets.UTF_8).toString();
 	}
 	
