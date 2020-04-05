@@ -95,7 +95,7 @@ public class TaintedLeavesBase extends LeavesBase {
         if(surrounded == true) {
             worldIn.setBlockState(pos, state.withProperty(BlockStateInit.FULLYTAINTED, true));
             this.needsRandomTick = !surrounded;
-            System.out.println(pos + ": Ticking? "+this.needsRandomTick);
+//            System.out.println(pos + ": Ticking? "+this.needsRandomTick);
         }
     }
 

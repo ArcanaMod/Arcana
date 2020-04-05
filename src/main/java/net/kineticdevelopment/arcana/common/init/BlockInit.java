@@ -150,7 +150,7 @@ public class BlockInit {
 	public static final Block TAINTED_BIRCH_LEAVES = new TaintedLeavesBase("tainted_birch_leaves");
 	public static final Block TAINTED_BIRCH_LOG = new TaintedLogBase("tainted_birch_log");
 	public static final Block TAINTED_BIRCH_PLANKS = new TaintedBlockBase("tainted_birch_planks", Material.WOOD);
-	public static final Block TAINTED_BIRCH_SAPLING = new DumbSapling("tainted_birch_sapling");
+	public static final Block TAINTED_BIRCH_SAPLING = new TaintedBirchSapling("tainted_birch_sapling", false, false);
 	public static final Block TAINTED_BIRCH_SLAB_DOUBLE = new TaintedDoubleSlabBase("tainted_birch_slab_double", Material.WOOD);
 	public static final Block TAINTED_BIRCH_SLAB_HALF = new TaintedHalfSlabBase("tainted_birch_slab", Material.WOOD, BlockInit.TAINTED_BIRCH_SLAB_DOUBLE);
 	public static final Block TAINTED_BIRCH_STAIRS = new TaintedStairsBase("tainted_birch_stairs", TAINTED_BIRCH_PLANKS.getDefaultState());
@@ -249,7 +249,7 @@ public class BlockInit {
 	public static final Block UNTAINTED_BIRCH_LEAVES = new LeavesBase("untainted_birch_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_BIRCH_LOG = new TaintedLogBase("untainted_birch_log").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_BIRCH_PLANKS = new TaintedBlockBase("untainted_birch_planks", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block UNTAINTED_BIRCH_SAPLING = new DumbSapling("untainted_birch_sapling").setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_BIRCH_SAPLING = new TaintedBirchSapling("untainted_birch_sapling", false, true).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_BIRCH_SLAB_DOUBLE = new DoubleSlabBase("untainted_birch_slab_double", Material.WOOD);
 	public static final Block UNTAINTED_BIRCH_SLAB_HALF = new HalfSlabBase("untainted_birch_slab", Material.WOOD, BlockInit.UNTAINTED_BIRCH_SLAB_DOUBLE).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_BIRCH_STAIRS = new TaintedStairsBase("untainted_birch_stairs", UNTAINTED_BIRCH_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);
