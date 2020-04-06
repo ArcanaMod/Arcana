@@ -7,10 +7,6 @@ import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.VisBattery;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -44,7 +40,8 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 	}
 	
 	protected void refreshAspectSlots(){
-		aspectSlots.subList(3, aspectSlots.size()).clear();
+		if(aspectSlots.size() > 2)
+			aspectSlots.subList(3, aspectSlots.size()).clear();
 		
 		Supplier<AspectHandler> left = () -> AspectHandler.getFrom(inventorySlots.getSlot(0).getStack());
 		if(left.get() != null){
