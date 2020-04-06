@@ -85,7 +85,7 @@ public class BlockInit {
 	public static final Block WILLOW_LEAVES = new LeavesBase("willow_leaves").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block WILLOW_LOG = new LogBase("willow_log").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block WILLOW_PLANKS = new PlanksBase("willow_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block WILLOW_SAPLING = new DumbSapling("willow_sapling").setCreativeTab(Main.TAB_ARCANA);
+	public static final Block WILLOW_SAPLING = new WillowSapling("willow_sapling", false, false).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block WILLOW_SLAB_DOUBLE = new DoubleSlabBase("willow_slab_double", Material.WOOD);
 	public static final Block WILLOW_STONE_SLAB_HALF = new HalfSlabBase("willow_slab", Material.WOOD, BlockInit.WILLOW_SLAB_DOUBLE).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block WILLOW_STAIRS = new StairsBase("willow_stairs", WILLOW_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);
@@ -206,7 +206,7 @@ public class BlockInit {
 	public static final Block TAINTED_WILLOW_LEAVES = new TaintedLeavesBase("tainted_willow_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block TAINTED_WILLOW_LOG = new TaintedLogBase("tainted_willow_log");
 	public static final Block TAINTED_WILLOW_PLANKS = new TaintedBlockBase("tainted_willow_planks", Material.WOOD);
-	public static final Block TAINTED_WILLOW_SAPLING = new DumbSapling("tainted_willow_sapling");
+	public static final Block TAINTED_WILLOW_SAPLING = new WillowSapling("tainted_willow_sapling", true, false);
 	public static final Block TAINTED_WILLOW_SLAB_DOUBLE = new TaintedDoubleSlabBase("tainted_willow_slab_double", Material.WOOD);
 	public static final Block TAINTED_WILLOW_SLAB_HALF = new TaintedHalfSlabBase("tainted_willow_slab", Material.WOOD, BlockInit.TAINTED_WILLOW_SLAB_DOUBLE);
 	public static final Block TAINTED_WILLOW_STAIRS = new TaintedStairsBase("tainted_willow_stairs", TAINTED_WILLOW_PLANKS.getDefaultState());
@@ -305,7 +305,7 @@ public class BlockInit {
 	public static final Block UNTAINTED_WILLOW_LEAVES = new LeavesBase("untainted_willow_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_WILLOW_LOG = new TaintedLogBase("untainted_willow_log").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_WILLOW_PLANKS = new TaintedBlockBase("untainted_willow_planks", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block UNTAINTED_WILLOW_SAPLING = new DumbSapling("untainted_willow_sapling").setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_WILLOW_SAPLING = new WillowSapling("untainted_willow_sapling", true, true).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_WILLOW_SLAB_DOUBLE = new DoubleSlabBase("untainted_willow_slab_double", Material.WOOD);
 	public static final Block UNTAINTED_WILLOW_SLAB_HALF = new HalfSlabBase("untainted_willow_slab", Material.WOOD, BlockInit.UNTAINTED_WILLOW_SLAB_DOUBLE).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_WILLOW_STAIRS = new TaintedStairsBase("untainted_willow_stairs", UNTAINTED_WILLOW_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);
