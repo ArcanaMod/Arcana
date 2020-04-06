@@ -4,10 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static net.kineticdevelopment.arcana.utilities.StreamUtils.streamAndApply;
@@ -51,6 +48,10 @@ public class TypedVisBattery extends VisBattery{
 	
 	public boolean canStore(Aspect aspect){
 		return allowed.contains(aspect);
+	}
+	
+	public Set<Aspect> getAllowedAspects(){
+		return new HashSet<>(allowed);
 	}
 	
 	public int getCapacity(Aspect aspect){

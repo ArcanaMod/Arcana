@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.common.init;
 
 import net.kineticdevelopment.arcana.common.items.ItemResearchBook;
+import net.kineticdevelopment.arcana.common.items.ItemVisManipulators;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.WandCore;
@@ -66,6 +67,7 @@ public class ItemInit {
 	public static Item RESEARCH_NOTE = new ItemBase("research_note").setCreativeTab(Main.TAB_ARCANA);
 	public static Item INK = new ItemBase("ink").setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_TABLE_PLACER = new ItemResearchTable().setCreativeTab(Main.TAB_ARCANA);
+	public static Item VIS_MANIPULATORS = new ItemVisManipulators().setCreativeTab(Main.TAB_ARCANA);
 
 	public static Item ARCANUM = new ItemResearchBook("arcanum", new ResourceLocation(Main.MODID, "arcanum")).setCreativeTab(Main.TAB_ARCANA);
 	public static Item GRIMOIRE = new ItemResearchBook("illustrious_grimoire", new ResourceLocation(Main.MODID, "illustrious_grimoire")).setCreativeTab(Main.TAB_ARCANA);

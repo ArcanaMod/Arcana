@@ -37,7 +37,8 @@ public abstract class GuiAspectContainer extends GuiContainer{
 					GlStateManager.disableLighting();
 					GuiUtils.drawGradientRect(300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
 				}
-				itemRender.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, Aspects.getItemStackForAspect(slot.aspect), slot.x - 1, slot.y + 3, String.valueOf(slot.getAmount()));
+				if(slot.aspect != null)
+					itemRender.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, Aspects.getItemStackForAspect(slot.aspect), slot.x - 1, slot.y + 3, String.valueOf(slot.getAmount()));
 			}
 		}
 	}
@@ -66,9 +67,9 @@ public abstract class GuiAspectContainer extends GuiContainer{
 					slot.markDirty();
 				}else if(mouseButton == 1 && heldAspect != null && heldCount > 0 && (slot.aspect == heldAspect || slot.aspect == null)){
 					int drain = isShiftKeyDown() ? heldCount : 1;
-					heldCount -= drain - slot.inventory.get().insert(slot.aspect, drain, false);
 					if(slot.aspect == null && slot.storeSlot)
 						slot.aspect = heldAspect;
+					heldCount -= drain - slot.inventory.get().insert(slot.aspect, drain, false);
 					if(heldCount <= 0){
 						heldCount = 0;
 						heldAspect = null;

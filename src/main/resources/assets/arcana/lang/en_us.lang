@@ -16,8 +16,6 @@ item.hawthorn_wand.name=%s Hawthorn Wand
 item.arcanium_wand.name=%s Arcanium Wand
 item.silverwood_wand.name=%s Silverwood Wand
 
-item.goggles_of_revealing.name=Goggles Of Revealing
-
 item.arcanum.name=Arcanum
 item.illustrious_grimoire.name=Illustrious Grimoire
 item.tainted_codex.name=Tainted Codex
@@ -88,6 +86,7 @@ item.research_note.name=Research Note
 item.research_note_complete.name=Complete Research Note
 item.research_table_placer.name=Research Table
 item.ink.name=Scribing Tools
+item.vis_manipulation_tools.name=Vis Manipulation Tools
 
 #Arcana aspects
 aspect.air.name=Aer

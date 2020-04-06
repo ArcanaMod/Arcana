@@ -25,6 +25,14 @@ public class AspectSlot{
 		this.y = y;
 	}
 	
+	public AspectSlot(Aspect aspect, Supplier<AspectHandler> inventory, int x, int y, boolean storeSlot){
+		this.aspect = aspect;
+		this.inventory = inventory;
+		this.x = x;
+		this.y = y;
+		this.storeSlot = storeSlot;
+	}
+	
 	public int getAmount(){
 		if(inventory.get() != null)
 			return inventory.get().getCurrentVis(aspect);

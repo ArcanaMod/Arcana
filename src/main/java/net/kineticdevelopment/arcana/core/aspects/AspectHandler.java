@@ -87,9 +87,24 @@ public interface AspectHandler extends INBTSerializable<NBTTagCompound>{
 	 */
 	int getCapacity();
 	
-	Set<Aspect> getAllAspects();
+	/**
+	 * Returns a set containing all aspects that are allowed in this handler.`canStore` will return true
+	 * for all of these.
+	 *
+	 * @return All aspects allowed in this handler.
+	 */
+	Set<Aspect> getAllowedAspects();
+	
+	/**
+	 * Returns a set containing all aspects that are currently stored in this handler.`getCurrentVis` will
+	 * return a non-zero amount for all of these.
+	 *
+	 * @return All aspects allowed in this handler.
+	 */
+	Set<Aspect> getContainedAspects();
 	
 	NBTTagCompound serializeNBT();
+	
 	void deserializeNBT(NBTTagCompound data);
 	
 	static Optional<AspectHandler> getOptional(@Nonnull ICapabilityProvider holder){

@@ -1,9 +1,8 @@
-package net.kineticdevelopment.arcana.common.objects.containers;
+package net.kineticdevelopment.arcana.common.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
-import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
 import net.minecraft.entity.player.EntityPlayer;
@@ -30,18 +29,6 @@ public class ResearchTableContainer extends Container{
 		this.te = te;
 		addOwnSlots();
 		addPlayerSlots(playerInventory);
-		
-		addListener(new IContainerListener(){
-			public void sendAllContents(Container containerToSend, NonNullList<ItemStack> itemsList){}
-			public void sendWindowProperty(Container container, int varToUpdate, int newValue){}
-			public void sendAllWindowProperties(Container container, IInventory inventory){}
-			
-			public void sendSlotContents(Container containerToSend, int slotInd, ItemStack stack){
-				if(slotInd == 2){
-					// reset slots & add new ones
-				}
-			}
-		});
 	}
 	
 	private void addPlayerSlots(IInventory playerInventory){
@@ -51,14 +38,14 @@ public class ResearchTableContainer extends Container{
 			for(int col = 0; col < 9; col++){
 				int x = baseX + col * 18;
 				int y = row * 18 + baseY;
-				this.addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
+				addSlotToContainer(new Slot(playerInventory, col + row * 9 + 9, x, y));
 			}
 		
 		for(int row = 0; row < 3; ++row)
 			for(int col = 0; col < 3; ++col){
 				int x = 79 + col * 18;
 				int y = row * 18 + baseY;
-				this.addSlotToContainer(new Slot(playerInventory, col + row * 3, x, y));
+				addSlotToContainer(new Slot(playerInventory, col + row * 3, x, y));
 			}
 	}
 	

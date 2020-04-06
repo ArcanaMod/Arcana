@@ -7,10 +7,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Simple implementation of {@link AspectHandler} that stores any aspect up to the given amount.
@@ -80,7 +77,11 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 		return capacity;
 	}
 	
-	public Set<Aspect> getAllAspects(){
+	public Set<Aspect> getAllowedAspects(){
+		return new HashSet<>(Aspect.aspects);
+	}
+	
+	public Set<Aspect> getContainedAspects(){
 		return Collections.unmodifiableSet(stored.keySet());
 	}
 	
