@@ -30,15 +30,15 @@ public abstract class GuiAspectContainer extends GuiContainer{
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		for(AspectSlot slot : aspectSlots){
-			if(slot.inventory.get() != null){
-				if(slot.aspect != null)
-					itemRender.renderItemAndEffectIntoGUI(Aspects.getItemStackForAspect(slot.aspect), slot.x, slot.y);
+			if(slot.getInventory().get() != null){
+				if(slot.getAspect() != null)
+					itemRender.renderItemAndEffectIntoGUI(Aspects.getItemStackForAspect(slot.getAspect()), slot.x, slot.y);
 				if(isMouseOverSlot(mouseX, mouseY, slot)){
 					GlStateManager.disableLighting();
 					GuiUtils.drawGradientRect(300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
 				}
-				if(slot.aspect != null)
-					itemRender.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, Aspects.getItemStackForAspect(slot.aspect), slot.x - 1, slot.y + 3, String.valueOf(slot.getAmount()));
+				if(slot.getAspect() != null)
+					itemRender.renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, Aspects.getItemStackForAspect(slot.getAspect()), slot.x - 1, slot.y + 3, String.valueOf(slot.getAmount()));
 			}
 		}
 	}
@@ -57,19 +57,19 @@ public abstract class GuiAspectContainer extends GuiContainer{
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		for(AspectSlot slot : aspectSlots){
-			if(slot.inventory.get() != null && isMouseOverSlot(mouseX, mouseY, slot)){
-				if(mouseButton == 0 && (heldAspect == null || heldAspect == slot.aspect) && slot.getAmount() > 0){
-					heldAspect = slot.aspect;
+			if(slot.getInventory().get() != null && isMouseOverSlot(mouseX, mouseY, slot)){
+				if(mouseButton == 0 && (heldAspect == null || heldAspect == slot.getAspect()) && slot.getAmount() > 0){
+					heldAspect = slot.getAspect();
 					int drain = isShiftKeyDown() ? slot.getAmount() : 1;
-					heldCount += slot.inventory.get().drain(slot.aspect, drain, false);
+					heldCount += slot.drain(slot.getAspect(), drain, false);
 					if(slot.getAmount() <= 0 && slot.storeSlot)
-						slot.aspect = null;
+						slot.setAspect(null);
 					slot.markDirty();
-				}else if(mouseButton == 1 && heldAspect != null && heldCount > 0 && (slot.aspect == heldAspect || slot.aspect == null)){
+				}else if(mouseButton == 1 && heldAspect != null && heldCount > 0 && (slot.getAspect() == heldAspect || slot.getAspect() == null)){
 					int drain = isShiftKeyDown() ? heldCount : 1;
-					if(slot.aspect == null && slot.storeSlot)
-						slot.aspect = heldAspect;
-					heldCount -= drain - slot.inventory.get().insert(slot.aspect, drain, false);
+					if(slot.getAspect() == null && slot.storeSlot)
+						slot.setAspect(heldAspect);
+					heldCount -= drain - slot.insert(slot.getAspect(), drain, false);
 					if(heldCount <= 0){
 						heldCount = 0;
 						heldAspect = null;
@@ -79,6 +79,9 @@ public abstract class GuiAspectContainer extends GuiContainer{
 				break;
 			}
 		}
+		
+		if(heldCount == 0)
+			heldAspect = null;
 	}
 	
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot){

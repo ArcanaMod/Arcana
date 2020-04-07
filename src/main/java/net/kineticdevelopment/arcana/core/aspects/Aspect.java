@@ -1,7 +1,13 @@
 package net.kineticdevelopment.arcana.core.aspects;
 
+import net.kineticdevelopment.arcana.utilities.Pair;
+
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static net.kineticdevelopment.arcana.utilities.Pair.of;
 
 /**
  * Enumeration containing all aspect types
@@ -10,22 +16,25 @@ import java.util.List;
  */
 public enum Aspect{
 	AIR,
+	CHAOS,
+	FIRE,
+	EARTH,
+	ORDER,
+	WATER,
+	
 	ARMOUR,
 	AURA,
 	BEAST,
-	CHAOS,
 	CRAFTING,
 	CRYSTAL,
 	DARKNESS,
 	DEATH,
-	EARTH,
 	ELDRITCH,
 	ENDER,
 	ENERGY,
 	ENVY,
 	EXCHANGE,
 	FABRIC,
-	FIRE,
 	FLESH,
 	FLIGHT,
 	GLUTTONY,
@@ -45,7 +54,6 @@ public enum Aspect{
 	MIND,
 	MOVEMENT,
 	NETHER,
-	ORDER,
 	OVERWORLD,
 	PLANT,
 	PRIDE,
@@ -61,10 +69,28 @@ public enum Aspect{
 	UNDEAD,
 	VACUUM,
 	VENOM,
-	WATER,
 	WEAPON,
 	WIND,
 	WRATH;
+	
+	public static final Map<Pair<Aspect, Aspect>, Aspect> combinations = new HashMap<>();
+	
+	static{
+		combinations.put(of(MANA, AIR), AURA);
+		combinations.put(of(WATER, EARTH), LIFE);
+		combinations.put(of(LIFE, EARTH), TREE);
+		combinations.put(of(LIFE, WATER), SLIME);
+		combinations.put(of(ORDER, FIRE), ENERGY);
+		combinations.put(of(ORDER, EARTH), METAL);
+		combinations.put(of(ENERGY, AIR), MOVEMENT);
+		combinations.put(of(ENERGY, MOVEMENT), WIND);
+		combinations.put(of(CHAOS, LIFE), VENOM);
+		combinations.put(of(ORDER, ENERGY), LIGHT);
+	}
+	
+	public static Aspect getCompound(Pair<Aspect, Aspect> components){
+		return Aspect.combinations.containsKey(components) ? Aspect.combinations.get(components) : Aspect.combinations.getOrDefault(components.flip(), null);
+	}
 	
 	public static final List<Aspect> aspects = Arrays.asList(values());
 }

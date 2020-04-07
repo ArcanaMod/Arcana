@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+import static net.kineticdevelopment.arcana.utilities.Pair.of;
+
 @ParametersAreNonnullByDefault
 public class VisManipulatorsGUI extends GuiAspectContainer{
 	
@@ -22,7 +24,8 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 	
 	private static final ResourceLocation bg = new ResourceLocation(Main.MODID, "textures/gui/container/vis_manipulators_temp.png");
 	
-	protected VisBattery storeSlots = new VisBattery();
+	protected VisBattery leftSlotStorage = new VisBattery(), rightSlotStorage = new VisBattery();
+	protected AspectSlot leftStoreSlot, rightStoreSlot;
 	protected List<AspectSlot> leftScrollableSlots = new ArrayList<>();
 	protected List<AspectSlot> rightScrollableSlots = new ArrayList<>();
 	
@@ -35,12 +38,13 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 	}
 	
 	protected void initSlots(){
-		aspectSlots.add(new AspectSlot(null, () -> storeSlots, 44, 147, true));
-		aspectSlots.add(new AspectSlot(null, () -> storeSlots, 116, 147, true));
+		aspectSlots.add(leftStoreSlot = new AspectSlot(null, () -> leftSlotStorage, 44, 147, true));
+		aspectSlots.add(rightStoreSlot = new AspectSlot(null, () -> rightSlotStorage, 116, 147, true));
+		aspectSlots.add(new CombinatorAspectSlot(80, 146));
 	}
 	
 	protected void refreshAspectSlots(){
-		if(aspectSlots.size() > 2)
+		if(aspectSlots.size() > 3)
 			aspectSlots.subList(3, aspectSlots.size()).clear();
 		
 		Supplier<AspectHandler> left = () -> AspectHandler.getFrom(inventorySlots.getSlot(0).getStack());
@@ -95,5 +99,28 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
+	}
+	
+	class CombinatorAspectSlot extends AspectSlot{
+		
+		public CombinatorAspectSlot(int x, int y){
+			super(null, () -> new VisBattery(1), x, y);
+		}
+		
+		public int getAmount(){
+			return getAspect() != null ? Math.min(leftStoreSlot.getAmount(), rightStoreSlot.getAmount()) : 0;
+		}
+		
+		public Aspect getAspect(){
+			return Aspect.getCompound(of(leftStoreSlot.getAspect(), rightStoreSlot.getAspect()));
+		}
+		
+		public int drain(Aspect aspect, int amount, boolean simulate){
+			return getAspect() != null ? Math.min(leftStoreSlot.drain(leftStoreSlot.getAspect(), amount, simulate), rightStoreSlot.drain(rightStoreSlot.getAspect(), amount, simulate)) : 0;
+		}
+		
+		public int insert(Aspect aspect, int amount, boolean simulate){
+			return amount;
+		}
 	}
 }

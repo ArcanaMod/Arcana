@@ -7,8 +7,8 @@ import java.util.function.Supplier;
 
 public class AspectSlot{
 	
-	public Aspect aspect;
-	public final Supplier<AspectHandler> inventory;
+	private Aspect aspect;
+	private final Supplier<AspectHandler> inventory;
 	
 	public int x, y;
 	
@@ -19,14 +19,14 @@ public class AspectSlot{
 	public boolean storeSlot = false;
 	
 	public AspectSlot(Aspect aspect, Supplier<AspectHandler> inventory, int x, int y){
-		this.aspect = aspect;
+		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
 		this.y = y;
 	}
 	
 	public AspectSlot(Aspect aspect, Supplier<AspectHandler> inventory, int x, int y, boolean storeSlot){
-		this.aspect = aspect;
+		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
 		this.y = y;
@@ -34,13 +34,52 @@ public class AspectSlot{
 	}
 	
 	public int getAmount(){
-		if(inventory.get() != null)
-			return inventory.get().getCurrentVis(aspect);
+		if(getInventory().get() != null)
+			return getInventory().get().getCurrentVis(getAspect());
 		else
 			return -1;
 	}
 	
 	public void markDirty(){
+		if(storeSlot && getAmount() == 0)
+			aspect = null;
+	}
 	
+	public Supplier<AspectHandler> getInventory(){
+		return inventory;
+	}
+	
+	public Aspect getAspect(){
+		return aspect;
+	}
+	
+	public void setAspect(Aspect aspect){
+		this.aspect = aspect;
+	}
+	
+	/**
+	 * Draws from this slots underlying container, updates this slot, and returns the result.
+	 *
+	 * @return The result of drawing from the underlying inventory.
+	 */
+	public int drain(Aspect aspect, int amount, boolean simulate){
+		int result = 0;
+		if(getInventory().get() != null)
+			result = getInventory().get().drain(aspect, amount, simulate);
+		markDirty();
+		return result;
+	}
+	
+	/**
+	 * Inserts into this slot's underlying container, updates this slot, and returns the result.
+	 *
+	 * @return The result of inserting into the underlying inventory.
+	 */
+	public int insert(Aspect aspect, int amount, boolean simulate){
+		int result = amount;
+		if(getInventory().get() != null)
+			result = getInventory().get().insert(aspect, amount, simulate);
+		markDirty();
+		return result;
 	}
 }
