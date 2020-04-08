@@ -523,6 +523,36 @@ research.arcana.research_intro.desc=Learning about the world
 research.arcana.research_intro.stage.1=To reach further into the arcane, I must first understand the arcane. I can do this by completing research, and testing various theories that I might have, or following leads that pop up from time to time, or trailing other research.\n\nResearch is categorised into entries, just like the one I'm currently looking at. In order to see more content, I need to complete a number of requirements, which will be listed below the entry. Some requirements may use up items or resources, which will be consumed when I attempt to continue. I can only attempt to continue when I have completed all of the requirements for an entry.\n\nThe applications of simply using up resources or tinkering with mundane items is limited, however. I need to come up with a dedicated research workspace for more complex work and theories. One possibility for this is a specially-equipped table, providing scribing and vis-handling capabilities, as well as a nice, focused environment.
 research.arcana.research_intro.stage.2=The use of the §oresearch table§r allows me to complete more difficult research minigames, each of which has its own rules and is most tailored to certain applications. The research table has the ability to store vis, and draw vis from other objects that can store vis (including other research tables), although a wand is required to combine and use vis for research.\n\nTo use the table, I first need a research note for the entry I want to work on, which can be obtained by clicking on the relevant minigame requirement with paper and scribing tools in my inventory. Then, I simply place it with scribing tools and (usually) a wand to play the game.
 
+research.arcana.thaumaturgy_intro=Introduction to Thaumaturgy
+research.arcana.thaumaturgy_intro.desc=Slightly better wooden sticks
+
+research.arcana.alchemy_intro=Introduction to Alchemy
+research.arcana.alchemy_intro.desc=No titrations here!
+
+research.arcana.artifice_intro=Introduction to Artifice
+research.arcana.artifice_intro.desc=Stuff and Things
+
+research.arcana.golemancy_intro=Introduction to Golemancy
+research.arcana.golemancy_intro.desc=It's alive!
+
+research.arcana.research_expertise=Research Expertise
+research.arcana.research_expertise.desc=Improving your improvements
+
+research.arcana.study=Study
+research.arcana.study.desc=Breaking things down
+
+research.arcana.inspiration=Inspiration
+research.arcana.inspiration.desc=Using case studies
+
+research.arcana.research_mastery=Research Mastery
+research.arcana.research_mastery.desc=I'm getting good at this
+
+research.arcana.cartography=Cartography
+research.arcana.cartography.desc=Mapping my way to new discoveries
+
+research.arcana.archaeology=Archaeology
+research.arcana.archaeology.desc=Unveiling what once was
+
 research.arcana.crimson=introduction
 research.arcana.crimson.desc=welcome to the crimson.
 research.arcana.crimson.all=we have all seen things that we might not want to have seen. we have all found out some piece of critical info that doesn't fit our worldview. perhaps something as magical as a revelation from beyond, or something as mundane as a broken heart. whatever it is that lead you to the crimson, you're welcome here. you will be useful here.

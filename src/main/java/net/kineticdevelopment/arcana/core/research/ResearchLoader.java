@@ -96,7 +96,7 @@ public class ResearchLoader{
 				ResourceLocation key = new ResourceLocation(entry.get("key").getAsString());
 				String name = entry.get("name").getAsString();
 				String desc = entry.get("desc").getAsString();
-				List<Item> icons = idsToItems(entry.getAsJsonArray("icons"));
+				List<Item> icons = idsToItems(entry.getAsJsonArray("icons"), rl);
 				ResearchCategory category = ServerBooks.getCategory(new ResourceLocation(entry.get("category").getAsString()));
 				int x = entry.get("x").getAsInt();
 				int y = entry.get("y").getAsInt();
@@ -159,11 +159,23 @@ public class ResearchLoader{
 		}
 	}
 	
-	private static List<Item> idsToItems(JsonArray itemIds){
-		return StreamSupport.stream(itemIds.spliterator(), false)
+	private static List<Item> idsToItems(JsonArray itemIds, ResourceLocation rl){
+		/*return StreamSupport.stream(itemIds.spliterator(), false)
 				.map(element -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(element.getAsString())))
 				.filter(Objects::nonNull)
-				.collect(Collectors.toList());
+				.collect(Collectors.toList());*/
+		List<Item> ret = new ArrayList<>();
+		for(JsonElement element : itemIds){
+			ResourceLocation id = new ResourceLocation(element.getAsString());
+			Item icon = ForgeRegistries.ITEMS.getValue(id);
+			if(icon == null)
+				LOGGER.error("Invalid item \"" + id + "\" found in " + rl + "!");
+			else
+				ret.add(icon);
+		}
+		if(ret.isEmpty())
+			LOGGER.error("An entry has 0 valid icons in " + rl + "! Trying to open its category will crash the game!");
+		return ret;
 	}
 	
 	/*private static List<Guesswork> jsonToGuessworks(JsonArray puzzles, ResourceLocation file){

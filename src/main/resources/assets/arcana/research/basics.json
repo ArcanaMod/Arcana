@@ -15,7 +15,7 @@
         "round_base"
       ],
       "x": 0,
-      "y": 0,
+      "y": -2,
       "sections": [
         {
           "type": "string",
@@ -36,45 +36,21 @@
       ]
     },
     {
-      "key": "arcana:trailing",
-      "name": "research.arcana.trailing",
-      "desc": "research.arcana.trailing.desc",
-      "icons": [
-        "arcana:thaumium_ingot",
-        "arcana:arcanium_ingot"
-      ],
-      "category": "arcana:basics",
-      "parents": [
-        "arcana:root"
-      ],
-      "meta": [
-        "hexagon_base"
-      ],
-      "x": 1,
-      "y": 3,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.trailing.all"
-        }
-      ]
-    },
-    {
-      "key": "arcana:research.arcana.research_intro",
+      "key": "arcana:research_intro",
       "name": "research.arcana.research_intro",
       "desc": "research.arcana.research_intro.desc",
       "icons": [
         "arcana:research_table_placer"
       ],
       "category": "arcana:basics",
-      "parents": [],
+      "parents": [
+        "arcana:root"
+      ],
       "meta": [
-        "root",
-        "yellow_base",
         "spiky_base"
       ],
-      "x": -1,
-      "y": -2,
+      "x": 0,
+      "y": 0,
       "sections": [
         {
           "type": "string",
@@ -90,6 +66,282 @@
         {
           "type": "string",
           "content": "research.arcana.research_intro.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:thaumaturgy_intro",
+      "name": "research.arcana.thaumaturgy_intro",
+      "desc": "research.arcana.thaumaturgy_intro.desc",
+      "icons": [
+        "arcana:wood_wand"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_intro"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": -2,
+      "y": 1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.thaumaturgy_intro.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.thaumaturgy_intro.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:alchemy_intro",
+      "name": "research.arcana.alchemy_intro",
+      "desc": "research.arcana.alchemy_intro.desc",
+      "icons": [
+        "minecraft:cauldron"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_intro"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": -1,
+      "y": 2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.alchemy_intro.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.alchemy_intro.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:artifice_intro",
+      "name": "research.arcana.artifice_intro",
+      "desc": "research.arcana.artifice_intro.desc",
+      "icons": [
+        "arcana:goggles_of_revealing"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_intro"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": 2,
+      "y": 1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.artifice_intro.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.artifice_intro.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:golemancy_intro",
+      "name": "research.arcana.golemancy_intro",
+      "desc": "research.arcana.golemancy_intro.desc",
+      "icons": [
+        "arcana:aspect_human"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_intro"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": 1,
+      "y": 2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.golemancy_intro.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.golemancy_intro.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:research_expertise",
+      "name": "research.arcana.research_expertise",
+      "desc": "research.arcana.research_expertise.desc",
+      "icons": [
+        "arcana:aspect_aura"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_intro"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": 0,
+      "y": 3,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.research_expertise.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.research_expertise.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:study",
+      "name": "research.arcana.study",
+      "desc": "research.arcana.study.desc",
+      "icons": [
+        "arcana:aspect_order",
+        "arcana:aspect_chaos",
+        "arcana:aspect_water",
+        "arcana:aspect_fire",
+        "arcana:aspect_air",
+        "arcana:aspect_earth"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_expertise"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "x": -1,
+      "y": 4,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.study.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.study.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:inspiration",
+      "name": "research.arcana.inspiration",
+      "desc": "research.arcana.inspiration.desc",
+      "icons": [
+        "minecraft:bookshelf"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_expertise"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "x": 1,
+      "y": 4,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.inspiration.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.inspiration.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:research_mastery",
+      "name": "research.arcana.research_mastery",
+      "desc": "research.arcana.research_mastery.desc",
+      "icons": [
+        "arcana:aspect_senses",
+        "arcana:aspect_mana"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_expertise"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": 0,
+      "y": 5,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.research_mastery.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.research_mastery.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:cartography",
+      "name": "research.arcana.cartography",
+      "desc": "research.arcana.cartography.desc",
+      "icons": [
+        "minecraft:map"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_mastery"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "x": -1,
+      "y": 6,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.cartography.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.cartography.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:archaeology",
+      "name": "research.arcana.archaeology",
+      "desc": "research.arcana.archaeology.desc",
+      "icons": [
+        "minecraft:bone_block"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_mastery"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": 1,
+      "y": 6,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.archaeology.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.archaeology.stage.2"
         }
       ]
     }
@@ -111,12 +363,12 @@
       "desc": "requirement.fieldwork.place_table"
     },
     {
-      "key": "arcana:chemistry_trailing",
+      "key": "arcana:chemistry_expertise",
       "type": "chemistry",
       "nodes": [
-        "MANA",
-        "ORDER",
-        "CHAOS"
+        "mana",
+        "order",
+        "chaos"
       ]
     }
   ]
