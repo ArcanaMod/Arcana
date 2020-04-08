@@ -39,7 +39,7 @@ public class LeavesBase extends BlockLeaves implements IHasModel {
     public LeavesBase(String name) {
         this.name = name;
         Main.proxy.setGraphicsLevel(this, true);
-        setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(false)));
+        setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.TRUE).withProperty(DECAYABLE, Boolean.TRUE));
         setUnlocalizedName(name);
         setRegistryName(name);
 

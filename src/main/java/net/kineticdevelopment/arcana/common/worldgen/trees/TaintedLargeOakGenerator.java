@@ -168,7 +168,7 @@ public class TaintedLargeOakGenerator extends WorldGenAbstractTree {
     {
         for (int i = 0; i < this.leafDistanceLimit; ++i)
         {
-            this.crosSection(pos.up(i), this.leafSize(i), leavesBlock.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false)));
+            this.crosSection(pos.up(i), this.leafSize(i), leavesBlock.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE));
         }
     }
 

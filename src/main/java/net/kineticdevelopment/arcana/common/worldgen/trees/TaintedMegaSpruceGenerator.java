@@ -16,8 +16,8 @@ public class TaintedMegaSpruceGenerator extends WorldGenHugeTrees {
     private boolean useBaseHeight;
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_SPRUCE_LOG.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_SPRUCE_LOG.getDefaultState();
-    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_SPRUCE_LEAVES.getDefaultState();
-    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_SPRUCE_LEAVES.getDefaultState();
+    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_SPRUCE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_SPRUCE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
     private static final IBlockState PODZOL = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
 
     public TaintedMegaSpruceGenerator(boolean notify, boolean useBaseHeight, boolean untainted) {

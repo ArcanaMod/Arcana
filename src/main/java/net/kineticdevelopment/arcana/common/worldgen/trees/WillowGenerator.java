@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.common.worldgen.trees;
 
 import net.kineticdevelopment.arcana.common.init.BlockInit;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,9 +18,9 @@ public class WillowGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = BlockInit.WILLOW_LOG.getDefaultState();
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_WILLOW_LOG.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_WILLOW_LOG.getDefaultState();
-    private static final IBlockState DEFAULT_LEAVES = BlockInit.WILLOW_LEAVES.getDefaultState();
-    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_WILLOW_LEAVES.getDefaultState();
-    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_WILLOW_LEAVES.getDefaultState();
+    private static final IBlockState DEFAULT_LEAVES = BlockInit.WILLOW_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_WILLOW_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_WILLOW_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
 
     private final IBlockState metaWood;
     private final IBlockState metaLeaves;

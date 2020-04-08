@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.common.worldgen.trees;
 
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.minecraft.block.BlockCocoa;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -17,8 +18,8 @@ import java.util.Random;
 public class TaintedOakGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_OAK_LOG.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_OAK_LOG.getDefaultState();
-    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_OAK_LEAVES.getDefaultState();
-    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_OAK_LEAVES.getDefaultState();
+    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_OAK_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_OAK_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
 
     private final int minTreeHeight;
     private final boolean vinesGrow;
@@ -241,7 +242,7 @@ public class TaintedOakGenerator extends WorldGenAbstractTree {
 
     private void addVine(World worldIn, BlockPos pos, PropertyBool prop)
     {
-        this.setBlockAndNotifyAdequately(worldIn, pos, Blocks.VINE.getDefaultState().withProperty(prop, Boolean.valueOf(true)));
+        this.setBlockAndNotifyAdequately(worldIn, pos, Blocks.VINE.getDefaultState().withProperty(prop, Boolean.TRUE));
     }
 
     private void addHangingVine(World worldIn, BlockPos pos, PropertyBool prop)
