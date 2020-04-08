@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.common.objects.blocks.saplings;
 
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.SaplingBase;
 import net.kineticdevelopment.arcana.common.worldgen.trees.DairGenerator;
+import net.kineticdevelopment.arcana.common.worldgen.trees.WillowGenerator;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -11,18 +12,31 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
-public class UntaintedDairSapling extends SaplingBase {
-    public UntaintedDairSapling(String name) {
+public class WillowSapling extends SaplingBase {
+    boolean tainted;
+    boolean untainted;
+
+    public WillowSapling(String name, boolean tainted, boolean untainted) {
         super(name);
+        this.tainted = tainted;
+        this.untainted = untainted;
     }
 
     @Override
     public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         if (!TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
-        WorldGenerator worldgenerator = new DairGenerator(true, true);
+
+        WorldGenerator worldgenerator;
+        if (tainted) {
+            worldgenerator = untainted ? new WillowGenerator(true, true, true) : new WillowGenerator(true, true, false);
+        } else {
+            worldgenerator = new WillowGenerator(true, false);
+        }
 
         worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
 
-        worldgenerator.generate(worldIn, rand, pos);
+        if(!worldgenerator.generate(worldIn, rand, pos)) {
+            worldIn.setBlockState(pos, state, 4);
+        }
     }
 }

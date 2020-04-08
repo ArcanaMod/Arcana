@@ -66,10 +66,10 @@ public class TaintedLeavesBase extends LeavesBase {
         } else if (f >= 100) {
             h = 1;
         }
-        System.out.println("Spread? "+h);
+//        System.out.println("Spread? "+h);
         if (h == 1) {
             TaintHandler.spreadTaint(worldIn, pos);
-            System.out.println("Spreading Taint...");
+//            System.out.println("Spreading Taint...");
         }
 
         boolean surrounded = true;
@@ -95,7 +95,7 @@ public class TaintedLeavesBase extends LeavesBase {
         if(surrounded == true) {
             worldIn.setBlockState(pos, state.withProperty(BlockStateInit.FULLYTAINTED, true));
             this.needsRandomTick = !surrounded;
-            System.out.println(pos + ": Ticking? "+this.needsRandomTick);
+//            System.out.println(pos + ": Ticking? "+this.needsRandomTick);
         }
     }
 

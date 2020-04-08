@@ -1,9 +1,5 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:aspect_bookshelf"
-      }
-    ]
+    "normal": { "model": "arcana:aspect_bookshelf" }
   }
 }

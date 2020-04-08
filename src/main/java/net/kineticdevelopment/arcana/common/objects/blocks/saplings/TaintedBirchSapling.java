@@ -1,8 +1,8 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.saplings;
 
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.SaplingBase;
-import net.kineticdevelopment.arcana.common.worldgen.trees.TaintedLargeOakGenerator;
-import net.kineticdevelopment.arcana.common.worldgen.trees.TaintedOakGenerator;
+import net.kineticdevelopment.arcana.common.worldgen.trees.TaintedAcaciaGenerator;
+import net.kineticdevelopment.arcana.common.worldgen.trees.TaintedBirchGenerator;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -12,25 +12,22 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
-public class TaintedOakSapling extends SaplingBase {
+public class TaintedBirchSapling extends SaplingBase {
     boolean untainted;
-    public TaintedOakSapling(String name, boolean untainted) {
+    boolean useExtraRandomHeight;
+    public TaintedBirchSapling(String name, boolean useExtraRandomHeight, boolean untainted) {
         super(name);
         this.untainted = untainted;
+        this.useExtraRandomHeight = useExtraRandomHeight;
     }
 
     @Override
     public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-        Random random = new Random();
         if (!TerrainGen.saplingGrowTree(worldIn, rand, pos)) return;
 
-        boolean bigTree = random.nextInt(10) == 0;
-        WorldGenerator worldgenerator;
-        if (untainted) {
-            worldgenerator = bigTree ? new TaintedLargeOakGenerator(true, true) : new TaintedOakGenerator(true, true);
-        } else {
-            worldgenerator = bigTree ? new TaintedLargeOakGenerator(true, false) : new TaintedOakGenerator(true, false);
-        }
+        WorldGenerator worldgenerator = untainted ?
+                new TaintedBirchGenerator(true, useExtraRandomHeight, true, true) :
+                new TaintedBirchGenerator(true, useExtraRandomHeight, true, false);
 
         worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
 

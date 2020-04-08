@@ -37,12 +37,12 @@ public class TaintedLargeOakGenerator extends WorldGenAbstractTree {
     Block logBlock;
     Block saplingBlock;
 
-    public TaintedLargeOakGenerator(boolean notify, boolean fullyTainted) {
+    public TaintedLargeOakGenerator(boolean notify, boolean untainted) {
         super(notify);
 
-        leavesBlock = fullyTainted ? BlockInit.TAINTED_OAK_LEAVES : BlockInit.UNTAINTED_OAK_LEAVES;
-        logBlock = fullyTainted ? BlockInit.TAINTED_OAK_LOG : BlockInit.UNTAINTED_OAK_LOG;
-        saplingBlock = fullyTainted ? BlockInit.TAINTED_OAK_SAPLING : BlockInit.UNTAINTED_OAK_SAPLING;
+        leavesBlock = untainted ? BlockInit.UNTAINTED_OAK_LEAVES: BlockInit.TAINTED_OAK_LEAVES;
+        logBlock = untainted ? BlockInit.UNTAINTED_OAK_LOG : BlockInit.TAINTED_OAK_LOG;
+        saplingBlock = untainted ? BlockInit.UNTAINTED_OAK_SAPLING : BlockInit.TAINTED_OAK_SAPLING;
     }
 
     void generateLeafNodeList()
