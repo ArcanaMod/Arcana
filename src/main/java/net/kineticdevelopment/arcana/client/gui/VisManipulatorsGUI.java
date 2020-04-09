@@ -1,6 +1,8 @@
 package net.kineticdevelopment.arcana.client.gui;
 
 import net.kineticdevelopment.arcana.common.containers.AspectContainer;
+import net.kineticdevelopment.arcana.common.network.Connection;
+import net.kineticdevelopment.arcana.common.network.inventory.PktRequestAspectSync;
 import net.kineticdevelopment.arcana.core.Main;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
@@ -36,5 +38,10 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
+	}
+	
+	public void initGui(){
+		super.initGui();
+		Connection.network.sendToServer(new PktRequestAspectSync());
 	}
 }

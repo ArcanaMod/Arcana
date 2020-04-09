@@ -6,7 +6,6 @@ import net.kineticdevelopment.arcana.common.containers.AspectContainer;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -20,9 +19,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.kineticdevelopment.arcana.common.network.inventory.PktAspectClickConfirmHandler.*;
+import static net.kineticdevelopment.arcana.common.network.inventory.PktSyncAspectContainerHandler.*;
 
-public class PktAspectClickConfirmHandler implements IMessageHandler<PktAspectClickConfirm, IMessage>{
+public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAspectContainer, IMessage>{
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
@@ -32,7 +31,7 @@ public class PktAspectClickConfirmHandler implements IMessageHandler<PktAspectCl
 	// regular slots can be synced just by syncing the underlying AspectHandler
 	// store slots need that + their own aspect
 	
-	public IMessage onMessage(PktAspectClickConfirm message, MessageContext ctx){
+	public IMessage onMessage(PktSyncAspectContainer message, MessageContext ctx){
 		Minecraft.getMinecraft().addScheduledTask(() -> {
 			EntityPlayerSP eps = Minecraft.getMinecraft().player;
 			AspectContainer container = (AspectContainer)eps.openContainer;
@@ -46,16 +45,16 @@ public class PktAspectClickConfirmHandler implements IMessageHandler<PktAspectCl
 		return null;
 	}
 	
-	public static class PktAspectClickConfirm implements IMessage{
+	public static class PktSyncAspectContainer implements IMessage{
 		
 		int heldCount;
 		Aspect heldAspect = null;
 		List<Pair<Integer, NBTTagCompound>> handlers = new ArrayList<>();
 		List<Pair<Integer, Aspect>> storeSlotAspects = new ArrayList<>();
 		
-		public PktAspectClickConfirm(){}
+		public PktSyncAspectContainer(){}
 		
-		public PktAspectClickConfirm(AspectContainer container){
+		public PktSyncAspectContainer(AspectContainer container){
 			heldCount = container.getHeldCount();
 			heldAspect = container.getHeldAspect();
 			

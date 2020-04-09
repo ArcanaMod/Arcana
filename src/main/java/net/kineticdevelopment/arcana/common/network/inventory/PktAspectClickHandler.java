@@ -3,8 +3,7 @@ package net.kineticdevelopment.arcana.common.network.inventory;
 import io.netty.buffer.ByteBuf;
 import net.kineticdevelopment.arcana.client.gui.AspectSlot;
 import net.kineticdevelopment.arcana.common.containers.AspectContainer;
-import net.kineticdevelopment.arcana.common.network.inventory.PktAspectClickConfirmHandler.PktAspectClickConfirm;
-import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.common.network.inventory.PktSyncAspectContainerHandler.PktSyncAspectContainer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -13,9 +12,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import static net.kineticdevelopment.arcana.common.network.inventory.PktAspectClickHandler.PktAspectClick;
 
-public class PktAspectClickHandler implements IMessageHandler<PktAspectClick, PktAspectClickConfirm>{
+public class PktAspectClickHandler implements IMessageHandler<PktAspectClick, PktSyncAspectContainer>{
 	
-	public PktAspectClickConfirm onMessage(PktAspectClick message, MessageContext ctx){
+	public PktSyncAspectContainer onMessage(PktAspectClick message, MessageContext ctx){
 		// on server
 		EntityPlayerMP epm = ctx.getServerHandler().player;
 		if(epm.openContainer.windowId == message.windowId){
@@ -42,7 +41,7 @@ public class PktAspectClickHandler implements IMessageHandler<PktAspectClick, Pk
 				}
 				slot.sync();
 			}
-			return new PktAspectClickConfirm(container);
+			return new PktSyncAspectContainer(container);
 		}
 		return null;
 	}
