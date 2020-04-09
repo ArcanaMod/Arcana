@@ -25,7 +25,6 @@ public class ResearchTableGUI extends GuiAspectContainer{
 	private static final ResourceLocation bg = new ResourceLocation(Main.MODID, "textures/gui/container/gui_researchbook.png");
 	
 	ResearchTableTileEntity te;
-	protected List<AspectSlot> scrollableSlots = new ArrayList<>();
 	
 	public ResearchTableGUI(ResearchTableTileEntity te, ResearchTableContainer container){
 		super(container);
@@ -47,36 +46,5 @@ public class ResearchTableGUI extends GuiAspectContainer{
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
-	}
-	
-	protected void initSlots(){
-		Supplier<AspectHandler> aspects = () -> AspectHandler.getFrom(te.visItem());
-		for(int i = 0; i < Aspects.primalAspects.length; i++){
-			Aspect primal = Aspects.primalAspects[i];
-			int x = 31 + 16 * i;
-			int y = 14;
-			if(i % 2 == 0)
-				y += 5;
-			aspectSlots.add(new AspectSlot(primal, aspects, x, y));
-		}
-		Aspect[] values = Aspect.values();
-		Supplier<AspectHandler> table = () -> AspectHandler.getFrom(te);
-		for(int i = 0; i < values.length; i++){
-			Aspect aspect = values[i];
-			int yy = i / 6;
-			int xx = i % 6;
-			int x = 9 + 20 * xx;
-			int y = 65 + 21 * yy;
-			// the scroll wheel handles all of them
-			if(yy >= 5)
-				break;
-			if(xx % 2 == 0)
-				y += 5;
-			if(yy % 2 == 0)
-				x += 3;
-			AspectSlot slot = new AspectSlot(aspect, table, x, y);
-			aspectSlots.add(slot);
-			scrollableSlots.add(slot);
-		}
 	}
 }

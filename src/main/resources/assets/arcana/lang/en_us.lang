@@ -514,6 +514,8 @@ requirement.guesswork.ench.hint.book=A storage of text
 requirement.guesswork.ench.hint.obsidian=A dark, hard rock
 requirement.fieldwork.place_table=Place a research table
 
+research.arcana.vis_manipulators=Basic Vis Manipulation
+
 research.arcana.trailing=Trailing Entry
 research.arcana.trailing.desc=Nothing here but us chickens!
 research.arcana.trailing.all=That's all, folks!
@@ -524,7 +526,7 @@ research.arcana.research_intro.stage.1=To reach further into the arcane, I must 
 research.arcana.research_intro.stage.2=The use of the §oresearch table§r allows me to complete more difficult research minigames, each of which has its own rules and is most tailored to certain applications. The research table has the ability to store vis, and draw vis from other objects that can store vis (including other research tables), although a wand is required to combine and use vis for research.\n\nTo use the table, I first need a research note for the entry I want to work on, which can be obtained by clicking on the relevant minigame requirement with paper and scribing tools in my inventory. Then, I simply place it with scribing tools and (usually) a wand to play the game.
 
 research.arcana.thaumaturgy_intro=Introduction to Thaumaturgy
-research.arcana.thaumaturgy_intro.desc=Slightly better wooden sticks
+research.arcana.thaumaturgy_intro.desc=Tools of the Trade
 
 research.arcana.alchemy_intro=Introduction to Alchemy
 research.arcana.alchemy_intro.desc=No titrations here!
@@ -536,7 +538,7 @@ research.arcana.golemancy_intro=Introduction to Golemancy
 research.arcana.golemancy_intro.desc=It's alive!
 
 research.arcana.research_expertise=Research Expertise
-research.arcana.research_expertise.desc=Improving your improvements
+research.arcana.research_expertise.desc=Improving my improvements
 
 research.arcana.study=Study
 research.arcana.study.desc=Breaking things down

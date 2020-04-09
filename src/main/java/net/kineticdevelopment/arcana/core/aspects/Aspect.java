@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.core.aspects;
 
 import net.kineticdevelopment.arcana.utilities.Pair;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -88,6 +89,7 @@ public enum Aspect{
 		combinations.put(of(ORDER, ENERGY), LIGHT);
 	}
 	
+	@Nullable
 	public static Aspect getCompound(Pair<Aspect, Aspect> components){
 		return Aspect.combinations.containsKey(components) ? Aspect.combinations.get(components) : Aspect.combinations.getOrDefault(components.flip(), null);
 	}

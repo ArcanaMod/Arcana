@@ -2,7 +2,10 @@ package net.kineticdevelopment.arcana.utilities;
 
 import java.util.Objects;
 
-// Thank you, https://stackoverflow.com/a/8229791/9777506
+// I know there's already org.apache.commons.lang3.tuple.Pair, but I didn't when I wrote this
+// It doesn't have flip() though
+// I'll replace this... later
+// Before merge
 public class Pair<A, B>{
 	
 	A first;

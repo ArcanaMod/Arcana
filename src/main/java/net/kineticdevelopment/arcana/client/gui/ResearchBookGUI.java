@@ -159,9 +159,9 @@ public class ResearchBookGUI extends GuiScreen{
 							}else{
 								arrows.drawHorizontalLine(parent.y(), entry.x(), parent.x());
 								if(parent.x() > entry.x())
-									arrows.drawRightArrow(entry.x() - 1, entry.y());
-								else
 									arrows.drawLeftArrow(entry.x() + 1, entry.y());
+								else
+									arrows.drawRightArrow(entry.x() - 1, entry.y());
 							}
 						// if there is a y-difference & x-difference of 1, draw a small curve
 						else if(xdiff == 1 && ydiff == 1)

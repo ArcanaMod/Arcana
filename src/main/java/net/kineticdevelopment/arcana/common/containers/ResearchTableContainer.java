@@ -1,34 +1,42 @@
 package net.kineticdevelopment.arcana.common.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.kineticdevelopment.arcana.client.gui.AspectSlot;
 import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
+import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
+import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableContainer extends Container{
+public class ResearchTableContainer extends AspectContainer{
 	
 	private ResearchTableTileEntity te;
+	protected List<AspectSlot> scrollableSlots = new ArrayList<>();
 	
 	public ResearchTableContainer(IInventory playerInventory, ResearchTableTileEntity te){
 		this.te = te;
 		addOwnSlots();
 		addPlayerSlots(playerInventory);
+		addAspectSlots();
 	}
 	
 	private void addPlayerSlots(IInventory playerInventory){
@@ -75,6 +83,37 @@ public class ResearchTableContainer extends Container{
 		});
 	}
 	
+	protected void addAspectSlots(){
+		Supplier<AspectHandler> aspects = () -> AspectHandler.getFrom(te.visItem());
+		for(int i = 0; i < Aspects.primalAspects.length; i++){
+			Aspect primal = Aspects.primalAspects[i];
+			int x = 31 + 16 * i;
+			int y = 14;
+			if(i % 2 == 0)
+				y += 5;
+			getAspectSlots().add(new AspectSlot(primal, aspects, x, y));
+		}
+		Aspect[] values = Aspect.values();
+		Supplier<AspectHandler> table = () -> AspectHandler.getFrom(te);
+		for(int i = 0; i < values.length; i++){
+			Aspect aspect = values[i];
+			int yy = i / 6;
+			int xx = i % 6;
+			int x = 9 + 20 * xx;
+			int y = 65 + 21 * yy;
+			// the scroll wheel handles all of them
+			if(yy >= 5)
+				break;
+			if(xx % 2 == 0)
+				y += 5;
+			if(yy % 2 == 0)
+				x += 3;
+			AspectSlot slot = new AspectSlot(aspect, table, x, y);
+			getAspectSlots().add(slot);
+			scrollableSlots.add(slot);
+		}
+	}
+	
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index){
 		ItemStack itemstack = ItemStack.EMPTY;
@@ -101,5 +140,13 @@ public class ResearchTableContainer extends Container{
 	
 	public boolean canInteractWith(EntityPlayer player){
 		return true;
+	}
+	
+	public List<AspectHandler> getOpenHandlers(){
+		AspectHandler item = AspectHandler.getFrom(te.visItem());
+		if(item != null){
+			return Arrays.asList(AspectHandler.getFrom(te), item);
+		}else
+			return Collections.singletonList(AspectHandler.getFrom(te));
 	}
 }

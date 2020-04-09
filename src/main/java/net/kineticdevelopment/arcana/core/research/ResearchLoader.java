@@ -95,7 +95,7 @@ public class ResearchLoader{
 				// expecting key, name, desc, icons, category, x, y, sections
 				ResourceLocation key = new ResourceLocation(entry.get("key").getAsString());
 				String name = entry.get("name").getAsString();
-				String desc = entry.get("desc").getAsString();
+				String desc = entry.has("desc") ? entry.get("desc").getAsString() : "";
 				List<Item> icons = idsToItems(entry.getAsJsonArray("icons"), rl);
 				ResearchCategory category = ServerBooks.getCategory(new ResourceLocation(entry.get("category").getAsString()));
 				int x = entry.get("x").getAsInt();
