@@ -15,9 +15,9 @@ public class TaintedDarkOakGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK);
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_DARKOAK_LOG.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_DARKOAK_LOG.getDefaultState();
-    private static final IBlockState DEFAULT_LEAVES = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.valueOf(false));
-    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_DARKOAK_LEAVES.getDefaultState();
-    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_DARKOAK_LEAVES.getDefaultState();
+    private static final IBlockState DEFAULT_LEAVES = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_DARKOAK_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_DARKOAK_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
 
     private final IBlockState metaWood;
     private final IBlockState metaLeaves;

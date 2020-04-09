@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.common.worldgen.trees;
 
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.IBlockState;
@@ -16,8 +17,8 @@ import java.util.Random;
 public class TaintedMegaJungleGenerator extends WorldGenHugeTrees {
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_JUNGLE_LOG.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_JUNGLE_LOG.getDefaultState();
-    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_JUNGLE_LEAVES.getDefaultState();
-    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_JUNGLE_LEAVES.getDefaultState();
+    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
 
     public TaintedMegaJungleGenerator(boolean notify, int baseHeightIn, int extraRandomHeightIn, boolean untainted)
     {
@@ -126,7 +127,7 @@ public class TaintedMegaJungleGenerator extends WorldGenHugeTrees {
     {
         if (p_181632_2_.nextInt(3) > 0 && p_181632_1_.isAirBlock(p_181632_3_))
         {
-            this.setBlockAndNotifyAdequately(p_181632_1_, p_181632_3_, Blocks.VINE.getDefaultState().withProperty(p_181632_4_, Boolean.valueOf(true)));
+            this.setBlockAndNotifyAdequately(p_181632_1_, p_181632_3_, Blocks.VINE.getDefaultState().withProperty(p_181632_4_, Boolean.TRUE));
         }
     }
 

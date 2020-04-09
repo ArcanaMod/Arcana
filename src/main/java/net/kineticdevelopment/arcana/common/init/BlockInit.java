@@ -66,7 +66,7 @@ public class BlockInit {
 	public static final Block HAWTHORN_LEAVES = new LeavesBase("hawthorn_leaves").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block HAWTHORN_LOG = new LogBase("hawthorn_log").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block HAWTHORN_PLANKS = new PlanksBase("hawthorn_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block HAWTHORN_SAPLING = new DumbSapling("hawthorn_sapling").setCreativeTab(Main.TAB_ARCANA);
+	public static final Block HAWTHORN_SAPLING = new HawthornSapling("hawthorn_sapling", false, false).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block HAWTHORN_SLAB_DOUBLE = new DoubleSlabBase("hawthorn_slab_double", Material.WOOD);
 	public static final Block HAWTHORN_STONE_SLAB_HALF = new HalfSlabBase("hawthorn_slab", Material.WOOD, BlockInit.HAWTHORN_SLAB_DOUBLE).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block HAWTHORN_STAIRS = new StairsBase("hawthorn_stairs", HAWTHORN_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);
@@ -178,7 +178,7 @@ public class BlockInit {
 	public static final Block TAINTED_HAWTHORN_LEAVES = new TaintedLeavesBase("tainted_hawthorn_leaves");
 	public static final Block TAINTED_HAWTHORN_LOG = new TaintedLogBase("tainted_hawthorn_log");
 	public static final Block TAINTED_HAWTHORN_PLANKS = new TaintedBlockBase("tainted_hawthorn_planks", Material.WOOD);
-	public static final Block TAINTED_HAWTHORN_SAPLING = new DumbSapling("tainted_hawthorn_sapling");
+	public static final Block TAINTED_HAWTHORN_SAPLING = new HawthornSapling("tainted_hawthorn_sapling", true, false);
 	public static final Block TAINTED_HAWTHORN_SLAB_DOUBLE = new TaintedDoubleSlabBase("tainted_hawthorn_slab_double", Material.WOOD);
 	public static final Block TAINTED_HAWTHORN_SLAB_HALF = new TaintedHalfSlabBase("tainted_hawthorn_slab", Material.WOOD, BlockInit.TAINTED_HAWTHORN_SLAB_DOUBLE);
 	public static final Block TAINTED_HAWTHORN_STAIRS = new TaintedStairsBase("tainted_hawthorn_stairs", TAINTED_HAWTHORN_PLANKS.getDefaultState());
@@ -277,7 +277,7 @@ public class BlockInit {
 	public static final Block UNTAINTED_HAWTHORN_LEAVES = new LeavesBase("untainted_hawthorn_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_HAWTHORN_LOG = new TaintedLogBase("untainted_hawthorn_log").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_HAWTHORN_PLANKS = new TaintedBlockBase("untainted_hawthorn_planks", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
-	public static final Block UNTAINTED_HAWTHORN_SAPLING = new DumbSapling("untainted_hawthorn_sapling").setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_HAWTHORN_SAPLING = new HawthornSapling("untainted_hawthorn_sapling", true, true).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_HAWTHORN_SLAB_DOUBLE = new DoubleSlabBase("untainted_hawthorn_slab_double", Material.WOOD);
 	public static final Block UNTAINTED_HAWTHORN_SLAB_HALF = new HalfSlabBase("untainted_hawthorn_slab", Material.WOOD, BlockInit.UNTAINTED_HAWTHORN_SLAB_DOUBLE).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_HAWTHORN_STAIRS = new TaintedStairsBase("untainted_hawthorn_stairs", UNTAINTED_HAWTHORN_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);
