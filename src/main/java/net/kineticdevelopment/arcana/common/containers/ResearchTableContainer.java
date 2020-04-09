@@ -1,14 +1,10 @@
 package net.kineticdevelopment.arcana.common.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.kineticdevelopment.arcana.client.gui.AspectSlot;
 import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
-import net.kineticdevelopment.arcana.core.aspects.Aspect;
-import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
-import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
-import net.kineticdevelopment.arcana.core.aspects.Aspects;
+import net.kineticdevelopment.arcana.core.aspects.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -31,6 +27,10 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	private ResearchTableTileEntity te;
 	protected List<AspectSlot> scrollableSlots = new ArrayList<>();
+	
+	// combination slots
+	protected VisBattery leftSlotStorage = new VisBattery(), rightSlotStorage = new VisBattery();
+	protected AspectSlot leftStoreSlot, rightStoreSlot;
 	
 	public ResearchTableContainer(IInventory playerInventory, ResearchTableTileEntity te){
 		this.te = te;
@@ -112,6 +112,10 @@ public class ResearchTableContainer extends AspectContainer{
 			getAspectSlots().add(slot);
 			scrollableSlots.add(slot);
 		}
+		// combinator slots
+		aspectSlots.add(leftStoreSlot = new AspectSlot(null, () -> leftSlotStorage, 30, 179, true));
+		aspectSlots.add(rightStoreSlot = new AspectSlot(null, () -> rightSlotStorage, 92, 179, true));
+		aspectSlots.add(new CombinatorAspectSlot(leftStoreSlot, rightStoreSlot, 61, 179));
 	}
 	
 	@Override
@@ -144,9 +148,9 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	public List<AspectHandler> getOpenHandlers(){
 		AspectHandler item = AspectHandler.getFrom(te.visItem());
-		if(item != null){
-			return Arrays.asList(AspectHandler.getFrom(te), item);
-		}else
-			return Collections.singletonList(AspectHandler.getFrom(te));
+		if(item != null)
+			return Arrays.asList(AspectHandler.getFrom(te), leftSlotStorage, rightSlotStorage, item);
+		else
+			return Arrays.asList(AspectHandler.getFrom(te), leftSlotStorage, rightSlotStorage);
 	}
 }

@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.client.gui;
 
 import net.kineticdevelopment.arcana.common.containers.AspectContainer;
+import net.kineticdevelopment.arcana.common.containers.AspectSlot;
 import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;

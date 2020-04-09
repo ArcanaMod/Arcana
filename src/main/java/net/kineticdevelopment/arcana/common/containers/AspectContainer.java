@@ -1,6 +1,5 @@
 package net.kineticdevelopment.arcana.common.containers;
 
-import net.kineticdevelopment.arcana.client.gui.AspectSlot;
 import net.kineticdevelopment.arcana.client.gui.GuiAspectContainer;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.inventory.PktAspectClickHandler.ClickType;

@@ -1,7 +1,7 @@
 package net.kineticdevelopment.arcana.common.network.inventory;
 
 import io.netty.buffer.ByteBuf;
-import net.kineticdevelopment.arcana.client.gui.AspectSlot;
+import net.kineticdevelopment.arcana.common.containers.AspectSlot;
 import net.kineticdevelopment.arcana.common.containers.AspectContainer;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.minecraft.client.Minecraft;

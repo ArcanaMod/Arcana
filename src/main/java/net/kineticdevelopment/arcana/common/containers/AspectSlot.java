@@ -1,4 +1,4 @@
-package net.kineticdevelopment.arcana.client.gui;
+package net.kineticdevelopment.arcana.common.containers;
 
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
