@@ -22,6 +22,7 @@ public class ItemResearchBook extends ItemBase{
 	public ItemResearchBook(String name, ResourceLocation book){
 		super(name);
 		this.book = book;
+		setMaxStackSize(1);
 	}
 	
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn){

@@ -21,6 +21,7 @@ public class ItemVisManipulators extends ItemBase{
 	
 	public ItemVisManipulators(){
 		this("vis_manipulation_tools");
+		setMaxStackSize(1);
 	}
 	
 	public ItemVisManipulators(String name){

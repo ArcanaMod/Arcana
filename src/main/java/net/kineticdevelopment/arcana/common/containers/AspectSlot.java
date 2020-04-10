@@ -11,6 +11,7 @@ public class AspectSlot{
 	private final Supplier<AspectHandler> inventory;
 	
 	public int x, y;
+	public boolean visible = true;
 	
 	/**
 	 * If true, this slot will act more like an item stack: when empty, any aspect can be inserted

@@ -18,8 +18,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -66,7 +69,7 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 	}
 	
 	@Nullable
-	private TileEntity getTE(BlockPos pos, World world){
+	private static TileEntity getTE(BlockPos pos, World world){
 		if(world.getBlockState(pos).getValue(PART).equals(LEFT))
 			return world.getTileEntity(pos);
 		else
@@ -74,13 +77,22 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 	}
 	
 	public void breakBlock(World world, BlockPos pos, IBlockState state){
-		TileEntity tileentity = world.getTileEntity(pos);
+		TileEntity te;
+		if(state.getValue(PART).equals(LEFT))
+			te = world.getTileEntity(pos);
+		else
+			te = world.getTileEntity(pos.offset(state.getValue(FACING).rotateYCCW()));
 		
-		if(tileentity instanceof IInventory){
-			InventoryHelper.dropInventoryItems(world, pos, (IInventory)tileentity);
-			world.updateComparatorOutputLevel(pos, this);
+		if(te instanceof ResearchTableTileEntity){
+			ResearchTableTileEntity rt = (ResearchTableTileEntity)te;
+			
+			ItemStack itemstack = new ItemStack(ItemInit.RESEARCH_TABLE_PLACER);
+			NBTTagCompound nbttagcompound = new NBTTagCompound();
+			nbttagcompound.setTag("BlockEntityTag", rt.saveToNBT());
+			itemstack.setTagCompound(nbttagcompound);
+			
+			spawnAsEntity(world, pos, itemstack);
 		}
-		
 		super.breakBlock(world, pos, state);
 	}
 	
@@ -103,11 +115,16 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 			BlockPos blockpos = pos.offset(state.getValue(FACING).rotateYCCW());
 			if(worldIn.getBlockState(blockpos).getBlock() == this)
 				worldIn.setBlockToAir(blockpos);
+		}else{
+			BlockPos blockpos = pos.offset(state.getValue(FACING).rotateY());
+			if(worldIn.getBlockState(blockpos).getBlock() == this)
+				worldIn.setBlockToAir(blockpos);
 		}
 	}
 	
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-		drops.add(new ItemStack(ItemInit.RESEARCH_TABLE_PLACER));
+		// Handled by breakBlock while preserving NBT
+		// drops.add(new ItemStack(ItemInit.RESEARCH_TABLE_PLACER));
 	}
 	
 	public EnumBlockRenderType getRenderType(IBlockState state){

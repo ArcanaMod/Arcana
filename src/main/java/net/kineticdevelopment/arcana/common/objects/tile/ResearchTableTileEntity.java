@@ -65,6 +65,12 @@ public class ResearchTableTileEntity extends TileEntity{
 		return super.getCapability(capability, facing);
 	}
 	
+	public NBTTagCompound saveToNBT(){
+		NBTTagCompound compound = new NBTTagCompound();
+		compound.setTag("aspects", aspects.serializeNBT());
+		return compound;
+	}
+	
 	public ItemStack visItem(){
 		return items.getStackInSlot(0);
 	}

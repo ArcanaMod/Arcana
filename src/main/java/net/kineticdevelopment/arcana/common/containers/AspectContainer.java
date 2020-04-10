@@ -46,7 +46,7 @@ public abstract class AspectContainer extends Container{
 	
 	public void handleClick(int mouseX, int mouseY, int button, GuiAspectContainer gui){
 		for(AspectSlot slot : getAspectSlots()){
-			if(slot.getInventory().get() != null && isMouseOverSlot(mouseX, mouseY, slot, gui)){
+			if(slot.getInventory().get() != null && gui.isSlotVisible(slot) && isMouseOverSlot(mouseX, mouseY, slot, gui)){
 				// gonna send a packet
 				ClickType type;
 				if(button == 0)

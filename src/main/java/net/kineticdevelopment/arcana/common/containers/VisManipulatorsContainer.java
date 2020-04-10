@@ -30,10 +30,10 @@ public class VisManipulatorsContainer extends AspectContainer{
 		}
 	};
 	
-	protected VisBattery leftSlotStorage = new VisBattery(), rightSlotStorage = new VisBattery();
-	protected AspectSlot leftStoreSlot, rightStoreSlot;
-	protected List<AspectSlot> leftScrollableSlots = new ArrayList<>();
-	protected List<AspectSlot> rightScrollableSlots = new ArrayList<>();
+	public VisBattery leftSlotStorage = new VisBattery(), rightSlotStorage = new VisBattery();
+	public AspectSlot leftStoreSlot, rightStoreSlot;
+	public List<AspectSlot> leftScrollableSlots = new ArrayList<>();
+	public List<AspectSlot> rightScrollableSlots = new ArrayList<>();
 	
 	public VisManipulatorsContainer(IInventory playerInventory){
 		// My slots
@@ -116,6 +116,10 @@ public class VisManipulatorsContainer extends AspectContainer{
 	protected void refreshAspectSlots(){
 		if(aspectSlots.size() > 3)
 			aspectSlots.subList(3, aspectSlots.size()).clear();
+		leftScrollableSlots.clear();
+		rightScrollableSlots.clear();
+		
+		// reset zoom
 		
 		Supplier<AspectHandler> left = () -> AspectHandler.getFrom(getSlot(0).getStack());
 		if(left.get() != null){
@@ -126,10 +130,10 @@ public class VisManipulatorsContainer extends AspectContainer{
 				int xx = i % 3;
 				int x = 11 + 20 * xx;
 				int y = 46 + 21 * yy;
-				// the scroll wheel handles the rest
-				if(yy >= 5)
-					break;
 				AspectSlot slot = new AspectSlot(aspect, left, x, y);
+				// the scroll wheel handles the rest
+				if(yy >= 4)
+					slot.visible = false;
 				aspectSlots.add(slot);
 				leftScrollableSlots.add(slot);
 			}
@@ -144,10 +148,10 @@ public class VisManipulatorsContainer extends AspectContainer{
 				int xx = i % 3;
 				int x = 92 + 20 * xx;
 				int y = 46 + 20 * yy;
-				// the scroll wheel handles the rest
-				if(yy >= 5)
-					break;
 				AspectSlot slot = new AspectSlot(aspect, right, x, y);
+				// the scroll wheel handles the rest
+				if(yy >= 4)
+					slot.visible = false;
 				aspectSlots.add(slot);
 				rightScrollableSlots.add(slot);
 			}

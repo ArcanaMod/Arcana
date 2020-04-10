@@ -22,7 +22,7 @@ public abstract class GuiAspectContainer extends GuiContainer{
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		for(AspectSlot slot : aspectContainer.getAspectSlots()){
-			if(slot.getInventory().get() != null){
+			if(slot.getInventory().get() != null && slot.visible){
 				if(slot.getAspect() != null)
 					itemRender.renderItemAndEffectIntoGUI(Aspects.getItemStackForAspect(slot.getAspect()), slot.x, slot.y);
 				if(isMouseOverSlot(mouseX, mouseY, slot)){
@@ -61,5 +61,9 @@ public abstract class GuiAspectContainer extends GuiContainer{
 	
 	public int getGuiTop(){
 		return super.getGuiTop();
+	}
+	
+	public boolean isSlotVisible(AspectSlot slot){
+		return slot.visible;
 	}
 }

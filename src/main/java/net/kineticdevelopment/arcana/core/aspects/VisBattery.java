@@ -26,10 +26,6 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 	}
 	
 	public int insert(Aspect aspect, int amount, boolean simulate){
-		/*int left = getCapacity(aspect) - getCurrentVis(aspect);
-		if(!simulate)
-			stored.put(aspect, getCurrentVis(aspect) + (Math.min(left, amount)));
-		return amount - left;*/
 		int capacityRemaining = getCapacity(aspect) - getCurrentVis(aspect);
 		if(amount <= capacityRemaining){
 			if(!simulate)
@@ -78,7 +74,8 @@ public class VisBattery implements AspectHandler, ICapabilityProvider{
 	}
 	
 	public Set<Aspect> getAllowedAspects(){
-		return new HashSet<>(Aspect.aspects);
+		// insertion order matters!
+		return new LinkedHashSet<>(Aspect.aspects);
 	}
 	
 	public Set<Aspect> getContainedAspects(){
