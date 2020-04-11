@@ -5,16 +5,18 @@ import net.kineticdevelopment.arcana.common.containers.VisManipulatorsContainer;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.inventory.PktRequestAspectSync;
 import net.kineticdevelopment.arcana.core.Main;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.input.Mouse;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
 import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class VisManipulatorsGUI extends GuiAspectContainer{
+public class VisManipulatorsGUI extends GuiAspectContainer implements VisManipulatorsContainer.ScrollRefreshListener{
 	
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 256;
@@ -27,6 +29,8 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 		super(inventorySlots);
 		xSize = WIDTH;
 		ySize = HEIGHT;
+		
+		inventorySlots.scroller = this;
 	}
 	
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
@@ -36,9 +40,21 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 	
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		
+		GlStateManager.disableLighting();
+		GlStateManager.color(1f, 1f, 1f, 1f);
+		
 		String s = I18n.format("item.vis_manipulation_tools.name");
 		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 0x404040);
-		fontRenderer.drawStringWithShadow(String.valueOf(leftScroll), 0, 0, 0);
+		
+		GlStateManager.color(1f, 1f, 1f, 1f);
+		mc.getTextureManager().bindTexture(bg);
+		
+		float leftFrac = maxLeftScroll() > 0 ? leftScroll / (float)maxLeftScroll() : 0;
+		drawTexturedModalRect(76, 44 + 73 * leftFrac, 176 + (maxLeftScroll() > 0 ? 0 : 10), 0, 10, 15);
+		
+		float rightFrac = maxRightScroll() > 0 ? (rightScroll / (float)maxRightScroll()) : 0;
+		drawTexturedModalRect(157, 44 + 73 * rightFrac, 176 + (maxRightScroll() > 0 ? 0 : 10), 0, 10, 15);
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
@@ -52,16 +68,21 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 		Connection.network.sendToServer(new PktRequestAspectSync());
 	}
 	
-	void scroll(boolean right, boolean down){
+	void scroll(boolean right, @Nullable Boolean down){
 		if(right){
-			int maxScroll = (int)Math.ceil(((VisManipulatorsContainer)inventorySlots).rightScrollableSlots.size() / 3f) - 4;
+			int maxScroll = maxRightScroll();
 			if(maxScroll < 0)
 				maxScroll = 0;
-			if(down){
-				if(rightScroll < maxScroll)
-					rightScroll++;
-			}else if(rightScroll > 0)
-				rightScroll--;
+			
+			if(down != null)
+				if(down){
+					if(rightScroll < maxScroll)
+						rightScroll++;
+				}else if(rightScroll > 0)
+					rightScroll--;
+			
+			if(rightScroll > maxScroll)
+				rightScroll = maxScroll;
 			
 			List<AspectSlot> slots = ((VisManipulatorsContainer)inventorySlots).rightScrollableSlots;
 			for(int i = 0; i < slots.size(); i++){
@@ -75,14 +96,19 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 				slot.visible = yy >= rightScroll && yy < rightScroll + 4;
 			}
 		}else{
-			int maxScroll = (int)Math.ceil(((VisManipulatorsContainer)inventorySlots).leftScrollableSlots.size() / 3f) - 4;
+			int maxScroll = maxLeftScroll();
 			if(maxScroll < 0)
 				maxScroll = 0;
-			if(down){
-				if(leftScroll < maxScroll)
-					leftScroll++;
-			}else if(leftScroll > 0)
-				leftScroll--;
+			
+			if(down != null)
+				if(down){
+					if(leftScroll < maxScroll)
+						leftScroll++;
+				}else if(leftScroll > 0)
+					leftScroll--;
+			
+			if(leftScroll > maxScroll)
+				leftScroll = maxScroll;
 			
 			List<AspectSlot> slots = ((VisManipulatorsContainer)inventorySlots).leftScrollableSlots;
 			for(int i = 0; i < slots.size(); i++){
@@ -96,6 +122,14 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 				slot.visible = yy >= leftScroll && yy < leftScroll + 4;
 			}
 		}
+	}
+	
+	int maxRightScroll(){
+		return (int)Math.ceil(((VisManipulatorsContainer)inventorySlots).rightScrollableSlots.size() / 3f) - 4;
+	}
+	
+	int maxLeftScroll(){
+		return (int)Math.ceil(((VisManipulatorsContainer)inventorySlots).leftScrollableSlots.size() / 3f) - 4;
 	}
 	
 	public void handleMouseInput() throws IOException{
@@ -112,5 +146,10 @@ public class VisManipulatorsGUI extends GuiAspectContainer{
 	
 	public boolean isSlotVisible(AspectSlot slot){
 		return super.isSlotVisible(slot);
+	}
+	
+	public void refreshScrolling(){
+		scroll(true, null);
+		scroll(false, null);
 	}
 }

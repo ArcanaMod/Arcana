@@ -1,7 +1,6 @@
 package net.kineticdevelopment.arcana.common.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.kineticdevelopment.arcana.client.gui.VisManipulatorsGUI;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
@@ -35,6 +34,8 @@ public class VisManipulatorsContainer extends AspectContainer{
 	public List<AspectSlot> leftScrollableSlots = new ArrayList<>();
 	public List<AspectSlot> rightScrollableSlots = new ArrayList<>();
 	
+	public ScrollRefreshListener scroller;
+	
 	public VisManipulatorsContainer(IInventory playerInventory){
 		// My slots
 		// 48, 17
@@ -52,7 +53,7 @@ public class VisManipulatorsContainer extends AspectContainer{
 		});
 		
 		// Slots for the main inventory
-		int baseX = 8, baseY = VisManipulatorsGUI.HEIGHT - 82;
+		int baseX = 8, baseY = 174;
 		
 		for(int row = 0; row < 3; row++)
 			for(int col = 0; col < 9; col++){
@@ -119,8 +120,6 @@ public class VisManipulatorsContainer extends AspectContainer{
 		leftScrollableSlots.clear();
 		rightScrollableSlots.clear();
 		
-		// reset zoom
-		
 		Supplier<AspectHandler> left = () -> AspectHandler.getFrom(getSlot(0).getStack());
 		if(left.get() != null){
 			Aspect[] values = left.get().getAllowedAspects().toArray(new Aspect[0]);
@@ -156,6 +155,19 @@ public class VisManipulatorsContainer extends AspectContainer{
 				rightScrollableSlots.add(slot);
 			}
 		}
+		
+		// when on the logical client: tell the GUI, somehow.
+		// I'll use an interface, and have VisManipulatorsGUI implement it
+		// to avoid ever seeing "GuiScreen".
+		if(scroller != null)
+			scroller.refreshScrolling();
+	}
+	
+	/**
+	 * Only for VisManipulatorsGUI.
+	 */
+	public interface ScrollRefreshListener{
+		void refreshScrolling();
 	}
 	
 	public List<AspectHandler> getOpenHandlers(){
