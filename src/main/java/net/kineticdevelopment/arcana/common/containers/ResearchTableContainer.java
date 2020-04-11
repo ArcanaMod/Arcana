@@ -26,7 +26,7 @@ import java.util.function.Supplier;
 public class ResearchTableContainer extends AspectContainer{
 	
 	private ResearchTableTileEntity te;
-	protected List<AspectSlot> scrollableSlots = new ArrayList<>();
+	public List<AspectSlot> scrollableSlots = new ArrayList<>();
 	
 	// combination slots
 	protected VisBattery leftSlotStorage = new VisBattery(), rightSlotStorage = new VisBattery();
@@ -99,16 +99,20 @@ public class ResearchTableContainer extends AspectContainer{
 			Aspect aspect = values[i];
 			int yy = i / 6;
 			int xx = i % 6;
+			boolean visible = true;
+			if(yy >= 5){
+				visible = false;
+				// wrap
+				yy %= 5;
+			}
 			int x = 9 + 20 * xx;
 			int y = 65 + 21 * yy;
-			// the scroll wheel handles all of them
-			if(yy >= 5)
-				break;
 			if(xx % 2 == 0)
 				y += 5;
 			if(yy % 2 == 0)
 				x += 3;
 			AspectSlot slot = new AspectSlot(aspect, table, x, y);
+			slot.visible = visible;
 			getAspectSlots().add(slot);
 			scrollableSlots.add(slot);
 		}

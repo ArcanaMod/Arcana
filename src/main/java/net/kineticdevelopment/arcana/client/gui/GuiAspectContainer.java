@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public abstract class GuiAspectContainer extends GuiContainer{
 	
-	private AspectContainer aspectContainer;
+	protected AspectContainer aspectContainer;
 	
 	public GuiAspectContainer(AspectContainer inventorySlots){
 		super(inventorySlots);

@@ -87,6 +87,8 @@ public enum Aspect{
 		combinations.put(of(ENERGY, MOVEMENT), WIND);
 		combinations.put(of(CHAOS, LIFE), VENOM);
 		combinations.put(of(ORDER, ENERGY), LIGHT);
+		combinations.put(of(ORDER, CHAOS), EXCHANGE);
+		combinations.put(of(CHAOS, LIGHT), DARKNESS);
 	}
 	
 	@Nullable

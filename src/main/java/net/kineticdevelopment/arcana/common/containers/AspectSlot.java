@@ -11,6 +11,12 @@ public class AspectSlot{
 	private final Supplier<AspectHandler> inventory;
 	
 	public int x, y;
+	
+	/**
+	 * If false, this slot will not render and cannot be interacted with. This is *not* validated
+	 * server-side, and can safely be changed on the client; in other words, any invisible slots can *theoretically*
+	 * be accessed by clients.
+	 */
 	public boolean visible = true;
 	
 	/**
