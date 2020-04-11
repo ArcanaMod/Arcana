@@ -19,7 +19,7 @@ public final class ItemHud{
 	
 	@SubscribeEvent
 	public static void onRenderGameOverlay(RenderGameOverlayEvent.Post event){
-			if(Minecraft.getMinecraft().player != null){
+			if(Minecraft.getMinecraft().player != null && event.getType().equals(RenderGameOverlayEvent.ElementType.ALL))
 				if(Minecraft.getMinecraft().player.getHeldItemMainhand().getItem() instanceof ItemWand){
 					AspectHandler aspects = AspectHandler.getFrom(Minecraft.getMinecraft().player.getHeldItemMainhand());
 					for(int i = 0; i < Aspects.primalAspects.length; i++){
@@ -33,7 +33,6 @@ public final class ItemHud{
 						GlStateManager.disableLighting();
 					}
 				}
-			}
 		
 	}
 }

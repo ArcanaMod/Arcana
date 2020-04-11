@@ -12,22 +12,21 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityShulkerBox;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -37,6 +36,8 @@ import static net.kineticdevelopment.arcana.common.objects.blocks.BlockResearchT
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
+// TODO: This has a problem with being broken. I don't think this can be solved without a TESR.
+// Thankfully, I'll probably switch this over to a TESR anyways to show ink, wands, and research notes. yay.
 public class BlockResearchTable extends BlockBase implements ITileEntityProvider{
 	
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
@@ -45,10 +46,11 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 	public BlockResearchTable(){
 		super("research_table", Material.WOOD);
 		translucent = true;
+		setHardness(2.5f);
 	}
 	
 	public boolean hasTileEntity(IBlockState state){
-		return true;
+		return state.getValue(PART) == LEFT;
 	}
 	
 	@Nullable
@@ -91,7 +93,15 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 			nbttagcompound.setTag("BlockEntityTag", rt.saveToNBT());
 			itemstack.setTagCompound(nbttagcompound);
 			
-			spawnAsEntity(world, pos, itemstack);
+			if(state.getValue(PART).equals(LEFT)){
+				if(rt.shouldDrop())
+					spawnAsEntity(world, pos, itemstack);
+				IItemHandler items = rt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+				if(items != null)
+					for(int i = 0; i < items.getSlots(); i++)
+						if(!items.getStackInSlot(i).isEmpty())
+							spawnAsEntity(world, pos, items.getStackInSlot(i));
+			}
 		}
 		super.breakBlock(world, pos, state);
 	}
@@ -110,21 +120,32 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 		super.harvestBlock(world, player, pos, state, null, stack);
 	}
 	
-	public void onBlockHarvested(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player){
+	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player){
+		TileEntity te;
+		if(state.getValue(PART).equals(LEFT))
+			te = world.getTileEntity(pos);
+		else
+			te = world.getTileEntity(pos.offset(state.getValue(FACING).rotateYCCW()));
+		
+		if(te instanceof ResearchTableTileEntity){
+			ResearchTableTileEntity researchTable = (ResearchTableTileEntity)te;
+			researchTable.setShouldDrop(!player.capabilities.isCreativeMode);
+			researchTable.markDirty();
+		}
+		
 		if(state.getValue(PART) == RIGHT){
 			BlockPos blockpos = pos.offset(state.getValue(FACING).rotateYCCW());
-			if(worldIn.getBlockState(blockpos).getBlock() == this)
-				worldIn.setBlockToAir(blockpos);
+			if(world.getBlockState(blockpos).getBlock() == this)
+				world.setBlockToAir(blockpos);
 		}else{
 			BlockPos blockpos = pos.offset(state.getValue(FACING).rotateY());
-			if(worldIn.getBlockState(blockpos).getBlock() == this)
-				worldIn.setBlockToAir(blockpos);
+			if(world.getBlockState(blockpos).getBlock() == this)
+				world.setBlockToAir(blockpos);
 		}
 	}
 	
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
-		// Handled by breakBlock while preserving NBT
-		// drops.add(new ItemStack(ItemInit.RESEARCH_TABLE_PLACER));
+		// Handled by breakBlock while preserving aspects
 	}
 	
 	public EnumBlockRenderType getRenderType(IBlockState state){
@@ -138,6 +159,10 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 				world.setBlockToAir(pos);
 		}else if(world.getBlockState(pos.offset(facing.rotateYCCW())).getBlock() != this)
 			world.setBlockToAir(pos);
+	}
+	
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
+		return face.equals(EnumFacing.UP) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
 	}
 	
 	// pretty much copied from BlockChest

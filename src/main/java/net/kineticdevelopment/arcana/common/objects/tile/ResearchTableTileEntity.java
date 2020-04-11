@@ -12,7 +12,6 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -21,6 +20,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class ResearchTableTileEntity extends TileEntity{
 	
 	public static final ResourceLocation ID = new ResourceLocation("arcana:research_table");
+	
+	private boolean shouldDrop = true;
 	
 	// Three slots for wand (OR any AspectHandler, but research games can only be performed with a wand), ink, note
 	// up to 9 for crafting guesswork for arcane crafting
@@ -80,6 +81,14 @@ public class ResearchTableTileEntity extends TileEntity{
 	}
 	
 	public ItemStack note(){
-		return items.getStackInSlot(1);
+		return items.getStackInSlot(2);
+	}
+	
+	public void setShouldDrop(boolean shouldDrop){
+		this.shouldDrop = shouldDrop;
+	}
+	
+	public boolean shouldDrop(){
+		return shouldDrop;
 	}
 }
