@@ -14,6 +14,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import java.awt.*;
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate small willow trees
+ */
 public class WillowGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = BlockInit.WILLOW_LOG.getDefaultState();
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_WILLOW_LOG.getDefaultState();

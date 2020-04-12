@@ -14,7 +14,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import java.util.Random;
 
-
+/**
+ * Author: Mozaran
+ *
+ * Used to generate small acacia tainted trees
+ */
 public class TaintedAcaciaGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA);
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_ACACIA_LOG.getDefaultState();

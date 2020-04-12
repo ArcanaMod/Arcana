@@ -17,6 +17,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate large oak tainted trees
+ */
 public class TaintedLargeOakGenerator extends WorldGenAbstractTree {
     private Random rand;
     private World world;

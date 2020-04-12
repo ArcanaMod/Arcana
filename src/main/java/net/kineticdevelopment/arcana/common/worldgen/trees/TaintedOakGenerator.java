@@ -15,6 +15,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate small oak tainted trees
+ */
 public class TaintedOakGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_OAK_LOG.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_OAK_LOG.getDefaultState();

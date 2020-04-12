@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.common.worldgen.trees;
 
 import net.kineticdevelopment.arcana.common.init.BlockInit;
+import net.kineticdevelopment.arcana.common.worldgen.GenerationUtilities;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -11,8 +12,14 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.common.IPlantable;
 
+import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate hawthorn trees (WIP)
+ */
 public class HawthornGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = BlockInit.HAWTHORN_LOG.getDefaultState();
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_HAWTHORN_LOG.getDefaultState();
@@ -24,7 +31,7 @@ public class HawthornGenerator extends WorldGenAbstractTree {
     private final IBlockState metaWood;
     private final IBlockState metaLeaves;
 
-    private final int minTreeHeight = 4;
+    private final int minTreeHeight = 7;
 
     public HawthornGenerator(boolean notify, boolean tainted) {
         this(notify, tainted, false);
@@ -77,32 +84,19 @@ public class HawthornGenerator extends WorldGenAbstractTree {
 
     private void generateLeaves(World worldIn, BlockPos position, int height, Random parRandom)
     {
-        for (int foliageY = position.getY() - 3 + height; foliageY <= position.getY() + height; ++foliageY)
-        {
-            int foliageLayer = foliageY - (position.getY() + height);
-            int foliageLayerRadius = 1 - foliageLayer / 2;
+        // Test of spheres
+        ArrayList<BlockPos> positions = GenerationUtilities.GenerateCircle(position.add(0,14,0), 1, GenerationUtilities.GenType.FULL);
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,13,0),  3, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,12,0),  5, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,11,0),  7, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,10,0),  9, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,9,0),  7, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,8,0),  5, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,7,0),  3, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,6,0),  1, GenerationUtilities.GenType.FULL));
 
-            for (int foliageX = position.getX() - foliageLayerRadius; foliageX <= position.getX() + foliageLayerRadius; ++foliageX)
-            {
-                int foliageRelativeX = foliageX - position.getX();
-
-                for (int foliageZ = position.getZ() - foliageLayerRadius; foliageZ <= position.getZ() + foliageLayerRadius; ++foliageZ)
-                {
-                    int foliageRelativeZ = foliageZ - position.getZ();
-
-                    // Fill in layer with some randomness
-                    if (Math.abs(foliageRelativeX) != foliageLayerRadius || Math.abs(foliageRelativeZ) != foliageLayerRadius || parRandom.nextInt(2) != 0 && foliageLayer != 0)
-                    {
-                        BlockPos blockPos = new BlockPos(foliageX, foliageY, foliageZ);
-                        IBlockState state = worldIn.getBlockState(blockPos);
-
-                        if (state.getBlock().isAir(state, worldIn, blockPos) || state.getBlock().isLeaves(state, worldIn, blockPos))
-                        {
-                            setBlockAndNotifyAdequately(worldIn, blockPos, metaLeaves);
-                        }
-                    }
-                }
-            }
+        for(BlockPos pos : positions) {
+            setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);
         }
     }
 

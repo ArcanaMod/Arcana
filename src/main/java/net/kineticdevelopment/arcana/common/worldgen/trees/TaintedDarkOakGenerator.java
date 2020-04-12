@@ -11,6 +11,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate dark oak tainted trees
+ */
 public class TaintedDarkOakGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK);
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_DARKOAK_LOG.getDefaultState();

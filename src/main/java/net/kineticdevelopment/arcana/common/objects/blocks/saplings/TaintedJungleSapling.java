@@ -14,6 +14,11 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to grow all variations of the tainted jungle tree
+ */
 public class TaintedJungleSapling extends SaplingBase {
     boolean untainted;
     public TaintedJungleSapling(String name, boolean untainted) {

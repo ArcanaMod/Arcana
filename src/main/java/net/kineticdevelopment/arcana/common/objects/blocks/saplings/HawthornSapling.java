@@ -12,6 +12,11 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to grow all variations of the hawthorn tree
+ */
 public class HawthornSapling extends SaplingBase {
     boolean tainted;
     boolean untainted;
