@@ -80,6 +80,11 @@ public class ResearchTableContainer extends AspectContainer{
 				// only notes
 				return super.isItemValid(stack) && stack.getItem() == ItemInit.RESEARCH_NOTE || stack.getItem() == ItemInit.RESEARCH_NOTE_COMPLETE;
 			}
+			
+			public void onSlotChanged(){
+				super.onSlotChanged();
+				// change stuff I guess?
+			}
 		});
 	}
 	

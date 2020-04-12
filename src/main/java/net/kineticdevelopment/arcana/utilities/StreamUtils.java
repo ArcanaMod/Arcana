@@ -16,9 +16,4 @@ public final class StreamUtils{
 				.map(filterType::cast)
 				.map(applicator);
 	}
-	
-	public static <T> Supplier<T> cached(Supplier<T> creator){
-		T cached = creator.get();
-		return () -> cached;
-	}
 }
