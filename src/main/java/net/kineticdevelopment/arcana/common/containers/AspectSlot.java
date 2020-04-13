@@ -64,6 +64,10 @@ public class AspectSlot{
 		this.aspect = aspect;
 	}
 	
+	public boolean shouldShowAmount(){
+		return true;
+	}
+	
 	/**
 	 * Draws from this slots underlying container, updates this slot, and returns the result.
 	 *
@@ -89,4 +93,6 @@ public class AspectSlot{
 		sync();
 		return result;
 	}
+	
+	public void onClose(){}
 }

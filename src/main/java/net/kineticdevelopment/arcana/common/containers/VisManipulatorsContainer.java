@@ -4,7 +4,6 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
-import net.kineticdevelopment.arcana.core.aspects.VisBattery;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryBasic;
@@ -29,7 +28,6 @@ public class VisManipulatorsContainer extends AspectContainer{
 		}
 	};
 	
-	public VisBattery leftSlotStorage = new VisBattery(), rightSlotStorage = new VisBattery();
 	public AspectSlot leftStoreSlot, rightStoreSlot;
 	public List<AspectSlot> leftScrollableSlots = new ArrayList<>();
 	public List<AspectSlot> rightScrollableSlots = new ArrayList<>();
@@ -109,8 +107,8 @@ public class VisManipulatorsContainer extends AspectContainer{
 	}
 	
 	protected void addAspectSlots(){
-		aspectSlots.add(leftStoreSlot = new AspectSlot(null, () -> leftSlotStorage, 44, 147, true));
-		aspectSlots.add(rightStoreSlot = new AspectSlot(null, () -> rightSlotStorage, 116, 147, true));
+		aspectSlots.add(leftStoreSlot = new AspectStoreSlot(null, 44, 147));
+		aspectSlots.add(rightStoreSlot = new AspectStoreSlot(null, 116, 147));
 		aspectSlots.add(new CombinatorAspectSlot(leftStoreSlot, rightStoreSlot, 80, 146));
 	}
 	
@@ -173,8 +171,6 @@ public class VisManipulatorsContainer extends AspectContainer{
 	public List<AspectHandler> getOpenHandlers(){
 		// left slot storage, right slot storage, left item stack if present, right item stack if present
 		List<AspectHandler> ret = new ArrayList<>();
-		ret.add(leftSlotStorage);
-		ret.add(rightSlotStorage);
 		AspectHandler left = AspectHandler.getFrom(getSlot(0).getStack());
 		if(left != null)
 			ret.add(left);

@@ -7,8 +7,10 @@ import net.kineticdevelopment.arcana.common.network.inventory.PktAspectClickHand
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,4 +79,17 @@ public abstract class AspectContainer extends Container{
 	 * @return A list containing all open AspectHandlers.
 	 */
 	public abstract List<AspectHandler> getOpenHandlers();
+	
+	public List<AspectHandler> getAllOpenHandlers(){
+		List<AspectHandler> handlers = new ArrayList<>(getOpenHandlers());
+		for(AspectSlot slot : aspectSlots)
+			if(slot instanceof AspectStoreSlot)
+				handlers.add(((AspectStoreSlot)slot).getHolder());
+		return handlers;
+	}
+	
+	public void onContainerClosed(@Nonnull EntityPlayer player){
+		super.onContainerClosed(player);
+		aspectSlots.forEach(AspectSlot::onClose);
+	}
 }

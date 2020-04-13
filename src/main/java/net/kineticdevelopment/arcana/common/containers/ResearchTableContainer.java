@@ -29,7 +29,6 @@ public class ResearchTableContainer extends AspectContainer{
 	public List<AspectSlot> scrollableSlots = new ArrayList<>();
 	
 	// combination slots
-	protected VisBattery leftSlotStorage = new VisBattery(), rightSlotStorage = new VisBattery();
 	protected AspectSlot leftStoreSlot, rightStoreSlot;
 	
 	public ResearchTableContainer(IInventory playerInventory, ResearchTableTileEntity te){
@@ -110,20 +109,18 @@ public class ResearchTableContainer extends AspectContainer{
 				// wrap
 				yy %= 5;
 			}
-			int x = 9 + 20 * xx;
+			int x = 11 + 20 * xx;
 			int y = 65 + 21 * yy;
 			if(xx % 2 == 0)
 				y += 5;
-			if(yy % 2 == 0)
-				x += 3;
 			AspectSlot slot = new AspectSlot(aspect, table, x, y);
 			slot.visible = visible;
 			getAspectSlots().add(slot);
 			scrollableSlots.add(slot);
 		}
 		// combinator slots
-		aspectSlots.add(leftStoreSlot = new AspectSlot(null, () -> leftSlotStorage, 30, 179, true));
-		aspectSlots.add(rightStoreSlot = new AspectSlot(null, () -> rightSlotStorage, 92, 179, true));
+		aspectSlots.add(leftStoreSlot = new AspectStoreSlot(table, 30, 179));
+		aspectSlots.add(rightStoreSlot = new AspectStoreSlot(table, 92, 179));
 		aspectSlots.add(new CombinatorAspectSlot(leftStoreSlot, rightStoreSlot, 61, 179));
 	}
 	
@@ -158,8 +155,8 @@ public class ResearchTableContainer extends AspectContainer{
 	public List<AspectHandler> getOpenHandlers(){
 		AspectHandler item = AspectHandler.getFrom(te.visItem());
 		if(item != null)
-			return Arrays.asList(AspectHandler.getFrom(te), leftSlotStorage, rightSlotStorage, item);
+			return Arrays.asList(AspectHandler.getFrom(te), item);
 		else
-			return Arrays.asList(AspectHandler.getFrom(te), leftSlotStorage, rightSlotStorage);
+			return Collections.singletonList(AspectHandler.getFrom(te));
 	}
 }

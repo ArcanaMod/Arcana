@@ -40,7 +40,7 @@ public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAsp
 			for(Pair<Integer, Aspect> storeSlot : message.storeSlotAspects)
 				container.getAspectSlots().get(storeSlot.getLeft()).setAspect(storeSlot.getRight());
 			for(Pair<Integer, NBTTagCompound> handler : message.handlers)
-				container.getOpenHandlers().get(handler.getLeft()).deserializeNBT(handler.getRight());
+				container.getAllOpenHandlers().get(handler.getLeft()).deserializeNBT(handler.getRight());
 		});
 		return null;
 	}
@@ -58,8 +58,8 @@ public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAsp
 			heldCount = container.getHeldCount();
 			heldAspect = container.getHeldAspect();
 			
-			for(int i = 0; i < container.getOpenHandlers().size(); i++)
-				handlers.add(Pair.of(i, container.getOpenHandlers().get(i).serializeNBT()));
+			for(int i = 0; i < container.getAllOpenHandlers().size(); i++)
+				handlers.add(Pair.of(i, container.getAllOpenHandlers().get(i).serializeNBT()));
 			
 			for(int i = 0; i < container.getAspectSlots().size(); i++){
 				AspectSlot slot = container.getAspectSlots().get(i);
