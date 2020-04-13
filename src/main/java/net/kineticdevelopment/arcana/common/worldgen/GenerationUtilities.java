@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.common.worldgen;
 
+import com.google.gson.internal.$Gson$Types;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -157,6 +158,155 @@ public class GenerationUtilities {
 
     public static ArrayList<BlockPos> GenerateCircle(BlockPos origin, int diameter, GenType type) {
         return GenerateOval(origin, diameter, diameter, type);
+    }
+
+    /**
+     * @param center - Center of square
+     * @param width - Must be odd, if even it will be made to closest smaller odd number
+     * @return - Block Pos of all blocks in square
+     */
+    private static ArrayList<BlockPos> GenerateSquare(BlockPos center, int width) {
+        ArrayList<BlockPos> blockPosList = new ArrayList<>();
+
+        int adjWidth = width % 2 == 0 ? width - 1 : width;
+
+        int size = (adjWidth - 1) / 2;
+
+        for (int x = -size; x <= size; ++x) {
+            for(int z = -size; z <= size; ++z) {
+                blockPosList.add(center.add(x, 0, z));
+            }
+        }
+
+        return blockPosList;
+    }
+
+    /**
+     * @param start - Start coordinate
+     * @param end - End coordinate
+     * @param diameter - Diameter of trunk. Must be odd, if even it will be made to closest smaller odd number
+     * @return - ArrayList of all blocks in trunk
+     */
+    public static ArrayList<BlockPos> GenerateTrunk(BlockPos start, BlockPos end, int diameter) {
+        ArrayList<BlockPos> blockPosList = new ArrayList<>();
+        blockPosList.add(start);
+
+        int height = end.getY() - start.getY();
+        int xTranslation = end.getX() - start.getX();
+        int zTranslation = end.getZ() - start.getZ();
+
+        if(xTranslation == 0 && zTranslation == 0) {
+            // only y axis
+            for(int y = 0; y <= height; ++y) {
+                blockPosList.add(start.add(0, y, 0));
+            }
+        } else if(xTranslation != 0 && zTranslation != 0) {
+            // 3 axis trunk
+            int dx = Math.abs(xTranslation);
+            int dy = Math.abs(height);
+            int dz = Math.abs(zTranslation);
+            int xs = end.getX() > start.getX() ? 1 : -1;
+            int ys = end.getY() > start.getY() ? 1 : -1;
+            int zs = end.getZ() > start.getZ() ? 1 : -1;
+            int x1 = start.getX();
+            int x2 = end.getX();
+            int y1 = start.getY();
+            int y2 = end.getY();
+            int z1 = start.getZ();
+            int z2 = end.getZ();
+
+            if(dx > dy && dx >= dz) {
+                int p1 = 2 * dy - dx;
+                int p2 = 2 * dz - dx;
+
+                while (x1 != x2) {
+                    boolean yzChange = false;
+                    x1 += xs;
+                    if(p1 >= 0) {
+                        y1 += ys;
+                        p1 -= 2 * dx;
+                        yzChange = true;
+                    }
+                    if(p2 >= 0) {
+                        z1 += zs;
+                        p2 -= 2 * dx;
+                        yzChange = true;
+                    }
+                    p1 += 2 * dy;
+                    p2 += 2 * dz;
+                    if(yzChange) blockPosList.add(new BlockPos(x1 - xs, y1, z1));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
+                }
+            } else if (dy >= dx && dy >= dz) {
+                int p1 = 2 * dx - dy;
+                int p2 = 2 * dz - dy;
+                while (y1 != y2) {
+                    boolean xzChange = false;
+                    y1 += ys;
+                    if (p1 >= 0) {
+                        x1 += xs;
+                        p1 -= 2 * dy;
+                        xzChange = true;
+                    }
+                    if (p2 >= 0) {
+                        z1 += zs;
+                        p2 -= 2 * dy;
+                        xzChange = true;
+                    }
+                    p1 += 2 * dx;
+                    p2 += 2 * dz;
+                    if(xzChange) blockPosList.add(new BlockPos(x1, y1 - ys, z1));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
+                }
+            } else {
+                int p1 = 2 * dy - dz;
+                int p2 = 2 * dx - dz;
+                while (z1 != z2) {
+                    boolean xyChange = false;
+                    z1 += zs;
+                    if (p1 >= 0) {
+                        y1 += ys;
+                        p1 -= 2 * dz;
+                        xyChange = true;
+                    }
+                    if (p2 >= 0) {
+                        x1 += xs;
+                        p2 -= 2 * dz;
+                        xyChange = true;
+                    }
+                    p1 += 2 * dy;
+                    p2 += 2 * dx;
+                    if(xyChange) blockPosList.add(new BlockPos(x1, y1, z1 - zs));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
+                }
+            }
+        } else {
+            // 2 Axis Trunk
+            boolean isXAxis = xTranslation != 0;
+
+            if(isXAxis) {
+                int slope = (int) Math.ceil((double) height / Math.abs(xTranslation));
+                for(int x = 0; x <= Math.abs(xTranslation); ++x) {
+                    for(int y = 0; y < slope; ++y) {
+                        int xOffset = xTranslation < 0 ? -x : x;
+                        int yOffset =  (x * slope) + y - x;
+                        if(yOffset > height) break;
+                        blockPosList.addAll(GenerationUtilities.GenerateSquare(start.add(xOffset, yOffset, 0), diameter));
+                    }
+                }
+            } else {
+                int slope = (int) Math.ceil((double) height / Math.abs(zTranslation));
+                for(int z = 0; z <= Math.abs(zTranslation); ++z) {
+                    for(int y = 0; y < slope; ++y) {
+                        int zOffset = zTranslation < 0 ? -z : z;
+                        int yOffset =  (z * slope) + y - z;
+                        if(yOffset > height) break;
+                        blockPosList.addAll(GenerationUtilities.GenerateSquare(start.add(0, yOffset, zOffset), diameter));
+                    }
+                }
+            }
+        }
+        return blockPosList;
     }
 }
 

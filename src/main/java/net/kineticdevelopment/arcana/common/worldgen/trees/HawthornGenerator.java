@@ -85,15 +85,10 @@ public class HawthornGenerator extends WorldGenAbstractTree {
     private void generateLeaves(World worldIn, BlockPos position, int height, Random parRandom)
     {
         // Test of spheres
-        ArrayList<BlockPos> positions = GenerationUtilities.GenerateCircle(position.add(0,14,0), 1, GenerationUtilities.GenType.FULL);
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,13,0),  3, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,12,0),  5, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,11,0),  7, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,10,0),  9, GenerationUtilities.GenType.FULL));
+        ArrayList<BlockPos> positions = GenerationUtilities.GenerateCircle(position.add(0,11,0), 3, GenerationUtilities.GenType.FULL);
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,10,0),  5, GenerationUtilities.GenType.FULL));
         positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,9,0),  7, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,8,0),  5, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,7,0),  3, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,6,0),  1, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,8,0),  9, GenerationUtilities.GenType.FULL));
 
         for(BlockPos pos : positions) {
             setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);
@@ -102,15 +97,13 @@ public class HawthornGenerator extends WorldGenAbstractTree {
 
     private void generateTrunk(World worldIn, BlockPos position, int minHeight)
     {
-        for (int height = 0; height < minHeight; ++height)
-        {
-            BlockPos upN = position.up(height);
-            IBlockState state = worldIn.getBlockState(upN);
+        ArrayList<BlockPos> positions = GenerationUtilities.GenerateTrunk(position, position.add(3, 8, 0), 1);
+        positions.addAll(GenerationUtilities.GenerateTrunk(position, position.add(-3, 8, 0), 1));
+        positions.addAll(GenerationUtilities.GenerateTrunk(position, position.add(0, 8, 3), 1));
+        positions.addAll(GenerationUtilities.GenerateTrunk(position, position.add(0, 8, -3), 1));
 
-            if (state.getBlock().isAir(state, worldIn, upN) || state.getBlock().isLeaves(state, worldIn, upN))
-            {
-                setBlockAndNotifyAdequately(worldIn, position.up(height), metaWood.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.Y));
-            }
+        for(BlockPos pos : positions) {
+            setBlockAndNotifyAdequately(worldIn, pos, metaWood);
         }
     }
 
