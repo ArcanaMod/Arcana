@@ -39,20 +39,6 @@ public class StoreSlotVis implements AspectHandler, ICapabilityProvider{
 	
 	public int insert(Aspect aspect, int amount, boolean simulate){
 		System.out.println("Inserting " + aspect + " x" + amount + ": " + simulate + "!");
-		/*Aspect _stored = stored;
-		if(_stored == null)
-			_stored = aspect;
-		if(_stored != aspect)
-			return amount;
-		int ret = amount + held - capacity;
-		if(ret < 0)
-			ret = 0;
-		if(!simulate){
-			stored = _stored;
-			held = ret;
-		}
-		return ret;*/
-		
 		Aspect _stored = stored;
 		if(_stored == null)
 			_stored = aspect;
@@ -83,18 +69,6 @@ public class StoreSlotVis implements AspectHandler, ICapabilityProvider{
 	
 	public int drain(Aspect aspect, int amount, boolean simulate){
 		System.out.println("Draining " + aspect + " x" + amount + ": " + simulate + "!");
-		/*if(stored == null || stored != aspect)
-			return 0;
-		int ret = Math.min(held, amount);
-		if(!simulate){
-			held = held - ret;
-			if(held <= 0){
-				held = 0;
-				stored = null;
-			}
-		}
-		return ret;*/
-		
 		int vis = getCurrentVis(aspect);
 		if(amount >= vis){
 			if(!simulate){
@@ -138,6 +112,7 @@ public class StoreSlotVis implements AspectHandler, ICapabilityProvider{
 		NBTTagCompound storedAspects = new NBTTagCompound();
 		storedAspects.setInteger(stored != null ? stored.name().toLowerCase() : "null", held);
 		compound.setTag("stored", storedAspects);
+		compound.setInteger("capacity", capacity);
 		return compound;
 	}
 	
@@ -149,5 +124,6 @@ public class StoreSlotVis implements AspectHandler, ICapabilityProvider{
 				held = storedAspects.getInteger(s);
 			}
 		}
+		capacity = data.getInteger("capacity");
 	}
 }

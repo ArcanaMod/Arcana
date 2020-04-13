@@ -134,7 +134,11 @@ public class ResearchBookGUI extends GuiScreen{
 				// render item
 				itemRender.zLevel = 50;
 				GlStateManager.scale(zoom, zoom, 1f);
+				GlStateManager.enableDepth();
+				RenderHelper.enableGUIStandardItemLighting();
+				GlStateManager.disableLighting();
 				itemRender.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get((mc.player.ticksExisted / 30) % entry.icons().size())), (int)(entry.x() * 30 + getXOffset() + 7), (int)(entry.y() * 30 + getYOffset() + 7));
+				GlStateManager.disableLighting();
 				GlStateManager.scale(1 / zoom, 1 / zoom, 1f);
 				GlStateManager.enableRescaleNormal();
 				

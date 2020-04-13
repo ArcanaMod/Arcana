@@ -7,6 +7,7 @@ import net.kineticdevelopment.arcana.core.research.impls.RecipeSection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -37,8 +38,10 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 		textures = new ResourceLocation(book.getKey().getResourceDomain(), "textures/gui/research/" + book.getPrefix() + OVERLAY_SUFFIX);
 		
 		mc().getTextureManager().bindTexture(textures);
-		GlStateManager.disableLighting();
 		GlStateManager.color(1f, 1f, 1f, 1f);
+		GlStateManager.enableDepth();
+		RenderHelper.enableGUIStandardItemLighting();
+		GlStateManager.disableLighting();
 		/*
 		 now, to complain about 1.12 again
 		 in 1.14+, all recipes (furnace, crafting, smoking, blasting, loom-ing, and eventually our own) are all IRecipe<?>s

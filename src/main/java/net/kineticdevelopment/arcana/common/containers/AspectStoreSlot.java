@@ -9,11 +9,18 @@ import java.util.function.Supplier;
 public class AspectStoreSlot extends AspectSlot{
 	
 	Supplier<AspectHandler> returnInv;
-	StoreSlotVis holder = new StoreSlotVis(10);
+	StoreSlotVis holder;
 	
 	public AspectStoreSlot(Supplier<AspectHandler> returnInv, int x, int y){
 		super(null, null, x, y, true);
 		this.returnInv = returnInv;
+		holder = new StoreSlotVis(10);
+	}
+	
+	public AspectStoreSlot(Supplier<AspectHandler> returnInv, int x, int y, int capacity){
+		super(null, null, x, y, true);
+		this.returnInv = returnInv;
+		holder = new StoreSlotVis(capacity);
 	}
 	
 	public Supplier<AspectHandler> getInventory(){
@@ -40,6 +47,10 @@ public class AspectStoreSlot extends AspectSlot{
 			return holder.held;
 		else
 			return 0;
+	}
+	
+	public boolean shouldShowAmount(){
+		return holder.getCapacity() > 1;
 	}
 	
 	public AspectHandler getHolder(){
