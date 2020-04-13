@@ -13,6 +13,11 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to grow all variations of the tainted dark oak tree
+ */
 public class TaintedDarkOakSapling extends SaplingBase {
     boolean untainted;
     public TaintedDarkOakSapling(String name, boolean untainted) {

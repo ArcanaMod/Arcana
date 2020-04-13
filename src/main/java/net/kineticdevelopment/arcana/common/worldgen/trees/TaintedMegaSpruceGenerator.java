@@ -12,6 +12,11 @@ import net.minecraft.world.gen.feature.WorldGenHugeTrees;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate mega spruce tainted trees
+ */
 public class TaintedMegaSpruceGenerator extends WorldGenHugeTrees {
     private boolean useBaseHeight;
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_SPRUCE_LOG.getDefaultState();

@@ -11,6 +11,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate small spruce tainted trees
+ */
 public class TaintedSpruceGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.SPRUCE);
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_SPRUCE_LOG.getDefaultState();

@@ -12,6 +12,11 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to grow all variations of the tainted birch tree
+ */
 public class TaintedBirchSapling extends SaplingBase {
     boolean untainted;
     boolean useExtraRandomHeight;

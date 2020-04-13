@@ -14,6 +14,11 @@ import net.minecraft.world.gen.feature.WorldGenHugeTrees;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate mega jungle tainted trees
+ */
 public class TaintedMegaJungleGenerator extends WorldGenHugeTrees {
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_JUNGLE_LOG.getDefaultState();
     private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_JUNGLE_LOG.getDefaultState();

@@ -13,6 +13,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate dair trees
+ */
 public class DairGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = BlockInit.DAIR_LOG.getDefaultState();
     private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_DAIR_LOG.getDefaultState();

@@ -13,6 +13,11 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to grow all variations of the tainted spruce tree
+ */
 public class TaintedSpruceSapling extends SaplingBase {
     boolean untainted;
     public TaintedSpruceSapling(String name, boolean untainted) {

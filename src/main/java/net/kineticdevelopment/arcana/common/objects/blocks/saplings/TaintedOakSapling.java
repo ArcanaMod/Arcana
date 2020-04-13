@@ -12,6 +12,11 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to grow all variations of the tainted oak tree
+ */
 public class TaintedOakSapling extends SaplingBase {
     boolean untainted;
     public TaintedOakSapling(String name, boolean untainted) {

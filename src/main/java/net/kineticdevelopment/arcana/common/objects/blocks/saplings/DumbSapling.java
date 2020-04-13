@@ -7,6 +7,11 @@ import net.minecraft.world.World;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Saplings that are a WIP
+ */
 public class DumbSapling extends SaplingBase {
     public DumbSapling(String name) {
         super(name);

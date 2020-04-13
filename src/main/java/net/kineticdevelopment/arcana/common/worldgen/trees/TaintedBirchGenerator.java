@@ -10,6 +10,11 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to generate small birch tainted trees
+ */
 public class TaintedBirchGenerator extends WorldGenAbstractTree {
     private final boolean useExtraRandomHeight;
     private static final IBlockState DEFAULT_TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH);

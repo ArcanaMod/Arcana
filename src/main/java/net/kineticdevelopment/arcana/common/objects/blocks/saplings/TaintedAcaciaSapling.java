@@ -13,6 +13,11 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
 
+/**
+ * @author Mozaran
+ *
+ * Used to grow all variations of the tainted acacia tree
+ */
 public class TaintedAcaciaSapling extends SaplingBase {
     boolean untainted;
     public TaintedAcaciaSapling(String name, boolean untainted) {
