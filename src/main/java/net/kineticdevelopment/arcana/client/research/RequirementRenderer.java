@@ -12,13 +12,13 @@ import net.kineticdevelopment.arcana.core.research.impls.XpRequirement;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public interface RequirementRenderer<T extends Requirement>{
 	
-	Map<ResourceLocation, RequirementRenderer<?>> map = new LinkedHashMap<>();
+	Map<ResourceLocation, RequirementRenderer<?>> map = new HashMap<>();
 	
 	static void init(){
 		map.put(ItemRequirement.TYPE, new ItemRequirementRenderer());
@@ -28,7 +28,7 @@ public interface RequirementRenderer<T extends Requirement>{
 	}
 	
 	static <T extends Requirement> RequirementRenderer<T> get(String type){
-		return (RequirementRenderer<T>)map.get(type);
+		return (RequirementRenderer<T>)map.get(new ResourceLocation(type));
 	}
 	
 	static <T extends Requirement> RequirementRenderer<T> get(Requirement type){

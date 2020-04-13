@@ -11,12 +11,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 public interface EntrySectionRenderer<T extends EntrySection>{
 	
-	Map<String, EntrySectionRenderer<?>> map = new LinkedHashMap<>();
+	Map<String, EntrySectionRenderer<?>> map = new HashMap<>();
 	
 	static void init(){
 		map.put(StringSection.TYPE, new StringSectionRenderer());

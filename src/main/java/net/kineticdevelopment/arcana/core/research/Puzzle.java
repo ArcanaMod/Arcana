@@ -50,10 +50,10 @@ public abstract class Puzzle{
 	}
 	
 	public static void init(){
-		factories.put("guesswork", Guesswork::new);
-		deserializers.put("guesswork", Guesswork::deserialize);
-		factories.put("fieldwork", Fieldwork::new);
-		deserializers.put("fieldwork", __ -> new Fieldwork());
+		factories.put(Guesswork.TYPE, Guesswork::new);
+		deserializers.put(Guesswork.TYPE, Guesswork::deserialize);
+		factories.put(Fieldwork.TYPE, Fieldwork::new);
+		deserializers.put(Fieldwork.TYPE, __ -> new Fieldwork());
 		factories.put("chemistry", null);
 		deserializers.put("chemistry", null);
 	}

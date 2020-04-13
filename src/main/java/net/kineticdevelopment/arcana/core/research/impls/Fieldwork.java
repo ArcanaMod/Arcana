@@ -9,13 +9,14 @@ import net.minecraft.util.ResourceLocation;
 public class Fieldwork extends Puzzle{
 	
 	private static final ResourceLocation ICON = new ResourceLocation(Main.MODID, "textures/gui/research/fieldwork.png");
+	public static final String TYPE = "fieldwork";
 	
 	public void load(JsonObject data, ResourceLocation file){
 		// no-op
 	}
 	
 	public String type(){
-		return "fieldwork";
+		return TYPE;
 	}
 	
 	public NBTTagCompound getData(){
