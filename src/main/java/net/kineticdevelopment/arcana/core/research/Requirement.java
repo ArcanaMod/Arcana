@@ -1,9 +1,6 @@
 package net.kineticdevelopment.arcana.core.research;
 
-import net.kineticdevelopment.arcana.core.research.impls.FieldworkRequirement;
-import net.kineticdevelopment.arcana.core.research.impls.GuessworkRequirement;
-import net.kineticdevelopment.arcana.core.research.impls.ItemRequirement;
-import net.kineticdevelopment.arcana.core.research.impls.XpRequirement;
+import net.kineticdevelopment.arcana.core.research.impls.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -42,16 +39,12 @@ public abstract class Requirement{
 	}
 	
 	public static void init(){
-		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("itemType")))));
-		deserializers.put(XpRequirement.TYPE, __ -> new XpRequirement());
-		deserializers.put(GuessworkRequirement.TYPE, compound -> new GuessworkRequirement(compound.getInteger("id")));
 		// item requirement creation is handled by ResearchLoader -- an explicit form may be useful though.
+		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("itemType")))));
 		factories.put(XpRequirement.TYPE, __ -> new XpRequirement());
-		factories.put(GuessworkRequirement.TYPE, params -> new GuessworkRequirement(Integer.parseInt(params.get(0))));
-		
-		// TODO: fieldworks
-		factories.put(FieldworkRequirement.TYPE, __ -> new FieldworkRequirement());
-		deserializers.put(FieldworkRequirement.TYPE, __ -> new FieldworkRequirement());
+		deserializers.put(XpRequirement.TYPE, __ -> new XpRequirement());
+		factories.put(PuzzleRequirement.TYPE, params -> new PuzzleRequirement(new ResourceLocation(params.get(0))));
+		deserializers.put(PuzzleRequirement.TYPE, compound -> new PuzzleRequirement(new ResourceLocation(compound.getString("puzzle"))));
 	}
 	
 	////////// instance stuff

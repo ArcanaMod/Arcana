@@ -212,7 +212,6 @@ tile.arcane_stone_bricks_stairs.name=Arcane Stone Brick Stairs
 tile.infusion_arcane_stone.name=Infused Arcane Stone
 tile.magical_grass.name=Magical Grass
 tile.table.name=Table
-tile.research_table.name=Research Table
 
 #Ore
 tile.amber_ore.name=Amber Ore
@@ -269,7 +268,7 @@ tile.willow_slab_double.name=Willow Double Slab
 tile.willow_stairs.name=Willow Stairs
 
 ##Functional
-tile.research_table.name=Research Table Block (!!!)
+tile.research_table.name=Research Table Block
 
 ##Tainted
 tile.tainted_acacia_leaves.name=Tainted Acacia Leaves
@@ -490,7 +489,7 @@ researchEntry.continue=Continue
 # Research
 requirement.guesswork=Complete the guesswork
 requirement.experience=%sx Experience Levels
-requirement.fieldwork=Do ___
+requirement.fieldwork=Do (something)
 
 # NOTE: none of these names are final, or even more than a working name
 research.arcana.category.basics=Basics

@@ -6,11 +6,18 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
-public class FieldworkRequirement extends Requirement{
+public class PuzzleRequirement extends Requirement{
 	
-	public static final ResourceLocation TYPE = new ResourceLocation(Main.MODID, "fieldwork");
+	public static final ResourceLocation TYPE = new ResourceLocation(Main.MODID, "puzzle");
+	
+	protected ResourceLocation puzzleId;
+	
+	public PuzzleRequirement(ResourceLocation puzzleId){
+		this.puzzleId = puzzleId;
+	}
 	
 	public boolean satisfied(EntityPlayer player){
+		//return Researcher.getFrom(player).stage(puzzleId) > 0;
 		return false;
 	}
 	
@@ -23,6 +30,12 @@ public class FieldworkRequirement extends Requirement{
 	}
 	
 	public NBTTagCompound data(){
-		return new NBTTagCompound();
+		NBTTagCompound compound = new NBTTagCompound();
+		compound.setString("puzzle", puzzleId.toString());
+		return compound;
+	}
+	
+	public ResourceLocation getPuzzleId(){
+		return puzzleId;
 	}
 }

@@ -54,7 +54,7 @@ public abstract class EntrySection{
 		factories.put("string", StringSection::new);
 		deserializers.put(StringSection.TYPE, nbt -> new StringSection(nbt.getString("text")));
 		factories.put("guesswork", GuessworkSection::new);
-		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getInteger("guesswork")));
+		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getString("guesswork")));
 		factories.put("recipe", RecipeSection::new);
 		deserializers.put(RecipeSection.TYPE, nbt -> new RecipeSection(new ResourceLocation(nbt.getString("recipe"))));
 	}

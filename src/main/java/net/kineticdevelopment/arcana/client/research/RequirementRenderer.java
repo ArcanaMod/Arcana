@@ -1,14 +1,8 @@
 package net.kineticdevelopment.arcana.client.research;
 
-import net.kineticdevelopment.arcana.client.research.impls.FieldworkRequirementRenderer;
-import net.kineticdevelopment.arcana.client.research.impls.GuessworkRequirementRenderer;
-import net.kineticdevelopment.arcana.client.research.impls.ItemRequirementRenderer;
-import net.kineticdevelopment.arcana.client.research.impls.XpRequirementRenderer;
+import net.kineticdevelopment.arcana.client.research.impls.*;
 import net.kineticdevelopment.arcana.core.research.Requirement;
-import net.kineticdevelopment.arcana.core.research.impls.FieldworkRequirement;
-import net.kineticdevelopment.arcana.core.research.impls.GuessworkRequirement;
-import net.kineticdevelopment.arcana.core.research.impls.ItemRequirement;
-import net.kineticdevelopment.arcana.core.research.impls.XpRequirement;
+import net.kineticdevelopment.arcana.core.research.impls.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 
@@ -23,8 +17,7 @@ public interface RequirementRenderer<T extends Requirement>{
 	static void init(){
 		map.put(ItemRequirement.TYPE, new ItemRequirementRenderer());
 		map.put(XpRequirement.TYPE, new XpRequirementRenderer());
-		map.put(GuessworkRequirement.TYPE, new GuessworkRequirementRenderer());
-		map.put(FieldworkRequirement.TYPE, new FieldworkRequirementRenderer());
+		map.put(PuzzleRequirement.TYPE, new PuzzleRequirementRenderer());
 	}
 	
 	static <T extends Requirement> RequirementRenderer<T> get(String type){

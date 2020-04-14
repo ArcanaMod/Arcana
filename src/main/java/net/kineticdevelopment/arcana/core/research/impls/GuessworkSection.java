@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.core.research.impls;
 
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 
 /**
  * An entry section that displays a guesswork game's status, and allows the player to obtain a corresponding scroll (or whatever its called).
@@ -11,14 +12,14 @@ public class GuessworkSection extends EntrySection{
 	
 	public static final String TYPE = "GuessworkSection";
 	
-	int guessworkIndex;
+	protected ResourceLocation puzzleId;
 	
-	public GuessworkSection(String guessworkIndex){
-		this.guessworkIndex = /*Integer.parseInt(guessworkIndex)*/0;
+	public GuessworkSection(String guessworkId){
+		this.puzzleId = new ResourceLocation(guessworkId);
 	}
 	
-	public GuessworkSection(int guessworkIndex){
-		this.guessworkIndex = guessworkIndex;
+	public GuessworkSection(ResourceLocation guessworkId){
+		this.puzzleId = guessworkId;
 	}
 	
 	public String getType(){
@@ -27,15 +28,15 @@ public class GuessworkSection extends EntrySection{
 	
 	public NBTTagCompound getData(){
 		NBTTagCompound tag = new NBTTagCompound();
-		tag.setInteger("guesswork", getGuessworkIndex());
+		tag.setString("guesswork", getGuessworkId().toString());
 		return tag;
 	}
 	
-	public int getGuessworkIndex(){
-		return guessworkIndex;
+	public ResourceLocation getGuessworkId(){
+		return puzzleId;
 	}
 	
 	public void addOwnRequirements(){
-		addRequirement(new GuessworkRequirement(guessworkIndex));
+		addRequirement(new PuzzleRequirement(getGuessworkId()));
 	}
 }
