@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.core.research.impls;
 
 import net.kineticdevelopment.arcana.common.event.ResearchEvent;
+import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,6 +21,10 @@ public class ResearcherImpl implements Researcher{
 		return data.getOrDefault(entry.key(), 0);
 	}
 	
+	public boolean isPuzzleCompleted(Puzzle puzzle){
+		return false;
+	}
+	
 	public void advance(ResearchEntry entry){
 		// whether or not we can advance is already checked
 		do{
@@ -33,7 +38,11 @@ public class ResearcherImpl implements Researcher{
 		MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
 	}
 	
-	public void complete(ResearchEntry entry){
+	public void completePuzzle(Puzzle puzzle){
+	
+	}
+	
+	public void completeEntry(ResearchEntry entry){
 		if(stage(entry) < entry.sections().size()){
 			data.put(entry.key(), entry.sections().size());
 			MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.COMPLETE));

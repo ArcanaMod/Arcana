@@ -67,7 +67,7 @@ public class PktSyncBooksHandler implements IMessageHandler<PktSyncBooksHandler.
 				for(NBTBase puzzleElement : puzzles){
 					NBTTagCompound puzzle = (NBTTagCompound)puzzleElement;
 					// deserialize book
-					Puzzle puzzleObject = Puzzle.deserialze(puzzle);
+					Puzzle puzzleObject = Puzzle.deserialize(puzzle);
 					if(puzzleObject != null){
 						this.puzzles.put(puzzleObject.getKey(), puzzleObject);
 					}else LOGGER.error(format("An error occurred syncing research puzzles with client: could not deserialize Puzzle with type \"%s\"; invalid type.", puzzle.getString("type")));

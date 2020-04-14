@@ -22,6 +22,8 @@ public interface Researcher{
 	 */
 	int stage(ResearchEntry entry);
 	
+	boolean isPuzzleCompleted(Puzzle puzzle);
+	
 	/**
 	 * Increments the stage for an entry.
 	 *
@@ -39,6 +41,8 @@ public interface Researcher{
 	 */
 	void advance(ResearchEntry entry);
 	
+	void completePuzzle(Puzzle puzzle);
+	
 	/**
 	 * Sets this researchers progress for an entry to its maximum progress
 	 *
@@ -49,7 +53,7 @@ public interface Researcher{
 	 * @param entry
 	 * 		The research entry to complete.
 	 */
-	void complete(ResearchEntry entry);
+	void completeEntry(ResearchEntry entry);
 	
 	/**
 	 * Removes all progress on the given entry.

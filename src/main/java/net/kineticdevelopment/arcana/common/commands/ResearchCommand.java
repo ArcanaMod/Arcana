@@ -47,7 +47,7 @@ public class ResearchCommand extends CommandBase{
 					Researcher.getFrom(player).reset(entry);
 					Connection.sendReset(entry, player);
 				}else if(args[2].equalsIgnoreCase("complete")){
-					Researcher.getFrom(player).complete(entry);
+					Researcher.getFrom(player).completeEntry(entry);
 					Connection.sendComplete(entry, player);
 				}else if(args[2].equalsIgnoreCase("tryAdvance")){
 					if(Researcher.canAdvance(Researcher.getFrom(player), entry)){

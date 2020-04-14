@@ -14,7 +14,7 @@ public class PktCompleteHandler implements IMessageHandler<PktCompleteHandler.Pk
 	public IMessage onMessage(PktCompleteResearch message, MessageContext ctx){
 		ResearchEntry entry = ClientBooks.getEntry(message.getKey());
 		if(entry != null)
-			Researcher.getFrom(Minecraft.getMinecraft().player).complete(entry);
+			Researcher.getFrom(Minecraft.getMinecraft().player).completeEntry(entry);
 		return null;
 	}
 	

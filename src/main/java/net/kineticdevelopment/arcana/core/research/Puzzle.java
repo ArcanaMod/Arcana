@@ -37,7 +37,7 @@ public abstract class Puzzle{
 		return factories.get(type);
 	}
 	
-	public static Puzzle deserialze(NBTTagCompound passData){
+	public static Puzzle deserialize(NBTTagCompound passData){
 		String type = passData.getString("type");
 		ResourceLocation key = new ResourceLocation(passData.getString("key"));
 		NBTTagCompound data = passData.getCompoundTag("data");

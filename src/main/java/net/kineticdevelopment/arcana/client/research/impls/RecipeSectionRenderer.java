@@ -68,9 +68,9 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 	}
 	
 	private void renderCraftingRecipe(int x, int y, IRecipe recipe, int screenWidth, int screenHeight){
-		renderResult(x, y, recipe.getRecipeOutput(), screenWidth, screenHeight);
+		renderResult(recipe.getRecipeOutput().getDisplayName(), x, y, recipe.getRecipeOutput(), screenWidth, screenHeight);
 		
-		int ulX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 + 8;
+		int ulX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 - 10;
 		mc().getTextureManager().bindTexture(textures);
 		drawTexturedModalRect(ulX - 4, ulY - 4, 145, 1, 72, 72);
 		
@@ -91,7 +91,7 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 	}
 	
 	private void renderSmeltingRecipe(int x, int y, ItemStack input, ItemStack output, int screenWidth, int screenHeight){
-		renderResult(x, y, output, screenWidth, screenHeight);
+		renderResult(output.getDisplayName(), x, y, output, screenWidth, screenHeight);
 		
 		int inputX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 + 8;
 		mc().getTextureManager().bindTexture(textures);
@@ -99,12 +99,19 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 		Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(input, inputX, inputY);
 	}
 	
-	private void renderResult(int x, int y, ItemStack result, int screenWidth, int screenHeight){
+	private void renderResult(String name, int x, int y, ItemStack result, int screenWidth, int screenHeight){
 		// render result
 		// texture is @ 1, 167 & has a size of 58x20
-		int rX = x + (screenWidth - 256) / 2 + (PAGE_WIDTH - 58) / 2, rY = y + (screenHeight - 181) / 2 + 10;
+		int rX = x + (screenWidth - 256) / 2 + (PAGE_WIDTH - 58) / 2;
+		int rY = y + (screenHeight - 181) / 2 + 16;
 		drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
-		Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(result, rX + 29 - 8, rY + 10 - 8);
+		mc().getRenderItem().renderItemAndEffectIntoGUI(result, rX + 29 - 8, rY + 10 - 8);
+		int stX = x + (screenWidth - 256) / 2 + (PAGE_WIDTH - fr().getStringWidth(name)) / 2;
+		int stY = y + (screenHeight - 181) / 2 + 11 - fr().FONT_HEIGHT;
+		fr().drawString(name, stX, stY, 0);
+		GlStateManager.color(1f, 1f, 1f, 1f);
+		//GlStateManager.enableBlend();
+		//GlStateManager.disableLighting();
 	}
 	
 	public void renderAfter(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player){
@@ -125,13 +132,14 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 	
 	private void renderCraftingRecipeTooltips(int x, int y, IRecipe recipe, int screenWidth, int screenHeight, int mouseX, int mouseY){
 		// Check result
-		int rX = x + (screenWidth - 256) / 2 + 44, rY = y + (screenHeight - 181) / 2 + 12;
+		int rX = x + (screenWidth - 256) / 2 + 44;
+		int rY = y + (screenHeight - 181) / 2 + 18;
 		if(mouseX >= rX && mouseX <= rX + 16 && mouseY >= rY && mouseY <= rY + 16){
 			GuiUtils.drawGradientRect(300, rX, rY, rX + 16, rY + 16, slotColor, slotColor);
 			GuiUtils.drawHoveringText(recipe.getRecipeOutput(), getTooltipFromItem(recipe.getRecipeOutput()), mouseX, mouseY, screenWidth, screenHeight, -1, mc().fontRenderer);
 			GlStateManager.disableLighting();
 		}else{
-			int ulX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 + 8;
+			int ulX = x + (screenWidth - 256 + PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + PAGE_HEIGHT) / 2 - 10;
 			int width = recipe instanceof IShapedRecipe ? ((IShapedRecipe)recipe).getRecipeWidth() : 3;
 			int height = recipe instanceof IShapedRecipe ? ((IShapedRecipe)recipe).getRecipeHeight() : 3;
 			if(mouseX >= ulX && mouseX <= ulX + 24 * width && mouseY >= ulY && mouseY <= ulY + 24 * height){
@@ -157,7 +165,8 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 	
 	private void renderSmeltingRecipeTooltips(int x, int y, ItemStack input, ItemStack output, int screenWidth, int screenHeight, int mouseX, int mouseY){
 		// Check result
-		int rX = x + (screenWidth - 256) / 2 + 44, rY = y + (screenHeight - 181) / 2 + 12;
+		int rX = x + (screenWidth - 256) / 2 + 44;
+		int rY = y + (screenHeight - 181) / 2 + 18;
 		if(mouseX >= rX && mouseX <= rX + 16 && mouseY >= rY && mouseY <= rY + 16){
 			GuiUtils.drawGradientRect(299, rX, rY, rX + 16, rY + 16, slotColor, slotColor);
 			GuiUtils.drawHoveringText(output, getTooltipFromItem(output), mouseX, mouseY, screenWidth, screenHeight, -1, mc().fontRenderer);
