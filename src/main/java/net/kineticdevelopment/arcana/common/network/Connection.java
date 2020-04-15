@@ -6,6 +6,7 @@ import net.kineticdevelopment.arcana.common.network.PktResetHandler.PktResetRese
 import net.kineticdevelopment.arcana.common.network.PktSyncBooksHandler.PktSyncBooks;
 import net.kineticdevelopment.arcana.common.network.PktSyncClientResearchHandler.PktSyncClientResearch;
 import net.kineticdevelopment.arcana.common.network.PktTryAdvanceHandler.PktTryAdvance;
+import net.kineticdevelopment.arcana.common.network.inventory.PktGetNoteHandler;
 import net.kineticdevelopment.arcana.common.network.inventory.PktRequestAspectSync;
 import net.kineticdevelopment.arcana.common.network.inventory.PktSyncAspectContainerHandler;
 import net.kineticdevelopment.arcana.common.network.inventory.PktSyncAspectContainerHandler.PktSyncAspectContainer;
@@ -36,6 +37,7 @@ public class Connection{
 		network.registerMessage(PktTryAdvanceHandler.class, PktTryAdvance.class, id++, Side.SERVER);
 		network.registerMessage(PktAspectClickHandler.class, PktAspectClick.class, id++, Side.SERVER);
 		network.registerMessage(PktRequestAspectSync.class, PktRequestAspectSync.class, id++, Side.SERVER);
+		network.registerMessage(PktGetNoteHandler.class, PktGetNoteHandler.PktGetNote.class, id++, Side.SERVER);
 	}
 	
 	public static void sendTryAdvance(ResearchEntry entry){

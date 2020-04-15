@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 public class PktCompleteHandler implements IMessageHandler<PktCompleteHandler.PktCompleteResearch, IMessage>{
 	
 	public IMessage onMessage(PktCompleteResearch message, MessageContext ctx){
+		// on client
 		ResearchEntry entry = ClientBooks.getEntry(message.getKey());
 		if(entry != null)
 			Researcher.getFrom(Minecraft.getMinecraft().player).completeEntry(entry);

@@ -30,6 +30,10 @@
           "content": "research.arcana.root.complete"
         },
         {
+          "type": "guesswork",
+          "content": "arcana:gw_enchanting_table"
+        },
+        {
           "type": "recipe",
           "content": "arcana:R_arcanium_sword"
         }

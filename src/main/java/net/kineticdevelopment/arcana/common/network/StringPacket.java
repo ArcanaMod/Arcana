@@ -1,23 +1,23 @@
 package net.kineticdevelopment.arcana.common.network;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.nio.charset.StandardCharsets;
 
 public abstract class StringPacket implements IMessage{
 	
-	String entryKey;
+	protected String entryKey;
 	
 	public void fromBytes(ByteBuf buf){
-		// note: here I use buf.readableBytes() because only a string is encoded. If I wanted to store other data,
-		// I should handle this more appropriately.
-		// 1.14's PacketBuffer will handle this for me.
-		// ~~this is actually a packetbuffer already~~
-		entryKey = buf.readCharSequence(buf.readableBytes(), StandardCharsets.UTF_8).toString();
+		PacketBuffer pb = new PacketBuffer(buf);
+		// no reason to make it so big, but no reason to make it any shorter.
+		entryKey = pb.readString(32767 * 4);
 	}
 	
 	public void toBytes(ByteBuf buf){
-		buf.writeCharSequence(entryKey, StandardCharsets.UTF_8);
+		PacketBuffer pb = new PacketBuffer(buf);
+		pb.writeString(entryKey);
 	}
 }

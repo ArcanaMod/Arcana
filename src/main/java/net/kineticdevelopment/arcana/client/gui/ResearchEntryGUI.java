@@ -149,6 +149,20 @@ public class ResearchEntryGUI extends GuiScreen{
 		super.keyTyped(typedChar, keyCode);
 	}
 	
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+		super.mouseClicked(mouseX, mouseY, mouseButton);
+		if(totalLength() > index){
+			EntrySection section = getSectionAtIndex(index);
+			if(section != null)
+				EntrySectionRenderer.get(section).onClick(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
+		}
+		if(totalLength() > index + 1){
+			EntrySection section = getSectionAtIndex(index + 1);
+			if(section != null)
+				EntrySectionRenderer.get(section).onClick(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
+		}
+	}
+	
 	private boolean canTurnRight(){
 		return index < totalLength() - 2;
 	}
