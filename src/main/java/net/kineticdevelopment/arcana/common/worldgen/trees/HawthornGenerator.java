@@ -89,6 +89,12 @@ public class HawthornGenerator extends WorldGenAbstractTree {
         positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,10,0),  5, GenerationUtilities.GenType.FULL));
         positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,9,0),  7, GenerationUtilities.GenType.FULL));
         positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,8,0),  9, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateOval(position.add(0,15,0),  6,12, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,20,0),  6, GenerationUtilities.GenType.FULL));
+        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,19,0),  6, GenerationUtilities.GenType.THICK));
+        positions.addAll(GenerationUtilities.GenerateOval(position.add(0,14,0),  6, 12, GenerationUtilities.GenType.THICK));
+        positions.addAll(GenerationUtilities.GenerateOval(position.add(0,25,0),  12, 12, GenerationUtilities.GenType.THICK));
+
 
         for(BlockPos pos : positions) {
             setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);
