@@ -1,6 +1,5 @@
 package net.kineticdevelopment.arcana.common.worldgen;
 
-import com.google.gson.internal.$Gson$Types;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -13,14 +12,33 @@ import java.util.ArrayList;
 public class GenerationUtilities {
     public enum GenType {THICK, THIN, FULL}
 
+    /**
+     * @param x - x coordinate
+     * @param y - y coordinate
+     * @param z - z coordinate
+     * @return - squared length of line between 3D points
+     */
     private static double lengthSq(double x, double y, double z) {
         return (x * x) + (y * y) + (z * z);
     }
 
+    /**
+     * @param x - x coordinate
+     * @param z - z coordinate
+     * @return - squared length of line between 2D points
+     */
     private static double lengthSq(double x, double z) {
         return (x * x) + (z * z);
     }
 
+    /**
+     * @param origin - Center of the Sphere
+     * @param xSize - Diameter of the X-Axis
+     * @param zSize - Diameter of the Y-Axis
+     * @param height - Height of Cylinder
+     * @param type - GenType either FULL, THICK, or THIN
+     * @return An ArrayList of BlockPos which compose the cylinder
+     */
     public static ArrayList<BlockPos> GenerateCyl(BlockPos origin, int xSize, int zSize, int height, GenType type) {
         ArrayList<BlockPos> blockPosList = new ArrayList<>();
 
@@ -104,12 +122,129 @@ public class GenerationUtilities {
         return blockPosList;
     }
 
-    public static ArrayList<BlockPos> GenerateOval(BlockPos origin, int xSize, int ySize, GenType type) {
+    /**
+     * @param origin - Center of the Sphere
+     * @param xSize - Diameter of the X-Axis
+     * @param ySize - Diameter of the Y-Axis
+     * @param type - GenType either FULL, THICK, or THIN
+     * @return An ArrayList of BlockPos which compose the ellipse
+     */
+    public static ArrayList<BlockPos> GenerateEllipse(BlockPos origin, int xSize, int ySize, GenType type) {
         return GenerateCyl(origin, xSize, ySize, 1, type);
     }
 
+    /**
+     * @param origin - Center of the Sphere
+     * @param diameter - Diameter of the Sphere
+     * @param type - GenType either FULL, THICK, or THIN
+     * @return An ArrayList of BlockPos which compose the circle
+     */
     public static ArrayList<BlockPos> GenerateCircle(BlockPos origin, int diameter, GenType type) {
-        return GenerateOval(origin, diameter, diameter, type);
+        return GenerateEllipse(origin, diameter, diameter, type);
+    }
+
+    /**
+     * @param origin - Center of the Sphere
+     * @param diameter - Diameter of the Sphere
+     * @param type - GenType either FULL, or THICK/THIN which behave the same
+     * @return An ArrayList of BlockPos which compose the Sphere
+     */
+    public static ArrayList<BlockPos> GenerateSphere(BlockPos origin, int diameter, GenType type) {
+        return GenerateEllipsoid(origin, diameter, diameter, diameter, type);
+    }
+
+    /**
+     * @param origin - Center of the Ellipsoid
+     * @param xSize - Diameter of X-Axis
+     * @param ySize - Diameter of Y-Axis
+     * @param zSize - Diameter of Z-Axis
+     * @param type - GenType either FULL, or THICK/THIN which behave the same
+     * @return An ArrayList of BlockPos which compose the Ellipsoid
+     */
+    public static ArrayList<BlockPos> GenerateEllipsoid(BlockPos origin, int xSize, int ySize, int zSize, GenType type) {
+        ArrayList<BlockPos> blockPosList = new ArrayList<>();
+
+        double xRadius = xSize / 2.0 + 0.5;
+        double yRadius = ySize / 2.0 + 0.5;
+        double zRadius = zSize / 2.0 + 0.5;
+
+        final double invRadiusX = 1 / xRadius;
+        final double invRadiusY = 1 / yRadius;
+        final double invRadiusZ = 1 / zRadius;
+
+        final int ceilRadiusX = (int) Math.ceil(xRadius);
+        final int ceilRadiusY = (int) Math.ceil(yRadius);
+        final int ceilRadiusZ = (int) Math.ceil(zRadius);
+
+        double nextXn = 0;
+        forX: for (int x = 0; x <= ceilRadiusX; ++x) {
+            final double xn = nextXn;
+            nextXn = (x + 1) * invRadiusX;
+            double nextYn = 0;
+            forY: for (int y = 0; y <= ceilRadiusY; ++y) {
+                final double yn = nextYn;
+                nextYn = (y + 1) * invRadiusY;
+                double nextZn = 0;
+                forZ: for (int z = 0; z <= ceilRadiusZ; ++z) {
+                    final double zn = nextZn;
+                    nextZn = (z + 1) * invRadiusZ;
+
+                    double distanceSq = lengthSq(xn, yn, zn);
+                    if (distanceSq > 1) {
+                        if (z == 0) {
+                            if (y == 0) {
+                                break forX;
+                            }
+                            break forY;
+                        }
+                        break forZ;
+                    }
+
+                    if (type != GenType.FULL) {
+                        if (lengthSq(nextXn, yn, zn) <= 1 && lengthSq(xn, nextYn, zn) <= 1 && lengthSq(xn, yn, nextZn) <= 1) {
+                            continue;
+                        }
+                    }
+
+                    blockPosList.add(origin.add(x, y, z));
+                    blockPosList.add(origin.add(-x, y, z));
+                    blockPosList.add(origin.add(x, -y, z));
+                    blockPosList.add(origin.add(x, y, -z));
+                    blockPosList.add(origin.add(-x, -y, z));
+                    blockPosList.add(origin.add(x, -y, -z));
+                    blockPosList.add(origin.add(-x, y, -z));
+                    blockPosList.add(origin.add(-x, -y, -z));
+                }
+            }
+        }
+        return blockPosList;
+    }
+
+    /**
+     * @param origin - Center of pyramid base
+     * @param size - Length of base
+     * @param type - GenType either FULL, or THICK/THIN which behave the same
+     * @return An ArrayList of BlockPos which compose the pyramid
+     */
+    public static ArrayList<BlockPos> GeneratePyramid(BlockPos origin, int size, GenType type) {
+        ArrayList<BlockPos> blockPosList = new ArrayList<>();
+
+        int height = size;
+
+        for (int y = 0; y <= height; ++y) {
+            size--;
+            for (int x = 0; x <= size; ++x) {
+                for (int z = 0; z <= size; ++z) {
+                    if ((type == GenType.FULL && z <= size && x <= size) || z == size || x == size) {
+                        blockPosList.add(origin.add(x, y, z));
+                        blockPosList.add(origin.add(-x, y, z));
+                        blockPosList.add(origin.add(x, y, -z));
+                        blockPosList.add(origin.add(-x, y, -z));
+                    }
+                }
+            }
+        }
+        return blockPosList;
     }
 
     /**
