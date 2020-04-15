@@ -200,7 +200,7 @@ public class GenerationUtilities {
             for(int y = 0; y <= height; ++y) {
                 blockPosList.add(start.add(0, y, 0));
             }
-        } else if(xTranslation != 0 && zTranslation != 0) {
+        } else {
             // 3 axis trunk
             int dx = Math.abs(xTranslation);
             int dy = Math.abs(height);
@@ -215,27 +215,27 @@ public class GenerationUtilities {
             int z1 = start.getZ();
             int z2 = end.getZ();
 
-            if(dx > dy && dx >= dz) {
+            if (dx > dy && dx >= dz) {
                 int p1 = 2 * dy - dx;
                 int p2 = 2 * dz - dx;
 
                 while (x1 != x2) {
                     boolean yzChange = false;
                     x1 += xs;
-                    if(p1 >= 0) {
+                    if (p1 >= 0) {
                         y1 += ys;
                         p1 -= 2 * dx;
                         yzChange = true;
                     }
-                    if(p2 >= 0) {
+                    if (p2 >= 0) {
                         z1 += zs;
                         p2 -= 2 * dx;
                         yzChange = true;
                     }
                     p1 += 2 * dy;
                     p2 += 2 * dz;
-                    if(yzChange) blockPosList.add(new BlockPos(x1 - xs, y1, z1));
-                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
+                    if (yzChange) blockPosList.add(new BlockPos(x1 - xs, y1, z1));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1), diameter));
                 }
             } else if (dy >= dx && dy >= dz) {
                 int p1 = 2 * dx - dy;
@@ -255,8 +255,8 @@ public class GenerationUtilities {
                     }
                     p1 += 2 * dx;
                     p2 += 2 * dz;
-                    if(xzChange) blockPosList.add(new BlockPos(x1, y1 - ys, z1));
-                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
+                    if (xzChange) blockPosList.add(new BlockPos(x1, y1 - ys, z1));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1), diameter));
                 }
             } else {
                 int p1 = 2 * dy - dz;
@@ -276,33 +276,8 @@ public class GenerationUtilities {
                     }
                     p1 += 2 * dy;
                     p2 += 2 * dx;
-                    if(xyChange) blockPosList.add(new BlockPos(x1, y1, z1 - zs));
-                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
-                }
-            }
-        } else {
-            // 2 Axis Trunk
-            boolean isXAxis = xTranslation != 0;
-
-            if(isXAxis) {
-                int slope = (int) Math.ceil((double) height / Math.abs(xTranslation));
-                for(int x = 0; x <= Math.abs(xTranslation); ++x) {
-                    for(int y = 0; y < slope; ++y) {
-                        int xOffset = xTranslation < 0 ? -x : x;
-                        int yOffset =  (x * slope) + y - x;
-                        if(yOffset > height) break;
-                        blockPosList.addAll(GenerationUtilities.GenerateSquare(start.add(xOffset, yOffset, 0), diameter));
-                    }
-                }
-            } else {
-                int slope = (int) Math.ceil((double) height / Math.abs(zTranslation));
-                for(int z = 0; z <= Math.abs(zTranslation); ++z) {
-                    for(int y = 0; y < slope; ++y) {
-                        int zOffset = zTranslation < 0 ? -z : z;
-                        int yOffset =  (z * slope) + y - z;
-                        if(yOffset > height) break;
-                        blockPosList.addAll(GenerationUtilities.GenerateSquare(start.add(0, yOffset, zOffset), diameter));
-                    }
+                    if (xyChange) blockPosList.add(new BlockPos(x1, y1, z1 - zs));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1), diameter));
                 }
             }
         }
