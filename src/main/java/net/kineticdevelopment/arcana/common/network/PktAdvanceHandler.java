@@ -14,7 +14,7 @@ public class PktAdvanceHandler implements IMessageHandler<PktAdvanceHandler.PktA
 	public IMessage onMessage(PktAdvanceResearch message, MessageContext ctx){
 		ResearchEntry entry = ClientBooks.getEntry(message.getKey());
 		if(entry != null)
-			Researcher.getFrom(Minecraft.getMinecraft().player).advance(entry);
+			Researcher.getFrom(Minecraft.getMinecraft().player).advanceEntry(entry);
 		// else print error
 		return null;
 	}

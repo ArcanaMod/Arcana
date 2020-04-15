@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.core.research;
 
 import com.google.gson.JsonObject;
+import net.kineticdevelopment.arcana.core.research.impls.Chemistry;
 import net.kineticdevelopment.arcana.core.research.impls.Fieldwork;
 import net.kineticdevelopment.arcana.core.research.impls.Guesswork;
 import net.minecraft.nbt.NBTTagCompound;
@@ -51,11 +52,11 @@ public abstract class Puzzle{
 	
 	public static void init(){
 		factories.put(Guesswork.TYPE, Guesswork::new);
-		deserializers.put(Guesswork.TYPE, Guesswork::deserialize);
+		deserializers.put(Guesswork.TYPE, Guesswork::fromNBT);
 		factories.put(Fieldwork.TYPE, Fieldwork::new);
 		deserializers.put(Fieldwork.TYPE, __ -> new Fieldwork());
-		factories.put("chemistry", null);
-		deserializers.put("chemistry", null);
+		factories.put(Chemistry.TYPE, Chemistry::new);
+		deserializers.put(Chemistry.TYPE, Chemistry::fromNBT);
 	}
 	
 	////////////////////// INSTANCE STUFF

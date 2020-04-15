@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBufOutputStream;
 import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.ResearchBook;
+import net.kineticdevelopment.arcana.core.research.ServerBooks;
 import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -29,6 +30,9 @@ public class PktSyncBooksHandler implements IMessageHandler<PktSyncBooksHandler.
 		// TODO: this should probably be made into something somewhat better
 		ClientBooks.books = message.books;
 		ClientBooks.puzzles = message.puzzles;
+		// and for multiplayer, for PuzzleRequirement
+		ServerBooks.books = message.books;
+		ServerBooks.puzzles = message.puzzles;
 		return null;
 	}
 	

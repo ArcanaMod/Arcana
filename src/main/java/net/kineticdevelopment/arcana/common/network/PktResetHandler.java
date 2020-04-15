@@ -14,7 +14,7 @@ public class PktResetHandler implements IMessageHandler<PktResetHandler.PktReset
 	public IMessage onMessage(PktResetResearch message, MessageContext ctx){
 		ResearchEntry entry = ClientBooks.getEntry(message.getKey());
 		if(entry != null)
-			Researcher.getFrom(Minecraft.getMinecraft().player).reset(entry);
+			Researcher.getFrom(Minecraft.getMinecraft().player).resetEntry(entry);
 		return null;
 	}
 	

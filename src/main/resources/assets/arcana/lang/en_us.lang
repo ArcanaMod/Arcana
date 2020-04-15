@@ -487,9 +487,10 @@ commands.arcanaresearch.invalid_entry=Invalid entry "%s"!
 researchEntry.continue=Continue
 
 # Research
-requirement.guesswork=Complete the guesswork
+requirement.guesswork=Guess the Recipe
+requirement.chemistry=Complete the Chemistry
 requirement.experience=%sx Experience Levels
-requirement.fieldwork=Do (something)
+requirement.fieldwork=Do ???
 
 # NOTE: none of these names are final, or even more than a working name
 research.arcana.category.basics=Basics

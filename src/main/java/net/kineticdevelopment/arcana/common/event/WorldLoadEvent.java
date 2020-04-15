@@ -24,6 +24,7 @@ public class WorldLoadEvent{
 		// Its definitely an EntityPlayerMP
 		Connection.network.sendTo(new PktSyncBooks(ServerBooks.books, ServerBooks.puzzles), (EntityPlayerMP)event.player);
 		// may need to delay this somehow...
-		Connection.network.sendTo(new PktSyncClientResearch(Researcher.getFrom(event.player).getData()), (EntityPlayerMP)event.player);
+		Researcher researcher = Researcher.getFrom(event.player);
+		Connection.network.sendTo(new PktSyncClientResearch(researcher.getEntryData(), researcher.getPuzzleData()), (EntityPlayerMP)event.player);
 	}
 }

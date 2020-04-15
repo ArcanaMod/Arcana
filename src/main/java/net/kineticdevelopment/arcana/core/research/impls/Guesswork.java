@@ -23,9 +23,7 @@ public class Guesswork extends Puzzle{
 	protected ResourceLocation recipe;
 	protected Map<ResourceLocation, String> hints;
 	
-	public Guesswork(){
-		// empty for loading
-	}
+	public Guesswork(){}
 	
 	public Guesswork(ResourceLocation recipe, Map<ResourceLocation, String> hints){
 		this.recipe = recipe;
@@ -61,7 +59,7 @@ public class Guesswork extends Puzzle{
 		return compound;
 	}
 	
-	public static Guesswork deserialize(NBTTagCompound passData){
+	public static Guesswork fromNBT(NBTTagCompound passData){
 		ResourceLocation recipe = new ResourceLocation(passData.getString("recipe"));
 		Map<ResourceLocation, String> hints = new HashMap<>();
 		NBTTagCompound serialHints = passData.getCompoundTag("hints");

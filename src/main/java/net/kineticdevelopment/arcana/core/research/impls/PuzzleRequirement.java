@@ -2,6 +2,8 @@ package net.kineticdevelopment.arcana.core.research.impls;
 
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Requirement;
+import net.kineticdevelopment.arcana.core.research.Researcher;
+import net.kineticdevelopment.arcana.core.research.ServerBooks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -17,8 +19,7 @@ public class PuzzleRequirement extends Requirement{
 	}
 	
 	public boolean satisfied(EntityPlayer player){
-		//return Researcher.getFrom(player).stage(puzzleId) > 0;
-		return false;
+		return Researcher.getFrom(player).isPuzzleCompleted(ServerBooks.puzzles.get(puzzleId));
 	}
 	
 	public void take(EntityPlayer player){

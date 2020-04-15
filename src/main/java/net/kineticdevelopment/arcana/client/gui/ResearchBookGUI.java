@@ -324,10 +324,10 @@ public class ResearchBookGUI extends GuiScreen{
 		
 		// if the page is at full progress, its complete.
 		Researcher r = Researcher.getFrom(mc.player);
-		if(r.stage(entry) >= entry.sections().size())
+		if(r.entryStage(entry) >= entry.sections().size())
 			return PageStyle.COMPLETE;
 		// if its progress is greater than zero, then its in progress.
-		if(r.stage(entry) > 0)
+		if(r.entryStage(entry) > 0)
 			return PageStyle.IN_PROGRESS;
 		// if it has no parents *and* the "root" tag, its available to do and in progress.
 		if(entry.meta().contains("root") && entry.parents().size() == 0)

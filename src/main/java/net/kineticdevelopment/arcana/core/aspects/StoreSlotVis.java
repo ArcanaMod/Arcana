@@ -38,7 +38,6 @@ public class StoreSlotVis implements AspectHandler, ICapabilityProvider{
 	}
 	
 	public int insert(Aspect aspect, int amount, boolean simulate){
-		System.out.println("Inserting " + aspect + " x" + amount + ": " + simulate + "!");
 		Aspect _stored = stored;
 		if(_stored == null)
 			_stored = aspect;
@@ -68,7 +67,6 @@ public class StoreSlotVis implements AspectHandler, ICapabilityProvider{
 	}
 	
 	public int drain(Aspect aspect, int amount, boolean simulate){
-		System.out.println("Draining " + aspect + " x" + amount + ": " + simulate + "!");
 		int vis = getCurrentVis(aspect);
 		if(amount >= vis){
 			if(!simulate){

@@ -20,7 +20,7 @@ public interface Researcher{
 	 * 		The research entry to check the status of.
 	 * @return The last index of entry section unlocked, or 0 if it hasn't been unlocked or progressed.
 	 */
-	int stage(ResearchEntry entry);
+	int entryStage(ResearchEntry entry);
 	
 	boolean isPuzzleCompleted(Puzzle puzzle);
 	
@@ -39,9 +39,13 @@ public interface Researcher{
 	 * @param entry
 	 * 		The research page to advance.
 	 */
-	void advance(ResearchEntry entry);
+	void advanceEntry(ResearchEntry entry);
 	
 	void completePuzzle(Puzzle puzzle);
+	
+	void resetPuzzle(Puzzle puzzle);
+	
+	void setPuzzleCompletion(Puzzle puzzle, boolean complete);
 	
 	/**
 	 * Sets this researchers progress for an entry to its maximum progress
@@ -63,48 +67,65 @@ public interface Researcher{
 	 * @param entry
 	 * 		The research entry to reset.
 	 */
-	void reset(ResearchEntry entry);
+	void resetEntry(ResearchEntry entry);
 	
 	void setPlayer(EntityPlayer player);
 	EntityPlayer getPlayer();
 	
 	/**
 	 * Returns a map containing this researcher's data, where the keys are the keys of all sections
-	 * that have a stage greater than 0 and the keys of every completed puzzle,and the values are the
-	 * current stage of that entry, or "1" for a completed puzzle. Incomplete puzzles, and entries with
-	 * 0 progress may be included in this map.
+	 * that have a stage greater than 0, and the values are the current stage of that entry. Entries
+	 * with 0 progress may be included in this map.
 	 *
-	 * @return A Map containing the data of this researcher.
+	 * @return A Map containing the research entry data of this researcher.
 	 */
-	Map<ResourceLocation, Integer> getData();
+	Map<ResourceLocation, Integer> getEntryData();
 	
-	void setData(Map<ResourceLocation, Integer> data);
+	void setEntryData(Map<ResourceLocation, Integer> data);
+	
+	Map<ResourceLocation, Boolean> getPuzzleData();
+	
+	void setPuzzleData(Map<ResourceLocation, Boolean> data);
 	
 	default NBTBase serialize(){
 		NBTTagCompound compound = new NBTTagCompound();
-		getData().forEach((key, value) -> compound.setInteger(key.toString(), value));
+		
+		NBTTagCompound entries = new NBTTagCompound();
+		getEntryData().forEach((key, value) -> entries.setInteger(key.toString(), value));
+		compound.setTag("entries", entries);
+		
+		NBTTagCompound puzzles = new NBTTagCompound();
+		getEntryData().forEach((key, value) -> puzzles.setInteger(key.toString(), value));
+		compound.setTag("puzzles", puzzles);
 		return compound;
 	}
 	
 	default void deserialize(NBTTagCompound data){
-		Map<ResourceLocation, Integer> dat = new HashMap<>();
-		for(String s : data.getKeySet())
-			dat.put(new ResourceLocation(s), data.getInteger(s));
-		setData(dat);
+		Map<ResourceLocation, Integer> entryDat = new HashMap<>();
+		NBTTagCompound entries = data.getCompoundTag("entries");
+		for(String s : entries.getKeySet())
+			entryDat.put(new ResourceLocation(s), entries.getInteger(s));
+		setEntryData(entryDat);
+		
+		Map<ResourceLocation, Boolean> puzzleDat = new HashMap<>();
+		NBTTagCompound puzzles = data.getCompoundTag("puzzles");
+		for(String s : puzzles.getKeySet())
+			puzzleDat.put(new ResourceLocation(s), puzzles.getBoolean(s));
+		setPuzzleData(puzzleDat);
 	}
 	
-	static boolean canAdvance(Researcher r, ResearchEntry entry){
-		if(visible(entry, r))
-			if(entry.sections().size() > r.stage(entry))
-				return entry.sections().get(r.stage(entry)).getRequirements().stream().allMatch(x -> x.satisfied(r.getPlayer()));
+	static boolean canAdvanceEntry(Researcher r, ResearchEntry entry){
+		if(isEntryVisible(entry, r))
+			if(entry.sections().size() > r.entryStage(entry))
+				return entry.sections().get(r.entryStage(entry)).getRequirements().stream().allMatch(x -> x.satisfied(r.getPlayer()));
 		// at maximum
 		return false;
 	}
 	
-	static void takeAndAdvance(Researcher r, ResearchEntry entry){
-		if(canAdvance(r, entry)){
-			entry.sections().get(r.stage(entry)).getRequirements().forEach(requirement -> requirement.take(r.getPlayer()));
-			r.advance(entry);
+	static void takeRequirementsAndAdvanceEntry(Researcher r, ResearchEntry entry){
+		if(canAdvanceEntry(r, entry)){
+			entry.sections().get(r.entryStage(entry)).getRequirements().forEach(requirement -> requirement.take(r.getPlayer()));
+			r.advanceEntry(entry);
 		}
 	}
 	
@@ -119,17 +140,17 @@ public interface Researcher{
 		return p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null);
 	}
 	
-	static boolean visible(ResearchEntry entry, Researcher r){
+	static boolean isEntryVisible(ResearchEntry entry, Researcher r){
 		// abridged version of ResearchBookGUI#style
 		
-		if(r.stage(entry) >= entry.sections().size())
+		if(r.entryStage(entry) >= entry.sections().size())
 			return true;
-		if(r.stage(entry) > 0)
+		if(r.entryStage(entry) > 0)
 			return true;
 		if(entry.meta().contains("root") && entry.parents().size() == 0)
 			return true;
 		if(!entry.meta().contains("hidden"))
-			return entry.parents().stream().allMatch(x -> visible(ServerBooks.getEntry(x), r));
+			return entry.parents().stream().allMatch(x -> isEntryVisible(ServerBooks.getEntry(x), r));
 		return false;
 	}
 }

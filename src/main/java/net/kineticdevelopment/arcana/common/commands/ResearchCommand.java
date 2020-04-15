@@ -44,18 +44,18 @@ public class ResearchCommand extends CommandBase{
 			if(entry != null){
 				EntityPlayerMP player = getPlayer(server, sender, args[1]);
 				if(args[2].equalsIgnoreCase("reset")){
-					Researcher.getFrom(player).reset(entry);
+					Researcher.getFrom(player).resetEntry(entry);
 					Connection.sendReset(entry, player);
 				}else if(args[2].equalsIgnoreCase("complete")){
 					Researcher.getFrom(player).completeEntry(entry);
 					Connection.sendComplete(entry, player);
 				}else if(args[2].equalsIgnoreCase("tryAdvance")){
-					if(Researcher.canAdvance(Researcher.getFrom(player), entry)){
-						Researcher.getFrom(player).advance(entry);
+					if(Researcher.canAdvanceEntry(Researcher.getFrom(player), entry)){
+						Researcher.getFrom(player).advanceEntry(entry);
 						Connection.sendAdvance(entry, player);
 					}
 				}else if(args[2].equalsIgnoreCase("forceAdvance")){
-					Researcher.getFrom(player).advance(entry);
+					Researcher.getFrom(player).advanceEntry(entry);
 					Connection.sendAdvance(entry, player);
 				}else
 					throw new WrongUsageException("commands.arcanaresearch.operations");

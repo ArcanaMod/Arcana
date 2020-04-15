@@ -24,6 +24,6 @@ public class AttachCapabilities{
 	@SubscribeEvent
 	public static void playerClone(PlayerEvent.Clone event){
 		if(!event.isWasDeath())
-			Researcher.getFrom(event.getEntityPlayer()).setData(Researcher.getFrom(event.getOriginal()).getData());
+			Researcher.getFrom(event.getEntityPlayer()).setEntryData(Researcher.getFrom(event.getOriginal()).getEntryData());
 	}
 }

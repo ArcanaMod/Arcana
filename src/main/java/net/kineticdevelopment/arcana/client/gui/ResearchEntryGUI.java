@@ -70,8 +70,8 @@ public class ResearchEntryGUI extends GuiScreen{
 		
 		// Requirements
 		Researcher r = Researcher.getFrom(mc.player);
-		if(r.stage(entry) < entry.sections().size() && entry.sections().get(r.stage(entry)).getRequirements().size() > 0){
-			List<Requirement> requirements = entry.sections().get(r.stage(entry)).getRequirements();
+		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
+			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
 			final int y = (height - 181) / 2 + 190;
 			final int reqWidth = 20;
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
@@ -112,8 +112,8 @@ public class ResearchEntryGUI extends GuiScreen{
 			// I can't be bothered to make a new type for something which will use this behaviours exactly once.
 			// If I ever need this behaviour elsewhere, I'll move it to a proper class.
 			public void drawButton(Minecraft mc, int mouseX, int mouseY, float partial){
-				enabled = Researcher.getFrom(mc.player).stage(entry) < entry.sections().size() &&
-						entry.sections().get(Researcher.getFrom(mc.player).stage(entry)).getRequirements().stream().allMatch(it -> it.satisfied(mc.player));
+				enabled = Researcher.getFrom(mc.player).entryStage(entry) < entry.sections().size() &&
+						entry.sections().get(Researcher.getFrom(mc.player).entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfied(mc.player));
 				super.drawButton(mc, mouseX, mouseY, partial);
 			}
 		};
@@ -135,7 +135,7 @@ public class ResearchEntryGUI extends GuiScreen{
 	protected void updateButtonVisibility(){
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
-		cont.visible = Researcher.getFrom(mc.player).stage(entry) < getVisibleSections().size();
+		cont.visible = Researcher.getFrom(mc.player).entryStage(entry) < getVisibleSections().size();
 	}
 	
 	protected void keyTyped(char typedChar, int keyCode) throws IOException{
@@ -188,7 +188,7 @@ public class ResearchEntryGUI extends GuiScreen{
 	}
 	
 	private boolean visible(EntrySection section){
-		return Researcher.getFrom(Minecraft.getMinecraft().player).stage(entry) >= entry.sections().indexOf(section);
+		return Researcher.getFrom(Minecraft.getMinecraft().player).entryStage(entry) >= entry.sections().indexOf(section);
 	}
 	
 	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){
