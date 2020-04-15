@@ -1,6 +1,5 @@
 package net.kineticdevelopment.arcana.common.worldgen;
 
-import com.google.gson.internal.$Gson$Types;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -11,153 +10,241 @@ import java.util.ArrayList;
  * Functions used to generate ArrayLists od BlockPos that form a given shape
  */
 public class GenerationUtilities {
-    public enum GenType {THIN, THICK, FULL}
-    private enum Quad {LB, RB, LT, RT}
+    public enum GenType {THICK, THIN, FULL}
 
-    private static double distance(double x, double y, double ratio) {
-        double ySq = Math.pow(y * ratio, 2);
-        double xSq = Math.pow(x, 2);
-        return Math.sqrt(ySq + xSq);
+    /**
+     * @param x - x coordinate
+     * @param y - y coordinate
+     * @param z - z coordinate
+     * @return - squared length of line between 3D points
+     */
+    private static double lengthSq(double x, double y, double z) {
+        return (x * x) + (y * y) + (z * z);
     }
 
-    private static boolean filled(double x, double y, double radius, double ratio) {
-        double distance = distance(x, y, ratio);
-        double floorDistance = Math.floor(distance * 100) / 100;
-        // return floorDistance - radius <= 0.05;
-        return floorDistance <= radius;
+    /**
+     * @param x - x coordinate
+     * @param z - z coordinate
+     * @return - squared length of line between 2D points
+     */
+    private static double lengthSq(double x, double z) {
+        return (x * x) + (z * z);
     }
 
-    private static boolean fat(double x, double y, double radius, double ratio) {
-        return filled(x, y, radius, ratio) &&
-                !(filled(x + 1, y, radius, ratio) &&
-                filled(x - 1, y, radius, ratio) &&
-                filled(x, y + 1, radius, ratio) &&
-                filled(x, y - 1, radius, ratio) &&
-                filled(x + 1, y + 1, radius, ratio) &&
-                filled(x + 1, y - 1, radius, ratio) &&
-                filled(x - 1, y - 1, radius, ratio) &&
-                filled(x - 1, y + 1, radius, ratio)
-        );
-    }
-
-    private static ArrayList<BlockPos> GenQuadrant(BlockPos origin, Quad quadrant, int xSize, int zSize,
-                                            double radius, double ratio, GenType type) {
+    /**
+     * @param origin - Center of the Sphere
+     * @param xSize - Diameter of the X-Axis
+     * @param zSize - Diameter of the Y-Axis
+     * @param height - Height of Cylinder
+     * @param type - GenType either FULL, THICK, or THIN
+     * @return An ArrayList of BlockPos which compose the cylinder
+     */
+    public static ArrayList<BlockPos> GenerateCyl(BlockPos origin, int xSize, int zSize, int height, GenType type) {
         ArrayList<BlockPos> blockPosList = new ArrayList<>();
 
-        int lowX;
-        int highX;
-        int lowZ;
-        int highZ;
-        if(quadrant == Quad.LB) {
-            lowX = -xSize;
-            highX = 0;
-            lowZ = -zSize;
-            highZ = 0;
-        } else if(quadrant == Quad.RB) {
-            lowX = 0;
-            highX = xSize;
-            lowZ = -zSize;
-            highZ = 0;
-        } else if(quadrant == Quad.LT) {
-            lowX = -xSize;
-            highX = 0;
-            lowZ = 0;
-            highZ = zSize;
-        } else {
-            // Quad.RT
-            lowX = 0;
-            highX = xSize;
-            lowZ = 0;
-            highZ = zSize;
+        double xRadius = xSize / 2.0 + 0.5;
+        double zRadius = zSize / 2.0 + 0.5;
+
+        if (height == 0) {
+            return blockPosList;
+        } else if (height < 0) {
+            origin = origin.add(0, height, 0);
+            height = -height;
         }
 
-        for (int z = lowZ; z <= highZ; z++) {
-            for (int x = lowX; x <= highX; x++) {
-                boolean filled;
+        if (origin.getY() < 0) {
+            origin = new BlockPos(origin.getX(), 0, origin.getZ());
+        } else if (origin.getY() + height - 1 > 255) {
+            height = 255 - origin.getY() + 1;
+        }
 
-                if (type == GenType.THICK) {
-                    filled = fat(x, z, radius, ratio);
-                } else if (type == GenType.THIN) {
-                    filled = fat(x, z, radius, ratio)
-                            && !(fat(x + (x > 0 ? 1 : -1), z, radius, ratio)
-                            && fat(x , z + (z > 0 ? 1 : -1), radius, ratio));
-                } else {
-                    filled = filled(x, z, radius, ratio);
+        final double invRadiusX = 1 / xRadius;
+        final double invRadiusZ = 1 / zRadius;
+
+        final int ceilRadiusX = (int) Math.ceil(xRadius);
+        final int ceilRadiusZ = (int) Math.ceil(zRadius);
+
+        int lastX = 0;
+        int lastZ = ceilRadiusZ - 1;
+        boolean addThick = false;
+        int maxZThick = 0;
+        double nextXn = 0;
+        forX: for (int x = 0; x <= ceilRadiusX; ++x) {
+            final double xn = nextXn;
+            nextXn = (x + 1) * invRadiusX;
+            double nextZn = 0;
+            forZ: for (int z = 0; z <= ceilRadiusZ; ++z) {
+                final double zn = nextZn;
+                nextZn = (z + 1) * invRadiusZ;
+
+                double distanceSq = lengthSq(xn, zn);
+                if (distanceSq > 1) {
+                    if (z == 0) {
+                        break forX;
+                    }
+                    break forZ;
                 }
-                if (filled) {
-                    blockPosList.add(origin.add(x, 0, z));
+
+                if (type != GenType.FULL) {
+                    double d1 = lengthSq(nextXn, zn);
+                    double d2 = lengthSq(xn, nextZn);
+                    if (d1 <= 1 && d2 <= 1) {
+                        continue;
+                    }
+                }
+
+
+                for (int y = 0; y < height; ++y) {
+                    blockPosList.add(origin.add(x, y, z));
+                    blockPosList.add(origin.add(-x, y, z));
+                    blockPosList.add(origin.add(x, y, -z));
+                    blockPosList.add(origin.add(-x, y, -z));
+
+                    if(type == GenType.THICK && lastX != x && lastZ != z) {
+                        lastZ = z;
+                        addThick = true;
+                        maxZThick = z;
+                    }
+                }
+            }
+            lastX = x;
+            if(addThick) {
+                addThick = false;
+                for (int y = 0; y < height; ++y) {
+                    blockPosList.add(origin.add(x - 1, y, maxZThick));
+                    blockPosList.add(origin.add(-x + 1, y, maxZThick));
+                    blockPosList.add(origin.add(x - 1, y, -maxZThick));
+                    blockPosList.add(origin.add(-x + 1, y, -maxZThick));
+                }
+            }
+        }
+
+        return blockPosList;
+    }
+
+    /**
+     * @param origin - Center of the Sphere
+     * @param xSize - Diameter of the X-Axis
+     * @param ySize - Diameter of the Y-Axis
+     * @param type - GenType either FULL, THICK, or THIN
+     * @return An ArrayList of BlockPos which compose the ellipse
+     */
+    public static ArrayList<BlockPos> GenerateEllipse(BlockPos origin, int xSize, int ySize, GenType type) {
+        return GenerateCyl(origin, xSize, ySize, 1, type);
+    }
+
+    /**
+     * @param origin - Center of the Sphere
+     * @param diameter - Diameter of the Sphere
+     * @param type - GenType either FULL, THICK, or THIN
+     * @return An ArrayList of BlockPos which compose the circle
+     */
+    public static ArrayList<BlockPos> GenerateCircle(BlockPos origin, int diameter, GenType type) {
+        return GenerateEllipse(origin, diameter, diameter, type);
+    }
+
+    /**
+     * @param origin - Center of the Sphere
+     * @param diameter - Diameter of the Sphere
+     * @param type - GenType either FULL, or THICK/THIN which behave the same
+     * @return An ArrayList of BlockPos which compose the Sphere
+     */
+    public static ArrayList<BlockPos> GenerateSphere(BlockPos origin, int diameter, GenType type) {
+        return GenerateEllipsoid(origin, diameter, diameter, diameter, type);
+    }
+
+    /**
+     * @param origin - Center of the Ellipsoid
+     * @param xSize - Diameter of X-Axis
+     * @param ySize - Diameter of Y-Axis
+     * @param zSize - Diameter of Z-Axis
+     * @param type - GenType either FULL, or THICK/THIN which behave the same
+     * @return An ArrayList of BlockPos which compose the Ellipsoid
+     */
+    public static ArrayList<BlockPos> GenerateEllipsoid(BlockPos origin, int xSize, int ySize, int zSize, GenType type) {
+        ArrayList<BlockPos> blockPosList = new ArrayList<>();
+
+        double xRadius = xSize / 2.0 + 0.5;
+        double yRadius = ySize / 2.0 + 0.5;
+        double zRadius = zSize / 2.0 + 0.5;
+
+        final double invRadiusX = 1 / xRadius;
+        final double invRadiusY = 1 / yRadius;
+        final double invRadiusZ = 1 / zRadius;
+
+        final int ceilRadiusX = (int) Math.ceil(xRadius);
+        final int ceilRadiusY = (int) Math.ceil(yRadius);
+        final int ceilRadiusZ = (int) Math.ceil(zRadius);
+
+        double nextXn = 0;
+        forX: for (int x = 0; x <= ceilRadiusX; ++x) {
+            final double xn = nextXn;
+            nextXn = (x + 1) * invRadiusX;
+            double nextYn = 0;
+            forY: for (int y = 0; y <= ceilRadiusY; ++y) {
+                final double yn = nextYn;
+                nextYn = (y + 1) * invRadiusY;
+                double nextZn = 0;
+                forZ: for (int z = 0; z <= ceilRadiusZ; ++z) {
+                    final double zn = nextZn;
+                    nextZn = (z + 1) * invRadiusZ;
+
+                    double distanceSq = lengthSq(xn, yn, zn);
+                    if (distanceSq > 1) {
+                        if (z == 0) {
+                            if (y == 0) {
+                                break forX;
+                            }
+                            break forY;
+                        }
+                        break forZ;
+                    }
+
+                    if (type != GenType.FULL) {
+                        if (lengthSq(nextXn, yn, zn) <= 1 && lengthSq(xn, nextYn, zn) <= 1 && lengthSq(xn, yn, nextZn) <= 1) {
+                            continue;
+                        }
+                    }
+
+                    blockPosList.add(origin.add(x, y, z));
+                    blockPosList.add(origin.add(-x, y, z));
+                    blockPosList.add(origin.add(x, -y, z));
+                    blockPosList.add(origin.add(x, y, -z));
+                    blockPosList.add(origin.add(-x, -y, z));
+                    blockPosList.add(origin.add(x, -y, -z));
+                    blockPosList.add(origin.add(-x, y, -z));
+                    blockPosList.add(origin.add(-x, -y, -z));
                 }
             }
         }
         return blockPosList;
     }
 
-    public static ArrayList<BlockPos> GenerateOval(BlockPos origin, int width, int height, GenType type) {
+    /**
+     * @param origin - Center of pyramid base
+     * @param size - Length of base
+     * @param type - GenType either FULL, or THICK/THIN which behave the same
+     * @return An ArrayList of BlockPos which compose the pyramid
+     */
+    public static ArrayList<BlockPos> GeneratePyramid(BlockPos origin, int size, GenType type) {
         ArrayList<BlockPos> blockPosList = new ArrayList<>();
 
-        double widthRadius = width / 2.0;
-        double heightRadius = height / 2.0;
-        double radiusRatio = widthRadius < heightRadius ? widthRadius / heightRadius : heightRadius / widthRadius;
-        double ovalRatio = widthRadius / heightRadius;
+        int height = size;
 
-        int maxBlocksX;
-        int maxBlocksZ;
-
-        if(width % 2 == 0) {
-            maxBlocksX = width / 2 - 1;
-        } else {
-            maxBlocksX = (width - 1) / 2;
+        for (int y = 0; y <= height; ++y) {
+            size--;
+            for (int x = 0; x <= size; ++x) {
+                for (int z = 0; z <= size; ++z) {
+                    if ((type == GenType.FULL && z <= size && x <= size) || z == size || x == size) {
+                        blockPosList.add(origin.add(x, y, z));
+                        blockPosList.add(origin.add(-x, y, z));
+                        blockPosList.add(origin.add(x, y, -z));
+                        blockPosList.add(origin.add(-x, y, -z));
+                    }
+                }
+            }
         }
-
-        if(height % 2 == 0) {
-            maxBlocksZ = height / 2 - 1;
-        } else {
-            maxBlocksZ = (height - 1) / 2;
-        }
-
-        BlockPos originLB;
-        BlockPos originRB;
-        BlockPos originLT;
-        BlockPos originRT;
-        double radius;
-        if(width % 2 == 0 && height % 2 == 0) {
-            originLB = origin;
-            originRB = origin.add(1,0,0);
-            originLT = origin.add(0,0,1);
-            originRT = origin.add(1, 0, 1);
-            radius = widthRadius - distance(.5,.5, radiusRatio);
-        } else if(width % 2 == 1 && height % 2 == 0) {
-            originLB = origin;
-            originLT = origin.add(0,0,1);
-            originRB = originLB;
-            originRT = originLT;
-            radius = widthRadius - distance(0,0.5, radiusRatio);
-        } else if(width % 2 == 0 && height % 2 == 1){
-            originLB = origin;
-            originRB = origin.add(1,0,0);
-            originLT = originLB;
-            originRT = originRB;
-            radius = widthRadius - distance(0, 0.5, radiusRatio);
-
-        } else {
-            originLB = origin;
-            originRB = origin;
-            originLT = origin;
-            originRT = origin;
-            radius = widthRadius;
-
-        }
-
-        blockPosList.addAll(GenQuadrant(originLB, Quad.LB, maxBlocksX, maxBlocksZ, radius, ovalRatio, type));
-        blockPosList.addAll(GenQuadrant(originRB, Quad.RB, maxBlocksX, maxBlocksZ, radius, ovalRatio, type));
-        blockPosList.addAll(GenQuadrant(originLT, Quad.LT, maxBlocksX, maxBlocksZ, radius, ovalRatio, type));
-        blockPosList.addAll(GenQuadrant(originRT, Quad.RT, maxBlocksX, maxBlocksZ, radius, ovalRatio, type));
-
         return blockPosList;
-    }
-
-    public static ArrayList<BlockPos> GenerateCircle(BlockPos origin, int diameter, GenType type) {
-        return GenerateOval(origin, diameter, diameter, type);
     }
 
     /**
@@ -200,7 +287,7 @@ public class GenerationUtilities {
             for(int y = 0; y <= height; ++y) {
                 blockPosList.add(start.add(0, y, 0));
             }
-        } else if(xTranslation != 0 && zTranslation != 0) {
+        } else {
             // 3 axis trunk
             int dx = Math.abs(xTranslation);
             int dy = Math.abs(height);
@@ -215,27 +302,27 @@ public class GenerationUtilities {
             int z1 = start.getZ();
             int z2 = end.getZ();
 
-            if(dx > dy && dx >= dz) {
+            if (dx > dy && dx >= dz) {
                 int p1 = 2 * dy - dx;
                 int p2 = 2 * dz - dx;
 
                 while (x1 != x2) {
                     boolean yzChange = false;
                     x1 += xs;
-                    if(p1 >= 0) {
+                    if (p1 >= 0) {
                         y1 += ys;
                         p1 -= 2 * dx;
                         yzChange = true;
                     }
-                    if(p2 >= 0) {
+                    if (p2 >= 0) {
                         z1 += zs;
                         p2 -= 2 * dx;
                         yzChange = true;
                     }
                     p1 += 2 * dy;
                     p2 += 2 * dz;
-                    if(yzChange) blockPosList.add(new BlockPos(x1 - xs, y1, z1));
-                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
+                    if (yzChange) blockPosList.add(new BlockPos(x1 - xs, y1, z1));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1), diameter));
                 }
             } else if (dy >= dx && dy >= dz) {
                 int p1 = 2 * dx - dy;
@@ -255,8 +342,8 @@ public class GenerationUtilities {
                     }
                     p1 += 2 * dx;
                     p2 += 2 * dz;
-                    if(xzChange) blockPosList.add(new BlockPos(x1, y1 - ys, z1));
-                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
+                    if (xzChange) blockPosList.add(new BlockPos(x1, y1 - ys, z1));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1), diameter));
                 }
             } else {
                 int p1 = 2 * dy - dz;
@@ -276,33 +363,8 @@ public class GenerationUtilities {
                     }
                     p1 += 2 * dy;
                     p2 += 2 * dx;
-                    if(xyChange) blockPosList.add(new BlockPos(x1, y1, z1 - zs));
-                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1),diameter));
-                }
-            }
-        } else {
-            // 2 Axis Trunk
-            boolean isXAxis = xTranslation != 0;
-
-            if(isXAxis) {
-                int slope = (int) Math.ceil((double) height / Math.abs(xTranslation));
-                for(int x = 0; x <= Math.abs(xTranslation); ++x) {
-                    for(int y = 0; y < slope; ++y) {
-                        int xOffset = xTranslation < 0 ? -x : x;
-                        int yOffset =  (x * slope) + y - x;
-                        if(yOffset > height) break;
-                        blockPosList.addAll(GenerationUtilities.GenerateSquare(start.add(xOffset, yOffset, 0), diameter));
-                    }
-                }
-            } else {
-                int slope = (int) Math.ceil((double) height / Math.abs(zTranslation));
-                for(int z = 0; z <= Math.abs(zTranslation); ++z) {
-                    for(int y = 0; y < slope; ++y) {
-                        int zOffset = zTranslation < 0 ? -z : z;
-                        int yOffset =  (z * slope) + y - z;
-                        if(yOffset > height) break;
-                        blockPosList.addAll(GenerationUtilities.GenerateSquare(start.add(0, yOffset, zOffset), diameter));
-                    }
+                    if (xyChange) blockPosList.add(new BlockPos(x1, y1, z1 - zs));
+                    blockPosList.addAll(GenerationUtilities.GenerateSquare(new BlockPos(x1, y1, z1), diameter));
                 }
             }
         }
