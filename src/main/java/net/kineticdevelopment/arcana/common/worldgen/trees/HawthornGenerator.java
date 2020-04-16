@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.worldgen.trees;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.worldgen.GenerationUtilities;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -13,6 +14,8 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static net.minecraft.block.BlockLog.LOG_AXIS;
 
 /**
  * @author Mozaran
@@ -123,10 +126,6 @@ public class HawthornGenerator extends WorldGenAbstractTree {
         for(int y = 0; y <= height; ++y) {
             trunkBlockList.add(position.add(0, y, 0));
         }
-        trunkBlockList.add(position.add(1,0,0));
-        trunkBlockList.add(position.add(-1,0,0));
-        trunkBlockList.add(position.add(0,0,1));
-        trunkBlockList.add(position.add(0,0,-1));
         leafBlockList.addAll(GenerationUtilities.GenerateCircle(position.add(0, height, 0), 5, GenerationUtilities.GenType.FULL));
         leafBlockList.addAll(GenerationUtilities.GenerateCircle(position.add(0,height + 1,0), 3, GenerationUtilities.GenType.FULL));
 
@@ -175,6 +174,12 @@ public class HawthornGenerator extends WorldGenAbstractTree {
             for(BlockPos pos : trunkBlockList) {
                 setBlockAndNotifyAdequately(worldIn, pos, metaWood);
             }
+
+            setBlockAndNotifyAdequately(worldIn, position.add(1,0,0), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.X));
+            setBlockAndNotifyAdequately(worldIn, position.add(-1,0,0), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.X));
+            setBlockAndNotifyAdequately(worldIn, position.add(0,0,1), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z));
+            setBlockAndNotifyAdequately(worldIn, position.add(0,0,-1), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z));
+
             return true;
         }
         else
