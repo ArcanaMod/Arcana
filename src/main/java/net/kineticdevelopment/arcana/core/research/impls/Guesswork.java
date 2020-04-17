@@ -5,8 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -86,6 +88,14 @@ public class Guesswork extends Puzzle{
 	
 	public ResourceLocation getDefaultIcon(){
 		return ICON;
+	}
+	
+	public List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player){
+		return Collections.emptyList();
+	}
+	
+	public List<Pair<Integer, Integer>> getAspectSlotLocations(){
+		return Collections.emptyList();
 	}
 	
 	public boolean equals(Object o){

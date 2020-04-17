@@ -37,15 +37,17 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	 * @param screenHeight The height of the screen.
 	 * @param mouseX The x location of the mouse.
 	 * @param mouseY The y location of the mouse.
-	 * @param right Whether the section that is visible is on the left or gith.
+	 * @param right Whether the section that is visible is on the left or right.
 	 * @param player The player that clicked.
 	 */
 	default void onClick(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player){}
 	
+	@SuppressWarnings("unchecked")
 	static <T extends EntrySection> EntrySectionRenderer<T> get(String type){
 		return (EntrySectionRenderer<T>)map.get(type);
 	}
 	
+	@SuppressWarnings("unchecked")
 	static <T extends EntrySection> EntrySectionRenderer<T> get(EntrySection type){
 		return (EntrySectionRenderer<T>)map.get(type.getType());
 	}

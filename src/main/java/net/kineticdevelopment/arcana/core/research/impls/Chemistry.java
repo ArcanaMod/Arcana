@@ -6,17 +6,21 @@ import com.google.gson.JsonObject;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Chemistry extends Puzzle{
 	
@@ -63,6 +67,30 @@ public class Chemistry extends Puzzle{
 		for(NBTBase node : passData.getTagList("nodes", Constants.NBT.TAG_STRING))
 			nodes.add(Aspect.valueOf(((NBTTagString)node).getString()));
 		return new Chemistry(nodes);
+	}
+	
+	private List<Pair<Integer, Integer>> genHexGrid(int gridWidth, int gridHeight){
+		List<Pair<Integer, Integer>> grid = new ArrayList<>();
+		for(int x = 0; x < gridWidth; x++){
+			for(int y = 0; y < gridHeight; y++){
+				int xx = x * 22 + (y % 2 == 0 ? 11 : 0);
+				int yy = y * 19;
+				int scX = xx + 141 + (214 - (23 * gridWidth - 2)) / 2;
+				int scY = yy + 35 + (134 - (19 * gridHeight + 1)) / 2;
+				grid.add(Pair.of(scX, scY));
+			}
+		}
+		return grid;
+	}
+	
+	public List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player){
+		return Collections.emptyList();
+	}
+	
+	public List<Pair<Integer, Integer>> getAspectSlotLocations(){
+		return genHexGrid(8, 6).stream()
+				.map(pair -> Pair.of(pair.getLeft() + 2, pair.getRight() + 2))
+				.collect(Collectors.toList());
 	}
 	
 	public String type(){

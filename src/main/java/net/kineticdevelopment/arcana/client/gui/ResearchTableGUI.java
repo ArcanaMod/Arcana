@@ -1,15 +1,18 @@
 package net.kineticdevelopment.arcana.client.gui;
 
+import net.kineticdevelopment.arcana.client.research.ClientBooks;
+import net.kineticdevelopment.arcana.client.research.PuzzleRenderer;
 import net.kineticdevelopment.arcana.common.containers.AspectSlot;
 import net.kineticdevelopment.arcana.common.containers.ResearchTableContainer;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.inventory.PktRequestAspectSync;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.inventory.Slot;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -38,6 +41,13 @@ public class ResearchTableGUI extends GuiAspectContainer{
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		mc.getTextureManager().bindTexture(bg);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
+		if(!te.note().isEmpty()){
+			NBTTagCompound compound = te.note().getTagCompound();
+			if(compound != null){
+				Puzzle puzzle = ClientBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
+				PuzzleRenderer.get(puzzle).render(puzzle, width, height, mouseX, mouseY, mc.player);
+			}
+		}
 	}
 	
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){

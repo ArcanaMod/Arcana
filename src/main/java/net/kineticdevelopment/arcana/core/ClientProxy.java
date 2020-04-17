@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.core;
 import net.kineticdevelopment.arcana.client.gui.ResearchBookGUI;
 import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
+import net.kineticdevelopment.arcana.client.research.PuzzleRenderer;
 import net.kineticdevelopment.arcana.client.research.RequirementRenderer;
 import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
@@ -40,6 +41,7 @@ public class ClientProxy extends CommonProxy {
 		super.preInit(event);
 		EntrySectionRenderer.init();
 		RequirementRenderer.init();
+		PuzzleRenderer.init();
 	}
 
 	@Override

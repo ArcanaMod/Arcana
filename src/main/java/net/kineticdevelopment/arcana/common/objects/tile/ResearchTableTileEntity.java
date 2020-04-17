@@ -12,6 +12,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -80,6 +81,7 @@ public class ResearchTableTileEntity extends TileEntity{
 		return items.getStackInSlot(1);
 	}
 	
+	@Nonnull
 	public ItemStack note(){
 		return items.getStackInSlot(2);
 	}

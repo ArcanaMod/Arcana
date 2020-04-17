@@ -3,8 +3,13 @@ package net.kineticdevelopment.arcana.core.research.impls;
 import com.google.gson.JsonObject;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Fieldwork extends Puzzle{
 	
@@ -30,5 +35,13 @@ public class Fieldwork extends Puzzle{
 	
 	public ResourceLocation getDefaultIcon(){
 		return ICON;
+	}
+	
+	public List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player){
+		return Collections.emptyList();
+	}
+	
+	public List<Pair<Integer, Integer>> getAspectSlotLocations(){
+		return Collections.emptyList();
 	}
 }

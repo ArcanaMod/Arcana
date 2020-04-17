@@ -1,14 +1,18 @@
 package net.kineticdevelopment.arcana.core.research;
 
 import com.google.gson.JsonObject;
+import net.kineticdevelopment.arcana.common.containers.ResearchTableContainer;
 import net.kineticdevelopment.arcana.core.research.impls.Chemistry;
 import net.kineticdevelopment.arcana.core.research.impls.Fieldwork;
 import net.kineticdevelopment.arcana.core.research.impls.Guesswork;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -71,7 +75,12 @@ public abstract class Puzzle{
 	public abstract NBTTagCompound getData();
 	
 	public abstract String getDefaultDesc();
+	
 	public abstract ResourceLocation getDefaultIcon();
+	
+	public abstract List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player);
+	
+	public abstract List<Pair<Integer, Integer>> getAspectSlotLocations();
 	
 	public String getDesc(){
 		return desc;
@@ -93,5 +102,21 @@ public abstract class Puzzle{
 	
 	public ResourceLocation getKey(){
 		return key;
+	}
+	
+	int guiLeft(int screenWidth){
+		return (screenWidth - ResearchTableContainer.WIDTH) / 2;
+	}
+	
+	int guiTop(int screenHeight){
+		return (screenHeight - ResearchTableContainer.HEIGHT) / 2;
+	}
+	
+	protected int paperLeft(int screenWidth){
+		return guiLeft(screenWidth) + 141;
+	}
+	
+	protected int paperTop(int screenHeight){
+		return guiTop(screenHeight) + 35;
 	}
 }

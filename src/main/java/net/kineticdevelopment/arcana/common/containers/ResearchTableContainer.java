@@ -4,14 +4,21 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
-import net.kineticdevelopment.arcana.core.aspects.*;
+import net.kineticdevelopment.arcana.core.aspects.Aspect;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
+import net.kineticdevelopment.arcana.core.aspects.Aspects;
+import net.kineticdevelopment.arcana.core.research.ServerBooks;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -25,11 +32,17 @@ import java.util.function.Supplier;
 @MethodsReturnNonnullByDefault
 public class ResearchTableContainer extends AspectContainer{
 	
+	public static final int WIDTH = 376;
+	public static final int HEIGHT = 280;
+	
 	private ResearchTableTileEntity te;
 	public List<AspectSlot> scrollableSlots = new ArrayList<>();
 	
 	// combination slots
 	protected AspectSlot leftStoreSlot, rightStoreSlot;
+	//public NoteChangeListener listener;
+	private ItemStack note;
+	private List<AspectSlot> puzzleSlots = new ArrayList<>();
 	
 	public ResearchTableContainer(IInventory playerInventory, ResearchTableTileEntity te){
 		this.te = te;
@@ -58,7 +71,7 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	private void addOwnSlots(){
 		IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		
+		note = te.note();
 		// 9, 10
 		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 9, 10){
 			public boolean isItemValid(@Nonnull ItemStack stack){
@@ -82,9 +95,26 @@ public class ResearchTableContainer extends AspectContainer{
 			
 			public void onSlotChanged(){
 				super.onSlotChanged();
-				// change stuff I guess?
+				if(!ItemStack.areItemStacksEqual(note, te.note())){
+					note = te.note();
+					// remove added slots * aspect slots
+					// listener.noteChanged();
+					refreshPuzzleSlots();
+				}
 			}
 		});
+	}
+	
+	private void refreshPuzzleSlots(){
+		aspectSlots.removeAll(puzzleSlots);
+		puzzleSlots.forEach(AspectSlot::onClose);
+		puzzleSlots.clear();
+		if(!note.isEmpty() && note.getTagCompound() != null && note.getTagCompound().hasKey("puzzle"))
+			for(Pair<Integer, Integer> location : ServerBooks.puzzles.get(new ResourceLocation(note.getTagCompound().getString("puzzle"))).getAspectSlotLocations()){
+				AspectStoreSlot storeSlot = new AspectStoreSlot(() -> AspectHandler.getFrom(te), location.getLeft(), location.getRight(), 1);
+				puzzleSlots.add(storeSlot);
+				aspectSlots.add(storeSlot);
+			}
 	}
 	
 	protected void addAspectSlots(){
@@ -122,6 +152,8 @@ public class ResearchTableContainer extends AspectContainer{
 		aspectSlots.add(leftStoreSlot = new AspectStoreSlot(table, 30, 179));
 		aspectSlots.add(rightStoreSlot = new AspectStoreSlot(table, 92, 179));
 		aspectSlots.add(new CombinatorAspectSlot(leftStoreSlot, rightStoreSlot, 61, 179));
+		
+		refreshPuzzleSlots();
 	}
 	
 	@Override
@@ -146,6 +178,10 @@ public class ResearchTableContainer extends AspectContainer{
 		}
 		
 		return itemstack;
+	}
+	
+	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
+		return super.slotClick(slotId, dragType, clickTypeIn, player);
 	}
 	
 	public boolean canInteractWith(EntityPlayer player){
