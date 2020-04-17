@@ -73,7 +73,7 @@ public class BlockInit {
 	public static final Block SILVERWOOD_LEAVES = new LeavesBase("silverwood_leaves").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block SILVERWOOD_LOG = new LogBase("silverwood_log").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block SILVERWOOD_PLANKS = new PlanksBase("silverwood_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block SILVERWOOD_SAPLING = new DumbSapling("silverwood_sapling").setCreativeTab(Main.TAB_ARCANA);
+	public static final Block SILVERWOOD_SAPLING = new SilverwoodSapling("silverwood_sapling").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block SILVERWOOD_SLAB_DOUBLE = new DoubleSlabBase("silverwood_slab_double", Material.WOOD);
 	public static final Block SILVERWOOD_STONE_SLAB_HALF = new HalfSlabBase("silverwood_slab", Material.WOOD, BlockInit.HAWTHORN_SLAB_DOUBLE).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block SILVERWOOD_STAIRS = new StairsBase("silverwood_stairs", HAWTHORN_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);

@@ -285,7 +285,7 @@ public class GenerationUtilities {
         if(xTranslation == 0 && zTranslation == 0) {
             // only y axis
             for(int y = 0; y <= height; ++y) {
-                blockPosList.add(start.add(0, y, 0));
+                blockPosList.addAll(GenerationUtilities.GenerateSquare(start.add(0, y, 0), diameter));
             }
         } else {
             // 3 axis trunk

@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.worldgen.trees;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.worldgen.GenerationUtilities;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -13,6 +14,8 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import static net.minecraft.block.BlockLog.LOG_AXIS;
 
 /**
  * @author Mozaran
@@ -30,7 +33,7 @@ public class HawthornGenerator extends WorldGenAbstractTree {
     private final IBlockState metaWood;
     private final IBlockState metaLeaves;
 
-    private final int minTreeHeight = 7;
+    private final int minTreeHeight = 4;
 
     public HawthornGenerator(boolean notify, boolean tainted) {
         this(notify, tainted, false);
@@ -49,99 +52,140 @@ public class HawthornGenerator extends WorldGenAbstractTree {
 
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) {
-        int minHeight = rand.nextInt(3) + minTreeHeight;
+        int seed = rand.nextInt(8);
+        int height = rand.nextInt(2) + minTreeHeight;
+
+        BlockPos xBranch = null;
+        BlockPos zBranch = null;
+        BlockPos xzBranch = null;
+        if(seed < 4) {
+            if (seed % 4 == 0) {
+                // Branch +x +z (-x)(-z)
+                xBranch = position.add(2 + rand.nextInt(2), height, 0);
+                zBranch = position.add(0, height, 2 + rand.nextInt(2));
+                xzBranch = position.add(-2 - rand.nextInt(2), height, -2 - rand.nextInt(2));
+            } else if (seed % 4 == 1) {
+                // Branch +x -z (-x)z
+                xBranch = position.add(2 + rand.nextInt(2), height, 0);
+                zBranch = position.add(0, height, -2 - rand.nextInt(2));
+                xzBranch = position.add(-2 - rand.nextInt(2), height, 2 + rand.nextInt(2));
+            } else if (seed % 4 == 2) {
+                // Branch -x +z x(-z)
+                xBranch = position.add(-2 - rand.nextInt(2), height, 0);
+                zBranch = position.add(0, height, 2 + rand.nextInt(2));
+                xzBranch = position.add(2 + rand.nextInt(2), height, -2 - rand.nextInt(2));
+            } else {
+                // Branch -x -z xz
+                xBranch = position.add(-2 - rand.nextInt(2), height, 0);
+                zBranch = position.add(0, height, -2 - rand.nextInt(2));
+                xzBranch = position.add(2 + rand.nextInt(2), height, 2 + rand.nextInt(2));
+            }
+        } else {
+            int adjSeed = rand.nextInt(12);
+            if(adjSeed == 0) {
+                xBranch = position.add(2 + rand.nextInt(2), height, 0);
+                zBranch = position.add(0, height, 2 + rand.nextInt(2));
+            } else if (adjSeed == 1) {
+                xBranch = position.add(-2 - rand.nextInt(2), height, 0);
+                zBranch = position.add(0, height, 2 + rand.nextInt(2));
+            } else if (adjSeed == 2) {
+                xBranch = position.add(2 + rand.nextInt(2), height, 0);
+                zBranch = position.add(0, height, -2 - rand.nextInt(2));
+            } else if (adjSeed == 3) {
+                xBranch = position.add(-2 - rand.nextInt(2), height, 0);
+                zBranch = position.add(0, height, -2 - rand.nextInt(2));
+            } else if (adjSeed == 4) {
+                xBranch = position.add(2 + rand.nextInt(2), height, 0);
+                xzBranch = position.add(0, height, 2 + rand.nextInt(2));
+            } else if (adjSeed == 5) {
+                xBranch = position.add(-2 - rand.nextInt(2), height, 0);
+                xzBranch = position.add(0, height, 2 + rand.nextInt(2));
+            } else if (adjSeed == 6) {
+                xBranch = position.add(2 + rand.nextInt(2), height, 0);
+                xzBranch = position.add(0, height, -2 - rand.nextInt(2));
+            } else if (adjSeed == 7) {
+                xBranch = position.add(-2 - rand.nextInt(2), height, 0);
+                xzBranch = position.add(0, height, -2 - rand.nextInt(2));
+            } else if (adjSeed == 8) {
+                zBranch = position.add(2 + rand.nextInt(2), height, 0);
+                xzBranch = position.add(0, height, 2 + rand.nextInt(2));
+            } else if (adjSeed == 9) {
+                zBranch = position.add(-2 - rand.nextInt(2), height, 0);
+                xzBranch = position.add(0, height, 2 + rand.nextInt(2));
+            } else if (adjSeed == 10) {
+                zBranch = position.add(2 + rand.nextInt(2), height, 0);
+                xzBranch = position.add(0, height, -2 - rand.nextInt(2));
+            } else if (adjSeed == 11) {
+                zBranch = position.add(-2 - rand.nextInt(2), height, 0);
+                xzBranch = position.add(0, height, -2 - rand.nextInt(2));
+            }
+        }
+
+        ArrayList<BlockPos> trunkBlockList = new ArrayList<>();
+        ArrayList<BlockPos> leafBlockList = new ArrayList<>();
+        for(int y = 0; y <= height; ++y) {
+            trunkBlockList.add(position.add(0, y, 0));
+        }
+        leafBlockList.addAll(GenerationUtilities.GenerateCircle(position.add(0, height, 0), 5, GenerationUtilities.GenType.FULL));
+        leafBlockList.addAll(GenerationUtilities.GenerateCircle(position.add(0,height + 1,0), 3, GenerationUtilities.GenType.FULL));
+
+        if(xBranch != null) {
+            trunkBlockList.addAll(GenerationUtilities.GenerateTrunk(position.add(0, 2 + rand.nextInt(2), 0), xBranch, 1));
+            leafBlockList.addAll(GenerationUtilities.GenerateCircle(xBranch, 5, GenerationUtilities.GenType.FULL));
+            leafBlockList.addAll(GenerationUtilities.GenerateCircle(xBranch.add(0,1,0), 3, GenerationUtilities.GenType.FULL));
+        }
+        if(zBranch != null) {
+            trunkBlockList.addAll(GenerationUtilities.GenerateTrunk(position.add(0, 2 + rand.nextInt(2), 0), zBranch, 1));
+            leafBlockList.addAll(GenerationUtilities.GenerateCircle(zBranch, 5, GenerationUtilities.GenType.FULL));
+            leafBlockList.addAll(GenerationUtilities.GenerateCircle(zBranch.add(0,1,0), 3, GenerationUtilities.GenType.FULL));
+        }
+        if(xzBranch != null) {
+            trunkBlockList.addAll(GenerationUtilities.GenerateTrunk(position.add(0, 2 + rand.nextInt(2), 0), xzBranch, 1));
+            leafBlockList.addAll(GenerationUtilities.GenerateCircle(xzBranch, 5, GenerationUtilities.GenType.FULL));
+            leafBlockList.addAll(GenerationUtilities.GenerateCircle(xzBranch.add(0, 1, 0), 3, GenerationUtilities.GenType.FULL));
+        }
 
         // Check if tree fits in world
-        if (position.getY() >= 1 && position.getY() + minHeight + 1 <= worldIn.getHeight())
+        if (position.getY() >= 1 && position.getY() + height + 1 <= worldIn.getHeight())
         {
-            if (!isSuitableLocation(worldIn, position, minHeight))
-            {
-                return false;
-            }
-            else
-            {
-                IBlockState state = worldIn.getBlockState(position.down());
-
-                if (state.getBlock().canSustainPlant(state, worldIn, position.down(), EnumFacing.UP, (IPlantable) Blocks.SAPLING) && position.getY() < worldIn.getHeight() - minHeight - 1)
-                {
-                    state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
-                    generateLeaves(worldIn, position, minHeight, rand);
-                    generateTrunk(worldIn, position, minHeight);
-                    return true;
-                }
-                else
-                {
+            for(BlockPos pos : leafBlockList) {
+                if (!this.isReplaceable(worldIn, pos)) {
                     return false;
                 }
             }
+            for(BlockPos pos : trunkBlockList) {
+                if (!this.isReplaceable(worldIn, pos)) {
+                    return false;
+                }
+            }
+        } else {
+            return false;
+        }
+
+
+        IBlockState state = worldIn.getBlockState(position.down());
+
+        if (state.getBlock().canSustainPlant(state, worldIn, position.down(), EnumFacing.UP, (IPlantable) Blocks.SAPLING) && position.getY() < worldIn.getHeight() - height - 1)
+        {
+            state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
+            for(BlockPos pos : leafBlockList) {
+                setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);
+            }
+            for(BlockPos pos : trunkBlockList) {
+                setBlockAndNotifyAdequately(worldIn, pos, metaWood);
+            }
+
+            setBlockAndNotifyAdequately(worldIn, position.add(1,0,0), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.X));
+            setBlockAndNotifyAdequately(worldIn, position.add(-1,0,0), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.X));
+            setBlockAndNotifyAdequately(worldIn, position.add(0,0,1), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z));
+            setBlockAndNotifyAdequately(worldIn, position.add(0,0,-1), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z));
+
+            return true;
         }
         else
         {
             return false;
         }
-    }
 
-    private void generateLeaves(World worldIn, BlockPos position, int height, Random parRandom)
-    {
-        // Test of spheres
-        ArrayList<BlockPos> positions = GenerationUtilities.GenerateCircle(position.add(0,11,0), 3, GenerationUtilities.GenType.FULL);
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,10,0),  5, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,9,0),  7, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,8,0),  9, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateEllipse(position.add(0,15,0),  6,12, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,20,0),  6, GenerationUtilities.GenType.FULL));
-        positions.addAll(GenerationUtilities.GenerateCircle(position.add(0,19,0),  6, GenerationUtilities.GenType.THICK));
-        positions.addAll(GenerationUtilities.GenerateEllipse(position.add(0,14,0),  6, 12, GenerationUtilities.GenType.THICK));
-        positions.addAll(GenerationUtilities.GenerateEllipse(position.add(0,25,0),  12, 12, GenerationUtilities.GenType.THICK));
-
-
-        for(BlockPos pos : positions) {
-            setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);
-        }
-    }
-
-    private void generateTrunk(World worldIn, BlockPos position, int minHeight)
-    {
-        ArrayList<BlockPos> positions = GenerationUtilities.GenerateTrunk(position, position.add(3, 8, 0), 1);
-        positions.addAll(GenerationUtilities.GenerateTrunk(position, position.add(-3, 8, 0), 1));
-        positions.addAll(GenerationUtilities.GenerateTrunk(position, position.add(0, 8, 3), 1));
-        positions.addAll(GenerationUtilities.GenerateTrunk(position, position.add(0, 8, -3), 1));
-
-        for(BlockPos pos : positions) {
-            setBlockAndNotifyAdequately(worldIn, pos, metaWood);
-        }
-    }
-
-    private boolean isSuitableLocation(World worldIn, BlockPos position, int minHeight)
-    {
-        boolean isSuitableLocation = true;
-
-        for (int checkY = position.getY(); checkY <= position.getY() + 1 + minHeight; ++checkY)
-        {
-            // Handle increasing space towards top of tree
-            int extraSpaceNeeded = 1;
-            // Handle base location
-            if (checkY == position.getY())
-            {
-                extraSpaceNeeded = 0;
-            }
-            // Handle top location
-            if (checkY >= position.getY() + 1 + minHeight - 2)
-            {
-                extraSpaceNeeded = 2;
-            }
-
-            BlockPos.MutableBlockPos blockPos = new BlockPos.MutableBlockPos();
-
-            for (int checkX = position.getX() - extraSpaceNeeded; checkX <= position.getX() + extraSpaceNeeded && isSuitableLocation; ++checkX)
-            {
-                for (int checkZ = position.getZ() - extraSpaceNeeded; checkZ <= position.getZ() + extraSpaceNeeded && isSuitableLocation; ++checkZ)
-                {
-                    isSuitableLocation = isReplaceable(worldIn,blockPos.setPos(checkX, checkY, checkZ));
-                }
-            }
-        }
-
-        return isSuitableLocation;
     }
 }
