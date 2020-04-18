@@ -73,6 +73,8 @@ public abstract class Requirement{
 	public abstract ResourceLocation type();
 	public abstract NBTTagCompound data();
 	
+	public void onClick(){}
+	
 	public boolean equals(Object o){
 		if(this == o)
 			return true;

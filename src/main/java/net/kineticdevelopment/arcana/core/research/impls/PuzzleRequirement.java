@@ -1,5 +1,7 @@
 package net.kineticdevelopment.arcana.core.research.impls;
 
+import net.kineticdevelopment.arcana.common.network.Connection;
+import net.kineticdevelopment.arcana.common.network.inventory.PktGetNoteHandler;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Requirement;
 import net.kineticdevelopment.arcana.core.research.Researcher;
@@ -34,6 +36,11 @@ public class PuzzleRequirement extends Requirement{
 		NBTTagCompound compound = new NBTTagCompound();
 		compound.setString("puzzle", puzzleId.toString());
 		return compound;
+	}
+	
+	public void onClick(){
+		if(!(ServerBooks.puzzles.get(puzzleId) instanceof Fieldwork))
+			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId));
 	}
 	
 	public ResourceLocation getPuzzleId(){

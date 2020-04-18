@@ -14,6 +14,7 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -83,7 +85,15 @@ public class ResearchEntryGUI extends GuiScreen{
 			// Show tooltips
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
-					GuiUtils.drawHoveringText(renderer(requirements.get(i)).tooltip(requirements.get(i), mc.player), mouseX, mouseY, width, height, -1, mc.fontRenderer);
+					List<String> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), mc.player);
+					List<String> lines = new ArrayList<>();
+					for(int i1 = 0, tooltipSize = tooltip.size(); i1 < tooltipSize; i1++){
+						String s = tooltip.get(i1);
+						s = I18n.format(s);
+						s = (i1 == 0 ? TextFormatting.WHITE : TextFormatting.GRAY) + s;
+						lines.add(s);
+					}
+					GuiUtils.drawHoveringText(lines, mouseX, mouseY, width, height, -1, mc.fontRenderer);
 					break;
 				}
 		}
@@ -160,6 +170,18 @@ public class ResearchEntryGUI extends GuiScreen{
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
 				EntrySectionRenderer.get(section).onClick(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
+		}
+		Researcher r = Researcher.getFrom(mc.player);
+		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
+			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
+			final int y = (height - 181) / 2 + 190;
+			final int reqWidth = 20;
+			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
+			for(int i = 0, size = requirements.size(); i < size; i++)
+				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
+					requirements.get(i).onClick();
+					break;
+				}
 		}
 	}
 	

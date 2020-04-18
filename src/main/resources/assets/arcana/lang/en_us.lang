@@ -491,6 +491,8 @@ requirement.guesswork=Guess the Recipe
 requirement.chemistry=Complete the Chemistry
 requirement.experience=%sx Experience Levels
 requirement.fieldwork=Do ???
+requirement.puzzle.get_note.1=Click to get research note
+requirement.puzzle.get_note.2=Requires scribing tools and paper
 
 # NOTE: none of these names are final, or even more than a working name
 research.arcana.category.basics=Basics

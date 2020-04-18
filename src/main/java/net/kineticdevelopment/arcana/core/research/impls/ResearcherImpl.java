@@ -23,7 +23,7 @@ public class ResearcherImpl implements Researcher{
 	}
 	
 	public boolean isPuzzleCompleted(Puzzle puzzle){
-		return puzzleData.get(puzzle.getKey());
+		return puzzleData.getOrDefault(puzzle.getKey(), false);
 	}
 	
 	public void advanceEntry(ResearchEntry entry){
