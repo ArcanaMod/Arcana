@@ -3,9 +3,12 @@ package net.kineticdevelopment.arcana.core.research.impls;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.kineticdevelopment.arcana.common.containers.AspectSlot;
 import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
@@ -13,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.*;
+import java.util.function.Supplier;
 
 public class Guesswork extends Puzzle{
 	
@@ -94,8 +98,12 @@ public class Guesswork extends Puzzle{
 		return Collections.emptyList();
 	}
 	
-	public List<Pair<Integer, Integer>> getAspectSlotLocations(){
+	public List<AspectSlot> getAspectSlots(Supplier<AspectHandler> returnInv){
 		return Collections.emptyList();
+	}
+	
+	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots){
+		return false;
 	}
 	
 	public boolean equals(Object o){

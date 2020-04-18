@@ -4,6 +4,7 @@ import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.PuzzleRenderer;
 import net.kineticdevelopment.arcana.common.containers.AspectSlot;
 import net.kineticdevelopment.arcana.common.containers.ResearchTableContainer;
+import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.inventory.PktRequestAspectSync;
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
@@ -41,11 +42,11 @@ public class ResearchTableGUI extends GuiAspectContainer{
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		mc.getTextureManager().bindTexture(bg);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
-		if(!te.note().isEmpty()){
+		if(!te.note().isEmpty() && te.note().getItem() == ItemInit.RESEARCH_NOTE){
 			NBTTagCompound compound = te.note().getTagCompound();
 			if(compound != null){
 				Puzzle puzzle = ClientBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
-				PuzzleRenderer.get(puzzle).render(puzzle, width, height, mouseX, mouseY, mc.player);
+				PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer)aspectContainer).puzzleSlots, width, height, mouseX, mouseY, mc.player);
 			}
 		}
 	}

@@ -92,4 +92,6 @@ public abstract class AspectContainer extends Container{
 		super.onContainerClosed(player);
 		aspectSlots.forEach(AspectSlot::onClose);
 	}
+	
+	public void onAspectSlotChange(){}
 }

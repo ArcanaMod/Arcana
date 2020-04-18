@@ -47,7 +47,7 @@ public class AspectSlot{
 			return -1;
 	}
 	
-	public void sync(){
+	public void onChange(){
 		if(storeSlot && getAmount() == 0)
 			aspect = null;
 	}
@@ -77,7 +77,7 @@ public class AspectSlot{
 		int result = 0;
 		if(getInventory().get() != null)
 			result = getInventory().get().drain(aspect, amount, simulate);
-		sync();
+		onChange();
 		return result;
 	}
 	
@@ -90,7 +90,7 @@ public class AspectSlot{
 		int result = amount;
 		if(getInventory().get() != null)
 			result = getInventory().get().insert(aspect, amount, simulate);
-		sync();
+		onChange();
 		return result;
 	}
 	

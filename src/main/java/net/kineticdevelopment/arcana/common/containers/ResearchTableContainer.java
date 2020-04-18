@@ -8,24 +8,21 @@ import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
 import net.kineticdevelopment.arcana.core.aspects.Aspects;
+import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.ServerBooks;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
@@ -42,7 +39,7 @@ public class ResearchTableContainer extends AspectContainer{
 	protected AspectSlot leftStoreSlot, rightStoreSlot;
 	//public NoteChangeListener listener;
 	private ItemStack note;
-	private List<AspectSlot> puzzleSlots = new ArrayList<>();
+	public final List<AspectSlot> puzzleSlots = new ArrayList<>();
 	
 	public ResearchTableContainer(IInventory playerInventory, ResearchTableTileEntity te){
 		this.te = te;
@@ -109,12 +106,14 @@ public class ResearchTableContainer extends AspectContainer{
 		aspectSlots.removeAll(puzzleSlots);
 		puzzleSlots.forEach(AspectSlot::onClose);
 		puzzleSlots.clear();
-		if(!note.isEmpty() && note.getTagCompound() != null && note.getTagCompound().hasKey("puzzle"))
-			for(Pair<Integer, Integer> location : ServerBooks.puzzles.get(new ResourceLocation(note.getTagCompound().getString("puzzle"))).getAspectSlotLocations()){
-				AspectStoreSlot storeSlot = new AspectStoreSlot(() -> AspectHandler.getFrom(te), location.getLeft(), location.getRight(), 1);
-				puzzleSlots.add(storeSlot);
-				aspectSlots.add(storeSlot);
-			}
+		/*if(!note.isEmpty() && note.getTagCompound() != null && note.getTagCompound().hasKey("puzzle"))*/
+		getFromNote().ifPresent(puzzle -> {
+			if(note.getItem() == ItemInit.RESEARCH_NOTE)
+				for(AspectSlot slot : puzzle.getAspectSlots(() -> AspectHandler.getFrom(te))){
+					puzzleSlots.add(slot);
+					aspectSlots.add(slot);
+				}
+		});
 	}
 	
 	protected void addAspectSlots(){
@@ -180,8 +179,32 @@ public class ResearchTableContainer extends AspectContainer{
 		return itemstack;
 	}
 	
-	public ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn, EntityPlayer player){
-		return super.slotClick(slotId, dragType, clickTypeIn, player);
+	public void onAspectSlotChange(){
+		if(getFromNote().map(puzzle -> puzzle.validate(puzzleSlots, null)).orElse(false)){
+			ItemStack complete = new ItemStack(ItemInit.RESEARCH_NOTE_COMPLETE);
+			NBTTagCompound data = note.getTagCompound();
+			
+			// I might store e.g. chemistry data for display in the future.
+			complete.setTagCompound(data);
+			
+			// Don't close them, because that will move aspects over to the main table.
+			// This will need changing if slots need to be able to clean up arbitrary resources.
+			aspectSlots.removeAll(puzzleSlots);
+			puzzleSlots.clear();
+			
+			IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			if(capability != null){
+				capability.extractItem(2, 64, false);
+				capability.insertItem(2, complete, false);
+			}
+		}
+	}
+	
+	public Optional<Puzzle> getFromNote(){
+		if(!note.isEmpty() && note.getTagCompound() != null && note.getTagCompound().hasKey("puzzle"))
+			return Optional.ofNullable(ServerBooks.puzzles.get(new ResourceLocation(note.getTagCompound().getString("puzzle"))));
+		else
+			return Optional.empty();
 	}
 	
 	public boolean canInteractWith(EntityPlayer player){

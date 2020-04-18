@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.core.aspects;
 
 import net.kineticdevelopment.arcana.common.items.AspectItem;
 import net.kineticdevelopment.arcana.core.Main;
+import net.kineticdevelopment.arcana.utilities.Pair;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -110,4 +111,12 @@ public class Aspects{
             case "MIND": return Aspect.MIND;
         }
     }
+	
+	public static boolean areAspectsConnected(Aspect a, Aspect b){
+		if(a != null)
+			if(b != null){
+				return Aspect.combinations.inverse().getOrDefault(a, Pair.of(null, null)).contains(b) || Aspect.combinations.inverse().getOrDefault(b, Pair.of(null, null)).contains(a);
+			}
+		return false;
+	}
 }

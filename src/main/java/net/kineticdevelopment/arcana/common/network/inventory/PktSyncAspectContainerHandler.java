@@ -41,6 +41,7 @@ public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAsp
 				container.getAspectSlots().get(storeSlot.getLeft()).setAspect(storeSlot.getRight());
 			for(Pair<Integer, NBTTagCompound> handler : message.handlers)
 				container.getAllOpenHandlers().get(handler.getLeft()).deserializeNBT(handler.getRight());
+			container.onAspectSlotChange();
 		});
 		return null;
 	}

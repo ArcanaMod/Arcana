@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.client.research;
 import net.kineticdevelopment.arcana.client.gui.ResearchTableGUI;
 import net.kineticdevelopment.arcana.client.research.impls.ChemistryPuzzleRenderer;
 import net.kineticdevelopment.arcana.client.research.impls.GuessworkPuzzleRenderer;
+import net.kineticdevelopment.arcana.common.containers.AspectSlot;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.impls.Chemistry;
@@ -11,7 +12,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,11 +39,7 @@ public interface PuzzleRenderer<T extends Puzzle>{
 		return get(puzzle.type());
 	}
 	
-	void render(T puzzle, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player);
-	
-	/*List<Pair<Integer, Integer>> getItemSlotLocations(T puzzle, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player);
-	
-	List<Pair<Integer, Integer>> getAspectSlotLocations(T puzzle, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player);*/
+	void render(T puzzle, List<AspectSlot> puzzleSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player);
 	
 	default Minecraft mc(){
 		return Minecraft.getMinecraft();

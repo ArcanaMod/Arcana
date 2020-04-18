@@ -39,6 +39,10 @@ public class Pair<A, B>{
 		return of(getSecond(), getFirst());
 	}
 	
+	public boolean contains(Object obj){
+		return first == obj || second == obj;
+	}
+	
 	public boolean equals(Object o){
 		if(this == o)
 			return true;

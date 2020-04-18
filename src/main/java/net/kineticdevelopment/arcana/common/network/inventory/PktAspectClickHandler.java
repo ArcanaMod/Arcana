@@ -33,7 +33,7 @@ public class PktAspectClickHandler implements IMessageHandler<PktAspectClick, Pk
 					container.setHeldCount(container.getHeldCount() + slot.drain(slot.getAspect(), drain, false));
 					if(slot.getAmount() <= 0 && slot.storeSlot)
 						slot.setAspect(null);
-					slot.sync();
+					slot.onChange();
 				}else if((message.type == ClickType.PUT || message.type == ClickType.PUT_ALL) && container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == null)){
 					int drain = message.type == ClickType.PUT_ALL ? container.getHeldCount() : 1;
 					if(slot.getAspect() == null && slot.storeSlot)
@@ -43,8 +43,9 @@ public class PktAspectClickHandler implements IMessageHandler<PktAspectClick, Pk
 						container.setHeldCount(0);
 						container.setHeldAspect(null);
 					}
-					slot.sync();
+					slot.onChange();
 				}
+				container.onAspectSlotChange();
 				return new PktSyncAspectContainer(container);
 			}else{
 				LOGGER.error(String.format("Tried to click on invalid aspect slot; out of bounds! (size: %d, slot index: %d).", container.getAspectSlots().size(), message.slotId));

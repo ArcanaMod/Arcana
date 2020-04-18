@@ -1,5 +1,7 @@
 package net.kineticdevelopment.arcana.core.aspects;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import net.kineticdevelopment.arcana.utilities.Pair;
 
 import javax.annotation.Nullable;
@@ -74,7 +76,7 @@ public enum Aspect{
 	WIND,
 	WRATH;
 	
-	public static final Map<Pair<Aspect, Aspect>, Aspect> combinations = new HashMap<>();
+	public static final BiMap<Pair<Aspect, Aspect>, Aspect> combinations = HashBiMap.create(Aspect.values().length);
 	
 	static{
 		combinations.put(of(MANA, AIR), AURA);

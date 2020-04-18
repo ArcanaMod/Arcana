@@ -401,9 +401,10 @@
       "key": "arcana:chemistry_expertise",
       "type": "chemistry",
       "nodes": [
-        "mana",
+        "slime",
         "order",
-        "chaos"
+        "chaos",
+        "tree"
       ]
     }
   ]

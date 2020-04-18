@@ -1,11 +1,14 @@
 package net.kineticdevelopment.arcana.core.research;
 
 import com.google.gson.JsonObject;
+import net.kineticdevelopment.arcana.common.containers.AspectSlot;
 import net.kineticdevelopment.arcana.common.containers.ResearchTableContainer;
+import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.research.impls.Chemistry;
 import net.kineticdevelopment.arcana.core.research.impls.Fieldwork;
 import net.kineticdevelopment.arcana.core.research.impls.Guesswork;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
@@ -80,7 +83,9 @@ public abstract class Puzzle{
 	
 	public abstract List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player);
 	
-	public abstract List<Pair<Integer, Integer>> getAspectSlotLocations();
+	public abstract List<AspectSlot> getAspectSlots(Supplier<AspectHandler> returnInv);
+	
+	public abstract boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots);
 	
 	public String getDesc(){
 		return desc;
