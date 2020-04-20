@@ -39,7 +39,7 @@ public class PuzzleRequirement extends Requirement{
 	}
 	
 	public void onClick(){
-		if(!(ServerBooks.puzzles.get(puzzleId) instanceof Fieldwork)) //
+		if(!(ServerBooks.puzzles.get(puzzleId) instanceof Fieldwork))
 			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId));
 	}
 	
