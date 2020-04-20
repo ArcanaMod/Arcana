@@ -8,8 +8,6 @@ import java.util.function.Consumer;
 
 // Google Guava 23.1+ has the class Traverser, which would do all of this for me.
 // Unfortunately, we're stuck on 21.0.
-// I have considered adding a newer version as a shaded dependancy, but the shading plugin requires Gradle 5.0+.
-// Which we're not on.
 @SuppressWarnings("UnstableApiUsage")
 public final class GraphTraverser<N>{
 	
@@ -26,7 +24,7 @@ public final class GraphTraverser<N>{
 	
 	/**
 	 * Runs the given consumer on every node reachable from the given start node
-	 * once.
+	 * once, including the start node. The order is not guaranteed.
 	 *
 	 * @param user
 	 * 		A consumer to be run over each node.

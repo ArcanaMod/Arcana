@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.items;
 import com.google.common.collect.ImmutableList;
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.client.Sounds;
+import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.Focus;
 import net.kineticdevelopment.arcana.core.Main;
@@ -11,14 +12,15 @@ import net.kineticdevelopment.arcana.core.aspects.TypedVisBattery;
 import net.kineticdevelopment.arcana.core.spells.Spell;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.utilities.WandUtil;
+import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -112,15 +114,53 @@ public class ItemWand extends Item{
         }
         return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
     }
-
+    
+    /**
+     * Called when a Block is right-clicked with this Item. The wand uses this to transform blocks when applicable.
+     *
+     * @param player
+     * 		The player using the wand.
+     * @param world
+     * 		The world the wand is used in.
+     * @param pos
+     * 		The position of the block clicked.
+     * @param hand
+     * 		The hand the wand is in.
+     * @param facing
+     * 		Which side of the block is being clicked (?).
+     * @param hitX
+     * 		Where on the block on the X axis the player has clicked.
+     * @param hitY
+     * 		Where on the block on the Y axis the player has clicked.
+     * @param hitZ
+     * 		Where on the block on the Z axis the player has clicked.
+     * @return Whether the wand did anything.
+     */
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+        Block block = world.getBlockState(pos).getBlock();
+        // hardcoded for now, but this could be made into recipes later (probably 1.13+ when recipes can work with non-crafting tables)
+        if(block == Blocks.BOOKSHELF){
+            // destroy the block
+            world.setBlockToAir(pos);
+            // create an Arcanum item
+            if(!world.isRemote){
+                EntityItem entity = new EntityItem(world, pos.getX() + .5, pos.getY(), pos.getZ() + .5, new ItemStack(ItemInit.ARCANUM));
+                entity.setDefaultPickupDelay();
+                world.spawnEntity(entity);
+            }
+            // display particles ane effects (to do)
+            return EnumActionResult.SUCCESS;
+        }
+        return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
+    }
+    
     /**
      * Getter of the attached attachments.
      * @return an array of the attached attachments
      */
     public ItemAttachment[][] getAttachments(){
-        if(this.attachments == null){
-            this.attachments = this.supplierAttachments.get();
-        }
+        if(this.attachments == null)
+            this.attachments = supplierAttachments.get();
 
         return this.attachments;
     }

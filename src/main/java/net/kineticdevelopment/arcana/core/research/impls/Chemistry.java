@@ -116,7 +116,7 @@ public class Chemistry extends Puzzle{
 	public boolean validate(List<AspectSlot> puzzleSlots, List<Slot> ignored){
 		fillGraph(puzzleSlots);
 		// now traverse the graph
-		AtomicInteger count = new AtomicInteger(); // traversing from first
+		AtomicInteger count = new AtomicInteger();
 		GraphTraverser.of(graph).traverse((f) -> {
 			if(f.fixed)
 				count.incrementAndGet();
