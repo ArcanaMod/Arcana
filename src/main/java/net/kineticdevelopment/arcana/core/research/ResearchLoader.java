@@ -270,7 +270,17 @@ public class ResearchLoader{
 				}else{
 					// its an item
 					ResourceLocation item = new ResourceLocation(desc);
-					Requirement add = new ItemRequirement(ForgeRegistries.ITEMS.getValue(item));
+					ItemRequirement add = new ItemRequirement(ForgeRegistries.ITEMS.getValue(item));
+					// a / means meta (intentionally temporary until we upgrade)
+					// any other param will be NBT eventually
+					// TODO: document properly
+					if(params.size() > 0 && params.get(0).startsWith("/")){
+						try{
+							add.setMeta(Integer.parseInt(params.get(0).substring(1)));
+						}catch(NumberFormatException exception){
+							LOGGER.error("Tried to set an item requirement's item's meta to a non-integer! (If the first parameter of an item requirement begins with a /, it will be parsed as meta.)");
+						}
+					}
 					add.amount = amount;
 					ret.add(add);
 				}

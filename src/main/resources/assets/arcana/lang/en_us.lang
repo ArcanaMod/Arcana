@@ -91,7 +91,7 @@ item.vis_manipulation_tools.name=Vis Manipulation Tools
 #Arcana aspects
 aspect.air.name=Aer
 aspect.air.desc=Air
-aspect.armour.name=???
+aspect.armour.name=Armis
 aspect.armour.desc=Armour
 aspect.aura.name=Auram
 aspect.aura.desc=Aura
@@ -112,36 +112,36 @@ aspect.earth.desc=Earth
 aspect.eldritch.name=???
 aspect.eldritch.desc=Eldritch
 aspect.ender.name=???
-aspect.ender.desc=Ender
+aspect.ender.desc=The End
 aspect.energy.name=Potentia
 aspect.energy.desc=Energy
 aspect.envy.name=???
 aspect.envy.desc=Envy
 aspect.exchange.name=Permutatio
 aspect.exchange.desc=Exchange
-aspect.fabric.name=???
+aspect.fabric.name=Fabricae
 aspect.fabric.desc=Fabric
 aspect.fire.name=Ignis
 aspect.fire.desc=Fire
-aspect.flesh.name=???
+aspect.flesh.name=Carnes
 aspect.flesh.desc=Flesh
-aspect.flight.name=???
+aspect.flight.name=Fuga
 aspect.flight.desc=Flight
 aspect.gluttony.name=???
 aspect.gluttony.desc=Gluttony
-aspect.greed.name=???
+aspect.greed.name=Avaritia
 aspect.greed.desc=Greed
-aspect.harvest.name=???
+aspect.harvest.name=Messis
 aspect.harvest.desc=Harvest
 aspect.human.name=Humanus
 aspect.human.desc=Humanity
 aspect.ice.name=???
 aspect.ice.desc=Ice
 aspect.imprison.name=???
-aspect.imprison.desc=Imprison
-aspect.journey.name=???
+aspect.imprison.desc=Imprisonment
+aspect.journey.name=Iter
 aspect.journey.desc=Journey
-aspect.life.desc=???
+aspect.life.desc=Victus
 aspect.life.name=Life
 aspect.light.desc=Lux
 aspect.light.name=Light
@@ -149,13 +149,13 @@ aspect.lust.desc=???
 aspect.lust.name=Lust
 aspect.machine.desc=Machina
 aspect.machine.name=Machinery
-aspect.mana.name=???
+aspect.mana.name=Vis
 aspect.mana.desc=Mana
-aspect.metal.name=???
+aspect.metal.name=Metallum
 aspect.metal.desc=Metal
 aspect.mining.name=???
 aspect.mining.desc=Mining
-aspect.mind.name=???
+aspect.mind.name=Amino
 aspect.mind.desc=Mind
 aspect.movement.name=???
 aspect.movement.desc=Movement
@@ -173,11 +173,11 @@ aspect.seeds.name=???
 aspect.seeds.desc=Seeds
 aspect.senses.name=???
 aspect.senses.desc=Senses
-aspect.slime.name=???
+aspect.slime.name=Limus
 aspect.slime.desc=Slime
 aspect.sloth.name=???
 aspect.sloth.desc=Sloth
-aspect.spirit.name=???
+aspect.spirit.name=Spiritus
 aspect.spirit.desc=Spirit
 aspect.strength.name=???
 aspect.strength.desc=Strength
@@ -191,13 +191,13 @@ aspect.undead.name=???
 aspect.undead.desc=Undead
 aspect.vacuum.name=???
 aspect.vacuum.desc=Vacuums
-aspect.venom.name=???
+aspect.venom.name=Virus
 aspect.venom.desc=Venom
 aspect.water.name=Aqua
 aspect.water.desc=Water
-aspect.weapon.name=???
+aspect.weapon.name=Telum
 aspect.weapon.desc=Weapons
-aspect.wind.name=???
+aspect.wind.name=Ventus
 aspect.wind.desc=Wind
 aspect.wrath.name=???
 aspect.wrath.desc=Wrath
@@ -491,6 +491,7 @@ requirement.guesswork=Guess the Recipe
 requirement.chemistry=Complete the Chemistry
 requirement.experience=%sx Experience Levels
 requirement.fieldwork=Do ???
+requirement.item.have=Have:
 requirement.puzzle.get_note.1=Click to get research note
 requirement.puzzle.get_note.2=Requires scribing tools and paper
 
@@ -506,26 +507,40 @@ research.arcana.category.taint=Taint
 research.arcana.category.crimson=Crimson Rites
 research.arcana.category.illustrious=Cleansing
 
-research.arcana.root=Root Entry
+research.arcana.root=The Arcane
 research.arcana.root.desc=(The start of something magical!)
-research.arcana.root.stage.1=<actual lore stuff, I don't know>
-research.arcana.root.complete=Good enough for me ¯\_(ツ)_/¯
+research.arcana.root.stage.1=There is more than meets the eye when it comes to this wand. By tapping it against a bookshelf, I have created a magical book, capable of storing large amounts of knowledge - especially magical knowledge. Information is organised into entries, such as the one I'm reading right now, which can have multiple stages. To complete a stage, I must fulfill its requirements, shown just below the book itself. Once I have everything I need, I can move onto the next stage. Some requirements will require me to use up resources, such as experience levels or items, while others simply require me to do tasks or have items present.\n\nThere seems to be more to this book than that; I'll require some further investigation.
+research.arcana.root.stage.2=After some further observation, I have found that the knowledge written in this book is bound to me, somehow; any copy of this book will present the same set of information, regardless of who made it or previously used it; and any knowledge I write will also persist after death.\n\nFinally, the book seems to have a kind of subtle intelligence of its own, trying to guide me into further more advanced and interesting magic. This is exciting! I can't wait to see what kind of inventions await me.
+
+## scanning???
+
+research.arcana.tome_of_sharing=Tome of Sharing
+research.arcana.tome_of_sharing.desc=Sharing is caring
+research.arcana.tome_of_sharing.stage.1=It's quite useful to have my knowledge bound to myself, rather than any specific copy of the this book, but it can also be limiting when trying to share my discoveries with friends. Teaching them everything manually is irritating and time-consuming. Perhaps a modified version of this book could teach them instead?
+research.arcana.tome_of_sharing.stage.2=By combining this book with an ender pearl, I can link it to my knowledge specifically. Anyone else reading it will gain access to my knowledge.
+
+research.arcana.vis_manipulators=Basic Vis Manipulation
+research.arcana.vis_manipulators.stage.1=My experience using my wand has taught me something vital about the world: energy is all around me. Energy that can't be seen or felt directly - at least, not at its usual concentration. All living things seem to weakly interact with it in some way, including myself. I have dubbed this energy *vis*, and intend to take advantage of it for my own purposes.\n\nTo do so, I'll need to figure out how I can manipulate it.
+research.arcana.vis_manipulators.stage.2=Certain materials seem to interact with it in interesting ways. Glass can manipulate it similarly to light, albiet in a more convoluted way; redstone can act as a kind of semiconductor; diamond can concentrate and store it, although I have no way to know how much, yet. Lapis is a kind of fossil fuel for it, capable of releasing a large amount of it (could this be related to enchantment?). Gold, then, is like a superconductor, freely transmitting vis. Finally, iron is resistant to it, absorbing large amounts before showing obserable differences. (Wood showed no interesting effects.)\n\nMy next task will be creating a tool based on these concepts to properly control vis.
+research.arcana.vis_manipulators.stage.3=The §oVis Manipulation Tools§r are built on the the abilities of diamond, redstone, and glass. With them, I can transfer vis between items capable of containing it - currently just wands - and combine aspects into their compound aspects - that is, if I had anything capable of storing compound aspects.. I expect more applications fo rtheir use fill appear soon.
+
+research.arcana.research_intro=Introduction to Research
+research.arcana.research_intro.desc=Learning about the world
+research.arcana.research_intro.stage.1=To reach further into the arcane, I must first understand the arcane. I can do this by completing research, and testing various theories that I might have. The applications of simply using up resources or tinkering with mundane items is limited, however. I need to come up with a dedicated research workspace for more complex work and theories. One possibility for this is a specially-equipped table, providing scribing and vis-handling capabilities, as well as a nice, focused environment.
+research.arcana.research_intro.stage.2=The use of the §oresearch table§r allows me to complete more difficult research puzzles, each of which has its own rules and is most tailored to certain applications. The table has the ability to store vis, and draw vis from other objects that can store vis.\n\nTo use the table, I first need a research note for the entry I want to work on, which can be obtained by clicking on the relevant puzzle requirement with paper and scribing tools in my inventory. Then, I simply place it with scribing tools into the table, and play the game. I can then right click with a complete research note to mark the puzzle as complete.
+
+research.arcana.guesswork_info=Puzzle: Guesswork
+research.arcana.guesswork_info.desc=It's exactly what it sounds like
+research.arcana.guesswork_info.stage.1=The simplest puzzle is a guessing game. Given the shape of a recipe, and a few hints, I fill it in.
+
+research.arcana.chemistry_info=Puzzle: Chemistry
+research.arcana.chemistry_info.desc=A + B = C
+research.arcana.chemistry_info.stage.1=The chemistry puzzle consists of a hexagonal grid with a few aspects placed at the edges. To complete this puzzle, I need to connect the aspects by placing my own aspects between them. Aspects will only connect if one of them is a direct component of another; for example, Victus can connect to Aqua and Terra, and Arbor can connect to Victus and Terra, but Arbor cannot connect to Aqua. Once every edge aspect is connected, the puzzle is complete.
+research.arcana.chemistry_info.stage.2=I should be able to use this to figure out how to utilize multiple disparate aspects together.
 
 requirement.guesswork.ench.hint.diamond=A pure crystal
 requirement.guesswork.ench.hint.book=A storage of text
 requirement.guesswork.ench.hint.obsidian=A dark, hard rock
-requirement.fieldwork.place_table=Place a research table
-
-research.arcana.vis_manipulators=Basic Vis Manipulation
-
-research.arcana.trailing=Trailing Entry
-research.arcana.trailing.desc=Nothing here but us chickens!
-research.arcana.trailing.all=That's all, folks!
-
-research.arcana.research_intro=Introduction to Research
-research.arcana.research_intro.desc=Learning about the world
-research.arcana.research_intro.stage.1=To reach further into the arcane, I must first understand the arcane. I can do this by completing research, and testing various theories that I might have, or following leads that pop up from time to time, or trailing other research.\n\nResearch is categorised into entries, just like the one I'm currently looking at. In order to see more content, I need to complete a number of requirements, which will be listed below the entry. Some requirements may use up items or resources, which will be consumed when I attempt to continue. I can only attempt to continue when I have completed all of the requirements for an entry.\n\nThe applications of simply using up resources or tinkering with mundane items is limited, however. I need to come up with a dedicated research workspace for more complex work and theories. One possibility for this is a specially-equipped table, providing scribing and vis-handling capabilities, as well as a nice, focused environment.
-research.arcana.research_intro.stage.2=The use of the §oresearch table§r allows me to complete more difficult research minigames, each of which has its own rules and is most tailored to certain applications. The research table has the ability to store vis, and draw vis from other objects that can store vis (including other research tables), although a wand is required to combine and use vis for research.\n\nTo use the table, I first need a research note for the entry I want to work on, which can be obtained by clicking on the relevant minigame requirement with paper and scribing tools in my inventory. Then, I simply place it with scribing tools and (usually) a wand to play the game.
 
 research.arcana.thaumaturgy_intro=Introduction to Thaumaturgy
 research.arcana.thaumaturgy_intro.desc=Tools of the Trade
@@ -535,6 +550,8 @@ research.arcana.alchemy_intro.desc=No titrations here!
 
 research.arcana.artifice_intro=Introduction to Artifice
 research.arcana.artifice_intro.desc=Stuff and Things
+
+research.arcana.infusion_intro=Introduction to Infusion
 
 research.arcana.golemancy_intro=Introduction to Golemancy
 research.arcana.golemancy_intro.desc=It's alive!

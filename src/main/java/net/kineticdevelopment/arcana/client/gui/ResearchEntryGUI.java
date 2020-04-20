@@ -232,7 +232,7 @@ public class ResearchEntryGUI extends GuiScreen{
 	}
 	
 	private void renderAmount(int x, int y, int amount, boolean complete){
-		if(amount == 1){
+		if(amount == 1 || amount == 0){
 			//display tick or cross
 			mc.getTextureManager().bindTexture(bg);
 			GlStateManager.color(1f, 1f, 1f, 1f);
@@ -262,6 +262,7 @@ public class ResearchEntryGUI extends GuiScreen{
 	
 	@SubscribeEvent
 	public void onResearchChange(ResearchEvent event){
+		System.out.println("Research changed?");
 		updateButtonVisibility();
 	}
 	

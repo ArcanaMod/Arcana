@@ -120,6 +120,7 @@ public class ResearchBookGUI extends GuiScreen{
 		for(ResearchEntry entry : categories.get(tab).getEntries()){
 			PageStyle style = style(entry);
 			if(style != PageStyle.NONE){
+				GlStateManager.scale(zoom, zoom, 1f);
 				// render base
 				mc.getTextureManager().bindTexture(ARROWS_AND_BASES);
 				int base = base(entry);
@@ -129,17 +130,16 @@ public class ResearchBookGUI extends GuiScreen{
 				else if(style == PageStyle.PENDING)
 					mult = 0.1f;
 				GlStateManager.color(mult, mult, mult, 1f);
-				//drawTexturedModalRect((int)((entry.x() * 30 + getXOffset() + 2) * zoom), (int)((entry.y() * 30 + getYOffset() + 2) * zoom), base % 4 * 26, base / 4 * 26, (int)(26 * zoom), (int)(26 * zoom));
-				drawScaledCustomSizeModalRect((int)((entry.x() * 30 + getXOffset() + 2) * zoom), (int)((entry.y() * 30 + getYOffset() + 2) * zoom), base % 4 * 26, base / 4 * 26, 26, 26, (int)(26 * zoom), (int)(26 * zoom), 256, 256);
+				//noinspection IntegerDivisionInFloatingPointContext
+				drawScaledCustomSizeModalRect((int)((entry.x() * 30 + getXOffset() + 2)), (int)((entry.y() * 30 + getYOffset() + 2)), base % 4 * 26, base / 4 * 26, 26, 26, 26, 26, 256, 256);
 				// render item
 				itemRender.zLevel = 50;
-				GlStateManager.scale(zoom, zoom, 1f);
 				GlStateManager.enableDepth();
 				RenderHelper.enableGUIStandardItemLighting();
 				GlStateManager.disableLighting();
 				itemRender.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get((mc.player.ticksExisted / 30) % entry.icons().size())), (int)(entry.x() * 30 + getXOffset() + 7), (int)(entry.y() * 30 + getYOffset() + 7));
 				GlStateManager.disableLighting();
-				GlStateManager.scale(1 / zoom, 1 / zoom, 1f);
+				
 				GlStateManager.enableRescaleNormal();
 				
 				// for every visible parent
@@ -167,7 +167,7 @@ public class ResearchBookGUI extends GuiScreen{
 								else
 									arrows.drawRightArrow(entry.x() - 1, entry.y());
 							}
-						// if there is a y-difference & x-difference of 1, draw a small curve
+							// if there is a y-difference & x-difference of 1, draw a small curve
 						else if(xdiff == 1 && ydiff == 1)
 							// from entry's POV
 							if(entry.x() > parent.x())
@@ -187,7 +187,7 @@ public class ResearchBookGUI extends GuiScreen{
 									arrows.drawUpArrow(entry.x(), entry.y() + 1);
 								}
 							}
-						// else if there is a y-difference or x-difference of 1, draw a line then small curve
+							// else if there is a y-difference or x-difference of 1, draw a line then small curve
 						else if(xdiff == 1 || ydiff == 1)
 							// from entry's POV
 							if(xdiff == 1){
@@ -229,7 +229,7 @@ public class ResearchBookGUI extends GuiScreen{
 									}
 								}
 							}
-						// else if there is a y-difference & x-difference of 2, draw a large curve
+							// else if there is a y-difference & x-difference of 2, draw a large curve
 						else if(xdiff == 2 && ydiff == 2){
 							// from entry's POV
 							if(entry.x() > parent.x())
@@ -292,7 +292,7 @@ public class ResearchBookGUI extends GuiScreen{
 									}
 								}
 							}
-						// else (x-difference & y-difference > 2), draw a line, then large curve, then line
+							// else (x-difference & y-difference > 2), draw a line, then large curve, then line
 						else{
 							arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
 							arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
@@ -316,6 +316,7 @@ public class ResearchBookGUI extends GuiScreen{
 						}
 					}
 				}
+				GlStateManager.scale(1 / zoom, 1 / zoom, 1f);
 			}
 		}
 	}
@@ -386,8 +387,7 @@ public class ResearchBookGUI extends GuiScreen{
 		int y = (int)((entry.y() * 30 + getYOffset() + 2) * zoom);
 		// 224x196 viewing area
 		int scrx = (width - fWidth) / 2 + 16, scry = (height - fHeight) / 2 + 17;
-		return mouseX >= x && mouseX <= x + (26 * zoom) && mouseY >= y && mouseY <= y + (26 * zoom)
-				&& mouseX >= scrx && mouseX <= scrx + 224 && mouseY >= scry && mouseY <= scry + 196;
+		return mouseX >= x && mouseX <= x + (26 * zoom) && mouseY >= y && mouseY <= y + (26 * zoom) && mouseX >= scrx && mouseX <= scrx + 224 && mouseY >= scry && mouseY <= scry + 196;
 	}
 	
 	private void renderFrame(){
@@ -456,21 +456,19 @@ public class ResearchBookGUI extends GuiScreen{
 	private final class Arrows extends Gui{
 		
 		int gX2SX(int gX){
-			return (int)((gX * 30 + getXOffset()) *  zoom);
+			return (int)((gX * 30 + getXOffset())/* *  zoom*/);
 		}
 		
 		int gY2SY(int gY){
-			return (int)((gY * 30 + getYOffset()) * zoom);
+			return (int)((gY * 30 + getYOffset())/* * zoom*/);
 		}
 		
 		void drawHorizontalSegment(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 0, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 104, 0, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 0, 30, 30);
 		}
 		
 		void drawVerticalSegment(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 0, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 134, 0, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 0, 30, 30);
 		}
 		
 		void drawHorizontalLine(int y, int startGX, int endGX){
@@ -525,63 +523,51 @@ public class ResearchBookGUI extends GuiScreen{
 		}
 		
 		void drawLuCurve(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 164, 0, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 164, 0, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 164, 0, 30, 30);
 		}
 		
 		void drawRuCurve(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 0, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 194, 0, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 0, 30, 30);
 		}
 		
 		void drawLdCurve(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 224, 0, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 224, 0, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 224, 0, 30, 30);
 		}
 		
 		void drawRdCurve(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 30, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 104, 30, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 30, 30, 30);
 		}
 		
 		void drawLargeLuCurve(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 30, 60, 60);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 134, 30, 60, 60, (int)(60 * zoom), (int)(60 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 30, 60, 60);
 		}
 		
 		void drawLargeRuCurve(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 30, 60, 60);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 194, 30, 60, 60, (int)(60 * zoom), (int)(60 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 30, 60, 60);
 		}
 		
 		void drawLargeLdCurve(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 90, 60, 60);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 134, 90, 60, 60, (int)(60 * zoom), (int)(60 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 90, 60, 60);
 		}
 		
 		void drawLargeRdCurve(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 90, 60, 60);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY), 194, 90, 60, 60, (int)(60 * zoom), (int)(60 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 90, 60, 60);
 		}
 		
 		void drawDownArrow(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30);
 		}
 		
 		void drawUpArrow(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30);
 		}
 		
 		void drawLeftArrow(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30);
 		}
 		
 		void drawRightArrow(int gX, int gY){
-			//drawTexturedModalRect(gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30);
-			drawScaledCustomSizeModalRect(gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30, (int)(30 * zoom), (int)(30 * zoom), 256, 256);
+			drawTexturedModalRect(gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30);
 		}
 	}
 	

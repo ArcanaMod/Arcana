@@ -14,28 +14,19 @@
         "yellow_base",
         "round_base"
       ],
-      "x": -1,
+      "x": -3,
       "y": -1,
       "sections": [
         {
           "type": "string",
           "content": "research.arcana.root.stage.1",
           "requirements": [
-            "5*arcana::xp",
-            "arcana:arcanum"
+            "10*arcana::xp"
           ]
         },
         {
           "type": "string",
-          "content": "research.arcana.root.complete"
-        },
-        {
-          "type": "guesswork",
-          "content": "arcana:gw_enchanting_table"
-        },
-        {
-          "type": "recipe",
-          "content": "arcana:arcanium_sword"
+          "content": "research.arcana.root.stage.2"
         }
       ]
     },
@@ -46,23 +37,39 @@
         "arcana:vis_manipulation_tools"
       ],
       "category": "arcana:basics",
-      "parents": [
-        "arcana:root"
+      "parents": [],
+      "meta": [
+        "root"
       ],
       "x": 1,
       "y": -1,
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.vis_manipulators.stage.1"
-        },
-        {
-          "type": "recipe",
-          "content": "arcana:temp_vis_manipulators_1"
+          "content": "research.arcana.vis_manipulators.stage.1",
+          "requirements": [
+            "2*minecraft:glass",
+            "3*minecraft:redstone",
+            "minecraft:diamond",
+            "minecraft:dye{/4}",
+            "minecraft:gold_ingot",
+            "minecraft:log"
+          ]
         },
         {
           "type": "string",
           "content": "research.arcana.vis_manipulators.stage.2"
+        },
+        {
+          "type": "recipe",
+          "content": "arcana:temp_vis_manipulators_1",
+          "requirements": [
+            "0*arcana:vis_manipulation_tools"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.vis_manipulators.stage.3"
         }
       ]
     },
@@ -80,8 +87,8 @@
       "meta": [
         "spiky_base"
       ],
-      "x": 0,
-      "y": 0,
+      "x": -1,
+      "y": 1,
       "sections": [
         {
           "type": "string",
@@ -95,7 +102,7 @@
           "type": "recipe",
           "content": "arcana:temp_research_table",
           "requirements": [
-            "arcana:research_table_placer"
+            "0*arcana:research_table_placer"
           ]
         },
         {
@@ -113,13 +120,13 @@
       ],
       "category": "arcana:basics",
       "parents": [
-        "arcana:research_intro"
+        "arcana:alchemy_intro"
       ],
       "meta": [
         "spiky_base"
       ],
-      "x": -2,
-      "y": 1,
+      "x": 0,
+      "y": 4,
       "sections": [
         {
           "type": "string",
@@ -145,7 +152,7 @@
       "meta": [
         "spiky_base"
       ],
-      "x": -1,
+      "x": 0,
       "y": 2,
       "sections": [
         {
@@ -172,8 +179,8 @@
       "meta": [
         "spiky_base"
       ],
-      "x": 2,
-      "y": 1,
+      "x": -2,
+      "y": 2,
       "sections": [
         {
           "type": "string",
@@ -186,6 +193,32 @@
       ]
     },
     {
+      "key": "arcana:infusion_intro",
+      "name": "research.arcana.infusion_intro",
+      "icons": [
+        "arcana:aspect_mana"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:artifice_intro"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": -2,
+      "y": 4,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.thaumaturgy_intro.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.thaumaturgy_intro.stage.2"
+        }
+      ]
+    },
+    {
       "key": "arcana:golemancy_intro",
       "name": "research.arcana.golemancy_intro",
       "desc": "research.arcana.golemancy_intro.desc",
@@ -194,13 +227,13 @@
       ],
       "category": "arcana:basics",
       "parents": [
-        "arcana:research_intro"
+        "arcana:artifice_intro"
       ],
       "meta": [
         "spiky_base"
       ],
-      "x": 1,
-      "y": 2,
+      "x": -4,
+      "y": 3,
       "sections": [
         {
           "type": "string",
@@ -226,7 +259,7 @@
       "meta": [
         "spiky_base"
       ],
-      "x": 0,
+      "x": -1,
       "y": 3,
       "sections": [
         {
@@ -261,8 +294,8 @@
       "meta": [
         "round_base"
       ],
-      "x": -1,
-      "y": 4,
+      "x": 1,
+      "y": 5,
       "sections": [
         {
           "type": "string",
@@ -288,8 +321,8 @@
       "meta": [
         "round_base"
       ],
-      "x": 1,
-      "y": 4,
+      "x": -3,
+      "y": 5,
       "sections": [
         {
           "type": "string",
@@ -306,8 +339,7 @@
       "name": "research.arcana.research_mastery",
       "desc": "research.arcana.research_mastery.desc",
       "icons": [
-        "arcana:aspect_senses",
-        "arcana:aspect_mana"
+        "arcana:aspect_senses"
       ],
       "category": "arcana:basics",
       "parents": [
@@ -316,7 +348,7 @@
       "meta": [
         "spiky_base"
       ],
-      "x": 0,
+      "x": -1,
       "y": 5,
       "sections": [
         {
@@ -343,7 +375,7 @@
       "meta": [
         "round_base"
       ],
-      "x": -1,
+      "x": 0,
       "y": 6,
       "sections": [
         {
@@ -370,7 +402,7 @@
       "meta": [
         "round_base"
       ],
-      "x": 1,
+      "x": -2,
       "y": 6,
       "sections": [
         {
