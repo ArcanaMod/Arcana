@@ -18,7 +18,7 @@ public class GuessworkSectionRenderer implements EntrySectionRenderer<GuessworkS
 	
 	public void onClick(GuessworkSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player){
 		System.out.println("clicking");
-		Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(section.getGuessworkId()));
+		//Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(section.getGuessworkId()));
 	}
 	
 	public int span(GuessworkSection section, EntityPlayer player){

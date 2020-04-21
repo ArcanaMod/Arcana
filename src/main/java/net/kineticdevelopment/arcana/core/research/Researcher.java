@@ -45,8 +45,6 @@ public interface Researcher{
 	
 	void resetPuzzle(Puzzle puzzle);
 	
-	void setPuzzleCompletion(Puzzle puzzle, boolean complete);
-	
 	/**
 	 * Sets this researchers progress for an entry to its maximum progress
 	 *

@@ -1,6 +1,7 @@
 package net.kineticdevelopment.arcana.common.init;
 
 import net.kineticdevelopment.arcana.common.items.ItemResearchBook;
+import net.kineticdevelopment.arcana.common.items.ItemResearchNote;
 import net.kineticdevelopment.arcana.common.items.ItemVisManipulators;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
@@ -63,8 +64,8 @@ public class ItemInit {
 
 	//Items With Function
 
-	public static Item RESEARCH_NOTE_COMPLETE = new ItemBase("research_note_complete").setMaxStackSize(1).setCreativeTab(Main.TAB_ARCANA);
-	public static Item RESEARCH_NOTE = new ItemBase("research_note").setMaxStackSize(1).setCreativeTab(Main.TAB_ARCANA);
+	public static Item RESEARCH_NOTE_COMPLETE = new ItemResearchNote("research_note_complete", true).setCreativeTab(Main.TAB_ARCANA);
+	public static Item RESEARCH_NOTE = new ItemResearchNote("research_note", false).setCreativeTab(Main.TAB_ARCANA);
 	public static Item INK = new ItemBase("ink").setMaxStackSize(1).setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_TABLE_PLACER = new ItemResearchTable().setCreativeTab(Main.TAB_ARCANA);
 	public static Item VIS_MANIPULATORS = new ItemVisManipulators().setCreativeTab(Main.TAB_ARCANA);
@@ -74,7 +75,7 @@ public class ItemInit {
 	public static Item CODEX = new ItemResearchBook("tainted_codex", new ResourceLocation(Main.MODID, "tainted_codex")).setCreativeTab(Main.TAB_ARCANA);
 	public static Item RITES = new ItemResearchBook("crimson_rites", new ResourceLocation(Main.MODID, "crimson_rites")).setCreativeTab(Main.TAB_ARCANA);
 
-	//Food - Will add food class soon --Tea :D
+	//Food - Will add food class soon --Tea :D    (rip lol --Luna)
 	public static Item CAT_MEAT_COOKED = new ItemBase("cooked_cat_meat").setCreativeTab(Main.TAB_ARCANA);
 	public static Item CAT_MEAT_UNCOOKED = new ItemBase("cat_meat").setCreativeTab(Main.TAB_ARCANA);
 	public static Item DOG_MEAT_COOKED = new ItemBase("cooked_dog_meat").setCreativeTab(Main.TAB_ARCANA);

@@ -4,6 +4,7 @@ import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.network.inventory.PktGetNoteHandler;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Requirement;
+import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.kineticdevelopment.arcana.core.research.ServerBooks;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,9 +39,9 @@ public class PuzzleRequirement extends Requirement{
 		return compound;
 	}
 	
-	public void onClick(){
+	public void onClick(ResearchEntry entry){
 		if(!(ServerBooks.puzzles.get(puzzleId) instanceof Fieldwork))
-			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId));
+			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId.toString(), entry.key().toString()));
 	}
 	
 	public ResourceLocation getPuzzleId(){

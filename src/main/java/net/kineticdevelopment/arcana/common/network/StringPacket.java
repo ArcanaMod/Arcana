@@ -13,7 +13,7 @@ public abstract class StringPacket implements IMessage{
 	public void fromBytes(ByteBuf buf){
 		PacketBuffer pb = new PacketBuffer(buf);
 		// no reason to make it so big, but no reason to make it any shorter.
-		entryKey = pb.readString(32767 * 4);
+		entryKey = pb.readString(32767);
 	}
 	
 	public void toBytes(ByteBuf buf){

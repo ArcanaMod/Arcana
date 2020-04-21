@@ -343,7 +343,9 @@
       ],
       "category": "arcana:basics",
       "parents": [
-        "arcana:research_expertise"
+        "arcana:research_expertise",
+        "arcana:infusion_intro",
+        "arcana:thaumaturgy_intro"
       ],
       "meta": [
         "spiky_base"

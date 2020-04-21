@@ -6,8 +6,8 @@ import net.kineticdevelopment.arcana.common.event.ResearchEvent;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.core.research.EntrySection;
 import net.kineticdevelopment.arcana.core.research.Requirement;
-import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
+import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -122,8 +122,7 @@ public class ResearchEntryGUI extends GuiScreen{
 			// I can't be bothered to make a new type for something which will use this behaviours exactly once.
 			// If I ever need this behaviour elsewhere, I'll move it to a proper class.
 			public void drawButton(Minecraft mc, int mouseX, int mouseY, float partial){
-				enabled = Researcher.getFrom(mc.player).entryStage(entry) < entry.sections().size() &&
-						entry.sections().get(Researcher.getFrom(mc.player).entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfied(mc.player));
+				enabled = Researcher.getFrom(mc.player).entryStage(entry) < entry.sections().size() && entry.sections().get(Researcher.getFrom(mc.player).entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfied(mc.player));
 				super.drawButton(mc, mouseX, mouseY, partial);
 			}
 		};
@@ -179,7 +178,7 @@ public class ResearchEntryGUI extends GuiScreen{
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
-					requirements.get(i).onClick();
+					requirements.get(i).onClick(entry);
 					break;
 				}
 		}
@@ -261,9 +260,9 @@ public class ResearchEntryGUI extends GuiScreen{
 	}
 	
 	@SubscribeEvent
-	public void onResearchChange(ResearchEvent event){
-		System.out.println("Research changed?");
-		updateButtonVisibility();
+	public static void onResearchChange(ResearchEvent event){
+		if(Minecraft.getMinecraft().currentScreen instanceof ResearchEntryGUI)
+			((ResearchEntryGUI)Minecraft.getMinecraft().currentScreen).updateButtonVisibility();
 	}
 	
 	class ChangePageButton extends GuiButton{
