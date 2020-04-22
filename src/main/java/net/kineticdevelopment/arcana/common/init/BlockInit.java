@@ -56,6 +56,13 @@ public class BlockInit {
 	public static final Block DEAD_SLAB_DOUBLE = new DoubleSlabBase("dead_slab_double", Material.WOOD);
 	public static final Block DEAD_STONE_SLAB_HALF = new HalfSlabBase("dead_slab", Material.WOOD, BlockInit.DEAD_SLAB_DOUBLE).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block DEAD_STAIRS = new StairsBase("dead_stairs", DEAD_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block EUCALYPTUS_LEAVES = new LeavesBase("eucalyptus_leaves").setCreativeTab(Main.TAB_ARCANA);
+	public static final Block EUCALYPTUS_LOG = new LogBase("eucalyptus_log").setCreativeTab(Main.TAB_ARCANA);
+	public static final Block EUCALYPTUS_PLANKS = new PlanksBase("eucalyptus_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block EUCALYPTUS_SAPLING = new EucalyptusSapling("eucalyptus_sapling", false, false).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block EUCALYPTUS_SLAB_DOUBLE = new DoubleSlabBase("eucalyptus_slab_double", Material.WOOD);
+	public static final Block EUCALYPTUS_STONE_SLAB_HALF = new HalfSlabBase("eucalyptus_slab", Material.WOOD, BlockInit.GREATWOOD_SLAB_DOUBLE).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block EUCALYPTUS_STAIRS = new StairsBase("eucalyptus_stairs", EUCALYPTUS_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block GREATWOOD_LEAVES = new LeavesBase("greatwood_leaves").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block GREATWOOD_LOG = new LogBase("greatwood_log").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block GREATWOOD_PLANKS = new PlanksBase("greatwood_planks", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);

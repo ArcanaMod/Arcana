@@ -1,7 +1,7 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.saplings;
 
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.SaplingBase;
-import net.kineticdevelopment.arcana.common.worldgen.trees.HawthornGenerator;
+import net.kineticdevelopment.arcana.common.worldgen.trees.EucalyptusGenerator;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -16,11 +16,11 @@ import java.util.Random;
  *
  * Used to grow all variations of the hawthorn tree
  */
-public class HawthornSapling extends SaplingBase {
+public class EucalyptusSapling extends SaplingBase {
     boolean tainted;
     boolean untainted;
 
-    public HawthornSapling(String name, boolean tainted, boolean untainted) {
+    public EucalyptusSapling(String name, boolean tainted, boolean untainted) {
         super(name);
         this.tainted = tainted;
         this.untainted = untainted;
@@ -32,9 +32,9 @@ public class HawthornSapling extends SaplingBase {
 
         WorldGenerator worldgenerator;
         if (tainted) {
-            worldgenerator = untainted ? new HawthornGenerator(true, true, true) : new HawthornGenerator(true, true, false);
+            worldgenerator = untainted ? new EucalyptusGenerator(true, true, true) : new EucalyptusGenerator(true, true, false);
         } else {
-            worldgenerator = new HawthornGenerator(true, false);
+            worldgenerator = new EucalyptusGenerator(true, false);
         }
 
         worldIn.setBlockState(pos, Blocks.AIR.getDefaultState(), 4);
