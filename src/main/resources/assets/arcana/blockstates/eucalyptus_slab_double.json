@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=top": {"model": "arcana:eucalyptus_planks"},
+    "half=bottom": {"model": "arcana:eucalyptus_planks"}
+  }
+}
