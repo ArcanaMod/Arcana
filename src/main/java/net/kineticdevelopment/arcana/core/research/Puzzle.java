@@ -47,11 +47,15 @@ public abstract class Puzzle{
 	
 	public static Puzzle deserialize(NBTTagCompound passData){
 		String type = passData.getString("type");
+		String desc = passData.getString("desc");
 		ResourceLocation key = new ResourceLocation(passData.getString("key"));
+		ResourceLocation icon = new ResourceLocation(passData.getString("icon"));
 		NBTTagCompound data = passData.getCompoundTag("data");
 		if(deserializers.get(type) != null){
 			Puzzle puzzle = deserializers.get(type).apply(data);
 			puzzle.key = key;
+			puzzle.desc = desc;
+			puzzle.icon = icon;
 			return puzzle;
 		}else
 			return null;
@@ -99,7 +103,7 @@ public abstract class Puzzle{
 		NBTTagCompound passData = new NBTTagCompound();
 		passData.setString("type", type());
 		passData.setString("key", getKey().toString());
-		passData.setString("desc", getDesc());
+		passData.setString("desc", getDesc() != null ? getDesc() : "null");
 		passData.setString("icon", getIcon().toString());
 		passData.setTag("data", getData());
 		return passData;

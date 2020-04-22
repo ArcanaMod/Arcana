@@ -427,7 +427,7 @@ public class ResearchBookGUI extends GuiScreen{
 		super.handleMouseInput();
 		float amnt = 1.5f;
 		int scroll = Mouse.getEventDWheel();
-		if((scroll < 0 && zoom > 0.125) || (scroll > 0 && zoom < 8))
+		if((scroll < 0 && zoom > 0.5) || (scroll > 0 && zoom < 2))
 			zoom *= scroll > 0 ? amnt : 1 / amnt;
 	}
 	

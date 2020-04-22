@@ -7,6 +7,7 @@ import net.kineticdevelopment.arcana.common.init.EntityInit;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
+import net.kineticdevelopment.arcana.common.worldgen.NodeGenerator;
 import net.kineticdevelopment.arcana.common.worldgen.OreGenerator;
 import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
@@ -45,6 +46,8 @@ public class CommonProxy {
 
 		GameRegistry.registerWorldGenerator(OreGenerator.instance, 5);
 		MinecraftForge.EVENT_BUS.register(OreGenerator.instance);
+		GameRegistry.registerWorldGenerator(NodeGenerator.instance, 20);
+		MinecraftForge.EVENT_BUS.register(NodeGenerator.instance);
 
 		// might want to group these together somehow...
 		EntrySection.init();

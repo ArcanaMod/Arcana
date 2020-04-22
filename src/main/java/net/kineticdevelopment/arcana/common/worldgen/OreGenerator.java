@@ -1,6 +1,6 @@
 package net.kineticdevelopment.arcana.common.worldgen;
 
-import net.kineticdevelopment.arcana.common.config.OregenConfig;
+import net.kineticdevelopment.arcana.common.config.ArcanaConfig;
 import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.core.Main;
@@ -38,15 +38,15 @@ public class OreGenerator implements IWorldGenerator {
     }
 
     public void generateWorld(Random random, int chunkX, int chunkZ, World world, boolean newGen) {
-        if(!newGen && !OregenConfig.RETROGEN) return;
+        if(!newGen && !ArcanaConfig.ORE_RETROGEN) return;
 
         boolean chunkWritten = false;
-        if(OregenConfig.GENERATE_OVERWORLD) {
+        if(ArcanaConfig.GENERATE_OVERWORLD) {
             if (world.provider.getDimensionType() == DimensionType.OVERWORLD) {
                 // Add Amber Ore
                 addOreSpawn(BlockInit.AMBER_ORE, (byte) 0, Blocks.STONE, world, random, chunkX * 16,
-                        chunkZ * 16, OregenConfig.AMBER_MIN_VEIN_SIZE, OregenConfig.AMBER_MAX_VEIN_SIZE,
-                        OregenConfig.AMBER_CHANCES_TO_SPAWN, OregenConfig.AMBER_MIN_Y, OregenConfig.AMBER_MAX_Y);
+                            chunkZ * 16, ArcanaConfig.AMBER_MIN_VEIN_SIZE, ArcanaConfig.AMBER_MAX_VEIN_SIZE,
+                            ArcanaConfig.AMBER_CHANCES_TO_SPAWN, ArcanaConfig.AMBER_MIN_Y, ArcanaConfig.AMBER_MAX_Y);
                 chunkWritten = true;
             }
         }
@@ -89,15 +89,15 @@ public class OreGenerator implements IWorldGenerator {
         ChunkPos coord = event.getChunk().getPos();
 
         if (tag != null) {
-            boolean generated = OregenConfig.RETROGEN && !tag.hasKey("generated");
+            boolean generated = ArcanaConfig.ORE_RETROGEN && !tag.hasKey("generated");
             if (generated) {
-                if (OregenConfig.VERBOSE) {
-                    Main.logger.log(Level.DEBUG, "Queuing Retrogen for chunk: " + coord.toString() + ".");
+                if (ArcanaConfig.VERBOSE) {
+                    Main.logger.log(Level.DEBUG, "Queuing ore retrogen for chunk: " + coord.toString() + ".");
                 }
                 regen = true;
             }
         } else {
-            regen = OregenConfig.RETROGEN;
+            regen = ArcanaConfig.ORE_RETROGEN;
         }
 
         if (regen) {
