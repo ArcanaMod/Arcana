@@ -96,16 +96,15 @@ public class ItemInit {
 	public static Item FOCUS_PARTS = new ItemBase("focus_parts").setCreativeTab(Main.TAB_ARCANA);
 
 	// Wand Attachments
-	// Caps are ordered by their level. Do we really need to add Botania caps?
 	public static Cap IRON_CAP = (Cap)new Cap("iron_cap").setId(0).setLevel(1).setCreativeTab(Main.TAB_ARCANA);
 	public static Cap GOLD_CAP = (Cap)new Cap("gold_cap").setId(1).setLevel(2).setCreativeTab(Main.TAB_ARCANA);
 	public static Cap COPPER_CAP = (Cap)new Cap("copper_cap").setId(4).setLevel(2).setCreativeTab(Main.TAB_ARCANA);
 	public static Cap SILVER_CAP = (Cap)new Cap("silver_cap").setId(5).setLevel(2).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap MANASTEEL_CAP = (Cap)new Cap("manasteel_cap").setId(7).setLevel(2).setCreativeTab(Main.TAB_ARCANA);
+	//public static Cap MANASTEEL_CAP = (Cap)new Cap("manasteel_cap").setId(7).setLevel(2).setCreativeTab(Main.TAB_ARCANA);
 	public static Cap THAUMIUM_CAP = (Cap)new Cap("thaumium_cap").setId(2).setLevel(3).setCreativeTab(Main.TAB_ARCANA);
 	public static Cap VOID_CAP = (Cap)new Cap("void_cap").setId(3).setLevel(3).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap ELEMENTIUM_CAP = (Cap)new Cap("elementium_cap").setId(6).setLevel(3).setCreativeTab(Main.TAB_ARCANA);
-	public static Cap TERRASTEEL_CAP = (Cap)new Cap("terrasteel_cap").setId(8).setLevel(4).setCreativeTab(Main.TAB_ARCANA);
+	//public static Cap ELEMENTIUM_CAP = (Cap)new Cap("elementium_cap").setId(6).setLevel(3).setCreativeTab(Main.TAB_ARCANA);
+	//public static Cap TERRASTEEL_CAP = (Cap)new Cap("terrasteel_cap").setId(8).setLevel(4).setCreativeTab(Main.TAB_ARCANA);
 
 	public static Item FOCUS = new ItemFocus("focus");
 

@@ -40,18 +40,18 @@ public class WandUtil {
             ItemAttachment capAttachment = wand.getAttachment(wandStack, EnumAttachmentType.CAP);
             if(capAttachment == ItemInit.COPPER_CAP){
                 cap = CapType.COPPER;
-            }else if(capAttachment == ItemInit.ELEMENTIUM_CAP){
-                cap = CapType.COPPER;
+            /*}else if(capAttachment == ItemInit.ELEMENTIUM_CAP){
+                cap = CapType.COPPER;*/
             }else if(capAttachment == ItemInit.GOLD_CAP){
                 cap = CapType.GOLD;
             }else if(capAttachment == ItemInit.IRON_CAP){
                 cap = CapType.IRON;
-            }else if(capAttachment == ItemInit.MANASTEEL_CAP){
-                cap = CapType.MANASTEEL;
+            /*}else if(capAttachment == ItemInit.MANASTEEL_CAP){
+                cap = CapType.MANASTEEL;*/
             }else if(capAttachment == ItemInit.SILVER_CAP){
                 cap = CapType.SILVER;
-            }else if(capAttachment == ItemInit.TERRASTEEL_CAP){
-                cap = CapType.TERRASTEEL;
+            /*}else if(capAttachment == ItemInit.TERRASTEEL_CAP){
+                cap = CapType.TERRASTEEL;*/
             }else if(capAttachment == ItemInit.THAUMIUM_CAP){
                 cap = CapType.THAUMIUM;
             }else if(capAttachment == ItemInit.VOID_CAP){

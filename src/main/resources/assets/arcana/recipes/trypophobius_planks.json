@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "planks",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:trypophobius_log"
+    }
+  },
+  "result": {
+    "item": "arcana:trypophobius_planks",
+    "count": 4
+  }
+}

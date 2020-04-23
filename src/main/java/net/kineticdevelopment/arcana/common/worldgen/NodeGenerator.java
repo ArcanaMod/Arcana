@@ -40,6 +40,7 @@ public class NodeGenerator implements IWorldGenerator{
 				// pick random x/y
 				int x = random.nextInt(16), z = random.nextInt(16);
 				// 2-10 blocks above highest block at x/y
+				// underground gen needs some work
 				int yOffset = random.nextInt(8) + 2;
 				
 				IBlockState gen = BlockInit.NORMAL_NODE.getDefaultState();

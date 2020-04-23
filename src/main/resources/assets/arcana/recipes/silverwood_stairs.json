@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_stairs",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:silverwood_planks"
+    }
+  },
+  "result": {
+    "item": "arcana:silverwood_stairs",
+    "count": 4
+  }
+}

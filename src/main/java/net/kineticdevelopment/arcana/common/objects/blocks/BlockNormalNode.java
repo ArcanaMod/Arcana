@@ -3,21 +3,16 @@ package net.kineticdevelopment.arcana.common.objects.blocks;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.BlockBase;
 import net.kineticdevelopment.arcana.common.objects.tile.NodeTileEntity;
+import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.Aspects;
-import net.kineticdevelopment.arcana.core.aspects.Aspect;
-import net.kineticdevelopment.arcana.core.wand.CapType;
-import net.kineticdevelopment.arcana.core.wand.CoreType;
-import net.kineticdevelopment.arcana.utilities.WandUtil;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
@@ -27,7 +22,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -45,7 +39,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
     public BlockNormalNode() {
         super("normal_node", Material.BARRIER);
         this.translucent = true;
-
+        setLightLevel(4);
     }
 
     public void hitboxOff() {
@@ -117,7 +111,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
     @Nullable
     @Override
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        return null;
+        return NULL_AABB;
     }
 
     @Override
@@ -173,5 +167,9 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
             }
         }
         return true;
+    }
+
+    public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
+        return BlockFaceShape.UNDEFINED;
     }
 }
