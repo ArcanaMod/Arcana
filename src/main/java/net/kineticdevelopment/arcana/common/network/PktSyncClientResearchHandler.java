@@ -5,17 +5,18 @@ import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.minecraft.client.Minecraft;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTSizeTracker;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 // 1.14/15: should be removable I think, deserialisation seems to occur on clients
 public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClientResearchHandler.PktSyncClientResearch, IMessage>{
@@ -46,11 +47,11 @@ public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClie
 	public static class PktSyncClientResearch implements IMessage{
 		
 		Map<ResourceLocation, Integer> data = new LinkedHashMap<>();
-		Map<ResourceLocation, Boolean> puzzleData = new LinkedHashMap<>();
+		Set<ResourceLocation> puzzleData = new HashSet<>();
 		
 		public PktSyncClientResearch(){}
 		
-		public PktSyncClientResearch(Map<ResourceLocation, Integer> data, Map<ResourceLocation, Boolean> puzzleData){
+		public PktSyncClientResearch(Map<ResourceLocation, Integer> data, Set<ResourceLocation> puzzleData){
 			this.data = data;
 			this.puzzleData = puzzleData;
 		}
@@ -71,9 +72,9 @@ public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClie
 				for(String key : researches.getKeySet())
 					data.put(new ResourceLocation(key), researches.getInteger(key));
 				
-				NBTTagCompound puzzles = (NBTTagCompound)nbt.getTag("puzzles");
-				for(String key : puzzles.getKeySet())
-					puzzleData.put(new ResourceLocation(key), puzzles.getBoolean(key));
+				NBTTagList puzzles = nbt.getTagList("puzzles", Constants.NBT.TAG_STRING);
+				for(NBTBase key : puzzles)
+					puzzleData.add(new ResourceLocation(((NBTTagString)key).getString()));
 			}
 		}
 		
@@ -82,12 +83,13 @@ public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClie
 			// used with ByteBufOutputStream
 			ByteBufOutputStream stream = new ByteBufOutputStream(buf);
 			NBTTagCompound nbt = new NBTTagCompound();
-			NBTTagCompound researches = new NBTTagCompound(), puzzles = new NBTTagCompound();
+			NBTTagCompound researches = new NBTTagCompound();
 			// add each book
 			data.forEach((entry, stage) -> researches.setInteger(entry.toString(), stage));
 			nbt.setTag("researches", researches);
 			
-			puzzleData.forEach((puzzle, complete) -> puzzles.setBoolean(puzzle.toString(), complete));
+			NBTTagList puzzles = new NBTTagList();
+			puzzleData.forEach(puzzle -> puzzles.appendTag(new NBTTagString(puzzle.toString())));
 			nbt.setTag("puzzles", puzzles);
 			try{
 				CompressedStreamTools.write(nbt, stream);

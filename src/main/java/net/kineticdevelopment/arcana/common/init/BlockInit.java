@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.kineticdevelopment.arcana.common.blocks.BlockCrucible;
 import net.kineticdevelopment.arcana.common.objects.blocks.BlockNormalNode;
 import net.kineticdevelopment.arcana.common.objects.blocks.BlockResearchTable;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.*;
@@ -38,11 +39,12 @@ public class BlockInit {
 	public static final Block INFUSION_ARCANE_STONE = new BlockBase("infusion_arcane_stone", Material.ROCK).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block MAGICAL_GRASS = new BlockBase("magical_grass", Material.GRASS).setCreativeTab(Main.TAB_ARCANA);
 	// public static final Block TABLE = new BlockBase("table", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
-	 public static final Block NORMAL_NODE = new BlockNormalNode().setCreativeTab(Main.TAB_ARCANA);
-
+	
 	//Blocks with function
 	public static final Block RESEARCH_TABLE = new BlockResearchTable();
-	// public static final Block ASPECT_BOOKSHELF = new BlockBase ("aspect_bookshelf", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block NORMAL_NODE = new BlockNormalNode().setCreativeTab(Main.TAB_ARCANA);
+	public static final Block CRUCIBLE = new BlockCrucible("crucible").setCreativeTab(Main.TAB_ARCANA);
+
 	// Logs
 	public static final Block DAIR_LEAVES = new LeavesBase("dair_leaves").setCreativeTab(Main.TAB_ARCANA);
 	public static final Block DAIR_LOG = new LogBase("dair_log").setCreativeTab(Main.TAB_ARCANA);
@@ -317,4 +319,3 @@ public class BlockInit {
 	public static final Block UNTAINTED_WILLOW_SLAB_HALF = new HalfSlabBase("untainted_willow_slab", Material.WOOD, BlockInit.UNTAINTED_WILLOW_SLAB_DOUBLE).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_WILLOW_STAIRS = new TaintedStairsBase("untainted_willow_stairs", UNTAINTED_WILLOW_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);
 }
-

@@ -141,12 +141,12 @@ aspect.imprison.name=???
 aspect.imprison.desc=Imprisonment
 aspect.journey.name=Iter
 aspect.journey.desc=Journey
-aspect.life.desc=Victus
-aspect.life.name=Life
-aspect.light.desc=Lux
-aspect.light.name=Light
-aspect.lust.desc=???
-aspect.lust.name=Lust
+aspect.life.name=Victus
+aspect.life.desc=Life
+aspect.light.name=Lux
+aspect.light.desc=Light
+aspect.lust.name=???
+aspect.lust.desc=Lust
 aspect.machine.desc=Machina
 aspect.machine.name=Machinery
 aspect.mana.name=Vis
@@ -276,6 +276,7 @@ tile.willow_stairs.name=Willow Stairs
 
 ##Functional
 tile.research_table.name=Research Table Block
+tile.crucible.name=Crucible
 
 ##Tainted
 tile.tainted_acacia_leaves.name=Tainted Acacia Leaves
@@ -502,8 +503,7 @@ requirement.item.have=Have:
 requirement.puzzle.get_note.1=Click to get research note
 requirement.puzzle.get_note.2=Requires scribing tools and paper
 
-# NOTE: none of these names are final, or even more than a working name
-research.arcana.category.basics=Basics
+research.arcana.category.basics=Fundamentals
 research.arcana.category.artifice=Artifice
 research.arcana.category.alchemy=Alchemy
 research.arcana.category.infusion=Infusion
@@ -519,17 +519,20 @@ research.arcana.root.desc=(The start of something magical!)
 research.arcana.root.stage.1=There is more than meets the eye when it comes to this wand. By tapping it against a bookshelf, I have created a magical book, capable of storing large amounts of knowledge - especially magical knowledge. Information is organised into entries, such as the one I'm reading right now, which can have multiple stages. To complete a stage, I must fulfill its requirements, shown just below the book itself. Once I have everything I need, I can move onto the next stage. Some requirements will require me to use up resources, such as experience levels or items, while others simply require me to do tasks or have items present.\n\nThere seems to be more to this book than that; I'll require some further investigation.
 research.arcana.root.stage.2=After some further observation, I have found that the knowledge written in this book is bound to me, somehow; any copy of this book will present the same set of information, regardless of who made it or previously used it; and any knowledge I write will also persist after death.\n\nFinally, the book seems to have a kind of subtle intelligence of its own, trying to guide me into further more advanced and interesting magic. This is exciting! I can't wait to see what kind of inventions await me.
 
-## scanning???
+research.arcana.revealing=Revealing the Arcane
+research.arcana.revealing.desc=Now you can see me, now you can't
+research.arcana.revealing.stage.1=Although this wand is somewhat magical on its own, it does seem to have the capacity to do so much more, if I could use it correctly. My experience using it has taught me something vital about the world: energy is all around me. Energy that can't be seen or felt directly - at least, not at its usual concentration. I have dubbed this energy *vis*, and need to find a proper source of it to do anything more powerful than creating fancy books. Scattered around the world are glowing points in space, which seem to have a higher-than-average concentration of vis. I have designed a set of goggles with which I can view vis, and nodes too, directly.
+research.arcana.revealing.stage.2=While wearing the §oGoggles of Revealing§r, Aura Nodes become immediately observable to me, and interactions between vis and materials become easy to test and iterate on.
 
 research.arcana.tome_of_sharing=Tome of Sharing
 research.arcana.tome_of_sharing.desc=Sharing is caring
 research.arcana.tome_of_sharing.stage.1=It's quite useful to have my knowledge bound to myself, rather than any specific copy of the this book, but it can also be limiting when trying to share my discoveries with friends. Teaching them everything manually is irritating and time-consuming. Perhaps a modified version of this book could teach them instead?
-research.arcana.tome_of_sharing.stage.2=By combining this book with an ender pearl, I can link it to my knowledge specifically. Anyone else reading it will gain access to my knowledge.
+research.arcana.tome_of_sharing.stage.2=By combining this book with an eye of ender, I can link it to my knowledge specifically, taking advantage of what seems to be similar to the mechanism behind ender chests. Anyone else reading it will gain access to my knowledge.
 
 research.arcana.vis_manipulators=Basic Vis Manipulation
-research.arcana.vis_manipulators.stage.1=My experience using my wand has taught me something vital about the world: energy is all around me. Energy that can't be seen or felt directly - at least, not at its usual concentration. All living things seem to weakly interact with it in some way, including myself. I have dubbed this energy *vis*, and intend to take advantage of it for my own purposes.\n\nTo do so, I'll need to figure out how I can manipulate it.
-research.arcana.vis_manipulators.stage.2=Certain materials seem to interact with it in interesting ways. Glass can manipulate it similarly to light, albiet in a more convoluted way; redstone can act as a kind of semiconductor; diamond can concentrate and store it, although I have no way to know how much, yet. Lapis is a kind of fossil fuel for it, capable of releasing a large amount of it (could this be related to enchantment?). Gold, then, is like a superconductor, freely transmitting vis. Finally, iron is resistant to it, absorbing large amounts before showing obserable differences. (Wood showed no interesting effects.)\n\nMy next task will be creating a tool based on these concepts to properly control vis.
-research.arcana.vis_manipulators.stage.3=The §oVis Manipulation Tools§r are built on the the abilities of diamond, redstone, and glass. With them, I can transfer vis between items capable of containing it - currently just wands - and combine aspects into their compound aspects - that is, if I had anything capable of storing compound aspects. I expect more applications fo rtheir use fill appear soon.
+research.arcana.vis_manipulators.stage.1=All living things seem to weakly interact with vis in some way, including myself. I intend to take advantage of vis for my own purposes, but to do so, I'll need to figure out how I can manipulate it peroperly and consistently.
+research.arcana.vis_manipulators.stage.2=Certain materials seem to interact with it in interesting ways. Glass can manipulate it similarly to light, albiet in a more convoluted way; redstone can act as a kind of semiconductor; diamond can concentrate and store it, although I have no way to know how much, yet. Lapis is a kind of fossil fuel for it, capable of releasing a large amount of it (could this be related to enchantment?). Gold, then, is like a superconductor, freely transmitting vis. Finally, iron is resistant to it, absorbing large amounts before showing obserable differences. Wood is a simple, primitive, but abundant vis storage material.\n\nMy next task will be creating a tool based on these concepts to properly control vis.
+research.arcana.vis_manipulators.stage.3=The §oVis Manipulation Tools§r are built on the the abilities of diamond, redstone, and glass. With them, I can transfer vis between items capable of containing it - currently just wands - and combine aspects into their compound aspects - that is, if I had anything capable of storing compound aspects. I expect more applications for their use fill appear soon.
 
 research.arcana.research_intro=Introduction to Research
 research.arcana.research_intro.desc=Learning about the world

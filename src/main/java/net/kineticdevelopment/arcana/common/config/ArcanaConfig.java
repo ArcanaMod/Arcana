@@ -15,7 +15,7 @@ public class ArcanaConfig{
     public static boolean ORE_RETROGEN = true;
 
     @Comment(value = "Enable node retrogen")
-    public static boolean NODE_RETROGEN = true;
+    public static boolean NODE_RETROGEN = false;
 
     @Comment(value = "Enable verbose logging for retrogen")
     public static boolean VERBOSE = false;
@@ -39,7 +39,7 @@ public class ArcanaConfig{
     public static int AMBER_MAX_Y = 50;
 
     @Comment(value = "Probability of a node existing in a chunk (out of 1000)")
-    public static int NODE_CHANCE = 5;
+    public static int NODE_CHANCE = 1;
 
     @Comment(value = "Probability of a node being a special (not normal) node (out of 100)")
     public static int SPECIAL_NODE_CHANCE = 25;

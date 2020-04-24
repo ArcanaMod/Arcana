@@ -1,18 +1,16 @@
 package net.kineticdevelopment.arcana.client.research.impls;
 
-import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.RequirementRenderer;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
+import net.kineticdevelopment.arcana.core.research.ServerBooks;
 import net.kineticdevelopment.arcana.core.research.impls.PuzzleRequirement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextFormatting;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequirement>{
@@ -31,6 +29,6 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 	}
 	
 	private Puzzle getFrom(PuzzleRequirement pr){
-		return ClientBooks.puzzles.get(pr.getPuzzleId());
+		return ServerBooks.puzzles.get(pr.getPuzzleId());
 	}
 }

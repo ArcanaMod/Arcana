@@ -5,10 +5,15 @@ import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public interface Researcher{
 	
@@ -81,9 +86,9 @@ public interface Researcher{
 	
 	void setEntryData(Map<ResourceLocation, Integer> data);
 	
-	Map<ResourceLocation, Boolean> getPuzzleData();
+	Set<ResourceLocation> getPuzzleData();
 	
-	void setPuzzleData(Map<ResourceLocation, Boolean> data);
+	void setPuzzleData(Set<ResourceLocation> data);
 	
 	default NBTBase serialize(){
 		NBTTagCompound compound = new NBTTagCompound();
@@ -92,8 +97,8 @@ public interface Researcher{
 		getEntryData().forEach((key, value) -> entries.setInteger(key.toString(), value));
 		compound.setTag("entries", entries);
 		
-		NBTTagCompound puzzles = new NBTTagCompound();
-		getEntryData().forEach((key, value) -> puzzles.setInteger(key.toString(), value));
+		NBTTagList puzzles = new NBTTagList();
+		getPuzzleData().forEach(puzzle -> puzzles.appendTag(new NBTTagString(puzzle.toString())));
 		compound.setTag("puzzles", puzzles);
 		return compound;
 	}
@@ -105,10 +110,11 @@ public interface Researcher{
 			entryDat.put(new ResourceLocation(s), entries.getInteger(s));
 		setEntryData(entryDat);
 		
-		Map<ResourceLocation, Boolean> puzzleDat = new HashMap<>();
-		NBTTagCompound puzzles = data.getCompoundTag("puzzles");
-		for(String s : puzzles.getKeySet())
-			puzzleDat.put(new ResourceLocation(s), puzzles.getBoolean(s));
+		Set<ResourceLocation> puzzleDat = new HashSet<>();
+		NBTTagList puzzles = data.getTagList("puzzles", Constants.NBT.TAG_STRING);
+		for(NBTBase key : puzzles)
+			puzzleDat.add(new ResourceLocation(((NBTTagString)key).getString()));
+		
 		setPuzzleData(puzzleDat);
 	}
 	

@@ -4,26 +4,26 @@ import net.kineticdevelopment.arcana.common.event.ResearchEvent;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.Researcher;
+import net.kineticdevelopment.arcana.core.research.ServerBooks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ResearcherImpl implements Researcher{
 	
-	private Map<ResourceLocation, Integer> data = new HashMap<>();
-	private Map<ResourceLocation, Boolean> puzzleData = new HashMap<>();
-	private EntityPlayer player;
+	protected Map<ResourceLocation, Integer> data = new HashMap<>();
+	protected Set<ResourceLocation> completePuzzles = new HashSet<>();
+	protected EntityPlayer player;
 	
 	public int entryStage(ResearchEntry entry){
+		Objects.requireNonNull(entry, "Tried to get the stage of a null research entry. Does a research entry reference a parent that doesn't exist?");
 		return data.getOrDefault(entry.key(), 0);
 	}
 	
 	public boolean isPuzzleCompleted(Puzzle puzzle){
-		return puzzleData.getOrDefault(puzzle.getKey(), false);
+		return completePuzzles.contains(puzzle.getKey());
 	}
 	
 	public void advanceEntry(ResearchEntry entry){
@@ -37,18 +37,18 @@ public class ResearcherImpl implements Researcher{
 			// TODO: don't skip through addenda
 		}while(entryStage(entry) < entry.sections().size() && entry.sections().get(entryStage(entry)).getRequirements().size() == 0);
 		MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
+		// advance all children too, but only if they have no requirements on their first stage
+		ServerBooks.streamChildrenOf(entry)
+				.filter(x -> x.sections().get(0).getRequirements().isEmpty())
+				.forEach(this::advanceEntry);
 	}
 	
 	public void completePuzzle(Puzzle puzzle){
-		puzzleData.put(puzzle.getKey(), true);
+		completePuzzles.add(puzzle.getKey());
 	}
 	
 	public void resetPuzzle(Puzzle puzzle){
-		puzzleData.put(puzzle.getKey(), false);
-	}
-	
-	public void setPuzzleCompletion(Puzzle puzzle, boolean complete){
-		puzzleData.put(puzzle.getKey(), complete);
+		completePuzzles.remove(puzzle.getKey());
 	}
 	
 	public void completeEntry(ResearchEntry entry){
@@ -74,13 +74,13 @@ public class ResearcherImpl implements Researcher{
 		this.data.putAll(data);
 	}
 	
-	public Map<ResourceLocation, Boolean> getPuzzleData(){
-		return Collections.unmodifiableMap(puzzleData);
+	public Set<ResourceLocation> getPuzzleData(){
+		return Collections.unmodifiableSet(completePuzzles);
 	}
 	
-	public void setPuzzleData(Map<ResourceLocation, Boolean> data){
-		puzzleData.clear();
-		puzzleData.putAll(data);
+	public void setPuzzleData(Set<ResourceLocation> data){
+		completePuzzles.clear();
+		completePuzzles.addAll(data);
 	}
 	
 	public void setPlayer(EntityPlayer player){

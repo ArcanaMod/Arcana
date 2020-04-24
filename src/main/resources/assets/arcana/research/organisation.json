@@ -26,39 +26,44 @@
       "bg": "arcana:research/basics_bg.png"
     },
     {
-      "key": "arcana:artifice",
-      "in": "arcana:arcanum",
-      "icon": "arcana:item/research_goggles.png",
-      "name": "research.arcana.category.artifice",
-      "bg": "arcana:research/starry_bg.png"
-    },
-    {
       "key": "arcana:alchemy",
       "in": "arcana:arcanum",
       "icon": "arcana:item/crucible_item.png",
       "name": "research.arcana.category.alchemy",
-      "bg": "arcana:research/basics_bg.png"
+      "bg": "arcana:research/basics_bg.png",
+      "requires": "arcana:alchemy_intro"
     },
     {
-      "key": "arcana:infusion",
+      "key": "arcana:artifice",
       "in": "arcana:arcanum",
-      "icon": "arcana:item/mana.png",
-      "name": "research.arcana.category.infusion",
-      "bg": "arcana:research/starry_bg.png"
-    },
-    {
-      "key": "arcana:golemancy",
-      "in": "arcana:arcanum",
-      "icon": "arcana:item/human.png",
-      "name": "research.arcana.category.golemancy",
-      "bg": "arcana:research/starry_bg.png"
+      "icon": "arcana:item/research_goggles.png",
+      "name": "research.arcana.category.artifice",
+      "bg": "arcana:research/starry_bg.png",
+      "requires": "arcana:artifice_intro"
     },
     {
       "key": "arcana:auromancy",
       "in": "arcana:arcanum",
       "icon": "arcana:item/focus_parts.png",
       "name": "research.arcana.category.auromancy",
-      "bg": "arcana:research/colourvoid_bg.png"
+      "bg": "arcana:research/colourvoid_bg.png",
+      "requires": "arcana:auromancy_intro"
+    },
+    {
+      "key": "arcana:infusion",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/mana.png",
+      "name": "research.arcana.category.infusion",
+      "bg": "arcana:research/starry_bg.png",
+      "requires": "arcana:infusion_intro"
+    },
+    {
+      "key": "arcana:golemancy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/human.png",
+      "name": "research.arcana.category.golemancy",
+      "bg": "arcana:research/starry_bg.png",
+      "requires": "arcana:golemancy_intro"
     },
     {
       "key": "arcana:eldritch",

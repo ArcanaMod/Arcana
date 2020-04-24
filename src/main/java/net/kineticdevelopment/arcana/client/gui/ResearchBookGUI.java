@@ -1,13 +1,9 @@
 package net.kineticdevelopment.arcana.client.gui;
 
 import com.google.common.collect.Lists;
-import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.core.Main;
-import net.kineticdevelopment.arcana.core.research.ResearchBook;
-import net.kineticdevelopment.arcana.core.research.ResearchCategory;
-import net.kineticdevelopment.arcana.core.research.ResearchEntry;
-import net.kineticdevelopment.arcana.core.research.Researcher;
+import net.kineticdevelopment.arcana.core.research.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
@@ -144,10 +140,8 @@ public class ResearchBookGUI extends GuiScreen{
 				
 				// for every visible parent
 				// draw an arrow & arrowhead
-				// THIS CODE IS NOT VERY GOOD, BY THE WAY
-				// PLEASE BE CAREFUL
 				for(ResourceLocation parentKey : entry.parents()){
-					ResearchEntry parent = ClientBooks.getEntry(parentKey);
+					ResearchEntry parent = ServerBooks.getEntry(parentKey);
 					if(parent != null && parent.category().equals(entry.category()) && style(parent) != PageStyle.NONE){
 						mc.getTextureManager().bindTexture(ARROWS_AND_BASES);
 						int xdiff = abs(entry.x() - parent.x());
@@ -167,31 +161,11 @@ public class ResearchBookGUI extends GuiScreen{
 								else
 									arrows.drawRightArrow(entry.x() - 1, entry.y());
 							}
-							// if there is a y-difference & x-difference of 1, draw a small curve
-						else if(xdiff == 1 && ydiff == 1)
+						else if(xdiff < 2 || ydiff < 2){
 							// from entry's POV
-							if(entry.x() > parent.x())
-								if(entry.y() > parent.y()){
-									arrows.drawLdCurve(entry.x(), parent.y());
-									arrows.drawDownArrow(entry.x(), entry.y() - 1);
-								}else{
-									arrows.drawLuCurve(entry.x(), parent.y());
-									arrows.drawUpArrow(entry.x(), entry.y() + 1);
-								}
-							else{
-								if(entry.y() > parent.y()){
-									arrows.drawRdCurve(entry.x(), parent.y());
-									arrows.drawDownArrow(entry.x(), entry.y() - 1);
-								}else{
-									arrows.drawRuCurve(entry.x(), parent.y());
-									arrows.drawUpArrow(entry.x(), entry.y() + 1);
-								}
-							}
-							// else if there is a y-difference or x-difference of 1, draw a line then small curve
-						else if(xdiff == 1 || ydiff == 1)
-							// from entry's POV
-							if(xdiff == 1){
+							if(!entry.meta().contains("reverse")){
 								arrows.drawVerticalLine(entry.x(), parent.y(), entry.y());
+								arrows.drawHorizontalLine(parent.y(), parent.x(), entry.x());
 								if(entry.x() > parent.x()){
 									if(entry.y() > parent.y()){
 										arrows.drawLdCurve(entry.x(), parent.y());
@@ -210,16 +184,15 @@ public class ResearchBookGUI extends GuiScreen{
 									}
 								}
 							}else{
-								arrows.drawHorizontalLine(parent.y(), parent.x(), entry.x());
-								if(entry.x() > parent.x())
-									if(entry.y() > parent.y()){
-										arrows.drawLdCurve(entry.x(), parent.y());
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
-									}else{
-										arrows.drawLuCurve(entry.x(), parent.y());
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
-									}
-								else{
+								arrows.drawHorizontalLine(entry.y(), entry.x(), parent.x());
+								arrows.drawVerticalLine(parent.x(), parent.y(), entry.y());
+								if(entry.x() > parent.x()){
+									if(entry.y() > parent.y())
+										arrows.drawRuCurve(parent.x(), entry.y());
+									else
+										arrows.drawRdCurve(parent.x(), entry.y());
+									arrows.drawRightArrow(entry.x() - 1, entry.y());
+								}else{
 									if(entry.y() > parent.y()){
 										arrows.drawRdCurve(entry.x(), parent.y());
 										arrows.drawDownArrow(entry.x(), entry.y() - 1);
@@ -229,31 +202,10 @@ public class ResearchBookGUI extends GuiScreen{
 									}
 								}
 							}
-							// else if there is a y-difference & x-difference of 2, draw a large curve
-						else if(xdiff == 2 && ydiff == 2){
-							// from entry's POV
-							if(entry.x() > parent.x())
-								if(entry.y() > parent.y()){
-									arrows.drawLargeLdCurve(entry.x() - 1, parent.y());
-									arrows.drawDownArrow(entry.x(), entry.y() - 1);
-								}else{
-									arrows.drawLargeLuCurve(entry.x() - 1, parent.y() - 1);
-									arrows.drawUpArrow(entry.x(), entry.y() + 1);
-								}
-							else{
-								if(entry.y() > parent.y()){
-									arrows.drawLargeRdCurve(entry.x(), parent.y());
-									arrows.drawDownArrow(entry.x(), entry.y() - 1);
-								}else{
-									arrows.drawLargeRuCurve(entry.x(), parent.y() - 1);
-									arrows.drawUpArrow(entry.x(), entry.y() + 1);
-								}
-							}
 						}
-						// else if there is a y-difference or x-difference of 2, draw a line then large curve
-						else if(xdiff == 2 || ydiff == 2)
-							// from entry's POV
-							if(xdiff == 2){
+						else{
+							if(!entry.meta().contains("reverse")){
+								arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
 								arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
 								if(entry.x() > parent.x()){
 									if(entry.y() > parent.y()){
@@ -273,44 +225,20 @@ public class ResearchBookGUI extends GuiScreen{
 									}
 								}
 							}else{
-								arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
-								if(entry.x() > parent.x())
-									if(entry.y() > parent.y()){
-										arrows.drawLargeLdCurve(entry.x(), parent.y());
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
-									}else{
-										arrows.drawLargeLuCurve(entry.x(), parent.y());
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
-									}
-								else{
-									if(entry.y() > parent.y()){
-										arrows.drawLargeRdCurve(entry.x(), parent.y());
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
-									}else{
-										arrows.drawLargeRuCurve(entry.x(), parent.y());
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
-									}
-								}
-							}
-							// else (x-difference & y-difference > 2), draw a line, then large curve, then line
-						else{
-							arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
-							arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
-							if(entry.x() > parent.x()){
-								if(entry.y() > parent.y()){
-									arrows.drawLargeLdCurve(entry.x() - 1, parent.y());
-									arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								arrows.drawHorizontalLineMinus1(entry.y(), entry.x(), parent.x());
+								arrows.drawVerticalLineMinus1(parent.x(), parent.y(), entry.y());
+								if(entry.x() > parent.x()){
+									if(entry.y() > parent.y())
+										arrows.drawLargeRuCurve(parent.x(), entry.y() - 1);
+									else
+										arrows.drawLargeRdCurve(parent.x(), entry.y() - 1);
+									arrows.drawRightArrow(entry.x() - 1, entry.y());
 								}else{
-									arrows.drawLargeLuCurve(entry.x() - 1, parent.y() - 1);
-									arrows.drawUpArrow(entry.x(), entry.y() + 1);
-								}
-							}else{
-								if(entry.y() > parent.y()){
-									arrows.drawLargeRdCurve(entry.x(), parent.y());
-									arrows.drawDownArrow(entry.x(), entry.y() - 1);
-								}else{
-									arrows.drawLargeRuCurve(entry.x(), parent.y() - 1);
-									arrows.drawUpArrow(entry.x(), entry.y() + 1);
+									if(entry.y() > parent.y())
+										arrows.drawLargeLuCurve(entry.x() + 1, entry.y() - 1);
+									else
+										arrows.drawLargeLdCurve(entry.x() + 1, entry.y());
+									arrows.drawLeftArrow(entry.x() + 1, entry.y());
 								}
 							}
 						}
@@ -335,7 +263,7 @@ public class ResearchBookGUI extends GuiScreen{
 			return PageStyle.IN_PROGRESS;
 		// if it does not have the "hidden" tag:
 		if(!entry.meta().contains("hidden")){
-			List<PageStyle> parentStyles = entry.parents().stream().map(ClientBooks::getEntry).map(this::style).collect(Collectors.toList());
+			List<PageStyle> parentStyles = entry.parents().stream().map(ServerBooks::getEntry).map(this::style).collect(Collectors.toList());
 			// if all of its parents are complete, it is available to do and in progress.
 			if(parentStyles.stream().allMatch(PageStyle.COMPLETE::equals))
 				return PageStyle.IN_PROGRESS;
@@ -590,7 +518,7 @@ public class ResearchBookGUI extends GuiScreen{
 				RenderHelper.disableStandardItemLighting();
 				
 				mc.getTextureManager().bindTexture(category.getIcon());
-				drawModalRectWithCustomSizedTexture(x - (hovered ? 5 : 0), y, 0, 0, 16, 16, 16, 16);
+				drawModalRectWithCustomSizedTexture(x - (categoryNum == tab ? 6 : (hovered) ? 4 : 0), y, 0, 0, 16, 16, 16, 16);
 				
 				this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
 				if(hovered)

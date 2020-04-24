@@ -39,7 +39,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider {
     public BlockNormalNode() {
         super("normal_node", Material.BARRIER);
         this.translucent = true;
-        setLightLevel(4);
+        setLightLevel(5 / 15f);
     }
 
     public void hitboxOff() {

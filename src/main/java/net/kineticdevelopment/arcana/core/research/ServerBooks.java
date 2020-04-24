@@ -10,9 +10,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Stores all of the research books known on the server.
- * This is considered to be the "master" copy of available research.
- * (To be) Synced with a player upon login, and synced to all players when research JSONs are loaded.
+ * Stores all of the research books.
  */
 public class ServerBooks{
 
@@ -43,6 +41,14 @@ public class ServerBooks{
 	
 	public static List<ResearchEntry> getEntries(){
 		return streamEntries().collect(Collectors.toList());
+	}
+	
+	public static Stream<ResearchEntry> streamChildrenOf(ResearchEntry parent){
+		return streamEntries().filter(x -> x.parents().contains(parent.key()));
+	}
+	
+	public static List<ResearchEntry> getChildrenOf(ResearchEntry parent){
+		return streamChildrenOf(parent).collect(Collectors.toList());
 	}
 	
 	public static ResearchEntry getEntry(ResourceLocation key){
