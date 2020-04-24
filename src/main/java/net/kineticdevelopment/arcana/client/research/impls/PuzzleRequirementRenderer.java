@@ -2,7 +2,7 @@ package net.kineticdevelopment.arcana.client.research.impls;
 
 import net.kineticdevelopment.arcana.client.research.RequirementRenderer;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.kineticdevelopment.arcana.core.research.impls.PuzzleRequirement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -29,6 +29,6 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 	}
 	
 	private Puzzle getFrom(PuzzleRequirement pr){
-		return ServerBooks.puzzles.get(pr.getPuzzleId());
+		return ResearchBooks.puzzles.get(pr.getPuzzleId());
 	}
 }

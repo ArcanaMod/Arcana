@@ -4,7 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.kineticdevelopment.arcana.core.research.Researcher;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -40,7 +40,7 @@ public class ResearchCommand extends CommandBase{
 			ResearchLoader.load();
 		else if(args.length == 3){
 			ResourceLocation entryKey = new ResourceLocation(args[0]);
-			ResearchEntry entry = ServerBooks.getEntry(entryKey);
+			ResearchEntry entry = ResearchBooks.getEntry(entryKey);
 			if(entry != null){
 				EntityPlayerMP player = getPlayer(server, sender, args[1]);
 				if(args[2].equalsIgnoreCase("reset")){
@@ -75,7 +75,7 @@ public class ResearchCommand extends CommandBase{
 		// if args-length = 3 AND we're not reloading: operations
 		// can't wait for brigadier to do this all for me :)
 		if(args.length == 1){
-			List<String> possibilties = getListOfStringsMatchingLastWord(args, ServerBooks.streamEntries().map(ResearchEntry::key).collect(Collectors.toList()));
+			List<String> possibilties = getListOfStringsMatchingLastWord(args, ResearchBooks.streamEntries().map(ResearchEntry::key).collect(Collectors.toList()));
 			possibilties.addAll(getListOfStringsMatchingLastWord(args, "reload"));
 			return possibilties;
 		}else if(args.length == 2 && !args[0].equalsIgnoreCase("reload")){

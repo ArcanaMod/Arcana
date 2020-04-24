@@ -60,7 +60,7 @@ public class ResearchLoader{
 				ResourceLocation key = new ResourceLocation(book.get("key").getAsString());
 				String prefix = book.get("prefix").getAsString();
 				ResearchBook bookObject = new ResearchBook(key, new LinkedHashMap<>(), prefix);
-				ServerBooks.books.putIfAbsent(key, bookObject);
+				ResearchBooks.books.putIfAbsent(key, bookObject);
 			}
 		}
 	}
@@ -78,7 +78,7 @@ public class ResearchLoader{
 				ResourceLocation icon = new ResourceLocation(category.get("icon").getAsString());
 				icon = new ResourceLocation(icon.getResourceDomain(), "textures/" + icon.getResourcePath());
 				String name = category.get("name").getAsString();
-				ResearchBook in = ServerBooks.books.get(new ResourceLocation(category.get("in").getAsString()));
+				ResearchBook in = ResearchBooks.books.get(new ResourceLocation(category.get("in").getAsString()));
 				ResearchCategory categoryObject = new ResearchCategory(new LinkedHashMap<>(), key, icon, bg, name, in);
 				in.categories.putIfAbsent(key, categoryObject);
 			}
@@ -97,7 +97,7 @@ public class ResearchLoader{
 				String name = entry.get("name").getAsString();
 				String desc = entry.has("desc") ? entry.get("desc").getAsString() : "";
 				List<Item> icons = idsToItems(entry.getAsJsonArray("icons"), rl);
-				ResearchCategory category = ServerBooks.getCategory(new ResourceLocation(entry.get("category").getAsString()));
+				ResearchCategory category = ResearchBooks.getCategory(new ResourceLocation(entry.get("category").getAsString()));
 				int x = entry.get("x").getAsInt();
 				int y = entry.get("y").getAsInt();
 				List<EntrySection> sections = jsonToSections(entry.getAsJsonArray("sections"), rl);
@@ -134,7 +134,7 @@ public class ResearchLoader{
 				// make it
 				Puzzle puzzleObject = Puzzle.makePuzzle(type, desc, key, icon, puzzle, rl);
 				if(puzzleObject != null)
-					ServerBooks.puzzles.putIfAbsent(key, puzzleObject);
+					ResearchBooks.puzzles.putIfAbsent(key, puzzleObject);
 				else if(Puzzle.getBlank(type) == null)
 					LOGGER.error("Invalid Puzzle type \"" + type + "\" in file " + rl + "!");
 			}
@@ -330,6 +330,6 @@ public class ResearchLoader{
 		puzzleQueue.forEach(ResearchLoader::applyPuzzlesArray);
 		
 		if(FMLCommonHandler.instance().getMinecraftServerInstance() != null)
-			Connection.network.sendToAll(new PktSyncBooksHandler.PktSyncBooks(ServerBooks.books, ServerBooks.puzzles));
+			Connection.network.sendToAll(new PktSyncBooksHandler.PktSyncBooks(ResearchBooks.books, ResearchBooks.puzzles));
 	}
 }

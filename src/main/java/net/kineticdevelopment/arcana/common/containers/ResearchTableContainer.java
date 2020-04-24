@@ -9,7 +9,7 @@ import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandlerCapability;
 import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -202,7 +202,7 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	public Optional<Puzzle> getFromNote(){
 		if(!note.isEmpty() && note.getTagCompound() != null && note.getTagCompound().hasKey("puzzle"))
-			return Optional.ofNullable(ServerBooks.puzzles.get(new ResourceLocation(note.getTagCompound().getString("puzzle"))));
+			return Optional.ofNullable(ResearchBooks.puzzles.get(new ResourceLocation(note.getTagCompound().getString("puzzle"))));
 		else
 			return Optional.empty();
 	}

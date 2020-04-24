@@ -4,7 +4,7 @@ import net.kineticdevelopment.arcana.common.event.ResearchEvent;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.Researcher;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -38,7 +38,7 @@ public class ResearcherImpl implements Researcher{
 		}while(entryStage(entry) < entry.sections().size() && entry.sections().get(entryStage(entry)).getRequirements().size() == 0);
 		MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
 		// advance all children too, but only if they have no requirements on their first stage
-		ServerBooks.streamChildrenOf(entry)
+		ResearchBooks.streamChildrenOf(entry)
 				.filter(x -> x.sections().get(0).getRequirements().isEmpty())
 				.forEach(this::advanceEntry);
 	}

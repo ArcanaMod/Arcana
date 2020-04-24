@@ -1,11 +1,10 @@
 package net.kineticdevelopment.arcana.common.items;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.common.objects.items.ItemBase;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.Researcher;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -43,7 +42,7 @@ public class ItemResearchNote extends ItemBase{
 		NBTTagCompound compound = stack.getTagCompound();
 		if(compound != null && compound.hasKey("puzzle")){
 			Researcher from = Researcher.getFrom(player);
-			Puzzle puzzle = ServerBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
+			Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
 			if(!from.isPuzzleCompleted(puzzle)){
 				from.completePuzzle(puzzle);
 				if(!player.capabilities.isCreativeMode)
@@ -59,7 +58,7 @@ public class ItemResearchNote extends ItemBase{
 		NBTTagCompound compound = stack.getTagCompound();
 		if(compound != null && compound.hasKey("research")){
 			ResourceLocation research = new ResourceLocation(compound.getString("research"));
-			tooltip.add(TextFormatting.AQUA + I18n.format(ServerBooks.getEntry(research).name()));
+			tooltip.add(TextFormatting.AQUA + I18n.format(ResearchBooks.getEntry(research).name()));
 		}
 	}
 }

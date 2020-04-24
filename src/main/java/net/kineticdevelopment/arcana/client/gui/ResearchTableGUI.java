@@ -9,7 +9,7 @@ import net.kineticdevelopment.arcana.common.network.inventory.PktRequestAspectSy
 import net.kineticdevelopment.arcana.common.objects.tile.ResearchTableTileEntity;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
@@ -45,7 +45,7 @@ public class ResearchTableGUI extends GuiAspectContainer{
 		if(!te.note().isEmpty() && te.note().getItem() == ItemInit.RESEARCH_NOTE){
 			NBTTagCompound compound = te.note().getTagCompound();
 			if(compound != null){
-				Puzzle puzzle = ServerBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
+				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
 				PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer)aspectContainer).puzzleSlots, width, height, mouseX, mouseY, mc.player);
 			}
 		}

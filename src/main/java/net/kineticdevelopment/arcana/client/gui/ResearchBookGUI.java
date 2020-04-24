@@ -141,7 +141,7 @@ public class ResearchBookGUI extends GuiScreen{
 				// for every visible parent
 				// draw an arrow & arrowhead
 				for(ResourceLocation parentKey : entry.parents()){
-					ResearchEntry parent = ServerBooks.getEntry(parentKey);
+					ResearchEntry parent = ResearchBooks.getEntry(parentKey);
 					if(parent != null && parent.category().equals(entry.category()) && style(parent) != PageStyle.NONE){
 						mc.getTextureManager().bindTexture(ARROWS_AND_BASES);
 						int xdiff = abs(entry.x() - parent.x());
@@ -263,7 +263,7 @@ public class ResearchBookGUI extends GuiScreen{
 			return PageStyle.IN_PROGRESS;
 		// if it does not have the "hidden" tag:
 		if(!entry.meta().contains("hidden")){
-			List<PageStyle> parentStyles = entry.parents().stream().map(ServerBooks::getEntry).map(this::style).collect(Collectors.toList());
+			List<PageStyle> parentStyles = entry.parents().stream().map(ResearchBooks::getEntry).map(this::style).collect(Collectors.toList());
 			// if all of its parents are complete, it is available to do and in progress.
 			if(parentStyles.stream().allMatch(PageStyle.COMPLETE::equals))
 				return PageStyle.IN_PROGRESS;

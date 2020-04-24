@@ -1,7 +1,7 @@
 package net.kineticdevelopment.arcana.common.network;
 
 import net.kineticdevelopment.arcana.core.research.Researcher;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
@@ -13,7 +13,7 @@ public class PktTryAdvanceHandler implements IMessageHandler<PktTryAdvanceHandle
 	public PktAdvanceHandler.PktAdvanceResearch onMessage(PktTryAdvance message, MessageContext ctx){
 		// null is returned if the player *cannot* advance. a valid PktAdvanceResearch is sent if they *are* allowed to.
 		// this is being handled on the server.
-		ResearchEntry entry = ServerBooks.getEntry(message.getKey());
+		ResearchEntry entry = ResearchBooks.getEntry(message.getKey());
 		if(entry != null){
 			EntityPlayerMP sender = ctx.getServerHandler().player;
 			if(Researcher.canAdvanceEntry(Researcher.getFrom(sender), entry)){

@@ -6,7 +6,7 @@ import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.research.Requirement;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
 import net.kineticdevelopment.arcana.core.research.Researcher;
-import net.kineticdevelopment.arcana.core.research.ServerBooks;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -22,7 +22,7 @@ public class PuzzleRequirement extends Requirement{
 	}
 	
 	public boolean satisfied(EntityPlayer player){
-		return Researcher.getFrom(player).isPuzzleCompleted(ServerBooks.puzzles.get(puzzleId));
+		return Researcher.getFrom(player).isPuzzleCompleted(ResearchBooks.puzzles.get(puzzleId));
 	}
 	
 	public void take(EntityPlayer player){
@@ -40,7 +40,7 @@ public class PuzzleRequirement extends Requirement{
 	}
 	
 	public void onClick(ResearchEntry entry){
-		if(!(ServerBooks.puzzles.get(puzzleId) instanceof Fieldwork))
+		if(!(ResearchBooks.puzzles.get(puzzleId) instanceof Fieldwork))
 			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId.toString(), entry.key().toString()));
 	}
 	

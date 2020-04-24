@@ -1,8 +1,8 @@
 package net.kineticdevelopment.arcana.common.network;
 
-import net.kineticdevelopment.arcana.client.research.ClientBooks;
-import net.kineticdevelopment.arcana.core.research.Researcher;
 import net.kineticdevelopment.arcana.core.research.ResearchEntry;
+import net.kineticdevelopment.arcana.core.research.Researcher;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -13,7 +13,7 @@ public class PktCompleteHandler implements IMessageHandler<PktCompleteHandler.Pk
 	
 	public IMessage onMessage(PktCompleteResearch message, MessageContext ctx){
 		// on client
-		ResearchEntry entry = ClientBooks.getEntry(message.getKey());
+		ResearchEntry entry = ResearchBooks.getEntry(message.getKey());
 		if(entry != null)
 			Researcher.getFrom(Minecraft.getMinecraft().player).completeEntry(entry);
 		return null;

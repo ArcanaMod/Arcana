@@ -1,8 +1,8 @@
 package net.kineticdevelopment.arcana.client.research.impls;
 
-import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
 import net.kineticdevelopment.arcana.core.research.ResearchBook;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.kineticdevelopment.arcana.core.research.impls.RecipeSection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -34,7 +34,7 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 	private ResourceLocation textures;
 	
 	public void render(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player){
-		ResearchBook book = ClientBooks.getEntry(section.getEntry()).category().getBook();
+		ResearchBook book = ResearchBooks.getEntry(section.getEntry()).category().getBook();
 		textures = new ResourceLocation(book.getKey().getResourceDomain(), "textures/gui/research/" + book.getPrefix() + OVERLAY_SUFFIX);
 		
 		mc().getTextureManager().bindTexture(textures);

@@ -154,7 +154,7 @@ public interface Researcher{
 		if(entry.meta().contains("root") && entry.parents().size() == 0)
 			return true;
 		if(!entry.meta().contains("hidden"))
-			return entry.parents().stream().allMatch(x -> isEntryVisible(ServerBooks.getEntry(x), r));
+			return entry.parents().stream().allMatch(x -> isEntryVisible(ResearchBooks.getEntry(x), r));
 		return false;
 	}
 }

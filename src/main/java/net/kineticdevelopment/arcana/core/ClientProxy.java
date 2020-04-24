@@ -1,7 +1,6 @@
 package net.kineticdevelopment.arcana.core;
 
 import net.kineticdevelopment.arcana.client.gui.ResearchBookGUI;
-import net.kineticdevelopment.arcana.client.research.ClientBooks;
 import net.kineticdevelopment.arcana.client.research.EntrySectionRenderer;
 import net.kineticdevelopment.arcana.client.research.PuzzleRenderer;
 import net.kineticdevelopment.arcana.client.research.RequirementRenderer;
@@ -9,6 +8,7 @@ import net.kineticdevelopment.arcana.common.items.ItemAttachment;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.core.aspects.Aspects;
+import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
@@ -86,7 +86,7 @@ public class ClientProxy extends CommonProxy {
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){
-		Minecraft.getMinecraft().displayGuiScreen(new ResearchBookGUI(ClientBooks.books.get(book)));
+		Minecraft.getMinecraft().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
 	}
 	
 	public ItemStack getAspectItemStackForDisplay(){

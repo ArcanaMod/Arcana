@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * Stores all of the research books.
  */
-public class ServerBooks{
+public class ResearchBooks{
 
 	// public
 	// thats a bad idea I think
