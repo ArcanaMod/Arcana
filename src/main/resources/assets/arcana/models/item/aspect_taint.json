@@ -1,6 +1,5 @@
-
 {
-  "parent": "item/handheld",
+  "parent": "item/generated",
   "textures": {
     "layer0": "arcana:item/taint"
   }

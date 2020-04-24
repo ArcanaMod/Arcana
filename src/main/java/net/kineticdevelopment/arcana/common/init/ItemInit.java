@@ -81,13 +81,13 @@ public class ItemInit {
 	public static Item DOG_MEAT_COOKED = new ItemBase("cooked_dog_meat").setCreativeTab(Main.TAB_ARCANA);
 	public static Item DOG_MEAT_UNCOOKED = new ItemBase("dog_meat").setCreativeTab(Main.TAB_ARCANA);
 
-	// Ingots
+	// Materials
 	public static Item THAUMIUM_INGOT = new ItemBase("thaumium_ingot").setCreativeTab(Main.TAB_ARCANA);
 	public static Item ARCANIUM_INGOT = new ItemBase("arcanium_ingot").setCreativeTab(Main.TAB_ARCANA);
 	public static Item VOID_METAL_INGOT = new ItemBase("void_metal_ingot").setCreativeTab(Main.TAB_ARCANA);
-
-	// Materials - Items
+	
 	public static Item SILVERWOOD_STICK = new ItemBase("silverwood_stick").setCreativeTab(Main.TAB_ARCANA);
+	public static Item AMBER = new ItemBase("amber").setCreativeTab(Main.TAB_ARCANA);
 
 	// Goggle Armor
 	public static GoggleBase GOGGLES_OF_REVEALING = new GoggleBase("goggles_of_revealing", MATERIAL_GOGGLES_REVEALING, 1, GogglePriority.SHOW_NODE);

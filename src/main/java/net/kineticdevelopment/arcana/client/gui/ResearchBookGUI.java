@@ -45,10 +45,9 @@ public class ResearchBookGUI extends GuiScreen{
 	// drawing helper
 	private final Arrows arrows = new Arrows();
 	
-	// TODO: reset button
 	static float xPan = 0;
 	static float yPan = 0;
-	static float zoom = 1f;
+	static float zoom = 0.7f;//1f;
 	
 	public ResearchBookGUI(ResearchBook book){
 		this.book = book;
@@ -65,11 +64,11 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	public float getXOffset(){
-		return (width / 2f) + (xPan / 2f);
+		return ((width / 2f) * (1 / zoom)) + (xPan / 2f);
 	}
 	
 	public float getYOffset(){
-		return (height / 2f) - (yPan / 2f);
+		return ((height / 2f) * (1 / zoom)) - (yPan / 2f);
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
@@ -116,16 +115,15 @@ public class ResearchBookGUI extends GuiScreen{
 		// pans up to (256 - 224) x, (256 - 196) y
 		// which is only 32
 		// let's scale is up x2, and also pan with half speed (which is what I'd do anyways) so we get 128 pan
-		// TODO: use larger (512^2) textures
 		mc.getTextureManager().bindTexture(categories.get(tab).bg());
-		drawModalRectWithCustomSizedTexture((width - fWidth) / 2 + 16, (height - fHeight) / 2 + 17, -xPan / 4f + MAX_PAN, yPan / 4f + MAX_PAN, 224, 196, 256, 256);
+		drawModalRectWithCustomSizedTexture((width - fWidth) / 2 + 16, (height - fHeight) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, 224, 196, 512, 512);
 	}
 	
 	private void renderEntries(float partialTicks){
+		GlStateManager.scale(zoom, zoom, 1f);
 		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style = style(entry);
 			if(style != PageStyle.NONE){
-				GlStateManager.scale(zoom, zoom, 1f);
 				// render base
 				mc.getTextureManager().bindTexture(ARROWS_AND_BASES);
 				int base = base(entry);
@@ -211,8 +209,7 @@ public class ResearchBookGUI extends GuiScreen{
 									}
 								}
 							}
-						}
-						else{
+						}else{
 							if(!entry.meta().contains("reverse")){
 								arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
 								arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
@@ -253,9 +250,9 @@ public class ResearchBookGUI extends GuiScreen{
 						}
 					}
 				}
-				GlStateManager.scale(1 / zoom, 1 / zoom, 1f);
 			}
 		}
+		GlStateManager.scale(1 / zoom, 1 / zoom, 1f);
 	}
 	
 	private PageStyle style(ResearchEntry entry){
@@ -333,11 +330,8 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	protected void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick){
-		// in 1.14, there's a nice _-delta as parameters
-		// but here I use Mouse.getD_()
-		// TODO: the mouse and panning offset aren't fully in sync, why? --> calculate delta manually
-		xPan += Mouse.getDX();
-		yPan += Mouse.getDY();
+		xPan += Mouse.getEventDX();
+		yPan += Mouse.getEventDY();
 		xPan = min(max(xPan, -MAX_PAN), MAX_PAN);
 		yPan = min(max(yPan, -MAX_PAN), MAX_PAN);
 		super.mouseClickMove(mouseX, mouseY, clickedMouseButton, timeSinceLastClick);
@@ -362,10 +356,12 @@ public class ResearchBookGUI extends GuiScreen{
 	
 	public void handleMouseInput() throws IOException{
 		super.handleMouseInput();
-		float amnt = 1.5f;
+		float amnt = 1.2f;
 		int scroll = Mouse.getEventDWheel();
-		if((scroll < 0 && zoom > 0.5) || (scroll > 0 && zoom < 2))
+		if((scroll < 0 && zoom > 0.5) || (scroll > 0 && zoom < 1))
 			zoom *= scroll > 0 ? amnt : 1 / amnt;
+		if(zoom > 1f)
+			zoom = 1f;
 	}
 	
 	protected void actionPerformed(@Nonnull GuiButton button){

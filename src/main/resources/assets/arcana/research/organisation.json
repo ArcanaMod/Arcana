@@ -23,7 +23,7 @@
       "in": "arcana:arcanum",
       "icon": "arcana:item/light.png",
       "name": "research.arcana.category.basics",
-      "bg": "arcana:research/basics_bg.png"
+      "bg": "arcana:research/research_bg1_b.png"
     },
     {
       "key": "arcana:alchemy",
@@ -72,9 +72,6 @@
       "name": "research.arcana.category.eldritch",
       "bg": "arcana:research/static_bg.png"
     },
-
-
-
     {
       "key": "arcana:tainted_basics",
       "in": "arcana:tainted_codex",

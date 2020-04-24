@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.kineticdevelopment.arcana.common.blocks.BlockAmberOre;
 import net.kineticdevelopment.arcana.common.blocks.BlockCrucible;
 import net.kineticdevelopment.arcana.common.objects.blocks.BlockNormalNode;
 import net.kineticdevelopment.arcana.common.objects.blocks.BlockResearchTable;
@@ -35,7 +36,7 @@ public class BlockInit {
 	public static final Block ARCANE_STONE_BRICKS_SLAB_DOUBLE = new DoubleSlabBase("arcane_stone_bricks_slab_double", Material.ROCK);
 	public static final Block ARCANE_STONE_BRICKS_SLAB_HALF = new HalfSlabBase("arcane_stone_bricks_slab", Material.ROCK, BlockInit.ARCANE_STONE_BRICKS_SLAB_DOUBLE).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block ARCANE_STONE_BRICKS_STAIRS = new StairsBase("arcane_stone_bricks_stairs", ARCANE_STONE_BRICKS.getDefaultState()).setCreativeTab(Main.TAB_ARCANA);
-	public static final Block AMBER_ORE = new BlockBase("amber_ore", Material.ROCK).setCreativeTab(Main.TAB_ARCANA);
+	public static final Block AMBER_ORE = new BlockAmberOre().setCreativeTab(Main.TAB_ARCANA);
 	public static final Block INFUSION_ARCANE_STONE = new BlockBase("infusion_arcane_stone", Material.ROCK).setCreativeTab(Main.TAB_ARCANA);
 	public static final Block MAGICAL_GRASS = new BlockBase("magical_grass", Material.GRASS).setCreativeTab(Main.TAB_ARCANA);
 	// public static final Block TABLE = new BlockBase("table", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);

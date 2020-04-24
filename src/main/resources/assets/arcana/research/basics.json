@@ -165,11 +165,25 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.alchemy_intro.stage.1"
+          "content": "research.arcana.alchemy_intro.stage.1",
+          "requirements": [
+            "0*arcana:crucible"
+          ]
         },
         {
           "type": "string",
           "content": "research.arcana.alchemy_intro.stage.2"
+        },
+        {
+          "type": "recipe",
+          "content": "arcana:temp_arcanium_ingot",
+          "requirements": [
+            "0*arcana:arcanium_ingot"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.alchemy_intro.stage.3"
         }
       ]
     },
