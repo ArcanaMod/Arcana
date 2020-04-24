@@ -28,6 +28,7 @@ public class BlockCrucible extends BlockBase{
 	
 	public BlockCrucible(String name){
 		super(name, Material.IRON);
+		setHardness(2f);
 	}
 	
 	public boolean isOpaqueCube(IBlockState state){

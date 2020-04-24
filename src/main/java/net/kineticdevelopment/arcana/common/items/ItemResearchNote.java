@@ -47,7 +47,7 @@ public class ItemResearchNote extends ItemBase{
 				from.completePuzzle(puzzle);
 				if(!player.capabilities.isCreativeMode)
 					stack.shrink(1);
-				return new ActionResult<>(EnumActionResult.PASS, stack);
+				return new ActionResult<>(EnumActionResult.SUCCESS, stack);
 			}
 		}
 		return super.onItemRightClick(world, player, hand);

@@ -3,6 +3,7 @@ package net.kineticdevelopment.arcana.common.items;
 import com.google.common.collect.ImmutableList;
 import mcp.MethodsReturnNonnullByDefault;
 import net.kineticdevelopment.arcana.client.Sounds;
+import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.items.attachment.Cap;
 import net.kineticdevelopment.arcana.common.items.attachment.Focus;
@@ -13,6 +14,7 @@ import net.kineticdevelopment.arcana.core.spells.Spell;
 import net.kineticdevelopment.arcana.core.wand.EnumAttachmentType;
 import net.kineticdevelopment.arcana.utilities.WandUtil;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -34,7 +36,7 @@ import java.util.function.Supplier;
 
 /**
  * Wand Item
- * 
+ *
  * @author Merijn
  */
 @MethodsReturnNonnullByDefault
@@ -148,6 +150,11 @@ public class ItemWand extends Item{
                 entity.setDefaultPickupDelay();
                 world.spawnEntity(entity);
             }
+            // display particles ane effects (to do)
+            return EnumActionResult.SUCCESS;
+        }else if(block == Blocks.CAULDRON){
+            IBlockState crucible = BlockInit.CRUCIBLE.getDefaultState();
+            world.setBlockState(pos, crucible);
             // display particles ane effects (to do)
             return EnumActionResult.SUCCESS;
         }
