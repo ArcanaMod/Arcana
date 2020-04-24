@@ -34,7 +34,7 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 	private ResourceLocation textures;
 	
 	public void render(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player){
-		ResearchBook book = ResearchBooks.getEntry(section.getEntry()).category().getBook();
+		ResearchBook book = ResearchBooks.getEntry(section.getEntry()).category().book();
 		textures = new ResourceLocation(book.getKey().getResourceDomain(), "textures/gui/research/" + book.getPrefix() + OVERLAY_SUFFIX);
 		
 		mc().getTextureManager().bindTexture(textures);

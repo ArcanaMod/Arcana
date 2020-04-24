@@ -48,7 +48,7 @@ public class ResearchEntryGUI extends GuiScreen{
 	
 	public ResearchEntryGUI(ResearchEntry entry){
 		this.entry = entry;
-		bg = new ResourceLocation(entry.key().getResourceDomain(), "textures/gui/research/" + entry.category().getBook().getPrefix() + SUFFIX);
+		bg = new ResourceLocation(entry.key().getResourceDomain(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
@@ -149,8 +149,8 @@ public class ResearchEntryGUI extends GuiScreen{
 	
 	protected void keyTyped(char typedChar, int keyCode) throws IOException{
 		if(this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)){
-			ResearchBookGUI gui = new ResearchBookGUI(entry.category().getBook());
-			gui.tab = entry.category().getBook().getCategories().indexOf(entry.category());
+			ResearchBookGUI gui = new ResearchBookGUI(entry.category().book());
+			gui.tab = entry.category().book().getCategories().indexOf(entry.category());
 			if(gui.tab < 0)
 				gui.tab = 0;
 			mc.displayGuiScreen(gui);

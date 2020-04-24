@@ -91,8 +91,8 @@ public class ResearchBook{
 		Map<ResourceLocation, ResearchCategory> categories = StreamSupport.stream(categoryList.spliterator(), false)
 				.map(NBTTagCompound.class::cast)
 				.map(nbt1 -> ResearchCategory.deserialize(nbt1, book))
-				.sorted(Comparator.comparingInt(ResearchCategory::getSerializationIndex))
-				.collect(toMap(ResearchCategory::getKey, Function.identity(), (a, b) -> a, LinkedHashMap::new));
+				.sorted(Comparator.comparingInt(ResearchCategory::serializationIndex))
+				.collect(toMap(ResearchCategory::key, Function.identity(), (a, b) -> a, LinkedHashMap::new));
 		
 		// this could be replaced by adding c to ClientBooks before deserializing, but this wouldn't look any different
 		// and would leave a broken book in if an exception occurs.

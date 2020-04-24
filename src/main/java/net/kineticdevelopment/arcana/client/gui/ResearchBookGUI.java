@@ -12,6 +12,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
@@ -52,7 +53,15 @@ public class ResearchBookGUI extends GuiScreen{
 	public ResearchBookGUI(ResearchBook book){
 		this.book = book;
 		texture = new ResourceLocation(book.getKey().getResourceDomain(), "textures/gui/research/" + book.getPrefix() + SUFFIX);
-		categories = book.getCategories();
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		categories = book.getCategories().stream().filter(category -> {
+			if(category.requirement() == null)
+				return true;
+			ResearchEntry entry = ResearchBooks.getEntry(category.requirement());
+			if(entry == null)
+				return false;
+			return Researcher.getFrom(player).entryStage(entry) >= entry.sections().size();
+		}).collect(Collectors.toList());
 	}
 	
 	public float getXOffset(){
@@ -108,12 +117,12 @@ public class ResearchBookGUI extends GuiScreen{
 		// which is only 32
 		// let's scale is up x2, and also pan with half speed (which is what I'd do anyways) so we get 128 pan
 		// TODO: use larger (512^2) textures
-		mc.getTextureManager().bindTexture(categories.get(tab).getBg());
+		mc.getTextureManager().bindTexture(categories.get(tab).bg());
 		drawModalRectWithCustomSizedTexture((width - fWidth) / 2 + 16, (height - fHeight) / 2 + 17, -xPan / 4f + MAX_PAN, yPan / 4f + MAX_PAN, 224, 196, 256, 256);
 	}
 	
 	private void renderEntries(float partialTicks){
-		for(ResearchEntry entry : categories.get(tab).getEntries()){
+		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style = style(entry);
 			if(style != PageStyle.NONE){
 				GlStateManager.scale(zoom, zoom, 1f);
@@ -296,7 +305,7 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	private void renderEntryTooltip(int mouseX, int mouseY){
-		for(ResearchEntry entry : categories.get(tab).getEntries()){
+		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style = null;
 			if(hovering(entry, mouseX, mouseY) && (style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS){
 				//tooltip
@@ -335,7 +344,7 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
-		for(ResearchEntry entry : categories.get(tab).getEntries()){
+		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style;
 			if(hovering(entry, mouseX, mouseY)){
 				if(mouseButton != 2){
@@ -517,12 +526,12 @@ public class ResearchBookGUI extends GuiScreen{
 				GlStateManager.color(1, 1, 1, 1);
 				RenderHelper.disableStandardItemLighting();
 				
-				mc.getTextureManager().bindTexture(category.getIcon());
+				mc.getTextureManager().bindTexture(category.icon());
 				drawModalRectWithCustomSizedTexture(x - (categoryNum == tab ? 6 : (hovered) ? 4 : 0), y, 0, 0, 16, 16, 16, 16);
 				
 				this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
 				if(hovered)
-					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.getName())), mouseX, mouseY, ResearchBookGUI.this.width, ResearchBookGUI.this.height, -1, mc.fontRenderer);
+					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name())), mouseX, mouseY, ResearchBookGUI.this.width, ResearchBookGUI.this.height, -1, mc.fontRenderer);
 			}
 		}
 	}

@@ -14,7 +14,7 @@
         "yellow_base",
         "round_base"
       ],
-      "x": -3,
+      "x": -2,
       "y": -1,
       "sections": [
         {
@@ -126,7 +126,7 @@
         "round_base",
         "reverse"
       ],
-      "x": -2,
+      "x": -1,
       "y": 0,
       "sections": [
         {

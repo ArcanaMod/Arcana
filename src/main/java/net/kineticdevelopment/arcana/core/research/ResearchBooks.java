@@ -32,7 +32,7 @@ public class ResearchBooks{
 	}
 	
 	public static ResearchCategory getCategory(ResourceLocation key){
-		return streamCategories().filter(x -> x.getKey().equals(key)).findFirst().orElse(null);
+		return streamCategories().filter(x -> x.key().equals(key)).findFirst().orElse(null);
 	}
 	
 	public static Stream<ResearchEntry> streamEntries(){

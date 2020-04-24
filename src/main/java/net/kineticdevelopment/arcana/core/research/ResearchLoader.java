@@ -78,8 +78,9 @@ public class ResearchLoader{
 				ResourceLocation icon = new ResourceLocation(category.get("icon").getAsString());
 				icon = new ResourceLocation(icon.getResourceDomain(), "textures/" + icon.getResourcePath());
 				String name = category.get("name").getAsString();
+				ResourceLocation requirement = category.has("requires") ? new ResourceLocation(category.get("requires").getAsString()) : null;
 				ResearchBook in = ResearchBooks.books.get(new ResourceLocation(category.get("in").getAsString()));
-				ResearchCategory categoryObject = new ResearchCategory(new LinkedHashMap<>(), key, icon, bg, name, in);
+				ResearchCategory categoryObject = new ResearchCategory(new LinkedHashMap<>(), key, icon, bg, requirement, name, in);
 				in.categories.putIfAbsent(key, categoryObject);
 			}
 		}

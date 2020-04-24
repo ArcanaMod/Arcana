@@ -16,30 +16,31 @@ import java.util.stream.StreamSupport;
 public class ResearchCategory{
 	
 	protected Map<ResourceLocation, ResearchEntry> entries;
-	private ResourceLocation key, icon, bg;
+	private ResourceLocation key, icon, bg, requirement;
 	private ResearchBook in;
 	private String name;
 	
 	protected int serializationIndex = 0;
 	
-	public ResearchCategory(Map<ResourceLocation, ResearchEntry> entries, ResourceLocation key, ResourceLocation icon, ResourceLocation bg, String name, ResearchBook in){
+	public ResearchCategory(Map<ResourceLocation, ResearchEntry> entries, ResourceLocation key, ResourceLocation icon, ResourceLocation bg, ResourceLocation requirement, String name, ResearchBook in){
 		this.entries = entries;
 		this.key = key;
+		this.requirement = requirement;
 		this.in = in;
 		this.icon = icon;
 		this.name = name;
 		this.bg = bg;
 	}
 	
-	public ResourceLocation getKey(){
+	public ResourceLocation key(){
 		return key;
 	}
 	
-	public ResearchEntry getEntry(ResearchEntry entry){
+	public ResearchEntry entry(ResearchEntry entry){
 		return entries.get(entry.key());
 	}
 	
-	public List<ResearchEntry> getEntries(){
+	public List<ResearchEntry> entries(){
 		return new ArrayList<>(entries.values());
 	}
 	
@@ -47,24 +48,28 @@ public class ResearchCategory{
 		return entries.values().stream();
 	}
 	
-	public ResearchBook getBook(){
+	public ResearchBook book(){
 		return in;
 	}
 	
-	public ResourceLocation getIcon(){
+	public ResourceLocation icon(){
 		return icon;
 	}
 	
-	public String getName(){
+	public String name(){
 		return name;
 	}
 	
-	public ResourceLocation getBg(){
+	public ResourceLocation bg(){
 		return bg;
 	}
 	
-	int getSerializationIndex(){
+	int serializationIndex(){
 		return serializationIndex;
+	}
+	
+	public ResourceLocation requirement(){
+		return requirement;
 	}
 	
 	public NBTTagCompound serialize(ResourceLocation tag, int index){
@@ -72,6 +77,7 @@ public class ResearchCategory{
 		nbt.setString("id", tag.toString());
 		nbt.setString("icon", icon.toString());
 		nbt.setString("bg", bg.toString());
+		nbt.setString("requirement", requirement != null ? requirement.toString() : "null");
 		nbt.setString("name", name);
 		nbt.setInteger("index", index);
 		NBTTagList list = new NBTTagList();
@@ -84,11 +90,12 @@ public class ResearchCategory{
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
 		ResourceLocation icon = new ResourceLocation(nbt.getString("icon"));
 		ResourceLocation bg = new ResourceLocation(nbt.getString("bg"));
+		ResourceLocation requirement = nbt.getString("requirement").equals("null") ? null : new ResourceLocation(nbt.getString("requirement"));
 		String name = nbt.getString("name");
 		NBTTagList entriesList = nbt.getTagList("entries", 10);
 		// same story as ResearchBook
 		Map<ResourceLocation, ResearchEntry> c = new LinkedHashMap<>();
-		ResearchCategory category = new ResearchCategory(c, key, icon, bg, name, in);
+		ResearchCategory category = new ResearchCategory(c, key, icon, bg, requirement, name, in);
 		category.serializationIndex = nbt.getInteger("index");
 		
 		Map<ResourceLocation, ResearchEntry> entries = StreamSupport.stream(entriesList.spliterator(), false)
@@ -106,10 +113,10 @@ public class ResearchCategory{
 		if(!(o instanceof ResearchCategory))
 			return false;
 		ResearchCategory category = (ResearchCategory)o;
-		return getKey().equals(category.getKey());
+		return key().equals(category.key());
 	}
 	
 	public int hashCode(){
-		return Objects.hash(getKey());
+		return Objects.hash(key());
 	}
 }
