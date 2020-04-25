@@ -10,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Basic Stairs, all stairs should either be this, or extend it
@@ -23,6 +24,7 @@ public class StairsBase extends BlockStairs implements IHasModel{
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setLightOpacity(0);
+		OreDictionary.registerOre("stairWood", this);
 		BlockInit.BLOCKS.add(this);
 		ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(getRegistryName()));
 	}

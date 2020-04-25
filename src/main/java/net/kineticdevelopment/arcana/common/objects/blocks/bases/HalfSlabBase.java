@@ -7,6 +7,7 @@ import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSlab;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Basic Half Slab, all half slabs should either be this, or extend it
@@ -18,6 +19,7 @@ public class HalfSlabBase extends SlabBase implements IHasModel {
 
     public HalfSlabBase(String name, Material material, Block doubleSlab) {
         super(name, material);
+        OreDictionary.registerOre("slabWood", this);
         ItemInit.ITEMS.add(new ItemSlab(this, this, (BlockSlab) doubleSlab).setRegistryName(this.getRegistryName()));
     }
 
