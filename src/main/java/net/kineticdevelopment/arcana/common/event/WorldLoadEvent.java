@@ -20,7 +20,7 @@ public class WorldLoadEvent{
 	
 	@SubscribeEvent
 	public static void onWorldLoad(PlayerLoggedInEvent event) {
-		TaintLevelHandler.createTaintLevelFile(event.player.world);
+//		TaintLevelHandler.createTaintLevelFile(event.player.world);
 		// Its definitely an EntityPlayerMP
 		Connection.network.sendTo(new PktSyncBooks(ResearchBooks.books, ResearchBooks.puzzles), (EntityPlayerMP)event.player);
 		// may need to delay this somehow...

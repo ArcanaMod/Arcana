@@ -98,7 +98,7 @@ public class Main {
 	@Mod.EventHandler
 	public void serverLoad(FMLServerStartingEvent event) {
 		event.registerServerCommand(new CommandFocus());
-		event.registerServerCommand(new TaintLevelCommand());
+		// event.registerServerCommand(new TaintLevelCommand());
 		event.registerServerCommand(new ResearchCommand());
 	}
 
