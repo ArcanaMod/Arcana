@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +19,7 @@ import java.util.function.Supplier;
 
 public class Guesswork extends Puzzle{
 	
+	public static final ResourceLocation bg = new ResourceLocation(Main.MODID, "textures/gui/container/unknown_slot.png");
 	private static final ResourceLocation ICON = new ResourceLocation(Main.MODID, "textures/item/research_note.png");
 	private static final Logger LOGGER = LogManager.getLogger();
 	
@@ -94,8 +94,17 @@ public class Guesswork extends Puzzle{
 		return ICON;
 	}
 	
-	public List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player){
-		return Collections.emptyList();
+	public List<Puzzle.SlotInfo> getItemSlotLocations(EntityPlayer player){
+		List<Puzzle.SlotInfo> ret = new ArrayList<>();
+		for(int y = 0; y < 3; y++)
+			for(int x = 0; x < 3; x++){
+				int xx = x * 20;
+				int yy = y * 20;
+				int scX = xx + 141 + (214 - 20 * 3) / 2;
+				int scY = yy + 35 + (134 - 20 * 3) / 2;
+				ret.add(new SlotInfo(scX, scY, 1, bg));
+			}
+		return ret;
 	}
 	
 	public List<AspectSlot> getAspectSlots(Supplier<AspectHandler> returnInv){

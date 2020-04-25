@@ -70,7 +70,7 @@
       "in": "arcana:arcanum",
       "icon": "arcana:research/eldritch.png",
       "name": "research.arcana.category.eldritch",
-      "bg": "arcana:research/static_bg.png"
+      "bg": "arcana:research/eldritch_bg.png"
     },
     {
       "key": "arcana:tainted_basics",
@@ -84,7 +84,7 @@
       "in": "arcana:crimson_rites",
       "icon": "arcana:research/crimson_basics.png",
       "name": "research.arcana.category.crimson",
-      "bg": "arcana:research/static_bg.png"
+      "bg": "arcana:research/eldritch_bg.png"
     },
     {
       "key": "arcana:illustrious_basics",

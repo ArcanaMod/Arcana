@@ -11,7 +11,9 @@ import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.ClickType;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryBasic;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,9 +39,12 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	// combination slots
 	protected AspectSlot leftStoreSlot, rightStoreSlot;
-	//public NoteChangeListener listener;
+	
 	private ItemStack note;
 	public final List<AspectSlot> puzzleSlots = new ArrayList<>();
+	public final List<Slot> puzzleItemSlots = new ArrayList<>();
+	public IInventory puzzleInventorySlots;
+	EntityPlayer lastClickPlayer;
 	
 	public ResearchTableContainer(IInventory playerInventory, ResearchTableTileEntity te){
 		this.te = te;
@@ -95,25 +100,70 @@ public class ResearchTableContainer extends AspectContainer{
 				if(!ItemStack.areItemStacksEqual(note, te.note())){
 					note = te.note();
 					// remove added slots * aspect slots
-					// listener.noteChanged();
 					refreshPuzzleSlots();
 				}
 			}
 		});
 	}
 	
+	public ItemStack slotClick(int slot, int dragType, ClickType clickType, EntityPlayer player){
+		lastClickPlayer = player;
+		return super.slotClick(slot, dragType, clickType, player);
+	}
+	
 	private void refreshPuzzleSlots(){
 		aspectSlots.removeAll(puzzleSlots);
 		puzzleSlots.forEach(AspectSlot::onClose);
 		puzzleSlots.clear();
-		/*if(!note.isEmpty() && note.getTagCompound() != null && note.getTagCompound().hasKey("puzzle"))*/
+		
+		if(puzzleInventorySlots != null)
+			if(!lastClickPlayer.world.isRemote)
+				clearContainer(lastClickPlayer, lastClickPlayer.world, puzzleInventorySlots);
+		
+		for(int i = puzzleItemSlots.size() - 1; i >= 0; i--){
+			Slot slot = puzzleItemSlots.get(i);
+			inventoryItemStacks.remove(slot.slotNumber);
+			inventorySlots.remove(slot);
+		}
+		puzzleItemSlots.clear();
+		
 		getFromNote().ifPresent(puzzle -> {
-			if(note.getItem() == ItemInit.RESEARCH_NOTE)
+			if(note.getItem() == ItemInit.RESEARCH_NOTE){
 				for(AspectSlot slot : puzzle.getAspectSlots(() -> AspectHandler.getFrom(te))){
 					puzzleSlots.add(slot);
 					aspectSlots.add(slot);
 				}
+				List<Puzzle.SlotInfo> locations = puzzle.getItemSlotLocations(lastClickPlayer);
+				int size = locations.size();
+				puzzleInventorySlots = new InventoryBasic("", false, size){
+					public void markDirty(){
+						super.markDirty();
+						ResearchTableContainer.this.onCraftMatrixChanged(this);
+					}
+				};
+				for(int i = 0; i < locations.size(); i++){
+					Puzzle.SlotInfo slotInfo = locations.get(i);
+					Slot slot = new Slot(puzzleInventorySlots, i, slotInfo.x, slotInfo.y){
+						public int getSlotStackLimit(){
+							return slotInfo.max != -1 ? slotInfo.max : super.getSlotStackLimit();
+						}
+					};
+					if(slotInfo.bg != null){
+						slot.setBackgroundLocation(slotInfo.bg);
+						slot.setBackgroundName(slotInfo.bg.toString());
+					}
+					addSlotToContainer(slot);
+					puzzleItemSlots.add(slot);
+				}
+			}
 		});
+	}
+	
+	public void onContainerClosed(@Nonnull EntityPlayer player){
+		super.onContainerClosed(player);
+		if(puzzleInventorySlots != null)
+			if(!player.world.isRemote)
+				clearContainer(player, player.world, puzzleInventorySlots);
 	}
 	
 	protected void addAspectSlots(){

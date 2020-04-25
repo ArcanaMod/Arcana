@@ -9,7 +9,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +40,7 @@ public class Fieldwork extends Puzzle{
 		return ICON;
 	}
 	
-	public List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player){
+	public List<Puzzle.SlotInfo> getItemSlotLocations(EntityPlayer player){
 		return Collections.emptyList();
 	}
 	

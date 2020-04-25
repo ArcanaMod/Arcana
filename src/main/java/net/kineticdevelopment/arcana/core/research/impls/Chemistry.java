@@ -20,7 +20,6 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -105,7 +104,7 @@ public class Chemistry extends Puzzle{
 		return grid;
 	}
 	
-	public List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player){
+	public List<Puzzle.SlotInfo> getItemSlotLocations(EntityPlayer player){
 		return Collections.emptyList();
 	}
 	

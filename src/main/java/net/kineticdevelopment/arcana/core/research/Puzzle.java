@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import org.apache.commons.lang3.tuple.Pair;
 
 import javax.annotation.Nullable;
 import java.util.LinkedHashMap;
@@ -85,7 +84,7 @@ public abstract class Puzzle{
 	
 	public abstract ResourceLocation getDefaultIcon();
 	
-	public abstract List<Pair<Integer, Integer>> getItemSlotLocations(EntityPlayer player);
+	public abstract List<SlotInfo> getItemSlotLocations(EntityPlayer player);
 	
 	public abstract List<AspectSlot> getAspectSlots(Supplier<AspectHandler> returnInv);
 	
@@ -127,5 +126,21 @@ public abstract class Puzzle{
 	
 	protected int paperTop(int screenHeight){
 		return guiTop(screenHeight) + 35;
+	}
+	
+	public static class SlotInfo{
+		public final int x, y, max;
+		public final ResourceLocation bg;
+		
+		public SlotInfo(int x, int y){
+			this(x, y, -1, null);
+		}
+		
+		public SlotInfo(int x, int y, int max, ResourceLocation bg){
+			this.x = x;
+			this.y = y;
+			this.max = max;
+			this.bg = bg;
+		}
 	}
 }
