@@ -2,7 +2,9 @@ package net.kineticdevelopment.arcana.core;
 
 import net.kineticdevelopment.arcana.ArcanaGuiHandler;
 import net.kineticdevelopment.arcana.client.Sounds;
+import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
+import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.EntityInit;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
@@ -17,6 +19,7 @@ import net.kineticdevelopment.arcana.core.research.Requirement;
 import net.kineticdevelopment.arcana.core.research.ResearchLoader;
 import net.kineticdevelopment.arcana.core.research.impls.ResearcherCapability;
 import net.kineticdevelopment.arcana.core.spells.SpellEffectHandler;
+import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -27,6 +30,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.stream.Collectors;
@@ -66,10 +70,13 @@ public class CommonProxy {
 		
 		Sounds.registerSounds();
 		SpellEffectHandler.init();
+		
+		for(Block block : BlockInit.BLOCKS)
+			if(block instanceof OreDictEntry)
+				OreDictionary.registerOre(((OreDictEntry)block).getOreDictName(), block);
 	}
 
 	public void postInit(FMLPostInitializationEvent event){
-	
 	}
 
 	public void registerWand(IForgeRegistry<Item> registry, ItemWand wand) {

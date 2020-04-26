@@ -1,5 +1,7 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+import mcp.MethodsReturnNonnullByDefault;
+import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.core.Main;
@@ -26,6 +28,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 /**
@@ -34,7 +37,9 @@ import java.util.Random;
  * @author Mozaran
  * @see LeavesBase
  */
-public class LeavesBase extends BlockLeaves implements IHasModel {
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
+public class LeavesBase extends BlockLeaves implements IHasModel, OreDictEntry{
     String name;
 
     public LeavesBase(String name) {
@@ -43,10 +48,13 @@ public class LeavesBase extends BlockLeaves implements IHasModel {
         setDefaultState(blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.TRUE).withProperty(DECAYABLE, Boolean.TRUE));
         setUnlocalizedName(name);
         setRegistryName(name);
-        OreDictionary.registerOre("treeLeaves", this);
 
         BlockInit.BLOCKS.add(this);
         ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
+    }
+    
+    public String getOreDictName(){
+        return "treeLeaves";
     }
 
     @Override

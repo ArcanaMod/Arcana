@@ -1,5 +1,7 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+import mcp.MethodsReturnNonnullByDefault;
+import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.core.Main;
 import net.minecraft.block.Block;
@@ -17,6 +19,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 /**
  * Slab Base. To be extended by double slab base and half slab base.
  *
@@ -24,7 +28,9 @@ import net.minecraftforge.oredict.OreDictionary;
  * @see HalfSlabBase
  * @see DoubleSlabBase
  */
-public abstract class SlabBase extends BlockSlab {
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
+public abstract class SlabBase extends BlockSlab implements OreDictEntry{
     private String name;
 
     public SlabBase(String name, Material material) {
@@ -32,7 +38,6 @@ public abstract class SlabBase extends BlockSlab {
         setUnlocalizedName(name);
         setRegistryName(name);
         this.name = name;
-        OreDictionary.registerOre("slabWood", this);
 
         IBlockState state = this.blockState.getBaseState();
 
@@ -49,10 +54,13 @@ public abstract class SlabBase extends BlockSlab {
 
     @Override
     public String getUnlocalizedName(int meta) {
-
         return this.getUnlocalizedName();
     }
-
+    
+    public String getOreDictName(){
+        return "slabWood";
+    }
+    
     @Override
     public IProperty<?> getVariantProperty() {
         return HALF;
@@ -83,7 +91,7 @@ public abstract class SlabBase extends BlockSlab {
         if(this.isDouble()) {
             return  0;
         }
-        return ((EnumBlockHalf)state.getValue(HALF)).ordinal() +1;
+        return state.getValue(HALF).ordinal() +1;
     }
 
     @Override

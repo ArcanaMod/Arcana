@@ -260,15 +260,20 @@ public class ResearchTableContainer extends AspectContainer{
 			// This will need changing if slots need to be able to clean up arbitrary resources.
 			aspectSlots.removeAll(puzzleSlots);
 			puzzleSlots.clear();
+			
+			for(int i = puzzleItemSlots.size() - 1; i >= 0; i--){
+				Slot slot = puzzleItemSlots.get(i);
+				inventoryItemStacks.remove(slot.slotNumber);
+				inventorySlots.remove(slot);
+			}
 			puzzleItemSlots.clear();
+			puzzleInventorySlots = null;
 			
 			IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			if(capability != null){
 				capability.extractItem(2, 64, false);
 				capability.insertItem(2, complete, false);
 			}
-			
-			refreshPuzzleSlots();
 		}
 	}
 	

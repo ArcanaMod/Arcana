@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.core.Main;
@@ -17,16 +18,19 @@ import net.minecraftforge.oredict.OreDictionary;
  *
  * @author Tea
  */
-public class StairsBase extends BlockStairs implements IHasModel{
+public class StairsBase extends BlockStairs implements IHasModel, OreDictEntry{
 	
 	public StairsBase(String name, IBlockState state){
 		super(state);
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setLightOpacity(0);
-		OreDictionary.registerOre("stairWood", this);
 		BlockInit.BLOCKS.add(this);
 		ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(getRegistryName()));
+	}
+	
+	public String getOreDictName(){
+		return "stairWood";
 	}
 	
 	@Override

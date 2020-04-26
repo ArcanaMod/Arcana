@@ -19,7 +19,6 @@ public class HalfSlabBase extends SlabBase implements IHasModel {
 
     public HalfSlabBase(String name, Material material, Block doubleSlab) {
         super(name, material);
-        OreDictionary.registerOre("slabWood", this);
         ItemInit.ITEMS.add(new ItemSlab(this, this, (BlockSlab) doubleSlab).setRegistryName(this.getRegistryName()));
     }
 

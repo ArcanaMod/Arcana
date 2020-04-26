@@ -1,5 +1,7 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+import mcp.MethodsReturnNonnullByDefault;
+import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.core.Main;
@@ -22,6 +24,7 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.oredict.OreDictionary;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 /**
@@ -30,7 +33,9 @@ import java.util.Random;
  * @author Mozaran
  *
  */
-public abstract class SaplingBase extends BlockBush implements IGrowable, IHasModel {
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
+public abstract class SaplingBase extends BlockBush implements IGrowable, IHasModel, OreDictEntry{
 
     public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
     protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
@@ -40,12 +45,15 @@ public abstract class SaplingBase extends BlockBush implements IGrowable, IHasMo
         setRegistryName(name);
         setHardness(0.0F);
         setSoundType(SoundType.PLANT);
-        OreDictionary.registerOre("treeSapling", this);
 
         BlockInit.BLOCKS.add(this);
         ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
-
+    
+    public String getOreDictName(){
+        return "treeSapling";
+    }
+    
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos)
     {

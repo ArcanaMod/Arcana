@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
 
+import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.core.Main;
@@ -28,7 +29,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Tea, Mozaran
  *
  */
-public class LogBase extends BlockLog implements IHasModel {
+public class LogBase extends BlockLog implements IHasModel, OreDictEntry{
 
     public LogBase(String name) {
         this.setDefaultState(this.getStateFromMeta(0));
@@ -38,12 +39,15 @@ public class LogBase extends BlockLog implements IHasModel {
         setHardness(2.0f);
         setResistance(2.0f);
         setHarvestLevel("axe",0);
-        OreDictionary.registerOre("logWood", this);
 
         BlockInit.BLOCKS.add(this);
         ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
     }
-
+    
+    public String getOreDictName(){
+        return "logWood";
+    }
+    
     @Override
     public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos)
     {
