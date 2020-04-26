@@ -20,6 +20,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.TerrainGen;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.Random;
 
@@ -39,6 +40,7 @@ public abstract class SaplingBase extends BlockBush implements IGrowable, IHasMo
         setRegistryName(name);
         setHardness(0.0F);
         setSoundType(SoundType.PLANT);
+        OreDictionary.registerOre("treeSapling", this);
 
         BlockInit.BLOCKS.add(this);
         ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));

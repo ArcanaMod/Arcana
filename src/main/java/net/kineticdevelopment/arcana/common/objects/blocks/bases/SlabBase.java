@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Slab Base. To be extended by double slab base and half slab base.
@@ -31,7 +32,7 @@ public abstract class SlabBase extends BlockSlab {
         setUnlocalizedName(name);
         setRegistryName(name);
         this.name = name;
-
+        OreDictionary.registerOre("slabWood", this);
 
         IBlockState state = this.blockState.getBaseState();
 

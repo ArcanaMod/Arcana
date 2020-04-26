@@ -178,6 +178,13 @@ public class BlockInit {
 	public static final Block TAINTED_DARKOAK_SLAB_DOUBLE = new TaintedDoubleSlabBase("tainted_darkoak_slab_double", Material.WOOD);
 	public static final Block TAINTED_DARKOAK_SLAB_HALF = new TaintedHalfSlabBase("tainted_darkoak_slab", Material.WOOD, BlockInit.TAINTED_DARKOAK_SLAB_DOUBLE);
 	public static final Block TAINTED_DARKOAK_STAIRS = new TaintedStairsBase("tainted_darkoak_stairs", TAINTED_DARKOAK_PLANKS.getDefaultState());
+	public static final Block TAINTED_EUCALYPTUS_LEAVES = new TaintedLeavesBase("tainted_eucalyptus_leaves");
+	public static final Block TAINTED_EUCALYPTUS_LOG = new TaintedLogBase("tainted_eucalyptus_log");
+	public static final Block TAINTED_EUCALYPTUS_PLANKS = new TaintedBlockBase("tainted_eucalyptus_planks", Material.WOOD);
+	public static final Block TAINTED_EUCALYPTUS_SAPLING = new EucalyptusSapling("tainted_eucalyptus_sapling", true, false);
+	public static final Block TAINTED_EUCALYPTUS_SLAB_DOUBLE = new TaintedDoubleSlabBase("tainted_eucalyptus_slab_double", Material.WOOD);
+	public static final Block TAINTED_EUCALYPTUS_SLAB_HALF = new TaintedHalfSlabBase("tainted_eucalyptus_slab", Material.WOOD, BlockInit.TAINTED_DAIR_SLAB_DOUBLE);
+	public static final Block TAINTED_EUCALYPTUS_STAIRS = new TaintedStairsBase("tainted_eucalyptus_stairs", TAINTED_DAIR_PLANKS.getDefaultState());
 	public static final Block TAINTED_GREATWOOD_LEAVES = new TaintedLeavesBase("tainted_greatwood_leaves");
 	public static final Block TAINTED_GREATWOOD_LOG = new TaintedLogBase("tainted_greatwood_log");
 	public static final Block TAINTED_GREATWOOD_PLANKS = new TaintedBlockBase("tainted_greatwood_planks", Material.WOOD);
@@ -277,6 +284,13 @@ public class BlockInit {
 	public static final Block UNTAINTED_DARKOAK_SLAB_DOUBLE = new DoubleSlabBase("untainted_darkoak_slab_double", Material.WOOD);
 	public static final Block UNTAINTED_DARKOAK_SLAB_HALF = new HalfSlabBase("untainted_darkoak_slab", Material.WOOD, BlockInit.UNTAINTED_DARKOAK_SLAB_DOUBLE).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_DARKOAK_STAIRS = new TaintedStairsBase("untainted_darkoak_stairs", UNTAINTED_DARKOAK_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_EUCALYPTUS_LEAVES = new TaintedLeavesBase("untainted_eucalyptus_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_EUCALYPTUS_LOG = new TaintedLogBase("untainted_eucalyptus_log").setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_EUCALYPTUS_PLANKS = new TaintedBlockBase("untainted_eucalyptus_planks", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_EUCALYPTUS_SAPLING = new EucalyptusSapling("untainted_eucalyptus_sapling", true, true).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_EUCALYPTUS_SLAB_DOUBLE = new TaintedDoubleSlabBase("untainted_eucalyptus_slab_double", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_EUCALYPTUS_SLAB_HALF = new TaintedHalfSlabBase("untainted_eucalyptus_slab", Material.WOOD, BlockInit.TAINTED_DAIR_SLAB_DOUBLE).setCreativeTab(Main.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_EUCALYPTUS_STAIRS = new TaintedStairsBase("untainted_eucalyptus_stairs", TAINTED_DAIR_PLANKS.getDefaultState()).setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_GREATWOOD_LEAVES = new LeavesBase("untainted_greatwood_leaves").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_GREATWOOD_LOG = new TaintedLogBase("untainted_greatwood_log").setCreativeTab(Main.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_GREATWOOD_PLANKS = new TaintedBlockBase("untainted_greatwood_planks", Material.WOOD).setCreativeTab(Main.TAB_TAINTARCANA);

@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Basic Logs, all logs should either be this, or extend it
@@ -37,6 +38,7 @@ public class LogBase extends BlockLog implements IHasModel {
         setHardness(2.0f);
         setResistance(2.0f);
         setHarvestLevel("axe",0);
+        OreDictionary.registerOre("logWood", this);
 
         BlockInit.BLOCKS.add(this);
         ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));

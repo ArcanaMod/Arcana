@@ -24,11 +24,11 @@ import static net.minecraft.block.BlockLog.LOG_AXIS;
  */
 public class EucalyptusGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = BlockInit.EUCALYPTUS_LOG.getDefaultState();
-    private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_HAWTHORN_LOG.getDefaultState();
-    private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_HAWTHORN_LOG.getDefaultState();
+    private static final IBlockState DEFAULT_TAINTED_TRUNK = BlockInit.TAINTED_EUCALYPTUS_LOG.getDefaultState();
+    private static final IBlockState DEFAULT_UNTAINTED_TRUNK = BlockInit.UNTAINTED_EUCALYPTUS_LOG.getDefaultState();
     private static final IBlockState DEFAULT_LEAVES = BlockInit.EUCALYPTUS_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_HAWTHORN_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_HAWTHORN_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_TAINTED_LEAVES = BlockInit.TAINTED_EUCALYPTUS_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+    private static final IBlockState DEFAULT_UNTAINTED_LEAVES = BlockInit.UNTAINTED_EUCALYPTUS_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
 
     private final IBlockState metaWood;
     private final IBlockState metaLeaves;
