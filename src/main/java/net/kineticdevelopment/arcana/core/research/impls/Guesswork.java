@@ -23,7 +23,6 @@ import java.util.function.Supplier;
 
 public class Guesswork extends Puzzle{
 	
-	public static final ResourceLocation BG = new ResourceLocation(Main.MODID, "textures/gui/container/unknown_slot.png");
 	private static final ResourceLocation ICON = new ResourceLocation(Main.MODID, "textures/item/research_note.png");
 	private static final Logger LOGGER = LogManager.getLogger();
 	
@@ -72,7 +71,7 @@ public class Guesswork extends Puzzle{
 	
 	public static Guesswork fromNBT(NBTTagCompound passData){
 		ResourceLocation recipe = new ResourceLocation(passData.getString("recipe"));
-		Map<ResourceLocation, String> hints = new HashMap<>();
+		Map<ResourceLocation, String> hints = new LinkedHashMap<>();
 		NBTTagCompound serialHints = passData.getCompoundTag("hints");
 		for(String s : serialHints.getKeySet())
 			hints.put(new ResourceLocation(s), serialHints.getString(s));
@@ -107,7 +106,7 @@ public class Guesswork extends Puzzle{
 				for(int x = 0; x < 3; x++){
 					int xx = x * 23;
 					int yy = y * 23;
-					int scX = xx + 141 + 76;
+					int scX = xx + 141 + 15;
 					int scY = yy + 35 + 54;
 					if(recipe.getIngredients().size() > (x + y * 3) && recipe.getIngredients().get(x + y * 3).getMatchingStacks().length > 0)
 						ret.add(new SlotInfo(scX, scY, 1, BG_NAME));
@@ -122,6 +121,8 @@ public class Guesswork extends Puzzle{
 	}
 	
 	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, EntityPlayer player, ResearchTableContainer container){
+		if(player == null)
+			return false;
 		IRecipe recipe = CraftingManager.getRecipe(getRecipe());
 		if(recipe == null)
 			return false;

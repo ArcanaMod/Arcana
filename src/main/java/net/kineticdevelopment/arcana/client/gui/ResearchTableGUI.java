@@ -48,7 +48,7 @@ public class ResearchTableGUI extends GuiAspectContainer{
 			NBTTagCompound compound = te.note().getTagCompound();
 			if(compound != null){
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
-				PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer)aspectContainer).puzzleSlots, width, height, mouseX, mouseY, mc.player);
+				PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer)aspectContainer).puzzleSlots, ((ResearchTableContainer)aspectContainer).puzzleItemSlots, width, height, mouseX, mouseY, mc.player);
 				if(te.ink().isEmpty()){
 					// tell them "no u cant do research without a pen"
 					mc.getTextureManager().bindTexture(NO_INK);

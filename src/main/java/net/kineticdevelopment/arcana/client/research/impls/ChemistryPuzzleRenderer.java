@@ -8,6 +8,7 @@ import net.kineticdevelopment.arcana.core.aspects.Aspects;
 import net.kineticdevelopment.arcana.core.research.impls.Chemistry;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ChemistryPuzzleRenderer extends Gui implements PuzzleRenderer<Chemi
 	
 	private static final ResourceLocation TEX = new ResourceLocation(Main.MODID, "textures/gui/research/chemistry_overlay.png");
 	
-	public void render(Chemistry puzzle, List<AspectSlot> puzzleSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player){
+	public void render(Chemistry puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player){
 		drawPaper(screenWidth, screenHeight);
 		// how to generate a hexagonal grid?
 		// 20x20 per hex

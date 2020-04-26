@@ -11,6 +11,7 @@ import net.kineticdevelopment.arcana.core.research.impls.Guesswork;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public interface PuzzleRenderer<T extends Puzzle>{
 		return get(puzzle.type());
 	}
 	
-	void render(T puzzle, List<AspectSlot> puzzleSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player);
+	void render(T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player);
 	
 	default Minecraft mc(){
 		return Minecraft.getMinecraft();

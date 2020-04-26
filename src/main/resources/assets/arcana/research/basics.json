@@ -190,7 +190,6 @@
     {
       "key": "arcana:artifice_intro",
       "name": "research.arcana.artifice_intro",
-      "desc": "research.arcana.artifice_intro.desc",
       "icons": [
         "arcana:goggles_of_revealing"
       ],
@@ -217,7 +216,6 @@
     {
       "key": "arcana:auromancy_intro",
       "name": "research.arcana.auromancy_intro",
-      "desc": "research.arcana.auromancy_intro.desc",
       "icons": [
         "arcana:normal_node"
       ],
@@ -244,7 +242,6 @@
     {
       "key": "arcana:infusion_intro",
       "name": "research.arcana.infusion_intro",
-      "desc": "research.arcana.infusion_intro.desc",
       "icons": [
         "arcana:aspect_mana"
       ],
