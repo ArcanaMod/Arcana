@@ -574,9 +574,9 @@ research.arcana.thaumaturgy_intro.desc=Tools of the Trade
 
 research.arcana.alchemy_intro=Introduction to Alchemy
 research.arcana.alchemy_intro.desc=Al-chemistry
-research.arcana.alchemy_intro.stage.1=
-research.arcana.alchemy_intro.stage.2=Make smth in crucible
-research.arcana.alchemy_intro.stage.3=wel done
+research.arcana.alchemy_intro.stage.1=Right click a cauldron with a wand to make a crucible.
+research.arcana.alchemy_intro.stage.2=Combine Vis essentia and gold to create Arcanium. Alchemy doesn't yet work, so here's a simpler recipe for you instead.
+research.arcana.alchemy_intro.stage.3=Well done, you've completed the demo.
 
 research.arcana.artifice_intro=Introduction to Artifice
 

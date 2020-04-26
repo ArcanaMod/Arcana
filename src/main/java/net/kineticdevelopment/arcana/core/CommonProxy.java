@@ -6,6 +6,7 @@ import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.handlers.WorldTickHandler;
 import net.kineticdevelopment.arcana.common.init.BlockInit;
 import net.kineticdevelopment.arcana.common.init.EntityInit;
+import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.common.network.Connection;
 import net.kineticdevelopment.arcana.common.objects.blocks.bases.LeavesBase;
 import net.kineticdevelopment.arcana.common.items.ItemWand;
@@ -22,6 +23,7 @@ import net.kineticdevelopment.arcana.core.spells.SpellEffectHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -74,6 +76,9 @@ public class CommonProxy {
 		for(Block block : BlockInit.BLOCKS)
 			if(block instanceof OreDictEntry)
 				OreDictionary.registerOre(((OreDictEntry)block).getOreDictName(), block);
+		
+		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlockInit.AMBER_ORE, new ItemStack(ItemInit.AMBER), 0.2f);
+		FurnaceRecipes.instance().addSmeltingRecipeForBlock(BlockInit.TAINTED_OAK_LOG, new ItemStack(ItemInit.TAINTED_WAND_CORE), 1);
 	}
 
 	public void postInit(FMLPostInitializationEvent event){
