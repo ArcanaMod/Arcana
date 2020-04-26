@@ -66,7 +66,7 @@ public class ItemInit {
 
 	public static Item RESEARCH_NOTE_COMPLETE = new ItemResearchNote("research_note_complete", true).setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_NOTE = new ItemResearchNote("research_note", false).setCreativeTab(Main.TAB_ARCANA);
-	public static Item INK = new ItemBase("ink").setMaxStackSize(1).setCreativeTab(Main.TAB_ARCANA);
+	public static Item INK = new ItemBase("ink").setMaxStackSize(1).setMaxDamage(100).setCreativeTab(Main.TAB_ARCANA);
 	public static Item RESEARCH_TABLE_PLACER = new ItemResearchTable().setCreativeTab(Main.TAB_ARCANA);
 	public static Item VIS_MANIPULATORS = new ItemVisManipulators().setCreativeTab(Main.TAB_ARCANA);
 

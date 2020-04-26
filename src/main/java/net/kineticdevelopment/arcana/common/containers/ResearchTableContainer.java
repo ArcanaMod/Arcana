@@ -269,6 +269,8 @@ public class ResearchTableContainer extends AspectContainer{
 			puzzleItemSlots.clear();
 			puzzleInventorySlots = null;
 			
+			te.ink().damageItem(1, lastClickPlayer);
+			
 			IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			if(capability != null){
 				capability.extractItem(2, 64, false);
