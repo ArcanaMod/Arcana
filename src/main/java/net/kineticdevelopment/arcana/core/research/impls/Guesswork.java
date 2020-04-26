@@ -4,11 +4,15 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.kineticdevelopment.arcana.common.containers.AspectSlot;
+import net.kineticdevelopment.arcana.common.containers.ResearchTableContainer;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -19,17 +23,18 @@ import java.util.function.Supplier;
 
 public class Guesswork extends Puzzle{
 	
-	public static final ResourceLocation bg = new ResourceLocation(Main.MODID, "textures/gui/container/unknown_slot.png");
+	public static final ResourceLocation BG = new ResourceLocation(Main.MODID, "textures/gui/container/unknown_slot.png");
 	private static final ResourceLocation ICON = new ResourceLocation(Main.MODID, "textures/item/research_note.png");
 	private static final Logger LOGGER = LogManager.getLogger();
 	
-	public static final String TYPE = "guesswork";
+	public static final String TYPE = "guesswork", BG_NAME = "arcana:gui/container/unknown_slot";
 	
 	// Check RecipeSectionRenderer for how non-crafting recipes are handled.
 	protected ResourceLocation recipe;
 	protected Map<ResourceLocation, String> hints;
 	
-	public Guesswork(){}
+	public Guesswork(){
+	}
 	
 	public Guesswork(ResourceLocation recipe, Map<ResourceLocation, String> hints){
 		this.recipe = recipe;
@@ -96,14 +101,19 @@ public class Guesswork extends Puzzle{
 	
 	public List<Puzzle.SlotInfo> getItemSlotLocations(EntityPlayer player){
 		List<Puzzle.SlotInfo> ret = new ArrayList<>();
-		for(int y = 0; y < 3; y++)
-			for(int x = 0; x < 3; x++){
-				int xx = x * 20;
-				int yy = y * 20;
-				int scX = xx + 141 + (214 - 20 * 3) / 2;
-				int scY = yy + 35 + (134 - 20 * 3) / 2;
-				ret.add(new SlotInfo(scX, scY, 1, bg));
-			}
+		IRecipe recipe = CraftingManager.getRecipe(getRecipe());
+		if(recipe != null)
+			for(int y = 0; y < 3; y++)
+				for(int x = 0; x < 3; x++){
+					int xx = x * 23;
+					int yy = y * 23;
+					int scX = xx + 141 + 76;
+					int scY = yy + 35 + 54;
+					if(recipe.getIngredients().size() > (x + y * 3) && recipe.getIngredients().get(x + y * 3).getMatchingStacks().length > 0)
+						ret.add(new SlotInfo(scX, scY, 1, BG_NAME));
+					else
+						ret.add(new SlotInfo(scX, scY));
+				}
 		return ret;
 	}
 	
@@ -111,8 +121,16 @@ public class Guesswork extends Puzzle{
 		return Collections.emptyList();
 	}
 	
-	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots){
-		return false;
+	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, EntityPlayer player, ResearchTableContainer container){
+		IRecipe recipe = CraftingManager.getRecipe(getRecipe());
+		if(recipe == null)
+			return false;
+		InventoryCrafting inv = new InventoryCrafting(container, 3, 3);
+		for(int i = 0; i < itemSlots.size(); i++){
+			Slot slot = itemSlots.get(i);
+			inv.setInventorySlotContents(i, slot.getStack());
+		}
+		return recipe.matches(inv, player.world);
 	}
 	
 	public boolean equals(Object o){

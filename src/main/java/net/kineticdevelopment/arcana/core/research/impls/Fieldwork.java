@@ -2,6 +2,7 @@ package net.kineticdevelopment.arcana.core.research.impls;
 
 import com.google.gson.JsonObject;
 import net.kineticdevelopment.arcana.common.containers.AspectSlot;
+import net.kineticdevelopment.arcana.common.containers.ResearchTableContainer;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
 import net.kineticdevelopment.arcana.core.research.Puzzle;
@@ -48,7 +49,7 @@ public class Fieldwork extends Puzzle{
 		return Collections.emptyList();
 	}
 	
-	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots){
+	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, EntityPlayer player, ResearchTableContainer container){
 		return false;
 	}
 }

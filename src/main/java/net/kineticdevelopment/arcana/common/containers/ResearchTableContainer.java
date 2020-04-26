@@ -40,7 +40,7 @@ public class ResearchTableContainer extends AspectContainer{
 	// combination slots
 	protected AspectSlot leftStoreSlot, rightStoreSlot;
 	
-	private ItemStack note;
+	private ItemStack note, ink;
 	public final List<AspectSlot> puzzleSlots = new ArrayList<>();
 	public final List<Slot> puzzleItemSlots = new ArrayList<>();
 	public IInventory puzzleInventorySlots;
@@ -74,6 +74,7 @@ public class ResearchTableContainer extends AspectContainer{
 	private void addOwnSlots(){
 		IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		note = te.note();
+		ink = te.ink();
 		// 9, 10
 		addSlotToContainer(new SlotItemHandler(itemHandler, 0, 9, 10){
 			public boolean isItemValid(@Nonnull ItemStack stack){
@@ -87,6 +88,14 @@ public class ResearchTableContainer extends AspectContainer{
 				// only ink
 				return super.isItemValid(stack) && stack.getItem() == ItemInit.INK;
 			}
+			
+			public void onSlotChanged(){
+				super.onSlotChanged();
+				if((ink.isEmpty() && !te.ink().isEmpty()) || (!ink.isEmpty() && te.ink().isEmpty())){
+					ink = te.ink();
+					refreshPuzzleSlots();
+				}
+			}
 		});
 		// 155, 11
 		addSlotToContainer(new SlotItemHandler(itemHandler, 2, 155, 11){
@@ -99,7 +108,7 @@ public class ResearchTableContainer extends AspectContainer{
 				super.onSlotChanged();
 				if(!ItemStack.areItemStacksEqual(note, te.note())){
 					note = te.note();
-					// remove added slots * aspect slots
+					// remove added slots & aspect slots
 					refreshPuzzleSlots();
 				}
 			}
@@ -108,7 +117,10 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	public ItemStack slotClick(int slot, int dragType, ClickType clickType, EntityPlayer player){
 		lastClickPlayer = player;
-		return super.slotClick(slot, dragType, clickType, player);
+		ItemStack stack = super.slotClick(slot, dragType, clickType, player);
+		if(!ink.isEmpty())
+			validate();
+		return stack;
 	}
 	
 	private void refreshPuzzleSlots(){
@@ -128,34 +140,33 @@ public class ResearchTableContainer extends AspectContainer{
 		puzzleItemSlots.clear();
 		
 		getFromNote().ifPresent(puzzle -> {
-			if(note.getItem() == ItemInit.RESEARCH_NOTE){
-				for(AspectSlot slot : puzzle.getAspectSlots(() -> AspectHandler.getFrom(te))){
-					puzzleSlots.add(slot);
-					aspectSlots.add(slot);
-				}
-				List<Puzzle.SlotInfo> locations = puzzle.getItemSlotLocations(lastClickPlayer);
-				int size = locations.size();
-				puzzleInventorySlots = new InventoryBasic("", false, size){
-					public void markDirty(){
-						super.markDirty();
-						ResearchTableContainer.this.onCraftMatrixChanged(this);
+			if(!ink.isEmpty())
+				if(note.getItem() == ItemInit.RESEARCH_NOTE){
+					for(AspectSlot slot : puzzle.getAspectSlots(() -> AspectHandler.getFrom(te))){
+						puzzleSlots.add(slot);
+						aspectSlots.add(slot);
 					}
-				};
-				for(int i = 0; i < locations.size(); i++){
-					Puzzle.SlotInfo slotInfo = locations.get(i);
-					Slot slot = new Slot(puzzleInventorySlots, i, slotInfo.x, slotInfo.y){
-						public int getSlotStackLimit(){
-							return slotInfo.max != -1 ? slotInfo.max : super.getSlotStackLimit();
+					List<Puzzle.SlotInfo> locations = puzzle.getItemSlotLocations(lastClickPlayer);
+					int size = locations.size();
+					puzzleInventorySlots = new InventoryBasic("", false, size){
+						public void markDirty(){
+							super.markDirty();
+							ResearchTableContainer.this.onCraftMatrixChanged(this);
 						}
 					};
-					if(slotInfo.bg != null){
-						slot.setBackgroundLocation(slotInfo.bg);
-						slot.setBackgroundName(slotInfo.bg.toString());
+					for(int i = 0; i < locations.size(); i++){
+						Puzzle.SlotInfo slotInfo = locations.get(i);
+						Slot slot = new Slot(puzzleInventorySlots, i, slotInfo.x, slotInfo.y){
+							public int getSlotStackLimit(){
+								return slotInfo.max != -1 ? slotInfo.max : super.getSlotStackLimit();
+							}
+						};
+						if(slotInfo.bg_name != null)
+							slot.setBackgroundName(slotInfo.bg_name);
+						addSlotToContainer(slot);
+						puzzleItemSlots.add(slot);
 					}
-					addSlotToContainer(slot);
-					puzzleItemSlots.add(slot);
 				}
-			}
 		});
 	}
 	
@@ -211,26 +222,34 @@ public class ResearchTableContainer extends AspectContainer{
 		Slot slot = inventorySlots.get(index);
 		
 		if(slot != null && slot.getHasStack()){
-			ItemStack itemstack1 = slot.getStack();
-			itemstack = itemstack1.copy();
-			
-			if(index < 3){
-				if(!this.mergeItemStack(itemstack1, 3, inventorySlots.size(), true))
+			if(note.isEmpty() || index != 2){
+				ItemStack itemstack1 = slot.getStack();
+				itemstack = itemstack1.copy();
+				
+				if(index < 3){
+					if(!this.mergeItemStack(itemstack1, 3, inventorySlots.size(), true))
+						return ItemStack.EMPTY;
+				}else if(!this.mergeItemStack(itemstack1, 0, 3, false))
 					return ItemStack.EMPTY;
-			}else if(!this.mergeItemStack(itemstack1, 0, 3, false))
-				return ItemStack.EMPTY;
-			
-			if(itemstack1.isEmpty())
-				slot.putStack(ItemStack.EMPTY);
-			else
-				slot.onSlotChanged();
+				
+				if(itemstack1.isEmpty())
+					slot.putStack(ItemStack.EMPTY);
+				else
+					slot.onSlotChanged();
+			}
 		}
 		
 		return itemstack;
 	}
 	
 	public void onAspectSlotChange(){
-		if(getFromNote().map(puzzle -> puzzle.validate(puzzleSlots, null)).orElse(false)){
+		super.onAspectSlotChange();
+		if(!ink.isEmpty())
+			validate();
+	}
+	
+	public void validate(){
+		if(getFromNote().map(puzzle -> puzzle.validate(puzzleSlots, puzzleItemSlots, lastClickPlayer, this)).orElse(false)){
 			ItemStack complete = new ItemStack(ItemInit.RESEARCH_NOTE_COMPLETE);
 			NBTTagCompound data = note.getTagCompound();
 			
@@ -241,12 +260,15 @@ public class ResearchTableContainer extends AspectContainer{
 			// This will need changing if slots need to be able to clean up arbitrary resources.
 			aspectSlots.removeAll(puzzleSlots);
 			puzzleSlots.clear();
+			puzzleItemSlots.clear();
 			
 			IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			if(capability != null){
 				capability.extractItem(2, 64, false);
 				capability.insertItem(2, complete, false);
 			}
+			
+			refreshPuzzleSlots();
 		}
 	}
 	

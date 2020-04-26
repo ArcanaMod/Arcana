@@ -13,6 +13,7 @@ import net.kineticdevelopment.arcana.core.research.ResearchBooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 
@@ -25,7 +26,8 @@ public class ResearchTableGUI extends GuiAspectContainer{
 	public static final int WIDTH = 376;
 	public static final int HEIGHT = 280;
 	
-	private static final ResourceLocation bg = new ResourceLocation(Main.MODID, "textures/gui/container/gui_researchbook.png");
+	private static final ResourceLocation BG = new ResourceLocation(Main.MODID, "textures/gui/container/gui_researchbook.png");
+	private static final ResourceLocation NO_INK = new ResourceLocation(Main.MODID, "textures/gui/research/no_ink_overlay.png");
 	
 	ResearchTableTileEntity te;
 	int page = 0;
@@ -40,13 +42,20 @@ public class ResearchTableGUI extends GuiAspectContainer{
 	}
 	
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
-		mc.getTextureManager().bindTexture(bg);
+		mc.getTextureManager().bindTexture(BG);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ItemInit.RESEARCH_NOTE){
 			NBTTagCompound compound = te.note().getTagCompound();
 			if(compound != null){
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
 				PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer)aspectContainer).puzzleSlots, width, height, mouseX, mouseY, mc.player);
+				if(te.ink().isEmpty()){
+					// tell them "no u cant do research without a pen"
+					mc.getTextureManager().bindTexture(NO_INK);
+					drawModalRectWithCustomSizedTexture(guiLeft + 137, guiTop + 31, 0, 0, 223, 143, 223, 143);
+					String noInk = I18n.format("researchTable.ink_needed");
+					mc.fontRenderer.drawString(noInk, guiLeft + 141 + (213 - mc.fontRenderer.getStringWidth(noInk)) / 2, guiTop + 35 + (134 - mc.fontRenderer.FONT_HEIGHT) / 2, -1);
+				}
 			}
 		}
 	}
@@ -123,7 +132,7 @@ public class ResearchTableGUI extends GuiAspectContainer{
 						}
 					}
 				// then just draw
-				mc.getTextureManager().bindTexture(bg);
+				mc.getTextureManager().bindTexture(BG);
 				GlStateManager.disableLighting();
 				GlStateManager.color(1f, 1f, 1f);
 				drawModalRectWithCustomSizedTexture(guiLeft + x, guiTop + y, teX, teY, width, height, 378, 378);

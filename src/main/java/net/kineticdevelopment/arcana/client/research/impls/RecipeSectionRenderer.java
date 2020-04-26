@@ -42,17 +42,6 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 		GlStateManager.enableDepth();
 		RenderHelper.enableGUIStandardItemLighting();
 		GlStateManager.disableLighting();
-		/*
-		 now, to complain about 1.12 again
-		 in 1.14+, all recipes (furnace, crafting, smoking, blasting, loom-ing, and eventually our own) are all IRecipe<?>s
-		 and can all be accessed in the same way (mc.player.connection.getRecipeManager().getRecipe(x).orElse(...)//ifPresent(...))
-		 HERE, THOUGH
-		 crafting recipes are easier: CraftingManager...
-		 but smelting is FurnaceRecipes...
-		 and those don't have IDs
-		 
-		 apparently I was wrong about custom json recipes, but heck we don't have any yet
-		*/
 		
 		if(section.getRecipe().getResourceDomain().equals("__furnace__")){
 			String[] parts = section.getRecipe().getResourcePath().split("\\.");

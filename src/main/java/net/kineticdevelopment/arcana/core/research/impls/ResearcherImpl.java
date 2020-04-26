@@ -37,10 +37,13 @@ public class ResearcherImpl implements Researcher{
 			// TODO: don't skip through addenda
 		}while(entryStage(entry) < entry.sections().size() && entry.sections().get(entryStage(entry)).getRequirements().size() == 0);
 		MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
+		// if this research is being completed,
 		// advance all children too, but only if they have no requirements on their first stage
-		ResearchBooks.streamChildrenOf(entry)
-				.filter(x -> x.sections().get(0).getRequirements().isEmpty())
-				.forEach(this::advanceEntry);
+		if(entryStage(entry) == entry.sections().size())
+			ResearchBooks.streamChildrenOf(entry)
+					.filter(x -> x.sections().get(0).getRequirements().isEmpty())
+					.filter(x -> entryStage(x) == 0)
+					.forEach(this::advanceEntry);
 	}
 	
 	public void completePuzzle(Puzzle puzzle){

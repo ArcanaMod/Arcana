@@ -14,6 +14,6 @@ public class TextureStitch{
 	@SubscribeEvent
 	public static void onTextureStitch(TextureStitchEvent.Pre event){
 		Sprites.NORMAL_NODE = event.getMap().registerSprite(new ResourceLocation(Main.MODID, "nodes/normal_node"));
-		event.getMap().registerSprite(new ResourceLocation(Main.MODID, "textures/gui/container/unknown_slot"));
+		event.getMap().registerSprite(new ResourceLocation(Main.MODID, "gui/container/unknown_slot"));
 	}
 }

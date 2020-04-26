@@ -386,6 +386,33 @@
           "content": "research.arcana.chemistry_info.stage.2"
         }
       ]
+    },
+    {
+      "key": "arcana:guesswork_info",
+      "name": "research.arcana.guesswork_info",
+      "desc": "research.arcana.guesswork_info.desc",
+      "icons": [
+        "minecraft:crafting_table"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:research_intro"
+      ],
+      "meta": [
+        "round_base",
+        "yellow_base"
+      ],
+      "x": 3,
+      "y": -1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.guesswork_info.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:gw_enchanting_table}"
+          ]
+        }
+      ]
     }
   ],
   "puzzles": [

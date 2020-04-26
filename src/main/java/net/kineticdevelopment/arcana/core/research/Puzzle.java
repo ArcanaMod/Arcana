@@ -88,7 +88,7 @@ public abstract class Puzzle{
 	
 	public abstract List<AspectSlot> getAspectSlots(Supplier<AspectHandler> returnInv);
 	
-	public abstract boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots);
+	public abstract boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, EntityPlayer player, ResearchTableContainer container);
 	
 	public String getDesc(){
 		return desc;
@@ -130,17 +130,17 @@ public abstract class Puzzle{
 	
 	public static class SlotInfo{
 		public final int x, y, max;
-		public final ResourceLocation bg;
+		public final String bg_name;
 		
 		public SlotInfo(int x, int y){
 			this(x, y, -1, null);
 		}
 		
-		public SlotInfo(int x, int y, int max, ResourceLocation bg){
+		public SlotInfo(int x, int y, int max, String bg_name){
 			this.x = x;
 			this.y = y;
 			this.max = max;
-			this.bg = bg;
+			this.bg_name = bg_name;
 		}
 	}
 }

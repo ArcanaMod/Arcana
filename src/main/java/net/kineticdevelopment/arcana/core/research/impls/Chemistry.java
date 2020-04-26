@@ -7,6 +7,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.kineticdevelopment.arcana.common.containers.AspectSlot;
 import net.kineticdevelopment.arcana.common.containers.AspectStoreSlot;
+import net.kineticdevelopment.arcana.common.containers.ResearchTableContainer;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.core.aspects.Aspect;
 import net.kineticdevelopment.arcana.core.aspects.AspectHandler;
@@ -112,7 +113,7 @@ public class Chemistry extends Puzzle{
 		return genHexGrid(gWidth, gHeight, returnInv).stream().peek(slot -> slot.x += 2).peek(slot -> slot.y += 2).collect(Collectors.toList());
 	}
 	
-	public boolean validate(List<AspectSlot> puzzleSlots, List<Slot> ignored){
+	public boolean validate(List<AspectSlot> puzzleSlots, List<Slot> ignored, EntityPlayer player, ResearchTableContainer container){
 		fillGraph(puzzleSlots);
 		// now traverse the graph
 		AtomicInteger count = new AtomicInteger();
