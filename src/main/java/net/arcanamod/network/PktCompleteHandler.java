@@ -1,5 +1,6 @@
 package net.arcanamod.network;
 
+import net.arcanamod.Arcana;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
@@ -15,7 +16,7 @@ public class PktCompleteHandler implements IMessageHandler<PktCompleteHandler.Pk
 		// on client
 		ResearchEntry entry = ResearchBooks.getEntry(message.getKey());
 		if(entry != null)
-			Researcher.getFrom(Minecraft.getMinecraft().player).completeEntry(entry);
+			Researcher.getFrom(Arcana.proxy.getPlayerOnClient()).completeEntry(entry);
 		return null;
 	}
 	

@@ -191,7 +191,7 @@ public class SpellEntity extends Entity implements IProjectile{
 	}
 	
 	public static EntityPlayer findPlayer(World world, UUID uuid){
-		return !world.isRemote ? Minecraft.getMinecraft().player : Objects.requireNonNull(world.getMinecraftServer()).getPlayerList().getPlayerByUUID(uuid); // The Getter when the Player is on a Server
+		return /*!world.isRemote ? Minecraft.getMinecraft().player :*/ Objects.requireNonNull(world.getMinecraftServer()).getPlayerList().getPlayerByUUID(uuid); // The Getter when the Player is on a Server
 	}
 	
 	public void onHit(RayTraceResult result){

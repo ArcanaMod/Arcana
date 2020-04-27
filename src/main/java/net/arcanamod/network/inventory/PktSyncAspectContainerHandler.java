@@ -1,11 +1,14 @@
 package net.arcanamod.network.inventory;
 
 import io.netty.buffer.ByteBuf;
+import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -32,17 +35,15 @@ public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAsp
 	// store slots need that + their own aspect
 	
 	public IMessage onMessage(PktSyncAspectContainer message, MessageContext ctx){
-		Minecraft.getMinecraft().addScheduledTask(() -> {
-			EntityPlayerSP eps = Minecraft.getMinecraft().player;
-			AspectContainer container = (AspectContainer)eps.openContainer;
-			container.setHeldAspect(message.heldAspect);
-			container.setHeldCount(message.heldCount);
-			for(Pair<Integer, Aspect> storeSlot : message.storeSlotAspects)
-				container.getAspectSlots().get(storeSlot.getLeft()).setAspect(storeSlot.getRight());
-			for(Pair<Integer, NBTTagCompound> handler : message.handlers)
-				container.getAllOpenHandlers().get(handler.getLeft()).deserializeNBT(handler.getRight());
-			container.onAspectSlotChange();
-		});
+		EntityPlayer eps = Arcana.proxy.getPlayerOnClient();
+		AspectContainer container = (AspectContainer)eps.openContainer;
+		container.setHeldAspect(message.heldAspect);
+		container.setHeldCount(message.heldCount);
+		for(Pair<Integer, Aspect> storeSlot : message.storeSlotAspects)
+			container.getAspectSlots().get(storeSlot.getLeft()).setAspect(storeSlot.getRight());
+		for(Pair<Integer, NBTTagCompound> handler : message.handlers)
+			container.getAllOpenHandlers().get(handler.getLeft()).deserializeNBT(handler.getRight());
+		container.onAspectSlotChange();
 		return null;
 	}
 	

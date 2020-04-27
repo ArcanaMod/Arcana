@@ -1,5 +1,6 @@
 package net.arcanamod.network;
 
+import net.arcanamod.Arcana;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
@@ -14,7 +15,7 @@ public class PktAdvanceHandler implements IMessageHandler<PktAdvanceHandler.PktA
 	public IMessage onMessage(PktAdvanceResearch message, MessageContext ctx){
 		ResearchEntry entry = ResearchBooks.getEntry(message.getKey());
 		if(entry != null)
-			Researcher.getFrom(Minecraft.getMinecraft().player).advanceEntry(entry);
+			Researcher.getFrom(Arcana.proxy.getPlayerOnClient()).advanceEntry(entry);
 		// else print error
 		return null;
 	}

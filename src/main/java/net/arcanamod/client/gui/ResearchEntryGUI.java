@@ -19,6 +19,8 @@ import net.minecraftforge.fml.client.config.GuiButtonExt;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
@@ -26,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mod.EventBusSubscriber
+@SideOnly(Side.CLIENT)
 public class ResearchEntryGUI extends GuiScreen{
 	
 	ResourceLocation bg;
@@ -141,7 +143,7 @@ public class ResearchEntryGUI extends GuiScreen{
 		updateButtonVisibility();
 	}
 	
-	protected void updateButtonVisibility(){
+	public void updateButtonVisibility(){
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
 		cont.visible = Researcher.getFrom(mc.player).entryStage(entry) < getVisibleSections().size();
@@ -257,12 +259,6 @@ public class ResearchEntryGUI extends GuiScreen{
 	
 	public boolean doesGuiPauseGame(){
 		return false;
-	}
-	
-	@SubscribeEvent
-	public static void onResearchChange(ResearchEvent event){
-		if(Minecraft.getMinecraft().currentScreen instanceof ResearchEntryGUI)
-			((ResearchEntryGUI)Minecraft.getMinecraft().currentScreen).updateButtonVisibility();
 	}
 	
 	class ChangePageButton extends GuiButton{

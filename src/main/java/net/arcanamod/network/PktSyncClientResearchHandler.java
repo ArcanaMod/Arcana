@@ -3,6 +3,7 @@ package net.arcanamod.network;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
+import net.arcanamod.Arcana;
 import net.arcanamod.research.Researcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.*;
@@ -25,21 +26,21 @@ public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClie
 		// from server -> client
 		// 1.14/15: almost certainly remove, seems like a bug that its required anyways
 		// wait for player to be nonnull
-		if(Minecraft.getMinecraft().player != null)
-			Researcher.getFrom(Minecraft.getMinecraft().player).setEntryData(message.data);
+		if(Arcana.proxy.getPlayerOnClient() != null)
+			Researcher.getFrom(Arcana.proxy.getPlayerOnClient()).setEntryData(message.data);
 		else{
 			Runnable tryDo = new Runnable(){
 				public void run(){
-					if(Minecraft.getMinecraft().player != null){
-						Researcher researcher = Researcher.getFrom(Minecraft.getMinecraft().player);
+					if(Arcana.proxy.getPlayerOnClient() != null){
+						Researcher researcher = Researcher.getFrom(Arcana.proxy.getPlayerOnClient());
 						researcher.setEntryData(message.data);
 						researcher.setPuzzleData(message.puzzleData);
 					}else
-						Minecraft.getMinecraft().addScheduledTask(this); // cant use lambdas because of scoping
+						Arcana.proxy.scheduleOnClient(this); // cant use lambdas because of scoping
 				}
 			};
 			// effectively looping until its nonnull
-			Minecraft.getMinecraft().addScheduledTask(tryDo);
+			Arcana.proxy.scheduleOnClient(tryDo);
 		}
 		return null;
 	}

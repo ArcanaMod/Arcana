@@ -3,9 +3,11 @@ package net.arcanamod;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.bases.LeavesBase;
 import net.arcanamod.client.gui.ResearchBookGUI;
+import net.arcanamod.client.gui.ResearchEntryGUI;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
+import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.items.ItemAttachment;
 import net.arcanamod.items.ItemWand;
 import net.arcanamod.research.ResearchBooks;
@@ -13,6 +15,7 @@ import net.arcanamod.wand.EnumAttachmentType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -76,6 +79,19 @@ public class ClientProxy extends CommonProxy{
 	
 	public void openResearchBookUI(ResourceLocation book){
 		Minecraft.getMinecraft().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
+	}
+	
+	public void onResearchChange(ResearchEvent event){
+		if(Minecraft.getMinecraft().currentScreen instanceof ResearchEntryGUI)
+			((ResearchEntryGUI)Minecraft.getMinecraft().currentScreen).updateButtonVisibility();
+	}
+	
+	public EntityPlayer getPlayerOnClient(){
+		return Minecraft.getMinecraft().player;
+	}
+	
+	public void scheduleOnClient(Runnable runnable){
+		Minecraft.getMinecraft().addScheduledTask(runnable);
 	}
 	
 	public ItemStack getAspectItemStackForDisplay(){

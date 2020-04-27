@@ -1,9 +1,9 @@
 package net.arcanamod.network;
 
+import net.arcanamod.Arcana;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,7 +14,7 @@ public class PktResetHandler implements IMessageHandler<PktResetHandler.PktReset
 	public IMessage onMessage(PktResetResearch message, MessageContext ctx){
 		ResearchEntry entry = ResearchBooks.getEntry(message.getKey());
 		if(entry != null)
-			Researcher.getFrom(Minecraft.getMinecraft().player).resetEntry(entry);
+			Researcher.getFrom(Arcana.proxy.getPlayerOnClient()).resetEntry(entry);
 		return null;
 	}
 	

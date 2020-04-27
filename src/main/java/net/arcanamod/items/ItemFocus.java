@@ -36,7 +36,7 @@ public class ItemFocus extends Item{
 		this.setUnlocalizedName(name);
 		this.setRegistryName(name);
 		
-		initModel();
+		//initModel();
 		
 		ArcanaItems.ITEMS.add(this);
 	}
