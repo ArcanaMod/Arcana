@@ -69,7 +69,7 @@ public class ArcanaBlocks{
 	public static final Block GREATWOOD_LEAVES = new LeavesBase("greatwood_leaves").setCreativeTab(Arcana.TAB_ARCANA);
 	public static final Block GREATWOOD_LOG = new LogBase("greatwood_log").setCreativeTab(Arcana.TAB_ARCANA);
 	public static final Block GREATWOOD_PLANKS = new PlanksBase("greatwood_planks", Material.WOOD).setCreativeTab(Arcana.TAB_ARCANA);
-	public static final Block GREATWOOD_SAPLING = new DumbSapling("greatwood_sapling").setCreativeTab(Arcana.TAB_ARCANA);
+	public static final Block GREATWOOD_SAPLING = new GreatwoodSapling("greatwood_sapling", false, false).setCreativeTab(Arcana.TAB_ARCANA);
 	public static final Block GREATWOOD_SLAB_DOUBLE = new DoubleSlabBase("greatwood_slab_double", Material.WOOD);
 	public static final Block GREATWOOD_STONE_SLAB_HALF = new HalfSlabBase("greatwood_slab", Material.WOOD, ArcanaBlocks.GREATWOOD_SLAB_DOUBLE).setCreativeTab(Arcana.TAB_ARCANA);
 	public static final Block GREATWOOD_STAIRS = new StairsBase("greatwood_stairs", GREATWOOD_PLANKS.getDefaultState()).setCreativeTab(Arcana.TAB_ARCANA);
@@ -188,7 +188,7 @@ public class ArcanaBlocks{
 	public static final Block TAINTED_GREATWOOD_LEAVES = new TaintedLeavesBase("tainted_greatwood_leaves");
 	public static final Block TAINTED_GREATWOOD_LOG = new TaintedLogBase("tainted_greatwood_log");
 	public static final Block TAINTED_GREATWOOD_PLANKS = new TaintedBlockBase("tainted_greatwood_planks", Material.WOOD);
-	public static final Block TAINTED_GREATWOOD_SAPLING = new DumbSapling("tainted_greatwood_sapling");
+	public static final Block TAINTED_GREATWOOD_SAPLING = new GreatwoodSapling("tainted_greatwood_sapling", true, false);
 	public static final Block TAINTED_GREATWOOD_SLAB_DOUBLE = new TaintedDoubleSlabBase("tainted_greatwood_slab_double", Material.WOOD);
 	public static final Block TAINTED_GREATWOOD_SLAB_HALF = new TaintedHalfSlabBase("tainted_greatwood_slab", Material.WOOD, ArcanaBlocks.TAINTED_GREATWOOD_SLAB_DOUBLE);
 	public static final Block TAINTED_GREATWOOD_STAIRS = new TaintedStairsBase("tainted_greatwood_stairs", TAINTED_GREATWOOD_PLANKS.getDefaultState());
@@ -294,7 +294,7 @@ public class ArcanaBlocks{
 	public static final Block UNTAINTED_GREATWOOD_LEAVES = new LeavesBase("untainted_greatwood_leaves").setCreativeTab(Arcana.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_GREATWOOD_LOG = new TaintedLogBase("untainted_greatwood_log").setCreativeTab(Arcana.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_GREATWOOD_PLANKS = new TaintedBlockBase("untainted_greatwood_planks", Material.WOOD).setCreativeTab(Arcana.TAB_TAINTARCANA);
-	public static final Block UNTAINTED_GREATWOOD_SAPLING = new DumbSapling("untainted_greatwood_sapling").setCreativeTab(Arcana.TAB_TAINTARCANA);
+	public static final Block UNTAINTED_GREATWOOD_SAPLING = new GreatwoodSapling("untainted_greatwood_sapling", true, true).setCreativeTab(Arcana.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_GREATWOOD_SLAB_DOUBLE = new DoubleSlabBase("untainted_greatwood_slab_double", Material.WOOD);
 	public static final Block UNTAINTED_GREATWOOD_SLAB_HALF = new HalfSlabBase("untainted_greatwood_slab", Material.WOOD, ArcanaBlocks.UNTAINTED_GREATWOOD_SLAB_DOUBLE).setCreativeTab(Arcana.TAB_TAINTARCANA);
 	public static final Block UNTAINTED_GREATWOOD_STAIRS = new TaintedStairsBase("untainted_greatwood_stairs", UNTAINTED_GREATWOOD_PLANKS.getDefaultState()).setCreativeTab(Arcana.TAB_TAINTARCANA);
