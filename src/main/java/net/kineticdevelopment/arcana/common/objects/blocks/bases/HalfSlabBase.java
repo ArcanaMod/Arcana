@@ -1,4 +1,5 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases;
+import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
@@ -15,11 +16,15 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author Tea, Mozaran
  *
  */
-public class HalfSlabBase extends SlabBase implements IHasModel {
+public class HalfSlabBase extends SlabBase implements IHasModel, OreDictEntry {
 
     public HalfSlabBase(String name, Material material, Block doubleSlab) {
         super(name, material);
         ItemInit.ITEMS.add(new ItemSlab(this, this, (BlockSlab) doubleSlab).setRegistryName(this.getRegistryName()));
+    }
+
+    public String getOreDictName(){
+        return "slabWood";
     }
 
     @Override

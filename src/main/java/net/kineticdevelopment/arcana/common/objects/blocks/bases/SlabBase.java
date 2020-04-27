@@ -30,7 +30,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public abstract class SlabBase extends BlockSlab implements OreDictEntry{
+public abstract class SlabBase extends BlockSlab{
     private String name;
 
     public SlabBase(String name, Material material) {
@@ -55,10 +55,6 @@ public abstract class SlabBase extends BlockSlab implements OreDictEntry{
     @Override
     public String getUnlocalizedName(int meta) {
         return this.getUnlocalizedName();
-    }
-    
-    public String getOreDictName(){
-        return "slabWood";
     }
     
     @Override

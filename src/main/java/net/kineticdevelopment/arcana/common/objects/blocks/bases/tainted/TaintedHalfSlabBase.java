@@ -1,5 +1,6 @@
 package net.kineticdevelopment.arcana.common.objects.blocks.bases.tainted;
 
+import net.kineticdevelopment.arcana.common.blocks.OreDictEntry;
 import net.kineticdevelopment.arcana.common.init.ItemInit;
 import net.kineticdevelopment.arcana.core.Main;
 import net.kineticdevelopment.arcana.utilities.IHasModel;
@@ -15,10 +16,14 @@ import net.minecraft.item.ItemSlab;
  * @author Mozaran
  * @see TaintedSlabBase
  */
-public class TaintedHalfSlabBase extends TaintedSlabBase implements IHasModel {
+public class TaintedHalfSlabBase extends TaintedSlabBase implements IHasModel, OreDictEntry {
     public TaintedHalfSlabBase(String name, Material material, Block doubleSlab) {
         super(name, material);
         ItemInit.ITEMS.add(new ItemSlab(this, this, (BlockSlab) doubleSlab).setRegistryName(this.getRegistryName()));
+    }
+
+    public String getOreDictName(){
+        return "slabWood";
     }
 
     @Override

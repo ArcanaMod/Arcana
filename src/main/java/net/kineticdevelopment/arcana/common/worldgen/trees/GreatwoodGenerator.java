@@ -24,7 +24,7 @@ import static net.minecraft.block.BlockLog.LOG_AXIS;
 /**
  * @author Mozaran
  *
- * Used to generate eucalyptus trees
+ * Used to generate greatwood trees
  */
 public class GreatwoodGenerator extends WorldGenAbstractTree {
     private static final IBlockState DEFAULT_TRUNK = BlockInit.GREATWOOD_LOG.getDefaultState();

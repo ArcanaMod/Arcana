@@ -18,7 +18,7 @@ import java.util.Random;
 /**
  * @author Mozaran
  *
- * Used to grow all variations of the tainted dark oak tree
+ * Used to grow all variations of the greatwood tree
  */
 public class GreatwoodSapling extends SaplingBase {
     boolean tainted;
