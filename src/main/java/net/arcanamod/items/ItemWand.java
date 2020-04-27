@@ -238,6 +238,7 @@ public class ItemWand extends Item{
 	public String getItemStackDisplayName(ItemStack stack){
 		String s = getUnlocalizedName(stack) + ".name";
 		// Using server-side I18n -- replace when updating.
-		return I18n.translateToLocalFormatted(s, I18n.translateToLocal(getAttachment(stack, EnumAttachmentType.CAP).getUnlocalizedName() + ".prefix"));
+		ItemAttachment attachment = getAttachment(stack, EnumAttachmentType.CAP);
+		return I18n.translateToLocalFormatted(s, I18n.translateToLocal(attachment != null ? attachment.getUnlocalizedName() + ".prefix" : "invalid_cap.prefix"));
 	}
 }

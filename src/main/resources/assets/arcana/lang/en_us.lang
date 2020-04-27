@@ -43,6 +43,7 @@ item.silver_cap.prefix=Silver Topped
 item.manasteel_cap.prefix=Manasteel Capped
 item.elementium_cap.prefix=Elementium Capped
 item.terrasteel_cap.prefix=Terrasteel Capped
+invalid_cap.prefix=Invalid Capped
 
 item.greatwood_wand_core.name=Greatwood Wand Core
 item.tainted_wand_core.name=Tainted Wand Core
