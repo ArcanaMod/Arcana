@@ -41,7 +41,6 @@ public abstract class SlabBase extends BlockSlab implements OreDictEntry{
 		IBlockState state = this.blockState.getBaseState();
 		
 		if(!this.isDouble()){
-			
 			state = state.withProperty(HALF, EnumBlockHalf.BOTTOM);
 		}
 		
