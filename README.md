@@ -1,6 +1,6 @@
 
 ![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=for-the-badge&logo=appveyor)
-![Issues](https://img.shields.io/github/issues/ArcanaMod/Arcana?style=for-the-badge&logo=appveyor)
+![Issues](https://img.shields.io/github/issues/SleepingTea98/Arcana?style=for-the-badge&logo=appveyor)
 
 <p align="center">
     <img width="768" height="256" src="https://media.discordapp.net/attachments/604720893654073388/627505379399434241/logo_animated.gif" />
