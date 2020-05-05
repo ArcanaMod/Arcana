@@ -1,32 +1,16 @@
 package net.arcanamod.commands;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.network.Connection;
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.ResearchLoader;
-import net.arcanamod.research.Researcher;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Allows for the reloading, granting, removal and completion of research.
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchCommand extends CommandBase{
-	
+public class ResearchCommand{// extends CommandBase{
+	/*
 	public String getName(){
 		return "arcana-research";
 	}
@@ -85,5 +69,5 @@ public class ResearchCommand extends CommandBase{
 		}
 		
 		return super.getTabCompletions(server, sender, args, targetPos);
-	}
+	}*/
 }

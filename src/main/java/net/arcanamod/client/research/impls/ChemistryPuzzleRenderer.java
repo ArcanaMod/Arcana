@@ -36,11 +36,12 @@ public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRender
 				int index = x + y * gridWidth;
 				Aspect slot = puzzle.getAspectInSlot(index);
 				if(slot != null){
-					mc().getRenderItem().renderItemAndEffectIntoGUI(Aspects.getItemStackForAspect(slot), scX + 2, scY + 2);
+					mc().getItemRenderer().renderItemAndEffectIntoGUI(Aspects.getItemStackForAspect(slot), scX + 2, scY + 2);
 					mc().getTextureManager().bindTexture(TEX);
 				}else{
 					mc().getTextureManager().bindTexture(TEX);
-					drawTexturedModalRect(scX, scY, 0, 0, 20, 20);
+					// TODO: blit
+					// drawTexturedModalRect(scX, scY, 0, 0, 20, 20);
 					if(puzzleSlots != null && puzzleSlots.size() > index)
 						slot = puzzleSlots.get(index).getAspect();
 				}
@@ -52,31 +53,31 @@ public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRender
 					//    a slot also below or also above it (+/-1 Y, - (if odd)/+1 (if even) X)
 					if(x > 0 && areAspectsConnected(slot, getAt(index - 1, puzzle, puzzleSlots) /*puzzleSlots.get(index - 1).getAspect()*/)){
 						// render 20,12 8x3
-						drawTexturedModalRect(scX - 5, scY + 9, 20, 12, 8, 3);
+						//drawTexturedModalRect(scX - 5, scY + 9, 20, 12, 8, 3);
 					}
 					if(x < gridWidth - 1 && areAspectsConnected(slot, getAt(index + 1, puzzle, puzzleSlots) /*puzzleSlots.get(index + 1).getAspect()*/)){
 						// render 42,12 8x3
-						drawTexturedModalRect(scX + 17, scY + 9, 42, 12, 8, 3);
+						//drawTexturedModalRect(scX + 17, scY + 9, 42, 12, 8, 3);
 					}
 					if(y < gridHeight - 1){
 						int belowInd = x + (y + 1) * gridWidth;
 						if(y % 2 == 0){
 							if(areAspectsConnected(slot, getAt(belowInd, puzzle, puzzleSlots) /*puzzleSlots.get(belowInd).getAspect()*/)){
 								// render 26,0 7x7
-								drawTexturedModalRect(scX + 1, scY + 16, 26, 18, 7, 7);
+								//drawTexturedModalRect(scX + 1, scY + 16, 26, 18, 7, 7);
 							}
 							if(belowInd + 1 < gridWidth * gridHeight && areAspectsConnected(slot, getAt(belowInd + 1, puzzle, puzzleSlots) /*puzzleSlots.get(belowInd + 1).getAspect()*/)){
 								// render 37,0 7x7
-								drawTexturedModalRect(scX + 12, scY + 16, 37, 18, 7, 7);
+								//drawTexturedModalRect(scX + 12, scY + 16, 37, 18, 7, 7);
 							}
 						}else{
 							if(areAspectsConnected(slot, getAt(belowInd, puzzle, puzzleSlots) /*puzzleSlots.get(belowInd).getAspect()*/)){
 								// render 37,0 7x7
-								drawTexturedModalRect(scX + 12, scY + 16, 37, 18, 7, 7);
+								//drawTexturedModalRect(scX + 12, scY + 16, 37, 18, 7, 7);
 							}
 							if(x > 0 && areAspectsConnected(slot, getAt(belowInd - 1, puzzle, puzzleSlots) /*puzzleSlots.get(belowInd - 1).getAspect()*/)){
 								// render 26,0 7x7
-								drawTexturedModalRect(scX + 1, scY + 16, 26, 18, 7, 7);
+								//drawTexturedModalRect(scX + 1, scY + 16, 26, 18, 7, 7);
 							}
 						}
 					}
@@ -85,20 +86,20 @@ public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRender
 						if(y % 2 == 0){
 							if(areAspectsConnected(slot, getAt(aboveInd, puzzle, puzzleSlots) /*puzzleSlots.get(aboveInd).getAspect()*/)){
 								// render 26,17 7x7
-								drawTexturedModalRect(scX + 1, scY - 3, 26, 0, 7, 7);
+								//drawTexturedModalRect(scX + 1, scY - 3, 26, 0, 7, 7);
 							}
 							if(x > 0 && areAspectsConnected(slot, getAt(aboveInd + 1, puzzle, puzzleSlots)/*puzzleSlots.get(aboveInd + 1).getAspect())*/)){
 								// render 37,17 7x7
-								drawTexturedModalRect(scX + 12, scY - 3, 37, 0, 7, 7);
+								//drawTexturedModalRect(scX + 12, scY - 3, 37, 0, 7, 7);
 							}
 						}else{
 							if(areAspectsConnected(slot, getAt(aboveInd, puzzle, puzzleSlots) /*puzzleSlots.get(aboveInd).getAspect()*/)){
 								// render 37,17 7x7
-								drawTexturedModalRect(scX + 12, scY - 3, 37, 0, 7, 7);
+								//drawTexturedModalRect(scX + 12, scY - 3, 37, 0, 7, 7);
 							}
 							if(x > 0 && areAspectsConnected(slot, getAt(aboveInd - 1, puzzle, puzzleSlots) /*puzzleSlots.get(aboveInd - 1).getAspect()*/)){
 								// render 26,17 7x7
-								drawTexturedModalRect(scX + 1, scY - 3, 26, 0, 7, 7);
+								//drawTexturedModalRect(scX + 1, scY - 3, 26, 0, 7, 7);
 							}
 						}
 					}

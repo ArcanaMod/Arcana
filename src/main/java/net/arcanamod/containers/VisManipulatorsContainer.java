@@ -18,10 +18,10 @@ import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class VisManipulatorsContainer extends AspectContainer{
-	
+public class VisManipulatorsContainer{// extends AspectContainer{
+	/*
 	// Inventory w/ two slots
-	public IInventory manipulatorInv = new Inventory("", false, 2){
+	public IInventory manipulatorInv = new Inventory(*//*"", false, 2*//*){
 		public void markDirty(){
 			super.markDirty();
 			VisManipulatorsContainer.this.onCraftMatrixChanged(this);
@@ -161,9 +161,9 @@ public class VisManipulatorsContainer extends AspectContainer{
 			scroller.refreshScrolling();
 	}
 	
-	/**
+	*//**
 	 * Only for VisManipulatorsGUI.
-	 */
+	 *//*
 	public interface ScrollRefreshListener{
 		void refreshScrolling();
 	}
@@ -178,5 +178,5 @@ public class VisManipulatorsContainer extends AspectContainer{
 		if(right != null)
 			ret.add(right);
 		return ret;
-	}
+	}*/
 }

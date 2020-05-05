@@ -11,8 +11,10 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Finalized Baked model for wands
@@ -49,7 +51,7 @@ public class BakedModelWandFinalized implements IBakedModel{
 	}
 	
 	@Override
-	public List<BakedQuad> getQuads(BlockState arg0, Direction arg1, long arg2){
+	public List<BakedQuad> getQuads(BlockState arg0, Direction arg1, Random arg2){
 		ArrayList<BakedQuad> list = new ArrayList<>();
 		
 		List<BakedQuad> list1 = this.modelMain.getQuads(arg0, arg1, arg2);
@@ -101,5 +103,9 @@ public class BakedModelWandFinalized implements IBakedModel{
 	@Override
 	public boolean isGui3d(){
 		return this.modelMain.isGui3d();
+	}
+	
+	public boolean func_230044_c_(){
+		return false;
 	}
 }

@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Baked Model for wands
@@ -45,7 +46,7 @@ public class BakedModelWand implements IBakedModel{
 	}
 	
 	@Override
-	public List<BakedQuad> getQuads(BlockState arg0, Direction arg1, long arg2){
+	public List<BakedQuad> getQuads(BlockState arg0, Direction arg1, Random arg2){
 		return this.modelMain.getQuads(arg0, arg1, arg2);
 	}
 	
@@ -64,19 +65,20 @@ public class BakedModelWand implements IBakedModel{
 		return this.modelMain.isGui3d();
 	}
 	
+	public boolean func_230044_c_(){
+		return false;
+	}
+	
 	private static class OverridesList extends ItemOverrideList{
 		private BakedModelWand modelWand;
 		
 		public OverridesList(BakedModelWand modelGun){
-			super(Collections.emptyList());
 			this.modelWand = modelGun;
 		}
 		
-		@Override
 		public IBakedModel handleItemState(IBakedModel originalModel, ItemStack itemStack, World world, LivingEntity entity){
 			return this.modelWand.getModelFinal().setCurrentItemStack(itemStack);
 			
 		}
 	}
-	
 }

@@ -64,7 +64,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	}
 	
 	default Minecraft mc(){
-		return Minecraft.getMinecraft();
+		return Minecraft.getInstance();
 	}
 	
 	default FontRenderer fr(){

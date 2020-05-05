@@ -6,8 +6,6 @@ import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.impls.Fieldwork;
 import net.arcanamod.research.impls.PuzzleRequirement;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
@@ -19,9 +17,9 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 	
 	public void render(int x, int y, PuzzleRequirement requirement, int ticks, float partialTicks, PlayerEntity player){
 		ResourceLocation icon = getFrom(requirement).getIcon();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(icon != null ? icon : getFrom(requirement).getDefaultIcon());
-		GlStateManager.color(1f, 1f, 1f, 1f);
-		AbstractGui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+		Minecraft.getInstance().getTextureManager().bindTexture(icon != null ? icon : getFrom(requirement).getDefaultIcon());
+		//GlStateManager.color(1f, 1f, 1f, 1f);
+		//AbstractGui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 	}
 	
 	public List<String> tooltip(PuzzleRequirement requirement, PlayerEntity player){

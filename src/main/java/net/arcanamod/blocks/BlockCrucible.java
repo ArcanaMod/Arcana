@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -26,7 +27,7 @@ public class BlockCrucible extends BlockBase{
 	
 	public BlockCrucible(String name){
 		super(name, Material.IRON);
-		setHardness(2f);
+		//setHardness(2f);
 	}
 	
 	public boolean isOpaqueCube(BlockState state){
@@ -45,13 +46,13 @@ public class BlockCrucible extends BlockBase{
 		//addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
 	}
 	
-	public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos){
-		return FULL_BLOCK_AABB;
-	}
+	/*public AxisAlignedBB getBoundingBox(BlockState state, IBlockReader source, BlockPos pos){
+		;
+	}*/
 	
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face){
+	/*public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face){
 		if(face == Direction.UP)
 			return BlockFaceShape.BOWL;
 		return face == Direction.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
-	}
+	}*/
 }

@@ -1,16 +1,12 @@
 package net.arcanamod.client.research.impls;
 
-import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.Arcana;
+import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.research.impls.Guesswork;
 import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -30,19 +26,19 @@ public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRender
 		// render result
 		int rX = paperLeft(screenWidth) + 78;
 		int rY = paperTop(screenHeight) + 13;
-		drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
+		//drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
 		int ulX = paperLeft(screenWidth) + 10;
 		int ulY = paperTop(screenHeight) + 49;
-		drawTexturedModalRect(ulX, ulY, 145, 1, 72, 72);
-		RenderHelper.enableGUIStandardItemLighting();
-		mc().getRenderItem().renderItemAndEffectIntoGUI(CraftingManager.getRecipe(puzzle.getRecipe()).getRecipeOutput(), rX + 29 - 8, rY + 10 - 8);
+		//drawTexturedModalRect(ulX, ulY, 145, 1, 72, 72);
+		//RenderHelper.enableGUIStandardItemLighting();
+		//mc().getRenderItem().renderItemAndEffectIntoGUI(CraftingManager.getRecipe(puzzle.getRecipe()).getRecipeOutput(), rX + 29 - 8, rY + 10 - 8);
 		
 		List<Map.Entry<ResourceLocation, String>> indexHelper = new ArrayList<>(puzzle.getHints().entrySet());
-		IRecipe recipe = CraftingManager.getRecipe(puzzle.getRecipe());
+		//IRecipe recipe = CraftingManager.getRecipe(puzzle.getRecipe());
 		
-		if(recipe == null){
+		//if(recipe == null){
 		
-		}else{
+		/*}else{
 			for(int y = 0; y < 3; y++)
 				for(int x = 0; x < 3; x++){
 					int index = x + y * 3;
@@ -60,7 +56,7 @@ public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRender
 				int hintY = ulY + i * 12;
 				fr().drawString(hintSymbols[i % hintSymbols.length] + " = " + I18n.format(entry.getValue()), hintX, hintY, hintColours[i % hintColours.length]);
 			}
-		}
+		}*/
 	}
 	
 	private static int indexMatchingKey(List<Map.Entry<ResourceLocation, String>> indexHelper, ResourceLocation key){

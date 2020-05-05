@@ -1,8 +1,10 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.client.Sounds;
 import net.arcanamod.event.WorldTickHandler;
+import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.network.Connection;
 import net.arcanamod.research.EntrySection;
 import net.arcanamod.research.Puzzle;
@@ -10,6 +12,8 @@ import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchLoader;
 import net.arcanamod.research.impls.ResearcherCapability;
 import net.arcanamod.spells.SpellEffectHandler;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -35,7 +39,7 @@ public class Arcana{
 	public static final Logger logger = LogManager.getLogger("Arcana");
 	public static Arcana instance;
 	
-	// public static ItemGroup ITEMS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaItems.ARCANIUM_WAND_CORE.get()));
+	public static ItemGroup ITEMS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaBlocks.ARCANE_STONE.get()));
 	// public static ItemGroup TAINTED_BLOCKS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaBlocks.TAINTED_GRASS.get()));
 	// public static ItemGroup ASPECTS = new SupplierItemGroup(MODID, proxy::getAspectItemStackForDisplay()));
 	
@@ -50,7 +54,7 @@ public class Arcana{
 		// deffered registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		
-		// ArcanaBlocks.BLOCKS.register(modEventBus);
+		ArcanaBlocks.BLOCKS.register(modEventBus);
 		// ArcanaTileEntities.TES.register(modEventBus);
 		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 		// etc
@@ -69,8 +73,7 @@ public class Arcana{
 		
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
 		
-		Connection.init();
-		ResearchLoader.load();
+		//Connection.init();
 		//NetworkRegistry.INSTANCE.registerGuiHandler(Arcana.instance, new ArcanaGuiHandler());
 		
 		Sounds.registerSounds();

@@ -2,9 +2,7 @@ package net.arcanamod.commands;
 
 import com.google.common.collect.Lists;
 import net.arcanamod.util.taint.TaintLevelHandler;
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
@@ -17,8 +15,8 @@ import java.util.List;
  *
  * @author Atlas
  */
-public class TaintLevelCommand extends CommandBase{
-	
+public class TaintLevelCommand{// extends CommandBase{
+	/*
 	@Override
 	public String getName(){
 		return "taintlevel";
@@ -64,5 +62,5 @@ public class TaintLevelCommand extends CommandBase{
 		zero.add("set");
 		
 		return zero;
-	}
+	}*/
 }

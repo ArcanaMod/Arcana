@@ -29,8 +29,8 @@ import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableContainer extends AspectContainer{
-	
+public class ResearchTableContainer {//extends AspectContainer{
+	/*
 	public static final int WIDTH = 376;
 	public static final int HEIGHT = 280;
 	
@@ -296,5 +296,5 @@ public class ResearchTableContainer extends AspectContainer{
 			return Arrays.asList(VisHandler.getFrom(te), item);
 		else
 			return Collections.singletonList(VisHandler.getFrom(te));
-	}
+	}*/
 }

@@ -1,5 +1,6 @@
 package net.arcanamod.client.research.impls;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.arcanamod.client.gui.ResearchEntryGUI;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.research.ResearchBook;
@@ -7,17 +8,15 @@ import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.impls.RecipeSection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.IShapedRecipe;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +32,7 @@ public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRe
 	private ResourceLocation textures;
 	
 	public void render(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
-		ResearchBook book = ResearchBooks.getEntry(section.getEntry()).category().book();
+		/*ResearchBook book = ResearchBooks.getEntry(section.getEntry()).category().book();
 		textures = new ResourceLocation(book.getKey().getResourceDomain(), "textures/gui/research/" + book.getPrefix() + ResearchEntryGUI.OVERLAY_SUFFIX);
 		
 		mc().getTextureManager().bindTexture(textures);
@@ -52,11 +51,11 @@ public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRe
 		}else{
 			IRecipe recipe = CraftingManager.getRecipe(section.getRecipe());
 			renderCraftingRecipe(right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X, ResearchEntryGUI.PAGE_Y, recipe, screenWidth, screenHeight);
-		}
+		}*/
 	}
 	
 	private void renderCraftingRecipe(int x, int y, IRecipe recipe, int screenWidth, int screenHeight){
-		renderResult(recipe.getRecipeOutput().getDisplayName(), x, y, recipe.getRecipeOutput(), screenWidth, screenHeight);
+		/*renderResult(recipe.getRecipeOutput().getDisplayName(), x, y, recipe.getRecipeOutput(), screenWidth, screenHeight);
 		
 		int ulX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 - 10;
 		mc().getTextureManager().bindTexture(textures);
@@ -75,36 +74,36 @@ public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRe
 					if(stacks.length > 0)
 						mc().getRenderItem().renderItemAndEffectIntoGUI(stacks[dispIndex(stacks.length)], itemX, itemY);
 				}
-			}
+			}*/
 	}
 	
 	private void renderSmeltingRecipe(int x, int y, ItemStack input, ItemStack output, int screenWidth, int screenHeight){
-		renderResult(output.getDisplayName(), x, y, output, screenWidth, screenHeight);
+		/*renderResult(output.getDisplayName(), x, y, output, screenWidth, screenHeight);
 		
 		int inputX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 + 8;
 		mc().getTextureManager().bindTexture(textures);
 		drawTexturedModalRect(inputX - 9, inputY - 9, 219, 1, 34, 48);
-		Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(input, inputX, inputY);
+		Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(input, inputX, inputY);*/
 	}
 	
 	private void renderResult(String name, int x, int y, ItemStack result, int screenWidth, int screenHeight){
 		// render result
 		// texture is @ 1, 167 & has a size of 58x20
-		int rX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - 58) / 2;
+		/*int rX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - 58) / 2;
 		int rY = y + (screenHeight - 181) / 2 + 16;
 		drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
 		mc().getRenderItem().renderItemAndEffectIntoGUI(result, rX + 29 - 8, rY + 10 - 8);
 		int stX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - fr().getStringWidth(name)) / 2;
 		int stY = y + (screenHeight - 181) / 2 + 11 - fr().FONT_HEIGHT;
 		fr().drawString(name, stX, stY, 0);
-		GlStateManager.color(1f, 1f, 1f, 1f);
+		GlStateManager.color(1f, 1f, 1f, 1f);*/
 		//GlStateManager.enableBlend();
 		//GlStateManager.disableLighting();
 	}
 	
 	public void renderAfter(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		// tooltips
-		if(section.getRecipe().getResourceDomain().equals("__furnace__")){
+		/*if(section.getRecipe().getResourceDomain().equals("__furnace__")){
 			String[] parts = section.getRecipe().getResourcePath().split("\\.");
 			ResourceLocation input = new ResourceLocation(parts[0].replace("-", ":"));
 			ResourceLocation output = new ResourceLocation(parts[1].replace("-", ":"));
@@ -115,12 +114,12 @@ public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRe
 		}else{
 			IRecipe recipe = CraftingManager.getRecipe(section.getRecipe());
 			renderCraftingRecipeTooltips(right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X, ResearchEntryGUI.PAGE_Y, recipe, screenWidth, screenHeight, mouseX, mouseY);
-		}
+		}*/
 	}
 	
 	private void renderCraftingRecipeTooltips(int x, int y, IRecipe recipe, int screenWidth, int screenHeight, int mouseX, int mouseY){
 		// Check result
-		int rX = x + (screenWidth - 256) / 2 + 44;
+		/*int rX = x + (screenWidth - 256) / 2 + 44;
 		int rY = y + (screenHeight - 181) / 2 + 18;
 		if(mouseX >= rX && mouseX <= rX + 16 && mouseY >= rY && mouseY <= rY + 16){
 			GuiUtils.drawGradientRect(300, rX, rY, rX + 16, rY + 16, slotColor, slotColor);
@@ -148,7 +147,7 @@ public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRe
 					}
 				}
 			}
-		}
+		}*/
 	}
 	
 	private void renderSmeltingRecipeTooltips(int x, int y, ItemStack input, ItemStack output, int screenWidth, int screenHeight, int mouseX, int mouseY){
@@ -157,7 +156,7 @@ public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRe
 		int rY = y + (screenHeight - 181) / 2 + 18;
 		if(mouseX >= rX && mouseX <= rX + 16 && mouseY >= rY && mouseY <= rY + 16){
 			GuiUtils.drawGradientRect(299, rX, rY, rX + 16, rY + 16, slotColor, slotColor);
-			GuiUtils.drawHoveringText(output, getTooltipFromItem(output), mouseX, mouseY, screenWidth, screenHeight, -1, mc().fontRenderer);
+			//GuiUtils.drawHoveringText(output, getTooltipFromItem(output), mouseX, mouseY, screenWidth, screenHeight, -1, mc().fontRenderer);
 			GlStateManager.disableLighting();
 		}
 		// Check input
@@ -165,7 +164,7 @@ public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRe
 			int inputX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 + 8;
 			if(mouseX >= inputX && mouseX <= inputX + 16 && mouseY >= inputY && mouseY <= inputY + 16){
 				GuiUtils.drawGradientRect(299, inputX, inputY, inputX + 16, inputY + 16, slotColor, slotColor);
-				GuiUtils.drawHoveringText(input, getTooltipFromItem(input), mouseX, mouseY, screenWidth, screenHeight, -1, mc().fontRenderer);
+				//GuiUtils.drawHoveringText(input, getTooltipFromItem(input), mouseX, mouseY, screenWidth, screenHeight, -1, mc().fontRenderer);
 				GlStateManager.disableLighting();
 			}
 		}
@@ -175,9 +174,9 @@ public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRe
 		return (mc().player.ticksExisted / 30) % max;
 	}
 	
-	private List<String> getTooltipFromItem(ItemStack item){
+	/*private List<String> getTooltipFromItem(ItemStack item){
 		return item.getTooltip(mc().player, mc().gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
-	}
+	}*/
 	
 	public int span(RecipeSection section, PlayerEntity player){
 		return 1;

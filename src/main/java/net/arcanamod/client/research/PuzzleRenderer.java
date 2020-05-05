@@ -18,8 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static net.minecraft.client.gui.AbstractGui.drawModalRectWithCustomSizedTexture;
-
 public interface PuzzleRenderer<T extends Puzzle>{
 	
 	ResourceLocation PAPER = new ResourceLocation(Arcana.MODID, "textures/gui/research/temp_puzzle_overlay.png");
@@ -43,7 +41,7 @@ public interface PuzzleRenderer<T extends Puzzle>{
 	void render(T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player);
 	
 	default Minecraft mc(){
-		return Minecraft.getMinecraft();
+		return Minecraft.getInstance();
 	}
 	
 	default FontRenderer fr(){
@@ -52,7 +50,8 @@ public interface PuzzleRenderer<T extends Puzzle>{
 	
 	default void drawPaper(int screenWidth, int screenHeight){
 		mc().getTextureManager().bindTexture(PAPER);
-		drawModalRectWithCustomSizedTexture(guiLeft(screenWidth) + 141, guiTop(screenHeight) + 35, 0, 0, 214, 134, 214, 134);
+		// TODO: blit
+		//drawModalRectWithCustomSizedTexture(guiLeft(screenWidth) + 141, guiTop(screenHeight) + 35, 0, 0, 214, 134, 214, 134);
 	}
 	
 	default int guiLeft(int screenWidth){

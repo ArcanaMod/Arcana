@@ -1,27 +1,7 @@
 package net.arcanamod.commands;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.spells.FociHelper;
-import net.arcanamod.spells.SpellEffectHandler;
-import net.arcanamod.spells.effects.ISpellEffect;
-import net.minecraft.command.CommandBase;
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-public class CommandFocus extends CommandBase{
-	@Override
+public class CommandFocus{// extends CommandBase{
+	/*@Override
 	public String getName(){
 		return "createfocus";
 	}
@@ -69,5 +49,5 @@ public class CommandFocus extends CommandBase{
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos){
 		return Collections.emptyList();
 	}
-	
+	*/
 }

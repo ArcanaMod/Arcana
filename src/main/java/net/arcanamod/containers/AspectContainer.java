@@ -8,8 +8,10 @@ import net.arcanamod.network.inventory.PktAspectClickHandler;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,10 @@ public abstract class AspectContainer extends Container{
 	protected List<AspectSlot> aspectSlots = new ArrayList<>();
 	protected Aspect heldAspect = null;
 	protected int heldCount = 0;
+	
+	protected AspectContainer(@Nullable ContainerType<?> type, int id){
+		super(type, id);
+	}
 	
 	public List<AspectSlot> getAspectSlots(){
 		return aspectSlots;
@@ -54,13 +60,13 @@ public abstract class AspectContainer extends Container{
 					type = PktAspectClickHandler.ClickType.PUT;
 				else
 					return;
-				if(Screen.isShiftKeyDown())
+				if(Screen.hasShiftDown())
 					type = type == PktAspectClickHandler.ClickType.PUT ? PktAspectClickHandler.ClickType.PUT_ALL : PktAspectClickHandler.ClickType.TAKE_ALL;
 				// do some quick checking to make sure that the packet won't just do nothing
 				// don't actually modify anything though!
 				// <blah>
 				PktAspectClickHandler.PktAspectClick packet = new PktAspectClickHandler.PktAspectClick(windowId, aspectSlots.indexOf(slot), type);
-				Connection.network.sendToServer(packet);
+				//Connection.network.sendToServer(packet);
 			}
 		}
 	}
