@@ -1,6 +1,6 @@
 package net.arcanamod.aspects;
 
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -12,7 +12,7 @@ import java.util.Set;
  * Implement this interface as a capability which should handle aspects, especially storing
  * vis. This should not be used for essentia (which doesn't exist yet anyways).
  */
-public interface VisHandler extends INBTSerializable<NBTTagCompound>{
+public interface VisHandler extends INBTSerializable<CompoundNBT>{
 	
 	/**
 	 * Inserts an amount of vis of an aspect, and returns the remainder.
@@ -103,15 +103,15 @@ public interface VisHandler extends INBTSerializable<NBTTagCompound>{
 	 */
 	Set<Aspect> getContainedAspects();
 	
-	NBTTagCompound serializeNBT();
+	CompoundNBT serializeNBT();
 	
-	void deserializeNBT(NBTTagCompound data);
+	void deserializeNBT(CompoundNBT data);
 	
 	static Optional<VisHandler> getOptional(@Nonnull ICapabilityProvider holder){
-		return Optional.ofNullable(holder.getCapability(VisHandlerCapability.ASPECT_HANDLER, null));
+		return Optional.of(holder.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).orElse(null));
 	}
 	
 	static VisHandler getFrom(@Nonnull ICapabilityProvider holder){
-		return holder.getCapability(VisHandlerCapability.ASPECT_HANDLER, null);
+		return holder.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).orElse(null);
 	}
 }

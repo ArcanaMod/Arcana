@@ -5,11 +5,10 @@ import net.arcanamod.client.gui.VisManipulatorsGUI;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.containers.VisManipulatorsContainer;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,7 +17,7 @@ import javax.annotation.Nullable;
 /**
  * Handles opening containers.
  */
-public class ArcanaGuiHandler implements IGuiHandler{
+public class ArcanaGuiHandler{//implements IGuiHandler{
 	
 	public static final int RESEARCH_TABLE_ID = 0;
 	public static final int VIS_MANIPULATORS_ID = 1;
@@ -26,7 +25,7 @@ public class ArcanaGuiHandler implements IGuiHandler{
 	private static final Logger LOGGER = LogManager.getLogger();
 	
 	@Nullable
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z){
+	public Object getServerGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z){
 		// return container
 		switch(ID){
 			case RESEARCH_TABLE_ID:
@@ -44,7 +43,7 @@ public class ArcanaGuiHandler implements IGuiHandler{
 	}
 	
 	@Nullable
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z){
+	public Object getClientGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z){
 		// return gui
 		switch(ID){
 			case RESEARCH_TABLE_ID:  // as more IDs are added: switch on them

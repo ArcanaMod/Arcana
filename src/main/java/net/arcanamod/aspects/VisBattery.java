@@ -1,9 +1,10 @@
 package net.arcanamod.aspects;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -82,28 +83,28 @@ public class VisBattery implements VisHandler, ICapabilityProvider{
 		return Collections.unmodifiableSet(stored.keySet());
 	}
 	
-	public NBTTagCompound serializeNBT(){
-		NBTTagCompound compound = new NBTTagCompound();
-		NBTTagCompound storedAspects = new NBTTagCompound();
-		stored.forEach((aspect, amount) -> storedAspects.setInteger(aspect.name().toLowerCase(), amount));
-		compound.setTag("stored", storedAspects);
+	public CompoundNBT serializeNBT(){
+		CompoundNBT compound = new CompoundNBT();
+		CompoundNBT storedAspects = new CompoundNBT();
+		stored.forEach((aspect, amount) -> storedAspects.putInt(aspect.name().toLowerCase(), amount));
+		compound.put("stored", storedAspects);
 		return compound;
 	}
 	
-	public void deserializeNBT(NBTTagCompound data){
+	public void deserializeNBT(CompoundNBT data){
 		Map<Aspect, Integer> dat = new HashMap<>();
-		NBTTagCompound storedAspects = data.getCompoundTag("stored");
-		for(String s : storedAspects.getKeySet())
-			dat.put(Aspect.valueOf(s.toUpperCase()), storedAspects.getInteger(s));
+		CompoundNBT storedAspects = data.getCompound("stored");
+		for(String s : storedAspects.keySet())
+			dat.put(Aspect.valueOf(s.toUpperCase()), storedAspects.getInt(s));
 		stored = dat;
 	}
 	
-	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing){
+	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
 		return capability == VisHandlerCapability.ASPECT_HANDLER;
 	}
 	
 	@Nullable
-	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing){
-		return capability == VisHandlerCapability.ASPECT_HANDLER ? (T)this : null;
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing){
+		return capability == VisHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();
 	}
 }

@@ -2,11 +2,11 @@ package net.arcanamod.research;
 
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.research.impls.ResearcherCapability;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 
@@ -72,9 +72,9 @@ public interface Researcher{
 	 */
 	void resetEntry(ResearchEntry entry);
 	
-	void setPlayer(EntityPlayer player);
+	void setPlayer(PlayerEntity player);
 	
-	EntityPlayer getPlayer();
+	PlayerEntity getPlayer();
 	
 	/**
 	 * Returns a map containing this researcher's data, where the keys are the keys of all sections
@@ -91,30 +91,30 @@ public interface Researcher{
 	
 	void setPuzzleData(Set<ResourceLocation> data);
 	
-	default NBTBase serialize(){
-		NBTTagCompound compound = new NBTTagCompound();
+	default INBT serialize(){
+		CompoundNBT compound = new CompoundNBT();
 		
-		NBTTagCompound entries = new NBTTagCompound();
-		getEntryData().forEach((key, value) -> entries.setInteger(key.toString(), value));
-		compound.setTag("entries", entries);
+		CompoundNBT entries = new CompoundNBT();
+		getEntryData().forEach((key, value) -> entries.putInt(key.toString(), value));
+		compound.put("entries", entries);
 		
-		NBTTagList puzzles = new NBTTagList();
-		getPuzzleData().forEach(puzzle -> puzzles.appendTag(new NBTTagString(puzzle.toString())));
-		compound.setTag("puzzles", puzzles);
+		ListNBT puzzles = new ListNBT();
+		getPuzzleData().forEach(puzzle -> puzzles.add(StringNBT.valueOf(puzzle.toString())));
+		compound.put("puzzles", puzzles);
 		return compound;
 	}
 	
-	default void deserialize(NBTTagCompound data){
+	default void deserialize(CompoundNBT data){
 		Map<ResourceLocation, Integer> entryDat = new HashMap<>();
-		NBTTagCompound entries = data.getCompoundTag("entries");
-		for(String s : entries.getKeySet())
-			entryDat.put(new ResourceLocation(s), entries.getInteger(s));
+		CompoundNBT entries = data.getCompound("entries");
+		for(String s : entries.keySet())
+			entryDat.put(new ResourceLocation(s), entries.getInt(s));
 		setEntryData(entryDat);
 		
 		Set<ResourceLocation> puzzleDat = new HashSet<>();
-		NBTTagList puzzles = data.getTagList("puzzles", Constants.NBT.TAG_STRING);
-		for(NBTBase key : puzzles)
-			puzzleDat.add(new ResourceLocation(((NBTTagString)key).getString()));
+		ListNBT puzzles = data.getList("puzzles", Constants.NBT.TAG_STRING);
+		for(INBT key : puzzles)
+			puzzleDat.add(new ResourceLocation(key.getString()));
 		
 		setPuzzleData(puzzleDat);
 	}
@@ -141,8 +141,8 @@ public interface Researcher{
 	 * 		The player to get a capability from.
 	 * @return The player's researcher capability.
 	 */
-	static Researcher getFrom(EntityPlayer p){
-		return p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null);
+	static Researcher getFrom(PlayerEntity p){
+		return p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null).orElse(null);
 	}
 	
 	static boolean isEntryVisible(ResearchEntry entry, Researcher r){

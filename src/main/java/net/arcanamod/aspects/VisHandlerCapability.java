@@ -1,9 +1,9 @@
 package net.arcanamod.aspects;
 
 import net.arcanamod.Arcana;
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -25,12 +25,12 @@ public class VisHandlerCapability{
 	private static class Storage implements Capability.IStorage<VisHandler>{
 		
 		@Nullable
-		public NBTBase writeNBT(Capability<VisHandler> capability, VisHandler instance, EnumFacing side){
+		public INBT writeNBT(Capability<VisHandler> capability, VisHandler instance, Direction side){
 			return instance.serializeNBT();
 		}
 		
-		public void readNBT(Capability<VisHandler> capability, VisHandler instance, EnumFacing side, NBTBase nbt){
-			instance.deserializeNBT((NBTTagCompound)nbt);
+		public void readNBT(Capability<VisHandler> capability, VisHandler instance, Direction side, INBT nbt){
+			instance.deserializeNBT((CompoundNBT)nbt);
 		}
 	}
 }

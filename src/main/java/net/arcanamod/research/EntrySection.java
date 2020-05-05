@@ -3,8 +3,8 @@ package net.arcanamod.research;
 import net.arcanamod.research.impls.GuessworkSection;
 import net.arcanamod.research.impls.RecipeSection;
 import net.arcanamod.research.impls.StringSection;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -22,7 +22,7 @@ public abstract class EntrySection{
 	
 	// when addon support is to be added: change this from strings to ResourceLocations so mods can register more
 	private static Map<String, Function<String, EntrySection>> factories = new LinkedHashMap<>();
-	private static Map<String, Function<NBTTagCompound, EntrySection>> deserializers = new LinkedHashMap<>();
+	private static Map<String, Function<CompoundNBT, EntrySection>> deserializers = new LinkedHashMap<>();
 	
 	public static Function<String, EntrySection> getFactory(String type){
 		return factories.get(type);
@@ -35,10 +35,10 @@ public abstract class EntrySection{
 			return null;
 	}
 	
-	public static EntrySection deserialze(NBTTagCompound passData){
+	public static EntrySection deserialze(CompoundNBT passData){
 		String type = passData.getString("type");
-		NBTTagCompound data = passData.getCompoundTag("data");
-		List<Requirement> requirements = streamAndApply(passData.getTagList("requirements", 10), NBTTagCompound.class, Requirement::deserialze).collect(Collectors.toList());
+		CompoundNBT data = passData.getCompound("data");
+		List<Requirement> requirements = streamAndApply(passData.getList("requirements", 10), CompoundNBT.class, Requirement::deserialze).collect(Collectors.toList());
 		if(deserializers.get(type) != null){
 			EntrySection section = deserializers.get(type).apply(data);
 			requirements.forEach(section::addRequirement);
@@ -71,15 +71,15 @@ public abstract class EntrySection{
 		return Collections.unmodifiableList(requirements);
 	}
 	
-	public NBTTagCompound getPassData(){
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setString("type", getType());
-		nbt.setTag("data", getData());
-		nbt.setString("entry", getEntry().toString());
+	public CompoundNBT getPassData(){
+		CompoundNBT nbt = new CompoundNBT();
+		nbt.putString("type", getType());
+		nbt.put("data", getData());
+		nbt.putString("entry", getEntry().toString());
 		
-		NBTTagList list = new NBTTagList();
-		getRequirements().forEach((requirement) -> list.appendTag(requirement.getPassData()));
-		nbt.setTag("requirements", list);
+		ListNBT list = new ListNBT();
+		getRequirements().forEach((requirement) -> list.add(requirement.getPassData()));
+		nbt.put("requirements", list);
 		
 		return nbt;
 	}
@@ -90,7 +90,7 @@ public abstract class EntrySection{
 	
 	public abstract String getType();
 	
-	public abstract NBTTagCompound getData();
+	public abstract CompoundNBT getData();
 	
 	public void addOwnRequirements(){
 	}

@@ -3,10 +3,10 @@ package net.arcanamod.research;
 import net.arcanamod.research.impls.ItemRequirement;
 import net.arcanamod.research.impls.PuzzleRequirement;
 import net.arcanamod.research.impls.XpRequirement;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,7 +19,7 @@ public abstract class Requirement{
 	////////// static stuff
 	
 	private static Map<ResourceLocation, Function<List<String>, Requirement>> factories = new LinkedHashMap<>();
-	private static Map<ResourceLocation, Function<NBTTagCompound, Requirement>> deserializers = new LinkedHashMap<>();
+	private static Map<ResourceLocation, Function<CompoundNBT, Requirement>> deserializers = new LinkedHashMap<>();
 	
 	public static Requirement makeRequirement(ResourceLocation type, List<String> content){
 		if(factories.get(type) != null)
@@ -28,10 +28,10 @@ public abstract class Requirement{
 			return null;
 	}
 	
-	public static Requirement deserialze(NBTTagCompound passData){
+	public static Requirement deserialze(CompoundNBT passData){
 		ResourceLocation type = new ResourceLocation(passData.getString("type"));
-		NBTTagCompound data = passData.getCompoundTag("data");
-		int amount = passData.getInteger("amount");
+		CompoundNBT data = passData.getCompound("data");
+		int amount = passData.getInt("amount");
 		if(deserializers.get(type) != null){
 			Requirement requirement = deserializers.get(type).apply(data);
 			requirement.amount = amount;
@@ -42,7 +42,7 @@ public abstract class Requirement{
 	
 	public static void init(){
 		// item requirement creation is handled by ResearchLoader -- an explicit form may be useful though.
-		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("itemType")))).setMeta(compound.getInteger("meta")));
+		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("itemType")))).setMeta(compound.getInt("meta")));
 		factories.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		deserializers.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		factories.put(PuzzleRequirement.TYPE, params -> new PuzzleRequirement(new ResourceLocation(params.get(0))));
@@ -57,11 +57,11 @@ public abstract class Requirement{
 		return amount;
 	}
 	
-	public NBTTagCompound getPassData(){
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setString("type", type().toString());
-		nbt.setTag("data", data());
-		nbt.setInteger("amount", getAmount());
+	public CompoundNBT getPassData(){
+		CompoundNBT nbt = new CompoundNBT();
+		nbt.putString("type", type().toString());
+		nbt.put("data", data());
+		nbt.putInt("amount", getAmount());
 		return nbt;
 	}
 	
@@ -70,13 +70,13 @@ public abstract class Requirement{
 		return this;
 	}
 	
-	public abstract boolean satisfied(EntityPlayer player);
+	public abstract boolean satisfied(PlayerEntity player);
 	
-	public abstract void take(EntityPlayer player);
+	public abstract void take(PlayerEntity player);
 	
 	public abstract ResourceLocation type();
 	
-	public abstract NBTTagCompound data();
+	public abstract CompoundNBT data();
 	
 	public void onClick(ResearchEntry entry){
 	}

@@ -1,26 +1,22 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import javafx.geometry.Side;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
-import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.network.Connection;
 import net.arcanamod.research.EntrySection;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.io.IOException;
@@ -28,14 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SideOnly(Side.CLIENT)
-public class ResearchEntryGUI extends GuiScreen{
+public class ResearchEntryGUI extends Screen{
 	
 	ResourceLocation bg;
 	ResearchEntry entry;
 	int index;
 	
-	GuiButton left, right, cont;
+	Button left, right, cont;
 	
 	// there is: golem, crucible, crafting, infusion circle, arcane crafting, structure, wand(, arrow), crafting result
 	public static final String OVERLAY_SUFFIX = "_gui_overlay.png";
@@ -49,11 +44,12 @@ public class ResearchEntryGUI extends GuiScreen{
 	public static final int RIGHT_X_OFFSET = 119;
 	
 	public ResearchEntryGUI(ResearchEntry entry){
+		super(new StringTextComponent(""));
 		this.entry = entry;
-		bg = new ResourceLocation(entry.key().getResourceDomain(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
+		bg = new ResourceLocation(entry.key().getNamespace(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
 	}
 	
-	public void drawScreen(int mouseX, int mouseY, float partialTicks){
+	/*public void drawScreen(int mouseX, int mouseY, float partialTicks){
 		drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		mc.getTextureManager().bindTexture(bg);
@@ -283,5 +279,5 @@ public class ResearchEntryGUI extends GuiScreen{
 				GlStateManager.color(1f, 1f, 1f, 1f);
 			}
 		}
-	}
+	}*/
 }

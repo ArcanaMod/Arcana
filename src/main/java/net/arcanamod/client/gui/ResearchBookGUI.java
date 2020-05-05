@@ -1,23 +1,21 @@
 package net.arcanamod.client.gui;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.arcanamod.Arcana;
 import net.arcanamod.network.Connection;
 import net.arcanamod.research.*;
+import net.java.games.input.Mouse;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.config.GuiUtils;
-import org.lwjgl.input.Mouse;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
@@ -29,7 +27,7 @@ import java.util.stream.Collectors;
 import static java.lang.Math.*;
 import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
 
-public class ResearchBookGUI extends GuiScreen{
+public class ResearchBookGUI extends Screen{
 	
 	ResearchBook book;
 	List<ResearchCategory> categories;
@@ -43,16 +41,17 @@ public class ResearchBookGUI extends GuiScreen{
 	private static final int MAX_PAN = 512;
 	
 	// drawing helper
-	private final Arrows arrows = new Arrows();
+	//private final Arrows arrows = new Arrows();
 	
 	static float xPan = 0;
 	static float yPan = 0;
 	static float zoom = 0.7f;//1f;
 	
 	public ResearchBookGUI(ResearchBook book){
+		super(new StringTextComponent(""));
 		this.book = book;
-		texture = new ResourceLocation(book.getKey().getResourceDomain(), "textures/gui/research/" + book.getPrefix() + SUFFIX);
-		EntityPlayer player = Minecraft.getMinecraft().player;
+		texture = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + SUFFIX);
+		PlayerEntity player = Minecraft.getInstance().player;
 		categories = book.getCategories().stream().filter(category -> {
 			if(category.requirement() == null)
 				return true;
@@ -72,11 +71,11 @@ public class ResearchBookGUI extends GuiScreen{
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
-		drawDefaultBackground();
+		renderBackground();
 		GlStateManager.enableBlend();
 		
 		// draw stuff
-		
+		/*
 		// 224x196 viewing area
 		int scale = new ScaledResolution(mc).getScaleFactor();
 		int x = (width - fWidth) / 2 + 16, y = (height - fHeight) / 2 + 17;
@@ -97,10 +96,10 @@ public class ResearchBookGUI extends GuiScreen{
 		renderEntryTooltip(mouseX, mouseY);
 		
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		GlStateManager.enableBlend();
+		GlStateManager.enableBlend();*/
 	}
 	
-	public void initGui(){
+	/*public void initGui(){
 		super.initGui();
 		
 		// add buttons
@@ -108,8 +107,8 @@ public class ResearchBookGUI extends GuiScreen{
 			ResearchCategory category = categories.get(i);
 			addButton(new CategoryButton(i, i, (width - fWidth) / 2 - 12, 32 + ((height - fHeight) / 2) + 20 * i, category));
 		}
-	}
-	
+	}*/
+	/*
 	private void renderBackground(){
 		// 224x196 viewing area
 		// pans up to (256 - 224) x, (256 - 196) y
@@ -382,18 +381,18 @@ public class ResearchBookGUI extends GuiScreen{
 		super.keyTyped(typedChar, keyCode);
 	}
 	
-	/**
+	*//**
 	 * Helper class containing methods to draw segments of lines. Made to avoid cluttering up the namespace.
 	 * The lines texture must be bound before calling these methods.
-	 */
+	 *//*
 	private final class Arrows extends Gui{
 		
 		int gX2SX(int gX){
-			return (int)((gX * 30 + getXOffset())/* *  zoom*/);
+			return (int)((gX * 30 + getXOffset())*//* *  zoom*//*);
 		}
 		
 		int gY2SY(int gY){
-			return (int)((gY * 30 + getYOffset())/* * zoom*/);
+			return (int)((gY * 30 + getYOffset())*//* * zoom*//*);
 		}
 		
 		void drawHorizontalSegment(int gX, int gY){
@@ -530,5 +529,5 @@ public class ResearchBookGUI extends GuiScreen{
 					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name())), mouseX, mouseY, ResearchBookGUI.this.width, ResearchBookGUI.this.height, -1, mc.fontRenderer);
 			}
 		}
-	}
+	}*/
 }

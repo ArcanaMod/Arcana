@@ -30,7 +30,7 @@ public class Aspects{
 		// TODO: this might break with addons, not finding the correct resources. maybe.
 		// Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
 		for(Aspect aspect : Aspect.values())
-			aspectItems.add(new AspectItem("aspect_" + aspect.name().toLowerCase(), aspect.name().toLowerCase()).setCreativeTab(Arcana.TAB_ASPECTS_ARCANA));
+			aspectItems.add(new AspectItem("aspect_" + aspect.name().toLowerCase(), aspect.name().toLowerCase()));//.setCreativeTab(Arcana.TAB_ASPECTS_ARCANA));
 		aspectStacks = aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
 	}
 	

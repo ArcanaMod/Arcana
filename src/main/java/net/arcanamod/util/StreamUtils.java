@@ -1,7 +1,7 @@
 package net.arcanamod.util;
 
-import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -9,7 +9,7 @@ import java.util.stream.StreamSupport;
 
 public final class StreamUtils{
 	
-	public static <X extends NBTBase, Z> Stream<Z> streamAndApply(NBTTagList list, Class<X> filterType, Function<X, Z> applicator){
+	public static <X extends INBT, Z> Stream<Z> streamAndApply(ListNBT list, Class<X> filterType, Function<X, Z> applicator){
 		return StreamSupport.stream(list.spliterator(), false).filter(filterType::isInstance).map(filterType::cast).map(applicator);
 	}
 }

@@ -1,9 +1,10 @@
 package net.arcanamod.aspects;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -16,13 +17,13 @@ import java.util.Set;
  */
 public class StoreSlotVis implements VisHandler, ICapabilityProvider{
 	
-	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing){
+	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
 		return capability == VisHandlerCapability.ASPECT_HANDLER;
 	}
 	
-	@Nullable
-	public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing facing){
-		return capability == VisHandlerCapability.ASPECT_HANDLER ? (T)this : null;
+	@Nonnull
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing){
+		return capability == VisHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();
 	}
 	
 	public Aspect stored;
@@ -105,23 +106,23 @@ public class StoreSlotVis implements VisHandler, ICapabilityProvider{
 		return Collections.singleton(stored);
 	}
 	
-	public NBTTagCompound serializeNBT(){
-		NBTTagCompound compound = new NBTTagCompound();
-		NBTTagCompound storedAspects = new NBTTagCompound();
-		storedAspects.setInteger(stored != null ? stored.name().toLowerCase() : "null", held);
-		compound.setTag("stored", storedAspects);
-		compound.setInteger("capacity", capacity);
+	public CompoundNBT serializeNBT(){
+		CompoundNBT compound = new CompoundNBT();
+		CompoundNBT storedAspects = new CompoundNBT();
+		storedAspects.putInt(stored != null ? stored.name().toLowerCase() : "null", held);
+		compound.put("stored", storedAspects);
+		compound.putInt("capacity", capacity);
 		return compound;
 	}
 	
-	public void deserializeNBT(NBTTagCompound data){
-		NBTTagCompound storedAspects = data.getCompoundTag("stored");
-		for(String s : storedAspects.getKeySet()){
+	public void deserializeNBT(CompoundNBT data){
+		CompoundNBT storedAspects = data.getCompound("stored");
+		for(String s : storedAspects.keySet()){
 			if(s != null && !s.equals("null")){
 				stored = Aspect.valueOf(s.toUpperCase());
-				held = storedAspects.getInteger(s);
+				held = storedAspects.getInt(s);
 			}
 		}
-		capacity = data.getInteger("capacity");
+		capacity = data.getInt("capacity");
 	}
 }

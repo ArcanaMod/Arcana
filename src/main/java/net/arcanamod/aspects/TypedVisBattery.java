@@ -1,9 +1,9 @@
 package net.arcanamod.aspects;
 
 import net.arcanamod.util.StreamUtils;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -59,17 +59,17 @@ public class TypedVisBattery extends VisBattery{
 		return 0;
 	}
 	
-	public NBTTagCompound serializeNBT(){
-		NBTTagCompound compound = super.serializeNBT();
-		NBTTagList types = new NBTTagList();
-		allowed.forEach((type) -> types.appendTag(new NBTTagString(type.name().toLowerCase())));
-		compound.setTag("allowed", types);
+	public CompoundNBT serializeNBT(){
+		CompoundNBT compound = super.serializeNBT();
+		ListNBT types = new ListNBT();
+		allowed.forEach((type) -> types.add(StringNBT.valueOf(type.name().toLowerCase())));
+		compound.put("allowed", types);
 		return compound;
 	}
 	
-	public void deserializeNBT(NBTTagCompound data){
+	public void deserializeNBT(CompoundNBT data){
 		super.deserializeNBT(data);
-		this.allowed = StreamUtils.streamAndApply(data.getTagList("allowed", 8), NBTTagString.class, NBTTagString::getString).map(String::toUpperCase).map(Aspect::valueOf).collect(Collectors.toList());
+		this.allowed = StreamUtils.streamAndApply(data.getList("allowed", 8), StringNBT.class, StringNBT::getString).map(String::toUpperCase).map(Aspect::valueOf).collect(Collectors.toList());
 	}
 	
 	public static TypedVisBattery primalBattery(){

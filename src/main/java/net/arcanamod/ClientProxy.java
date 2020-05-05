@@ -13,14 +13,14 @@ import net.arcanamod.items.ItemWand;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.wand.EnumAttachmentType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
@@ -34,11 +34,11 @@ public class ClientProxy extends CommonProxy{
 	
 	@Override
 	public void registerItemRenderer(Item item, int meta, String id){
-		ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), id));
+		//ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), id));
 	}
 	
 	@Override
-	public void preInit(FMLPreInitializationEvent event){
+	public void preInit(FMLCommonSetupEvent event){
 		super.preInit(event);
 		EntrySectionRenderer.init();
 		RequirementRenderer.init();
@@ -49,19 +49,19 @@ public class ClientProxy extends CommonProxy{
 	public void registerWand(IForgeRegistry<Item> registry, ItemWand wand){
 		super.registerWand(registry, wand);
 		
-		ModelResourceLocation main = new ModelResourceLocation(Arcana.MODID + ":wands/" + wand.getRegistryName().getResourcePath(), "inventory");
-		ModelLoader.setCustomModelResourceLocation(wand, 0, main);
+		ModelResourceLocation main = new ModelResourceLocation(Arcana.MODID + ":wands/" + wand.getRegistryName().getPath(), "inventory");
+		//ModelLoader.setCustomModelResourceLocation(wand, 0, main);
 		
 		ArrayList<ModelResourceLocation> list = new ArrayList<>();
 		list.add(main);
 		
 		for(int i = 0; i < EnumAttachmentType.values().length; ++i){
 			for(ItemAttachment attachment : wand.getAttachments()[i]){
-				list.add(new ModelResourceLocation(Arcana.MODID + ":wands/" + attachment.getRegistryName().getResourcePath(), "inventory"));
+				list.add(new ModelResourceLocation(Arcana.MODID + ":wands/" + attachment.getRegistryName().getPath(), "inventory"));
 			}
 		}
 		
-		ModelBakery.registerItemVariants(wand, list.toArray(new ModelResourceLocation[0]));
+		//ModelBakery.registerItemVariants(wand, list.toArray(new ModelResourceLocation[0]));
 	}
 	
 	/**
@@ -74,30 +74,30 @@ public class ClientProxy extends CommonProxy{
 	 */
 	@Override
 	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
-		parBlock.setGraphicsLevel(parFancyEnabled);
+		//parBlock.setGraphicsLevel(parFancyEnabled);
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){
-		Minecraft.getMinecraft().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
+		Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
 	}
 	
 	public void onResearchChange(ResearchEvent event){
-		if(Minecraft.getMinecraft().currentScreen instanceof ResearchEntryGUI)
-			((ResearchEntryGUI)Minecraft.getMinecraft().currentScreen).updateButtonVisibility();
+		/*if(Minecraft.getInstance().currentScreen instanceof ResearchEntryGUI)
+			((ResearchEntryGUI)Minecraft.getInstance().currentScreen).updateButtonVisibility();*/
 	}
 	
-	public EntityPlayer getPlayerOnClient(){
-		return Minecraft.getMinecraft().player;
+	public PlayerEntity getPlayerOnClient(){
+		return Minecraft.getInstance().player;
 	}
 	
 	public void scheduleOnClient(Runnable runnable){
-		Minecraft.getMinecraft().addScheduledTask(runnable);
+		Minecraft.getInstance().deferTask(runnable);//.addScheduledTask(runnable);
 	}
 	
 	public ItemStack getAspectItemStackForDisplay(){
-		if(Minecraft.getMinecraft().player == null)
+		if(Minecraft.getInstance().player == null)
 			return super.getAspectItemStackForDisplay();
 		else
-			return Aspects.aspectStacks.get((Minecraft.getMinecraft().player.ticksExisted / 20) % Aspects.aspectStacks.size());
+			return Aspects.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % Aspects.aspectStacks.size());
 	}
 }
