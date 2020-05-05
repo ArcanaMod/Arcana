@@ -3,7 +3,7 @@ package net.arcanamod.spells.effects;
 import net.arcanamod.spells.SpellEffectHandler;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -37,7 +37,7 @@ public class SpellEffectEarth implements ISpellEffect{
 	
 	@Override
 	public int getParticleID(){
-		return EnumParticleTypes.WATER_BUBBLE.getParticleID();
+		return 0/*ParticleTypes.BUBBLE_COLUMN_UP.getParticleID()*/;
 	}
 	
 	@Override

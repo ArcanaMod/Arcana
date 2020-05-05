@@ -3,7 +3,6 @@ package net.arcanamod.spells.effects;
 import net.arcanamod.spells.SpellEffectHandler;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.block.Blocks;
-import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -34,7 +33,7 @@ public class SpellEffectFire implements ISpellEffect{
 	
 	@Override
 	public int getParticleID(){
-		return EnumParticleTypes.FLAME.getParticleID();
+		return 0/*EnumParticleTypes.FLAME.getParticleID()*/;
 	}
 	
 	@Override

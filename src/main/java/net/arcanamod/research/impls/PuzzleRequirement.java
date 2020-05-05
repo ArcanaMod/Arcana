@@ -35,13 +35,14 @@ public class PuzzleRequirement extends Requirement{
 	
 	public CompoundNBT data(){
 		CompoundNBT compound = new CompoundNBT();
-		compound.setString("puzzle", puzzleId.toString());
+		compound.putString("puzzle", puzzleId.toString());
 		return compound;
 	}
 	
 	public void onClick(ResearchEntry entry){
-		if(!(ResearchBooks.puzzles.get(puzzleId) instanceof Fieldwork))
-			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId.toString(), entry.key().toString()));
+		// TODO
+		/*if(!(ResearchBooks.puzzles.get(puzzleId) instanceof Fieldwork))
+			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId.toString(), entry.key().toString()));*/
 	}
 	
 	public ResourceLocation getPuzzleId(){

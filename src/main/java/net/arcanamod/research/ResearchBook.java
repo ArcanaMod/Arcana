@@ -66,23 +66,23 @@ public class ResearchBook{
 	
 	public CompoundNBT serialize(ResourceLocation tag){
 		CompoundNBT nbt = new CompoundNBT();
-		nbt.setString("id", tag.toString());
-		nbt.setString("prefix", prefix);
+		nbt.putString("id", tag.toString());
+		nbt.putString("prefix", prefix);
 		ListNBT list = new ListNBT();
 		int index = 0;
 		for(Map.Entry<ResourceLocation, ResearchCategory> entry : categories.entrySet()){
 			// enforce a specific order so things are transferred correctly
-			list.appendTag(entry.getValue().serialize(entry.getKey(), index));
+			list.add(entry.getValue().serialize(entry.getKey(), index));
 			index++;
 		}
-		nbt.setTag("categories", list);
+		nbt.put("categories", list);
 		return nbt;
 	}
 	
 	public static ResearchBook deserialize(CompoundNBT nbt){
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
 		String prefix = nbt.getString("prefix");
-		ListNBT categoryList = nbt.getTagList("categories", 10);
+		ListNBT categoryList = nbt.getList("categories", 10);
 		// need to have a book to put them *in*
 		// book isn't in ClientBooks until all categories have been deserialized, so this is needed
 		Map<ResourceLocation, ResearchCategory> c = new LinkedHashMap<>();

@@ -1,19 +1,8 @@
 package net.arcanamod.network;
 
-import net.arcanamod.Arcana;
-import net.arcanamod.network.inventory.PktAspectClickHandler;
-import net.arcanamod.network.inventory.PktGetNoteHandler;
-import net.arcanamod.network.inventory.PktRequestAspectSync;
-import net.arcanamod.network.inventory.PktSyncAspectContainerHandler;
-import net.arcanamod.research.ResearchEntry;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
-
 public class Connection{
 	
-	public static SimpleNetworkWrapper network;
+	/*public static SimpleNetworkWrapper network;
 	private static int id = 0;
 	
 	public static void init(){
@@ -46,5 +35,5 @@ public class Connection{
 	
 	public static void sendComplete(ResearchEntry entry, ServerPlayerEntity player){
 		network.sendTo(new PktCompleteHandler.PktCompleteResearch(entry.key()), player);
-	}
+	}*/
 }

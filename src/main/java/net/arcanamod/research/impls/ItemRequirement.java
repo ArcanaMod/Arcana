@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemRequirement extends Requirement{
 	
@@ -28,11 +28,11 @@ public class ItemRequirement extends Requirement{
 	}
 	
 	public boolean satisfied(PlayerEntity player){
-		return player.inventory.clearMatchingItems(item, meta, 0, null) >= (getAmount() == 0 ? 1 : getAmount());
+		return player.inventory.clearMatchingItems(x -> x.getItem() == item, 0) >= (getAmount() == 0 ? 1 : getAmount());
 	}
 	
 	public void take(PlayerEntity player){
-		player.inventory.clearMatchingItems(item, meta, getAmount(), null);
+		player.inventory.clearMatchingItems(x -> x.getItem() == item, getAmount());
 	}
 	
 	public ResourceLocation type(){
@@ -41,8 +41,8 @@ public class ItemRequirement extends Requirement{
 	
 	public CompoundNBT data(){
 		CompoundNBT compound = new CompoundNBT();
-		compound.setString("itemType", String.valueOf(ForgeRegistries.ITEMS.getKey(item)));
-		compound.setInteger("meta", meta);
+		compound.putString("itemType", String.valueOf(ForgeRegistries.ITEMS.getKey(item)));
+		compound.putInt("meta", meta);
 		return compound;
 	}
 	
@@ -51,6 +51,6 @@ public class ItemRequirement extends Requirement{
 	}
 	
 	public ItemStack getStack(){
-		return stack == null ? stack = (meta == -1 ? new ItemStack(getItem()) : new ItemStack(getItem(), 1, meta)) : stack;
+		return stack == null ? stack = (meta == -1 ? new ItemStack(getItem()) : new ItemStack(getItem(), 1)) : stack;
 	}
 }

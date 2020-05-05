@@ -3,13 +3,14 @@ package net.arcanamod.research.impls;
 import net.arcanamod.Arcana;
 import net.arcanamod.research.Researcher;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -28,11 +29,11 @@ public class ResearcherCapability{
 	private static class Storage implements Capability.IStorage<Researcher>{
 		
 		@Nullable
-		public NBTBase writeNBT(Capability<Researcher> capability, Researcher instance, Direction side){
+		public INBT writeNBT(Capability<Researcher> capability, Researcher instance, Direction side){
 			return instance.serialize();
 		}
 		
-		public void readNBT(Capability<Researcher> capability, Researcher instance, Direction side, NBTBase nbt){
+		public void readNBT(Capability<Researcher> capability, Researcher instance, Direction side, INBT nbt){
 			if(nbt instanceof CompoundNBT)
 				instance.deserialize((CompoundNBT)nbt);
 		}
@@ -50,13 +51,10 @@ public class ResearcherCapability{
 			cap.deserialize(nbt);
 		}
 		
-		public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
-			return capability == RESEARCHER_CAPABILITY;
-		}
-		
-		public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction side){
+		@Nonnull
+		public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side){
 			// if Capability<T> == Capability<Researcher>, then T is Researcher, so this won't cause issues.
-			return capability == RESEARCHER_CAPABILITY ? (T)cap : null;
+			return capability == RESEARCHER_CAPABILITY ? LazyOptional.of(() -> (T)cap) : LazyOptional.empty();
 		}
 	}
 }

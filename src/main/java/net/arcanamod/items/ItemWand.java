@@ -57,9 +57,9 @@ public class ItemWand extends Item{
 	};
 	
 	public ItemWand(String name){
-		setMaxStackSize(1);
-		setMaxDamage(0);
-		setUnlocalizedName(name);
+		//setMaxStackSize(1);
+		//setMaxDamage(0);
+		//setUnlocalizedName(name);
 		setRegistryName(name);
 		
 		this.attachments = null;

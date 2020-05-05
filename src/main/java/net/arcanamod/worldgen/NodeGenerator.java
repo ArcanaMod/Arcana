@@ -13,18 +13,17 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.AbstractChunkProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraftforge.event.world.ChunkDataEvent;
-import net.minecraftforge.fml.common.IWorldGenerator;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayDeque;
 import java.util.Random;
 
-public class NodeGenerator implements IWorldGenerator{
+public class NodeGenerator{// implements IWorldGenerator{
 	public static final String RETRO_NAME = "ArcanaNodeGen";
 	public static NodeGenerator instance = new NodeGenerator();
 	
-	@Override
+	//@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, ChunkGenerator chunkGenerator, AbstractChunkProvider chunkProvider){
 		generateWorld(random, chunkX, chunkZ, world, true);
 	}
@@ -35,7 +34,7 @@ public class NodeGenerator implements IWorldGenerator{
 		boolean chunkWritten = false;
 		
 		// TODO: node generation in other dimensions
-		if(world.provider.getDimensionType() == DimensionType.OVERWORLD){
+		if(world.getDimension().isSurfaceWorld()){
 			if(random.nextInt(1000) < ArcanaConfig.NODE_CHANCE){
 				// pick random x/y
 				int x = random.nextInt(16), z = random.nextInt(16);
@@ -51,26 +50,26 @@ public class NodeGenerator implements IWorldGenerator{
 				
 				int xSpawn = chunkX * 16 + x;
 				int zSpawn = chunkZ * 16 + z;
-				world.setBlockState(new BlockPos(xSpawn, world.getHeight(xSpawn, zSpawn) + yOffset, zSpawn), gen);
+				//world.setBlockState(new BlockPos(xSpawn, world.getHeight(xSpawn, zSpawn) + yOffset, zSpawn), gen);
 				chunkWritten = true;
 			}
 		}
 		
-		if(!newGen && chunkWritten)
-			world.getChunkFromChunkCoords(chunkX, chunkZ).markDirty();
+		/*if(!newGen && chunkWritten)
+			world.getChunkFromChunkCoords(chunkX, chunkZ).markDirty();*/
 	}
 	
 	@SubscribeEvent
 	public void handleChunkSaveEvent(ChunkDataEvent.Save event){
-		CompoundNBT genTag = event.getData().getCompoundTag(RETRO_NAME);
-		if(!genTag.hasKey("generated"))
-			genTag.setBoolean("generated", true);
-		event.getData().setTag(RETRO_NAME, genTag);
+		CompoundNBT genTag = event.getData().getCompound(RETRO_NAME);
+		if(!genTag.hasUniqueId("generated"))
+			genTag.putBoolean("generated", true);
+		event.getData().put(RETRO_NAME, genTag);
 	}
 	
 	@SubscribeEvent
 	public void handleChunkLoadEvent(ChunkDataEvent.Load event){
-		int dim = event.getWorld().provider.getDimension();
+		/*int dim = event.getWorld().getDimension();
 		
 		boolean regen = false;
 		CompoundNBT tag = (CompoundNBT)event.getData().getTag(RETRO_NAME);
@@ -97,6 +96,6 @@ public class NodeGenerator implements IWorldGenerator{
 				chunks.addLast(coord);
 				WorldTickHandler.chunksToGen.put(dim, chunks);
 			}
-		}
+		}*/
 	}
 }

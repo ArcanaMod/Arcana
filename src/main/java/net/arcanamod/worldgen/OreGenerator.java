@@ -16,8 +16,7 @@ import net.minecraft.world.chunk.AbstractChunkProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.OreFeature;
 import net.minecraftforge.event.world.ChunkDataEvent;
-import net.minecraftforge.fml.common.IWorldGenerator;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayDeque;
@@ -29,11 +28,11 @@ import java.util.Random;
  * @author Mozaran
  * @see WorldTickHandler - Handles retrogenning
  */
-public class OreGenerator implements IWorldGenerator{
+public class OreGenerator {//implements IWorldGenerator{
 	public static final String RETRO_NAME = "ArcanaOreGen";
 	public static OreGenerator instance = new OreGenerator();
 	
-	@Override
+	//@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, ChunkGenerator chunkGenerator, AbstractChunkProvider chunkProvider){
 		generateWorld(random, chunkX, chunkZ, world, true);
 	}
@@ -44,7 +43,7 @@ public class OreGenerator implements IWorldGenerator{
 		
 		boolean chunkWritten = false;
 		if(ArcanaConfig.GENERATE_OVERWORLD){
-			if(world.provider.getDimensionType() == DimensionType.OVERWORLD){
+			if(world.getDimension().isSurfaceWorld()){
 				// Add Amber Ore
 				addOreSpawn(ArcanaBlocks.AMBER_ORE, (byte)0, Blocks.STONE, world, random, chunkX * 16, chunkZ * 16, ArcanaConfig.AMBER_MIN_VEIN_SIZE, ArcanaConfig.AMBER_MAX_VEIN_SIZE, ArcanaConfig.AMBER_CHANCES_TO_SPAWN, ArcanaConfig.AMBER_MIN_Y, ArcanaConfig.AMBER_MAX_Y);
 				chunkWritten = true;
@@ -53,34 +52,34 @@ public class OreGenerator implements IWorldGenerator{
 		
 		if(!newGen && chunkWritten){
 			// Forces chunk to save at next save point
-			world.getChunkFromChunkCoords(chunkX, chunkZ).markDirty();
+			//world.getChunkFromChunkCoords(chunkX, chunkZ).markDirty();
 		}
 	}
 	
 	public void addOreSpawn(Block block, byte blockMeta, Block targetBlock, World world, Random random, int blockXPos, int blockZPos, int minVeinSize, int maxVeinSize, int chancesToSpawn, int minY, int maxY){
-		OreFeature minable = new OreFeature(block.getStateFromMeta(blockMeta), (minVeinSize + random.nextInt(maxVeinSize - minVeinSize + 1)), BlockMatcher.forBlock(targetBlock));
+		/*OreFeature minable = new OreFeature(block.getStateFromMeta(blockMeta), (minVeinSize + random.nextInt(maxVeinSize - minVeinSize + 1)), BlockMatcher.forBlock(targetBlock));
 		for(int i = 0; i < chancesToSpawn; i++){
 			int posX = blockXPos + random.nextInt(16);
 			int posY = minY + random.nextInt(maxY - minY);
 			int posZ = blockZPos + random.nextInt(16);
 			minable.generate(world, random, new BlockPos(posX, posY, posZ));
-		}
+		}*/
 	}
 	
 	@SubscribeEvent
 	public void handleChunkSaveEvent(ChunkDataEvent.Save event){
-		CompoundNBT genTag = event.getData().getCompoundTag(RETRO_NAME);
+		/*CompoundNBT genTag = event.getData().getCompoundTag(RETRO_NAME);
 		if(!genTag.hasKey("generated")){
 			// If we did not have this key then this is a new chunk and we will have proper ores generated.
 			// Otherwise we are saving a chunk for which ores are not yet generated.
 			genTag.setBoolean("generated", true);
 		}
-		event.getData().setTag(RETRO_NAME, genTag);
+		event.getData().setTag(RETRO_NAME, genTag);*/
 	}
 	
 	@SubscribeEvent
 	public void handleChunkLoadEvent(ChunkDataEvent.Load event){
-		int dim = event.getWorld().provider.getDimension();
+		/*int dim = event.getWorld().provider.getDimension();
 		
 		boolean regen = false;
 		CompoundNBT tag = (CompoundNBT)event.getData().getTag(RETRO_NAME);
@@ -109,6 +108,6 @@ public class OreGenerator implements IWorldGenerator{
 				chunks.addLast(coord);
 				WorldTickHandler.chunksToGen.put(dim, chunks);
 			}
-		}
+		}*/
 	}
 }

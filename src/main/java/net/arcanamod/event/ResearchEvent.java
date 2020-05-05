@@ -4,7 +4,7 @@ import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.Event;
+import net.minecraftforge.eventbus.api.Event;
 
 /**
  * This event is fired on the {@link MinecraftForge#EVENT_BUS} when a Researcher changes the stage of a research.

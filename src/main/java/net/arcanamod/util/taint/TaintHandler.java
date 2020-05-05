@@ -16,7 +16,6 @@ import java.util.Map;
  * Handles the spread of taint
  *
  * @author Atlas
- * @see TaintCleaner
  * @see TaintLevelHandler
  */
 public class TaintHandler{
@@ -33,12 +32,12 @@ public class TaintHandler{
 	/**
 	 * List of blocks tainted rock spreads to
 	 */
-	static Block[] TaintedRockProspects = {Blocks.COBBLESTONE, Blocks.STONE, Blocks.STONEBRICK, Blocks.MOSSY_COBBLESTONE};
+	static Block[] TaintedRockProspects = {Blocks.COBBLESTONE, Blocks.STONE, Blocks.STONE_BRICKS, Blocks.MOSSY_COBBLESTONE};
 	
 	/**
 	 * List of blocks tainted crust spreads to
 	 */
-	static Block[] TaintedCrustProspects = {Blocks.CONCRETE, Blocks.CLAY, Blocks.END_STONE};
+	static Block[] TaintedCrustProspects = {Blocks.BLACK_CONCRETE, Blocks.CLAY, Blocks.END_STONE};
 	
 	/**
 	 * Hashmap of single block spreading
@@ -180,7 +179,7 @@ public class TaintHandler{
 	 */
 	@SuppressWarnings("serial")
 	public static void spreadTaint(World worldIn, BlockPos pos){
-		
+		/*
 		if(TaintLevelHandler.getTaintLevel(worldIn) >= 5){
 			
 			// Map of <OriginalBlocks -> TaintedBlock>
@@ -253,6 +252,6 @@ public class TaintHandler{
 					}
 				}
 			}
-		}
+		}*/
 	}
 }

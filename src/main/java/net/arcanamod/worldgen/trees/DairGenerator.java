@@ -18,33 +18,33 @@ import java.util.Random;
  * <p>
  * Used to generate dair trees
  */
-public class DairGenerator extends AbstractTreeFeature{
-	private static final BlockState DEFAULT_TRUNK = ArcanaBlocks.DAIR_LOG.getDefaultState();
-	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_DAIR_LOG.getDefaultState();
-	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_DAIR_LOG.getDefaultState();
-	private static final BlockState DEFAULT_LEAVES = ArcanaBlocks.DAIR_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
-	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_DAIR_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
-	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_DAIR_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+public class DairGenerator{//} extends AbstractTreeFeature{
+	//private static final BlockState DEFAULT_TRUNK = ArcanaBlocks.DAIR_LOG.getDefaultState();
+	//private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_DAIR_LOG.getDefaultState();
+	//private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_DAIR_LOG.getDefaultState();
+	//private static final BlockState DEFAULT_LEAVES = ArcanaBlocks.DAIR_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	//private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_DAIR_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	//private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_DAIR_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
-	private final BlockState metaWood;
-	private final BlockState metaLeaves;
+	//private final BlockState metaWood;
+	//private final BlockState metaLeaves;
 	
 	public DairGenerator(boolean notify, boolean tainted){
 		this(notify, tainted, false);
 	}
 	
 	public DairGenerator(boolean notify, boolean tainted, boolean untainted){
-		super(notify);
+		//super(notify);
 		if(tainted){
-			metaWood = untainted ? DEFAULT_UNTAINTED_TRUNK : DEFAULT_TAINTED_TRUNK;
-			metaLeaves = untainted ? DEFAULT_UNTAINTED_LEAVES : DEFAULT_TAINTED_LEAVES;
+			//metaWood = untainted ? DEFAULT_UNTAINTED_TRUNK : DEFAULT_TAINTED_TRUNK;
+			//metaLeaves = untainted ? DEFAULT_UNTAINTED_LEAVES : DEFAULT_TAINTED_LEAVES;
 		}else{
-			metaWood = DEFAULT_TRUNK;
-			metaLeaves = DEFAULT_LEAVES;
+			//metaWood = DEFAULT_TRUNK;
+			//metaLeaves = DEFAULT_LEAVES;
 		}
 	}
 	
-	@Override
+	/*@Override
 	public boolean generate(World worldIn, Random rand, BlockPos position){
 		int minTreeHeight = 8;
 		int treeHeight = rand.nextInt(3) + minTreeHeight;
@@ -152,5 +152,5 @@ public class DairGenerator extends AbstractTreeFeature{
 		}else{
 			return false;
 		}
-	}
+	}*/
 }

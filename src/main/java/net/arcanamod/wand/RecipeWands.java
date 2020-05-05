@@ -1,19 +1,18 @@
 package net.arcanamod.wand;
 
-import com.google.gson.JsonObject;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.items.ItemWand;
-import net.arcanamod.items.attachment.WandCore;
+import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.ItemWand;
 import net.arcanamod.items.attachment.Cap;
-import net.minecraft.item.Items;
+import net.arcanamod.items.attachment.WandCore;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.Items;
+import net.minecraft.item.crafting.ICraftingRecipe;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.common.crafting.IRecipeFactory;
-import net.minecraftforge.common.crafting.JsonContext;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -21,9 +20,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe{
+public class RecipeWands implements ICraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory>{
 	
 	// I can either make WandCore into a capability, or add special support for sticks just here. I prefer the latter.
+	
+	static final ResourceLocation id = new ResourceLocation(Arcana.MODID, "wands");
 	
 	public boolean matches(CraftingInventory inv, World world){
 		if(inv.getWidth() >= 3 && inv.getHeight() >= 3){
@@ -68,6 +69,15 @@ public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IR
 		return true;
 	}
 	
+	public ResourceLocation getId(){
+		return id;
+	}
+	
+	public IRecipeSerializer<?> getSerializer(){
+		// TODO: recipe serializer
+		return null;
+	}
+	
 	private static boolean isCore(@Nullable ItemStack stack){
 		return stack != null && (stack.getItem() instanceof WandCore || stack.getItem() == Items.STICK);
 	}
@@ -80,11 +90,19 @@ public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IR
 		return null;
 	}
 	
-	@SuppressWarnings("unused") // Referenced in _factories.json
+	public int getRecipeWidth(){
+		return 3;
+	}
+	
+	public int getRecipeHeight(){
+		return 3;
+	}
+	
+	/*@SuppressWarnings("unused") // Referenced in _factories.json
 	public static class Factory implements IRecipeFactory{
 		
 		public IRecipe parse(JsonContext context, JsonObject json){
 			return new RecipeWands();
 		}
-	}
+	}*/
 }

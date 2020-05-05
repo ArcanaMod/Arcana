@@ -15,8 +15,8 @@ import net.arcanamod.research.Puzzle;
 import net.arcanamod.util.GraphTraverser;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
@@ -76,15 +76,15 @@ public class Chemistry extends Puzzle{
 		CompoundNBT compound = new CompoundNBT();
 		ListNBT nodeList = new ListNBT();
 		for(Aspect node : nodes)
-			nodeList.appendTag(new StringNBT(node.name()));
-		compound.setTag("nodes", nodeList);
+			nodeList.add(StringNBT.valueOf(node.name()));
+		compound.put("nodes", nodeList);
 		return compound;
 	}
 	
 	public static Chemistry fromNBT(CompoundNBT passData){
 		List<Aspect> nodes = new ArrayList<>();
-		for(NBTBase node : passData.getTagList("nodes", Constants.NBT.TAG_STRING))
-			nodes.add(Aspect.valueOf(((StringNBT)node).getString()));
+		for(INBT node : passData.getList("nodes", Constants.NBT.TAG_STRING))
+			nodes.add(Aspect.valueOf(node.getString()));
 		return new Chemistry(nodes);
 	}
 	

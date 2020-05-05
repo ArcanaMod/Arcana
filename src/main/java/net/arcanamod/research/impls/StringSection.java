@@ -22,7 +22,7 @@ public class StringSection extends EntrySection{
 	
 	public CompoundNBT getData(){
 		CompoundNBT tag = new CompoundNBT();
-		tag.setString("text", getText());
+		tag.putString("text", getText());
 		return tag;
 	}
 	

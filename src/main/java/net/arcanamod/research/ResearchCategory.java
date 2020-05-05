@@ -74,15 +74,15 @@ public class ResearchCategory{
 	
 	public CompoundNBT serialize(ResourceLocation tag, int index){
 		CompoundNBT nbt = new CompoundNBT();
-		nbt.setString("id", tag.toString());
-		nbt.setString("icon", icon.toString());
-		nbt.setString("bg", bg.toString());
-		nbt.setString("requirement", requirement != null ? requirement.toString() : "null");
-		nbt.setString("name", name);
-		nbt.setInteger("index", index);
+		nbt.putString("id", tag.toString());
+		nbt.putString("icon", icon.toString());
+		nbt.putString("bg", bg.toString());
+		nbt.putString("requirement", requirement != null ? requirement.toString() : "null");
+		nbt.putString("name", name);
+		nbt.putInt("index", index);
 		ListNBT list = new ListNBT();
-		entries.forEach((location, entry) -> list.appendTag(entry.serialize(location)));
-		nbt.setTag("entries", list);
+		entries.forEach((location, entry) -> list.add(entry.serialize(location)));
+		nbt.put("entries", list);
 		return nbt;
 	}
 	
@@ -92,13 +92,13 @@ public class ResearchCategory{
 		ResourceLocation bg = new ResourceLocation(nbt.getString("bg"));
 		ResourceLocation requirement = nbt.getString("requirement").equals("null") ? null : new ResourceLocation(nbt.getString("requirement"));
 		String name = nbt.getString("name");
-		ListNBT entriesList = nbt.getTagList("entries", 10);
+		ListNBT entriesList = nbt.getList("entries", 10);
 		// same story as ResearchBook
 		Map<ResourceLocation, ResearchEntry> c = new LinkedHashMap<>();
 		ResearchCategory category = new ResearchCategory(c, key, icon, bg, requirement, name, in);
-		category.serializationIndex = nbt.getInteger("index");
+		category.serializationIndex = nbt.getInt("index");
 		
-		Map<ResourceLocation, ResearchEntry> entries = StreamSupport.stream(entriesList.spliterator(), false).map(CompoundNBT.class::cast).map((CompoundNBT nbt1) -> ResearchEntry.deserialize(nbt1, category)).collect(Collectors.toMap(ResearchEntry::key, Function.identity(), (a, b) -> a));
+		Map<ResourceLocation, ResearchEntry> entries = entriesList.stream().map(CompoundNBT.class::cast).map((CompoundNBT nbt1) -> ResearchEntry.deserialize(nbt1, category)).collect(Collectors.toMap(ResearchEntry::key, Function.identity(), (a, b) -> a));
 		
 		c.putAll(entries);
 		return category;

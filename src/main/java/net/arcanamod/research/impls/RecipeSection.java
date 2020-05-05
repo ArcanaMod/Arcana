@@ -24,7 +24,7 @@ public class RecipeSection extends EntrySection{
 	
 	public CompoundNBT getData(){
 		CompoundNBT compound = new CompoundNBT();
-		compound.setString("recipe", recipe.toString());
+		compound.putString("recipe", recipe.toString());
 		return compound;
 	}
 	

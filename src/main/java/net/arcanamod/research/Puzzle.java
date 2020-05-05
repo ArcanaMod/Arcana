@@ -49,7 +49,7 @@ public abstract class Puzzle{
 		String desc = passData.getString("desc");
 		ResourceLocation key = new ResourceLocation(passData.getString("key"));
 		ResourceLocation icon = new ResourceLocation(passData.getString("icon"));
-		CompoundNBT data = passData.getCompoundTag("data");
+		CompoundNBT data = passData.getCompound("data");
 		if(deserializers.get(type) != null){
 			Puzzle puzzle = deserializers.get(type).apply(data);
 			puzzle.key = key;
@@ -100,11 +100,11 @@ public abstract class Puzzle{
 	
 	public CompoundNBT getPassData(){
 		CompoundNBT passData = new CompoundNBT();
-		passData.setString("type", type());
-		passData.setString("key", getKey().toString());
-		passData.setString("desc", getDesc() != null ? getDesc() : "null");
-		passData.setString("icon", getIcon().toString());
-		passData.setTag("data", getData());
+		passData.putString("type", type());
+		passData.putString("key", getKey().toString());
+		passData.putString("desc", getDesc() != null ? getDesc() : "null");
+		passData.putString("icon", getIcon().toString());
+		passData.put("data", getData());
 		return passData;
 	}
 	

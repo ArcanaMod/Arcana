@@ -2,24 +2,16 @@ package net.arcanamod.research;
 
 import com.google.gson.*;
 import net.arcanamod.research.impls.ItemRequirement;
-import net.arcanamod.network.Connection;
-import net.arcanamod.network.PktSyncBooksHandler;
+import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.item.Item;
-import net.minecraft.util.JSONUtils;
+import net.minecraft.profiler.IProfiler;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
-import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -31,23 +23,20 @@ import java.util.stream.StreamSupport;
  *
  * <p>This class has some rather verbose logging, since this will probably be a source of problems or
  * confusion for addon makers. (If you don't think its verbose, add more logging.)
- *
- * <p>TODO: once we update to 1.14, change this to use JsonReloadManager so we can use datapacks instead.
  */
-public class ResearchLoader{
+@ParametersAreNonnullByDefault
+public class ResearchLoader extends JsonReloadListener{
 	
-	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	private static final Logger LOGGER = LogManager.getLogger();
+	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	
 	private static Map<ResourceLocation, JsonArray> bookQueue = new LinkedHashMap<>();
 	private static Map<ResourceLocation, JsonArray> categoryQueue = new LinkedHashMap<>();
 	private static Map<ResourceLocation, JsonArray> entryQueue = new LinkedHashMap<>();
 	private static Map<ResourceLocation, JsonArray> puzzleQueue = new LinkedHashMap<>();
 	
-	public static void applyJson(String json, ResourceLocation rl){
-		JsonObject jsonObject = JSONUtils.fromJson(GSON, json, JsonObject.class, false);
-		if(jsonObject != null)
-			applyJson(jsonObject, rl);
+	public ResearchLoader(){
+		super(GSON, "arcana_research");
 	}
 	
 	private static void applyBooksArray(ResourceLocation rl, JsonArray books){
@@ -74,9 +63,9 @@ public class ResearchLoader{
 				// expecting key, in, icon, (later) background
 				ResourceLocation key = new ResourceLocation(category.get("key").getAsString());
 				ResourceLocation bg = new ResourceLocation(category.get("bg").getAsString());
-				bg = new ResourceLocation(bg.getResourceDomain(), "textures/" + bg.getResourcePath());
+				bg = new ResourceLocation(bg.getNamespace(), "textures/" + bg.getPath());
 				ResourceLocation icon = new ResourceLocation(category.get("icon").getAsString());
-				icon = new ResourceLocation(icon.getResourceDomain(), "textures/" + icon.getResourcePath());
+				icon = new ResourceLocation(icon.getNamespace(), "textures/" + icon.getPath());
 				String name = category.get("name").getAsString();
 				ResourceLocation requirement = category.has("requires") ? new ResourceLocation(category.get("requires").getAsString()) : null;
 				ResearchBook in = ResearchBooks.books.get(new ResourceLocation(category.get("in").getAsString()));
@@ -290,14 +279,28 @@ public class ResearchLoader{
 		return ret;
 	}
 	
-	public static void load(){
+	protected void apply(Map<ResourceLocation, JsonObject> object, IResourceManager resourceManager, IProfiler profiler){
+		bookQueue.clear();
+		categoryQueue.clear();
+		entryQueue.clear();
+		puzzleQueue.clear();
+		
+		object.forEach((location, object1) -> applyJson(object1, location));
+		
+		bookQueue.forEach(ResearchLoader::applyBooksArray);
+		categoryQueue.forEach(ResearchLoader::applyCategoriesArray);
+		entryQueue.forEach(ResearchLoader::applyEntriesArray);
+		puzzleQueue.forEach(ResearchLoader::applyPuzzlesArray);
+	}
+	
+	/*public static void load(){
 		bookQueue.clear();
 		categoryQueue.clear();
 		entryQueue.clear();
 		puzzleQueue.clear();
 		
 		for(ModContainer mod : Loader.instance().getActiveModList()){
-			CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + "/research", /*pre-processing?*/ null, (root, file) -> {
+			CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + "/research", *//*pre-processing?*//* null, (root, file) -> {
 				String relative = root.relativize(file).toString();
 				if(!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_"))
 					return true;
@@ -332,5 +335,5 @@ public class ResearchLoader{
 		
 		if(FMLCommonHandler.instance().getMinecraftServerInstance() != null)
 			Connection.network.sendToAll(new PktSyncBooksHandler.PktSyncBooks(ResearchBooks.books, ResearchBooks.puzzles));
-	}
+	}*/
 }

@@ -6,7 +6,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Collections;
 import java.util.List;
@@ -85,29 +85,29 @@ public class ResearchEntry{
 	public CompoundNBT serialize(ResourceLocation tag){
 		CompoundNBT nbt = new CompoundNBT();
 		// key
-		nbt.setString("id", tag.toString());
+		nbt.putString("id", tag.toString());
 		// name, desc
-		nbt.setString("name", name());
-		nbt.setString("desc", description());
+		nbt.putString("name", name());
+		nbt.putString("desc", description());
 		// x, y
-		nbt.setInteger("x", x());
-		nbt.setInteger("y", y());
+		nbt.putInt("x", x());
+		nbt.putInt("y", y());
 		// sections
 		ListNBT list = new ListNBT();
-		sections().forEach((section) -> list.appendTag(section.getPassData()));
-		nbt.setTag("sections", list);
+		sections().forEach((section) -> list.add(section.getPassData()));
+		nbt.put("sections", list);
 		// icons
 		ListNBT icons = new ListNBT();
-		icons().forEach((icon) -> icons.appendTag(new StringNBT(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(icon), "Invalid item for icon on client side.").toString())));
-		nbt.setTag("icons", icons);
+		icons().forEach((icon) -> icons.add(StringNBT.valueOf(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(icon), "Invalid item for icon on client side.").toString())));
+		nbt.put("icons", icons);
 		// parents
 		ListNBT parents = new ListNBT();
-		parents().forEach((parent) -> parents.appendTag(new StringNBT(parent.toString())));
-		nbt.setTag("parents", parents);
+		parents().forEach((parent) -> parents.add(StringNBT.valueOf(parent.toString())));
+		nbt.put("parents", parents);
 		// meta
 		ListNBT meta = new ListNBT();
-		meta().forEach((met) -> meta.appendTag(new StringNBT(met)));
-		nbt.setTag("meta", meta);
+		meta().forEach((met) -> meta.add(StringNBT.valueOf(met)));
+		nbt.put("meta", meta);
 		return nbt;
 	}
 	
@@ -115,12 +115,12 @@ public class ResearchEntry{
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
 		String name = nbt.getString("name");
 		String desc = nbt.getString("desc");
-		int x = nbt.getInteger("x");
-		int y = nbt.getInteger("y");
-		List<EntrySection> sections = StreamUtils.streamAndApply(nbt.getTagList("sections", 10), CompoundNBT.class, EntrySection::deserialze).collect(Collectors.toList());
-		List<ResourceLocation> parents = StreamUtils.streamAndApply(nbt.getTagList("parents", 8), StringNBT.class, StringNBT::getString).map(ResourceLocation::new).collect(Collectors.toList());
-		List<Item> icons = StreamUtils.streamAndApply(nbt.getTagList("icons", 8), StringNBT.class, StringNBT::getString).map(ResourceLocation::new).map(ForgeRegistries.ITEMS::getValue).filter(Objects::nonNull).collect(Collectors.toList());
-		List<String> meta = StreamUtils.streamAndApply(nbt.getTagList("meta", 8), StringNBT.class, StringNBT::getString).collect(Collectors.toList());
+		int x = nbt.getInt("x");
+		int y = nbt.getInt("y");
+		List<EntrySection> sections = StreamUtils.streamAndApply(nbt.getList("sections", 10), CompoundNBT.class, EntrySection::deserialze).collect(Collectors.toList());
+		List<ResourceLocation> parents = StreamUtils.streamAndApply(nbt.getList("parents", 8), StringNBT.class, StringNBT::getString).map(ResourceLocation::new).collect(Collectors.toList());
+		List<Item> icons = StreamUtils.streamAndApply(nbt.getList("icons", 8), StringNBT.class, StringNBT::getString).map(ResourceLocation::new).map(ForgeRegistries.ITEMS::getValue).filter(Objects::nonNull).collect(Collectors.toList());
+		List<String> meta = StreamUtils.streamAndApply(nbt.getList("meta", 8), StringNBT.class, StringNBT::getString).collect(Collectors.toList());
 		return new ResearchEntry(key, sections, icons, meta, parents, in, name, desc, x, y);
 	}
 	

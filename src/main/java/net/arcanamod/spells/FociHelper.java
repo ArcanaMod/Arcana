@@ -5,6 +5,7 @@ import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.spells.effects.ISpellEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.StringTextComponent;
 
 /**
  * Helper for foci
@@ -29,28 +30,23 @@ public class FociHelper{
 	 * @return ItemStack with the focus properties.
 	 */
 	public static ItemStack generateFocus(int skin, ISpellEffect[] effects, int power, Aspect core, String name){
-		
 		ItemStack is = new ItemStack(ArcanaItems.FOCUS);
-		
-		CompoundNBT tag = is.getOrCreateSubCompound("foci");
-		
+		CompoundNBT tag = is.getChildTag("foci");
 		StringBuilder sb = new StringBuilder();
-		for(ISpellEffect effect : effects){
+		for(ISpellEffect effect : effects)
 			sb.append(effect.getName()).append(";");
-		}
 		
-		tag.setString("effects", sb.toString());
-		tag.setInteger("power", power);
-		tag.setString("core", core.toString());
-		tag.setString("name", name);
+		tag.putString("effects", sb.toString());
+		tag.putInt("power", power);
+		tag.putString("core", core.toString());
+		tag.putString("name", name);
 		CompoundNBT newtag = new CompoundNBT();
-		newtag.setTag("foci", tag);
-		newtag.setInteger("variant", skin);
+		newtag.put("foci", tag);
+		newtag.putInt("variant", skin);
 		
-		is.setStackDisplayName(name);
-		is.setTagCompound(newtag);
+		is.setDisplayName(new StringTextComponent(name));
+		is.setTag(newtag);
 		
 		return is;
 	}
-	
 }

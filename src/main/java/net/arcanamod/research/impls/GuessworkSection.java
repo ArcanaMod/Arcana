@@ -28,7 +28,7 @@ public class GuessworkSection extends EntrySection{
 	
 	public CompoundNBT getData(){
 		CompoundNBT tag = new CompoundNBT();
-		tag.setString("guesswork", getGuessworkId().toString());
+		tag.putString("guesswork", getGuessworkId().toString());
 		return tag;
 	}
 	

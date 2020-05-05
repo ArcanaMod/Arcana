@@ -31,81 +31,44 @@ public class TaintLevelHandler{
 		dir.mkdirs();
 		
 		if(!world.isRemote){
-			
-			if(Minecraft.getMinecraft().isSingleplayer()){
-				
+			if(Minecraft.getInstance().isSingleplayer()){
 				final File file = new File(dir, "TaintLevel.taint");
-				
 				CompoundNBT nbt;
-				
 				try{
-					
 					if(!file.exists()){
-						
 						file.createNewFile();
-						
 						nbt = new CompoundNBT();
-						
-						nbt.setFloat("TaintLevel", 0);
-						
+						nbt.putFloat("TaintLevel", 0);
 						try(FileOutputStream fileoutputstream = new FileOutputStream(file)){
-							
 							CompressedStreamTools.writeCompressed(nbt, fileoutputstream);
-							
 						}catch(IOException e){
-							
 							e.printStackTrace();
-							
 						}
-						
 					}
-					
 				}catch(IOException e){
-					
 					e.printStackTrace();
-					
 				}
-				
 			}
-			
 		}
 		
 		if(world.isRemote){
-			
 			final File file = new File(dir, "Arcana/TaintLevel.taint");
-			
 			CompoundNBT nbt;
-			
 			try{
-				
 				if(!file.exists()){
-					
 					file.createNewFile();
-					
 					nbt = new CompoundNBT();
-					
-					nbt.setFloat("TaintLevel", 0);
-					
+					nbt.putFloat("TaintLevel", 0);
 					try(FileOutputStream fileoutputstream = new FileOutputStream(file)){
-						
 						CompressedStreamTools.writeCompressed(nbt, fileoutputstream);
-						
 					}catch(IOException e){
-						
 						e.printStackTrace();
-						
 					}
-					
 				}
-				
 			}catch(IOException e){
-				
 				e.printStackTrace();
-				
 			}
-			
 		}
-		
 	}
 	
 	/**
@@ -118,35 +81,20 @@ public class TaintLevelHandler{
 		
 		File dir = new File(ArcanaFileUtils.getWorldDirectory(world), "Arcana");
 		dir.mkdirs();
-		
 		if(!world.isRemote){
-			
 			CompoundNBT nbt;
-			
 			final File file = new File(dir, "TaintLevel.taint");
-			
 			try{
-				
 				nbt = CompressedStreamTools.readCompressed(new FileInputStream(file));
-				
 				float returnvalue = nbt.getFloat("TaintLevel");
-				
 				return returnvalue;
-				
 			}catch(IOException e){
-				
 				e.printStackTrace();
-				
 			}
-			
 			return 2147483647;
-			
 		}else{
-			
 			return 80082;
-			
 		}
-		
 	}
 	
 	/**
@@ -158,109 +106,59 @@ public class TaintLevelHandler{
 	public static void increaseTaintLevel(World world, float amount){
 		
 		if(world instanceof ClientWorld){
-			
 			return;
-			
 		}
 		
 		File dir = new File(ArcanaFileUtils.getWorldDirectory(world), "Arcana");
 		dir.mkdirs();
 		
 		if(!world.isRemote){
-			
 			final File file = new File(dir, "TaintLevel.taint");
-			
 			CompoundNBT nbt;
-			
 			try{
-				
 				if(!file.exists()){
-					
 					file.createNewFile();
-					
 					nbt = new CompoundNBT();
-					
-				}else{
-					
+				}else
 					nbt = CompressedStreamTools.readCompressed(new FileInputStream(file));
-					
-				}
 				
-				nbt.setFloat("TaintLevel", getTaintLevel(world) + amount);
-				
+				nbt.putFloat("TaintLevel", getTaintLevel(world) + amount);
 				System.out.println((getTaintLevel(world) + amount));
-				
 				try(FileOutputStream fileoutputstream = new FileOutputStream(file)){
-					
 					CompressedStreamTools.writeCompressed(nbt, fileoutputstream);
-					
 				}catch(IOException e){
-					
 					e.printStackTrace();
-					
 				}
-				
 			}catch(IOException e){
-				
 				e.printStackTrace();
-				
 			}
-			
 		}
-		
 	}
 	
 	public static void setTaintLevel(World world, float amount){
-		
-		if(world instanceof ClientWorld){
-			
+		if(world instanceof ClientWorld)
 			return;
-			
-		}
-		
 		File dir = new File(ArcanaFileUtils.getWorldDirectory(world), "Arcana");
 		dir.mkdirs();
-		
 		if(!world.isRemote){
-			
 			final File file = new File(dir, "TaintLevel.taint");
-			
 			CompoundNBT nbt;
-			
 			try{
-				
 				if(!file.exists()){
-					
 					file.createNewFile();
-					
 					nbt = new CompoundNBT();
-					
-				}else{
-					
+				}else
 					nbt = CompressedStreamTools.readCompressed(new FileInputStream(file));
-					
-				}
-				
-				nbt.setFloat("TaintLevel", amount);
-				
+				nbt.putFloat("TaintLevel", amount);
 				try(FileOutputStream fileoutputstream = new FileOutputStream(file)){
-					
 					CompressedStreamTools.writeCompressed(nbt, fileoutputstream);
-					
 				}catch(IOException e){
-					
 					e.printStackTrace();
-					
 				}
-				
 			}catch(IOException e){
-				
 				e.printStackTrace();
-				
 			}
-			
 		}
-		
 	}
 	
 	/**
@@ -275,45 +173,25 @@ public class TaintLevelHandler{
 		dir.mkdirs();
 		
 		if(!world.isRemote){
-			
 			final File file = new File(dir, "TaintLevel.taint");
-			
 			CompoundNBT nbt;
-			
 			try{
-				
 				if(!file.exists()){
-					
 					file.createNewFile();
-					
 					nbt = new CompoundNBT();
-					
-				}else{
-					
+				}else
 					nbt = CompressedStreamTools.readCompressed(new FileInputStream(file));
-					
-				}
 				
-				nbt.setFloat("TaintLevel", getTaintLevel(world) - amount);
+				nbt.putFloat("TaintLevel", getTaintLevel(world) - amount);
 				
 				try(FileOutputStream fileoutputstream = new FileOutputStream(file)){
-					
 					CompressedStreamTools.writeCompressed(nbt, fileoutputstream);
-					
 				}catch(IOException e){
-					
 					e.printStackTrace();
-					
 				}
-				
 			}catch(IOException e){
-				
 				e.printStackTrace();
-				
 			}
-			
 		}
-		
 	}
-	
 }

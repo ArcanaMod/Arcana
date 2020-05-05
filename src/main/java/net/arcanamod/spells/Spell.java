@@ -92,21 +92,17 @@ public class Spell{
 		switch(core){
 			case EARTH:
 				for(ISpellEffect effect : effects){
-					if(effect == null){
+					if(effect == null)
 						continue;
-					}
-					if(player.getEntityWorld().getBlockState(player.getPosition()) != Blocks.AIR.getDefaultState()){
+					if(player.getEntityWorld().getBlockState(player.getPosition()) != Blocks.AIR.getDefaultState())
 						effect.getEffect(player.getPosition(), player.getEntityWorld(), power);
-						effect.getEffect(player, power);
-					}else{
-						effect.getEffect(player, power);
-					}
+					effect.getEffect(player, power);
 					//effect.getEffect(player.getPosition(), player.getEntityWorld(), power);
 				}
 				break;
 			case AIR:
 				SpellEntity entity = new SpellEntity(player.getEntityWorld(), player, this);
-				entity.setPosition(player.posX, player.getEntityBoundingBox().minY + (double)player.getEyeHeight(), player.posZ);
+				entity.setPosition(player.getPosX(), player.getBoundingBox().minY + (double)player.getEyeHeight(), player.getPosZ());
 				entity.setNoGravity(true);
 				float rotationYawIn = player.rotationPitch;
 				float rotationPitchIn = player.rotationPitch;
@@ -116,10 +112,10 @@ public class Spell{
 				float f2 = MathHelper.cos(rotationYawIn * 0.017453292F) * MathHelper.cos(rotationPitchIn * 0.017453292F);
 				entity.shoot(f, f1, f2, 5F, 0.0F);
 				System.out.println("spawnedSpellentity");
-				player.getEntityWorld().spawnEntity(entity);
+				player.getEntityWorld().addEntity(entity);
 				break;
 			case CHAOS:
-				List<LivingEntity> nearbyEntities = player.getEntityWorld().getEntitiesWithinAABB(MobEntity.class, player.getEntityBoundingBox().expand(power, power, power));
+				List<LivingEntity> nearbyEntities = player.getEntityWorld().getEntitiesWithinAABB(MobEntity.class, player.getBoundingBox().expand(power, power, power));
 				for(LivingEntity ent : nearbyEntities){
 					if(ent != player){
 						for(ISpellEffect effect : effects){
@@ -143,11 +139,11 @@ public class Spell{
 					entity1.shoot(wf, wf1, wf2, 5F, 0.0F);
 					yaw = yaw + 6F;
 					
-					player.getEntityWorld().spawnEntity(entity1);
+					player.getEntityWorld().addEntity(entity1);
 				}
 				break;
 			case ORDER:
-				List<LivingEntity> nearbyEntities1 = player.getEntityWorld().getEntitiesWithinAABB(LivingEntity.class, player.getEntityBoundingBox().expand(power, power, power));
+				List<LivingEntity> nearbyEntities1 = player.getEntityWorld().getEntitiesWithinAABB(LivingEntity.class, player.getBoundingBox().expand(power, power, power));
 				for(LivingEntity ent : nearbyEntities1){
 					if(ent != player){
 						for(ISpellEffect effect : effects){
@@ -177,7 +173,7 @@ public class Spell{
 			effects.add(effectObj);
 		}
 		Aspect core = Aspect.valueOf(spell.getString("core").toUpperCase());
-		int power = spell.getInteger("power");
+		int power = spell.getInt("power");
 		String name = spell.getString("name");
 		
 		return new Spell(effects.toArray(new ISpellEffect[0]), core, name, power);
