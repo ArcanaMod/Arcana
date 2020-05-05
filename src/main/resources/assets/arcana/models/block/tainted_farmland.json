@@ -1,0 +1,9 @@
+
+{
+  "parent": "block/template_farmland",
+  "textures": {
+    "particle": "block/dirt",
+    "dirt": "arcana:block/tainted_farmland_side",
+    "top": "arcana:block/tainted_farmland_top"
+  }
+}

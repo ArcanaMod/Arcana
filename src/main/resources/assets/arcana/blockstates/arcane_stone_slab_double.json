@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=top": {"model": "arcana:arcane_stone"},
+    "half=bottom": {"model": "arcana:arcane_stone"}
+  }
+}

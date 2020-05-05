@@ -1,0 +1,8 @@
+{
+  "parent": "block/inner_stairs",
+  "textures": {
+    "bottom": "arcana:block/trypophobius_planks",
+    "top": "arcana:block/trypophobius_planks",
+    "side": "arcana:block/trypophobius_planks"
+  }
+}

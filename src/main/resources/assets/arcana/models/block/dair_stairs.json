@@ -1,0 +1,8 @@
+{
+  "parent": "block/stairs",
+  "textures": {
+    "bottom": "arcana:block/dair_planks",
+    "top": "arcana:block/dair_planks",
+    "side": "arcana:block/dair_planks"
+  }
+}

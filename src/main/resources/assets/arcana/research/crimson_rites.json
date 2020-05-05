@@ -1,0 +1,53 @@
+{
+  "entries": [
+    {
+      "key": "arcana:crimson_trailing",
+      "name": "research.arcana.crimson",
+      "desc": "research.arcana.crimson.desc",
+      "icons": [
+        "arcana:crimson_rites",
+        "arcana:void_cap",
+        "arcana:hawthorn_log"
+      ],
+      "category": "arcana:crimson_basics",
+      "parents": [
+        "arcana:root"
+      ],
+      "meta": [
+        "purple_base",
+        "spiky_base"
+      ],
+      "x": 0,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.crimson.all"
+        }
+      ]
+    },
+    {
+      "key": "arcana:crimson_initiation",
+      "name": "research.arcana.crimson_initiation",
+      "desc": "research.arcana.crimson_initiation.desc",
+      "icons": [
+        "arcana:crimson_rites"
+      ],
+      "category": "arcana:crimson_basics",
+      "parents": [
+        "arcana:crimson_trailing"
+      ],
+      "meta": [
+        "purple_base"
+      ],
+      "x": 2,
+      "y": -2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.crimson_initiation.all"
+        }
+      ]
+    }
+  ]
+}

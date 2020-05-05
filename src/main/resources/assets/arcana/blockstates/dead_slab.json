@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=bottom": {"model": "arcana:dead_slab_bottom"},
+    "half=top": {"model": "arcana:dead_slab_top"}
+  }
+}

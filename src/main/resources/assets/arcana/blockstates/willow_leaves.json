@@ -1,0 +1,17 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "particle": "arcana:block/willow_log"
+    },
+    "model": "arcana:willow_leaves",
+    "uvlock": true
+  },
+  "variants": {
+    "normal": [{ }],
+    "check_decay=true,decayable=true": [{ }],
+    "check_decay=true,decayable=false": [{ }],
+    "check_decay=false,decayable=true": [{ }],
+    "check_decay=false,decayable=false": [{ }]
+  }
+}

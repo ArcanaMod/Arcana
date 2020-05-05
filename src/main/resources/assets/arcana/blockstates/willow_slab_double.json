@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=top": {"model": "arcana:willow_planks"},
+    "half=bottom": {"model": "arcana:willow_planks"}
+  }
+}

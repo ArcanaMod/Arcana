@@ -1,0 +1,8 @@
+{
+  "parent": "block/stairs",
+  "textures": {
+    "bottom": "arcana:block/tainted_jungle_planks",
+    "top": "arcana:block/tainted_jungle_planks",
+    "side": "arcana:block/tainted_jungle_planks"
+  }
+}

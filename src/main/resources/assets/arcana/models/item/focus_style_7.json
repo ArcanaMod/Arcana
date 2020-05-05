@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "arcana:foci/focus_style_7",
+    "layer1": "arcana:foci/focus_overlay_style_7"
+  }
+}

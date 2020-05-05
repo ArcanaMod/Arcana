@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "fullytainted=false": [{ "model": "arcana:tainted_goo" }],
+    "fullytainted=true": [{ "model": "arcana:tainted_goo" }]
+  }
+}

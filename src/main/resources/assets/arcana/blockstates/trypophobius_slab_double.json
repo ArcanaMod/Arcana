@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=top": {"model": "arcana:trypophobius_planks"},
+    "half=bottom": {"model": "arcana:trypophobius_planks"}
+  }
+}

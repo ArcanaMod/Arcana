@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "thaumium_ingot",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:thaumium_block"
+    }
+  },
+  "result": {
+    "item": "arcana:thaumium_ingot",
+    "count": 9
+  }
+}

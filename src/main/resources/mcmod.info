@@ -1,0 +1,16 @@
+[
+{
+  "modid": "arcana",
+  "name": "Arcana",
+  "description": "Arcana is a magic mod based on Thaumcraft",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["..."],
+  "credits": "The Arcana team",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

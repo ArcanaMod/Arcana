@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "fullytainted=false": [{ "model": "arcana:tainted_darkoak_planks" }],
+    "fullytainted=true": [{ "model": "arcana:tainted_darkoak_planks" }]
+  }
+}
+

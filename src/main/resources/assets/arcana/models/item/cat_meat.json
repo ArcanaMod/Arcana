@@ -1,0 +1,7 @@
+
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "arcana:item/cat_meat_raw"
+  }
+}

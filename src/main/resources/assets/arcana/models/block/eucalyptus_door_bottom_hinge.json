@@ -1,0 +1,7 @@
+{
+  "parent": "block/door_bottom_rh",
+  "textures": {
+    "bottom": "arcana:block/eucalyptus_door_bottom",
+    "top": "arcana:block/eucalyptus_door_top"
+  }
+}

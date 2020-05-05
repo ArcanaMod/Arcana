@@ -1,0 +1,13 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "arcana:tainted_darkoak_sapling",
+    "uvlock": true
+  },
+  "variants": {
+    "normal": [{ }],
+    "inventory": [{ }],
+    "stage=0":[{ }],
+    "stage=1":[{ }]
+  }
+}

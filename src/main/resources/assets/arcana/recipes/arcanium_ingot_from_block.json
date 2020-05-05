@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "arcanium_ingot",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:arcanium_block"
+    }
+  },
+  "result": {
+    "item": "arcana:arcanium_ingot",
+    "count": 9
+  }
+}

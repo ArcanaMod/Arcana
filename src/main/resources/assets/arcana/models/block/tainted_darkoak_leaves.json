@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "arcana:block/tainted_darkoak_leaves"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "arcana:block/tainted_darkoak_log_top",
+    "side": "arcana:block/tainted_darkoak_log"
+  }
+}

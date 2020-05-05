@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "half=bottom": {"model": "arcana:tainted_plank_slab"},
+    "half=top": {"model": "arcana:tainted_plank_slab_top"},
+    "type=double": {"model": "arcana:tainted_oak_planks"}
+  }
+}

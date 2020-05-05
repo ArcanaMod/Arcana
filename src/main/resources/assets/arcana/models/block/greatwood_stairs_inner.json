@@ -1,0 +1,8 @@
+{
+  "parent": "block/inner_stairs",
+  "textures": {
+    "bottom": "arcana:block/greatwood_planks",
+    "top": "arcana:block/greatwood_planks",
+    "side": "arcana:block/greatwood_planks"
+  }
+}

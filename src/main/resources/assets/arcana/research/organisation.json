@@ -1,0 +1,97 @@
+{
+  "books": [
+    {
+      "key": "arcana:arcanum",
+      "prefix": "arcanum"
+    },
+    {
+      "key": "arcana:tainted_codex",
+      "prefix": "book_of_taint"
+    },
+    {
+      "key": "arcana:crimson_rites",
+      "prefix": "crimson_rites"
+    },
+    {
+      "key": "arcana:illustrious_grimoire",
+      "prefix": "arcanum"
+    }
+  ],
+  "categories": [
+    {
+      "key": "arcana:basics",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/light.png",
+      "name": "research.arcana.category.basics",
+      "bg": "arcana:research/research_bg1_b.png"
+    },
+    {
+      "key": "arcana:alchemy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/crucible_item.png",
+      "name": "research.arcana.category.alchemy",
+      "bg": "arcana:research/basics_bg.png",
+      "requires": "arcana:alchemy_intro"
+    },
+    {
+      "key": "arcana:artifice",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/research_goggles.png",
+      "name": "research.arcana.category.artifice",
+      "bg": "arcana:research/starry_bg.png",
+      "requires": "arcana:artifice_intro"
+    },
+    {
+      "key": "arcana:auromancy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/focus_parts.png",
+      "name": "research.arcana.category.auromancy",
+      "bg": "arcana:research/colourvoid_bg.png",
+      "requires": "arcana:auromancy_intro"
+    },
+    {
+      "key": "arcana:infusion",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/mana.png",
+      "name": "research.arcana.category.infusion",
+      "bg": "arcana:research/starry_bg.png",
+      "requires": "arcana:infusion_intro"
+    },
+    {
+      "key": "arcana:golemancy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/human.png",
+      "name": "research.arcana.category.golemancy",
+      "bg": "arcana:research/starry_bg.png",
+      "requires": "arcana:golemancy_intro"
+    },
+    {
+      "key": "arcana:eldritch",
+      "in": "arcana:arcanum",
+      "icon": "arcana:research/eldritch.png",
+      "name": "research.arcana.category.eldritch",
+      "bg": "arcana:research/eldritch_bg.png"
+    },
+    {
+      "key": "arcana:tainted_basics",
+      "in": "arcana:tainted_codex",
+      "icon": "arcana:research/tainted_basics.png",
+      "name": "research.arcana.category.taint",
+      "bg": "arcana:research/static_bg.png"
+    },
+    {
+      "key": "arcana:crimson_basics",
+      "in": "arcana:crimson_rites",
+      "icon": "arcana:research/crimson_basics.png",
+      "name": "research.arcana.category.crimson",
+      "bg": "arcana:research/eldritch_bg.png"
+    },
+    {
+      "key": "arcana:illustrious_basics",
+      "in": "arcana:illustrious_grimoire",
+      "icon": "arcana:research/illustrious_basics.png",
+      "name": "research.arcana.category.illustrious",
+      "bg": "arcana:research/colourvoid_bg.png"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "half=bottom": {"model": "arcana:willow_slab_bottom"},
+    "half=top": {"model": "arcana:willow_slab_top"}
+  }
+}
