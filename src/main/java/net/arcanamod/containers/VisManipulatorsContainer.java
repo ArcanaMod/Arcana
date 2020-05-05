@@ -4,10 +4,10 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.aspects.VisHandlerCapability;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
@@ -21,7 +21,7 @@ import java.util.function.Supplier;
 public class VisManipulatorsContainer extends AspectContainer{
 	
 	// Inventory w/ two slots
-	public IInventory manipulatorInv = new InventoryBasic("", false, 2){
+	public IInventory manipulatorInv = new Inventory("", false, 2){
 		public void markDirty(){
 			super.markDirty();
 			VisManipulatorsContainer.this.onCraftMatrixChanged(this);
@@ -67,7 +67,7 @@ public class VisManipulatorsContainer extends AspectContainer{
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index){
+	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index){
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
 		
@@ -90,14 +90,14 @@ public class VisManipulatorsContainer extends AspectContainer{
 		return itemstack;
 	}
 	
-	public void onContainerClosed(EntityPlayer player){
+	public void onContainerClosed(PlayerEntity player){
 		super.onContainerClosed(player);
 		
 		if(!player.world.isRemote)
 			clearContainer(player, player.world, manipulatorInv);
 	}
 	
-	public boolean canInteractWith(EntityPlayer player){
+	public boolean canInteractWith(PlayerEntity player){
 		return true;
 	}
 	

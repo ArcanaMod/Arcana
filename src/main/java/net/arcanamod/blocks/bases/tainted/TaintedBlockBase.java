@@ -4,7 +4,7 @@ import net.arcanamod.blocks.bases.untainted.UntaintedBlockBase;
 import net.arcanamod.Arcana;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -92,7 +92,7 @@ public class TaintedBlockBase extends UntaintedBlockBase{
 	//	}
 	
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune){
 		Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Arcana.MODID, "un" + name));
 		if(block != null){
 			Item item = Item.getItemFromBlock(block);

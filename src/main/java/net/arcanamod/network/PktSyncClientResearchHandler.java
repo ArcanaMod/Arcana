@@ -5,7 +5,6 @@ import io.netty.buffer.ByteBufInputStream;
 import io.netty.buffer.ByteBufOutputStream;
 import net.arcanamod.Arcana;
 import net.arcanamod.research.Researcher;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
@@ -62,7 +61,7 @@ public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClie
 			// NBTBase # read (DataInput)
 			// used with ByteBufInputStream
 			ByteBufInputStream stream = new ByteBufInputStream(buf);
-			NBTTagCompound nbt = null;
+			CompoundNBT nbt = null;
 			try{
 				nbt = CompressedStreamTools.read(stream, NBTSizeTracker.INFINITE);
 			}catch(IOException e){
@@ -70,13 +69,13 @@ public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClie
 			}
 			
 			if(nbt != null){
-				NBTTagCompound researches = (NBTTagCompound)nbt.getTag("researches");
+				CompoundNBT researches = (CompoundNBT)nbt.getTag("researches");
 				for(String key : researches.getKeySet())
 					data.put(new ResourceLocation(key), researches.getInteger(key));
 				
-				NBTTagList puzzles = nbt.getTagList("puzzles", Constants.NBT.TAG_STRING);
+				ListNBT puzzles = nbt.getTagList("puzzles", Constants.NBT.TAG_STRING);
 				for(NBTBase key : puzzles)
-					puzzleData.add(new ResourceLocation(((NBTTagString)key).getString()));
+					puzzleData.add(new ResourceLocation(((StringNBT)key).getString()));
 			}
 		}
 		
@@ -84,14 +83,14 @@ public class PktSyncClientResearchHandler implements IMessageHandler<PktSyncClie
 			// NBTBase # write (DataOutput)
 			// used with ByteBufOutputStream
 			ByteBufOutputStream stream = new ByteBufOutputStream(buf);
-			NBTTagCompound nbt = new NBTTagCompound();
-			NBTTagCompound researches = new NBTTagCompound();
+			CompoundNBT nbt = new CompoundNBT();
+			CompoundNBT researches = new CompoundNBT();
 			// add each book
 			data.forEach((entry, stage) -> researches.setInteger(entry.toString(), stage));
 			nbt.setTag("researches", researches);
 			
-			NBTTagList puzzles = new NBTTagList();
-			puzzleData.forEach(puzzle -> puzzles.appendTag(new NBTTagString(puzzle.toString())));
+			ListNBT puzzles = new ListNBT();
+			puzzleData.forEach(puzzle -> puzzles.appendTag(new StringNBT(puzzle.toString())));
 			nbt.setTag("puzzles", puzzles);
 			try{
 				CompressedStreamTools.write(nbt, stream);

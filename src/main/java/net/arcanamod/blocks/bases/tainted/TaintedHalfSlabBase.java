@@ -5,7 +5,7 @@ import net.arcanamod.blocks.OreDictEntry;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.IHasModel;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSlab;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSlab;
@@ -19,7 +19,7 @@ import net.minecraft.item.ItemSlab;
 public class TaintedHalfSlabBase extends TaintedSlabBase implements IHasModel, OreDictEntry{
 	public TaintedHalfSlabBase(String name, Material material, Block doubleSlab){
 		super(name, material);
-		ArcanaItems.ITEMS.add(new ItemSlab(this, this, (BlockSlab)doubleSlab).setRegistryName(this.getRegistryName()));
+		ArcanaItems.ITEMS.add(new ItemSlab(this, this, (SlabBlock)doubleSlab).setRegistryName(this.getRegistryName()));
 	}
 	
 	public String getOreDictName(){

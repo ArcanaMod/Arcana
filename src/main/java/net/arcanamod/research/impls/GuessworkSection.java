@@ -1,7 +1,7 @@
 package net.arcanamod.research.impls;
 
 import net.arcanamod.research.EntrySection;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -26,8 +26,8 @@ public class GuessworkSection extends EntrySection{
 		return TYPE;
 	}
 	
-	public NBTTagCompound getData(){
-		NBTTagCompound tag = new NBTTagCompound();
+	public CompoundNBT getData(){
+		CompoundNBT tag = new CompoundNBT();
 		tag.setString("guesswork", getGuessworkId().toString());
 		return tag;
 	}

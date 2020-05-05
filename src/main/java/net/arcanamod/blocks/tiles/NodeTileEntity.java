@@ -5,10 +5,10 @@ import net.arcanamod.blocks.BlockNormalNode;
 import net.arcanamod.client.particles.EnumArcanaParticles;
 import net.arcanamod.client.particles.ParticleSpawner;
 import net.arcanamod.util.NodeHelper;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.common.util.Constants;
@@ -22,7 +22,7 @@ public class NodeTileEntity extends TileEntity implements ITickable{
 	
 	public boolean isOn = false;
 	
-	public boolean canInteractWith(EntityPlayer playerIn){
+	public boolean canInteractWith(PlayerEntity playerIn){
 		// If we are too far away from this tiles entity you cannot use it
 		return !isInvalid() && playerIn.getDistanceSq(pos.add(0.5D, 0.5D, 0.5D)) <= 64D;
 	}
@@ -59,22 +59,22 @@ public class NodeTileEntity extends TileEntity implements ITickable{
 	}
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound){
+	public void readFromNBT(CompoundNBT compound){
 		super.readFromNBT(compound);
 		
-		NBTTagList aspects = compound.getTagList("aspects", Constants.NBT.TAG_COMPOUND);
+		ListNBT aspects = compound.getTagList("aspects", Constants.NBT.TAG_COMPOUND);
 		for(NBTBase aspect : aspects){
-			NBTTagCompound aspectCompound = (NBTTagCompound)aspect;
+			CompoundNBT aspectCompound = (CompoundNBT)aspect;
 			storedAspects.put(Aspect.valueOf(aspectCompound.getString("type")), aspectCompound.getInteger("amount"));
 		}
 		
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound){
-		NBTTagList aspects = new NBTTagList();
+	public CompoundNBT writeToNBT(CompoundNBT compound){
+		ListNBT aspects = new ListNBT();
 		for(Aspect aspect : storedAspects.keySet()){
-			NBTTagCompound tag = new NBTTagCompound();
+			CompoundNBT tag = new CompoundNBT();
 			tag.setString("type", aspect.toString());
 			tag.setInteger("amount", storedAspects.get(aspect));
 			aspects.appendTag(tag);

@@ -1,17 +1,17 @@
 package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.BlockCocoa;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockVine;
+import net.minecraft.block.*;
+import net.minecraft.block.VineBlock;
+import net.minecraft.block.CocoaBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 
 import java.util.Random;
 
@@ -20,16 +20,16 @@ import java.util.Random;
  * <p>
  * Used to generate small oak tainted trees
  */
-public class TaintedOakGenerator extends WorldGenAbstractTree{
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_OAK_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_OAK_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_OAK_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_OAK_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+public class TaintedOakGenerator extends AbstractTreeFeature{
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_OAK_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_OAK_LOG.getDefaultState();
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_OAK_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_OAK_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
 	private final int minTreeHeight;
 	private final boolean vinesGrow;
-	private final IBlockState metaWood;
-	private final IBlockState metaLeaves;
+	private final BlockState metaWood;
+	private final BlockState metaLeaves;
 	
 	TaintedOakGenerator(boolean notify){
 		this(notify, false);
@@ -39,7 +39,7 @@ public class TaintedOakGenerator extends WorldGenAbstractTree{
 		this(notify, 4, untainted ? DEFAULT_UNTAINTED_TRUNK : DEFAULT_TAINTED_TRUNK, untainted ? DEFAULT_UNTAINTED_LEAVES : DEFAULT_TAINTED_LEAVES, false);
 	}
 	
-	public TaintedOakGenerator(boolean notify, int minTreeHeightIn, IBlockState woodMeta, IBlockState leavesMeta, boolean growVines){
+	public TaintedOakGenerator(boolean notify, int minTreeHeightIn, BlockState woodMeta, BlockState leavesMeta, boolean growVines){
 		super(notify);
 		this.minTreeHeight = minTreeHeightIn;
 		this.metaWood = woodMeta;
@@ -82,9 +82,9 @@ public class TaintedOakGenerator extends WorldGenAbstractTree{
 			if(!flag){
 				return false;
 			}else{
-				IBlockState state = worldIn.getBlockState(position.down());
+				BlockState state = worldIn.getBlockState(position.down());
 				
-				if(state.getBlock().canSustainPlant(state, worldIn, position.down(), net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - i - 1){
+				if(state.getBlock().canSustainPlant(state, worldIn, position.down(), Direction.UP, (SaplingBlock)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - i - 1){
 					state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
 					int k2 = 3;
 					int l2 = 0;
@@ -120,19 +120,19 @@ public class TaintedOakGenerator extends WorldGenAbstractTree{
 							
 							if(this.vinesGrow && j3 > 0){
 								if(rand.nextInt(3) > 0 && worldIn.isAirBlock(position.add(-1, j3, 0))){
-									this.addVine(worldIn, position.add(-1, j3, 0), BlockVine.EAST);
+									this.addVine(worldIn, position.add(-1, j3, 0), VineBlock.EAST);
 								}
 								
 								if(rand.nextInt(3) > 0 && worldIn.isAirBlock(position.add(1, j3, 0))){
-									this.addVine(worldIn, position.add(1, j3, 0), BlockVine.WEST);
+									this.addVine(worldIn, position.add(1, j3, 0), VineBlock.WEST);
 								}
 								
 								if(rand.nextInt(3) > 0 && worldIn.isAirBlock(position.add(0, j3, -1))){
-									this.addVine(worldIn, position.add(0, j3, -1), BlockVine.SOUTH);
+									this.addVine(worldIn, position.add(0, j3, -1), VineBlock.SOUTH);
 								}
 								
 								if(rand.nextInt(3) > 0 && worldIn.isAirBlock(position.add(0, j3, 1))){
-									this.addVine(worldIn, position.add(0, j3, 1), BlockVine.NORTH);
+									this.addVine(worldIn, position.add(0, j3, 1), VineBlock.NORTH);
 								}
 							}
 						}
@@ -156,19 +156,19 @@ public class TaintedOakGenerator extends WorldGenAbstractTree{
 										BlockPos blockpos1 = blockpos$mutableblockpos1.south();
 										
 										if(rand.nextInt(4) == 0 && worldIn.isAirBlock(blockpos2)){
-											this.addHangingVine(worldIn, blockpos2, BlockVine.EAST);
+											this.addHangingVine(worldIn, blockpos2, VineBlock.EAST);
 										}
 										
 										if(rand.nextInt(4) == 0 && worldIn.isAirBlock(blockpos3)){
-											this.addHangingVine(worldIn, blockpos3, BlockVine.WEST);
+											this.addHangingVine(worldIn, blockpos3, VineBlock.WEST);
 										}
 										
 										if(rand.nextInt(4) == 0 && worldIn.isAirBlock(blockpos4)){
-											this.addHangingVine(worldIn, blockpos4, BlockVine.SOUTH);
+											this.addHangingVine(worldIn, blockpos4, VineBlock.SOUTH);
 										}
 										
 										if(rand.nextInt(4) == 0 && worldIn.isAirBlock(blockpos1)){
-											this.addHangingVine(worldIn, blockpos1, BlockVine.NORTH);
+											this.addHangingVine(worldIn, blockpos1, VineBlock.NORTH);
 										}
 									}
 								}
@@ -177,9 +177,9 @@ public class TaintedOakGenerator extends WorldGenAbstractTree{
 						
 						if(rand.nextInt(5) == 0 && i > 5){
 							for(int l3 = 0; l3 < 2; ++l3){
-								for(EnumFacing enumfacing : EnumFacing.Plane.HORIZONTAL){
+								for(Direction enumfacing : Direction.Plane.HORIZONTAL){
 									if(rand.nextInt(4 - l3) == 0){
-										EnumFacing enumfacing1 = enumfacing.getOpposite();
+										Direction enumfacing1 = enumfacing.getOpposite();
 										this.placeCocoa(worldIn, rand.nextInt(3), position.add(enumfacing1.getFrontOffsetX(), i - 5 + l3, enumfacing1.getFrontOffsetZ()), enumfacing);
 									}
 								}
@@ -197,8 +197,8 @@ public class TaintedOakGenerator extends WorldGenAbstractTree{
 		}
 	}
 	
-	private void placeCocoa(World worldIn, int p_181652_2_, BlockPos pos, EnumFacing side){
-		this.setBlockAndNotifyAdequately(worldIn, pos, Blocks.COCOA.getDefaultState().withProperty(BlockCocoa.AGE, Integer.valueOf(p_181652_2_)).withProperty(BlockCocoa.FACING, side));
+	private void placeCocoa(World worldIn, int p_181652_2_, BlockPos pos, Direction side){
+		this.setBlockAndNotifyAdequately(worldIn, pos, Blocks.COCOA.getDefaultState().withProperty(CocoaBlock.AGE, Integer.valueOf(p_181652_2_)).withProperty(CocoaBlock.FACING, side));
 	}
 	
 	private void addVine(World worldIn, BlockPos pos, PropertyBool prop){

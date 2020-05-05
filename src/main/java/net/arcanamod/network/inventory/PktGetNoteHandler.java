@@ -3,10 +3,10 @@ package net.arcanamod.network.inventory;
 import io.netty.buffer.ByteBuf;
 import net.arcanamod.items.ArcanaItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
@@ -18,11 +18,11 @@ public class PktGetNoteHandler implements IMessageHandler<PktGetNoteHandler.PktG
 	public IMessage onMessage(PktGetNote message, MessageContext ctx){
 		// on server
 		Minecraft.getMinecraft().addScheduledTask(() -> {
-			EntityPlayerMP epm = ctx.getServerHandler().player;
+			ServerPlayerEntity epm = ctx.getServerHandler().player;
 			if(epm.inventory.clearMatchingItems(ArcanaItems.INK, -1, 0, null) > 0 && epm.inventory.clearMatchingItems(Items.PAPER, -1, 0, null) > 0){
 				// if I can give research note
 				ItemStack in = new ItemStack(ArcanaItems.RESEARCH_NOTE, 1);
-				NBTTagCompound nbt = new NBTTagCompound();
+				CompoundNBT nbt = new CompoundNBT();
 				nbt.setString("puzzle", message.getKey().toString());
 				nbt.setString("research", message.getResearchKey().toString());
 				in.setTagCompound(nbt);

@@ -3,7 +3,7 @@ package net.arcanamod.items.tools;
 import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.IHasModel;
-import net.minecraft.item.ItemPickaxe;
+import net.minecraft.item.PickaxeItem;
 
 import static net.arcanamod.Arcana.TAB_ARCANA;
 
@@ -13,7 +13,7 @@ import static net.arcanamod.Arcana.TAB_ARCANA;
  * @author Wilkon
  */
 
-public class PickaxeBase extends ItemPickaxe implements IHasModel{
+public class PickaxeBase extends PickaxeItem implements IHasModel{
 	public PickaxeBase(String name, ToolMaterial material){
 		super(material);
 		setUnlocalizedName(name);

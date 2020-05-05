@@ -1,15 +1,15 @@
 package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockVine;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.VineBlock;
 import net.minecraft.block.properties.PropertyBool;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenHugeTrees;
+import net.minecraft.world.gen.feature.HugeTreesFeature;
 
 import java.util.Random;
 
@@ -18,11 +18,11 @@ import java.util.Random;
  * <p>
  * Used to generate mega jungle tainted trees
  */
-public class TaintedMegaJungleGenerator extends WorldGenHugeTrees{
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_JUNGLE_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_JUNGLE_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+public class TaintedMegaJungleGenerator extends HugeTreesFeature{
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_JUNGLE_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_JUNGLE_LOG.getDefaultState();
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
 	public TaintedMegaJungleGenerator(boolean notify, int baseHeightIn, int extraRandomHeightIn, boolean untainted){
 		super(notify, baseHeightIn, extraRandomHeightIn, untainted ? DEFAULT_UNTAINTED_TRUNK : DEFAULT_TAINTED_TRUNK, untainted ? DEFAULT_UNTAINTED_LEAVES : DEFAULT_TAINTED_LEAVES);
@@ -63,8 +63,8 @@ public class TaintedMegaJungleGenerator extends WorldGenHugeTrees{
 					this.setBlockAndNotifyAdequately(worldIn, blockpos, this.woodMetadata);
 					
 					if(i2 > 0){
-						this.placeVine(worldIn, rand, blockpos.west(), BlockVine.EAST);
-						this.placeVine(worldIn, rand, blockpos.north(), BlockVine.SOUTH);
+						this.placeVine(worldIn, rand, blockpos.west(), VineBlock.EAST);
+						this.placeVine(worldIn, rand, blockpos.north(), VineBlock.SOUTH);
 					}
 				}
 				
@@ -75,8 +75,8 @@ public class TaintedMegaJungleGenerator extends WorldGenHugeTrees{
 						this.setBlockAndNotifyAdequately(worldIn, blockpos1, this.woodMetadata);
 						
 						if(i2 > 0){
-							this.placeVine(worldIn, rand, blockpos1.east(), BlockVine.WEST);
-							this.placeVine(worldIn, rand, blockpos1.north(), BlockVine.SOUTH);
+							this.placeVine(worldIn, rand, blockpos1.east(), VineBlock.WEST);
+							this.placeVine(worldIn, rand, blockpos1.north(), VineBlock.SOUTH);
 						}
 					}
 					
@@ -86,8 +86,8 @@ public class TaintedMegaJungleGenerator extends WorldGenHugeTrees{
 						this.setBlockAndNotifyAdequately(worldIn, blockpos2, this.woodMetadata);
 						
 						if(i2 > 0){
-							this.placeVine(worldIn, rand, blockpos2.east(), BlockVine.WEST);
-							this.placeVine(worldIn, rand, blockpos2.south(), BlockVine.NORTH);
+							this.placeVine(worldIn, rand, blockpos2.east(), VineBlock.WEST);
+							this.placeVine(worldIn, rand, blockpos2.south(), VineBlock.NORTH);
 						}
 					}
 					
@@ -97,8 +97,8 @@ public class TaintedMegaJungleGenerator extends WorldGenHugeTrees{
 						this.setBlockAndNotifyAdequately(worldIn, blockpos3, this.woodMetadata);
 						
 						if(i2 > 0){
-							this.placeVine(worldIn, rand, blockpos3.west(), BlockVine.EAST);
-							this.placeVine(worldIn, rand, blockpos3.south(), BlockVine.NORTH);
+							this.placeVine(worldIn, rand, blockpos3.west(), VineBlock.EAST);
+							this.placeVine(worldIn, rand, blockpos3.south(), VineBlock.NORTH);
 						}
 					}
 				}
@@ -124,7 +124,7 @@ public class TaintedMegaJungleGenerator extends WorldGenHugeTrees{
 	
 	//Helper macro
 	private boolean isAirLeaves(World world, BlockPos pos){
-		IBlockState state = world.getBlockState(pos);
+		BlockState state = world.getBlockState(pos);
 		return state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos);
 	}
 }

@@ -5,11 +5,8 @@ import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -35,13 +32,13 @@ public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAsp
 	// store slots need that + their own aspect
 	
 	public IMessage onMessage(PktSyncAspectContainer message, MessageContext ctx){
-		EntityPlayer eps = Arcana.proxy.getPlayerOnClient();
+		PlayerEntity eps = Arcana.proxy.getPlayerOnClient();
 		AspectContainer container = (AspectContainer)eps.openContainer;
 		container.setHeldAspect(message.heldAspect);
 		container.setHeldCount(message.heldCount);
 		for(Pair<Integer, Aspect> storeSlot : message.storeSlotAspects)
 			container.getAspectSlots().get(storeSlot.getLeft()).setAspect(storeSlot.getRight());
-		for(Pair<Integer, NBTTagCompound> handler : message.handlers)
+		for(Pair<Integer, CompoundNBT> handler : message.handlers)
 			container.getAllOpenHandlers().get(handler.getLeft()).deserializeNBT(handler.getRight());
 		container.onAspectSlotChange();
 		return null;
@@ -51,7 +48,7 @@ public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAsp
 		
 		int heldCount;
 		Aspect heldAspect = null;
-		List<Pair<Integer, NBTTagCompound>> handlers = new ArrayList<>();
+		List<Pair<Integer, CompoundNBT>> handlers = new ArrayList<>();
 		List<Pair<Integer, Aspect>> storeSlotAspects = new ArrayList<>();
 		
 		public PktSyncAspectContainer(){
@@ -79,7 +76,7 @@ public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAsp
 			int handlerCount = pb.readInt();
 			for(int i = 0; i < handlerCount; i++){
 				int index = pb.readInt();
-				NBTTagCompound data = null;
+				CompoundNBT data = null;
 				try{
 					data = pb.readCompoundTag();
 				}catch(IOException e){
@@ -103,7 +100,7 @@ public class PktSyncAspectContainerHandler implements IMessageHandler<PktSyncAsp
 			writeAspect(pb, heldAspect);
 			
 			pb.writeInt(handlers.size());
-			for(Pair<Integer, NBTTagCompound> handler : handlers){
+			for(Pair<Integer, CompoundNBT> handler : handlers){
 				pb.writeInt(handler.getLeft());
 				pb.writeCompoundTag(handler.getRight());
 			}

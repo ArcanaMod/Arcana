@@ -6,7 +6,7 @@ import net.arcanamod.items.ItemWand;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ItemBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -33,7 +33,7 @@ public class WandCore extends ItemBase{
 		int f = focus == null ? 0 : focus.getID();
 		ItemStack stack = new ItemStack(getWand());
 		if(stack.getTagCompound() == null)
-			stack.setTagCompound(new NBTTagCompound());
+			stack.setTagCompound(new CompoundNBT());
 		stack.getTagCompound().setInteger("cap", c);
 		stack.getTagCompound().setInteger("focus", f);
 		return stack;
@@ -48,7 +48,7 @@ public class WandCore extends ItemBase{
 		int f = focus == null ? 0 : focus.getID();
 		ItemStack stack = new ItemStack(ArcanaItems.WOOD_WAND);
 		if(stack.getTagCompound() == null)
-			stack.setTagCompound(new NBTTagCompound());
+			stack.setTagCompound(new CompoundNBT());
 		stack.getTagCompound().setInteger("cap", c);
 		stack.getTagCompound().setInteger("focus", f);
 		return stack;

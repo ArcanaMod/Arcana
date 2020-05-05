@@ -2,9 +2,9 @@ package net.arcanamod.items.tools.autorepair;
 
 import net.arcanamod.items.tools.HoeBase;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.world.World;
 
 /**
@@ -34,9 +34,9 @@ public class AutoRepairHoe extends HoeBase{
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 		if(isSelected){
-			NBTTagCompound tag = stack.getTagCompound();
+			CompoundNBT tag = stack.getTagCompound();
 			if(tag == null){
-				stack.setTagCompound(new NBTTagCompound());
+				stack.setTagCompound(new CompoundNBT());
 				tag = stack.getTagCompound();
 			}
 			if(tag != null && !tag.hasKey("repair_timer")){
@@ -47,7 +47,7 @@ public class AutoRepairHoe extends HoeBase{
 				tag.setInteger("repair_timer", tag.getInteger("repair_timer") - 1);
 			}else if(tag != null){
 				tag.setInteger("repair_timer", FULL_TIMER);
-				stack.damageItem(-1, (EntityLivingBase)entityIn);
+				stack.damageItem(-1, (LivingEntity)entityIn);
 			}
 		}
 	}

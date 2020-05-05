@@ -2,36 +2,36 @@ package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.worldgen.GenerationUtilities;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.LogBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-import static net.minecraft.block.BlockLog.LOG_AXIS;
+import static net.minecraft.block.LogBlock.LOG_AXIS;
 
 /**
  * @author Mozaran
  * <p>
  * Used to generate hawthorn trees (WIP)
  */
-public class HawthornGenerator extends WorldGenAbstractTree{
-	private static final IBlockState DEFAULT_TRUNK = ArcanaBlocks.HAWTHORN_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_HAWTHORN_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_HAWTHORN_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_LEAVES = ArcanaBlocks.HAWTHORN_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_HAWTHORN_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_HAWTHORN_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+public class HawthornGenerator extends AbstractTreeFeature{
+	private static final BlockState DEFAULT_TRUNK = ArcanaBlocks.HAWTHORN_LOG.getDefaultState();
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_HAWTHORN_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_HAWTHORN_LOG.getDefaultState();
+	private static final BlockState DEFAULT_LEAVES = ArcanaBlocks.HAWTHORN_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_HAWTHORN_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_HAWTHORN_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
-	private final IBlockState metaWood;
-	private final IBlockState metaLeaves;
+	private final BlockState metaWood;
+	private final BlockState metaLeaves;
 	
 	private final int minTreeHeight = 4;
 	
@@ -161,9 +161,9 @@ public class HawthornGenerator extends WorldGenAbstractTree{
 			return false;
 		}
 		
-		IBlockState state = worldIn.getBlockState(position.down());
+		BlockState state = worldIn.getBlockState(position.down());
 		
-		if(state.getBlock().canSustainPlant(state, worldIn, position.down(), EnumFacing.UP, (IPlantable)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - height - 1){
+		if(state.getBlock().canSustainPlant(state, worldIn, position.down(), Direction.UP, (IPlantable)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - height - 1){
 			state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
 			for(BlockPos pos : leafBlockList){
 				setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);
@@ -172,10 +172,10 @@ public class HawthornGenerator extends WorldGenAbstractTree{
 				setBlockAndNotifyAdequately(worldIn, pos, metaWood);
 			}
 			
-			setBlockAndNotifyAdequately(worldIn, position.add(1, 0, 0), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.X));
-			setBlockAndNotifyAdequately(worldIn, position.add(-1, 0, 0), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.X));
-			setBlockAndNotifyAdequately(worldIn, position.add(0, 0, 1), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z));
-			setBlockAndNotifyAdequately(worldIn, position.add(0, 0, -1), metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z));
+			setBlockAndNotifyAdequately(worldIn, position.add(1, 0, 0), metaWood.withProperty(LOG_AXIS, LogBlock.EnumAxis.X));
+			setBlockAndNotifyAdequately(worldIn, position.add(-1, 0, 0), metaWood.withProperty(LOG_AXIS, LogBlock.EnumAxis.X));
+			setBlockAndNotifyAdequately(worldIn, position.add(0, 0, 1), metaWood.withProperty(LOG_AXIS, LogBlock.EnumAxis.Z));
+			setBlockAndNotifyAdequately(worldIn, position.add(0, 0, -1), metaWood.withProperty(LOG_AXIS, LogBlock.EnumAxis.Z));
 			
 			return true;
 		}else{

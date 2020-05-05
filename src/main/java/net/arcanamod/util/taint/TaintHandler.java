@@ -1,11 +1,10 @@
 package net.arcanamod.util.taint;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockRotatedPillar;
-import net.minecraft.block.BlockSlab;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.*;
+import net.minecraft.block.RotatedPillarBlock;
+import net.minecraft.block.SlabBlock;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -210,8 +209,8 @@ public class TaintHandler{
 						
 						for(Map.Entry<Block[], Block> entry : conversionLists.entrySet()){
 							if(Arrays.stream(entry.getKey()).anyMatch(bl -> b.equals(bl.getBlockState().getBlock()))){
-								if(worldIn.getBlockState(nPos).getPropertyKeys().contains(BlockRotatedPillar.AXIS)){
-									worldIn.setBlockState(nPos, entry.getValue().getDefaultState().withProperty(BlockRotatedPillar.AXIS, worldIn.getBlockState(nPos).getValue(BlockRotatedPillar.AXIS)));
+								if(worldIn.getBlockState(nPos).getPropertyKeys().contains(RotatedPillarBlock.AXIS)){
+									worldIn.setBlockState(nPos, entry.getValue().getDefaultState().withProperty(RotatedPillarBlock.AXIS, worldIn.getBlockState(nPos).getValue(RotatedPillarBlock.AXIS)));
 								}else{
 									worldIn.setBlockState(nPos, entry.getValue().getDefaultState());
 								}
@@ -234,15 +233,15 @@ public class TaintHandler{
 							
 							if(b.equals(entry.getKey().getBlockState().getBlock())){
 								
-								if(worldIn.getBlockState(nPos).getPropertyKeys().contains(BlockRotatedPillar.AXIS)){
+								if(worldIn.getBlockState(nPos).getPropertyKeys().contains(RotatedPillarBlock.AXIS)){
 									
-									worldIn.setBlockState(nPos, entry.getValue().getDefaultState().withProperty(BlockRotatedPillar.AXIS, worldIn.getBlockState(nPos).getValue(BlockRotatedPillar.AXIS)));
-								}else if(worldIn.getBlockState(nPos).getProperties().containsKey(BlockStairs.SHAPE)){
-									worldIn.setBlockState(nPos, entry.getValue().getDefaultState().withProperty(BlockStairs.SHAPE, worldIn.getBlockState(nPos).getValue(BlockStairs.SHAPE)).withProperty(BlockStairs.FACING, worldIn.getBlockState(nPos).getValue(BlockStairs.FACING)).withProperty(BlockStairs.HALF, worldIn.getBlockState(nPos).getValue(BlockStairs.HALF)));
+									worldIn.setBlockState(nPos, entry.getValue().getDefaultState().withProperty(RotatedPillarBlock.AXIS, worldIn.getBlockState(nPos).getValue(RotatedPillarBlock.AXIS)));
+								}else if(worldIn.getBlockState(nPos).getProperties().containsKey(StairsBlock.SHAPE)){
+									worldIn.setBlockState(nPos, entry.getValue().getDefaultState().withProperty(StairsBlock.SHAPE, worldIn.getBlockState(nPos).getValue(StairsBlock.SHAPE)).withProperty(StairsBlock.FACING, worldIn.getBlockState(nPos).getValue(StairsBlock.FACING)).withProperty(StairsBlock.HALF, worldIn.getBlockState(nPos).getValue(StairsBlock.HALF)));
 									
-								}else if(worldIn.getBlockState(nPos).getProperties().containsKey(BlockSlab.HALF)){
+								}else if(worldIn.getBlockState(nPos).getProperties().containsKey(SlabBlock.HALF)){
 									
-									worldIn.setBlockState(nPos, entry.getValue().getDefaultState().withProperty(BlockSlab.HALF, worldIn.getBlockState(nPos).getValue(BlockSlab.HALF)));
+									worldIn.setBlockState(nPos, entry.getValue().getDefaultState().withProperty(SlabBlock.HALF, worldIn.getBlockState(nPos).getValue(SlabBlock.HALF)));
 								}else{
 									worldIn.setBlockState(nPos, entry.getValue().getDefaultState());
 								}

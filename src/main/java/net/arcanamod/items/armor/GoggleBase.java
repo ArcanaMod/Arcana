@@ -3,16 +3,16 @@ package net.arcanamod.items.armor;
 import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.GogglePriority;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 
-public class GoggleBase extends ItemArmor{
+public class GoggleBase extends ArmorItem{
 	
 	public GogglePriority priority;
 	
 	public GoggleBase(String name, ArmorMaterial materialIn, int renderIndexIn, GogglePriority priority){
 		
-		super(materialIn, renderIndexIn, EntityEquipmentSlot.HEAD);
+		super(materialIn, renderIndexIn, EquipmentSlotType.HEAD);
 		
 		setUnlocalizedName(name);
 		setRegistryName(name);

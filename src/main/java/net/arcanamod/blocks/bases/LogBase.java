@@ -5,15 +5,15 @@ import net.arcanamod.util.IHasModel;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.items.ArcanaItems;
-import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LogBlock;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.material.MapColor;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -24,7 +24,7 @@ import net.minecraft.world.IBlockAccess;
  *
  * @author Tea, Mozaran
  */
-public class LogBase extends BlockLog implements IHasModel, OreDictEntry{
+public class LogBase extends LogBlock implements IHasModel, OreDictEntry{
 	
 	public LogBase(String name){
 		this.setDefaultState(this.getStateFromMeta(0));
@@ -36,7 +36,7 @@ public class LogBase extends BlockLog implements IHasModel, OreDictEntry{
 		setHarvestLevel("axe", 0);
 		
 		ArcanaBlocks.BLOCKS.add(this);
-		ArcanaItems.ITEMS.add(new ItemBlock(this).setRegistryName(this.getRegistryName()));
+		ArcanaItems.ITEMS.add(new BlockItem(this).setRegistryName(this.getRegistryName()));
 	}
 	
 	public String getOreDictName(){
@@ -44,31 +44,31 @@ public class LogBase extends BlockLog implements IHasModel, OreDictEntry{
 	}
 	
 	@Override
-	public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos){
+	public MaterialColor getMapColor(BlockState state, IBlockAccess worldIn, BlockPos pos){
 		return Blocks.LOG.getDefaultState().getMapColor(worldIn, pos);
 	}
 	
 	@Override
-	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items){
+	public void getSubBlocks(ItemGroup itemIn, NonNullList<ItemStack> items){
 		items.add(new ItemStack(this));
 	}
 	
 	@Override
-	public IBlockState getStateFromMeta(int meta){
-		IBlockState state = this.getDefaultState();
+	public BlockState getStateFromMeta(int meta){
+		BlockState state = this.getDefaultState();
 		
 		switch(meta & 12){
 			case 0:
-				state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
+				state = state.withProperty(LOG_AXIS, LogBlock.EnumAxis.Y);
 				break;
 			case 4:
-				state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
+				state = state.withProperty(LOG_AXIS, LogBlock.EnumAxis.X);
 				break;
 			case 8:
-				state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
+				state = state.withProperty(LOG_AXIS, LogBlock.EnumAxis.Z);
 				break;
 			default:
-				state = state.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
+				state = state.withProperty(LOG_AXIS, LogBlock.EnumAxis.NONE);
 		}
 		
 		return state;
@@ -76,7 +76,7 @@ public class LogBase extends BlockLog implements IHasModel, OreDictEntry{
 	
 	@Override
 	@SuppressWarnings("incomplete-switch")
-	public int getMetaFromState(IBlockState state){
+	public int getMetaFromState(BlockState state){
 		int meta = 0;
 		
 		switch(state.getValue(LOG_AXIS)){
@@ -99,12 +99,12 @@ public class LogBase extends BlockLog implements IHasModel, OreDictEntry{
 	}
 	
 	@Override
-	protected ItemStack getSilkTouchDrop(IBlockState state){
+	protected ItemStack getSilkTouchDrop(BlockState state){
 		return new ItemStack(Item.getItemFromBlock(this), 1);
 	}
 	
 	@Override
-	public int damageDropped(IBlockState state){
+	public int damageDropped(BlockState state){
 		return 0;
 	}
 	

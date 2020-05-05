@@ -1,16 +1,16 @@
 package net.arcanamod.items;
 
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.block.model.ModelBakery;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.renderer.model.ModelBakery;
+import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.relauncher.Side;
@@ -158,9 +158,9 @@ public class ItemFocus extends Item{
 	
 	// Used to clear a focus and changes it back to focus parts
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn){
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn){
 		if(worldIn.isRemote){
-			return ActionResult.newResult(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+			return ActionResult.newResult(ActionResultType.PASS, playerIn.getHeldItem(handIn));
 		}
 		
 		ItemStack item = playerIn.getHeldItem(handIn);
@@ -168,12 +168,12 @@ public class ItemFocus extends Item{
 		if(playerIn.isSneaking()){
 			playerIn.inventory.setInventorySlotContents(playerIn.inventory.getSlotFor(item), new ItemStack(ArcanaItems.FOCUS_PARTS));
 		}
-		return new ActionResult<>(EnumActionResult.PASS, item);
+		return new ActionResult<>(ActionResultType.PASS, item);
 	}
 	
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn){
-		NBTTagCompound tag = getTagCompoundSafe(stack);
+		CompoundNBT tag = getTagCompoundSafe(stack);
 		StringBuilder sb = new StringBuilder();
 		String result = "None, Focus is empty.";
 		if(tag.hasKey("foci")){
@@ -186,7 +186,7 @@ public class ItemFocus extends Item{
 			result = sb.toString();
 		}
 		
-		if(GuiScreen.isShiftKeyDown()){
+		if(Screen.isShiftKeyDown()){
 			tooltip.add(GRAY + "Sneak + Right click to empty");
 			tooltip.add(GOLD + "Effects: ");
 			for(String s : result.split(";")){
@@ -198,10 +198,10 @@ public class ItemFocus extends Item{
 		}
 	}
 	
-	private NBTTagCompound getTagCompoundSafe(ItemStack stack){
-		NBTTagCompound tagCompound = stack.getTagCompound();
+	private CompoundNBT getTagCompoundSafe(ItemStack stack){
+		CompoundNBT tagCompound = stack.getTagCompound();
 		if(tagCompound == null){
-			tagCompound = new NBTTagCompound();
+			tagCompound = new CompoundNBT();
 			stack.setTagCompound(tagCompound);
 		}
 		return tagCompound;

@@ -2,9 +2,9 @@ package net.arcanamod.util.taint;
 
 import net.arcanamod.util.ArcanaFileUtils;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 import java.io.File;
@@ -36,7 +36,7 @@ public class TaintLevelHandler{
 				
 				final File file = new File(dir, "TaintLevel.taint");
 				
-				NBTTagCompound nbt;
+				CompoundNBT nbt;
 				
 				try{
 					
@@ -44,7 +44,7 @@ public class TaintLevelHandler{
 						
 						file.createNewFile();
 						
-						nbt = new NBTTagCompound();
+						nbt = new CompoundNBT();
 						
 						nbt.setFloat("TaintLevel", 0);
 						
@@ -74,7 +74,7 @@ public class TaintLevelHandler{
 			
 			final File file = new File(dir, "Arcana/TaintLevel.taint");
 			
-			NBTTagCompound nbt;
+			CompoundNBT nbt;
 			
 			try{
 				
@@ -82,7 +82,7 @@ public class TaintLevelHandler{
 					
 					file.createNewFile();
 					
-					nbt = new NBTTagCompound();
+					nbt = new CompoundNBT();
 					
 					nbt.setFloat("TaintLevel", 0);
 					
@@ -121,7 +121,7 @@ public class TaintLevelHandler{
 		
 		if(!world.isRemote){
 			
-			NBTTagCompound nbt;
+			CompoundNBT nbt;
 			
 			final File file = new File(dir, "TaintLevel.taint");
 			
@@ -157,7 +157,7 @@ public class TaintLevelHandler{
 	 */
 	public static void increaseTaintLevel(World world, float amount){
 		
-		if(world instanceof WorldClient){
+		if(world instanceof ClientWorld){
 			
 			return;
 			
@@ -170,7 +170,7 @@ public class TaintLevelHandler{
 			
 			final File file = new File(dir, "TaintLevel.taint");
 			
-			NBTTagCompound nbt;
+			CompoundNBT nbt;
 			
 			try{
 				
@@ -178,7 +178,7 @@ public class TaintLevelHandler{
 					
 					file.createNewFile();
 					
-					nbt = new NBTTagCompound();
+					nbt = new CompoundNBT();
 					
 				}else{
 					
@@ -212,7 +212,7 @@ public class TaintLevelHandler{
 	
 	public static void setTaintLevel(World world, float amount){
 		
-		if(world instanceof WorldClient){
+		if(world instanceof ClientWorld){
 			
 			return;
 			
@@ -225,7 +225,7 @@ public class TaintLevelHandler{
 			
 			final File file = new File(dir, "TaintLevel.taint");
 			
-			NBTTagCompound nbt;
+			CompoundNBT nbt;
 			
 			try{
 				
@@ -233,7 +233,7 @@ public class TaintLevelHandler{
 					
 					file.createNewFile();
 					
-					nbt = new NBTTagCompound();
+					nbt = new CompoundNBT();
 					
 				}else{
 					
@@ -278,7 +278,7 @@ public class TaintLevelHandler{
 			
 			final File file = new File(dir, "TaintLevel.taint");
 			
-			NBTTagCompound nbt;
+			CompoundNBT nbt;
 			
 			try{
 				
@@ -286,7 +286,7 @@ public class TaintLevelHandler{
 					
 					file.createNewFile();
 					
-					nbt = new NBTTagCompound();
+					nbt = new CompoundNBT();
 					
 				}else{
 					

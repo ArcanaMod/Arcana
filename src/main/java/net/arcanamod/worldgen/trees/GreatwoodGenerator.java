@@ -2,14 +2,14 @@ package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.worldgen.GenerationUtilities;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.LogBlock;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
@@ -18,23 +18,23 @@ import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static net.minecraft.block.BlockLog.LOG_AXIS;
+import static net.minecraft.block.LogBlock.LOG_AXIS;
 
 /**
  * @author Mozaran
  * <p>
  * Used to generate greatwood trees
  */
-public class GreatwoodGenerator extends WorldGenAbstractTree{
-	private static final IBlockState DEFAULT_TRUNK = ArcanaBlocks.GREATWOOD_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_GREATWOOD_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_GREATWOOD_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_LEAVES = ArcanaBlocks.GREATWOOD_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_GREATWOOD_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_GREATWOOD_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+public class GreatwoodGenerator extends AbstractTreeFeature{
+	private static final BlockState DEFAULT_TRUNK = ArcanaBlocks.GREATWOOD_LOG.getDefaultState();
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_GREATWOOD_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_GREATWOOD_LOG.getDefaultState();
+	private static final BlockState DEFAULT_LEAVES = ArcanaBlocks.GREATWOOD_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_GREATWOOD_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_GREATWOOD_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
-	private final IBlockState metaWood;
-	private final IBlockState metaLeaves;
+	private final BlockState metaWood;
+	private final BlockState metaLeaves;
 	
 	private final int minTreeHeight = 23;
 	
@@ -76,7 +76,7 @@ public class GreatwoodGenerator extends WorldGenAbstractTree{
 		// Gen Top Branch
 		int xOffset = (seed % 4 == 0 || seed % 4 == 1) ? 0 : 1;
 		int zOffset = (seed % 4 == 0 || seed % 4 == 2) ? 0 : 1;
-		genBranch(position.add(xOffset, height, zOffset), position.add(xOffset, height + 1, zOffset), BlockLog.EnumAxis.Y);
+		genBranch(position.add(xOffset, height, zOffset), position.add(xOffset, height + 1, zOffset), LogBlock.EnumAxis.Y);
 		
 		// Gen 4-5 branches per side on lower half 5 blocks long
 		int lowerY = 6;
@@ -120,9 +120,9 @@ public class GreatwoodGenerator extends WorldGenAbstractTree{
 			return false;
 		}
 		
-		IBlockState state = worldIn.getBlockState(position.down());
+		BlockState state = worldIn.getBlockState(position.down());
 		
-		if(state.getBlock().canSustainPlant(state, worldIn, position.down(), EnumFacing.UP, (IPlantable)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - height - 1){
+		if(state.getBlock().canSustainPlant(state, worldIn, position.down(), Direction.UP, (IPlantable)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - height - 1){
 			state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
 			for(BlockPos pos : leafBlockList){
 				setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);
@@ -131,10 +131,10 @@ public class GreatwoodGenerator extends WorldGenAbstractTree{
 				setBlockAndNotifyAdequately(worldIn, pos, metaWood);
 			}
 			for(BlockPos pos : xTrunkBlockList){
-				setBlockAndNotifyAdequately(worldIn, pos, metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.X));
+				setBlockAndNotifyAdequately(worldIn, pos, metaWood.withProperty(LOG_AXIS, LogBlock.EnumAxis.X));
 			}
 			for(BlockPos pos : zTrunkBlockList){
-				setBlockAndNotifyAdequately(worldIn, pos, metaWood.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z));
+				setBlockAndNotifyAdequately(worldIn, pos, metaWood.withProperty(LOG_AXIS, LogBlock.EnumAxis.Z));
 			}
 			
 			return true;
@@ -157,10 +157,10 @@ public class GreatwoodGenerator extends WorldGenAbstractTree{
 				BlockPos end = position.add(-1 - adjBranchLength, yEnd, sideStart);
 				takenOriginPos.add(start);
 				takenEndPos.add(end);
-				genBranch(start, end, BlockLog.EnumAxis.X);
-				genBranch(position.add(2, yStart, sideStart), position.add(2 + adjBranchLength, yEnd, sideStart), BlockLog.EnumAxis.X);
-				genBranch(position.add(sideStart, yStart, -1), position.add(sideStart, yEnd, -1 - adjBranchLength), BlockLog.EnumAxis.Z);
-				genBranch(position.add(sideStart, yStart, 2), position.add(sideStart, yEnd, 2 + adjBranchLength), BlockLog.EnumAxis.Z);
+				genBranch(start, end, LogBlock.EnumAxis.X);
+				genBranch(position.add(2, yStart, sideStart), position.add(2 + adjBranchLength, yEnd, sideStart), LogBlock.EnumAxis.X);
+				genBranch(position.add(sideStart, yStart, -1), position.add(sideStart, yEnd, -1 - adjBranchLength), LogBlock.EnumAxis.Z);
+				genBranch(position.add(sideStart, yStart, 2), position.add(sideStart, yEnd, 2 + adjBranchLength), LogBlock.EnumAxis.Z);
 			}else{
 				// Diagonal branches
 				boolean validStart = false;
@@ -193,21 +193,21 @@ public class GreatwoodGenerator extends WorldGenAbstractTree{
 					}
 				}
 				// -x
-				genBranch(position.add(-1, yStart, sideStart), position.add(-1 - branchLength, yEnd, sideEnd), BlockLog.EnumAxis.X);
+				genBranch(position.add(-1, yStart, sideStart), position.add(-1 - branchLength, yEnd, sideEnd), LogBlock.EnumAxis.X);
 				// +x
-				genBranch(position.add(2, yStart, sideStart), position.add(2 + branchLength, yEnd, sideEnd), BlockLog.EnumAxis.X);
+				genBranch(position.add(2, yStart, sideStart), position.add(2 + branchLength, yEnd, sideEnd), LogBlock.EnumAxis.X);
 				// -z
-				genBranch(position.add(sideStart, yStart, -1), position.add(sideEnd, yEnd, -1 - branchLength), BlockLog.EnumAxis.Z);
+				genBranch(position.add(sideStart, yStart, -1), position.add(sideEnd, yEnd, -1 - branchLength), LogBlock.EnumAxis.Z);
 				// +z
-				genBranch(position.add(sideStart, yStart, 2), position.add(sideEnd, yEnd, 2 + branchLength), BlockLog.EnumAxis.Z);
+				genBranch(position.add(sideStart, yStart, 2), position.add(sideEnd, yEnd, 2 + branchLength), LogBlock.EnumAxis.Z);
 			}
 		}
 	}
 	
-	private void genBranch(BlockPos origin, BlockPos end, BlockLog.EnumAxis logAxis){
-		if(logAxis == BlockLog.EnumAxis.X){
+	private void genBranch(BlockPos origin, BlockPos end, LogBlock.EnumAxis logAxis){
+		if(logAxis == LogBlock.EnumAxis.X){
 			xTrunkBlockList.addAll(GenerationUtilities.GenerateTrunk(origin, end, 1));
-		}else if(logAxis == BlockLog.EnumAxis.Y){
+		}else if(logAxis == LogBlock.EnumAxis.Y){
 			yTrunkBlockList.addAll(GenerationUtilities.GenerateTrunk(origin, end, 1));
 		}else{
 			zTrunkBlockList.addAll(GenerationUtilities.GenerateTrunk(origin, end, 1));

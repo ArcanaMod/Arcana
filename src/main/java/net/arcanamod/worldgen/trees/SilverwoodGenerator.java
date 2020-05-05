@@ -2,20 +2,20 @@ package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.worldgen.GenerationUtilities;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 import net.minecraftforge.common.IPlantable;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class SilverwoodGenerator extends WorldGenAbstractTree{
-	private final IBlockState metaWood = ArcanaBlocks.SILVERWOOD_LOG.getDefaultState();
-	private final IBlockState metaLeaves = ArcanaBlocks.SILVERWOOD_LEAVES.getDefaultState();
+public class SilverwoodGenerator extends AbstractTreeFeature{
+	private final BlockState metaWood = ArcanaBlocks.SILVERWOOD_LOG.getDefaultState();
+	private final BlockState metaLeaves = ArcanaBlocks.SILVERWOOD_LEAVES.getDefaultState();
 	
 	private final int minTreeHeight = 9;
 	
@@ -79,8 +79,8 @@ public class SilverwoodGenerator extends WorldGenAbstractTree{
 			return false;
 		}
 		
-		IBlockState state = worldIn.getBlockState(position.down());
-		if(state.getBlock().canSustainPlant(state, worldIn, position.down(), EnumFacing.UP, (IPlantable)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - height - 1){
+		BlockState state = worldIn.getBlockState(position.down());
+		if(state.getBlock().canSustainPlant(state, worldIn, position.down(), Direction.UP, (IPlantable)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - height - 1){
 			state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
 			for(BlockPos pos : leafBlockList){
 				setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);

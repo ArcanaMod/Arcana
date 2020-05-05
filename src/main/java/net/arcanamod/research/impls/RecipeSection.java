@@ -1,7 +1,7 @@
 package net.arcanamod.research.impls;
 
 import net.arcanamod.research.EntrySection;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 public class RecipeSection extends EntrySection{
@@ -22,8 +22,8 @@ public class RecipeSection extends EntrySection{
 		return TYPE;
 	}
 	
-	public NBTTagCompound getData(){
-		NBTTagCompound compound = new NBTTagCompound();
+	public CompoundNBT getData(){
+		CompoundNBT compound = new CompoundNBT();
 		compound.setString("recipe", recipe.toString());
 		return compound;
 	}

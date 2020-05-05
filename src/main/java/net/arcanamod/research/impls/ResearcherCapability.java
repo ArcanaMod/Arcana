@@ -2,9 +2,9 @@ package net.arcanamod.research.impls;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.research.Researcher;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -28,33 +28,33 @@ public class ResearcherCapability{
 	private static class Storage implements Capability.IStorage<Researcher>{
 		
 		@Nullable
-		public NBTBase writeNBT(Capability<Researcher> capability, Researcher instance, EnumFacing side){
+		public NBTBase writeNBT(Capability<Researcher> capability, Researcher instance, Direction side){
 			return instance.serialize();
 		}
 		
-		public void readNBT(Capability<Researcher> capability, Researcher instance, EnumFacing side, NBTBase nbt){
-			if(nbt instanceof NBTTagCompound)
-				instance.deserialize((NBTTagCompound)nbt);
+		public void readNBT(Capability<Researcher> capability, Researcher instance, Direction side, NBTBase nbt){
+			if(nbt instanceof CompoundNBT)
+				instance.deserialize((CompoundNBT)nbt);
 		}
 	}
 	
-	public static class Provider implements ICapabilitySerializable<NBTTagCompound>{
+	public static class Provider implements ICapabilitySerializable<CompoundNBT>{
 		
 		private final Researcher cap = new ResearcherImpl();
 		
-		public NBTTagCompound serializeNBT(){
-			return (NBTTagCompound)cap.serialize();
+		public CompoundNBT serializeNBT(){
+			return (CompoundNBT)cap.serialize();
 		}
 		
-		public void deserializeNBT(NBTTagCompound nbt){
+		public void deserializeNBT(CompoundNBT nbt){
 			cap.deserialize(nbt);
 		}
 		
-		public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable EnumFacing facing){
+		public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
 			return capability == RESEARCHER_CAPABILITY;
 		}
 		
-		public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable EnumFacing side){
+		public <T> T getCapability(@Nonnull Capability<T> capability, @Nullable Direction side){
 			// if Capability<T> == Capability<Researcher>, then T is Researcher, so this won't cause issues.
 			return capability == RESEARCHER_CAPABILITY ? (T)cap : null;
 		}

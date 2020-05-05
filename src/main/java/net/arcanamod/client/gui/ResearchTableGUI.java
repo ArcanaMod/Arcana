@@ -11,10 +11,10 @@ import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -32,7 +32,7 @@ public class ResearchTableGUI extends GuiAspectContainer{
 	ResearchTableTileEntity te;
 	int page = 0;
 	
-	GuiButton leftArrow, rightArrow;
+	Button leftArrow, rightArrow;
 	
 	public ResearchTableGUI(ResearchTableTileEntity te, ResearchTableContainer container){
 		super(container);
@@ -45,7 +45,7 @@ public class ResearchTableGUI extends GuiAspectContainer{
 		mc.getTextureManager().bindTexture(BG);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE){
-			NBTTagCompound compound = te.note().getTagCompound();
+			CompoundNBT compound = te.note().getTagCompound();
 			if(compound != null){
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
 				PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer)aspectContainer).puzzleSlots, ((ResearchTableContainer)aspectContainer).puzzleItemSlots, width, height, mouseX, mouseY, mc.player);
@@ -79,7 +79,7 @@ public class ResearchTableGUI extends GuiAspectContainer{
 		Connection.network.sendToServer(new PktRequestAspectSync());
 	}
 	
-	protected void actionPerformed(@Nonnull GuiButton button) throws IOException{
+	protected void actionPerformed(@Nonnull Button button) throws IOException{
 		super.actionPerformed(button);
 		if(button == leftArrow && page > 0)
 			page--;
@@ -99,7 +99,7 @@ public class ResearchTableGUI extends GuiAspectContainer{
 		}
 	}
 	
-	class ChangeAspectPageButton extends GuiButton{
+	class ChangeAspectPageButton extends Button{
 		
 		boolean right;
 		

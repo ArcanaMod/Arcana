@@ -4,12 +4,12 @@ import net.arcanamod.worldgen.trees.TaintedJungleGenerator;
 import net.arcanamod.worldgen.trees.TaintedMegaJungleGenerator;
 import net.arcanamod.blocks.bases.SaplingBase;
 import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenTrees;
-import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.TreeFeature;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import java.util.Random;
@@ -28,10 +28,10 @@ public class TaintedJungleSapling extends SaplingBase{
 	}
 	
 	@Override
-	public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand){
+	public void generateTree(World worldIn, BlockPos pos, BlockState state, Random rand){
 		if(!TerrainGen.saplingGrowTree(worldIn, rand, pos))
 			return;
-		WorldGenerator worldgenerator = new WorldGenTrees(true);
+		Feature worldgenerator = new TreeFeature(true);
 		int x = 0;
 		int z = 0;
 		boolean flag = false;
@@ -54,7 +54,7 @@ public class TaintedJungleSapling extends SaplingBase{
 			worldgenerator = untainted ? new TaintedJungleGenerator(true, true, true) : new TaintedJungleGenerator(true, true, false);
 		}
 		
-		IBlockState iblockstate2 = Blocks.AIR.getDefaultState();
+		BlockState iblockstate2 = Blocks.AIR.getDefaultState();
 		
 		if(flag){
 			worldIn.setBlockState(pos.add(x, 0, z), iblockstate2, 4);
@@ -90,7 +90,7 @@ public class TaintedJungleSapling extends SaplingBase{
 	}
 	
 	public boolean isTypeAt(World worldIn, BlockPos pos, BlockPlanks.EnumType type){
-		IBlockState iblockstate = worldIn.getBlockState(pos);
+		BlockState iblockstate = worldIn.getBlockState(pos);
 		return iblockstate.getBlock() == this;
 	}
 }

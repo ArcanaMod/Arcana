@@ -1,10 +1,10 @@
 package net.arcanamod.blocks.bases.tainted;
 
 import net.arcanamod.util.IHasModel;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.IPlantable;
@@ -23,7 +23,7 @@ public class TaintedGrassBase extends TaintedBlockBase implements IHasModel{
 	}
 	
 	@Override
-	public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable){
+	public boolean canSustainPlant(BlockState state, IBlockAccess world, BlockPos pos, Direction direction, IPlantable plantable){
 		ArrayList<IPlantable> plants = new ArrayList<IPlantable>();
 		plants.add(Blocks.TALLGRASS);
 		plants.add(Blocks.RED_FLOWER);

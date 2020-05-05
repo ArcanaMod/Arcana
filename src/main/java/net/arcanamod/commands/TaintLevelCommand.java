@@ -7,7 +7,7 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -33,26 +33,26 @@ public class TaintLevelCommand extends CommandBase{
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException{
 		switch(args.length){
 			case 0:
-				sender.sendMessage(new TextComponentString("Please specify an operation"));
+				sender.sendMessage(new StringTextComponent("Please specify an operation"));
 				break;
 			case 1:
 				if(args[0].contentEquals("raise")){
 					TaintLevelHandler.increaseTaintLevel(sender.getEntityWorld(), 1);
-					sender.sendMessage(new TextComponentString("Taint Level Raised by one, now " + TaintLevelHandler.getTaintLevel(sender.getEntityWorld())));
+					sender.sendMessage(new StringTextComponent("Taint Level Raised by one, now " + TaintLevelHandler.getTaintLevel(sender.getEntityWorld())));
 				}
 				if(args[0].contentEquals("lower")){
 					TaintLevelHandler.decreaseTaintLevel(sender.getEntityWorld(), 1);
-					sender.sendMessage(new TextComponentString("Taint Level Raised by one, now " + TaintLevelHandler.getTaintLevel(sender.getEntityWorld())));
+					sender.sendMessage(new StringTextComponent("Taint Level Raised by one, now " + TaintLevelHandler.getTaintLevel(sender.getEntityWorld())));
 				}
 				break;
 			case 2:
 				if(args[0].contentEquals("set")){
-					sender.sendMessage(new TextComponentString("Set taint level to " + args[1]));
+					sender.sendMessage(new StringTextComponent("Set taint level to " + args[1]));
 					TaintLevelHandler.setTaintLevel(sender.getEntityWorld(), Integer.parseInt(args[1]));
 				}
 				break;
 			default:
-				sender.sendMessage(new TextComponentString("Usage: taintlevel add/lower, taintlevel set <level>"));
+				sender.sendMessage(new StringTextComponent("Usage: taintlevel add/lower, taintlevel set <level>"));
 		}
 	}
 	

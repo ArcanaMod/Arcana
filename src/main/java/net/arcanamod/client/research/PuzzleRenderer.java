@@ -10,15 +10,15 @@ import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.impls.Guesswork;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static net.minecraft.client.gui.Gui.drawModalRectWithCustomSizedTexture;
+import static net.minecraft.client.gui.AbstractGui.drawModalRectWithCustomSizedTexture;
 
 public interface PuzzleRenderer<T extends Puzzle>{
 	
@@ -40,7 +40,7 @@ public interface PuzzleRenderer<T extends Puzzle>{
 		return get(puzzle.type());
 	}
 	
-	void render(T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player);
+	void render(T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player);
 	
 	default Minecraft mc(){
 		return Minecraft.getMinecraft();

@@ -1,15 +1,17 @@
 package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.SaplingBlock;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 
 import java.util.Random;
 
@@ -18,17 +20,17 @@ import java.util.Random;
  * <p>
  * Used to generate small birch tainted trees
  */
-public class TaintedBirchGenerator extends WorldGenAbstractTree{
+public class TaintedBirchGenerator extends AbstractTreeFeature{
 	private final boolean useExtraRandomHeight;
-	private static final IBlockState DEFAULT_TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH);
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_BIRCH_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_BIRCH_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.BIRCH).withProperty(BlockOldLeaf.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_BIRCH_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_BIRCH_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH);
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_BIRCH_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_BIRCH_LOG.getDefaultState();
+	private static final BlockState DEFAULT_LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.BIRCH).withProperty(BlockOldLeaf.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_BIRCH_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_BIRCH_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
-	private final IBlockState metaWood;
-	private final IBlockState metaLeaves;
+	private final BlockState metaWood;
+	private final BlockState metaLeaves;
 	
 	public TaintedBirchGenerator(boolean notify, boolean useExtraRandomHeightIn, boolean tainted){
 		this(notify, useExtraRandomHeightIn, tainted, false);
@@ -86,8 +88,8 @@ public class TaintedBirchGenerator extends WorldGenAbstractTree{
 				return false;
 			}else{
 				BlockPos down = position.down();
-				IBlockState state = worldIn.getBlockState(down);
-				boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, down, net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling)Blocks.SAPLING);
+				BlockState state = worldIn.getBlockState(down);
+				boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, down, Direction.UP, (SaplingBlock)Blocks.SAPLING);
 				
 				if(isSoil && position.getY() < worldIn.getHeight() - i - 1){
 					state.getBlock().onPlantGrow(state, worldIn, down, position);
@@ -104,7 +106,7 @@ public class TaintedBirchGenerator extends WorldGenAbstractTree{
 								
 								if(Math.abs(j1) != l2 || Math.abs(l1) != l2 || rand.nextInt(2) != 0 && k2 != 0){
 									BlockPos blockpos = new BlockPos(i3, i2, k1);
-									IBlockState state2 = worldIn.getBlockState(blockpos);
+									BlockState state2 = worldIn.getBlockState(blockpos);
 									
 									if(state2.getBlock().isAir(state2, worldIn, blockpos) || state2.getBlock().isAir(state2, worldIn, blockpos)){
 										this.setBlockAndNotifyAdequately(worldIn, blockpos, metaLeaves);
@@ -116,7 +118,7 @@ public class TaintedBirchGenerator extends WorldGenAbstractTree{
 					
 					for(int j2 = 0; j2 < i; ++j2){
 						BlockPos upN = position.up(j2);
-						IBlockState state2 = worldIn.getBlockState(upN);
+						BlockState state2 = worldIn.getBlockState(upN);
 						
 						if(state2.getBlock().isAir(state2, worldIn, upN) || state2.getBlock().isLeaves(state2, worldIn, upN)){
 							this.setBlockAndNotifyAdequately(worldIn, position.up(j2), metaWood);

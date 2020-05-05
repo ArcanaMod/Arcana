@@ -3,7 +3,7 @@ package net.arcanamod.items.tools;
 import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.IHasModel;
-import net.minecraft.item.ItemSword;
+import net.minecraft.item.SwordItem;
 
 import static net.arcanamod.Arcana.TAB_ARCANA;
 
@@ -13,7 +13,7 @@ import static net.arcanamod.Arcana.TAB_ARCANA;
  * @author Wilkon
  */
 
-public class SwordBase extends ItemSword implements IHasModel{
+public class SwordBase extends SwordItem implements IHasModel{
 	public SwordBase(String name, ToolMaterial material){
 		super(material);
 		setUnlocalizedName(name);

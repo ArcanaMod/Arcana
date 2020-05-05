@@ -1,7 +1,7 @@
 package net.arcanamod.util;
 
+import net.minecraft.world.ServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 
 import java.io.File;
 
@@ -20,7 +20,7 @@ public class ArcanaFileUtils{
 	 */
 	public static File getWorldDirectory(World world){
 		
-		WorldServer world1 = (WorldServer)world;
+		ServerWorld world1 = (ServerWorld)world;
 		
 		File dir = world1.getSaveHandler().getWorldDirectory();
 		

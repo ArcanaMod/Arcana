@@ -7,10 +7,10 @@ import net.arcanamod.spells.effects.ISpellEffect;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 import javax.annotation.Nonnull;
@@ -38,8 +38,8 @@ public class CommandFocus extends CommandBase{
 	
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException{
-		if(sender instanceof EntityPlayer){
-			EntityPlayer player = (EntityPlayer)sender;
+		if(sender instanceof PlayerEntity){
+			PlayerEntity player = (PlayerEntity)sender;
 			if(args.length > 5){
 				try{
 					List<ISpellEffect> effects = new ArrayList<>();
@@ -50,9 +50,9 @@ public class CommandFocus extends CommandBase{
 						}
 					}
 					player.inventory.addItemStackToInventory(FociHelper.generateFocus(Integer.parseInt(args[0]), effects.toArray(new ISpellEffect[0]), Integer.parseInt(args[1]), Aspect.valueOf(args[2]), args[3]));
-					sender.sendMessage(new TextComponentString(TextFormatting.GREEN + "Given a new focus!"));
+					sender.sendMessage(new StringTextComponent(TextFormatting.GREEN + "Given a new focus!"));
 				}catch(NumberFormatException ex){
-					sender.sendMessage(new TextComponentString(TextFormatting.RED + "One of the entered numbers is invalid!"));
+					sender.sendMessage(new StringTextComponent(TextFormatting.RED + "One of the entered numbers is invalid!"));
 				}
 			}
 		}

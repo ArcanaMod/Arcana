@@ -1,7 +1,7 @@
 package net.arcanamod.research.impls;
 
 import net.arcanamod.research.EntrySection;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 /**
  * An entry section that displays text over any number of pages.
@@ -20,8 +20,8 @@ public class StringSection extends EntrySection{
 		return TYPE;
 	}
 	
-	public NBTTagCompound getData(){
-		NBTTagCompound tag = new NBTTagCompound();
+	public CompoundNBT getData(){
+		CompoundNBT tag = new CompoundNBT();
 		tag.setString("text", getText());
 		return tag;
 	}

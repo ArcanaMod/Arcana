@@ -9,7 +9,7 @@ import net.arcanamod.research.impls.RecipeSection;
 import net.arcanamod.research.impls.StringSection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +24,11 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		map.put(RecipeSection.TYPE, new RecipeSectionRenderer());
 	}
 	
-	void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player);
+	void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);
 	
-	void renderAfter(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player);
+	void renderAfter(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);
 	
-	int span(T section, EntityPlayer player);
+	int span(T section, PlayerEntity player);
 	
 	/**
 	 * Called when the mouse is clicked anywhere on the screen while this section is visible.
@@ -50,7 +50,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	 * @param player
 	 * 		The player that clicked.
 	 */
-	default void onClick(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player){
+	default void onClick(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 	}
 	
 	@SuppressWarnings("unchecked")

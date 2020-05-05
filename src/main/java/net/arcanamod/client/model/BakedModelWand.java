@@ -1,13 +1,13 @@
 package net.arcanamod.client.model;
 
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemOverrideList;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.world.World;
 
 import java.util.Collections;
@@ -45,7 +45,7 @@ public class BakedModelWand implements IBakedModel{
 	}
 	
 	@Override
-	public List<BakedQuad> getQuads(IBlockState arg0, EnumFacing arg1, long arg2){
+	public List<BakedQuad> getQuads(BlockState arg0, Direction arg1, long arg2){
 		return this.modelMain.getQuads(arg0, arg1, arg2);
 	}
 	
@@ -73,7 +73,7 @@ public class BakedModelWand implements IBakedModel{
 		}
 		
 		@Override
-		public IBakedModel handleItemState(IBakedModel originalModel, ItemStack itemStack, World world, EntityLivingBase entity){
+		public IBakedModel handleItemState(IBakedModel originalModel, ItemStack itemStack, World world, LivingEntity entity){
 			return this.modelWand.getModelFinal().setCurrentItemStack(itemStack);
 			
 		}

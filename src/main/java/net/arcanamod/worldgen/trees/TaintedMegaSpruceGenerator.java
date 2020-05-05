@@ -1,16 +1,16 @@
 package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.Block;
+import net.minecraft.block.*;
 import net.minecraft.block.BlockDirt;
-import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenHugeTrees;
+import net.minecraft.world.gen.feature.HugeTreesFeature;
 
 import java.util.Random;
 
@@ -19,13 +19,13 @@ import java.util.Random;
  * <p>
  * Used to generate mega spruce tainted trees
  */
-public class TaintedMegaSpruceGenerator extends WorldGenHugeTrees{
+public class TaintedMegaSpruceGenerator extends HugeTreesFeature{
 	private boolean useBaseHeight;
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_SPRUCE_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_SPRUCE_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_SPRUCE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_SPRUCE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState PODZOL = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_SPRUCE_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_SPRUCE_LOG.getDefaultState();
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_SPRUCE_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_SPRUCE_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState PODZOL = Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
 	
 	public TaintedMegaSpruceGenerator(boolean notify, boolean useBaseHeight, boolean untainted){
 		super(notify, 13, 15, untainted ? DEFAULT_UNTAINTED_TRUNK : DEFAULT_TAINTED_TRUNK, untainted ? DEFAULT_UNTAINTED_LEAVES : DEFAULT_TAINTED_LEAVES);
@@ -106,10 +106,10 @@ public class TaintedMegaSpruceGenerator extends WorldGenHugeTrees{
 	private void placePodzolAt(World worldIn, BlockPos pos){
 		for(int i = 2; i >= -3; --i){
 			BlockPos blockpos = pos.up(i);
-			IBlockState iblockstate = worldIn.getBlockState(blockpos);
+			BlockState iblockstate = worldIn.getBlockState(blockpos);
 			Block block = iblockstate.getBlock();
 			
-			if(block.canSustainPlant(iblockstate, worldIn, blockpos, net.minecraft.util.EnumFacing.UP, ((net.minecraft.block.BlockSapling)Blocks.SAPLING))){
+			if(block.canSustainPlant(iblockstate, worldIn, blockpos, Direction.UP, ((SaplingBlock)Blocks.SAPLING))){
 				this.setBlockAndNotifyAdequately(worldIn, blockpos, PODZOL);
 				break;
 			}
@@ -122,7 +122,7 @@ public class TaintedMegaSpruceGenerator extends WorldGenHugeTrees{
 	
 	//Helper macro
 	private boolean isAirLeaves(World world, BlockPos pos){
-		IBlockState state = world.getBlockState(pos);
+		BlockState state = world.getBlockState(pos);
 		return state.getBlock().isAir(state, world, pos) || state.getBlock().isLeaves(state, world, pos);
 	}
 }

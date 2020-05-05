@@ -3,7 +3,7 @@ package net.arcanamod.items.tools;
 import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.IHasModel;
-import net.minecraft.item.ItemHoe;
+import net.minecraft.item.HoeItem;
 
 import static net.arcanamod.Arcana.TAB_ARCANA;
 
@@ -15,7 +15,7 @@ import static net.arcanamod.Arcana.TAB_ARCANA;
  * @author Wilkon
  */
 
-public class HoeBase extends ItemHoe implements IHasModel{
+public class HoeBase extends HoeItem implements IHasModel{
 	public HoeBase(String name, ToolMaterial material){
 		super(material);
 		setUnlocalizedName(name);

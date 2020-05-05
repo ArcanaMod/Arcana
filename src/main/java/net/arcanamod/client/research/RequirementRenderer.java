@@ -7,7 +7,7 @@ import net.arcanamod.client.research.impls.ItemRequirementRenderer;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.impls.ItemRequirement;
 import net.arcanamod.research.impls.XpRequirement;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.HashMap;
@@ -32,7 +32,7 @@ public interface RequirementRenderer<T extends Requirement>{
 		return (RequirementRenderer<T>)map.get(type.type());
 	}
 	
-	void render(int x, int y, T requirement, int ticks, float partialTicks, EntityPlayer player);
+	void render(int x, int y, T requirement, int ticks, float partialTicks, PlayerEntity player);
 	
-	List<String> tooltip(T requirement, EntityPlayer player);
+	List<String> tooltip(T requirement, PlayerEntity player);
 }

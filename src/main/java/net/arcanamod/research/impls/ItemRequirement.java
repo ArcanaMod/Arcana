@@ -2,10 +2,10 @@ package net.arcanamod.research.impls;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.research.Requirement;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -27,11 +27,11 @@ public class ItemRequirement extends Requirement{
 		return this;
 	}
 	
-	public boolean satisfied(EntityPlayer player){
+	public boolean satisfied(PlayerEntity player){
 		return player.inventory.clearMatchingItems(item, meta, 0, null) >= (getAmount() == 0 ? 1 : getAmount());
 	}
 	
-	public void take(EntityPlayer player){
+	public void take(PlayerEntity player){
 		player.inventory.clearMatchingItems(item, meta, getAmount(), null);
 	}
 	
@@ -39,8 +39,8 @@ public class ItemRequirement extends Requirement{
 		return TYPE;
 	}
 	
-	public NBTTagCompound data(){
-		NBTTagCompound compound = new NBTTagCompound();
+	public CompoundNBT data(){
+		CompoundNBT compound = new CompoundNBT();
 		compound.setString("itemType", String.valueOf(ForgeRegistries.ITEMS.getKey(item)));
 		compound.setInteger("meta", meta);
 		return compound;

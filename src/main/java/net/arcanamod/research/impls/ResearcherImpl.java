@@ -5,7 +5,7 @@ import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
 import net.arcanamod.event.ResearchEvent;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -15,7 +15,7 @@ public class ResearcherImpl implements Researcher{
 	
 	protected Map<ResourceLocation, Integer> data = new HashMap<>();
 	protected Set<ResourceLocation> completePuzzles = new HashSet<>();
-	protected EntityPlayer player;
+	protected PlayerEntity player;
 	
 	public int entryStage(ResearchEntry entry){
 		Objects.requireNonNull(entry, "Tried to get the stage of a null research entry. Does a research entry reference a parent that doesn't exist?");
@@ -83,11 +83,11 @@ public class ResearcherImpl implements Researcher{
 		completePuzzles.addAll(data);
 	}
 	
-	public void setPlayer(EntityPlayer player){
+	public void setPlayer(PlayerEntity player){
 		this.player = player;
 	}
 	
-	public EntityPlayer getPlayer(){
+	public PlayerEntity getPlayer(){
 		return player;
 	}
 }

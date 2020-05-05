@@ -6,12 +6,12 @@ import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.Researcher;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -34,11 +34,11 @@ public class ItemResearchNote extends ItemBase{
 		setMaxStackSize(1);
 	}
 	
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
 		if(!isComplete)
 			return super.onItemRightClick(world, player, hand);
 		ItemStack stack = player.getHeldItem(hand);
-		NBTTagCompound compound = stack.getTagCompound();
+		CompoundNBT compound = stack.getTagCompound();
 		if(compound != null && compound.hasKey("puzzle")){
 			Researcher from = Researcher.getFrom(player);
 			Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
@@ -46,7 +46,7 @@ public class ItemResearchNote extends ItemBase{
 				from.completePuzzle(puzzle);
 				if(!player.capabilities.isCreativeMode)
 					stack.shrink(1);
-				return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+				return new ActionResult<>(ActionResultType.SUCCESS, stack);
 			}
 		}
 		return super.onItemRightClick(world, player, hand);
@@ -54,7 +54,7 @@ public class ItemResearchNote extends ItemBase{
 	
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag){
-		NBTTagCompound compound = stack.getTagCompound();
+		CompoundNBT compound = stack.getTagCompound();
 		if(compound != null && compound.hasKey("research")){
 			ResourceLocation research = new ResourceLocation(compound.getString("research"));
 			tooltip.add(TextFormatting.AQUA + I18n.format(ResearchBooks.getEntry(research).name()));

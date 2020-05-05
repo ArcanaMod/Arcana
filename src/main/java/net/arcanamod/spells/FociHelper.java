@@ -4,7 +4,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.spells.effects.ISpellEffect;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 
 /**
  * Helper for foci
@@ -32,7 +32,7 @@ public class FociHelper{
 		
 		ItemStack is = new ItemStack(ArcanaItems.FOCUS);
 		
-		NBTTagCompound tag = is.getOrCreateSubCompound("foci");
+		CompoundNBT tag = is.getOrCreateSubCompound("foci");
 		
 		StringBuilder sb = new StringBuilder();
 		for(ISpellEffect effect : effects){
@@ -43,7 +43,7 @@ public class FociHelper{
 		tag.setInteger("power", power);
 		tag.setString("core", core.toString());
 		tag.setString("name", name);
-		NBTTagCompound newtag = new NBTTagCompound();
+		CompoundNBT newtag = new CompoundNBT();
 		newtag.setTag("foci", tag);
 		newtag.setInteger("variant", skin);
 		

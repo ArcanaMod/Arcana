@@ -7,8 +7,8 @@ import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 public class PuzzleRequirement extends Requirement{
@@ -21,11 +21,11 @@ public class PuzzleRequirement extends Requirement{
 		this.puzzleId = puzzleId;
 	}
 	
-	public boolean satisfied(EntityPlayer player){
+	public boolean satisfied(PlayerEntity player){
 		return Researcher.getFrom(player).isPuzzleCompleted(ResearchBooks.puzzles.get(puzzleId));
 	}
 	
-	public void take(EntityPlayer player){
+	public void take(PlayerEntity player){
 		// no-op
 	}
 	
@@ -33,8 +33,8 @@ public class PuzzleRequirement extends Requirement{
 		return TYPE;
 	}
 	
-	public NBTTagCompound data(){
-		NBTTagCompound compound = new NBTTagCompound();
+	public CompoundNBT data(){
+		CompoundNBT compound = new CompoundNBT();
 		compound.setString("puzzle", puzzleId.toString());
 		return compound;
 	}

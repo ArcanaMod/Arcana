@@ -1,7 +1,7 @@
 package net.arcanamod.research;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -72,33 +72,33 @@ public class ResearchCategory{
 		return requirement;
 	}
 	
-	public NBTTagCompound serialize(ResourceLocation tag, int index){
-		NBTTagCompound nbt = new NBTTagCompound();
+	public CompoundNBT serialize(ResourceLocation tag, int index){
+		CompoundNBT nbt = new CompoundNBT();
 		nbt.setString("id", tag.toString());
 		nbt.setString("icon", icon.toString());
 		nbt.setString("bg", bg.toString());
 		nbt.setString("requirement", requirement != null ? requirement.toString() : "null");
 		nbt.setString("name", name);
 		nbt.setInteger("index", index);
-		NBTTagList list = new NBTTagList();
+		ListNBT list = new ListNBT();
 		entries.forEach((location, entry) -> list.appendTag(entry.serialize(location)));
 		nbt.setTag("entries", list);
 		return nbt;
 	}
 	
-	public static ResearchCategory deserialize(NBTTagCompound nbt, ResearchBook in){
+	public static ResearchCategory deserialize(CompoundNBT nbt, ResearchBook in){
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
 		ResourceLocation icon = new ResourceLocation(nbt.getString("icon"));
 		ResourceLocation bg = new ResourceLocation(nbt.getString("bg"));
 		ResourceLocation requirement = nbt.getString("requirement").equals("null") ? null : new ResourceLocation(nbt.getString("requirement"));
 		String name = nbt.getString("name");
-		NBTTagList entriesList = nbt.getTagList("entries", 10);
+		ListNBT entriesList = nbt.getTagList("entries", 10);
 		// same story as ResearchBook
 		Map<ResourceLocation, ResearchEntry> c = new LinkedHashMap<>();
 		ResearchCategory category = new ResearchCategory(c, key, icon, bg, requirement, name, in);
 		category.serializationIndex = nbt.getInteger("index");
 		
-		Map<ResourceLocation, ResearchEntry> entries = StreamSupport.stream(entriesList.spliterator(), false).map(NBTTagCompound.class::cast).map((NBTTagCompound nbt1) -> ResearchEntry.deserialize(nbt1, category)).collect(Collectors.toMap(ResearchEntry::key, Function.identity(), (a, b) -> a));
+		Map<ResourceLocation, ResearchEntry> entries = StreamSupport.stream(entriesList.spliterator(), false).map(CompoundNBT.class::cast).map((CompoundNBT nbt1) -> ResearchEntry.deserialize(nbt1, category)).collect(Collectors.toMap(ResearchEntry::key, Function.identity(), (a, b) -> a));
 		
 		c.putAll(entries);
 		return category;

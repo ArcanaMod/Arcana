@@ -13,13 +13,13 @@ import net.arcanamod.aspects.TypedVisBattery;
 import net.arcanamod.spells.Spell;
 import net.arcanamod.wand.EnumAttachmentType;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
@@ -68,21 +68,21 @@ public class ItemWand extends Item{
 	}
 	
 	@Nullable
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt){
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
 		return TypedVisBattery.primalBattery(WandUtil.getCore(stack).getMaxVis());
 	}
 	
 	@Nullable
-	public NBTTagCompound getNBTShareTag(ItemStack stack){
-		NBTTagCompound tag = super.getNBTShareTag(stack);
+	public CompoundNBT getNBTShareTag(ItemStack stack){
+		CompoundNBT tag = super.getNBTShareTag(stack);
 		if(tag != null){
-			NBTTagCompound aspectNBT = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).serializeNBT();
+			CompoundNBT aspectNBT = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).serializeNBT();
 			tag.setTag("aspect_handler", aspectNBT);
 		}
 		return tag;
 	}
 	
-	public void readNBTShareTag(ItemStack stack, @Nullable NBTTagCompound nbt){
+	public void readNBTShareTag(ItemStack stack, @Nullable CompoundNBT nbt){
 		super.readNBTShareTag(stack, nbt);
 		if(nbt != null)
 			stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).deserializeNBT(nbt.getCompoundTag("aspect_handler"));
@@ -103,11 +103,11 @@ public class ItemWand extends Item{
 	 * 		Hand the wand is in
 	 */
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand){
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
 		if(world.isRemote){
-			return ActionResult.newResult(EnumActionResult.PASS, player.getHeldItem(hand));
+			return ActionResult.newResult(ActionResultType.PASS, player.getHeldItem(hand));
 		}
-		if(hand == EnumHand.MAIN_HAND){
+		if(hand == Hand.MAIN_HAND){
 			ItemStack item = player.getHeldItem(hand);
 			if(item.getTagCompound() != null){
 				if(!item.getTagCompound().getCompoundTag("foci").hasNoTags()){
@@ -117,7 +117,7 @@ public class ItemWand extends Item{
 				}
 			}
 		}
-		return new ActionResult<>(EnumActionResult.PASS, player.getHeldItem(hand));
+		return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
 	}
 	
 	/**
@@ -141,7 +141,7 @@ public class ItemWand extends Item{
 	 * 		Where on the block on the Z axis the player has clicked.
 	 * @return Whether the wand did anything.
 	 */
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+	public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ){
 		Block block = world.getBlockState(pos).getBlock();
 		// hardcoded for now, but this could be made into recipes later (probably 1.13+ when recipes can work with non-crafting tables)
 		if(block == Blocks.BOOKSHELF){
@@ -149,17 +149,17 @@ public class ItemWand extends Item{
 			world.setBlockToAir(pos);
 			// create an Arcanum item
 			if(!world.isRemote){
-				EntityItem entity = new EntityItem(world, pos.getX() + .5, pos.getY(), pos.getZ() + .5, new ItemStack(ArcanaItems.ARCANUM));
+				ItemEntity entity = new ItemEntity(world, pos.getX() + .5, pos.getY(), pos.getZ() + .5, new ItemStack(ArcanaItems.ARCANUM));
 				entity.setDefaultPickupDelay();
 				world.spawnEntity(entity);
 			}
 			// display particles ane effects (to do)
-			return EnumActionResult.SUCCESS;
+			return ActionResultType.SUCCESS;
 		}else if(block == Blocks.CAULDRON){
-			IBlockState crucible = ArcanaBlocks.CRUCIBLE.getDefaultState();
+			BlockState crucible = ArcanaBlocks.CRUCIBLE.getDefaultState();
 			world.setBlockState(pos, crucible);
 			// display particles ane effects (to do)
-			return EnumActionResult.SUCCESS;
+			return ActionResultType.SUCCESS;
 		}
 		return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
 	}

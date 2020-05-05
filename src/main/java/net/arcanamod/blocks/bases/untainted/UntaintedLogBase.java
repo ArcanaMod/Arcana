@@ -4,9 +4,9 @@ import net.arcanamod.util.IHasModel;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaProperties;
 import net.arcanamod.blocks.bases.LogBase;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 
 /**
@@ -24,7 +24,7 @@ public class UntaintedLogBase extends LogBase implements IHasModel{
 	}
 	
 	@Override
-	public int getMetaFromState(IBlockState state){
+	public int getMetaFromState(BlockState state){
 		int i = 0;
 		boolean tainted = state.getValue(FULLYTAINTED);
 		EnumAxis enumfacing$axis = state.getValue(LOG_AXIS);
@@ -47,7 +47,7 @@ public class UntaintedLogBase extends LogBase implements IHasModel{
 	}
 	
 	@Override
-	public IBlockState getStateFromMeta(int meta){
+	public BlockState getStateFromMeta(int meta){
 		EnumAxis enumfacing$axis = EnumAxis.Y;
 		boolean tainted;
 		int i = meta;

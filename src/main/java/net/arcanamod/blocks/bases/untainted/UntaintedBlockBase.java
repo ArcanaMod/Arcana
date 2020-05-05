@@ -7,7 +7,7 @@ import net.arcanamod.blocks.bases.BlockBase;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 
 /**
@@ -25,7 +25,7 @@ public class UntaintedBlockBase extends BlockBase implements IHasModel{
 	}
 	
 	@Override
-	public int getMetaFromState(IBlockState state){
+	public int getMetaFromState(BlockState state){
 		int i = 0;
 		boolean tainted = state.getValue(FULLYTAINTED);
 		
@@ -39,7 +39,7 @@ public class UntaintedBlockBase extends BlockBase implements IHasModel{
 	}
 	
 	@Override
-	public IBlockState getStateFromMeta(int meta){
+	public BlockState getStateFromMeta(int meta){
 		boolean tainted = false;
 		int i = meta;
 		

@@ -8,12 +8,12 @@ import net.arcanamod.Arcana;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.research.Puzzle;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,19 +60,19 @@ public class Guesswork extends Puzzle{
 		this.hints = hintMap;
 	}
 	
-	public NBTTagCompound getData(){
-		NBTTagCompound compound = new NBTTagCompound();
-		NBTTagCompound hints = new NBTTagCompound();
+	public CompoundNBT getData(){
+		CompoundNBT compound = new CompoundNBT();
+		CompoundNBT hints = new CompoundNBT();
 		getHints().forEach((location, s) -> hints.setString(location.toString(), s));
 		compound.setString("recipe", getRecipe().toString());
 		compound.setTag("hints", hints);
 		return compound;
 	}
 	
-	public static Guesswork fromNBT(NBTTagCompound passData){
+	public static Guesswork fromNBT(CompoundNBT passData){
 		ResourceLocation recipe = new ResourceLocation(passData.getString("recipe"));
 		Map<ResourceLocation, String> hints = new LinkedHashMap<>();
-		NBTTagCompound serialHints = passData.getCompoundTag("hints");
+		CompoundNBT serialHints = passData.getCompoundTag("hints");
 		for(String s : serialHints.getKeySet())
 			hints.put(new ResourceLocation(s), serialHints.getString(s));
 		return new Guesswork(recipe, hints);
@@ -98,7 +98,7 @@ public class Guesswork extends Puzzle{
 		return ICON;
 	}
 	
-	public List<Puzzle.SlotInfo> getItemSlotLocations(EntityPlayer player){
+	public List<Puzzle.SlotInfo> getItemSlotLocations(PlayerEntity player){
 		List<Puzzle.SlotInfo> ret = new ArrayList<>();
 		IRecipe recipe = CraftingManager.getRecipe(getRecipe());
 		if(recipe != null)
@@ -120,13 +120,13 @@ public class Guesswork extends Puzzle{
 		return Collections.emptyList();
 	}
 	
-	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, EntityPlayer player, ResearchTableContainer container){
+	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, PlayerEntity player, ResearchTableContainer container){
 		if(player == null)
 			return false;
 		IRecipe recipe = CraftingManager.getRecipe(getRecipe());
 		if(recipe == null)
 			return false;
-		InventoryCrafting inv = new InventoryCrafting(container, 3, 3);
+		CraftingInventory inv = new CraftingInventory(container, 3, 3);
 		for(int i = 0; i < itemSlots.size(); i++){
 			Slot slot = itemSlots.get(i);
 			inv.setInventorySlotContents(i, slot.getStack());

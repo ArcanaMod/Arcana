@@ -6,11 +6,11 @@ import net.arcanamod.research.ResearchBook;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.impls.RecipeSection;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings({"ConstantConditions", "SameParameterValue"})
-public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<RecipeSection>{
+public class RecipeSectionRenderer extends AbstractGui implements EntrySectionRenderer<RecipeSection>{
 	
 	// don't want to be making an ItemStack every frame...
 	private static Map<ResourceLocation, ItemStack> ITEM_CACHE = new HashMap<>();
@@ -32,7 +32,7 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 	
 	private ResourceLocation textures;
 	
-	public void render(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player){
+	public void render(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		ResearchBook book = ResearchBooks.getEntry(section.getEntry()).category().book();
 		textures = new ResourceLocation(book.getKey().getResourceDomain(), "textures/gui/research/" + book.getPrefix() + ResearchEntryGUI.OVERLAY_SUFFIX);
 		
@@ -102,7 +102,7 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 		//GlStateManager.disableLighting();
 	}
 	
-	public void renderAfter(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, EntityPlayer player){
+	public void renderAfter(RecipeSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		// tooltips
 		if(section.getRecipe().getResourceDomain().equals("__furnace__")){
 			String[] parts = section.getRecipe().getResourcePath().split("\\.");
@@ -179,7 +179,7 @@ public class RecipeSectionRenderer extends Gui implements EntrySectionRenderer<R
 		return item.getTooltip(mc().player, mc().gameSettings.advancedItemTooltips ? ITooltipFlag.TooltipFlags.ADVANCED : ITooltipFlag.TooltipFlags.NORMAL);
 	}
 	
-	public int span(RecipeSection section, EntityPlayer player){
+	public int span(RecipeSection section, PlayerEntity player){
 		return 1;
 	}
 }

@@ -10,7 +10,7 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -42,7 +42,7 @@ public class ResearchCommand extends CommandBase{
 			ResourceLocation entryKey = new ResourceLocation(args[0]);
 			ResearchEntry entry = ResearchBooks.getEntry(entryKey);
 			if(entry != null){
-				EntityPlayerMP player = getPlayer(server, sender, args[1]);
+				ServerPlayerEntity player = getPlayer(server, sender, args[1]);
 				if(args[2].equalsIgnoreCase("reset")){
 					Researcher.getFrom(player).resetEntry(entry);
 					Connection.sendReset(entry, player);

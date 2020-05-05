@@ -1,7 +1,7 @@
 package net.arcanamod.research;
 
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -64,11 +64,11 @@ public class ResearchBook{
 		return prefix;
 	}
 	
-	public NBTTagCompound serialize(ResourceLocation tag){
-		NBTTagCompound nbt = new NBTTagCompound();
+	public CompoundNBT serialize(ResourceLocation tag){
+		CompoundNBT nbt = new CompoundNBT();
 		nbt.setString("id", tag.toString());
 		nbt.setString("prefix", prefix);
-		NBTTagList list = new NBTTagList();
+		ListNBT list = new ListNBT();
 		int index = 0;
 		for(Map.Entry<ResourceLocation, ResearchCategory> entry : categories.entrySet()){
 			// enforce a specific order so things are transferred correctly
@@ -79,16 +79,16 @@ public class ResearchBook{
 		return nbt;
 	}
 	
-	public static ResearchBook deserialize(NBTTagCompound nbt){
+	public static ResearchBook deserialize(CompoundNBT nbt){
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
 		String prefix = nbt.getString("prefix");
-		NBTTagList categoryList = nbt.getTagList("categories", 10);
+		ListNBT categoryList = nbt.getTagList("categories", 10);
 		// need to have a book to put them *in*
 		// book isn't in ClientBooks until all categories have been deserialized, so this is needed
 		Map<ResourceLocation, ResearchCategory> c = new LinkedHashMap<>();
 		ResearchBook book = new ResearchBook(key, c, prefix);
 		
-		Map<ResourceLocation, ResearchCategory> categories = StreamSupport.stream(categoryList.spliterator(), false).map(NBTTagCompound.class::cast).map(nbt1 -> ResearchCategory.deserialize(nbt1, book)).sorted(Comparator.comparingInt(ResearchCategory::serializationIndex)).collect(toMap(ResearchCategory::key, Function.identity(), (a, b) -> a, LinkedHashMap::new));
+		Map<ResourceLocation, ResearchCategory> categories = StreamSupport.stream(categoryList.spliterator(), false).map(CompoundNBT.class::cast).map(nbt1 -> ResearchCategory.deserialize(nbt1, book)).sorted(Comparator.comparingInt(ResearchCategory::serializationIndex)).collect(toMap(ResearchCategory::key, Function.identity(), (a, b) -> a, LinkedHashMap::new));
 		
 		// this could be replaced by adding c to ClientBooks before deserializing, but this wouldn't look any different
 		// and would leave a broken book in if an exception occurs.

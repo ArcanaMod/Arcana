@@ -6,17 +6,16 @@ import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.SoundType;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -42,45 +41,45 @@ public class ItemResearchTable extends ItemBase{
 	}
 	
 	@Nullable
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt){
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
 		VisBattery battery = new VisBattery();
-		NBTTagCompound compound = stack.getTagCompound();
+		CompoundNBT compound = stack.getTagCompound();
 		if(compound != null && compound.hasKey("BlockEntityTag"))
 			battery.deserializeNBT(compound.getCompoundTag("BlockEntityTag").getCompoundTag("Aspects"));
 		return battery;
 	}
 	
 	@Nullable
-	public NBTTagCompound getNBTShareTag(ItemStack stack){
-		NBTTagCompound tag = super.getNBTShareTag(stack);
+	public CompoundNBT getNBTShareTag(ItemStack stack){
+		CompoundNBT tag = super.getNBTShareTag(stack);
 		if(tag != null && tag.hasKey("BlockEntityTag")){
-			NBTTagCompound aspectNBT = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).serializeNBT();
+			CompoundNBT aspectNBT = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).serializeNBT();
 			tag.getCompoundTag("BlockEntityTag").setTag("Aspects", aspectNBT);
 		}
 		return tag;
 	}
 	
-	public void readNBTShareTag(ItemStack stack, @Nullable NBTTagCompound nbt){
+	public void readNBTShareTag(ItemStack stack, @Nullable CompoundNBT nbt){
 		super.readNBTShareTag(stack, nbt);
 		if(nbt != null)
 			stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).deserializeNBT(nbt.getCompoundTag("BlockEntityTag").getCompoundTag("Aspects"));
 	}
 	
-	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+	public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ){
 		if(world.isRemote)
-			return EnumActionResult.SUCCESS;
+			return ActionResultType.SUCCESS;
 		
 		if(!world.getBlockState(pos).getBlock().isReplaceable(world, pos))
 			pos = pos.up();
 		
-		EnumFacing direction = player.getHorizontalFacing();
+		Direction direction = player.getHorizontalFacing();
 		BlockPos blockpos = pos.offset(direction.rotateY());
 		ItemStack itemStack = player.getHeldItem(hand);
 		if(player.canPlayerEdit(pos, facing, itemStack) && player.canPlayerEdit(blockpos, facing, itemStack)){
 			boolean canReplaceMain = world.getBlockState(pos).getBlock().isReplaceable(world, pos) || world.getBlockState(pos).getBlock().isAir(world.getBlockState(pos), world, pos);
 			boolean canReplaceSecond = world.getBlockState(blockpos).getBlock().isReplaceable(world, blockpos) || world.getBlockState(blockpos).getBlock().isAir(world.getBlockState(blockpos), world, blockpos);
 			if(canReplaceMain && canReplaceSecond){
-				IBlockState state = ArcanaBlocks.RESEARCH_TABLE.getStateForPlacement(world, pos, direction, hitX, hitY, hitZ, 0, player, hand);
+				BlockState state = ArcanaBlocks.RESEARCH_TABLE.getStateForPlacement(world, pos, direction, hitX, hitY, hitZ, 0, player, hand);
 				world.setBlockState(pos, state, 10);
 				world.setBlockState(blockpos, state.withProperty(PART, RIGHT), 10);
 				
@@ -93,23 +92,23 @@ public class ItemResearchTable extends ItemBase{
 				world.notifyNeighborsRespectDebug(pos, state.getBlock(), false);
 				world.notifyNeighborsRespectDebug(blockpos, state.getBlock(), false);
 				
-				if(player instanceof EntityPlayerMP)
-					CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos, itemStack);
+				if(player instanceof ServerPlayerEntity)
+					CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity)player, pos, itemStack);
 				
-				ItemBlock.setTileEntityNBT(world, player, pos, itemStack);
+				BlockItem.setTileEntityNBT(world, player, pos, itemStack);
 				
 				itemStack.shrink(1);
-				return EnumActionResult.SUCCESS;
+				return ActionResultType.SUCCESS;
 			}
 		}
-		return EnumActionResult.FAIL;
+		return ActionResultType.FAIL;
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltip, ITooltipFlag flag){
-		NBTTagCompound compound = stack.getTagCompound();
+		CompoundNBT compound = stack.getTagCompound();
 		if(compound != null && compound.hasKey("BlockEntityTag")){
-			NBTTagCompound data = compound.getCompoundTag("BlockEntityTag");
+			CompoundNBT data = compound.getCompoundTag("BlockEntityTag");
 			ItemStackHandler items = new ItemStackHandler(3);
 			items.deserializeNBT(data.getCompoundTag("Items"));
 			if(!items.getStackInSlot(0).isEmpty())

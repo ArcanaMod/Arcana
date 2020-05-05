@@ -5,7 +5,7 @@ import net.arcanamod.util.IHasModel;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.bases.StairsBase;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -23,7 +23,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TaintedStairsBase extends UntaintedStairBase implements IHasModel{
 	private String name;
 	
-	public TaintedStairsBase(String name, IBlockState state){
+	public TaintedStairsBase(String name, BlockState state){
 		super(name, state);
 		this.setTickRandomly(true);
 		this.name = name;
@@ -88,7 +88,7 @@ public class TaintedStairsBase extends UntaintedStairBase implements IHasModel{
 	//	}
 	
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune){
 		Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Arcana.MODID, "un" + name));
 		if(block != null){
 			Item item = Item.getItemFromBlock(block);

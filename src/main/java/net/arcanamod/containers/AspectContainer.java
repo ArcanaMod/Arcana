@@ -5,9 +5,9 @@ import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.client.gui.GuiAspectContainer;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.inventory.PktAspectClickHandler;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Container;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public abstract class AspectContainer extends Container{
 					type = PktAspectClickHandler.ClickType.PUT;
 				else
 					return;
-				if(GuiScreen.isShiftKeyDown())
+				if(Screen.isShiftKeyDown())
 					type = type == PktAspectClickHandler.ClickType.PUT ? PktAspectClickHandler.ClickType.PUT_ALL : PktAspectClickHandler.ClickType.TAKE_ALL;
 				// do some quick checking to make sure that the packet won't just do nothing
 				// don't actually modify anything though!
@@ -85,7 +85,7 @@ public abstract class AspectContainer extends Container{
 		return handlers;
 	}
 	
-	public void onContainerClosed(@Nonnull EntityPlayer player){
+	public void onContainerClosed(@Nonnull PlayerEntity player){
 		super.onContainerClosed(player);
 		aspectSlots.forEach(AspectSlot::onClose);
 	}

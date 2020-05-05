@@ -1,16 +1,18 @@
 package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.*;
 import net.minecraft.block.BlockOldLeaf;
 import net.minecraft.block.BlockOldLog;
 import net.minecraft.block.BlockPlanks;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 
 import java.util.Random;
 
@@ -19,16 +21,16 @@ import java.util.Random;
  * <p>
  * Used to generate small jungle tainted trees
  */
-public class TaintedJungleGenerator extends WorldGenAbstractTree{
-	private static final IBlockState DEFAULT_TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE);
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_JUNGLE_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_JUNGLE_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+public class TaintedJungleGenerator extends AbstractTreeFeature{
+	private static final BlockState DEFAULT_TRUNK = Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.JUNGLE);
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_JUNGLE_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_JUNGLE_LOG.getDefaultState();
+	private static final BlockState DEFAULT_LEAVES = Blocks.LEAVES.getDefaultState().withProperty(BlockOldLeaf.VARIANT, BlockPlanks.EnumType.JUNGLE).withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_JUNGLE_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
-	private final IBlockState metaWood;
-	private final IBlockState metaLeaves;
+	private final BlockState metaWood;
+	private final BlockState metaLeaves;
 	
 	public TaintedJungleGenerator(boolean notify, boolean tainted){
 		this(notify, tainted, false);
@@ -79,9 +81,9 @@ public class TaintedJungleGenerator extends WorldGenAbstractTree{
 			if(!flag){
 				return false;
 			}else{
-				IBlockState state = worldIn.getBlockState(position.down());
+				BlockState state = worldIn.getBlockState(position.down());
 				
-				if(state.getBlock().canSustainPlant(state, worldIn, position.down(), net.minecraft.util.EnumFacing.UP, (net.minecraft.block.BlockSapling)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - i - 1){
+				if(state.getBlock().canSustainPlant(state, worldIn, position.down(), Direction.UP, (SaplingBlock)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - i - 1){
 					state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
 					int k2 = 3;
 					int l2 = 0;

@@ -6,9 +6,9 @@ import net.arcanamod.Arcana;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.research.Puzzle;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;
@@ -28,9 +28,9 @@ public class Fieldwork extends Puzzle{
 		return TYPE;
 	}
 	
-	public NBTTagCompound getData(){
+	public CompoundNBT getData(){
 		// no-op
-		return new NBTTagCompound();
+		return new CompoundNBT();
 	}
 	
 	public String getDefaultDesc(){
@@ -41,7 +41,7 @@ public class Fieldwork extends Puzzle{
 		return ICON;
 	}
 	
-	public List<Puzzle.SlotInfo> getItemSlotLocations(EntityPlayer player){
+	public List<Puzzle.SlotInfo> getItemSlotLocations(PlayerEntity player){
 		return Collections.emptyList();
 	}
 	
@@ -49,7 +49,7 @@ public class Fieldwork extends Puzzle{
 		return Collections.emptyList();
 	}
 	
-	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, EntityPlayer player, ResearchTableContainer container){
+	public boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, PlayerEntity player, ResearchTableContainer container){
 		return false;
 	}
 }

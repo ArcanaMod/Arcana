@@ -1,15 +1,15 @@
 package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockSapling;
+import net.minecraft.block.*;
+import net.minecraft.block.LeavesBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 
 import java.util.Random;
 
@@ -18,16 +18,16 @@ import java.util.Random;
  * <p>
  * Used to generate small willow trees
  */
-public class WillowGenerator extends WorldGenAbstractTree{
-	private static final IBlockState DEFAULT_TRUNK = ArcanaBlocks.WILLOW_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_WILLOW_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_WILLOW_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_LEAVES = ArcanaBlocks.WILLOW_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_WILLOW_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_WILLOW_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+public class WillowGenerator extends AbstractTreeFeature{
+	private static final BlockState DEFAULT_TRUNK = ArcanaBlocks.WILLOW_LOG.getDefaultState();
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_WILLOW_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_WILLOW_LOG.getDefaultState();
+	private static final BlockState DEFAULT_LEAVES = ArcanaBlocks.WILLOW_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_WILLOW_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_WILLOW_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
-	private final IBlockState metaWood;
-	private final IBlockState metaLeaves;
+	private final BlockState metaWood;
+	private final BlockState metaLeaves;
 	
 	public WillowGenerator(boolean notify, boolean tainted){
 		this(notify, tainted, false);
@@ -85,9 +85,9 @@ public class WillowGenerator extends WorldGenAbstractTree{
 				return false;
 			}else{
 				// Placement Valid
-				IBlockState state = worldIn.getBlockState(position.down());
+				BlockState state = worldIn.getBlockState(position.down());
 				
-				if(state.getBlock().canSustainPlant(state, worldIn, position.down(), EnumFacing.UP, (BlockSapling)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - treeHeight - 1){
+				if(state.getBlock().canSustainPlant(state, worldIn, position.down(), Direction.UP, (SaplingBlock)Blocks.SAPLING) && position.getY() < worldIn.getHeight() - treeHeight - 1){
 					state.getBlock().onPlantGrow(state, worldIn, position.down(), position);
 					
 					// Generate Leaves

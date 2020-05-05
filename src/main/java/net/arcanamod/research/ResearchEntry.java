@@ -2,9 +2,9 @@ package net.arcanamod.research;
 
 import net.arcanamod.util.StreamUtils;
 import net.minecraft.item.Item;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 
@@ -82,8 +82,8 @@ public class ResearchEntry{
 		return y;
 	}
 	
-	public NBTTagCompound serialize(ResourceLocation tag){
-		NBTTagCompound nbt = new NBTTagCompound();
+	public CompoundNBT serialize(ResourceLocation tag){
+		CompoundNBT nbt = new CompoundNBT();
 		// key
 		nbt.setString("id", tag.toString());
 		// name, desc
@@ -93,34 +93,34 @@ public class ResearchEntry{
 		nbt.setInteger("x", x());
 		nbt.setInteger("y", y());
 		// sections
-		NBTTagList list = new NBTTagList();
+		ListNBT list = new ListNBT();
 		sections().forEach((section) -> list.appendTag(section.getPassData()));
 		nbt.setTag("sections", list);
 		// icons
-		NBTTagList icons = new NBTTagList();
-		icons().forEach((icon) -> icons.appendTag(new NBTTagString(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(icon), "Invalid item for icon on client side.").toString())));
+		ListNBT icons = new ListNBT();
+		icons().forEach((icon) -> icons.appendTag(new StringNBT(Objects.requireNonNull(ForgeRegistries.ITEMS.getKey(icon), "Invalid item for icon on client side.").toString())));
 		nbt.setTag("icons", icons);
 		// parents
-		NBTTagList parents = new NBTTagList();
-		parents().forEach((parent) -> parents.appendTag(new NBTTagString(parent.toString())));
+		ListNBT parents = new ListNBT();
+		parents().forEach((parent) -> parents.appendTag(new StringNBT(parent.toString())));
 		nbt.setTag("parents", parents);
 		// meta
-		NBTTagList meta = new NBTTagList();
-		meta().forEach((met) -> meta.appendTag(new NBTTagString(met)));
+		ListNBT meta = new ListNBT();
+		meta().forEach((met) -> meta.appendTag(new StringNBT(met)));
 		nbt.setTag("meta", meta);
 		return nbt;
 	}
 	
-	public static ResearchEntry deserialize(NBTTagCompound nbt, ResearchCategory in){
+	public static ResearchEntry deserialize(CompoundNBT nbt, ResearchCategory in){
 		ResourceLocation key = new ResourceLocation(nbt.getString("id"));
 		String name = nbt.getString("name");
 		String desc = nbt.getString("desc");
 		int x = nbt.getInteger("x");
 		int y = nbt.getInteger("y");
-		List<EntrySection> sections = StreamUtils.streamAndApply(nbt.getTagList("sections", 10), NBTTagCompound.class, EntrySection::deserialze).collect(Collectors.toList());
-		List<ResourceLocation> parents = StreamUtils.streamAndApply(nbt.getTagList("parents", 8), NBTTagString.class, NBTTagString::getString).map(ResourceLocation::new).collect(Collectors.toList());
-		List<Item> icons = StreamUtils.streamAndApply(nbt.getTagList("icons", 8), NBTTagString.class, NBTTagString::getString).map(ResourceLocation::new).map(ForgeRegistries.ITEMS::getValue).filter(Objects::nonNull).collect(Collectors.toList());
-		List<String> meta = StreamUtils.streamAndApply(nbt.getTagList("meta", 8), NBTTagString.class, NBTTagString::getString).collect(Collectors.toList());
+		List<EntrySection> sections = StreamUtils.streamAndApply(nbt.getTagList("sections", 10), CompoundNBT.class, EntrySection::deserialze).collect(Collectors.toList());
+		List<ResourceLocation> parents = StreamUtils.streamAndApply(nbt.getTagList("parents", 8), StringNBT.class, StringNBT::getString).map(ResourceLocation::new).collect(Collectors.toList());
+		List<Item> icons = StreamUtils.streamAndApply(nbt.getTagList("icons", 8), StringNBT.class, StringNBT::getString).map(ResourceLocation::new).map(ForgeRegistries.ITEMS::getValue).filter(Objects::nonNull).collect(Collectors.toList());
+		List<String> meta = StreamUtils.streamAndApply(nbt.getTagList("meta", 8), StringNBT.class, StringNBT::getString).collect(Collectors.toList());
 		return new ResearchEntry(key, sections, icons, meta, parents, in, name, desc, x, y);
 	}
 	

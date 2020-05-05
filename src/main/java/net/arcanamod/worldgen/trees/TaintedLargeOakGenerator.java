@@ -3,15 +3,15 @@ package net.arcanamod.worldgen.trees;
 import com.google.common.collect.Lists;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.bases.SaplingBase;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.*;
+import net.minecraft.block.LeavesBlock;
+import net.minecraft.block.LogBlock;
+import net.minecraft.block.BlockState;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 
 import java.util.List;
 import java.util.Random;
@@ -21,7 +21,7 @@ import java.util.Random;
  * <p>
  * Used to generate large oak tainted trees
  */
-public class TaintedLargeOakGenerator extends WorldGenAbstractTree{
+public class TaintedLargeOakGenerator extends AbstractTreeFeature{
 	private Random rand;
 	private World world;
 	private BlockPos basePos = BlockPos.ORIGIN;
@@ -97,14 +97,14 @@ public class TaintedLargeOakGenerator extends WorldGenAbstractTree{
 		}
 	}
 	
-	void crosSection(BlockPos pos, float p_181631_2_, IBlockState p_181631_3_){
+	void crosSection(BlockPos pos, float p_181631_2_, BlockState p_181631_3_){
 		int i = (int)((double)p_181631_2_ + 0.618D);
 		
 		for(int j = -i; j <= i; ++j){
 			for(int k = -i; k <= i; ++k){
 				if(Math.pow((double)Math.abs(j) + 0.5D, 2.0D) + Math.pow((double)Math.abs(k) + 0.5D, 2.0D) <= (double)(p_181631_2_ * p_181631_2_)){
 					BlockPos blockpos = pos.add(j, 0, k);
-					IBlockState state = this.world.getBlockState(blockpos);
+					BlockState state = this.world.getBlockState(blockpos);
 					
 					if(state.getBlock().isAir(state, world, blockpos) || state.getBlock().isLeaves(state, world, blockpos)){
 						this.setBlockAndNotifyAdequately(this.world, blockpos, p_181631_3_);
@@ -148,7 +148,7 @@ public class TaintedLargeOakGenerator extends WorldGenAbstractTree{
 	 */
 	void generateLeafNode(BlockPos pos){
 		for(int i = 0; i < this.leafDistanceLimit; ++i){
-			this.crosSection(pos.up(i), this.leafSize(i), leavesBlock.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE));
+			this.crosSection(pos.up(i), this.leafSize(i), leavesBlock.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE));
 		}
 	}
 	
@@ -161,8 +161,8 @@ public class TaintedLargeOakGenerator extends WorldGenAbstractTree{
 		
 		for(int j = 0; j <= i; ++j){
 			BlockPos blockpos1 = limbPos.add(0.5F + (float)j * f, 0.5F + (float)j * f1, 0.5F + (float)j * f2);
-			BlockLog.EnumAxis blocklog$enumaxis = this.getLogAxis(limbPos, blockpos1);
-			this.setBlockAndNotifyAdequately(this.world, blockpos1, logBlock.getDefaultState().withProperty(BlockLog.LOG_AXIS, blocklog$enumaxis));
+			LogBlock.EnumAxis blocklog$enumaxis = this.getLogAxis(limbPos, blockpos1);
+			this.setBlockAndNotifyAdequately(this.world, blockpos1, logBlock.getDefaultState().withProperty(LogBlock.LOG_AXIS, blocklog$enumaxis));
 		}
 	}
 	
@@ -181,17 +181,17 @@ public class TaintedLargeOakGenerator extends WorldGenAbstractTree{
 		}
 	}
 	
-	private BlockLog.EnumAxis getLogAxis(BlockPos p_175938_1_, BlockPos p_175938_2_){
-		BlockLog.EnumAxis blocklog$enumaxis = BlockLog.EnumAxis.Y;
+	private LogBlock.EnumAxis getLogAxis(BlockPos p_175938_1_, BlockPos p_175938_2_){
+		LogBlock.EnumAxis blocklog$enumaxis = LogBlock.EnumAxis.Y;
 		int i = Math.abs(p_175938_2_.getX() - p_175938_1_.getX());
 		int j = Math.abs(p_175938_2_.getZ() - p_175938_1_.getZ());
 		int k = Math.max(i, j);
 		
 		if(k > 0){
 			if(i == k){
-				blocklog$enumaxis = BlockLog.EnumAxis.X;
+				blocklog$enumaxis = LogBlock.EnumAxis.X;
 			}else{
-				blocklog$enumaxis = BlockLog.EnumAxis.Z;
+				blocklog$enumaxis = LogBlock.EnumAxis.Z;
 			}
 		}
 		
@@ -303,8 +303,8 @@ public class TaintedLargeOakGenerator extends WorldGenAbstractTree{
 	 */
 	private boolean validTreeLocation(){
 		BlockPos down = this.basePos.down();
-		IBlockState state = this.world.getBlockState(down);
-		boolean isSoil = state.getBlock().canSustainPlant(state, this.world, down, EnumFacing.UP, ((SaplingBase)saplingBlock));
+		BlockState state = this.world.getBlockState(down);
+		boolean isSoil = state.getBlock().canSustainPlant(state, this.world, down, Direction.UP, ((SaplingBase)saplingBlock));
 		
 		if(!isSoil){
 			return false;

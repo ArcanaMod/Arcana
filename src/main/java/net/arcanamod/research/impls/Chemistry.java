@@ -13,12 +13,12 @@ import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.util.GraphTraverser;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.nbt.NBTBase;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 import org.apache.logging.log4j.LogManager;
@@ -72,19 +72,19 @@ public class Chemistry extends Puzzle{
 		}
 	}
 	
-	public NBTTagCompound getData(){
-		NBTTagCompound compound = new NBTTagCompound();
-		NBTTagList nodeList = new NBTTagList();
+	public CompoundNBT getData(){
+		CompoundNBT compound = new CompoundNBT();
+		ListNBT nodeList = new ListNBT();
 		for(Aspect node : nodes)
-			nodeList.appendTag(new NBTTagString(node.name()));
+			nodeList.appendTag(new StringNBT(node.name()));
 		compound.setTag("nodes", nodeList);
 		return compound;
 	}
 	
-	public static Chemistry fromNBT(NBTTagCompound passData){
+	public static Chemistry fromNBT(CompoundNBT passData){
 		List<Aspect> nodes = new ArrayList<>();
 		for(NBTBase node : passData.getTagList("nodes", Constants.NBT.TAG_STRING))
-			nodes.add(Aspect.valueOf(((NBTTagString)node).getString()));
+			nodes.add(Aspect.valueOf(((StringNBT)node).getString()));
 		return new Chemistry(nodes);
 	}
 	
@@ -105,7 +105,7 @@ public class Chemistry extends Puzzle{
 		return grid;
 	}
 	
-	public List<Puzzle.SlotInfo> getItemSlotLocations(EntityPlayer player){
+	public List<Puzzle.SlotInfo> getItemSlotLocations(PlayerEntity player){
 		return Collections.emptyList();
 	}
 	
@@ -113,7 +113,7 @@ public class Chemistry extends Puzzle{
 		return genHexGrid(gWidth, gHeight, returnInv).stream().peek(slot -> slot.x += 2).peek(slot -> slot.y += 2).collect(Collectors.toList());
 	}
 	
-	public boolean validate(List<AspectSlot> puzzleSlots, List<Slot> ignored, EntityPlayer player, ResearchTableContainer container){
+	public boolean validate(List<AspectSlot> puzzleSlots, List<Slot> ignored, PlayerEntity player, ResearchTableContainer container){
 		fillGraph(puzzleSlots);
 		// now traverse the graph
 		AtomicInteger count = new AtomicInteger();

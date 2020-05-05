@@ -6,8 +6,8 @@ import net.arcanamod.items.ItemWand;
 import net.arcanamod.items.attachment.WandCore;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.Cap;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.Items;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
@@ -25,7 +25,7 @@ public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IR
 	
 	// I can either make WandCore into a capability, or add special support for sticks just here. I prefer the latter.
 	
-	public boolean matches(InventoryCrafting inv, World world){
+	public boolean matches(CraftingInventory inv, World world){
 		if(inv.getWidth() >= 3 && inv.getHeight() >= 3){
 			// check TL slot
 			// if there's a cap, TL->BR
@@ -45,7 +45,7 @@ public class RecipeWands extends IForgeRegistryEntry.Impl<IRecipe> implements IR
 		return false;
 	}
 	
-	public ItemStack getCraftingResult(InventoryCrafting inv){
+	public ItemStack getCraftingResult(CraftingInventory inv){
 		Cap caps;
 		if(inv.getStackInSlot(0).getItem() instanceof Cap)
 			caps = (Cap)inv.getStackInSlot(0).getItem();

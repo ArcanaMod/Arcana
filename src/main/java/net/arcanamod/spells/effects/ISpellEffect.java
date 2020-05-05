@@ -1,6 +1,6 @@
 package net.arcanamod.spells.effects;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -32,7 +32,7 @@ public interface ISpellEffect{
 	 * @param power
 	 * 		The power of the spell
 	 */
-	void getEffect(EntityLivingBase entity, int power);
+	void getEffect(LivingEntity entity, int power);
 	
 	/**
 	 * @return ID of the particle used

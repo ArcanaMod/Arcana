@@ -3,7 +3,7 @@ package net.arcanamod.network.inventory;
 import io.netty.buffer.ByteBuf;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -19,7 +19,7 @@ public class PktAspectClickHandler implements IMessageHandler<PktAspectClick, Pk
 	
 	public PktSyncAspectContainerHandler.PktSyncAspectContainer onMessage(PktAspectClick message, MessageContext ctx){
 		// on server
-		EntityPlayerMP epm = ctx.getServerHandler().player;
+		ServerPlayerEntity epm = ctx.getServerHandler().player;
 		if(epm.openContainer.windowId == message.windowId){
 			// decrease/increase whats held on the server
 			// send back a PktAspectClickConfirmed with new heldAspect and new heldCount for client

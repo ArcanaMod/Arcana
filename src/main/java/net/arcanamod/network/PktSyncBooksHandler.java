@@ -48,7 +48,7 @@ public class PktSyncBooksHandler implements IMessageHandler<PktSyncBooksHandler.
 			// NBTBase # read (DataInput)
 			// used with ByteBufInputStream
 			ByteBufInputStream stream = new ByteBufInputStream(buf);
-			NBTTagCompound nbt = null;
+			CompoundNBT nbt = null;
 			try{
 				nbt = CompressedStreamTools.read(stream, NBTSizeTracker.INFINITE);
 			}catch(IOException e){
@@ -57,16 +57,16 @@ public class PktSyncBooksHandler implements IMessageHandler<PktSyncBooksHandler.
 			}
 			
 			if(nbt != null){
-				NBTTagList books = nbt.getTagList("books", 10);
+				ListNBT books = nbt.getTagList("books", 10);
 				for(NBTBase bookElement : books){
-					NBTTagCompound book = (NBTTagCompound)bookElement;
+					CompoundNBT book = (CompoundNBT)bookElement;
 					// deserialize book
 					ResearchBook book1 = ResearchBook.deserialize(book);
 					this.books.put(book1.getKey(), book1);
 				}
-				NBTTagList puzzles = nbt.getTagList("puzzles", 10);
+				ListNBT puzzles = nbt.getTagList("puzzles", 10);
 				for(NBTBase puzzleElement : puzzles){
-					NBTTagCompound puzzle = (NBTTagCompound)puzzleElement;
+					CompoundNBT puzzle = (CompoundNBT)puzzleElement;
 					// deserialize puzzle
 					Puzzle puzzleObject = Puzzle.deserialize(puzzle);
 					if(puzzleObject != null){
@@ -81,8 +81,8 @@ public class PktSyncBooksHandler implements IMessageHandler<PktSyncBooksHandler.
 			// NBTBase # write (DataOutput)
 			// used with ByteBufOutputStream
 			ByteBufOutputStream stream = new ByteBufOutputStream(buf);
-			NBTTagCompound nbt = new NBTTagCompound();
-			NBTTagList books = new NBTTagList(), puzzles = new NBTTagList();
+			CompoundNBT nbt = new CompoundNBT();
+			ListNBT books = new ListNBT(), puzzles = new ListNBT();
 			// add each book
 			this.books.forEach((location, book) -> books.appendTag(book.serialize(location)));
 			nbt.setTag("books", books);

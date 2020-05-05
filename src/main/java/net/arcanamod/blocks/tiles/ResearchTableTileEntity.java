@@ -4,9 +4,9 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.VisBattery;
 import net.arcanamod.aspects.VisHandlerCapability;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -42,7 +42,7 @@ public class ResearchTableTileEntity extends TileEntity{
 	protected VisBattery aspects = new VisBattery();
 	
 	@Override
-	public void readFromNBT(NBTTagCompound compound){
+	public void readFromNBT(CompoundNBT compound){
 		super.readFromNBT(compound);
 		if(compound.hasKey("items"))
 			items.deserializeNBT(compound.getCompoundTag("items"));
@@ -51,7 +51,7 @@ public class ResearchTableTileEntity extends TileEntity{
 	}
 	
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound){
+	public CompoundNBT writeToNBT(CompoundNBT compound){
 		super.writeToNBT(compound);
 		compound.setTag("items", items.serializeNBT());
 		compound.setTag("aspects", aspects.serializeNBT());
@@ -59,7 +59,7 @@ public class ResearchTableTileEntity extends TileEntity{
 	}
 	
 	@Nullable
-	public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing){
+	public <T> T getCapability(Capability<T> capability, @Nullable Direction facing){
 		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			return (T)items;
 		else if(capability == VisHandlerCapability.ASPECT_HANDLER)
@@ -67,8 +67,8 @@ public class ResearchTableTileEntity extends TileEntity{
 		return super.getCapability(capability, facing);
 	}
 	
-	public NBTTagCompound saveToNBT(){
-		NBTTagCompound compound = new NBTTagCompound();
+	public CompoundNBT saveToNBT(){
+		CompoundNBT compound = new CompoundNBT();
 		compound.setTag("aspects", aspects.serializeNBT());
 		return compound;
 	}

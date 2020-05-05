@@ -6,20 +6,20 @@ import net.arcanamod.Arcana;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.aspects.Aspects;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
+import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 
 import static net.arcanamod.aspects.Aspects.areAspectsConnected;
 
-public class ChemistryPuzzleRenderer extends Gui implements PuzzleRenderer<Chemistry>{
+public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRenderer<Chemistry>{
 	
 	private static final ResourceLocation TEX = new ResourceLocation(Arcana.MODID, "textures/gui/research/chemistry_overlay.png");
 	
-	public void render(Chemistry puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, EntityPlayer player){
+	public void render(Chemistry puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player){
 		drawPaper(screenWidth, screenHeight);
 		// how to generate a hexagonal grid?
 		// 20x20 per hex

@@ -1,16 +1,16 @@
 package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.*;
 import net.minecraft.block.BlockNewLeaf;
 import net.minecraft.block.BlockNewLog;
 import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 
 import java.util.Random;
 
@@ -19,16 +19,16 @@ import java.util.Random;
  * <p>
  * Used to generate dark oak tainted trees
  */
-public class TaintedDarkOakGenerator extends WorldGenAbstractTree{
-	private static final IBlockState DEFAULT_TRUNK = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK);
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_DARKOAK_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_DARKOAK_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_LEAVES = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_DARKOAK_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_DARKOAK_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+public class TaintedDarkOakGenerator extends AbstractTreeFeature{
+	private static final BlockState DEFAULT_TRUNK = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK);
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_DARKOAK_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_DARKOAK_LOG.getDefaultState();
+	private static final BlockState DEFAULT_LEAVES = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK).withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_DARKOAK_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_DARKOAK_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
-	private final IBlockState metaWood;
-	private final IBlockState metaLeaves;
+	private final BlockState metaWood;
+	private final BlockState metaLeaves;
 	
 	public TaintedDarkOakGenerator(boolean notify, boolean tainted){
 		this(notify, tainted, false);
@@ -53,8 +53,8 @@ public class TaintedDarkOakGenerator extends WorldGenAbstractTree{
 		
 		if(k >= 1 && k + i + 1 < 256){
 			BlockPos blockpos = position.down();
-			IBlockState state = worldIn.getBlockState(blockpos);
-			boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, blockpos, net.minecraft.util.EnumFacing.UP, ((net.minecraft.block.BlockSapling)Blocks.SAPLING));
+			BlockState state = worldIn.getBlockState(blockpos);
+			boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, blockpos, Direction.UP, ((SaplingBlock)Blocks.SAPLING));
 			
 			if(!(isSoil && position.getY() < worldIn.getHeight() - i - 1)){
 				return false;
@@ -65,7 +65,7 @@ public class TaintedDarkOakGenerator extends WorldGenAbstractTree{
 				this.onPlantGrow(worldIn, blockpos.east(), position);
 				this.onPlantGrow(worldIn, blockpos.south(), position);
 				this.onPlantGrow(worldIn, blockpos.south().east(), position);
-				EnumFacing enumfacing = EnumFacing.Plane.HORIZONTAL.random(rand);
+				Direction enumfacing = Direction.Plane.HORIZONTAL.random(rand);
 				int i1 = i - rand.nextInt(4);
 				int j1 = 2 - rand.nextInt(3);
 				int k1 = j;
@@ -194,7 +194,7 @@ public class TaintedDarkOakGenerator extends WorldGenAbstractTree{
 	
 	private void placeLeafAt(World worldIn, int x, int y, int z){
 		BlockPos blockpos = new BlockPos(x, y, z);
-		IBlockState state = worldIn.getBlockState(blockpos);
+		BlockState state = worldIn.getBlockState(blockpos);
 		
 		if(state.getBlock().isAir(state, worldIn, blockpos)){
 			this.setBlockAndNotifyAdequately(worldIn, blockpos, metaLeaves);
@@ -203,7 +203,7 @@ public class TaintedDarkOakGenerator extends WorldGenAbstractTree{
 	
 	//Just a helper macro
 	private void onPlantGrow(World world, BlockPos pos, BlockPos source){
-		IBlockState state = world.getBlockState(pos);
+		BlockState state = world.getBlockState(pos);
 		state.getBlock().onPlantGrow(state, world, pos, source);
 	}
 }

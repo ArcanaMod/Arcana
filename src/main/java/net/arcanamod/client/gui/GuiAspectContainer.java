@@ -4,13 +4,13 @@ import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.aspects.Aspects;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
 import java.io.IOException;
 
-public abstract class GuiAspectContainer extends GuiContainer{
+public abstract class GuiAspectContainer extends ContainerScreen{
 	
 	protected AspectContainer aspectContainer;
 	

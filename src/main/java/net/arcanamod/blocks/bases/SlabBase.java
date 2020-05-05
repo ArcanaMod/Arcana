@@ -1,15 +1,14 @@
 package net.arcanamod.blocks.bases;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.blocks.OreDictEntry;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -29,7 +28,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public abstract class SlabBase extends BlockSlab{
+public abstract class SlabBase extends SlabBlock{
 	private String name;
 	
 	public SlabBase(String name, Material material){
@@ -38,7 +37,7 @@ public abstract class SlabBase extends BlockSlab{
 		setRegistryName(name);
 		this.name = name;
 		
-		IBlockState state = this.blockState.getBaseState();
+		BlockState state = this.blockState.getBaseState();
 		
 		if(!this.isDouble()){
 			state = state.withProperty(HALF, EnumBlockHalf.BOTTOM);
@@ -66,12 +65,12 @@ public abstract class SlabBase extends BlockSlab{
 	}
 	
 	@Override
-	public int damageDropped(IBlockState state){
+	public int damageDropped(BlockState state){
 		return 0;
 	}
 	
 	@Override
-	public IBlockState getStateFromMeta(int meta){
+	public BlockState getStateFromMeta(int meta){
 		if(!this.isDouble()){
 			return this.getDefaultState().withProperty(HALF, EnumBlockHalf.values()[meta % EnumBlockHalf.values().length]);
 		}
@@ -79,7 +78,7 @@ public abstract class SlabBase extends BlockSlab{
 	}
 	
 	@Override
-	public int getMetaFromState(IBlockState state){
+	public int getMetaFromState(BlockState state){
 		if(this.isDouble()){
 			return 0;
 		}
@@ -87,7 +86,7 @@ public abstract class SlabBase extends BlockSlab{
 	}
 	
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune){
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune){
 		Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Arcana.MODID, name.replace("_double", "")));
 		if(block != null){
 			Item item = Item.getItemFromBlock(block);

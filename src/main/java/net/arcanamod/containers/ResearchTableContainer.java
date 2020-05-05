@@ -10,13 +10,13 @@ import net.arcanamod.client.gui.ResearchTableGUI;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.ClickType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.Inventory;
+import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.InventoryBasic;
-import net.minecraft.inventory.Slot;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -44,7 +44,7 @@ public class ResearchTableContainer extends AspectContainer{
 	public final List<AspectSlot> puzzleSlots = new ArrayList<>();
 	public final List<Slot> puzzleItemSlots = new ArrayList<>();
 	public IInventory puzzleInventorySlots;
-	EntityPlayer lastClickPlayer;
+	PlayerEntity lastClickPlayer;
 	
 	public ResearchTableContainer(IInventory playerInventory, ResearchTableTileEntity te){
 		this.te = te;
@@ -115,7 +115,7 @@ public class ResearchTableContainer extends AspectContainer{
 		});
 	}
 	
-	public ItemStack slotClick(int slot, int dragType, ClickType clickType, EntityPlayer player){
+	public ItemStack slotClick(int slot, int dragType, ClickType clickType, PlayerEntity player){
 		lastClickPlayer = player;
 		ItemStack stack = super.slotClick(slot, dragType, clickType, player);
 		if(!ink.isEmpty())
@@ -148,7 +148,7 @@ public class ResearchTableContainer extends AspectContainer{
 					}
 					List<Puzzle.SlotInfo> locations = puzzle.getItemSlotLocations(lastClickPlayer);
 					int size = locations.size();
-					puzzleInventorySlots = new InventoryBasic("", false, size){
+					puzzleInventorySlots = new Inventory("", false, size){
 						public void markDirty(){
 							super.markDirty();
 							ResearchTableContainer.this.onCraftMatrixChanged(this);
@@ -170,7 +170,7 @@ public class ResearchTableContainer extends AspectContainer{
 		});
 	}
 	
-	public void onContainerClosed(@Nonnull EntityPlayer player){
+	public void onContainerClosed(@Nonnull PlayerEntity player){
 		super.onContainerClosed(player);
 		if(puzzleInventorySlots != null)
 			if(!player.world.isRemote)
@@ -217,7 +217,7 @@ public class ResearchTableContainer extends AspectContainer{
 	}
 	
 	@Override
-	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index){
+	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index){
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
 		
@@ -251,7 +251,7 @@ public class ResearchTableContainer extends AspectContainer{
 	public void validate(){
 		if(getFromNote().map(puzzle -> puzzle.validate(puzzleSlots, puzzleItemSlots, lastClickPlayer, this)).orElse(false)){
 			ItemStack complete = new ItemStack(ArcanaItems.RESEARCH_NOTE_COMPLETE);
-			NBTTagCompound data = note.getTagCompound();
+			CompoundNBT data = note.getTagCompound();
 			
 			// I might store e.g. chemistry data for display in the future.
 			complete.setTagCompound(data);
@@ -286,7 +286,7 @@ public class ResearchTableContainer extends AspectContainer{
 			return Optional.empty();
 	}
 	
-	public boolean canInteractWith(EntityPlayer player){
+	public boolean canInteractWith(PlayerEntity player){
 		return true;
 	}
 	

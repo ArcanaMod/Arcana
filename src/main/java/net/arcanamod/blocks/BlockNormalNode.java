@@ -6,18 +6,18 @@ import net.arcanamod.blocks.bases.BlockBase;
 import net.arcanamod.blocks.tiles.NodeTileEntity;
 import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.aspects.Aspects;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -67,13 +67,13 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
 	}
 	
 	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+	public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos){
 		return isOn ? BOUNDING_BOX : new AxisAlignedBB(0, 0, 0, 0, 0, 0);
 	}
 	
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state){
-		return EnumBlockRenderType.INVISIBLE;
+	public BlockRenderType getRenderType(BlockState state){
+		return BlockRenderType.INVISIBLE;
 	}
 	
 	@Override
@@ -82,43 +82,43 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
 	}
 	
 	@Override
-	public boolean isOpaqueCube(IBlockState state){
+	public boolean isOpaqueCube(BlockState state){
 		return false;
 	}
 	
 	@SideOnly(Side.CLIENT)
 	@Override
-	public float getAmbientOcclusionLightValue(IBlockState state){
+	public float getAmbientOcclusionLightValue(BlockState state){
 		return 1.0f;
 	}
 	
 	@Override
-	public boolean isFullCube(IBlockState state){
+	public boolean isFullCube(BlockState state){
 		return false;
 	}
 	
 	@Override
-	public boolean hasTileEntity(IBlockState state){
+	public boolean hasTileEntity(BlockState state){
 		return true;
 	}
 	
 	@Override
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState){
+	public void addCollisionBoxToList(BlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState){
 		addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, 0, 0, 0, 0, 0));
 	}
 	
 	@Nullable
 	@Override
-	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos){
+	public AxisAlignedBB getCollisionBoundingBox(BlockState blockState, IBlockAccess worldIn, BlockPos pos){
 		return NULL_AABB;
 	}
 	
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+	public boolean onBlockActivated(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ){
 		if(worldIn.isRemote){
 			return false;
 		}
-		if(hand != EnumHand.MAIN_HAND){
+		if(hand != Hand.MAIN_HAND){
 			return false;
 		}
 		ItemStack itemActivated = playerIn.getHeldItem(hand);
@@ -168,7 +168,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
 		return true;
 	}
 	
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face){
 		return BlockFaceShape.UNDEFINED;
 	}
 }

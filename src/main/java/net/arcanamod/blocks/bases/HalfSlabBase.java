@@ -5,7 +5,7 @@ import net.arcanamod.util.IHasModel;
 import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockSlab;
+import net.minecraft.block.SlabBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemSlab;
@@ -21,7 +21,7 @@ public class HalfSlabBase extends SlabBase implements IHasModel, OreDictEntry{
 	
 	public HalfSlabBase(String name, Material material, Block doubleSlab){
 		super(name, material);
-		ArcanaItems.ITEMS.add(new ItemSlab(this, this, (BlockSlab)doubleSlab).setRegistryName(this.getRegistryName()));
+		ArcanaItems.ITEMS.add(new ItemSlab(this, this, (SlabBlock)doubleSlab).setRegistryName(this.getRegistryName()));
 	}
 	
 	@Nonnull

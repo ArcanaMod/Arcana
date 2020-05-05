@@ -3,11 +3,11 @@ package net.arcanamod.spells;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.entities.SpellEntity;
 import net.arcanamod.spells.effects.ISpellEffect;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.MathHelper;
 
 import java.util.ArrayList;
@@ -88,7 +88,7 @@ public class Spell{
 	 * @param player
 	 * 		Caster of the spell
 	 */
-	public void cast(EntityPlayer player){
+	public void cast(PlayerEntity player){
 		switch(core){
 			case EARTH:
 				for(ISpellEffect effect : effects){
@@ -119,8 +119,8 @@ public class Spell{
 				player.getEntityWorld().spawnEntity(entity);
 				break;
 			case CHAOS:
-				List<EntityLivingBase> nearbyEntities = player.getEntityWorld().getEntitiesWithinAABB(EntityLiving.class, player.getEntityBoundingBox().expand(power, power, power));
-				for(EntityLivingBase ent : nearbyEntities){
+				List<LivingEntity> nearbyEntities = player.getEntityWorld().getEntitiesWithinAABB(MobEntity.class, player.getEntityBoundingBox().expand(power, power, power));
+				for(LivingEntity ent : nearbyEntities){
 					if(ent != player){
 						for(ISpellEffect effect : effects){
 							effect.getEffect(ent, power);
@@ -147,8 +147,8 @@ public class Spell{
 				}
 				break;
 			case ORDER:
-				List<EntityLivingBase> nearbyEntities1 = player.getEntityWorld().getEntitiesWithinAABB(EntityLivingBase.class, player.getEntityBoundingBox().expand(power, power, power));
-				for(EntityLivingBase ent : nearbyEntities1){
+				List<LivingEntity> nearbyEntities1 = player.getEntityWorld().getEntitiesWithinAABB(LivingEntity.class, player.getEntityBoundingBox().expand(power, power, power));
+				for(LivingEntity ent : nearbyEntities1){
 					if(ent != player){
 						for(ISpellEffect effect : effects){
 							effect.getEffect(ent, power);
@@ -167,7 +167,7 @@ public class Spell{
 	 * 		NBTTagCompound of the spell
 	 * @return {@link Spell} object
 	 */
-	public static Spell fromNBT(NBTTagCompound spell){
+	public static Spell fromNBT(CompoundNBT spell){
 		List<ISpellEffect> effects = new ArrayList<>();
 		for(String effect : spell.getString("effects").split(";")){
 			ISpellEffect effectObj = SpellEffectHandler.getEffect(effect);

@@ -1,16 +1,16 @@
 package net.arcanamod.worldgen.trees;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.*;
 import net.minecraft.block.BlockNewLeaf;
 import net.minecraft.block.BlockNewLog;
 import net.minecraft.block.BlockPlanks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.minecraft.world.gen.feature.AbstractTreeFeature;
 
 import java.util.Random;
 
@@ -19,16 +19,16 @@ import java.util.Random;
  * <p>
  * Used to generate small acacia tainted trees
  */
-public class TaintedAcaciaGenerator extends WorldGenAbstractTree{
-	private static final IBlockState DEFAULT_TRUNK = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA);
-	private static final IBlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_ACACIA_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_ACACIA_LOG.getDefaultState();
-	private static final IBlockState DEFAULT_LEAVES = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_ACACIA_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
-	private static final IBlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_ACACIA_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, Boolean.FALSE);
+public class TaintedAcaciaGenerator extends AbstractTreeFeature{
+	private static final BlockState DEFAULT_TRUNK = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.ACACIA);
+	private static final BlockState DEFAULT_TAINTED_TRUNK = ArcanaBlocks.TAINTED_ACACIA_LOG.getDefaultState();
+	private static final BlockState DEFAULT_UNTAINTED_TRUNK = ArcanaBlocks.UNTAINTED_ACACIA_LOG.getDefaultState();
+	private static final BlockState DEFAULT_LEAVES = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.ACACIA).withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_TAINTED_LEAVES = ArcanaBlocks.TAINTED_ACACIA_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
+	private static final BlockState DEFAULT_UNTAINTED_LEAVES = ArcanaBlocks.UNTAINTED_ACACIA_LEAVES.getDefaultState().withProperty(LeavesBlock.CHECK_DECAY, Boolean.FALSE);
 	
-	private final IBlockState metaWood;
-	private final IBlockState metaLeaves;
+	private final BlockState metaWood;
+	private final BlockState metaLeaves;
 	
 	public TaintedAcaciaGenerator(boolean notify, boolean tainted){
 		this(notify, tainted, false);
@@ -80,12 +80,12 @@ public class TaintedAcaciaGenerator extends WorldGenAbstractTree{
 				return false;
 			}else{
 				BlockPos down = position.down();
-				IBlockState state = worldIn.getBlockState(down);
-				boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, down, net.minecraft.util.EnumFacing.UP, ((net.minecraft.block.BlockSapling)Blocks.SAPLING));
+				BlockState state = worldIn.getBlockState(down);
+				boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, down, Direction.UP, ((SaplingBlock)Blocks.SAPLING));
 				
 				if(isSoil && position.getY() < worldIn.getHeight() - i - 1){
 					state.getBlock().onPlantGrow(state, worldIn, down, position);
-					EnumFacing enumfacing = EnumFacing.Plane.HORIZONTAL.random(rand);
+					Direction enumfacing = Direction.Plane.HORIZONTAL.random(rand);
 					int k2 = i - rand.nextInt(4) - 1;
 					int l2 = 3 - rand.nextInt(3);
 					int i3 = position.getX();
@@ -134,7 +134,7 @@ public class TaintedAcaciaGenerator extends WorldGenAbstractTree{
 					this.placeLeafAt(worldIn, blockpos2.north(2));
 					i3 = position.getX();
 					j1 = position.getZ();
-					EnumFacing enumfacing1 = EnumFacing.Plane.HORIZONTAL.random(rand);
+					Direction enumfacing1 = Direction.Plane.HORIZONTAL.random(rand);
 					
 					if(enumfacing1 != enumfacing){
 						int l3 = k2 - rand.nextInt(2) - 1;
@@ -194,7 +194,7 @@ public class TaintedAcaciaGenerator extends WorldGenAbstractTree{
 	}
 	
 	private void placeLeafAt(World worldIn, BlockPos pos){
-		IBlockState state = worldIn.getBlockState(pos);
+		BlockState state = worldIn.getBlockState(pos);
 		
 		if(state.getBlock().isAir(state, worldIn, pos) || state.getBlock().isLeaves(state, worldIn, pos)){
 			this.setBlockAndNotifyAdequately(worldIn, pos, metaLeaves);

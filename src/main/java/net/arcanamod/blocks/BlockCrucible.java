@@ -2,14 +2,12 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.bases.BlockBase;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -31,29 +29,29 @@ public class BlockCrucible extends BlockBase{
 		setHardness(2f);
 	}
 	
-	public boolean isOpaqueCube(IBlockState state){
+	public boolean isOpaqueCube(BlockState state){
 		return false;
 	}
 	
-	public boolean isFullCube(IBlockState state){
+	public boolean isFullCube(BlockState state){
 		return false;
 	}
 	
-	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState){
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
+	public void addCollisionBoxToList(BlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState){
+		//addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_LEGS);
+		//addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_WEST);
+		//addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_NORTH);
+		//addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_EAST);
+		//addCollisionBoxToList(pos, entityBox, collidingBoxes, AABB_WALL_SOUTH);
 	}
 	
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos){
+	public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos){
 		return FULL_BLOCK_AABB;
 	}
 	
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face){
-		if(face == EnumFacing.UP)
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face){
+		if(face == Direction.UP)
 			return BlockFaceShape.BOWL;
-		return face == EnumFacing.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
+		return face == Direction.DOWN ? BlockFaceShape.UNDEFINED : BlockFaceShape.SOLID;
 	}
 }

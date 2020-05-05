@@ -3,13 +3,13 @@ package net.arcanamod.client.model;
 import net.arcanamod.items.ItemAttachment;
 import net.arcanamod.items.ItemWand;
 import net.arcanamod.wand.EnumAttachmentType;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.block.model.BakedQuad;
-import net.minecraft.client.renderer.block.model.IBakedModel;
-import net.minecraft.client.renderer.block.model.ItemOverrideList;
+import net.minecraft.block.BlockState;
+import net.minecraft.client.renderer.model.ItemOverrideList;
+import net.minecraft.client.renderer.model.BakedQuad;
+import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Direction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ public class BakedModelWandFinalized implements IBakedModel{
 	}
 	
 	@Override
-	public List<BakedQuad> getQuads(IBlockState arg0, EnumFacing arg1, long arg2){
+	public List<BakedQuad> getQuads(BlockState arg0, Direction arg1, long arg2){
 		ArrayList<BakedQuad> list = new ArrayList<>();
 		
 		List<BakedQuad> list1 = this.modelMain.getQuads(arg0, arg1, arg2);

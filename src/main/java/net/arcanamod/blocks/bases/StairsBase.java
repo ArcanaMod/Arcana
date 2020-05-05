@@ -5,25 +5,25 @@ import net.arcanamod.util.IHasModel;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.items.ArcanaItems;
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.StairsBlock;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
+import net.minecraft.item.BlockItem;
 
 /**
  * Basic Stairs, all stairs should either be this, or extend it
  *
  * @author Tea
  */
-public class StairsBase extends BlockStairs implements IHasModel, OreDictEntry{
+public class StairsBase extends StairsBlock implements IHasModel, OreDictEntry{
 	
-	public StairsBase(String name, IBlockState state){
+	public StairsBase(String name, BlockState state){
 		super(state);
 		setUnlocalizedName(name);
 		setRegistryName(name);
 		setLightOpacity(0);
 		ArcanaBlocks.BLOCKS.add(this);
-		ArcanaItems.ITEMS.add(new ItemBlock(this).setRegistryName(getRegistryName()));
+		ArcanaItems.ITEMS.add(new BlockItem(this).setRegistryName(getRegistryName()));
 	}
 	
 	public String getOreDictName(){

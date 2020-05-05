@@ -3,7 +3,7 @@ package net.arcanamod.network;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -15,7 +15,7 @@ public class PktTryAdvanceHandler implements IMessageHandler<PktTryAdvanceHandle
 		// this is being handled on the server.
 		ResearchEntry entry = ResearchBooks.getEntry(message.getKey());
 		if(entry != null){
-			EntityPlayerMP sender = ctx.getServerHandler().player;
+			ServerPlayerEntity sender = ctx.getServerHandler().player;
 			if(Researcher.canAdvanceEntry(Researcher.getFrom(sender), entry)){
 				Researcher.takeRequirementsAndAdvanceEntry(Researcher.getFrom(sender), entry);
 				return new PktAdvanceHandler.PktAdvanceResearch(message.getKey());

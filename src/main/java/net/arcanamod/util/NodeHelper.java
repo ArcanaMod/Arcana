@@ -2,13 +2,13 @@ package net.arcanamod.util;
 
 import net.arcanamod.items.armor.GoggleBase;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 
 public class NodeHelper{
 	
 	public static GogglePriority getGogglePriority(){
-		EntityPlayerSP player = Minecraft.getMinecraft().player;
-		return !player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).isEmpty() && player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem() instanceof GoggleBase ? ((GoggleBase)player.getItemStackFromSlot(EntityEquipmentSlot.HEAD).getItem()).priority : GogglePriority.SHOW_NONE;
+		ClientPlayerEntity player = Minecraft.getMinecraft().player;
+		return !player.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty() && player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof GoggleBase ? ((GoggleBase)player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem()).priority : GogglePriority.SHOW_NONE;
 	}
 }

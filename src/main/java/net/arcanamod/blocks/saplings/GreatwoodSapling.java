@@ -2,11 +2,11 @@ package net.arcanamod.blocks.saplings;
 
 import net.arcanamod.blocks.bases.SaplingBase;
 import net.arcanamod.worldgen.trees.GreatwoodGenerator;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraft.world.gen.feature.Feature;
 import net.minecraftforge.event.terraingen.TerrainGen;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -29,7 +29,7 @@ public class GreatwoodSapling extends SaplingBase{
 	
 	@Override
     @ParametersAreNonnullByDefault
-	public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand){
+	public void generateTree(World worldIn, BlockPos pos, BlockState state, Random rand){
 		if(!TerrainGen.saplingGrowTree(worldIn, rand, pos))
 			return;
 		
@@ -37,9 +37,9 @@ public class GreatwoodSapling extends SaplingBase{
 		int z = 0;
 		boolean flag = false;
 		
-		WorldGenerator worldgenerator = new GreatwoodGenerator(true, false, false);
+		Feature worldgenerator = new GreatwoodGenerator(true, false, false);
 		
-		IBlockState iblockstate2 = Blocks.AIR.getDefaultState();
+		BlockState iblockstate2 = Blocks.AIR.getDefaultState();
 		
 		for(x = 0; x >= -1; --x){
 			for(z = 0; z >= -1; --z){
@@ -88,7 +88,7 @@ public class GreatwoodSapling extends SaplingBase{
 	}
 	
 	public boolean isTypeAt(World worldIn, BlockPos pos){
-		IBlockState iblockstate = worldIn.getBlockState(pos);
+		BlockState iblockstate = worldIn.getBlockState(pos);
 		return iblockstate.getBlock() == this;
 	}
 }

@@ -3,12 +3,11 @@ package net.arcanamod.entities;
 import net.arcanamod.spells.Spell;
 import net.arcanamod.spells.effects.ISpellEffect;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.IProjectile;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -29,13 +28,13 @@ import java.util.UUID;
 public class SpellEntity extends Entity implements IProjectile{
 	
 	private Spell spell;
-	private EntityLivingBase caster;
+	private LivingEntity caster;
 	
 	public SpellEntity(World worldIn){
 		super(worldIn);
 	}
 	
-	public SpellEntity(World worldIn, EntityLivingBase caster, Spell spell){
+	public SpellEntity(World worldIn, LivingEntity caster, Spell spell){
 		super(worldIn);
 		this.setPosition(caster.getPosition().getX(), caster.getEntityBoundingBox().minY + (double)caster.getEyeHeight(), caster.getPosition().getZ());
 		this.setSize(0.25F, 0.25F);
@@ -168,8 +167,8 @@ public class SpellEntity extends Entity implements IProjectile{
 	}
 	
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound){
-		NBTTagCompound tag = new NBTTagCompound();
+	public void writeEntityToNBT(CompoundNBT compound){
+		CompoundNBT tag = new CompoundNBT();
 		
 		StringBuilder sb = new StringBuilder();
 		for(ISpellEffect effect : spell.getEffects()){
@@ -185,12 +184,12 @@ public class SpellEntity extends Entity implements IProjectile{
 	}
 	
 	@Override
-	public void readEntityFromNBT(NBTTagCompound compound){
+	public void readEntityFromNBT(CompoundNBT compound){
 		this.spell = Spell.fromNBT(compound.getCompoundTag("foci"));
 		this.caster = findPlayer(this.getEntityWorld(), compound.getUniqueId("caster"));
 	}
 	
-	public static EntityPlayer findPlayer(World world, UUID uuid){
+	public static PlayerEntity findPlayer(World world, UUID uuid){
 		return /*!world.isRemote ? Minecraft.getMinecraft().player :*/ Objects.requireNonNull(world.getMinecraftServer()).getPlayerList().getPlayerByUUID(uuid); // The Getter when the Player is on a Server
 	}
 	
@@ -201,8 +200,8 @@ public class SpellEntity extends Entity implements IProjectile{
 			}
 		}else if(result.typeOfHit == RayTraceResult.Type.ENTITY){
 			for(ISpellEffect effect : spell.getEffects()){
-				if(result.entityHit instanceof EntityLivingBase){
-					effect.getEffect((EntityLivingBase)result.entityHit, spell.getPower());
+				if(result.entityHit instanceof LivingEntity){
+					effect.getEffect((LivingEntity)result.entityHit, spell.getPower());
 				}
 			}
 		}

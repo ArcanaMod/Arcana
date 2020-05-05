@@ -5,7 +5,7 @@ import net.arcanamod.research.impls.ItemRequirement;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PktSyncBooksHandler;
 import net.minecraft.item.Item;
-import net.minecraft.util.JsonUtils;
+import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -45,7 +45,7 @@ public class ResearchLoader{
 	private static Map<ResourceLocation, JsonArray> puzzleQueue = new LinkedHashMap<>();
 	
 	public static void applyJson(String json, ResourceLocation rl){
-		JsonObject jsonObject = JsonUtils.fromJson(GSON, json, JsonObject.class, false);
+		JsonObject jsonObject = JSONUtils.fromJson(GSON, json, JsonObject.class, false);
 		if(jsonObject != null)
 			applyJson(jsonObject, rl);
 	}

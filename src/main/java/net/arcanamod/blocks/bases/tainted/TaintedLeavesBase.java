@@ -3,8 +3,8 @@ package net.arcanamod.blocks.bases.tainted;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.bases.LeavesBase;
 import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -93,7 +93,7 @@ public class TaintedLeavesBase extends LeavesBase{
 	//    }
 	
 	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune){
+	public Item getItemDropped(BlockState state, Random rand, int fortune){
 		String untaintedName = "un" + name;
 		Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Arcana.MODID, untaintedName.replace("leaves", "sapling")));
 		if(block == null)
@@ -102,13 +102,13 @@ public class TaintedLeavesBase extends LeavesBase{
 	}
 	
 	@Override
-	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items){
+	public void getSubBlocks(ItemGroup itemIn, NonNullList<ItemStack> items){
 		Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Arcana.MODID, "un" + name));
 		items.add(new ItemStack(block));
 	}
 	
 	@Override
-	protected ItemStack getSilkTouchDrop(IBlockState state){
+	protected ItemStack getSilkTouchDrop(BlockState state){
 		Block block = GameRegistry.findRegistry(Block.class).getValue(new ResourceLocation(Arcana.MODID, "un" + name));
 		return new ItemStack(Item.getItemFromBlock(block));
 	}

@@ -6,7 +6,7 @@ import net.arcanamod.network.inventory.PktGetNoteHandler;
 import net.arcanamod.network.inventory.PktRequestAspectSync;
 import net.arcanamod.network.inventory.PktSyncAspectContainerHandler;
 import net.arcanamod.research.ResearchEntry;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
@@ -36,15 +36,15 @@ public class Connection{
 		network.sendToServer(new PktTryAdvanceHandler.PktTryAdvance(entry.key()));
 	}
 	
-	public static void sendAdvance(ResearchEntry entry, EntityPlayerMP player){
+	public static void sendAdvance(ResearchEntry entry, ServerPlayerEntity player){
 		network.sendTo(new PktAdvanceHandler.PktAdvanceResearch(entry.key()), player);
 	}
 	
-	public static void sendReset(ResearchEntry entry, EntityPlayerMP player){
+	public static void sendReset(ResearchEntry entry, ServerPlayerEntity player){
 		network.sendTo(new PktResetHandler.PktResetResearch(entry.key()), player);
 	}
 	
-	public static void sendComplete(ResearchEntry entry, EntityPlayerMP player){
+	public static void sendComplete(ResearchEntry entry, ServerPlayerEntity player){
 		network.sendTo(new PktCompleteHandler.PktCompleteResearch(entry.key()), player);
 	}
 }

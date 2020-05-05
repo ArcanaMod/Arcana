@@ -7,9 +7,9 @@ import net.arcanamod.research.impls.Fieldwork;
 import net.arcanamod.research.impls.Guesswork;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Slot;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -26,7 +26,7 @@ public abstract class Puzzle{
 	// I can't bother to add addon support for custom puzzles,
 	// if anyone wants to do that, *then* I'll add it
 	private static Map<String, Supplier<Puzzle>> factories = new LinkedHashMap<>();
-	private static Map<String, Function<NBTTagCompound, Puzzle>> deserializers = new LinkedHashMap<>();
+	private static Map<String, Function<CompoundNBT, Puzzle>> deserializers = new LinkedHashMap<>();
 	
 	public static Puzzle makePuzzle(String type, @Nullable String desc, ResourceLocation key, @Nullable ResourceLocation icon, JsonObject content, ResourceLocation file){
 		if(getBlank(type) != null){
@@ -44,12 +44,12 @@ public abstract class Puzzle{
 		return factories.get(type);
 	}
 	
-	public static Puzzle deserialize(NBTTagCompound passData){
+	public static Puzzle deserialize(CompoundNBT passData){
 		String type = passData.getString("type");
 		String desc = passData.getString("desc");
 		ResourceLocation key = new ResourceLocation(passData.getString("key"));
 		ResourceLocation icon = new ResourceLocation(passData.getString("icon"));
-		NBTTagCompound data = passData.getCompoundTag("data");
+		CompoundNBT data = passData.getCompoundTag("data");
 		if(deserializers.get(type) != null){
 			Puzzle puzzle = deserializers.get(type).apply(data);
 			puzzle.key = key;
@@ -78,17 +78,17 @@ public abstract class Puzzle{
 	
 	public abstract String type();
 	
-	public abstract NBTTagCompound getData();
+	public abstract CompoundNBT getData();
 	
 	public abstract String getDefaultDesc();
 	
 	public abstract ResourceLocation getDefaultIcon();
 	
-	public abstract List<SlotInfo> getItemSlotLocations(EntityPlayer player);
+	public abstract List<SlotInfo> getItemSlotLocations(PlayerEntity player);
 	
 	public abstract List<AspectSlot> getAspectSlots(Supplier<VisHandler> returnInv);
 	
-	public abstract boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, EntityPlayer player, ResearchTableContainer container);
+	public abstract boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, PlayerEntity player, ResearchTableContainer container);
 	
 	public String getDesc(){
 		return desc;
@@ -98,8 +98,8 @@ public abstract class Puzzle{
 		return icon;
 	}
 	
-	public NBTTagCompound getPassData(){
-		NBTTagCompound passData = new NBTTagCompound();
+	public CompoundNBT getPassData(){
+		CompoundNBT passData = new CompoundNBT();
 		passData.setString("type", type());
 		passData.setString("key", getKey().toString());
 		passData.setString("desc", getDesc() != null ? getDesc() : "null");

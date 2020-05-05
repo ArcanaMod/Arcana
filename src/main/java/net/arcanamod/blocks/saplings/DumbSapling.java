@@ -1,7 +1,7 @@
 package net.arcanamod.blocks.saplings;
 
 import net.arcanamod.blocks.bases.SaplingBase;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -18,7 +18,7 @@ public class DumbSapling extends SaplingBase{
 	}
 	
 	@Override
-	public void generateTree(World worldIn, BlockPos pos, IBlockState state, Random rand){
+	public void generateTree(World worldIn, BlockPos pos, BlockState state, Random rand){
 	
 	}
 }

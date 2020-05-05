@@ -4,14 +4,14 @@ import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.DimensionType;
+import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunkProvider;
-import net.minecraft.world.gen.IChunkGenerator;
+import net.minecraft.world.chunk.AbstractChunkProvider;
+import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.fml.common.IWorldGenerator;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,7 +25,7 @@ public class NodeGenerator implements IWorldGenerator{
 	public static NodeGenerator instance = new NodeGenerator();
 	
 	@Override
-	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider){
+	public void generate(Random random, int chunkX, int chunkZ, World world, ChunkGenerator chunkGenerator, AbstractChunkProvider chunkProvider){
 		generateWorld(random, chunkX, chunkZ, world, true);
 	}
 	
@@ -43,7 +43,7 @@ public class NodeGenerator implements IWorldGenerator{
 				// underground gen needs some work
 				int yOffset = random.nextInt(8) + 2;
 				
-				IBlockState gen = ArcanaBlocks.NORMAL_NODE.getDefaultState();
+				BlockState gen = ArcanaBlocks.NORMAL_NODE.getDefaultState();
 				
 				//if(random.nextInt(100) < ArcanaConfig.SPECIAL_NODE_CHANCE){
 				// TODO: generate other node types
@@ -62,7 +62,7 @@ public class NodeGenerator implements IWorldGenerator{
 	
 	@SubscribeEvent
 	public void handleChunkSaveEvent(ChunkDataEvent.Save event){
-		NBTTagCompound genTag = event.getData().getCompoundTag(RETRO_NAME);
+		CompoundNBT genTag = event.getData().getCompoundTag(RETRO_NAME);
 		if(!genTag.hasKey("generated"))
 			genTag.setBoolean("generated", true);
 		event.getData().setTag(RETRO_NAME, genTag);
@@ -73,7 +73,7 @@ public class NodeGenerator implements IWorldGenerator{
 		int dim = event.getWorld().provider.getDimension();
 		
 		boolean regen = false;
-		NBTTagCompound tag = (NBTTagCompound)event.getData().getTag(RETRO_NAME);
+		CompoundNBT tag = (CompoundNBT)event.getData().getTag(RETRO_NAME);
 		ChunkPos coord = event.getChunk().getPos();
 		
 		if(tag != null){

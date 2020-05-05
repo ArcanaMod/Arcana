@@ -2,7 +2,7 @@ package net.arcanamod.event;
 
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -12,12 +12,12 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  */
 public class ResearchEvent extends Event{
 	
-	private EntityPlayer player;
+	private PlayerEntity player;
 	private Researcher researcher;
 	private ResearchEntry entry;
 	private Type type;
 	
-	public EntityPlayer getPlayer(){
+	public PlayerEntity getPlayer(){
 		return player;
 	}
 	
@@ -33,7 +33,7 @@ public class ResearchEvent extends Event{
 		return type;
 	}
 	
-	public ResearchEvent(EntityPlayer player, Researcher researcher, ResearchEntry entry, Type type){
+	public ResearchEvent(PlayerEntity player, Researcher researcher, ResearchEntry entry, Type type){
 		this.player = player;
 		this.researcher = researcher;
 		this.entry = entry;
