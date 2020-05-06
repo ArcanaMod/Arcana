@@ -1,13 +1,5 @@
 package net.arcanamod.util;
 
-import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.ItemAttachment;
-import net.arcanamod.items.ItemWand;
-import net.arcanamod.wand.CapType;
-import net.arcanamod.wand.CoreType;
-import net.arcanamod.wand.EnumAttachmentType;
-import net.minecraft.item.ItemStack;
-
 public class WandUtil{
 	
 	/*public static CoreType getCore(ItemStack wandStack){

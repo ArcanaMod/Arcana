@@ -12,9 +12,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ItemResearchTable extends Item{
+public class ResearchTableItem extends Item{
 	
-	public ItemResearchTable(Properties properties){
+	public ResearchTableItem(Properties properties){
 		super(properties);
 		//setMaxDamage(0);
 		//setMaxStackSize(1);

@@ -1,6 +1,6 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.items.ItemAttachment;
+import net.arcanamod.items.AttachmentItem;
 import net.arcanamod.wand.EnumAttachmentType;
 
 /**
@@ -8,9 +8,9 @@ import net.arcanamod.wand.EnumAttachmentType;
  *
  * @author Merijn
  * @see Cap
- * @see ItemAttachment
+ * @see AttachmentItem
  */
-public class Focus extends ItemAttachment{
+public class Focus extends AttachmentItem{
 	
 	private int id;
 	

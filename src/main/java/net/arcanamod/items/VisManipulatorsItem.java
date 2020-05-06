@@ -14,9 +14,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ItemVisManipulators extends Item{
+public class VisManipulatorsItem extends Item{
 	
-	public ItemVisManipulators(Properties properties){
+	public VisManipulatorsItem(Properties properties){
 		super(properties);
 		//setMaxStackSize(1);
 	}

@@ -11,11 +11,11 @@ import java.util.List;
  *
  * @author Merijn
  */
-public abstract class ItemAttachment extends Item{
+public abstract class AttachmentItem extends Item{
 	
-	public static List<ItemAttachment> ATTACHMENTS = new ArrayList<>();
+	public static List<AttachmentItem> ATTACHMENTS = new ArrayList<>();
 	
-	public ItemAttachment(Properties properties){
+	public AttachmentItem(Properties properties){
 		super(properties);
 		ATTACHMENTS.add(this);
 	}
@@ -25,12 +25,12 @@ public abstract class ItemAttachment extends Item{
 	 *
 	 * @return Array with the default attachments
 	 */
-	public static ItemAttachment[][] buildDefaultArray(){
-		ItemAttachment[][] attachments = new ItemAttachment[EnumAttachmentType.values().length][];
+	public static AttachmentItem[][] buildDefaultArray(){
+		AttachmentItem[][] attachments = new AttachmentItem[EnumAttachmentType.values().length][];
 		
 		for(int i = 0; i < attachments.length; ++i){
-			ItemAttachment attachment = EnumAttachmentType.getSlot(i).getDefault();
-			attachments[i] = new ItemAttachment[]{attachment};
+			AttachmentItem attachment = EnumAttachmentType.getSlot(i).getDefault();
+			attachments[i] = new AttachmentItem[]{attachment};
 		}
 		
 		return attachments;

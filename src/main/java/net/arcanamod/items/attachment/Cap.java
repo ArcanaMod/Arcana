@@ -1,9 +1,7 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.ItemAttachment;
+import net.arcanamod.items.AttachmentItem;
 import net.arcanamod.wand.EnumAttachmentType;
-import net.minecraftforge.fml.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +10,10 @@ import java.util.List;
  * Wand Cap Attachment
  *
  * @author Merijn
- * @see ItemAttachment
+ * @see AttachmentItem
  * @see Focus
  */
-public class Cap extends ItemAttachment{
+public class Cap extends AttachmentItem{
 	
 	private int level;
 	

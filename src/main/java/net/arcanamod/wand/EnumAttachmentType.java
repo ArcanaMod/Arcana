@@ -1,7 +1,7 @@
 package net.arcanamod.wand;
 
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.ItemAttachment;
+import net.arcanamod.items.AttachmentItem;
 import net.minecraftforge.fml.RegistryObject;
 
 /**
@@ -14,11 +14,11 @@ public enum EnumAttachmentType{
 	CAP("cap", 0, ArcanaItems.IRON_CAP),
 	FOCUS("focus", 1, ArcanaItems.FOCUS_NONE);
 	
-	private RegistryObject<? extends ItemAttachment> _default;
+	private RegistryObject<? extends AttachmentItem> _default;
 	private int slot;
 	private String key;
 	
-	EnumAttachmentType(String key, int slot, RegistryObject<? extends ItemAttachment> _default){
+	EnumAttachmentType(String key, int slot, RegistryObject<? extends AttachmentItem> _default){
 		this._default = _default;
 		this.slot = slot;
 		this.key = key;
@@ -32,7 +32,7 @@ public enum EnumAttachmentType{
 		return EnumAttachmentType.values()[slot];
 	}
 	
-	public ItemAttachment getDefault(){
+	public AttachmentItem getDefault(){
 		return _default.get();
 	}
 	

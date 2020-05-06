@@ -7,9 +7,9 @@ import net.minecraft.item.Item;
  *
  * @author Merijn
  */
-public class ItemFocus extends Item{
+public class FocusItem extends Item{
 	
-	public ItemFocus(Properties properties){
+	public FocusItem(Properties properties){
 		super(properties);
 	}
 	

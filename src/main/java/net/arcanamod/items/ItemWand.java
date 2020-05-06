@@ -166,7 +166,7 @@ public class ItemWand extends Item{
 	 * 		Attachment type
 	 * @param id
 	 * 		ID of the attachment
-	 * @return {@link ItemAttachment} of the given type and id
+	 * @return {@link AttachmentItem} of the given type and id
 	 *//*
 	@Nullable
 	public ItemAttachment getAttachment(EnumAttachmentType type, int id){
@@ -198,7 +198,7 @@ public class ItemWand extends Item{
 	 * 		Itemstack to get the NBT from
 	 * @param type
 	 * 		Type of the requested attachment
-	 * @return {@link ItemAttachment} of the given type and ItemStack NBT
+	 * @return {@link AttachmentItem} of the given type and ItemStack NBT
 	 *//*
 	@Nullable
 	public ItemAttachment getAttachment(ItemStack itemStack, EnumAttachmentType type){
