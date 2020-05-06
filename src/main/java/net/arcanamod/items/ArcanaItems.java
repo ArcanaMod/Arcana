@@ -2,7 +2,6 @@ package net.arcanamod.items;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.blocks.ArcanaProperties;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.items.armor.ArmorBase;
 import net.arcanamod.items.armor.GoggleBase;
@@ -25,7 +24,6 @@ import java.util.List;
  * Initialize Items here
  *
  * @author Merijn, Tea, Luna
- * @see ArcanaProperties
  * @see ArcanaEntities
  * @see ArcanaBlocks
  */

@@ -1,7 +1,6 @@
 package net.arcanamod.entities;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.blocks.ArcanaProperties;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.Arcana;
 import net.minecraft.util.ResourceLocation;
@@ -11,7 +10,6 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
  * Initialize Entities here
  *
  * @author Merijn
- * @see ArcanaProperties
  * @see ArcanaBlocks
  * @see ArcanaItems
  */

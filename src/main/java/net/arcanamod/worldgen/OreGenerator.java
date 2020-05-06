@@ -45,7 +45,7 @@ public class OreGenerator {//implements IWorldGenerator{
 		if(ArcanaConfig.GENERATE_OVERWORLD){
 			if(world.getDimension().isSurfaceWorld()){
 				// Add Amber Ore
-				addOreSpawn(ArcanaBlocks.AMBER_ORE, (byte)0, Blocks.STONE, world, random, chunkX * 16, chunkZ * 16, ArcanaConfig.AMBER_MIN_VEIN_SIZE, ArcanaConfig.AMBER_MAX_VEIN_SIZE, ArcanaConfig.AMBER_CHANCES_TO_SPAWN, ArcanaConfig.AMBER_MIN_Y, ArcanaConfig.AMBER_MAX_Y);
+//				addOreSpawn(ArcanaBlocks.AMBER_ORE, (byte)0, Blocks.STONE, world, random, chunkX * 16, chunkZ * 16, ArcanaConfig.AMBER_MIN_VEIN_SIZE, ArcanaConfig.AMBER_MAX_VEIN_SIZE, ArcanaConfig.AMBER_CHANCES_TO_SPAWN, ArcanaConfig.AMBER_MIN_Y, ArcanaConfig.AMBER_MAX_Y);
 				chunkWritten = true;
 			}
 		}

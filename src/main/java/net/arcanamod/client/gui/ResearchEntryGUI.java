@@ -1,7 +1,7 @@
 package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import javafx.geometry.Side;
+//import javafx.geometry.Side;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.network.Connection;

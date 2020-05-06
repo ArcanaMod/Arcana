@@ -1,7 +1,7 @@
 package net.arcanamod.client.particles;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import javafx.geometry.Side;
+//import javafx.geometry.Side;
 import net.arcanamod.client.Sprites;
 import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;

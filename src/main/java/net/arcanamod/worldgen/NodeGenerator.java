@@ -42,7 +42,7 @@ public class NodeGenerator{// implements IWorldGenerator{
 				// underground gen needs some work
 				int yOffset = random.nextInt(8) + 2;
 				
-				BlockState gen = ArcanaBlocks.NORMAL_NODE.getDefaultState();
+//				BlockState gen = ArcanaBlocks.NORMAL_NODE.getDefaultState();
 				
 				//if(random.nextInt(100) < ArcanaConfig.SPECIAL_NODE_CHANCE){
 				// TODO: generate other node types

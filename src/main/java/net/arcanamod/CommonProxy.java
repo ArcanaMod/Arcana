@@ -1,7 +1,7 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.blocks.bases.LeavesBase;
+//import net.arcanamod.blocks.bases.LeavesBase;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.items.ItemWand;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,8 +31,8 @@ public class CommonProxy{
 		registry.register(wand);
 	}
 	
-	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
-	}
+//	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
+//	}
 	
 	public void openResearchBookUI(ResourceLocation book){
 	}

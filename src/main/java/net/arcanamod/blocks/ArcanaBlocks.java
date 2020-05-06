@@ -17,7 +17,6 @@ import static net.minecraft.block.material.Material.ROCK;
  * Initialize Blocks here
  *
  * @author Atlas, Mozaran, Tea
- * @see ArcanaProperties
  * @see ArcanaEntities
  * @see ArcanaItems
  */

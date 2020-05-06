@@ -1,7 +1,6 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.blocks.bases.LeavesBase;
 import net.arcanamod.client.gui.ResearchBookGUI;
 import net.arcanamod.client.gui.ResearchEntryGUI;
 import net.arcanamod.client.research.EntrySectionRenderer;
@@ -63,19 +62,11 @@ public class ClientProxy extends CommonProxy{
 		
 		//ModelBakery.registerItemVariants(wand, list.toArray(new ModelResourceLocation[0]));
 	}
-	
-	/**
-	 * Sets leaves to be transparent.
-	 *
-	 * @param parBlock
-	 * 		- Block to Make Transparent
-	 * @param parFancyEnabled
-	 * 		- Fancy Mode State
-	 */
-	@Override
-	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
-		//parBlock.setGraphicsLevel(parFancyEnabled);
-	}
+
+//	@Override
+//	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
+//		//parBlock.setGraphicsLevel(parFancyEnabled);
+//	}
 	
 	public void openResearchBookUI(ResourceLocation book){
 		Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
