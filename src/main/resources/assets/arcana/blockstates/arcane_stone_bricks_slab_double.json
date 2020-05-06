@@ -1,6 +1,10 @@
 {
   "variants": {
-    "half=top": {"model": "arcana:arcane_stone_bricks"},
-    "half=bottom": {"model": "arcana:arcane_stone_bricks"}
+    "half=top": {
+      "model": "arcana:arcane_stone_bricks"
+    },
+    "half=bottom": {
+      "model": "arcana:arcane_stone_bricks"
+    }
   }
 }

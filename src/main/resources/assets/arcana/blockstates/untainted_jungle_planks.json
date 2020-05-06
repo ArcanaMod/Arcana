@@ -1,7 +1,15 @@
 {
   "variants": {
-    "fullytainted=false": [{ "model": "arcana:tainted_jungle_planks" }],
-    "fullytainted=true": [{ "model": "arcana:tainted_jungle_planks" }]
+    "fullytainted=false": [
+      {
+        "model": "arcana:tainted_jungle_planks"
+      }
+    ],
+    "fullytainted=true": [
+      {
+        "model": "arcana:tainted_jungle_planks"
+      }
+    ]
   }
 }
 

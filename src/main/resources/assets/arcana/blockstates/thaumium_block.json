@@ -1,5 +1,9 @@
 {
   "variants": {
-    "normal": [{"model": "arcana:thaumium_block"}]
+    "normal": [
+      {
+        "model": "arcana:thaumium_block"
+      }
+    ]
   }
 }

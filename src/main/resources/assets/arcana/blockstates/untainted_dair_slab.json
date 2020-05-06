@@ -1,6 +1,10 @@
 {
   "variants": {
-    "half=bottom": {"model": "arcana:tainted_dair_slab_bottom"},
-    "half=top": {"model": "arcana:tainted_dair_slab_top"}
+    "half=bottom": {
+      "model": "arcana:tainted_dair_slab_bottom"
+    },
+    "half=top": {
+      "model": "arcana:tainted_dair_slab_top"
+    }
   }
 }

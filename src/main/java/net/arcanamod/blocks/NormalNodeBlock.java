@@ -7,9 +7,6 @@ import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.blocks.tiles.NodeTileEntity;
 import net.arcanamod.items.ItemWand;
-import net.arcanamod.util.WandUtil;
-import net.arcanamod.wand.CapType;
-import net.arcanamod.wand.CoreType;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
@@ -21,7 +18,6 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -40,13 +36,13 @@ import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class BlockNormalNode extends GroupedBlock{
+public class NormalNodeBlock extends GroupedBlock{
 	
 	private static VoxelShape BOUNDS = Block.makeCuboidShape(.25, .25, .25, .75, .75, .75);
 	
-	public boolean isOn = false;
+	public boolean isOn = true;
 	
-	public BlockNormalNode(Properties properties, ItemGroup group){
+	public NormalNodeBlock(Properties properties, ItemGroup group){
 		super(properties, group);
 	}
 	
@@ -60,7 +56,7 @@ public class BlockNormalNode extends GroupedBlock{
 	
 	@Nullable
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
-		NodeTileEntity entity = new NodeTileEntity(null);
+		NodeTileEntity entity = new NodeTileEntity();
 		
 		// TODO: seed this
 		Random rand = new Random();
@@ -84,7 +80,7 @@ public class BlockNormalNode extends GroupedBlock{
 	
 	@Override
 	public BlockRenderType getRenderType(BlockState state){
-		return BlockRenderType.INVISIBLE;
+		return BlockRenderType.MODEL;
 	}
 	
 	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos){
@@ -113,7 +109,7 @@ public class BlockNormalNode extends GroupedBlock{
 			TileEntity entity = world.getTileEntity(pos);
 			if(entity instanceof NodeTileEntity){
 				NodeTileEntity tileEntity = (NodeTileEntity)entity;
-				ListNBT aspectList = itemActivated.getTag().getList("aspects", Constants.NBT.TAG_COMPOUND);
+				ListNBT aspectList = itemActivated.getOrCreateTag().getList("aspects", Constants.NBT.TAG_COMPOUND);
 				ListNBT newAspects = new ListNBT();
 				for(Aspect coreAspect : Aspects.primalAspects){
 					if(tileEntity.storedAspects.containsKey(coreAspect)){

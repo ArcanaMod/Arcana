@@ -3,7 +3,9 @@ package net.arcanamod.items;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.items.armor.GoggleBase;
 import net.arcanamod.items.attachment.Cap;
+import net.arcanamod.util.GogglePriority;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
 import net.minecraftforge.fml.RegistryObject;
@@ -24,7 +26,6 @@ public class ArcanaItems{
 	//	// Materials - Values
 	//	public static Item.ToolMaterial MATERIAL_ARCANIUM = EnumHelper.addToolMaterial("material_arcanium", 4, 1987, 9.0F, 4.0F, 20);
 	//	public static Item.ToolMaterial MATERIAL_VOID_METAL = EnumHelper.addToolMaterial("material_void_metal", 5, 250, 10.0F, 4.5F, 8);
-	//	public static ArmorItem.ArmorMaterial MATERIAL_GOGGLES_REVEALING = EnumHelper.addArmorMaterial("material_goggles", Arcana.MODID + ":goggles_of_revealing", 50, new int[]{0, 0, 0, 2}, 0, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0.0F);
 	//	public static ArmorItem.ArmorMaterial ARMOR_MATERIAL_ARCANIUM = EnumHelper.addArmorMaterial("armor_material_arcanium", Arcana.MODID + ":arcanium_armor", 1987, new int[]{4, 7, 9, 4}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.5F);
 	//
 	//	//Weapons
@@ -75,7 +76,7 @@ public class ArcanaItems{
 	//	public static Item AMBER = new ItemBase("amber").setCreativeTab(Arcana.TAB_ARCANA);
 	//
 	//	// Goggle Armor
-	//	public static GoggleBase GOGGLES_OF_REVEALING = new GoggleBase("goggles_of_revealing", MATERIAL_GOGGLES_REVEALING, 1, GogglePriority.SHOW_NODE);
+	public static final RegistryObject<Item> GOGGLES_OF_REVEALING = ITEMS.register("goggles_of_revealing", () -> new GoggleBase(GoggleBase.GOGGLE_MATERIAL, new Properties().group(Arcana.ITEMS), GogglePriority.SHOW_NODE));
 	//
 	//	// Wand Parts
 	//	public static Item FOCUS_PARTS = new ItemBase("focus_parts").setCreativeTab(Arcana.TAB_ARCANA);

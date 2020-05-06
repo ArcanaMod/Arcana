@@ -1,6 +1,14 @@
 {
   "variants": {
-    "fullytainted=false": [{ "model": "arcana:tainted_silver_ore" }],
-    "fullytainted=true": [{ "model": "arcana:tainted_silver_ore" }]
+    "fullytainted=false": [
+      {
+        "model": "arcana:tainted_silver_ore"
+      }
+    ],
+    "fullytainted=true": [
+      {
+        "model": "arcana:tainted_silver_ore"
+      }
+    ]
   }
 }

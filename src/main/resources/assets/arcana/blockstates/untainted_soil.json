@@ -1,6 +1,14 @@
 {
   "variants": {
-    "fullytainted=false": [{ "model": "arcana:tainted_soil" }],
-    "fullytainted=true": [{ "model": "arcana:tainted_soil" }]
+    "fullytainted=false": [
+      {
+        "model": "arcana:tainted_soil"
+      }
+    ],
+    "fullytainted=true": [
+      {
+        "model": "arcana:tainted_soil"
+      }
+    ]
   }
 }

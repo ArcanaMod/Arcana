@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "arcana:willow_planks" }
+    "normal": {
+      "model": "arcana:willow_planks"
+    }
   }
 }

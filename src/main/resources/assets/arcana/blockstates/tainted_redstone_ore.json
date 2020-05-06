@@ -1,6 +1,14 @@
 {
   "variants": {
-    "fullytainted=false": [{ "model": "arcana:tainted_redstone_ore" }],
-    "fullytainted=true": [{ "model": "arcana:tainted_redstone_ore" }]
+    "fullytainted=false": [
+      {
+        "model": "arcana:tainted_redstone_ore"
+      }
+    ],
+    "fullytainted=true": [
+      {
+        "model": "arcana:tainted_redstone_ore"
+      }
+    ]
   }
 }

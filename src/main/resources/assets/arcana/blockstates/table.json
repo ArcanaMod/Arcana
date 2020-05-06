@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "arcana:table" }
+    "normal": {
+      "model": "arcana:table"
+    }
   }
 }

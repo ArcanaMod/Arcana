@@ -1,6 +1,14 @@
 {
   "variants": {
-    "fullytainted=false": [{ "model": "arcana:tainted_gravel" }],
-    "fullytainted=true": [{ "model": "arcana:tainted_gravel" }]
+    "fullytainted=false": [
+      {
+        "model": "arcana:tainted_gravel"
+      }
+    ],
+    "fullytainted=true": [
+      {
+        "model": "arcana:tainted_gravel"
+      }
+    ]
   }
 }

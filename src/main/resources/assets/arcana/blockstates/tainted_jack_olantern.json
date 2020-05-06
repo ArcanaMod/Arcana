@@ -1,8 +1,19 @@
 {
   "variants": {
-    "facing=north": { "model": "arcana:tainted_jack_olantern" },
-    "facing=south": { "model": "arcana:tainted_jack_olantern", "y": 180 },
-    "facing=west":  { "model": "arcana:tainted_jack_olantern", "y": 270 },
-    "facing=east":  { "model": "arcana:tainted_jack_olantern", "y": 90 }
+    "facing=north": {
+      "model": "arcana:tainted_jack_olantern"
+    },
+    "facing=south": {
+      "model": "arcana:tainted_jack_olantern",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "arcana:tainted_jack_olantern",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "arcana:tainted_jack_olantern",
+      "y": 90
+    }
   }
 }

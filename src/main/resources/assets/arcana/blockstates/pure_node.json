@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "arcana:nodes/pure_node" }
+    "normal": {
+      "model": "arcana:nodes/pure_node"
+    }
   }
 }

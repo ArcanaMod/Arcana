@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "arcana:dead_planks" }
+    "normal": {
+      "model": "arcana:dead_planks"
+    }
   }
 }

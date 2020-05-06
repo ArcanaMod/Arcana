@@ -1,6 +1,10 @@
 {
   "variants": {
-    "half=top": {"model": "arcana:dair_planks"},
-    "half=bottom": {"model": "arcana:dair_planks"}
+    "half=top": {
+      "model": "arcana:dair_planks"
+    },
+    "half=bottom": {
+      "model": "arcana:dair_planks"
+    }
   }
 }

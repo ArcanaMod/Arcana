@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "arcana:greatwood_planks" }
+    "normal": {
+      "model": "arcana:greatwood_planks"
+    }
   }
 }

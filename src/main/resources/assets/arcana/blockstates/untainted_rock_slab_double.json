@@ -1,6 +1,10 @@
 {
   "variants": {
-    "half=top": {"model": "arcana:tainted_rock"},
-    "half=bottom": {"model": "arcana:tainted_rock"}
+    "half=top": {
+      "model": "arcana:tainted_rock"
+    },
+    "half=bottom": {
+      "model": "arcana:tainted_rock"
+    }
   }
 }

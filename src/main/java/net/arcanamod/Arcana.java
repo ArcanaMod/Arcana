@@ -2,6 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.Sounds;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
@@ -53,7 +54,7 @@ public class Arcana{
 		
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaItems.ITEMS.register(modEventBus);
-		// ArcanaTileEntities.TES.register(modEventBus);
+		ArcanaTiles.TES.register(modEventBus);
 		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 		// etc
 	}

@@ -1,6 +1,10 @@
 {
   "variants": {
-    "half=top": {"model": "arcana:tainted_hawthorn_planks"},
-    "half=bottom": {"model": "arcana:tainted_hawthorn_planks"}
+    "half=top": {
+      "model": "arcana:tainted_hawthorn_planks"
+    },
+    "half=bottom": {
+      "model": "arcana:tainted_hawthorn_planks"
+    }
   }
 }

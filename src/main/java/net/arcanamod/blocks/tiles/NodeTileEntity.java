@@ -15,8 +15,8 @@ public class NodeTileEntity extends TileEntity implements ITickable{
 	
 	public boolean isOn = false;
 	
-	public NodeTileEntity(TileEntityType<?> tileEntityTypeIn){
-		super(tileEntityTypeIn);
+	public NodeTileEntity(){
+		super(ArcanaTiles.NODE_TE.get());
 	}
 	
 	public void tick(){

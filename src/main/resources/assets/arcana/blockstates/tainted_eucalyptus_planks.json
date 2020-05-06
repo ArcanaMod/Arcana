@@ -1,6 +1,14 @@
 {
   "variants": {
-    "fullytainted=false": [{ "model": "arcana:tainted_eucalyptus_planks" }],
-    "fullytainted=true": [{ "model": "arcana:tainted_eucalyptus_planks" }]
+    "fullytainted=false": [
+      {
+        "model": "arcana:tainted_eucalyptus_planks"
+      }
+    ],
+    "fullytainted=true": [
+      {
+        "model": "arcana:tainted_eucalyptus_planks"
+      }
+    ]
   }
 }
