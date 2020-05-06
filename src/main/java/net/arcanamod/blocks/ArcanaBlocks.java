@@ -37,7 +37,7 @@ public class ArcanaBlocks{
 	//	public static final Block ARCANE_STONE_BRICKS_SLAB_HALF = new HalfSlabBase("arcane_stone_bricks_slab", ROCK, ArcanaBlocks.ARCANE_STONE_BRICKS_SLAB_DOUBLE).setCreativeTab(Arcana.TAB_ARCANA);
 	//	public static final Block ARCANE_STONE_BRICKS_STAIRS = new StairsBase("arcane_stone_bricks_stairs", ARCANE_STONE_BRICKS.getDefaultState()).setCreativeTab(Arcana.TAB_ARCANA);
 	//	public static final Block AMBER_ORE = new BlockAmberOre().setCreativeTab(Arcana.TAB_ARCANA);
-	public static final RegistryObject<Block> AMBER_ORE = BLOCKS.register("amber_ore", () -> new GroupedBlock(create(ROCK), Arcana.ITEMS));
+	public static final RegistryObject<Block> AMBER_ORE = BLOCKS.register("amber_ore", () -> new GroupedBlock(create(ROCK).harvestLevel(1).hardnessAndResistance(3.0F, 3.0F), Arcana.ITEMS));
 	//	public static final Block INFUSION_ARCANE_STONE = new BlockBase("infusion_arcane_stone", ROCK).setCreativeTab(Arcana.TAB_ARCANA);
 	public static final RegistryObject<Block> INFUSION_ARCANE_STONE = BLOCKS.register("infusion_arcane_stone", () -> new GroupedBlock(create(ROCK), Arcana.ITEMS));
 	//	public static final Block MAGICAL_GRASS = new BlockBase("magical_grass", Material.GRASS).setCreativeTab(Arcana.TAB_ARCANA);

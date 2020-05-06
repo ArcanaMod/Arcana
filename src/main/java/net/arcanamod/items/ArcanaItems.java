@@ -73,7 +73,7 @@ public class ArcanaItems{
 	//	public static Item VOID_METAL_INGOT = new ItemBase("void_metal_ingot").setCreativeTab(Arcana.TAB_ARCANA);
 	//
 	//	public static Item SILVERWOOD_STICK = new ItemBase("silverwood_stick").setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item AMBER = new ItemBase("amber").setCreativeTab(Arcana.TAB_ARCANA);
+	public static final RegistryObject<Item> AMBER = ITEMS.register("amber",()->new Item(new Item.Properties().group(Arcana.ITEMS)));
 	//
 	//	// Goggle Armor
 	public static final RegistryObject<Item> GOGGLES_OF_REVEALING = ITEMS.register("goggles_of_revealing", () -> new GoggleBase(GoggleBase.GOGGLE_MATERIAL, new Properties().group(Arcana.ITEMS), GogglePriority.SHOW_NODE));
