@@ -2,6 +2,7 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.bases.GroupedBlock;
+import net.minecraft.block.Block;
 import net.minecraft.item.ItemGroup;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -10,13 +11,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 // TODO: This has a problem with being broken. I don't think this can be solved without a TESR.
 // Thankfully, I'll probably switch this over to a TESR anyways to show ink, wands, and research notes. yay.
-public class BlockResearchTable extends GroupedBlock{
+public class BlockResearchTable extends Block{
 	
 	//public static final PropertyDirection FACING = HorizontalBlock.FACING;
 	//public static final PropertyEnum<EnumSide> PART = PropertyEnum.create("part", EnumSide.class);
 	
-	public BlockResearchTable(Properties properties, ItemGroup group){
-		super(properties, group);
+	public BlockResearchTable(Properties properties){
+		super(properties);
 	}
 	
 	//public boolean hasTileEntity(BlockState state){

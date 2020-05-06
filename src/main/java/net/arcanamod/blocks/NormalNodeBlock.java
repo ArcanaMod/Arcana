@@ -36,14 +36,14 @@ import java.util.Random;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class NormalNodeBlock extends GroupedBlock{
+public class NormalNodeBlock extends Block{
 	
 	private static VoxelShape BOUNDS = Block.makeCuboidShape(.25, .25, .25, .75, .75, .75);
 	
 	public boolean isOn = true;
 	
-	public NormalNodeBlock(Properties properties, ItemGroup group){
-		super(properties, group);
+	public NormalNodeBlock(Properties properties){
+		super(properties);
 	}
 	
 	public void hitboxOff(){

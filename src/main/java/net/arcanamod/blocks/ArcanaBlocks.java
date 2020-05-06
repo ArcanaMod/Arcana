@@ -1,7 +1,6 @@
 package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.Block;
@@ -27,27 +26,27 @@ public class ArcanaBlocks{
 	
 	// General
 	// public static final Block ARCANE_STONE = new BlockBase("arcane_stone", create(ROCK))/*.setCreativeTab(Arcana.TAB_ARCANA)*/;
-	public static final RegistryObject<Block> ARCANE_STONE = BLOCKS.register("arcane_stone", () -> new GroupedBlock(create(ROCK), Arcana.ITEMS));
+	public static final RegistryObject<Block> ARCANE_STONE = BLOCKS.register("arcane_stone", () -> new Block(create(ROCK)));
 	//	public static final Block ARCANE_STONE_SLAB_DOUBLE = new DoubleSlabBase("arcane_stone_slab_double", ROCK);
 	//	public static final Block ARCANE_STONE_SLAB_HALF = new HalfSlabBase("arcane_stone_slab", ROCK, ArcanaBlocks.ARCANE_STONE_SLAB_DOUBLE).setCreativeTab(Arcana.TAB_ARCANA);
 	//	public static final Block ARCANE_STONE_STAIRS = new StairsBase("arcane_stone_stairs", ARCANE_STONE.getDefaultState()).setCreativeTab(Arcana.TAB_ARCANA);
 	//	public static final Block ARCANE_STONE_BRICKS = new BlockBase("arcane_stone_bricks", ROCK).setCreativeTab(Arcana.TAB_ARCANA);
-	public static final RegistryObject<Block> ARCANE_STONE_BRICKS = BLOCKS.register("arcane_stone_bricks", () -> new GroupedBlock(create(ROCK), Arcana.ITEMS));
+	public static final RegistryObject<Block> ARCANE_STONE_BRICKS = BLOCKS.register("arcane_stone_bricks", () -> new Block(create(ROCK)));
 	//	public static final Block ARCANE_STONE_BRICKS_SLAB_DOUBLE = new DoubleSlabBase("arcane_stone_bricks_slab_double", ROCK);
 	//	public static final Block ARCANE_STONE_BRICKS_SLAB_HALF = new HalfSlabBase("arcane_stone_bricks_slab", ROCK, ArcanaBlocks.ARCANE_STONE_BRICKS_SLAB_DOUBLE).setCreativeTab(Arcana.TAB_ARCANA);
 	//	public static final Block ARCANE_STONE_BRICKS_STAIRS = new StairsBase("arcane_stone_bricks_stairs", ARCANE_STONE_BRICKS.getDefaultState()).setCreativeTab(Arcana.TAB_ARCANA);
 	//	public static final Block AMBER_ORE = new BlockAmberOre().setCreativeTab(Arcana.TAB_ARCANA);
-	public static final RegistryObject<Block> AMBER_ORE = BLOCKS.register("amber_ore", () -> new GroupedBlock(create(ROCK).harvestLevel(1).hardnessAndResistance(3.0F, 3.0F), Arcana.ITEMS));
+	public static final RegistryObject<Block> AMBER_ORE = BLOCKS.register("amber_ore", () -> new Block(create(ROCK)));
 	//	public static final Block INFUSION_ARCANE_STONE = new BlockBase("infusion_arcane_stone", ROCK).setCreativeTab(Arcana.TAB_ARCANA);
-	public static final RegistryObject<Block> INFUSION_ARCANE_STONE = BLOCKS.register("infusion_arcane_stone", () -> new GroupedBlock(create(ROCK), Arcana.ITEMS));
+	public static final RegistryObject<Block> INFUSION_ARCANE_STONE = BLOCKS.register("infusion_arcane_stone", () -> new Block(create(ROCK)));
 	//	public static final Block MAGICAL_GRASS = new BlockBase("magical_grass", Material.GRASS).setCreativeTab(Arcana.TAB_ARCANA);
-	public static final RegistryObject<Block> MAGICAL_GRASS = BLOCKS.register("magical_grass", () -> new GroupedBlock(create(Material.ORGANIC), Arcana.ITEMS));
+	public static final RegistryObject<Block> MAGICAL_GRASS = BLOCKS.register("magical_grass", () -> new Block(create(Material.ORGANIC)));
 	//	// public static final Block TABLE = new BlockBase("table", Material.WOOD).setCreativeTab(Main.TAB_ARCANA);
 	//
 	//	//Blocks with function
 	//	public static final Block RESEARCH_TABLE = new BlockResearchTable();
 	//	public static final Block NORMAL_NODE = new BlockNormalNode().setCreativeTab(Arcana.TAB_ARCANA);
-	public static final RegistryObject<Block> NORMAL_NODE = BLOCKS.register("normal_node", () -> new NormalNodeBlock(create(BARRIER), Arcana.ITEMS));
+	public static final RegistryObject<Block> NORMAL_NODE = BLOCKS.register("normal_node", () -> new NormalNodeBlock(create(BARRIER)));
 	//	public static final Block CRUCIBLE = new BlockCrucible("crucible").setCreativeTab(Arcana.TAB_ARCANA);
 	//
 	//	// Logs
