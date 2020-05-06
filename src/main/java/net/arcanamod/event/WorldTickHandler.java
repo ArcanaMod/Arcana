@@ -1,6 +1,5 @@
 package net.arcanamod.event;
 
-import net.arcanamod.worldgen.OreGenerator;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,7 +17,6 @@ public class WorldTickHandler{
 	/**
 	 * @param event
 	 * 		- WorldTickEvent Executes every world tick
-	 * @see OreGenerator - Used by OreGenerator to implement retrogenning of ores in old worlds
 	 */
 	@SubscribeEvent
 	public void tickEnd(TickEvent.WorldTickEvent event){
