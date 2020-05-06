@@ -83,7 +83,6 @@ public class ArcanaItems{
 	
 	// Foci
 	public static final RegistryObject<Item> FOCUS_PARTS = ITEMS.register("focus_parts", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
-	//public static Item FOCUS = new ItemFocus("focus");
 	
 	// Wand Attachments
 	public static final RegistryObject<Cap> VOID_CAP = ITEMS.register("void_cap", () -> new Cap(new Properties().group(Arcana.ITEMS)).setLevel(3));
