@@ -11,6 +11,7 @@ import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.impls.ResearcherCapability;
 import net.arcanamod.spells.SpellEffectHandler;
+import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -77,6 +78,8 @@ public class Arcana{
 		
 		Sounds.registerSounds();
 		SpellEffectHandler.init();
+
+		FeatureGenerator.setupFeatureGeneraton();
 	}
 	
 	private void setupClient(FMLClientSetupEvent event){
