@@ -1,13 +1,13 @@
 {
     "_comment": "Creativetabs",
-    "itemGroup.tabArcana": "Arcana",
-    "itemGroup.tabTaintArcana": "Tainted Blocks",
-    "itemGroup.tabAspectsArcana": "Aspects",
+    "itemGroup.arcana": "Arcana",
+    "itemGroup.taint": "Tainted Blocks",
+    "itemGroup.aspects": "Aspects",
 
     "_comment": "Subtitles",
     "arcana.sounds.spell_cast": "Spell Cast",
 
-    "_comment": "# Items",
+    "_comment": "Items",
     "_comment": "Wands",
     "item.wood_wand": "%s Wooden Wand",
     "item.greatwood_wand": "%s Greatwood Wand",

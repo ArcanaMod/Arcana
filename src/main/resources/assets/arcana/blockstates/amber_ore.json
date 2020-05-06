@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "arcana:amber_ore" }
+    "": {
+      "model": "arcana:amber_ore"
+    }
   }
 }

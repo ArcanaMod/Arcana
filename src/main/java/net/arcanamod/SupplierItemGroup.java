@@ -25,6 +25,8 @@ public class SupplierItemGroup extends ItemGroup{
 	
 	@Nonnull
 	public ResourceLocation getBackgroundImage(){
+		if(backgroundImage == null)
+			return super.getBackgroundImage();
 		return backgroundImage;
 	}
 	

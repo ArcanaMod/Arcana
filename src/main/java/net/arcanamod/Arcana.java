@@ -40,7 +40,7 @@ public class Arcana{
 	// public static ItemGroup TAINTED_BLOCKS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaBlocks.TAINTED_GRASS.get()));
 	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
-	public static ItemGroup ASPECTS = new SupplierItemGroup(MODID, proxy::getAspectItemStackForDisplay);
+	public static ItemGroup ASPECTS = new SupplierItemGroup("aspects", proxy::getAspectItemStackForDisplay);
 	
 	public Arcana(){
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);

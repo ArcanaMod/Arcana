@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "arcana:magical_grass" }
+    "": {
+      "model": "arcana:magical_grass"
+    }
   }
 }
