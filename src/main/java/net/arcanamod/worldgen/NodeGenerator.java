@@ -1,22 +1,13 @@
 package net.arcanamod.worldgen;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.event.WorldTickHandler;
-import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.AbstractChunkProvider;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import org.apache.logging.log4j.Level;
 
-import java.util.ArrayDeque;
 import java.util.Random;
 
 public class NodeGenerator{// implements IWorldGenerator{

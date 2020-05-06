@@ -31,9 +31,6 @@ public class CommonProxy{
 		registry.register(wand);
 	}
 	
-//	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
-//	}
-	
 	public void openResearchBookUI(ResourceLocation book){
 	}
 	

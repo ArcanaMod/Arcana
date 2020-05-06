@@ -1,21 +1,48 @@
 package net.arcanamod.blocks;
 
+import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.blocks.tiles.NodeTileEntity;
+import net.arcanamod.items.ItemWand;
+import net.arcanamod.util.WandUtil;
+import net.arcanamod.wand.CapType;
+import net.arcanamod.wand.CoreType;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class BlockNormalNode extends GroupedBlock{
 	
-	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.25d, 0.25d, 0.25d, 0.75d, 0.75d, 0.75d);
+	private static VoxelShape BOUNDS = Block.makeCuboidShape(.25, .25, .25, .75, .75, .75);
 	
 	public boolean isOn = false;
 	
@@ -32,11 +59,11 @@ public class BlockNormalNode extends GroupedBlock{
 	}
 	
 	@Nullable
-	//@Override
-	public TileEntity createNewTileEntity(World worldIn){
+	public TileEntity createTileEntity(BlockState state, IBlockReader world){
 		NodeTileEntity entity = new NodeTileEntity(null);
 		
-		Random rand = worldIn.rand;
+		// TODO: seed this
+		Random rand = new Random();
 		
 		for(int i = 0; i < rand.nextInt((5 - 2) + 1) + 5; i++){
 			int randomAspect = rand.nextInt(6);
@@ -47,109 +74,80 @@ public class BlockNormalNode extends GroupedBlock{
 		return entity;
 	}
 	
-	//@Override
-	//public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos){
-	//	return isOn ? BOUNDING_BOX : new AxisAlignedBB(0, 0, 0, 0, 0, 0);
-	//}
+	public boolean hasTileEntity(BlockState state){
+		return true;
+	}
+	
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
+		return isOn ? BOUNDS : VoxelShapes.empty();
+	}
 	
 	@Override
 	public BlockRenderType getRenderType(BlockState state){
 		return BlockRenderType.INVISIBLE;
 	}
 	
-	//@Override
-	//public BlockRenderLayer getBlockLayer(){
-	//	return BlockRenderLayer.CUTOUT;
-	//}
-	
-	//@Override
-	public boolean isOpaqueCube(BlockState state){
+	public boolean isNormalCube(BlockState state, IBlockReader worldIn, BlockPos pos){
 		return false;
 	}
 	
-	/*@SideOnly(Side.CLIENT)
-	@Override
-	public float getAmbientOcclusionLightValue(BlockState state){
-		return 1.0f;
-	}*/
-	
-	/*@Override
-	public boolean isFullCube(BlockState state){
-		return false;
-	}*/
-	
-	/*@Override
-	public boolean hasTileEntity(BlockState state){
-		return true;
+	@OnlyIn(Dist.CLIENT)
+	public float getAmbientOcclusionLightValue(BlockState state, IBlockReader worldIn, BlockPos pos){
+		return 1;
 	}
 	
-	@Override
-	public void addCollisionBoxToList(BlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState){
-		addCollisionBoxToList(pos, entityBox, collidingBoxes, new AxisAlignedBB(0, 0, 0, 0, 0, 0));
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
+		return VoxelShapes.empty();
 	}
 	
-	@Nullable
-	@Override
-	public AxisAlignedBB getCollisionBoundingBox(BlockState blockState, IBlockAccess worldIn, BlockPos pos){
-		return NULL_AABB;
-	}
-	
-	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, BlockState state, PlayerEntity playerIn, Hand hand, Direction facing, float hitX, float hitY, float hitZ){
-		if(worldIn.isRemote){
-			return false;
-		}
-		if(hand != Hand.MAIN_HAND){
-			return false;
-		}
-		ItemStack itemActivated = playerIn.getHeldItem(hand);
-        *//*CoreType core = WandUtil.getCore(itemActivated);
-        CapType cap = WandUtil.getCap(itemActivated);*//*
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult p_225533_6_){
+		if(world.isRemote)
+			return ActionResultType.PASS;
+		if(hand != Hand.MAIN_HAND)
+			return ActionResultType.PASS;
+		ItemStack itemActivated = player.getHeldItem(hand);
+		//CoreType core = WandUtil.getCore(itemActivated);
+		//CapType cap = WandUtil.getCap(itemActivated);
 		// although other items can store aspects, only wands can draw them directly from nodes ATM
 		if(itemActivated.getItem() instanceof ItemWand){
-			TileEntity entity = worldIn.getTileEntity(pos);
+			TileEntity entity = world.getTileEntity(pos);
 			if(entity instanceof NodeTileEntity){
 				NodeTileEntity tileEntity = (NodeTileEntity)entity;
-                *//*NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
-                NBTTagList newAspects = new NBTTagList();*//*
+				ListNBT aspectList = itemActivated.getTag().getList("aspects", Constants.NBT.TAG_COMPOUND);
+				ListNBT newAspects = new ListNBT();
 				for(Aspect coreAspect : Aspects.primalAspects){
 					if(tileEntity.storedAspects.containsKey(coreAspect)){
-                        *//*if(aspectList.hasNoTags()){
-                            tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
-                            NBTTagCompound compound = new NBTTagCompound();
-                            compound.setString("type", coreAspect.toString());
-                            compound.setInteger("amount", 1);
-                            newAspects.appendTag(compound);
-                        }else{
-                            for(NBTBase base : aspectList){
-                                if(base instanceof NBTTagCompound){
-                                    NBTTagCompound compound = (NBTTagCompound)base;
-                                    if(coreAspect.toString().equals(compound.getString("type"))){
-                                        tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
-                                        if(compound.getInteger("amount") < core.getMaxVis()){
-                                            compound.setInteger("amount", compound.getInteger("amount") + 1);
-                                            newAspects.appendTag(compound);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        NBTTagCompound newTag = itemActivated.getTagCompound();
-                        newTag.setTag("aspects", newAspects);
-                        itemActivated.setTagCompound(newTag);*//*
+						if(aspectList.isEmpty()){
+							tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
+							CompoundNBT compound = new CompoundNBT();
+							compound.putString("type", coreAspect.toString());
+							compound.putInt("amount", 1);
+							newAspects.add(compound);
+						}else{
+							for(INBT base : aspectList){
+								if(base instanceof CompoundNBT){
+									CompoundNBT compound = (CompoundNBT)base;
+									if(coreAspect.toString().equals(compound.getString("type"))){
+										tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
+										if(compound.getInt("amount") < /*core.getMaxVis()*/ 35){
+											compound.putInt("amount", compound.getInt("amount") + 1);
+											newAspects.add(compound);
+										}
+									}
+								}
+							}
+						}
+						CompoundNBT newTag = itemActivated.getTag();
+						newTag.put("aspects", newAspects);
+						itemActivated.setTag(newTag);
 						// always transfer one for now -- this should work with more though
 						final int draw = 1;
 						tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - (VisHandler.getFrom(itemActivated).insert(coreAspect, draw, false) - draw));
 						tileEntity.markDirty();
-						
 					}
 				}
 			}
 		}
-		return true;
+		return ActionResultType.SUCCESS;
 	}
-	
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face){
-		return BlockFaceShape.UNDEFINED;
-	}*/
 }

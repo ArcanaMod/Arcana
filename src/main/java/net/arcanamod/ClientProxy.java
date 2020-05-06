@@ -14,6 +14,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -57,12 +58,6 @@ public class ClientProxy extends CommonProxy{
 		
 		//ModelBakery.registerItemVariants(wand, list.toArray(new ModelResourceLocation[0]));
 	}
-	
-	
-	/*@Override
-	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
-		//parBlock.setGraphicsLevel(parFancyEnabled);
-	}*/
 	
 	public void openResearchBookUI(ResourceLocation book){
 		Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));

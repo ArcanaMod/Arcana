@@ -1,6 +1,5 @@
-package net.arcanamod.event;
+package net.arcanamod;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.bases.GroupedBlock;
@@ -23,11 +22,6 @@ import net.minecraftforge.registries.IForgeRegistry;
 @EventBusSubscriber(modid = Arcana.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class RegistryHandler{
 	
-	/**
-	 * Register Items here
-	 *
-	 * @param event
-	 */
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onItemRegister(RegistryEvent.Register<Item> event){
 		Aspects.register();
@@ -40,39 +34,5 @@ public class RegistryHandler{
 			blockItem.setRegistryName(block.getRegistryName());
 			registry.register(blockItem);
 		});
-		//event.getRegistry().registerAll(ArcanaItems.ITEMS.toArray(new Item[0]));
-		/*for(ItemWand wand : ItemWand.WANDS)
-			Arcana.proxy.registerWand(event.getRegistry(), wand);*/
-	}
-	
-	/**
-	 * Register Blocks here
-	 *
-	 * @param event
-	 */
-	@SubscribeEvent
-	public static void onBlockRegister(RegistryEvent.Register<Block> event){
-		//event.getRegistry().registerAll(ArcanaBlocks.BLOCKS.toArray(new Block[0]));
-		/*GameRegistry.registerTileEntity(NodeTileEntity.class, new ResourceLocation(Arcana.MODID, "tile_normalnode"));
-		GameRegistry.registerTileEntity(ResearchTableTileEntity.class, ResearchTableTileEntity.ID);*/
-	}
-	
-	/**
-	 * Register Models Here
-	 *
-	 * @param event
-	 */
-	@SubscribeEvent
-	public static void onModelRegister(ModelRegistryEvent event){
-		/*for(Item item : ArcanaItems.ITEMS){
-			if(item instanceof IHasModel){
-				((IHasModel)item).registerModels();
-			}
-		}
-		for(Block block : ArcanaBlocks.BLOCKS){
-			if(block instanceof IHasModel){
-				((IHasModel)block).registerModels();
-			}
-		}*/
 	}
 }
