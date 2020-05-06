@@ -2,7 +2,6 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,17 +21,16 @@ public class AspectItem extends Item{
 	
 	public AspectItem(String aspectName){
 		super(new Properties().group(Arcana.ASPECTS));
+		if(aspectName.startsWith("aspect_"))
+			aspectName = aspectName.substring(7);
 		this.aspectName = aspectName;
 	}
 	
-	public String getItemStackDisplayName(ItemStack stack){
-		// aspect.beast.name, for example
-		return I18n.format("aspect." + aspectName + ".name").trim();
+	public ITextComponent getDisplayName(ItemStack stack){
+		return new TranslationTextComponent("aspect." + aspectName);
 	}
 	
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
-		// aspect.beast.desc, for example
-		//tooltip.add(I18n.translateToLocal("aspect." + aspectName + ".desc").trim());
 		tooltip.add(new TranslationTextComponent("aspect." + aspectName + ".desc"));
 	}
 	

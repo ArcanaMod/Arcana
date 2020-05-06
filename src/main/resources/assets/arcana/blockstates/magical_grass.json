@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "arcana:magical_grass"
+      "model": "arcana:block/magical_grass"
     }
   }
 }
