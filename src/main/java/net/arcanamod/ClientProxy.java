@@ -60,7 +60,7 @@ public class ClientProxy extends CommonProxy{
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){
-		Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
+		//Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
 	}
 	
 	public void onResearchChange(ResearchEvent event){

@@ -3,11 +3,14 @@ package net.arcanamod.items;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.items.armor.ArcanaArmourMaterials;
 import net.arcanamod.items.armor.GoggleBase;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.items.attachment.WandCore;
 import net.arcanamod.util.GogglePriority;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.Properties;
 import net.minecraft.util.ResourceLocation;
@@ -30,7 +33,6 @@ public class ArcanaItems{
 	// Materials
 	//	public static Item.ToolMaterial MATERIAL_ARCANIUM = EnumHelper.addToolMaterial("material_arcanium", 4, 1987, 9.0F, 4.0F, 20);
 	//	public static Item.ToolMaterial MATERIAL_VOID_METAL = EnumHelper.addToolMaterial("material_void_metal", 5, 250, 10.0F, 4.5F, 8);
-	//	public static ArmorItem.ArmorMaterial ARMOR_MATERIAL_ARCANIUM = EnumHelper.addArmorMaterial("armor_material_arcanium", Arcana.MODID + ":arcanium_armor", 1987, new int[]{4, 7, 9, 4}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2.5F);
 	
 	// Arcanium
 	//	public static Item ARCANIUM_AXE = new AxeBase("arcanium_axe", MATERIAL_ARCANIUM).setCreativeTab(Arcana.TAB_ARCANA);
@@ -39,10 +41,10 @@ public class ArcanaItems{
 	//	public static Item ARCANIUM_PICKAXE = new PickaxeBase("arcanium_pickaxe", MATERIAL_ARCANIUM).setCreativeTab(Arcana.TAB_ARCANA);
 	//	public static Item ARCANIUM_SHOVEL = new ShovelBase("arcanium_shovel", MATERIAL_ARCANIUM).setCreativeTab(Arcana.TAB_ARCANA);
 	
-	//	public static Item ARCANIUM_HELMET = new ArmorBase("arcanium_helmet", ARMOR_MATERIAL_ARCANIUM, 1, EquipmentSlotType.HEAD).setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item ARCANIUM_CHESTPLATE = new ArmorBase("arcanium_chestplate", ARMOR_MATERIAL_ARCANIUM, 1, EquipmentSlotType.CHEST).setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item ARCANIUM_LEGGINGS = new ArmorBase("arcanium_leggings", ARMOR_MATERIAL_ARCANIUM, 2, EquipmentSlotType.LEGS).setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item ARCANIUM_BOOTS = new ArmorBase("arcanium_boots", ARMOR_MATERIAL_ARCANIUM, 1, EquipmentSlotType.FEET).setCreativeTab(Arcana.TAB_ARCANA);
+	public static final RegistryObject<Item> ARCANIUM_HELMET = ITEMS.register("arcanium_helmet", () -> new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlotType.HEAD, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> ARCANIUM_CHESTPLATE = ITEMS.register("arcanium_chestplate", () -> new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlotType.CHEST, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> ARCANIUM_LEGGINGS = ITEMS.register("arcanium_leggings", () -> new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlotType.LEGS, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> ARCANIUM_BOOTS = ITEMS.register("arcanium_boots", () -> new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlotType.FEET, new Properties().group(Arcana.ITEMS)));
 	
 	// Void Metal
 	//	public static Item VOID_METAL_AXE = new AutoRepairAxe("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Arcana.TAB_ARCANA);
@@ -82,7 +84,7 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> QUICKSILVER = ITEMS.register("quicksilver", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
 	// Goggles
-	public static final RegistryObject<Item> GOGGLES_OF_REVEALING = ITEMS.register("goggles_of_revealing", () -> new GoggleBase(GoggleBase.GOGGLE_MATERIAL, new Properties().group(Arcana.ITEMS), GogglePriority.SHOW_NODE));
+	public static final RegistryObject<Item> GOGGLES_OF_REVEALING = ITEMS.register("goggles_of_revealing", () -> new GoggleBase(ArcanaArmourMaterials.GOGGLES, new Properties().group(Arcana.ITEMS), GogglePriority.SHOW_NODE));
 	
 	// Foci
 	public static final RegistryObject<Item> FOCUS_PARTS = ITEMS.register("focus_parts", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
