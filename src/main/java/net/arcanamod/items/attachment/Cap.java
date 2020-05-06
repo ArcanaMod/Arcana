@@ -3,6 +3,7 @@ package net.arcanamod.items.attachment;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ItemAttachment;
 import net.arcanamod.wand.EnumAttachmentType;
+import net.minecraftforge.fml.RegistryObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +17,8 @@ import java.util.List;
  */
 public class Cap extends ItemAttachment{
 	
-	private int id;
 	private int level;
 	
-	public static Cap DEFAULT = null;//(Cap)ArcanaItems.IRON_CAP.get();
 	public static List<Cap> CAPS = new ArrayList<>();
 	
 	public Cap(Properties properties){
@@ -32,18 +31,12 @@ public class Cap extends ItemAttachment{
 		return EnumAttachmentType.CAP;
 	}
 	
-	@Override
 	public int getID(){
-		return id;
+		return CAPS.indexOf(this);
 	}
 	
 	public int getLevel(){
 		return level;
-	}
-	
-	public Cap setId(int id){
-		this.id = id;
-		return this;
 	}
 	
 	public Cap setLevel(int level){
