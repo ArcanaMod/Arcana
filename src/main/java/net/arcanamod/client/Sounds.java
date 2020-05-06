@@ -12,7 +12,8 @@ public class Sounds{
 	public static SoundEvent SPELL_CAST;
 	
 	public static void registerSounds(){
-		SPELL_CAST = registerSound("spell_cast");
+		// can't be static
+		//SPELL_CAST = registerSound("spell_cast");
 	}
 	
 	private static SoundEvent registerSound(String name){

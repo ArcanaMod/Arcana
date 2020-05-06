@@ -70,7 +70,7 @@ public class BakedModelWandFinalized implements IBakedModel{
 		
 		for(int i = 0; i < EnumAttachmentType.values().length; ++i){
 			try{
-				attachment = wand.getAttachment(itemStack, EnumAttachmentType.values()[i]);
+				attachment = null;//wand.getAttachment(itemStack, EnumAttachmentType.values()[i]);
 				if(attachment == null){
 					continue;
 				}

@@ -19,11 +19,11 @@ public class Cap extends ItemAttachment{
 	private int id;
 	private int level;
 	
-	public static Cap DEFAULT = ArcanaItems.IRON_CAP;
+	public static Cap DEFAULT = null;//(Cap)ArcanaItems.IRON_CAP.get();
 	public static List<Cap> CAPS = new ArrayList<>();
 	
-	public Cap(String name){
-		super(name);
+	public Cap(Properties properties){
+		super(properties);
 		CAPS.add(this);
 	}
 	

@@ -1,6 +1,7 @@
 package net.arcanamod.items;
 
 import net.arcanamod.wand.EnumAttachmentType;
+import net.minecraft.item.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,12 +11,12 @@ import java.util.List;
  *
  * @author Merijn
  */
-public abstract class ItemAttachment extends ItemBase{
+public abstract class ItemAttachment extends Item{
 	
 	public static List<ItemAttachment> ATTACHMENTS = new ArrayList<>();
 	
-	public ItemAttachment(String name){
-		super(name);
+	public ItemAttachment(Properties properties){
+		super(properties);
 		ATTACHMENTS.add(this);
 	}
 	

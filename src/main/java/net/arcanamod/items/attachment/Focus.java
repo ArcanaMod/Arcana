@@ -14,11 +14,11 @@ public class Focus extends ItemAttachment{
 	
 	private int id;
 	
-	public static Focus NONE = new Focus("no_focus").setId(0);
-	public static Focus DEFAULT = new Focus("wand_focus").setId(1);
+	public static Focus NONE = new Focus(new Properties()).setId(0);
+	public static Focus DEFAULT = new Focus(new Properties()).setId(1);
 	
-	public Focus(String name){
-		super(name);
+	public Focus(Properties properties){
+		super(properties);
 	}
 	
 	@Override

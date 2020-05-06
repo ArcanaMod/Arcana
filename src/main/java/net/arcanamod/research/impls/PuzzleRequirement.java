@@ -1,8 +1,6 @@
 package net.arcanamod.research.impls;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.network.Connection;
-import net.arcanamod.network.inventory.PktGetNoteHandler;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;

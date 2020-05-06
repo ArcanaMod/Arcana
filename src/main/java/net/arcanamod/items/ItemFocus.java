@@ -1,26 +1,6 @@
 package net.arcanamod.items;
 
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.renderer.model.ModelBakery;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nullable;
-import java.util.List;
-
-import static com.mojang.realmsclient.gui.ChatFormatting.GRAY;
-import static net.minecraft.util.text.TextFormatting.GOLD;
 
 /**
  * Focus Item
@@ -29,21 +9,25 @@ import static net.minecraft.util.text.TextFormatting.GOLD;
  */
 public class ItemFocus extends Item{
 	
-	public ItemFocus(String name){
+	public ItemFocus(Properties properties){
+		super(properties);
+	}
+	
+	/*public ItemFocus(String name){
 		
-		this.setHasSubtypes(true);
-		this.setMaxDamage(0);
-		this.setUnlocalizedName(name);
+		//this.setHasSubtypes(true);
+		//this.setMaxDamage(0);
+		//this.setUnlocalizedName(name);
 		this.setRegistryName(name);
 		
 		//initModel();
 		
-		ArcanaItems.ITEMS.add(this);
+		//ArcanaItems.ITEMS.add(this);
 	}
 	
-	/**
+	*//**
 	 * Adds all of the focus types to register.
-	 */
+	 *//*
 	@SideOnly(Side.CLIENT)
 	public void initModel(){
 		ModelResourceLocation focus1 = new ModelResourceLocation(getRegistryName() + "_style_1", "inventory");
@@ -205,5 +189,5 @@ public class ItemFocus extends Item{
 			stack.setTagCompound(tagCompound);
 		}
 		return tagCompound;
-	}
+	}*/
 }

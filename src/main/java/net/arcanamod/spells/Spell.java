@@ -101,7 +101,7 @@ public class Spell{
 				}
 				break;
 			case AIR:
-				SpellEntity entity = new SpellEntity(player.getEntityWorld(), player, this);
+				SpellEntity entity = new SpellEntity(null);//(player.getEntityWorld(), player, this);
 				entity.setPosition(player.getPosX(), player.getBoundingBox().minY + (double)player.getEyeHeight(), player.getPosZ());
 				entity.setNoGravity(true);
 				float rotationYawIn = player.rotationPitch;
@@ -127,7 +127,7 @@ public class Spell{
 			case WATER:
 				float yaw = player.rotationYawHead - 12F;
 				for(int i = 0; i < 5; i++){
-					SpellEntity entity1 = new SpellEntity(player.getEntityWorld(), player, this);
+					SpellEntity entity1 = new SpellEntity(null);//player.getEntityWorld(), player, this);
 					entity1.setWorld(player.getEntityWorld());
 					entity1.setNoGravity(true);
 					float wrotationYawIn = yaw;

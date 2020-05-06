@@ -1,45 +1,26 @@
 package net.arcanamod.blocks;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.items.ItemWand;
-import net.arcanamod.blocks.bases.BlockBase;
-import net.arcanamod.blocks.tiles.NodeTileEntity;
-import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.blocks.bases.GroupedBlock;
+import net.arcanamod.blocks.tiles.NodeTileEntity;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ITileEntityProvider;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.BlockRenderLayer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nullable;
-import java.util.List;
 import java.util.Random;
 
-public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
+public class BlockNormalNode extends GroupedBlock{
 	
 	private static final AxisAlignedBB BOUNDING_BOX = new AxisAlignedBB(0.25d, 0.25d, 0.25d, 0.75d, 0.75d, 0.75d);
 	
 	public boolean isOn = false;
 	
-	public BlockNormalNode(){
-		super("normal_node", Material.BARRIER);
-		blockHardness=-1;
-		this.translucent = true;
-		setLightLevel(5 / 15f);
+	public BlockNormalNode(Properties properties, ItemGroup group){
+		super(properties, group);
 	}
 	
 	public void hitboxOff(){
@@ -51,9 +32,9 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
 	}
 	
 	@Nullable
-	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta){
-		NodeTileEntity entity = new NodeTileEntity();
+	//@Override
+	public TileEntity createNewTileEntity(World worldIn){
+		NodeTileEntity entity = new NodeTileEntity(null);
 		
 		Random rand = worldIn.rand;
 		
@@ -66,38 +47,38 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
 		return entity;
 	}
 	
-	@Override
-	public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos){
-		return isOn ? BOUNDING_BOX : new AxisAlignedBB(0, 0, 0, 0, 0, 0);
-	}
+	//@Override
+	//public AxisAlignedBB getBoundingBox(BlockState state, IBlockAccess source, BlockPos pos){
+	//	return isOn ? BOUNDING_BOX : new AxisAlignedBB(0, 0, 0, 0, 0, 0);
+	//}
 	
 	@Override
 	public BlockRenderType getRenderType(BlockState state){
 		return BlockRenderType.INVISIBLE;
 	}
 	
-	@Override
-	public BlockRenderLayer getBlockLayer(){
-		return BlockRenderLayer.CUTOUT;
-	}
+	//@Override
+	//public BlockRenderLayer getBlockLayer(){
+	//	return BlockRenderLayer.CUTOUT;
+	//}
 	
-	@Override
+	//@Override
 	public boolean isOpaqueCube(BlockState state){
 		return false;
 	}
 	
-	@SideOnly(Side.CLIENT)
+	/*@SideOnly(Side.CLIENT)
 	@Override
 	public float getAmbientOcclusionLightValue(BlockState state){
 		return 1.0f;
-	}
+	}*/
 	
-	@Override
+	/*@Override
 	public boolean isFullCube(BlockState state){
 		return false;
-	}
+	}*/
 	
-	@Override
+	/*@Override
 	public boolean hasTileEntity(BlockState state){
 		return true;
 	}
@@ -122,18 +103,18 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
 			return false;
 		}
 		ItemStack itemActivated = playerIn.getHeldItem(hand);
-        /*CoreType core = WandUtil.getCore(itemActivated);
-        CapType cap = WandUtil.getCap(itemActivated);*/
+        *//*CoreType core = WandUtil.getCore(itemActivated);
+        CapType cap = WandUtil.getCap(itemActivated);*//*
 		// although other items can store aspects, only wands can draw them directly from nodes ATM
 		if(itemActivated.getItem() instanceof ItemWand){
 			TileEntity entity = worldIn.getTileEntity(pos);
 			if(entity instanceof NodeTileEntity){
 				NodeTileEntity tileEntity = (NodeTileEntity)entity;
-                /*NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
-                NBTTagList newAspects = new NBTTagList();*/
+                *//*NBTTagList aspectList = itemActivated.getTagCompound().getTagList("aspects", Constants.NBT.TAG_COMPOUND);
+                NBTTagList newAspects = new NBTTagList();*//*
 				for(Aspect coreAspect : Aspects.primalAspects){
 					if(tileEntity.storedAspects.containsKey(coreAspect)){
-                        /*if(aspectList.hasNoTags()){
+                        *//*if(aspectList.hasNoTags()){
                             tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
                             NBTTagCompound compound = new NBTTagCompound();
                             compound.setString("type", coreAspect.toString());
@@ -155,7 +136,7 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
                         }
                         NBTTagCompound newTag = itemActivated.getTagCompound();
                         newTag.setTag("aspects", newAspects);
-                        itemActivated.setTagCompound(newTag);*/
+                        itemActivated.setTagCompound(newTag);*//*
 						// always transfer one for now -- this should work with more though
 						final int draw = 1;
 						tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - (VisHandler.getFrom(itemActivated).insert(coreAspect, draw, false) - draw));
@@ -170,5 +151,5 @@ public class BlockNormalNode extends BlockBase implements ITileEntityProvider{
 	
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face){
 		return BlockFaceShape.UNDEFINED;
-	}
+	}*/
 }

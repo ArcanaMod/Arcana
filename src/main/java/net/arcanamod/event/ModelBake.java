@@ -1,26 +1,13 @@
 package net.arcanamod.event;
 
-import net.arcanamod.items.ItemAttachment;
-import net.arcanamod.items.ItemWand;
-import net.arcanamod.Arcana;
-import net.arcanamod.client.model.BakedModelWand;
-import net.arcanamod.wand.EnumAttachmentType;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ModelResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-
 /**
  * Event Handler for ModelBakeEvent
  *
  * @author Merijn
  */
-@EventBusSubscriber(Side.CLIENT)
 public class ModelBake{
 	
-	@SubscribeEvent
+	/*@SubscribeEvent
 	public static void onBake(ModelBakeEvent event){
 		IBakedModel[][] models;
 		ModelResourceLocation mrl;
@@ -49,6 +36,5 @@ public class ModelBake{
 			event.getModelRegistry().putObject(mrl, new BakedModelWand(main, models));
 			
 		}
-	}
-	
+	}*/
 }

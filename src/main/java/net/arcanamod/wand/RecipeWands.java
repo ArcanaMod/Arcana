@@ -20,11 +20,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class RecipeWands implements ICraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory>{
+public class RecipeWands{// implements ICraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory>{
 	
 	// I can either make WandCore into a capability, or add special support for sticks just here. I prefer the latter.
 	
-	static final ResourceLocation id = new ResourceLocation(Arcana.MODID, "wands");
+	/*static final ResourceLocation id = new ResourceLocation(Arcana.MODID, "wands");
 	
 	public boolean matches(CraftingInventory inv, World world){
 		if(inv.getWidth() >= 3 && inv.getHeight() >= 3){
@@ -96,7 +96,7 @@ public class RecipeWands implements ICraftingRecipe, net.minecraftforge.common.c
 	
 	public int getRecipeHeight(){
 		return 3;
-	}
+	}*/
 	
 	/*@SuppressWarnings("unused") // Referenced in _factories.json
 	public static class Factory implements IRecipeFactory{

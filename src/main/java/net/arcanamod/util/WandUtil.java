@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 
 public class WandUtil{
 	
-	public static CoreType getCore(ItemStack wandStack){
+	/*public static CoreType getCore(ItemStack wandStack){
 		CoreType core = CoreType.ERROR;
 		if(wandStack.getItem() instanceof ItemWand){
 			ItemWand wand = (ItemWand)wandStack.getItem();
@@ -40,18 +40,18 @@ public class WandUtil{
 			ItemAttachment capAttachment = wand.getAttachment(wandStack, EnumAttachmentType.CAP);
 			if(capAttachment == ArcanaItems.COPPER_CAP){
 				cap = CapType.COPPER;
-            /*}else if(capAttachment == ItemInit.ELEMENTIUM_CAP){
-                cap = CapType.COPPER;*/
+            *//*}else if(capAttachment == ItemInit.ELEMENTIUM_CAP){
+                cap = CapType.COPPER;*//*
 			}else if(capAttachment == ArcanaItems.GOLD_CAP){
 				cap = CapType.GOLD;
 			}else if(capAttachment == ArcanaItems.IRON_CAP){
 				cap = CapType.IRON;
-            /*}else if(capAttachment == ItemInit.MANASTEEL_CAP){
-                cap = CapType.MANASTEEL;*/
+            *//*}else if(capAttachment == ItemInit.MANASTEEL_CAP){
+                cap = CapType.MANASTEEL;*//*
 			}else if(capAttachment == ArcanaItems.SILVER_CAP){
 				cap = CapType.SILVER;
-            /*}else if(capAttachment == ItemInit.TERRASTEEL_CAP){
-                cap = CapType.TERRASTEEL;*/
+            *//*}else if(capAttachment == ItemInit.TERRASTEEL_CAP){
+                cap = CapType.TERRASTEEL;*//*
 			}else if(capAttachment == ArcanaItems.THAUMIUM_CAP){
 				cap = CapType.THAUMIUM;
 			}else if(capAttachment == ArcanaItems.VOID_CAP){
@@ -59,5 +59,5 @@ public class WandUtil{
 			}
 		}
 		return cap;
-	}
+	}*/
 }

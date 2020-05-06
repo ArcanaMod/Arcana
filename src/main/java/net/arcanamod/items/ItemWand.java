@@ -1,37 +1,10 @@
 package net.arcanamod.items;
 
-import com.google.common.collect.ImmutableList;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.client.Sounds;
-import net.arcanamod.util.WandUtil;
-import net.arcanamod.Arcana;
-import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.items.attachment.Cap;
-import net.arcanamod.items.attachment.Focus;
-import net.arcanamod.aspects.VisHandlerCapability;
-import net.arcanamod.aspects.TypedVisBattery;
-import net.arcanamod.spells.Spell;
 import net.arcanamod.wand.EnumAttachmentType;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.translation.I18n;
-import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * Wand Item
@@ -42,7 +15,11 @@ import java.util.function.Supplier;
 @ParametersAreNonnullByDefault
 public class ItemWand extends Item{
 	
-	public static List<ItemWand> WANDS = new ArrayList<>();
+	public ItemWand(Properties properties){
+		super(properties);
+	}
+	
+	/*public static List<ItemWand> WANDS = new ArrayList<>();
 	
 	protected int level = 2;
 	protected ItemAttachment[][] attachments;
@@ -92,7 +69,7 @@ public class ItemWand extends Item{
 		return slotChanged;
 	}
 	
-	/**
+	*//**
 	 * Casts a spell if a focus is assigned
 	 *
 	 * @param world
@@ -101,7 +78,7 @@ public class ItemWand extends Item{
 	 * 		Player that performs the action
 	 * @param hand
 	 * 		Hand the wand is in
-	 */
+	 *//*
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
 		if(world.isRemote){
@@ -120,7 +97,7 @@ public class ItemWand extends Item{
 		return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
 	}
 	
-	/**
+	*//**
 	 * Called when a Block is right-clicked with this Item. The wand uses this to transform blocks when applicable.
 	 *
 	 * @param player
@@ -140,7 +117,7 @@ public class ItemWand extends Item{
 	 * @param hitZ
 	 * 		Where on the block on the Z axis the player has clicked.
 	 * @return Whether the wand did anything.
-	 */
+	 *//*
 	public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ){
 		Block block = world.getBlockState(pos).getBlock();
 		// hardcoded for now, but this could be made into recipes later (probably 1.13+ when recipes can work with non-crafting tables)
@@ -164,11 +141,11 @@ public class ItemWand extends Item{
 		return super.onItemUse(player, world, pos, hand, facing, hitX, hitY, hitZ);
 	}
 	
-	/**
+	*//**
 	 * Getter of the attached attachments.
 	 *
 	 * @return an array of the attached attachments
-	 */
+	 *//*
 	public ItemAttachment[][] getAttachments(){
 		if(this.attachments == null)
 			this.attachments = supplierAttachments.get();
@@ -176,7 +153,7 @@ public class ItemWand extends Item{
 		return this.attachments;
 	}
 	
-	/**
+	*//**
 	 * Gets an attachment based on {@link EnumAttachmentType} and the ID of the attachment
 	 *
 	 * @param type
@@ -184,7 +161,7 @@ public class ItemWand extends Item{
 	 * @param id
 	 * 		ID of the attachment
 	 * @return {@link ItemAttachment} of the given type and id
-	 */
+	 *//*
 	@Nullable
 	public ItemAttachment getAttachment(EnumAttachmentType type, int id){
 		ItemAttachment attachment = null;
@@ -197,18 +174,18 @@ public class ItemWand extends Item{
 		return attachment;
 	}
 	
-	/**
+	*//**
 	 * Gets amount of the allowed types
 	 *
 	 * @param type
 	 * 		Attachement type {@link EnumAttachmentType}
 	 * @return Amount of the given types
-	 */
+	 *//*
 	public int getAmountForSlot(EnumAttachmentType type){
 		return this.getAttachments()[type.getSlot()].length;
 	}
 	
-	/**
+	*//**
 	 * Gets a attachment based on the NBT of the given ItemStack and the given type
 	 *
 	 * @param itemStack
@@ -216,7 +193,7 @@ public class ItemWand extends Item{
 	 * @param type
 	 * 		Type of the requested attachment
 	 * @return {@link ItemAttachment} of the given type and ItemStack NBT
-	 */
+	 *//*
 	@Nullable
 	public ItemAttachment getAttachment(ItemStack itemStack, EnumAttachmentType type){
 		return this.getAttachment(type, Arcana.getNBT(itemStack).getInteger(type.getKey()));
@@ -240,5 +217,5 @@ public class ItemWand extends Item{
 		// Using server-side I18n -- replace when updating.
 		ItemAttachment attachment = getAttachment(stack, EnumAttachmentType.CAP);
 		return I18n.translateToLocalFormatted(s, I18n.translateToLocal(attachment != null ? attachment.getUnlocalizedName() + ".prefix" : "invalid_cap.prefix"));
-	}
+	}*/
 }

@@ -2,23 +2,18 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.ResearchBookGUI;
-import net.arcanamod.client.gui.ResearchEntryGUI;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.event.ResearchEvent;
-import net.arcanamod.items.ItemAttachment;
 import net.arcanamod.items.ItemWand;
 import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.wand.EnumAttachmentType;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -54,19 +49,20 @@ public class ClientProxy extends CommonProxy{
 		ArrayList<ModelResourceLocation> list = new ArrayList<>();
 		list.add(main);
 		
-		for(int i = 0; i < EnumAttachmentType.values().length; ++i){
+		/*for(int i = 0; i < EnumAttachmentType.values().length; ++i){
 			for(ItemAttachment attachment : wand.getAttachments()[i]){
 				list.add(new ModelResourceLocation(Arcana.MODID + ":wands/" + attachment.getRegistryName().getPath(), "inventory"));
 			}
-		}
+		}*/
 		
 		//ModelBakery.registerItemVariants(wand, list.toArray(new ModelResourceLocation[0]));
 	}
-
-//	@Override
-//	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
-//		//parBlock.setGraphicsLevel(parFancyEnabled);
-//	}
+	
+	
+	/*@Override
+	public void setGraphicsLevel(LeavesBase parBlock, boolean parFancyEnabled){
+		//parBlock.setGraphicsLevel(parFancyEnabled);
+	}*/
 	
 	public void openResearchBookUI(ResourceLocation book){
 		Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));

@@ -2,54 +2,34 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.VisBattery;
-import net.arcanamod.aspects.VisHandlerCapability;
-import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.*;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
-
-import static net.arcanamod.blocks.BlockResearchTable.EnumSide.RIGHT;
-import static net.arcanamod.blocks.BlockResearchTable.PART;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ItemResearchTable extends ItemBase{
+public class ItemResearchTable extends Item{
 	
-	public ItemResearchTable(){
-		super("research_table_placer");
-		setMaxDamage(0);
-		setMaxStackSize(1);
+	public ItemResearchTable(Properties properties){
+		super(properties);
+		//setMaxDamage(0);
+		//setMaxStackSize(1);
 	}
 	
 	@Nullable
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
 		VisBattery battery = new VisBattery();
-		CompoundNBT compound = stack.getTagCompound();
-		if(compound != null && compound.hasKey("BlockEntityTag"))
-			battery.deserializeNBT(compound.getCompoundTag("BlockEntityTag").getCompoundTag("Aspects"));
+		CompoundNBT compound = stack.getTag();
+		if(compound != null && compound.hasUniqueId("BlockEntityTag"))
+			battery.deserializeNBT(compound.getCompound("BlockEntityTag").getCompound("Aspects"));
 		return battery;
 	}
 	
-	@Nullable
+	/*@Nullable
 	public CompoundNBT getNBTShareTag(ItemStack stack){
 		CompoundNBT tag = super.getNBTShareTag(stack);
 		if(tag != null && tag.hasKey("BlockEntityTag")){
@@ -63,9 +43,9 @@ public class ItemResearchTable extends ItemBase{
 		super.readNBTShareTag(stack, nbt);
 		if(nbt != null)
 			stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).deserializeNBT(nbt.getCompoundTag("BlockEntityTag").getCompoundTag("Aspects"));
-	}
+	}*/
 	
-	public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ){
+	/*public ActionResultType onItemUse(PlayerEntity player, World world, BlockPos pos, Hand hand, Direction facing, float hitX, float hitY, float hitZ){
 		if(world.isRemote)
 			return ActionResultType.SUCCESS;
 		
@@ -120,5 +100,5 @@ public class ItemResearchTable extends ItemBase{
 			if(!data.getCompoundTag("Aspects").hasNoTags())
 				tooltip.add("Contains vis");
 		}
-	}
+	}*/
 }

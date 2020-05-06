@@ -113,11 +113,11 @@ public abstract class Puzzle{
 	}
 	
 	int guiLeft(int screenWidth){
-		return (screenWidth - ResearchTableContainer.WIDTH) / 2;
+		return (screenWidth - /*ResearchTableContainer.WIDTH*/1) / 2;
 	}
 	
 	int guiTop(int screenHeight){
-		return (screenHeight - ResearchTableContainer.HEIGHT) / 2;
+		return (screenHeight - /*ResearchTableContainer.HEIGHT*/1) / 2;
 	}
 	
 	protected int paperLeft(int screenWidth){

@@ -1,25 +1,11 @@
 package net.arcanamod.client.gui;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.client.research.PuzzleRenderer;
-import net.arcanamod.containers.AspectSlot;
-import net.arcanamod.containers.ResearchTableContainer;
-import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.network.Connection;
-import net.arcanamod.network.inventory.PktRequestAspectSync;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
-import net.arcanamod.research.Puzzle;
-import net.arcanamod.research.ResearchBooks;
-import net.minecraft.client.Minecraft;
+import net.arcanamod.containers.ResearchTableContainer;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-
-import javax.annotation.Nonnull;
-import java.io.IOException;
-import java.util.List;
+import net.minecraft.util.text.StringTextComponent;
 
 public class ResearchTableGUI extends GuiAspectContainer{
 	
@@ -35,13 +21,17 @@ public class ResearchTableGUI extends GuiAspectContainer{
 	Button leftArrow, rightArrow;
 	
 	public ResearchTableGUI(ResearchTableTileEntity te, ResearchTableContainer container){
-		super(container);
+		super(container, null, new StringTextComponent(""));
 		this.te = te;
 		xSize = WIDTH;
 		ySize = HEIGHT;
 	}
 	
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
+	
+	}
+	
+	/*protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		mc.getTextureManager().bindTexture(BG);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE){
@@ -142,5 +132,5 @@ public class ResearchTableGUI extends GuiAspectContainer{
 		public boolean mousePressed(@Nonnull Minecraft mc, int mouseX, int mouseY){
 			return mouseX >= guiLeft + x && mouseY >= guiTop + y && mouseX < guiLeft + x + width && mouseY < guiTop + y + height;
 		}
-	}
+	}*/
 }

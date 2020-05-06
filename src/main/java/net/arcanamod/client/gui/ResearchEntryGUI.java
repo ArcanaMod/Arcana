@@ -1,28 +1,12 @@
 package net.arcanamod.client.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-//import javafx.geometry.Side;
-import net.arcanamod.client.research.EntrySectionRenderer;
-import net.arcanamod.client.research.RequirementRenderer;
-import net.arcanamod.network.Connection;
-import net.arcanamod.research.EntrySection;
-import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.Researcher;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+//import javafx.geometry.Side;
 
 public class ResearchEntryGUI extends Screen{
 	

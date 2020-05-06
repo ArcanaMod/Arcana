@@ -24,7 +24,7 @@ public class ArcanaGuiHandler{//implements IGuiHandler{
 	
 	private static final Logger LOGGER = LogManager.getLogger();
 	
-	@Nullable
+	/*@Nullable
 	public Object getServerGuiElement(int ID, PlayerEntity player, World world, int x, int y, int z){
 		// return container
 		switch(ID){
@@ -58,5 +58,5 @@ public class ArcanaGuiHandler{//implements IGuiHandler{
 				return new VisManipulatorsGUI(new VisManipulatorsContainer(player.inventory));
 		}
 		return null;
-	}
+	}*/
 }

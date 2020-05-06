@@ -4,11 +4,12 @@ import net.arcanamod.spells.Spell;
 import net.arcanamod.spells.effects.ISpellEffect;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.network.IPacket;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
@@ -27,26 +28,16 @@ import java.util.UUID;
  */
 public class SpellEntity extends Entity implements IProjectile{
 	
-	private Spell spell;
-	private LivingEntity caster;
+	public SpellEntity(EntityType<?> entityTypeIn, World worldIn){
+		super(entityTypeIn, worldIn);
+	}
 	
 	public SpellEntity(World worldIn){
-		super(worldIn);
+		super(null, worldIn);
 	}
 	
-	public SpellEntity(World worldIn, LivingEntity caster, Spell spell){
-		super(worldIn);
-		this.setPosition(caster.getPosition().getX(), caster.getEntityBoundingBox().minY + (double)caster.getEyeHeight(), caster.getPosition().getZ());
-		this.setSize(0.25F, 0.25F);
-		
-		this.caster = caster;
-		this.spell = spell;
-	}
-	
-	@Override
-	protected void entityInit(){
-	
-	}
+	/*private Spell spell;
+	private LivingEntity caster;
 	
 	@Override
 	public void shoot(double x, double y, double z, float velocity, float inaccuracy){
@@ -190,7 +181,7 @@ public class SpellEntity extends Entity implements IProjectile{
 	}
 	
 	public static PlayerEntity findPlayer(World world, UUID uuid){
-		return /*!world.isRemote ? Minecraft.getMinecraft().player :*/ Objects.requireNonNull(world.getMinecraftServer()).getPlayerList().getPlayerByUUID(uuid); // The Getter when the Player is on a Server
+		return *//*!world.isRemote ? Minecraft.getMinecraft().player :*//* Objects.requireNonNull(world.getMinecraftServer()).getPlayerList().getPlayerByUUID(uuid); // The Getter when the Player is on a Server
 	}
 	
 	public void onHit(RayTraceResult result){
@@ -205,5 +196,25 @@ public class SpellEntity extends Entity implements IProjectile{
 				}
 			}
 		}
+	}*/
+	
+	protected void registerData(){
+	
+	}
+	
+	protected void readAdditional(CompoundNBT compound){
+	
+	}
+	
+	protected void writeAdditional(CompoundNBT compound){
+	
+	}
+	
+	public IPacket<?> createSpawnPacket(){
+		return null;
+	}
+	
+	public void shoot(double x, double y, double z, float velocity, float inaccuracy){
+	
 	}
 }

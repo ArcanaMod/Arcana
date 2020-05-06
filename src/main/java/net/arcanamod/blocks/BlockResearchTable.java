@@ -1,57 +1,29 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.Arcana;
-import net.arcanamod.ArcanaGuiHandler;
-import net.arcanamod.blocks.bases.BlockBase;
-import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
-import net.arcanamod.items.ArcanaItems;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyDirection;
-import net.minecraft.block.properties.PropertyEnum;
-import net.minecraft.block.state.BlockFaceShape;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
+import net.arcanamod.blocks.bases.GroupedBlock;
+import net.minecraft.item.ItemGroup;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import static net.arcanamod.blocks.BlockResearchTable.EnumSide.LEFT;
-import static net.arcanamod.blocks.BlockResearchTable.EnumSide.RIGHT;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 // TODO: This has a problem with being broken. I don't think this can be solved without a TESR.
 // Thankfully, I'll probably switch this over to a TESR anyways to show ink, wands, and research notes. yay.
-public class BlockResearchTable extends BlockBase implements ITileEntityProvider{
+public class BlockResearchTable extends GroupedBlock{
 	
-	public static final PropertyDirection FACING = HorizontalBlock.FACING;
-	public static final PropertyEnum<EnumSide> PART = PropertyEnum.create("part", EnumSide.class);
+	//public static final PropertyDirection FACING = HorizontalBlock.FACING;
+	//public static final PropertyEnum<EnumSide> PART = PropertyEnum.create("part", EnumSide.class);
 	
-	public BlockResearchTable(){
-		super("research_table", Material.WOOD);
-		translucent = true;
-		setHardness(2.5f);
+	public BlockResearchTable(Properties properties, ItemGroup group){
+		super(properties, group);
 	}
 	
-	public boolean hasTileEntity(BlockState state){
-		return state.getValue(PART) == LEFT;
-	}
+	//public boolean hasTileEntity(BlockState state){
+	//	return state.getValue(PART) == LEFT;
+	//}
 	
-	@Nullable
+	/*@Nullable
 	@ParametersAreNonnullByDefault
 	public TileEntity createNewTileEntity(World worldIn, int meta){
 		return (meta & 8) > 0 ? null : new ResearchTableTileEntity();
@@ -218,6 +190,11 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 	
+	@Nullable
+	public TileEntity createNewTileEntity(IBlockReader worldIn){
+		return null;
+	}
+	
 	public enum EnumSide implements IStringSerializable{
 		LEFT("left"),
 		RIGHT("right");
@@ -235,5 +212,5 @@ public class BlockResearchTable extends BlockBase implements ITileEntityProvider
 		public String getName(){
 			return this.name;
 		}
-	}
+	}*/
 }

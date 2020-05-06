@@ -1,22 +1,15 @@
 package net.arcanamod.client.gui;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.containers.AspectSlot;
-import net.arcanamod.containers.VisManipulatorsContainer;
-import net.arcanamod.network.Connection;
-import net.arcanamod.network.inventory.PktRequestAspectSync;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
 import net.minecraft.util.ResourceLocation;
-import org.lwjgl.input.Mouse;
+import net.minecraft.util.text.ITextComponent;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.io.IOException;
-import java.util.List;
 
 @ParametersAreNonnullByDefault
-public class VisManipulatorsGUI extends GuiAspectContainer implements VisManipulatorsContainer.ScrollRefreshListener{
+public class VisManipulatorsGUI extends GuiAspectContainer{// implements VisManipulatorsContainer.ScrollRefreshListener{
 	
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 256;
@@ -25,7 +18,15 @@ public class VisManipulatorsGUI extends GuiAspectContainer implements VisManipul
 	
 	int leftScroll = 0, rightScroll = 0;
 	
-	public VisManipulatorsGUI(VisManipulatorsContainer inventorySlots){
+	public VisManipulatorsGUI(Container screenContainer, PlayerInventory inv, ITextComponent titleIn){
+		super(screenContainer, inv, titleIn);
+	}
+	
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
+	
+	}
+	
+	/*public VisManipulatorsGUI(VisManipulatorsContainer inventorySlots){
 		super(inventorySlots);
 		xSize = WIDTH;
 		ySize = HEIGHT;
@@ -151,5 +152,5 @@ public class VisManipulatorsGUI extends GuiAspectContainer implements VisManipul
 	public void refreshScrolling(){
 		scroll(true, null);
 		scroll(false, null);
-	}
+	}*/
 }

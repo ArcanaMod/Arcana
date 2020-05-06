@@ -14,6 +14,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,13 +25,24 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.Supplier;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableContainer {//extends AspectContainer{
+public class ResearchTableContainer extends Container{
+	
+	protected ResearchTableContainer(@Nullable ContainerType<?> type, int id){
+		super(type, id);
+	}
+	
+	public boolean canInteractWith(PlayerEntity playerIn){
+		return true;
+	}
+	
+	//extends AspectContainer{
 	/*
 	public static final int WIDTH = 376;
 	public static final int HEIGHT = 280;

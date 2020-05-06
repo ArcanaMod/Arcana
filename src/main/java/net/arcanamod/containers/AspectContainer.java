@@ -3,8 +3,6 @@ package net.arcanamod.containers;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.client.gui.GuiAspectContainer;
-import net.arcanamod.network.Connection;
-import net.arcanamod.network.inventory.PktAspectClickHandler;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
@@ -50,7 +48,7 @@ public abstract class AspectContainer extends Container{
 	}
 	
 	public void handleClick(int mouseX, int mouseY, int button, GuiAspectContainer gui){
-		for(AspectSlot slot : getAspectSlots()){
+		/*for(AspectSlot slot : getAspectSlots()){
 			if(slot.getInventory().get() != null && gui.isSlotVisible(slot) && isMouseOverSlot(mouseX, mouseY, slot, gui)){
 				// gonna send a packet
 				PktAspectClickHandler.ClickType type;
@@ -68,7 +66,7 @@ public abstract class AspectContainer extends Container{
 				PktAspectClickHandler.PktAspectClick packet = new PktAspectClickHandler.PktAspectClick(windowId, aspectSlots.indexOf(slot), type);
 				//Connection.network.sendToServer(packet);
 			}
-		}
+		}*/
 	}
 	
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot, GuiAspectContainer gui){

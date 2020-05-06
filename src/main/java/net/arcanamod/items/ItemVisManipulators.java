@@ -4,6 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaGuiHandler;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -13,19 +14,15 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ItemVisManipulators extends ItemBase{
+public class ItemVisManipulators extends Item{
 	
-	public ItemVisManipulators(){
-		this("vis_manipulation_tools");
-		setMaxStackSize(1);
-	}
-	
-	public ItemVisManipulators(String name){
-		super(name);
+	public ItemVisManipulators(Properties properties){
+		super(properties);
+		//setMaxStackSize(1);
 	}
 	
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
-		player.openGui(Arcana.instance, ArcanaGuiHandler.VIS_MANIPULATORS_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+		//player.openGui(Arcana.instance, ArcanaGuiHandler.VIS_MANIPULATORS_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 		return super.onItemRightClick(world, player, hand);
 	}
 }

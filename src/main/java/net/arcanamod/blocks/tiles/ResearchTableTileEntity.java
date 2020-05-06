@@ -18,9 +18,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableTileEntity extends TileEntity{
+public class ResearchTableTileEntity{// extends TileEntity{
 	
-	public static final ResourceLocation ID = new ResourceLocation("arcana:research_table");
+	/*public static final ResourceLocation ID = new ResourceLocation("arcana:research_table");
 	
 	private boolean shouldDrop = true;
 	
@@ -92,5 +92,5 @@ public class ResearchTableTileEntity extends TileEntity{
 	
 	public boolean shouldDrop(){
 		return shouldDrop;
-	}
+	}*/
 }

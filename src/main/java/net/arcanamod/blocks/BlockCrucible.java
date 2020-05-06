@@ -1,14 +1,13 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.blocks.bases.BlockBase;
+import net.arcanamod.blocks.bases.GroupedBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.Direction;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -17,7 +16,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class BlockCrucible extends BlockBase{
+public class BlockCrucible extends GroupedBlock{
 	
 	protected static final AxisAlignedBB AABB_LEGS = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D);
 	protected static final AxisAlignedBB AABB_WALL_NORTH = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 0.125D);
@@ -25,9 +24,8 @@ public class BlockCrucible extends BlockBase{
 	protected static final AxisAlignedBB AABB_WALL_EAST = new AxisAlignedBB(0.875D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D);
 	protected static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
 	
-	public BlockCrucible(String name){
-		super(name, Material.IRON);
-		//setHardness(2f);
+	public BlockCrucible(Properties properties, ItemGroup group){
+		super(properties, group);
 	}
 	
 	public boolean isOpaqueCube(BlockState state){
