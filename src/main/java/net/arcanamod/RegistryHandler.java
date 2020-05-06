@@ -3,10 +3,8 @@ package net.arcanamod;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.bases.GroupedBlock;
-import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,6 +28,8 @@ public class RegistryHandler{
 			Item.Properties properties = new Item.Properties();
 			if(block instanceof GroupedBlock)
 				properties = properties.group(((GroupedBlock)block).getGroup());
+			else
+				properties = properties.group(Arcana.ITEMS);
 			BlockItem blockItem = new BlockItem(block, properties);
 			blockItem.setRegistryName(block.getRegistryName());
 			registry.register(blockItem);
