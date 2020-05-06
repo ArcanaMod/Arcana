@@ -4,11 +4,12 @@ import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.items.armor.ArcanaArmourMaterials;
+import net.arcanamod.items.armor.AutoRepairArmorItem;
 import net.arcanamod.items.armor.GoggleBase;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.items.attachment.WandCore;
-import net.arcanamod.items.tools.ArcanaToolTiers;
+import net.arcanamod.items.tools.*;
 import net.arcanamod.util.GogglePriority;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
@@ -30,10 +31,6 @@ public class ArcanaItems{
 	
 	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Arcana.MODID);
 	
-	// Materials
-	//	public static Item.ToolMaterial MATERIAL_ARCANIUM = EnumHelper.addToolMaterial("material_arcanium", 4, 1987, 9.0F, 4.0F, 20);
-	//	public static Item.ToolMaterial MATERIAL_VOID_METAL = EnumHelper.addToolMaterial("material_void_metal", 5, 250, 10.0F, 4.5F, 8);
-	
 	// Arcanium
 	public static final RegistryObject<Item> ARCANIUM_SWORD = ITEMS.register("arcanium_sword", () -> new SwordItem(ArcanaToolTiers.ARCANIUM, 3, -2.4f, new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> ARCANIUM_SHOVEL = ITEMS.register("arcanium_shovel", () -> new ShovelItem(ArcanaToolTiers.ARCANIUM, 1.5f, -3, new Properties().group(Arcana.ITEMS)));
@@ -47,11 +44,16 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> ARCANIUM_BOOTS = ITEMS.register("arcanium_boots", () -> new ArmorItem(ArcanaArmourMaterials.ARCANIUM, EquipmentSlotType.FEET, new Properties().group(Arcana.ITEMS)));
 	
 	// Void Metal
-	//	public static Item VOID_METAL_AXE = new AutoRepairAxe("void_metal_axe", MATERIAL_VOID_METAL).setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item VOID_METAL_SWORD = new AutoRepairSword("void_metal_sword", MATERIAL_VOID_METAL).setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item VOID_METAL_HOE = new AutoRepairHoe("void_metal_hoe", MATERIAL_VOID_METAL).setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item VOID_METAL_PICKAXE = new AutoRepairPickaxe("void_metal_pickaxe", MATERIAL_VOID_METAL).setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item VOID_METAL_SHOVEL = new AutoRepairShovel("void_metal_shovel", MATERIAL_VOID_METAL).setCreativeTab(Arcana.TAB_ARCANA);
+	public static final RegistryObject<Item> VOID_METAL_SWORD = ITEMS.register("void_metal_sword", () -> new AutoRepairSwordItem(ArcanaToolTiers.VOID_METAL, 3, -2.4f, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> VOID_METAL_SHOVEL = ITEMS.register("void_metal_shovel", () -> new AutoRepairShovelItem(ArcanaToolTiers.VOID_METAL, 1.5f, -3, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> VOID_METAL_PICKAXE = ITEMS.register("void_metal_pickaxe", () -> new AutoRepairPickaxeItem(ArcanaToolTiers.VOID_METAL, 1, -2.8f, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> VOID_METAL_AXE = ITEMS.register("void_metal_axe", () -> new AutoRepairAxeItem(ArcanaToolTiers.VOID_METAL, 5.5f, -3, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> VOID_METAL_HOE = ITEMS.register("void_metal_hoe", () -> new AutoRepairHoeItem(ArcanaToolTiers.VOID_METAL, -.5f, new Properties().group(Arcana.ITEMS)));
+	
+	public static final RegistryObject<Item> VOID_METAL_HELMET = ITEMS.register("void_metal_helmet", () -> new AutoRepairArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlotType.HEAD, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> VOID_METAL_CHESTPLATE = ITEMS.register("void_metal_chestplate", () -> new AutoRepairArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlotType.CHEST, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> VOID_METAL_LEGGINGS = ITEMS.register("void_metal_leggings", () -> new AutoRepairArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlotType.LEGS, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> VOID_METAL_BOOTS = ITEMS.register("void_metal_boots", () -> new AutoRepairArmorItem(ArcanaArmourMaterials.VOID_METAL, EquipmentSlotType.FEET, new Properties().group(Arcana.ITEMS)));
 	
 	//Items With Function
 	
@@ -66,13 +68,6 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> GRIMOIRE = ITEMS.register("illustrious_grimoire", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(Arcana.MODID, "illustrious_grimoire")));
 	public static final RegistryObject<Item> CODEX = ITEMS.register("tainted_codex", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(Arcana.MODID, "tainted_codex")));
 	public static final RegistryObject<Item> RITES = ITEMS.register("crimson_rites", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(Arcana.MODID, "crimson_rites")));
-	
-	// Why is this here?
-	// Food - Will add food class soon --Tea :D
-	//	public static Item CAT_MEAT_COOKED = new ItemBase("cooked_cat_meat").setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item CAT_MEAT_UNCOOKED = new ItemBase("cat_meat").setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item DOG_MEAT_COOKED = new ItemBase("cooked_dog_meat").setCreativeTab(Arcana.TAB_ARCANA);
-	//	public static Item DOG_MEAT_UNCOOKED = new ItemBase("dog_meat").setCreativeTab(Arcana.TAB_ARCANA);
 	
 	// Materials
 	public static final RegistryObject<Item> THAUMIUM_INGOT = ITEMS.register("thaumium_ingot", () -> new Item(new Properties().group(Arcana.ITEMS)));

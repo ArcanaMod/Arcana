@@ -16,7 +16,8 @@ import java.util.function.Supplier;
 public enum ArcanaArmourMaterials implements IArmorMaterial{
 	
 	GOGGLES("arcana:goggles_of_revealing", 5, new int[]{0, 0, 0, 2}, 15, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0, Ingredient::fromItems),
-	ARCANIUM("arcana:arcanium_armor", 20, new int[]{2, 5, 7, 3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1, () -> Ingredient.fromItems(ArcanaItems.ARCANIUM_INGOT.get()))
+	ARCANIUM("arcana:arcanium_armor", 20, new int[]{2, 5, 7, 3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1, () -> Ingredient.fromItems(ArcanaItems.ARCANIUM_INGOT.get())),
+	VOID_METAL("arcana:void_metal_armor", 17, new int[]{3, 6, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2, () -> Ingredient.fromItems(ArcanaItems.VOID_METAL_INGOT.get()))
 	;
 	
 	private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};

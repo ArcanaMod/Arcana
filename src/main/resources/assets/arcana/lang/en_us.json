@@ -57,7 +57,7 @@
     "item.arcana.arcanium_boots": "Arcanium Boots",
     "item.arcana.void_metal_helmet": "Void Metal Hood",
     "item.arcana.void_metal_chestplate": "Void Metal Curiass",
-    "item.arcana.void_metal_leggings": "Void Metal leggings",
+    "item.arcana.void_metal_leggings": "Void Metal Leggings",
     "item.arcana.void_metal_boots": "Void Metal Boots",
     "item.arcana.goggles_of_revealing": "Goggles Of Revealing",
 
@@ -137,7 +137,7 @@
     "aspect.harvest.desc": "Harvest",
     "aspect.human": "Humanus",
     "aspect.human.desc": "Humanity",
-    "aspect.ice": "???",
+    "aspect.ice": "Gelum",
     "aspect.ice.desc": "Ice",
     "aspect.imprison": "???",
     "aspect.imprison.desc": "Imprisonment",
