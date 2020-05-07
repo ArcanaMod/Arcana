@@ -215,6 +215,9 @@
     "block.arcana.magical_grass": "Magical Grass",
     "block.arcana.table": "Table",
     "block.arcana.normal_node": "Normal Node",
+    "block.arcana.jar": "Warded Jar",
+    "block.arcana.void_jar": "Void Jar",
+    "block.arcana.aspect_bookshelf": "Aspect Bookshelf",
 
     "_comment": "Ore",
     "block.arcana.amber_ore": "Amber Ore",

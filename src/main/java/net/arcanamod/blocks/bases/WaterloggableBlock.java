@@ -35,10 +35,8 @@ public class WaterloggableBlock extends Block implements IWaterLoggable{
 	}
 	
 	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos){
-		if(state.get(WATERLOGGED)){
+		if(state.get(WATERLOGGED))
 			world.getPendingFluidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickRate(world));
-		}
-		
 		return super.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos);
 	}
 	
