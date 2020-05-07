@@ -6,7 +6,7 @@
   ],
   "key": {
     "A": {
-      "item": "#forge:nuggets/iron"
+      "tag": "forge:nuggets/iron"
     }
   },
   "result": {

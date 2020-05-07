@@ -6,7 +6,7 @@
   ],
   "key": {
     "#": {
-      "item": "#forge:storage_blocks/thaumium"
+      "tag": "forge:storage_blocks/thaumium"
     }
   },
   "result": {

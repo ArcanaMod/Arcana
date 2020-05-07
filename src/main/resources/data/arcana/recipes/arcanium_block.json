@@ -7,7 +7,7 @@
   ],
   "key": {
     "#": {
-      "item": "#forge:ingots/arcanium"
+      "tag": "forge:ingots/arcanium"
     }
   },
   "result": {

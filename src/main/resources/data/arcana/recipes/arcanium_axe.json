@@ -7,7 +7,7 @@
   ],
   "key": {
     "A": {
-      "item": "#forge:ingots/arcanium"
+      "tag": "forge:ingots/arcanium"
     },
     "S": {
       "item": "arcana:silverwood_stick"

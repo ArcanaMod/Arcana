@@ -7,16 +7,16 @@
   ],
   "key": {
     "G": {
-      "item": "#forge:ingots/gold"
+      "tag": "forge:ingots/gold"
     },
     "L": {
-      "item": "#forge:glass"
+      "tag": "forge:glass"
     },
     "r": {
-      "item": "#forge:dusts/redstone"
+      "tag": "forge:dusts/redstone"
     },
     "e": {
-      "item": "#forge:leather"
+      "tag": "forge:leather"
     }
   },
   "result": {
