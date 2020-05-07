@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "arcana:dair_log",
+    "arcana:dead_log",
+    "arcana:eucalyptus_log",
+    "arcana:greatwood_log",
+    "arcana:hawthorn_log",
+    "arcana:silverwood_log",
+    "arcana:trypophobius_log",
+    "arcana:willow_log"
+  ]
+}

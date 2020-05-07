@@ -6,7 +6,7 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:gold_nugget"
+      "item": "#forge:nuggets/gold"
     }
   },
   "result": {

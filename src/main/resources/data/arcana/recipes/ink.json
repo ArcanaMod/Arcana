@@ -2,11 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:feather"
+      "item": "#forge:feathers"
     },
     {
-      "item": "minecraft:dye",
-      "data": 0
+      "item": "#forge:dyes"
     },
     {
       "item": "minecraft:glass_bottle"
