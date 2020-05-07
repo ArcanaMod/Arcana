@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_trapdoor",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:greatwood_planks"
+    }
+  },
+  "result": {
+    "item": "arcana:greatwood_trapdoor",
+    "count": 2
+  }
+}

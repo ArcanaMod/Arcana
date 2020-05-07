@@ -1,8 +1,0 @@
-{
-  "parent": "block/upper_slab",
-  "textures": {
-    "bottom": "arcana:block/tainted_eucalyptus_planks",
-    "top": "arcana:block/tainted_eucalyptus_planks",
-    "side": "arcana:block/tainted_eucalyptus_planks"
-  }
-}

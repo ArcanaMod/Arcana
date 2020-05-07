@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "arcana:block/tainted_hawthorn_log_top",
-    "side": "arcana:block/tainted_hawthorn_log"
-  }
-}

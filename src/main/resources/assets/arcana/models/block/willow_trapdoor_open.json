@@ -1,6 +1,6 @@
 {
   "parent": "block/template_trapdoor_open",
   "textures": {
-    "texture": "arcana:block/eucalyptus_trapdoor"
+    "texture": "arcana:block/willow_trapdoor"
   }
 }

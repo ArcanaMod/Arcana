@@ -1,8 +1,0 @@
-{
-  "parent": "block/half_slab",
-  "textures": {
-    "bottom": "arcana:block/tainted_dair_planks",
-    "top": "arcana:block/tainted_dair_planks",
-    "side": "arcana:block/tainted_dair_planks"
-  }
-}

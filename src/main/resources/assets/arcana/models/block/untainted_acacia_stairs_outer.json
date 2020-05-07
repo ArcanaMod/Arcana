@@ -1,8 +1,0 @@
-{
-  "parent": "block/outer_stairs",
-  "textures": {
-    "bottom": "arcana:block/tainted_acacia_planks",
-    "top": "arcana:block/tainted_acacia_planks",
-    "side": "arcana:block/tainted_acacia_planks"
-  }
-}
