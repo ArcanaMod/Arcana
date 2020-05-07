@@ -42,6 +42,7 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TABLE = BLOCKS.register("table", () -> new WaterloggableBlock(create(Material.WOOD).hardnessAndResistance(2).notSolid()));
 	
 	// Blocks with function
+	public static final RegistryObject<Block> JAR = BLOCKS.register("jar", () -> new Block(create(GLASS)));
 	// public static final Block RESEARCH_TABLE = new BlockResearchTable();
 	public static final RegistryObject<Block> NORMAL_NODE = BLOCKS.register("normal_node", () -> new NormalNodeBlock(create(BARRIER)));
 	// public static final Block CRUCIBLE = new BlockCrucible("crucible").setCreativeTab(Arcana.TAB_ARCANA);
