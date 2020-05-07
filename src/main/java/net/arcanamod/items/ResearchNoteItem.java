@@ -24,11 +24,11 @@ import java.util.List;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ItemResearchNote extends Item{
+public class ResearchNoteItem extends Item{
 	
 	private boolean isComplete;
 	
-	public ItemResearchNote(Properties properties, boolean complete){
+	public ResearchNoteItem(Properties properties, boolean complete){
 		super(properties);
 		isComplete = complete;
 		//setMaxStackSize(1);

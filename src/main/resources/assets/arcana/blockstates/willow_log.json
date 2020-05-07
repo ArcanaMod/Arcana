@@ -1,19 +1,19 @@
 {
   "variants": {
     "axis=y": {
-      "model": "arcana:willow_log"
+      "model": "arcana:block/willow_log"
     },
     "axis=z": {
-      "model": "arcana:willow_log",
+      "model": "arcana:block/willow_log",
       "x": 90
     },
     "axis=x": {
-      "model": "arcana:willow_log",
+      "model": "arcana:block/willow_log",
       "x": 90,
       "y": 90
     },
     "axis=none": {
-      "model": "arcana:willow_log",
+      "model": "arcana:block/willow_log",
       "x": 90,
       "y": 90
     }

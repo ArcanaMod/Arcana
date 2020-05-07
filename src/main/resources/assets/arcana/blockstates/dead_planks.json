@@ -1,7 +1,7 @@
 {
   "variants": {
-    "normal": {
-      "model": "arcana:dead_planks"
+    "": {
+      "model": "arcana:block/dead_planks"
     }
   }
 }

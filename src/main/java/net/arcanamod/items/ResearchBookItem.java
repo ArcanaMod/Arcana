@@ -15,14 +15,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ItemResearchBook extends Item{
+public class ResearchBookItem extends Item{
 	
 	ResourceLocation book;
 	
-	public ItemResearchBook(Properties properties, ResourceLocation book){
+	public ResearchBookItem(Properties properties, ResourceLocation book){
 		super(properties);
 		this.book = book;
-		//setMaxStackSize(1);
 	}
 	
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn){

@@ -5,6 +5,8 @@ import net.arcanamod.wand.EnumAttachmentType;
 import net.minecraft.item.Item;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Wand Item
@@ -15,13 +17,26 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class ItemWand extends Item{
 	
+	public static List<ItemWand> WANDS = new ArrayList<>();
+	protected int level = 2;
+	
 	public ItemWand(Properties properties){
 		super(properties);
+		WANDS.add(this);
 	}
 	
-	/*public static List<ItemWand> WANDS = new ArrayList<>();
+	public int getLevel(){
+		return level;
+	}
 	
-	protected int level = 2;
+	public ItemWand setLevel(int level){
+		this.level = level;
+		return this;
+	}
+	
+	/*
+	
+	
 	protected ItemAttachment[][] attachments;
 	
 	// remove at some point
@@ -33,16 +48,7 @@ public class ItemWand extends Item{
 		return new ItemAttachment[][]{allowed.toArray(new Cap[0]), allowedFoci.toArray(new Focus[0])};
 	};
 	
-	public ItemWand(String name){
-		//setMaxStackSize(1);
-		//setMaxDamage(0);
-		//setUnlocalizedName(name);
-		setRegistryName(name);
-		
-		this.attachments = null;
-		
-		WANDS.add(this);
-	}
+	
 	
 	@Nullable
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
@@ -160,7 +166,7 @@ public class ItemWand extends Item{
 	 * 		Attachment type
 	 * @param id
 	 * 		ID of the attachment
-	 * @return {@link ItemAttachment} of the given type and id
+	 * @return {@link AttachmentItem} of the given type and id
 	 *//*
 	@Nullable
 	public ItemAttachment getAttachment(EnumAttachmentType type, int id){
@@ -192,7 +198,7 @@ public class ItemWand extends Item{
 	 * 		Itemstack to get the NBT from
 	 * @param type
 	 * 		Type of the requested attachment
-	 * @return {@link ItemAttachment} of the given type and ItemStack NBT
+	 * @return {@link AttachmentItem} of the given type and ItemStack NBT
 	 *//*
 	@Nullable
 	public ItemAttachment getAttachment(ItemStack itemStack, EnumAttachmentType type){
@@ -201,15 +207,6 @@ public class ItemWand extends Item{
 	
 	public boolean capAllowed(Cap cap){
 		return cap.getLevel() <= level;
-	}
-	
-	public int getLevel(){
-		return level;
-	}
-	
-	public ItemWand setLevel(int level){
-		this.level = level;
-		return this;
 	}
 	
 	public String getItemStackDisplayName(ItemStack stack){

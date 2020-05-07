@@ -1,6 +1,6 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.items.ItemAttachment;
+import net.arcanamod.items.AttachmentItem;
 import net.arcanamod.wand.EnumAttachmentType;
 
 /**
@@ -8,14 +8,11 @@ import net.arcanamod.wand.EnumAttachmentType;
  *
  * @author Merijn
  * @see Cap
- * @see ItemAttachment
+ * @see AttachmentItem
  */
-public class Focus extends ItemAttachment{
+public class Focus extends AttachmentItem{
 	
 	private int id;
-	
-	public static Focus NONE = new Focus(new Properties()).setId(0);
-	public static Focus DEFAULT = new Focus(new Properties()).setId(1);
 	
 	public Focus(Properties properties){
 		super(properties);
@@ -34,9 +31,5 @@ public class Focus extends ItemAttachment{
 	public Focus setId(int id){
 		this.id = id;
 		return this;
-	}
-	
-	protected boolean shouldRegister(){
-		return this != NONE;
 	}
 }

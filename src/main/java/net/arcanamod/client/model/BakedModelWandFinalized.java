@@ -1,6 +1,6 @@
 package net.arcanamod.client.model;
 
-import net.arcanamod.items.ItemAttachment;
+import net.arcanamod.items.AttachmentItem;
 import net.arcanamod.items.ItemWand;
 import net.arcanamod.wand.EnumAttachmentType;
 import net.minecraft.block.BlockState;
@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -66,7 +65,7 @@ public class BakedModelWandFinalized implements IBakedModel{
 		
 		List<BakedQuad> list2;
 		
-		ItemAttachment attachment;
+		AttachmentItem attachment;
 		
 		for(int i = 0; i < EnumAttachmentType.values().length; ++i){
 			try{
