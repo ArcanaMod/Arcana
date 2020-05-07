@@ -1,21 +1,7 @@
 {
-  "forge_marker": 1,
-  "defaults": {
-    "model": "arcana:silverwood_sapling",
-    "uvlock": true
-  },
   "variants": {
-    "normal": [
-      {}
-    ],
-    "inventory": [
-      {}
-    ],
-    "stage=0": [
-      {}
-    ],
-    "stage=1": [
-      {}
-    ]
+    "": {
+      "model": "arcana:block/silverwood_sapling"
+    }
   }
 }
