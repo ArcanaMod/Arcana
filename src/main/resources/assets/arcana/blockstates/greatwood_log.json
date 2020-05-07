@@ -11,11 +11,6 @@
       "model": "arcana:block/greatwood_log",
       "x": 90,
       "y": 90
-    },
-    "axis=none": {
-      "model": "arcana:block/greatwood_log",
-      "x": 90,
-      "y": 90
     }
   }
 }
