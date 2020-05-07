@@ -1,0 +1,7 @@
+{
+  "parent": "block/door_top",
+  "textures": {
+    "bottom": "arcana:block/silverwood_door_bottom",
+    "top": "arcana:block/silverwood_door_top"
+  }
+}

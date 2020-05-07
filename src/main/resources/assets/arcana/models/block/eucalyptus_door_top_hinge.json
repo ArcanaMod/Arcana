@@ -1,5 +1,5 @@
 {
-  "parent": "block/door_bottom_rh",
+  "parent": "block/door_top_rh",
   "textures": {
     "bottom": "arcana:block/eucalyptus_door_bottom",
     "top": "arcana:block/eucalyptus_door_top"

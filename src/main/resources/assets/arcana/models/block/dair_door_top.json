@@ -1,0 +1,7 @@
+{
+  "parent": "block/door_top",
+  "textures": {
+    "bottom": "arcana:block/dair_door_bottom",
+    "top": "arcana:block/dair_door_top"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_door",
+  "pattern": [
+    "##",
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:greatwood_planks"
+    }
+  },
+  "result": {
+    "item": "arcana:greatwood_door",
+    "count": 3
+  }
+}
