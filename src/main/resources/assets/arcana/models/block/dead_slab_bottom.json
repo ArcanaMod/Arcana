@@ -1,8 +1,0 @@
-{
-  "parent": "block/half_slab",
-  "textures": {
-    "bottom": "arcana:block/dead_planks",
-    "top": "arcana:block/dead_planks",
-    "side": "arcana:block/dead_planks"
-  }
-}

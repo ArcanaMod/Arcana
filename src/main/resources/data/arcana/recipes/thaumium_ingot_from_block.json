@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "thaumium_ingot",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:storage_blocks/thaumium"
+    }
+  },
+  "result": {
+    "item": "arcana:thaumium_ingot",
+    "count": 9
+  }
+}

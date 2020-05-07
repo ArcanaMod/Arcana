@@ -11,9 +11,6 @@
       "model": "arcana:block/dead_log",
       "x": 90,
       "y": 90
-    },
-    "axis=none": {
-      "model": "arcana:block/dead_log"
     }
   }
 }

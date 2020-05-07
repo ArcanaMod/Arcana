@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA",
+    " S",
+    " S"
+  ],
+  "key": {
+    "A": {
+      "tag": "forge:ingots/arcanium"
+    },
+    "S": {
+      "item": "arcana:silverwood_stick"
+    }
+  },
+  "result": {
+    "item": "arcana:arcanium_hoe"
+  }
+}

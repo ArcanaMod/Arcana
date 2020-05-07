@@ -1,10 +1,13 @@
 {
   "variants": {
-    "half=bottom": {
-      "model": "arcana:willow_slab_bottom"
+    "type=bottom": {
+      "model": "arcana:block/willow_slab"
     },
-    "half=top": {
-      "model": "arcana:willow_slab_top"
+    "type=top": {
+      "model": "arcana:block/willow_slab_top"
+    },
+    "type=double": {
+      "model": "arcana:block/willow_planks"
     }
   }
 }

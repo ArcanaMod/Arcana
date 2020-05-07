@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_slab",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:silverwood_planks"
+    }
+  },
+  "result": {
+    "item": "arcana:silverwood_slab",
+    "count": 6
+  }
+}

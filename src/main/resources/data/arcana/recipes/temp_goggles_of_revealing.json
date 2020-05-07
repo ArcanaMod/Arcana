@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "e e",
+    "LGL",
+    "r r"
+  ],
+  "key": {
+    "G": {
+      "tag": "forge:ingots/gold"
+    },
+    "L": {
+      "tag": "forge:glass"
+    },
+    "r": {
+      "tag": "forge:dusts/redstone"
+    },
+    "e": {
+      "tag": "forge:leather"
+    }
+  },
+  "result": {
+    "item": "arcana:goggles_of_revealing"
+  }
+}
