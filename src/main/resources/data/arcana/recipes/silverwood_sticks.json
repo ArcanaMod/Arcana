@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:silverwood_planks"
+    }
+  },
+  "result": {
+    "item": "arcana:silverwood_stick",
+    "count": 4
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "arcana:dair_planks",
+    "arcana:dead_planks",
+    "arcana:eucalyptus_planks",
+    "arcana:greatwood_planks",
+    "arcana:hawthorn_planks",
+    "arcana:silverwood_planks",
+    "arcana:trypophobius_planks",
+    "arcana:willow_planks"
+  ]
+}
