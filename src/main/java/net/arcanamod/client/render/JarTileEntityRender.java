@@ -47,6 +47,11 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         TextureAtlasSprite sprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT);
         IVertexBuilder builder = buffer.getBuffer(RenderType.getTranslucent());
 
+        float vis_amount = 4f;
+        float vis_height = (vis_amount-5f)/10f;
+        float vis_scale = (vis_amount/10)+0.05f;
+        float vis_top = (vis_amount/10);
+
         long time = System.currentTimeMillis();
 
         Quaternion rotation = Vector3f.XP.rotationDegrees(90);
@@ -58,17 +63,56 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         matrixStack.scale(scale, scale, scale);
         matrixStack.translate(-.5, -.5, -.5);
 
-        add(builder, matrixStack, 0, 1, .4f, sprite.getMinU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, 1, .4f, sprite.getMaxU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, 0, .4f, sprite.getMaxU(), sprite.getMinV());
-        add(builder, matrixStack, 0, 0, .4f, sprite.getMinU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 1, vis_top, sprite.getMinU(), sprite.getMaxV());
+        add(builder, matrixStack, 1, 1, vis_top, sprite.getMaxU(), sprite.getMaxV());
+        add(builder, matrixStack, 1, 0, vis_top, sprite.getMaxU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 0, vis_top, sprite.getMinU(), sprite.getMinV());
 
         matrixStack.pop();
         matrixStack.push();
         matrixStack.translate(.5, .5, .5);
         matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
-        matrixStack.scale(scale, 0.4f, scale);
-        matrixStack.translate(-.5, -.1, -.5);
+        matrixStack.scale(scale, vis_scale, scale);
+        matrixStack.translate(-.5, vis_height, -.5);
+
+        add(builder, matrixStack, 0, 1, 0f, sprite.getMinU(), sprite.getMaxV());
+        add(builder, matrixStack, 1, 1, 0f, sprite.getMaxU(), sprite.getMaxV());
+        add(builder, matrixStack, 1, 0, 0f, sprite.getMaxU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 0, 0f, sprite.getMinU(), sprite.getMinV());
+
+        matrixStack.pop();
+        matrixStack.push();
+        matrixStack.translate(.5, .5, .5);
+        matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(90));
+        matrixStack.scale(scale, vis_scale, scale);
+        matrixStack.translate(-.5, vis_height, -.5);
+
+        add(builder, matrixStack, 0, 1, 0f, sprite.getMinU(), sprite.getMaxV());
+        add(builder, matrixStack, 1, 1, 0f, sprite.getMaxU(), sprite.getMaxV());
+        add(builder, matrixStack, 1, 0, 0f, sprite.getMaxU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 0, 0f, sprite.getMinU(), sprite.getMinV());
+
+        matrixStack.pop();
+        matrixStack.push();
+        matrixStack.translate(.5, .5, .5);
+        matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
+        matrixStack.rotate(Vector3f.YN.rotationDegrees(90));
+        matrixStack.scale(scale, vis_scale, scale);
+        matrixStack.translate(-.5, vis_height, -.5);
+
+        add(builder, matrixStack, 0, 1, 0f, sprite.getMinU(), sprite.getMaxV());
+        add(builder, matrixStack, 1, 1, 0f, sprite.getMaxU(), sprite.getMaxV());
+        add(builder, matrixStack, 1, 0, 0f, sprite.getMaxU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 0, 0f, sprite.getMinU(), sprite.getMinV());
+
+        matrixStack.pop();
+        matrixStack.push();
+        matrixStack.translate(.5, .5, .5);
+        matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
+        matrixStack.rotate(Vector3f.YP.rotationDegrees(180));
+        matrixStack.scale(scale, vis_scale, scale);
+        matrixStack.translate(-.5, vis_height, -.5);
 
         add(builder, matrixStack, 0, 1, 0f, sprite.getMinU(), sprite.getMaxV());
         add(builder, matrixStack, 1, 1, 0f, sprite.getMaxU(), sprite.getMaxV());
