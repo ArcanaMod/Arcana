@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_stairs",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:trypophobius_planks"
+    }
+  },
+  "result": {
+    "item": "arcana:trypophobius_stairs",
+    "count": 4
+  }
+}
