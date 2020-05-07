@@ -4,6 +4,8 @@ import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.Sounds;
+import net.arcanamod.client.event.TextureStitch;
+import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.EntrySection;
@@ -12,11 +14,14 @@ import net.arcanamod.research.Requirement;
 import net.arcanamod.research.impls.ResearcherCapability;
 import net.arcanamod.spells.SpellEffectHandler;
 import net.arcanamod.worldgen.FeatureGenerator;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -49,6 +54,7 @@ public class Arcana{
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
 		
 		// deffered registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -83,6 +89,8 @@ public class Arcana{
 	}
 	
 	private void setupClient(FMLClientSetupEvent event){
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.JAR.get(), RenderType.getTranslucent());
+		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);
 	}
 	
 	private void enqueueIMC(InterModEnqueueEvent event){

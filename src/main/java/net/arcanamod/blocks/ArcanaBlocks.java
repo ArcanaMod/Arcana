@@ -10,8 +10,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.minecraft.block.Block.Properties.create;
-import static net.minecraft.block.material.Material.BARRIER;
-import static net.minecraft.block.material.Material.ROCK;
+import static net.minecraft.block.material.Material.*;
 
 /**
  * Initialize Blocks here
@@ -46,6 +45,7 @@ public class ArcanaBlocks{
 	//	//Blocks with function
 	//	public static final Block RESEARCH_TABLE = new BlockResearchTable();
 	//	public static final Block NORMAL_NODE = new BlockNormalNode().setCreativeTab(Arcana.TAB_ARCANA);
+	public static final RegistryObject<Block> JAR = BLOCKS.register("jar", () -> new BlockJar(create(GLASS)));
 	public static final RegistryObject<Block> NORMAL_NODE = BLOCKS.register("normal_node", () -> new NormalNodeBlock(create(BARRIER)));
 	//	public static final Block CRUCIBLE = new BlockCrucible("crucible").setCreativeTab(Arcana.TAB_ARCANA);
 	//
