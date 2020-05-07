@@ -1,5 +1,5 @@
 {
-  "parent": "block/half_slab",
+  "parent": "block/slab",
   "textures": {
     "bottom": "arcana:block/silverwood_planks",
     "top": "arcana:block/silverwood_planks",

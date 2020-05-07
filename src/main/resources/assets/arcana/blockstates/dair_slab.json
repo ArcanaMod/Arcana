@@ -1,10 +1,13 @@
 {
   "variants": {
-    "half=bottom": {
-      "model": "arcana:dair_slab_bottom"
+    "type=bottom": {
+      "model": "arcana:block/dair_slab"
     },
-    "half=top": {
-      "model": "arcana:dair_slab_top"
+    "type=top": {
+      "model": "arcana:block/dair_slab_top"
+    },
+    "type=double": {
+      "model": "arcana:block/dair_planks"
     }
   }
 }
