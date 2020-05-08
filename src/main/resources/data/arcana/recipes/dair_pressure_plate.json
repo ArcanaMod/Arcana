@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "minecraft:wooden_pressure_plate",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:dair_planks"
+    }
+  },
+  "result": {
+    "item": "arcana:dair_pressure_plate"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "arcana:block/dair_pressure_plate" },
+    "powered=true": { "model": "arcana:block/dair_pressure_plate_down" }
+  }
+}

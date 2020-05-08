@@ -22,9 +22,9 @@ import java.util.Random;
  */
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ArcanaSaplingBlock extends SaplingBlock{
+public class ASaplingBlock extends SaplingBlock{
 	
-	public ArcanaSaplingBlock(Tree tree, Block.Properties properties){
+	public ASaplingBlock(Tree tree, Block.Properties properties){
 		super(tree, properties);
 	}
 }

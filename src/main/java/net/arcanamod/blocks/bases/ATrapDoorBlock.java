@@ -31,9 +31,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 // same BS as the sapling block - probably just going to AT these
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ArcanaTrapDoorBlock extends TrapDoorBlock{
+public class ATrapDoorBlock extends TrapDoorBlock{
 	
-	public ArcanaTrapDoorBlock(Block.Properties properties){
+	public ATrapDoorBlock(Block.Properties properties){
 		super(properties);
 		this.setDefaultState(this.stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(OPEN, Boolean.FALSE).with(HALF, Half.BOTTOM).with(POWERED, Boolean.FALSE).with(WATERLOGGED, Boolean.valueOf(false)));
 	}

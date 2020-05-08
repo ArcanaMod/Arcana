@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "arcana:block/arcane_stone_pressure_plate" },
+    "powered=true": { "model": "arcana:block/arcane_stone_pressure_plate_down" }
+  }
+}
