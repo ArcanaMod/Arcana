@@ -20,7 +20,8 @@ import java.time.LocalDateTime;
 
 public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
 {
-    public static final ResourceLocation JAR_CONTENT = new ResourceLocation(Arcana.MODID, "block/jar_placeholder");
+    public static final ResourceLocation JAR_CONTENT_SIDE = new ResourceLocation(Arcana.MODID, "models/parts/fluid_side");
+    public static final ResourceLocation JAR_CONTENT_TOP = new ResourceLocation(Arcana.MODID, "models/parts/fluid_top");
 
     public JarTileEntityRender(TileEntityRendererDispatcher p_i226006_1_)
     {
@@ -47,26 +48,27 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
     @Override
     public void render(JarTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 
-        TextureAtlasSprite sprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT);
+        TextureAtlasSprite sprite_side = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_SIDE);
+        TextureAtlasSprite sprite_top = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_TOP);
         IVertexBuilder builder = buffer.getBuffer(RenderType.getTranslucent());
-
+        // 6.00 is empty and 0.00 full.
         float vis_amount = 0;
         if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.SILVERWOOD_PLANKS.get())
-            vis_amount = 3f;
+            vis_amount = 6f;
         else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.DAIR_PLANKS.get())
             vis_amount = 2f;
         else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.WILLOW_PLANKS.get())
-            vis_amount = 1f;
+            vis_amount = 8f;
         else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.EUCALYPTUS_PLANKS.get())
-            vis_amount = -1f;
+            vis_amount = 0f;
         else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.HAWTHORN_PLANKS.get())
             vis_amount = LocalDateTime.now().getNano()/100000000f;
         else
             vis_amount = 4f;
 
         float vis_scale = vis_amount/10f;
-        float vis_height = vis_scale;//(-vis_amount/10/vis_scale);
-        float vis_top = (vis_amount/10f)+0.4f;
+        float vis_height = vis_scale-0.2f;
+        float vis_top = (vis_amount/10f)+0.2f;
 
         Quaternion rotation = Vector3f.XP.rotationDegrees(90);
         float scale = 0.4f;
@@ -77,10 +79,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         matrixStack.scale(scale, scale, scale);
         matrixStack.translate(-.5, -.5, -.5);
 
-        add(builder, matrixStack, 0, 1, vis_top, sprite.getMinU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, 1, vis_top, sprite.getMaxU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, 0, vis_top, sprite.getMaxU(), sprite.getMinV());
-        add(builder, matrixStack, 0, 0, vis_top, sprite.getMinU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 1, vis_top, sprite_top.getMinU(), sprite_top.getMaxV());
+        add(builder, matrixStack, 1, 1, vis_top, sprite_top.getMaxU(), sprite_top.getMaxV());
+        add(builder, matrixStack, 1, 0, vis_top, sprite_top.getMaxU(), sprite_top.getMinV());
+        add(builder, matrixStack, 0, 0, vis_top, sprite_top.getMinU(), sprite_top.getMinV());
 
         matrixStack.pop();
         matrixStack.push();
@@ -90,10 +92,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         matrixStack.translate(-.5, -0.1, -.5);
         //matrixStack.rotate(Vector3f.ZP.rotationDegrees(180));
 
-        add(builder, matrixStack, 0, 1, 0f, sprite.getMinU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, 1, 0f, sprite.getMaxU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, vis_height, 0f, sprite.getMaxU(), sprite.getMinV());
-        add(builder, matrixStack, 0, vis_height, 0f, sprite.getMinU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+        add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+        add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+        add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
         matrixStack.pop();
         matrixStack.push();
@@ -103,10 +105,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         matrixStack.scale(scale, scale, scale);
         matrixStack.translate(-.5, -0.1, -.5);
 
-        add(builder, matrixStack, 0, 1, 0f, sprite.getMinU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, 1, 0f, sprite.getMaxU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, vis_height, 0f, sprite.getMaxU(), sprite.getMinV());
-        add(builder, matrixStack, 0, vis_height, 0f, sprite.getMinU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+        add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+        add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+        add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
         matrixStack.pop();
         matrixStack.push();
@@ -116,10 +118,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         matrixStack.scale(scale, scale, scale);
         matrixStack.translate(-.5, -0.1, -.5);
 
-        add(builder, matrixStack, 0, 1, 0f, sprite.getMinU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, 1, 0f, sprite.getMaxU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, vis_height, 0f, sprite.getMaxU(), sprite.getMinV());
-        add(builder, matrixStack, 0, vis_height, 0f, sprite.getMinU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+        add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+        add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+        add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
         matrixStack.pop();
         matrixStack.push();
@@ -129,10 +131,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         matrixStack.scale(scale, scale, scale);
         matrixStack.translate(-.5, -0.1, -.5);
 
-        add(builder, matrixStack, 0, 1, 0f, sprite.getMinU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, 1, 0f, sprite.getMaxU(), sprite.getMaxV());
-        add(builder, matrixStack, 1, vis_height, 0f, sprite.getMaxU(), sprite.getMinV());
-        add(builder, matrixStack, 0, vis_height, 0f, sprite.getMinU(), sprite.getMinV());
+        add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+        add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+        add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+        add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
         matrixStack.pop();
     }

@@ -13,7 +13,8 @@ public class TextureStitch{
 	public static void onTextureStitch(TextureStitchEvent.Pre event){
 		if (event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE))
 		{
-			event.addSprite(JarTileEntityRender.JAR_CONTENT);
+			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
+			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);
 		}
 		//Sprites.NORMAL_NODE = event.getMap().registerSprite(new ResourceLocation(Arcana.MODID, "nodes/normal_node"));
 		//event.getMap().registerSprite(new ResourceLocation(Arcana.MODID, "gui/container/unknown_slot"));
