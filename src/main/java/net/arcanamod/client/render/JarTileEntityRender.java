@@ -71,7 +71,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         float vis_top = (vis_amount/10f)+0.2f;
 
         Quaternion rotation = Vector3f.XP.rotationDegrees(90);
-        float scale = 0.4f;
+        float scale = 0.5f;
 
         matrixStack.push();
         matrixStack.translate(.5, .5, .5);
