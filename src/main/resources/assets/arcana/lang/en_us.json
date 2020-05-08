@@ -209,11 +209,13 @@
     "block.arcana.arcane_stone_slab": "Arcane Stone Slab",
     "block.arcana.arcane_stone_stairs": "Arcane Stone Stairs",
     "block.arcana.arcane_stone_pressure_plate": "Arcane Stone Pressure Plate",
+    "block.arcana.arcane_stone_wall": "Arcane Stone Wall",
 
     "block.arcana.arcane_stone_bricks": "Arcane Stone Bricks",
     "block.arcana.arcane_stone_bricks_slab": "Arcane Stone Brick Slab",
     "block.arcana.arcane_stone_bricks_stairs": "Arcane Stone Brick Stairs",
     "block.arcana.arcane_stone_bricks_pressure_plate": "Arcane Stone Brick Pressure Plate",
+    "block.arcana.arcane_stone_bricks_wall": "Arcane Stone Brick Wall",
 
     "block.arcana.infusion_arcane_stone": "Infused Arcane Stone",
     "block.arcana.magical_grass": "Magical Grass",
