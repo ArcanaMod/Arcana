@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:arcane_stone_bricks"
+    }
+  },
+  "result": {
+    "item": "arcana:arcane_stone_bricks_pressure_plate"
+  }
+}
