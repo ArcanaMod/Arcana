@@ -3,6 +3,7 @@ package net.arcanamod.aspects;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.AspectItem;
 import net.arcanamod.Arcana;
+import net.arcanamod.items.PhialItem;
 import net.arcanamod.util.Pair;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,6 +35,9 @@ public class Aspects{
 			AspectItem e = new AspectItem("aspect_" + aspect.name().toLowerCase());
 			ArcanaItems.ITEMS.register("aspect_" + aspect.name().toLowerCase(), () -> e);
 			aspectItems.add(e);//.setCreativeTab(Arcana.TAB_ASPECTS_ARCANA));
+			PhialItem p = new PhialItem("phial_" + aspect.name().toLowerCase());
+			ArcanaItems.ITEMS.register(aspect.name().toLowerCase()+"_phial", () -> p);
+			//aspectItems.add(p);//.setCreativeTab(Arcana.TAB_ASPECTS_ARCANA));
 		}
 		aspectStacks = aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
 	}
