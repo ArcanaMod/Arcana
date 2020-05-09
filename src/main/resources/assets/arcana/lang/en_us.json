@@ -301,6 +301,7 @@
     "block.arcana.dair_sapling": "Dair Sapling",
     "block.arcana.dair_slab": "Dair Slab",
     "block.arcana.dair_stairs": "Dair Stairs",
+    "block.arcana.dair_fence": "Dair Fence",
 
     "block.arcana.dead_log": "Dead Wood Log",
     "block.arcana.dead_planks": "Dead Wood Planks",
@@ -308,6 +309,7 @@
     "block.arcana.dead_pressure_plate": "Dead Wood Pressure Plate",
     "block.arcana.dead_slab": "Dead Wood Slab",
     "block.arcana.dead_stairs": "Dead Wood Stairs",
+    "block.arcana.dead_fence": "Dead Wood Fence",
 
     "block.arcana.eucalyptus_leaves": "Eucalyptus Leaves",
     "block.arcana.eucalyptus_log": "Eucalyptus Log",
@@ -319,6 +321,7 @@
     "block.arcana.eucalyptus_sapling": "Eucalyptus Sapling",
     "block.arcana.eucalyptus_slab": "Eucalyptus Slab",
     "block.arcana.eucalyptus_stairs": "Eucalyptus Stairs",
+    "block.arcana.eucalyptus_fence": "Eucalyptus Fence",
 
     "block.arcana.greatwood_leaves": "Greatwood Leaves",
     "block.arcana.greatwood_log": "Greatwood Log",
@@ -330,6 +333,7 @@
     "block.arcana.greatwood_sapling": "Greatwood Sapling",
     "block.arcana.greatwood_slab": "Greatwood Slab",
     "block.arcana.greatwood_stairs": "Greatwood Stairs",
+    "block.arcana.greatwood_fence": "Greatwood Fence",
 
     "block.arcana.hawthorn_leaves": "Hawthorn Leaves",
     "block.arcana.hawthorn_log": "Hawthorn Log",
@@ -341,6 +345,7 @@
     "block.arcana.hawthorn_sapling": "Hawthorn Sapling",
     "block.arcana.hawthorn_slab": "Hawthorn Slab",
     "block.arcana.hawthorn_stairs": "Hawthorn Stairs",
+    "block.arcana.hawthorn_fence": "Hawthorn Fence",
 
     "block.arcana.silverwood_leaves": "Silverwood Leaves",
     "block.arcana.silverwood_log": "Silverwood Log",
@@ -352,6 +357,7 @@
     "block.arcana.silverwood_sapling": "Silverwood Sapling",
     "block.arcana.silverwood_slab": "Silverwood Slab",
     "block.arcana.silverwood_stairs": "Silverwood Stairs",
+    "block.arcana.silverwood_fence": "Silverwood Fence",
 
     "block.arcana.trypophobius_log": "Trypophobius Log",
     "block.arcana.trypophobius_planks": "Trypophobius Planks",
@@ -359,6 +365,7 @@
     "block.arcana.trypophobius_pressure_plate": "Trypophobius Pressure Plate",
     "block.arcana.trypophobius_slab": "Trypophobius Slab",
     "block.arcana.trypophobius_stairs": "Trypophobius Stairs",
+    "block.arcana.trypophobius_fence": "Trypophobius Fence",
 
     "block.arcana.willow_leaves": "Willow Leaves",
     "block.arcana.willow_log": "Willow Log",
@@ -370,6 +377,7 @@
     "block.arcana.willow_sapling": "Willow Sapling",
     "block.arcana.willow_slab": "Willow Slab",
     "block.arcana.willow_stairs": "Willow Stairs",
+    "block.arcana.willow_fence": "Willow Fence",
 
     "_comment": "Functional",
     "block.arcana.research_table": "Research Table Block",
