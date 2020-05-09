@@ -50,6 +50,7 @@ public class ResearchLoader extends JsonReloadListener{
 				String prefix = book.get("prefix").getAsString();
 				ResearchBook bookObject = new ResearchBook(key, new LinkedHashMap<>(), prefix);
 				ResearchBooks.books.putIfAbsent(key, bookObject);
+				LOGGER.info("Loaded book " + key);
 			}
 		}
 	}
@@ -167,33 +168,6 @@ public class ResearchLoader extends JsonReloadListener{
 			LOGGER.error("An entry has 0 valid icons in " + rl + "! Trying to open its category will crash the game!");
 		return ret;
 	}
-	
-	/*private static List<Guesswork> jsonToGuessworks(JsonArray puzzles, ResourceLocation file){
-		List<Guesswork> ret = new ArrayList<>();
-		for(JsonElement puzzleElement : puzzles){
-			if(puzzleElement.isJsonObject()){
-				JsonObject puzzle = puzzleElement.getAsJsonObject();
-				// expecting recipe (string), hints (array)
-				ResourceLocation recipe = new ResourceLocation(puzzle.get("recipe").getAsString());
-				JsonArray hints = puzzle.getAsJsonArray("hints");
-				Map<ResourceLocation, String> hintMap = new LinkedHashMap<>();
-				for(JsonElement hint : hints){
-					if(hint.isJsonPrimitive()){
-						String hintSt = hint.getAsString();
-						if(hintSt.contains("=")){
-							ResourceLocation key = new ResourceLocation(hintSt.split("=")[0]);
-							String value = hintSt.split("=")[1];
-							hintMap.put(key, value);
-						}else
-							LOGGER.error("String not containing \"=\" found in puzzle in " + file + "!");
-					}else
-						LOGGER.error("Non-String found in hints array in puzzle in " + file + "!");
-				}
-				ret.add(new Guesswork(recipe, hintMap));
-			}
-		}
-		return ret;
-	}*/
 	
 	private static List<EntrySection> jsonToSections(JsonArray sections, ResourceLocation file){
 		List<EntrySection> ret = new ArrayList<>();

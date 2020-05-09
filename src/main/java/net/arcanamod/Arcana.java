@@ -8,9 +8,11 @@ import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.network.Connection;
 import net.arcanamod.research.EntrySection;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.Requirement;
+import net.arcanamod.research.ResearchLoader;
 import net.arcanamod.research.impls.ResearcherCapability;
 import net.arcanamod.spells.SpellEffectHandler;
 import net.arcanamod.worldgen.FeatureGenerator;
@@ -27,6 +29,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,11 +46,11 @@ public class Arcana{
 	
 	public static final Logger logger = LogManager.getLogger("Arcana");
 	public static Arcana instance;
+	public static ResearchLoader researchManager;
 	
 	public static ItemGroup ITEMS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaBlocks.ARCANE_STONE.get()));
-	// public static ItemGroup TAINTED_BLOCKS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaBlocks.TAINTED_GRASS.get()));
-	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	
+	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	public static ItemGroup ASPECTS = new SupplierItemGroup("aspects", proxy::getAspectItemStackForDisplay);
 	
 	public Arcana(){
@@ -56,7 +60,7 @@ public class Arcana{
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
 		
-		// deffered registry registration
+		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		
 		ArcanaBlocks.BLOCKS.register(modEventBus);
@@ -75,11 +79,9 @@ public class Arcana{
 		
 		proxy.preInit(event);
 		
-		//
-		
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
 		
-		//Connection.init();
+		Connection.init();
 		//NetworkRegistry.INSTANCE.registerGuiHandler(Arcana.instance, new ArcanaGuiHandler());
 		
 		Sounds.registerSounds();
@@ -89,6 +91,7 @@ public class Arcana{
 	}
 	
 	private void setupClient(FMLClientSetupEvent event){
+		// TODO: move to ClientProxy for servers
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.JAR.get(), RenderType.getTranslucent());
 		
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.NORMAL_NODE.get(), RenderType.getCutout());
@@ -117,8 +120,10 @@ public class Arcana{
 	}
 	
 	private void enqueueIMC(InterModEnqueueEvent event){
+		// tell curios or whatever about our baubles
 	}
 	
 	private void processIMC(InterModProcessEvent event){
+		// handle aspect registration from addons?
 	}
 }

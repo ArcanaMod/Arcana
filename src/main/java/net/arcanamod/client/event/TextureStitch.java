@@ -11,8 +11,7 @@ public class TextureStitch{
 	
 	@SubscribeEvent
 	public static void onTextureStitch(TextureStitchEvent.Pre event){
-		if (event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE))
-		{
+		if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)){
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);
 		}
