@@ -21,6 +21,11 @@ public class BlockModels extends BlockModelProvider{
 			fenceInventory(name + "_fence_inventory", texture);
 			fencePost(name + "_fence", texture);
 			fenceSide(name + "_fence", texture);
+			
+			fenceGate(name + "_fence_gate", texture);
+			fenceGateOpen(name + "_fence_gate", texture);
+			fenceGateWall(name + "_fence_gate", texture);
+			fenceGateWallOpen(name + "_fence_gate", texture);
 		});
 	}
 	

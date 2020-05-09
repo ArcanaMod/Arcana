@@ -47,5 +47,8 @@ public class ArcanaDataGenerators{
 			generator.addProvider(new Blockstates(generator, efh));
 			generator.addProvider(new ItemModels(generator, efh));
 		}
+		if(event.includeServer()){
+			generator.addProvider(new LootTables(generator));
+		}
 	}
 }
