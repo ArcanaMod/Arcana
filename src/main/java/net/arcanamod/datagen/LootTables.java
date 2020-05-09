@@ -10,9 +10,6 @@ import net.minecraft.data.LootTableProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.SurvivesExplosion;
-import net.minecraft.world.storage.loot.functions.CopyName;
-import net.minecraft.world.storage.loot.functions.CopyNbt;
-import net.minecraft.world.storage.loot.functions.SetContents;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,14 +37,14 @@ public class LootTables extends LootTableProvider{
 	// TODO: check if there's a better way of doing this
 	
 	public void act(@Nonnull DirectoryCache cache){
-		addStandardTable("dair_fence_gate", DAIR_FENCE_GATE);
-		addStandardTable("dead_fence_gate", DEAD_FENCE_GATE);
-		addStandardTable("eucalyptus_fence_gate", EUCALYPTUS_FENCE_GATE);
-		addStandardTable("hawthorn_fence_gate", HAWTHORN_FENCE_GATE);
-		addStandardTable("greatwood_fence_gate", GREATWOOD_FENCE_GATE);
-		addStandardTable("silverwood_fence_gate", SILVERWOOD_FENCE_GATE);
-		addStandardTable("trypophobius_fence_gate", TRYPOPHOBIUS_FENCE_GATE);
-		addStandardTable("willow_fence_gate", WILLOW_FENCE_GATE);
+		addStandardTable(DAIR_FENCE_GATE);
+		addStandardTable(DEAD_FENCE_GATE);
+		addStandardTable(EUCALYPTUS_FENCE_GATE);
+		addStandardTable(HAWTHORN_FENCE_GATE);
+		addStandardTable(GREATWOOD_FENCE_GATE);
+		addStandardTable(SILVERWOOD_FENCE_GATE);
+		addStandardTable(TRYPOPHOBIUS_FENCE_GATE);
+		addStandardTable(WILLOW_FENCE_GATE);
 		
 		Map<ResourceLocation, LootTable> tables = new HashMap<>();
 		for(Map.Entry<Block, LootTable.Builder> entry : lootTables.entrySet())
@@ -55,15 +52,15 @@ public class LootTables extends LootTableProvider{
 		writeTables(cache, tables);
 	}
 	
-	protected void addStandardTable(String name, @Nonnull Supplier<? extends Block> block){
-		addStandardTable(name, block.get());
+	protected void addStandardTable(@Nonnull Supplier<? extends Block> block){
+		addStandardTable(block.get());
 	}
 	
-	protected void addStandardTable(String name, Block block){
-		lootTables.put(block, createStandardTable(name, block));
+	protected void addStandardTable(Block block){
+		lootTables.put(block, createStandardTable(block));
 	}
 	
-	protected LootTable.Builder createStandardTable(String name, Block block){
+	protected LootTable.Builder createStandardTable(Block block){
 		LootPool.Builder builder = LootPool.builder()
 				.rolls(ConstantRange.of(1))
 				.addEntry(ItemLootEntry.builder(block))
