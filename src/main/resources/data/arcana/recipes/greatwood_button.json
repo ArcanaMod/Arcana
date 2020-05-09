@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "arcana:greatwood_planks"
+    }
+  ],
+  "result": {
+    "item": "arcana:greatwood_button"
+  }
+}
