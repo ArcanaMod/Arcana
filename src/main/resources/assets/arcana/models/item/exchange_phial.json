@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "arcana:item/mechanism_phial"
+    "layer0": "arcana:item/exchange_phial"
   }
 }
