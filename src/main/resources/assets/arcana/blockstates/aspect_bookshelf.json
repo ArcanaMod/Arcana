@@ -1,19 +1,28 @@
 {
-  "variants": {
-    "facing=north": {
-      "model": "arcana:block/aspect_bookshelf"
-    },
-    "facing=south": {
-      "model": "arcana:block/aspect_bookshelf",
-      "y": 180
-    },
-    "facing=west": {
-      "model": "arcana:block/aspect_bookshelf",
-      "y": 270
-    },
-    "facing=east": {
-      "model": "arcana:block/aspect_bookshelf",
-      "y": 90
-    }
-  }
+  "multipart": [
+      {   "when": { "facing": "north" },
+          "apply": { "model": "arcana:block/aspect_bookshelf" }
+      },
+      {   "when": { "facing": "east" },
+          "apply": { "model": "arcana:block/aspect_bookshelf", "y": 90 }
+      },
+      {   "when": { "facing": "south" },
+          "apply": { "model": "arcana:block/aspect_bookshelf", "y": 180 }
+      },
+      {   "when": { "facing": "west" },
+          "apply": { "model": "arcana:block/aspect_bookshelf", "y": 270 }
+      },
+      {   "when": { "level": "1","facing": "north" },
+          "apply": { "model": "arcana:block/aspect_bookshelf_vial" }
+      },
+      {   "when": { "level": "1","facing": "east" },
+          "apply": { "model": "arcana:block/aspect_bookshelf_vial", "y": 90 }
+      },
+      {   "when": { "level": "1","facing": "south" },
+          "apply": { "model": "arcana:block/aspect_bookshelf_vial", "y": 180 }
+      },
+      {   "when": { "level": "1","facing": "west" },
+          "apply": { "model": "arcana:block/aspect_bookshelf_vial", "y": 270 }
+      }
+  ]
 }

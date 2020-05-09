@@ -16,6 +16,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 
 public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
@@ -28,9 +29,9 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         super(p_i226006_1_);
     }
 
-    private void add(IVertexBuilder renderer, MatrixStack stack, float x, float y, float z, float u, float v) {
+    private void add(IVertexBuilder renderer, MatrixStack stack, Color color, float x, float y, float z, float u, float v) {
         renderer.pos(stack.getLast().getMatrix(), x, y, z)
-                .color(1.0f, 1.0f, 1.0f, 1.0f)
+                .color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f, 1.0f)
                 .tex(u, v)
                 .lightmap(0, 240)
                 .normal(1, 0, 0)
@@ -51,20 +52,9 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         TextureAtlasSprite sprite_side = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_SIDE);
         TextureAtlasSprite sprite_top = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_TOP);
         IVertexBuilder builder = buffer.getBuffer(RenderType.getTranslucent());
-        // 12.00 is empty and 0.00 full.
-        float vis_amount = 0;
-        if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.SILVERWOOD_PLANKS.get())
-            vis_amount = 6f;
-        else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.DAIR_PLANKS.get())
-            vis_amount = 2f;
-        else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.WILLOW_PLANKS.get())
-            vis_amount = 12f;
-        else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.EUCALYPTUS_PLANKS.get())
-            vis_amount = 0f;
-        else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.HAWTHORN_PLANKS.get())
-            vis_amount = LocalDateTime.now().getNano()/100000000f;
-        else
-            vis_amount = 4f;
+
+        float vis_amount = tileEntity.getAspectAmount();
+        Color aspectColor = tileEntity.getAspectColor();
 
         if (vis_amount < 12f)
         {
@@ -81,10 +71,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
             matrixStack.scale(scale, scale, scale);
             matrixStack.translate(-.5, -.5, -.5);
 
-            add(builder, matrixStack, 0, 1, vis_top, sprite_top.getMinU(), sprite_top.getMaxV());
-            add(builder, matrixStack, 1, 1, vis_top, sprite_top.getMaxU(), sprite_top.getMaxV());
-            add(builder, matrixStack, 1, 0, vis_top, sprite_top.getMaxU(), sprite_top.getMinV());
-            add(builder, matrixStack, 0, 0, vis_top, sprite_top.getMinU(), sprite_top.getMinV());
+            add(builder, matrixStack, aspectColor, 0, 1, vis_top, sprite_top.getMinU(), sprite_top.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, 1, vis_top, sprite_top.getMaxU(), sprite_top.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, 0, vis_top, sprite_top.getMaxU(), sprite_top.getMinV());
+            add(builder, matrixStack, aspectColor, 0, 0, vis_top, sprite_top.getMinU(), sprite_top.getMinV());
 
             matrixStack.pop();
             matrixStack.push();
@@ -94,10 +84,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
             matrixStack.translate(-.5, -0.1, -.5);
             //matrixStack.rotate(Vector3f.ZP.rotationDegrees(180));
 
-            add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
-            add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
-            add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
-            add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
+            add(builder, matrixStack, aspectColor, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+            add(builder, matrixStack, aspectColor, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
             matrixStack.pop();
             matrixStack.push();
@@ -107,10 +97,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
             matrixStack.scale(scale, scale, scale);
             matrixStack.translate(-.5, -0.1, -.5);
 
-            add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
-            add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
-            add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
-            add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
+            add(builder, matrixStack, aspectColor, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+            add(builder, matrixStack, aspectColor, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
             matrixStack.pop();
             matrixStack.push();
@@ -120,10 +110,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
             matrixStack.scale(scale, scale, scale);
             matrixStack.translate(-.5, -0.1, -.5);
 
-            add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
-            add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
-            add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
-            add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
+            add(builder, matrixStack, aspectColor, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+            add(builder, matrixStack, aspectColor, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
             matrixStack.pop();
             matrixStack.push();
@@ -133,10 +123,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
             matrixStack.scale(scale, scale, scale);
             matrixStack.translate(-.5, -0.1, -.5);
 
-            add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
-            add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
-            add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
-            add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
+            add(builder, matrixStack, aspectColor, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+            add(builder, matrixStack, aspectColor, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+            add(builder, matrixStack, aspectColor, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
             matrixStack.pop();
         }
