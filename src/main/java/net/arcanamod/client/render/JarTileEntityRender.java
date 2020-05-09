@@ -51,14 +51,14 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         TextureAtlasSprite sprite_side = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_SIDE);
         TextureAtlasSprite sprite_top = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_TOP);
         IVertexBuilder builder = buffer.getBuffer(RenderType.getTranslucent());
-        // 6.00 is empty and 0.00 full.
+        // 12.00 is empty and 0.00 full.
         float vis_amount = 0;
         if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.SILVERWOOD_PLANKS.get())
             vis_amount = 6f;
         else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.DAIR_PLANKS.get())
             vis_amount = 2f;
         else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.WILLOW_PLANKS.get())
-            vis_amount = 8f;
+            vis_amount = 12f;
         else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.EUCALYPTUS_PLANKS.get())
             vis_amount = 0f;
         else if (tileEntity.getWorld().getBlockState(tileEntity.getPos().down()).getBlock() == ArcanaBlocks.HAWTHORN_PLANKS.get())
@@ -66,76 +66,79 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         else
             vis_amount = 4f;
 
-        float vis_scale = vis_amount/10f;
-        float vis_height = vis_scale-0.2f;
-        float vis_top = (vis_amount/10f)+0.2f;
+        if (vis_amount < 12f)
+        {
+            float vis_scale = vis_amount/10f; //Don't touch this (Arcane Calculations)
+            float vis_height = vis_scale-0.2f; //Don't touch this (Arcane Calculations)
+            float vis_top = (vis_amount/10f)+0.2f; //Don't touch this (Arcane Calculations)
 
-        Quaternion rotation = Vector3f.XP.rotationDegrees(90);
-        float scale = 0.5f;
+            Quaternion rotation = Vector3f.XP.rotationDegrees(90);
+            float scale = 0.5f;
 
-        matrixStack.push();
-        matrixStack.translate(.5, .5, .5);
-        matrixStack.rotate(rotation);
-        matrixStack.scale(scale, scale, scale);
-        matrixStack.translate(-.5, -.5, -.5);
+            matrixStack.push();
+            matrixStack.translate(.5, .5, .5);
+            matrixStack.rotate(rotation);
+            matrixStack.scale(scale, scale, scale);
+            matrixStack.translate(-.5, -.5, -.5);
 
-        add(builder, matrixStack, 0, 1, vis_top, sprite_top.getMinU(), sprite_top.getMaxV());
-        add(builder, matrixStack, 1, 1, vis_top, sprite_top.getMaxU(), sprite_top.getMaxV());
-        add(builder, matrixStack, 1, 0, vis_top, sprite_top.getMaxU(), sprite_top.getMinV());
-        add(builder, matrixStack, 0, 0, vis_top, sprite_top.getMinU(), sprite_top.getMinV());
+            add(builder, matrixStack, 0, 1, vis_top, sprite_top.getMinU(), sprite_top.getMaxV());
+            add(builder, matrixStack, 1, 1, vis_top, sprite_top.getMaxU(), sprite_top.getMaxV());
+            add(builder, matrixStack, 1, 0, vis_top, sprite_top.getMaxU(), sprite_top.getMinV());
+            add(builder, matrixStack, 0, 0, vis_top, sprite_top.getMinU(), sprite_top.getMinV());
 
-        matrixStack.pop();
-        matrixStack.push();
-        matrixStack.translate(.5, .5, .5);
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
-        matrixStack.scale(scale, scale, scale);
-        matrixStack.translate(-.5, -0.1, -.5);
-        //matrixStack.rotate(Vector3f.ZP.rotationDegrees(180));
+            matrixStack.pop();
+            matrixStack.push();
+            matrixStack.translate(.5, .5, .5);
+            matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
+            matrixStack.scale(scale, scale, scale);
+            matrixStack.translate(-.5, -0.1, -.5);
+            //matrixStack.rotate(Vector3f.ZP.rotationDegrees(180));
 
-        add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
-        add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
-        add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
-        add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
+            add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+            add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+            add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+            add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
-        matrixStack.pop();
-        matrixStack.push();
-        matrixStack.translate(.5, .5, .5);
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(90));
-        matrixStack.scale(scale, scale, scale);
-        matrixStack.translate(-.5, -0.1, -.5);
+            matrixStack.pop();
+            matrixStack.push();
+            matrixStack.translate(.5, .5, .5);
+            matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
+            matrixStack.rotate(Vector3f.YP.rotationDegrees(90));
+            matrixStack.scale(scale, scale, scale);
+            matrixStack.translate(-.5, -0.1, -.5);
 
-        add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
-        add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
-        add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
-        add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
+            add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+            add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+            add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+            add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
-        matrixStack.pop();
-        matrixStack.push();
-        matrixStack.translate(.5, .5, .5);
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
-        matrixStack.rotate(Vector3f.YN.rotationDegrees(90));
-        matrixStack.scale(scale, scale, scale);
-        matrixStack.translate(-.5, -0.1, -.5);
+            matrixStack.pop();
+            matrixStack.push();
+            matrixStack.translate(.5, .5, .5);
+            matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
+            matrixStack.rotate(Vector3f.YN.rotationDegrees(90));
+            matrixStack.scale(scale, scale, scale);
+            matrixStack.translate(-.5, -0.1, -.5);
 
-        add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
-        add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
-        add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
-        add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
+            add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+            add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+            add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+            add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
-        matrixStack.pop();
-        matrixStack.push();
-        matrixStack.translate(.5, .5, .5);
-        matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
-        matrixStack.rotate(Vector3f.YP.rotationDegrees(180));
-        matrixStack.scale(scale, scale, scale);
-        matrixStack.translate(-.5, -0.1, -.5);
+            matrixStack.pop();
+            matrixStack.push();
+            matrixStack.translate(.5, .5, .5);
+            matrixStack.rotate(Vector3f.XP.rotationDegrees(180));
+            matrixStack.rotate(Vector3f.YP.rotationDegrees(180));
+            matrixStack.scale(scale, scale, scale);
+            matrixStack.translate(-.5, -0.1, -.5);
 
-        add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
-        add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
-        add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
-        add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
+            add(builder, matrixStack, 0, 1, 0f, sprite_side.getMinU(), sprite_side.getMaxV());
+            add(builder, matrixStack, 1, 1, 0f, sprite_side.getMaxU(), sprite_side.getMaxV());
+            add(builder, matrixStack, 1, vis_height, 0f, sprite_side.getMaxU(), sprite_side.getMinV());
+            add(builder, matrixStack, 0, vis_height, 0f, sprite_side.getMinU(), sprite_side.getMinV());
 
-        matrixStack.pop();
+            matrixStack.pop();
+        }
     }
 }
