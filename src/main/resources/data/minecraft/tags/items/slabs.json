@@ -2,6 +2,14 @@
   "replace": false,
   "values": [
     "arcana:arcane_stone_slab",
-    "arcana:arcane_stone_bricks_slab"
+    "arcana:arcane_stone_bricks_slab",
+    "arcana:dair_slab",
+    "arcana:dead_slab",
+    "arcana:eucalyptus_slab",
+    "arcana:greatwood_slab",
+    "arcana:hawthorn_slab",
+    "arcana:silverwood_slab",
+    "arcana:trypophobius_slab",
+    "arcana:willow_slab"
   ]
 }

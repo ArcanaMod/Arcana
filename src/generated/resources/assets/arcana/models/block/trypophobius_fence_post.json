@@ -1,0 +1,6 @@
+{
+  "parent": "block/fence_post",
+  "textures": {
+    "texture": "arcana:block/trypophobius_planks"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "arcana:dair_fence",
+    "arcana:dead_fence",
+    "arcana:eucalyptus_fence",
+    "arcana:greatwood_fence",
+    "arcana:hawthorn_fence",
+    "arcana:silverwood_fence",
+    "arcana:trypophobius_fence",
+    "arcana:willow_fence"
+  ]
+}
