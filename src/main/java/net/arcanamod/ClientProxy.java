@@ -60,7 +60,7 @@ public class ClientProxy extends CommonProxy{
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){
-		//Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
+		Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
 	}
 	
 	public void onResearchChange(ResearchEvent event){
@@ -73,7 +73,7 @@ public class ClientProxy extends CommonProxy{
 	}
 	
 	public void scheduleOnClient(Runnable runnable){
-		Minecraft.getInstance().deferTask(runnable);//.addScheduledTask(runnable);
+		Minecraft.getInstance().deferTask(runnable);
 	}
 	
 	public ItemStack getAspectItemStackForDisplay(){
