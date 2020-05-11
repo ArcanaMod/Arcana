@@ -25,10 +25,10 @@ public class WorldLoadEvent{
 	
 	@SubscribeEvent
 	public static void onWorldLoad(PlayerEvent.PlayerLoggedInEvent event){
-		// Its definitely an EntityPlayerMP
+		// It's definitely an ServerPlayerEntity.
 		Connection.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity)event.getPlayer()), new PkSyncResearch(ResearchBooks.books, ResearchBooks.puzzles));
 		Researcher researcher = Researcher.getFrom(event.getPlayer());
-		//Connection.network.sendTo(new PktSyncClientResearch(researcher.getEntryData(), researcher.getPuzzleData()), (ServerPlayerEntity)event.player);
+		Connection.sendSyncPlayerResearch(researcher, (ServerPlayerEntity)event.getPlayer());
 	}
 	
 	@SubscribeEvent
