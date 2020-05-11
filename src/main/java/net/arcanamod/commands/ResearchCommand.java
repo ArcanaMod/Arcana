@@ -74,7 +74,7 @@ public class ResearchCommand{
 	public static int modify(CommandContext<CommandSource> ctx, Diff diff) throws CommandSyntaxException{
 		AtomicInteger ret = new AtomicInteger();
 		EntityArgument.getPlayers(ctx, "targets").forEach(entity -> {
-			ResourceLocation key = ResourceLocationArgument.getResourceLocation(ctx, "reseach");
+			ResourceLocation key = ResourceLocationArgument.getResourceLocation(ctx, "research");
 			ResearchEntry entry = ResearchBooks.streamEntries().filter(e -> e.key().equals(key)).findFirst().orElseThrow(() -> {
 				Message noSuchEntry = new TranslationTextComponent("command.arcana.research.no_entry", key.toString());
 				return new RuntimeException(new CommandSyntaxException(new SimpleCommandExceptionType(noSuchEntry), noSuchEntry));
