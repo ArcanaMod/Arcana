@@ -268,9 +268,7 @@ public class ResearchBookGUI extends Screen{
 	
 	
 	private PageStyle style(ResearchEntry entry){
-		// TODO: replace with actual data
-		return PageStyle.COMPLETE;
-		/*// if the page is at full progress, its complete.
+		// if the page is at full progress, its complete.
 		Researcher r = Researcher.getFrom(mc.player);
 		if(r.entryStage(entry) >= entry.sections().size())
 			return PageStyle.COMPLETE;
@@ -291,7 +289,7 @@ public class ResearchBookGUI extends Screen{
 				return PageStyle.PENDING;
 		}
 		// otherwise, its invisible
-		return PageStyle.NONE;*/
+		return PageStyle.NONE;
 	}
 	
 	private int base(ResearchEntry entry){

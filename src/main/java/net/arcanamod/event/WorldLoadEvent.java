@@ -1,6 +1,7 @@
 package net.arcanamod.event;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.commands.ResearchCommand;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkSyncResearch;
 import net.arcanamod.research.ResearchBooks;
@@ -11,6 +12,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 /**
@@ -32,5 +34,10 @@ public class WorldLoadEvent{
 	@SubscribeEvent
 	public static void serverAboutToStart(FMLServerAboutToStartEvent event){
 		event.getServer().getResourceManager().addReloadListener(Arcana.researchManager = new ResearchLoader());
+	}
+	
+	@SubscribeEvent
+	public static void serverStarting(FMLServerStartingEvent event){
+		ResearchCommand.register(event.getCommandDispatcher());
 	}
 }

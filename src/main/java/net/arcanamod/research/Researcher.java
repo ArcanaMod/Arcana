@@ -10,6 +10,7 @@ import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -104,7 +105,7 @@ public interface Researcher{
 		return compound;
 	}
 	
-	default void deserialize(CompoundNBT data){
+	default void deserialize(@Nonnull CompoundNBT data){
 		Map<ResourceLocation, Integer> entryDat = new HashMap<>();
 		CompoundNBT entries = data.getCompound("entries");
 		for(String s : entries.keySet())
@@ -141,11 +142,11 @@ public interface Researcher{
 	 * 		The player to get a capability from.
 	 * @return The player's researcher capability.
 	 */
-	static Researcher getFrom(PlayerEntity p){
+	static Researcher getFrom(@Nonnull PlayerEntity p){
 		return p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null).orElse(null);
 	}
 	
-	static boolean isEntryVisible(ResearchEntry entry, Researcher r){
+	static boolean isEntryVisible(ResearchEntry entry, @Nonnull Researcher r){
 		// abridged version of ResearchBookGUI#style
 		
 		if(r.entryStage(entry) >= entry.sections().size())
