@@ -32,12 +32,12 @@ public class ResearchCommand{
 		dispatcher.register(
 				literal("arcana-research").requires(source -> source.hasPermissionLevel(2))
 				.then(argument("targets", EntityArgument.players())
-						.then(literal("complete-all")).executes(ResearchCommand::giveAll)
-						.then(literal("reset-all")).executes(ResearchCommand::resetAll)
-						.then(literal("complete").then(argument("research", resourceLocation()).suggests(SUGGEST_RESEARCH)).executes(context -> modify(context, Diff.complete)))
-						.then(literal("try-advance").then(argument("research", resourceLocation()).suggests(SUGGEST_RESEARCH)).executes(context -> modify(context, Diff.advance)))
-						.then(literal("force-advance").then(argument("research", resourceLocation()).suggests(SUGGEST_RESEARCH)).executes(context -> modify(context, Diff.forceAdvance)))
-						.then(literal("reset").then(argument("research", resourceLocation()).suggests(SUGGEST_RESEARCH)).executes(context -> modify(context, Diff.reset)))
+						.then(literal("complete-all").executes(ResearchCommand::giveAll))
+						.then(literal("reset-all").executes(ResearchCommand::resetAll))
+						.then(literal("complete").then(argument("research", resourceLocation()).executes(context -> modify(context, Diff.complete)).suggests(SUGGEST_RESEARCH)))
+						.then(literal("try-advance").then(argument("research", resourceLocation()).executes(context -> modify(context, Diff.advance)).suggests(SUGGEST_RESEARCH)))
+						.then(literal("force-advance").then(argument("research", resourceLocation()).executes(context -> modify(context, Diff.forceAdvance)).suggests(SUGGEST_RESEARCH)))
+						.then(literal("reset").then(argument("research", resourceLocation()).executes(context -> modify(context, Diff.reset)).suggests(SUGGEST_RESEARCH)))
 				)
 				// arcana-research reload would go here
 		);
