@@ -49,8 +49,8 @@ public class JarTileEntity extends TileEntity{
 				+ " All: "+ visScaled+ " Last: "+ lastVisAmount);
 		if (smoothAmountVisContentAnimation <= visScaled)
 		smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/10f/delta_time;
-		if (smoothAmountVisContentAnimation > visScaled)
-			smoothAmountVisContentAnimation -= (visScaled-lastVisAmount)/10f/delta_time;
+		//if (smoothAmountVisContentAnimation > visScaled) // TODO: Fix Jar draining animation
+		//smoothAmountVisContentAnimation -= (visScaled-lastVisAmount)/10f/delta_time;
 		return -(smoothAmountVisContentAnimation-fullness);
 	}
 
