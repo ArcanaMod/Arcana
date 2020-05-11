@@ -46,7 +46,6 @@ public class ResearchBookGUI extends Screen{
 	static float xPan = 0;
 	static float yPan = 0;
 	static float zoom = 0.7f;//1f;
-	private Minecraft mc;
 	
 	public ResearchBookGUI(ResearchBook book){
 		super(new StringTextComponent(""));
@@ -86,7 +85,7 @@ public class ResearchBookGUI extends Screen{
 		
 		// draw stuff
 		// 224x196 viewing area
-		int scale = (int)mc.getMainWindow().getGuiScaleFactor();//new ScaledResolution(mc).getScaleFactor();
+		int scale = (int)getMinecraft().getMainWindow().getGuiScaleFactor();//new ScaledResolution(mc).getScaleFactor();
 		int x = (width - fWidth) / 2 + 16, y = (height - fHeight) / 2 + 17;
 		int visibleWidth = 224, visibleHeight = 196;
 		GL11.glScissor(x * scale, y * scale, visibleWidth * scale, visibleHeight * scale);
@@ -109,7 +108,6 @@ public class ResearchBookGUI extends Screen{
 	}
 	
 	public void init(@Nonnull Minecraft mc, int p_init_2_, int p_init_3_){
-		this.mc = mc;
 		super.init(mc, p_init_2_, p_init_3_);
 		
 		// add buttons
@@ -125,7 +123,7 @@ public class ResearchBookGUI extends Screen{
 		// pans up to (256 - 224) x, (256 - 196) y            
 		// which is only 32
 		// let's scale is up x2, and also pan with half speed (which is what I'd do anyways) so we get 128 pan
-		mc.getTextureManager().bindTexture(categories.get(tab).bg());
+		getMinecraft().getTextureManager().bindTexture(categories.get(tab).bg());
 		drawModalRectWithCustomSizedTexture((width - fWidth) / 2 + 16, (height - fHeight) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, 224, 196, 512, 512);
 	}
 	
@@ -136,11 +134,11 @@ public class ResearchBookGUI extends Screen{
 			PageStyle style = style(entry);
 			if(style != PageStyle.NONE){
 				// render base
-				mc.getTextureManager().bindTexture(ARROWS_AND_BASES);
+				getMinecraft().getTextureManager().bindTexture(ARROWS_AND_BASES);
 				int base = base(entry);
 				float mult = 1f;
 				if(style == PageStyle.IN_PROGRESS)
-					mult = (float)abs(sin((mc.player.ticksExisted + partialTicks) / 5f) * 0.75f) + .25f;
+					mult = (float)abs(sin((getMinecraft().player.ticksExisted + partialTicks) / 5f) * 0.75f) + .25f;
 				else if(style == PageStyle.PENDING)
 					mult = 0.1f;
 				RenderSystem.color4f(mult, mult, mult, 1f);
@@ -151,7 +149,7 @@ public class ResearchBookGUI extends Screen{
 				RenderSystem.enableDepthTest();
 				RenderHelper.enableStandardItemLighting();
 				RenderSystem.disableLighting();
-				itemRenderer.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get((mc.player.ticksExisted / 30) % entry.icons().size())), (int)(entry.x() * 30 + getXOffset() + 7), (int)(entry.y() * 30 + getYOffset() + 7));
+				itemRenderer.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get((getMinecraft().player.ticksExisted / 30) % entry.icons().size())), (int)(entry.x() * 30 + getXOffset() + 7), (int)(entry.y() * 30 + getYOffset() + 7));
 				RenderSystem.disableLighting();
 				RenderSystem.enableRescaleNormal();
 				
@@ -161,7 +159,7 @@ public class ResearchBookGUI extends Screen{
 				for(ResourceLocation parentKey : entry.parents()){
 					ResearchEntry parent = ResearchBooks.getEntry(parentKey);
 					if(parent != null && parent.category().equals(entry.category()) && style(parent) != PageStyle.NONE){
-						mc.getTextureManager().bindTexture(ARROWS_AND_BASES);
+						getMinecraft().getTextureManager().bindTexture(ARROWS_AND_BASES);
 						int xdiff = abs(entry.x() - parent.x());
 						int ydiff = abs(entry.y() - parent.y());
 						// if there is a y-difference or x-difference of 0, draw a line
@@ -269,7 +267,7 @@ public class ResearchBookGUI extends Screen{
 	
 	private PageStyle style(ResearchEntry entry){
 		// if the page is at full progress, its complete.
-		Researcher r = Researcher.getFrom(mc.player);
+		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) >= entry.sections().size())
 			return PageStyle.COMPLETE;
 		// if its progress is greater than zero, then its in progress.
@@ -320,7 +318,7 @@ public class ResearchBookGUI extends Screen{
 				List<String> lines = Lists.newArrayList(I18n.format(entry.name()));
 				if(entry.description() != null && !entry.description().equals(""))
 					lines.add(TextFormatting.GRAY + I18n.format(entry.description()));
-				GuiUtils.drawHoveringText(lines, mouseX, mouseY, width, height, -1, mc.fontRenderer);
+				GuiUtils.drawHoveringText(lines, mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
 				RenderHelper.disableStandardItemLighting();
 				break;
 			}
@@ -336,7 +334,7 @@ public class ResearchBookGUI extends Screen{
 	}
 	
 	private void renderFrame(){
-		mc.getTextureManager().bindTexture(texture);
+		getMinecraft().getTextureManager().bindTexture(texture);
 		RenderSystem.enableBlend();
 		drawTexturedModalRect((width - fWidth) / 2, (height - fHeight) / 2, 0, 0, fWidth, fHeight);
 	}
@@ -356,7 +354,7 @@ public class ResearchBookGUI extends Screen{
 				if(button != 2){
 					if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS)
 						// left/right (& other) click: open page
-						mc.displayGuiScreen(new ResearchEntryGUI(entry));
+						getMinecraft().displayGuiScreen(new ResearchEntryGUI(entry));
 				}else
 					// middle click: try advance
 					//Connection.sendTryAdvance(entry);
@@ -374,22 +372,17 @@ public class ResearchBookGUI extends Screen{
 		return super.mouseScrolled(mouseX, mouseY, scroll);
 	}
 	
-	/*protected void actionPerformed(@Nonnull GuiButton button){
-		if(button instanceof CategoryButton)
-			tab = min(((CategoryButton)button).categoryNum, categories.size());
-	}*/
-	
 	public boolean isPauseScreen(){
 		return false;
 	}
 	
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers){
-		if(super.keyReleased(keyCode, scanCode, modifiers))
+		if(super.keyPressed(keyCode, scanCode, modifiers))
 			return true;
 		else{
 			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
-			if(keyCode == 256 || minecraft.gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
-				mc.player.closeScreen();
+			if(keyCode == 256 || getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
+				getMinecraft().player.closeScreen();
 				return true;
 			}
 			return false;
@@ -524,7 +517,10 @@ public class ResearchBookGUI extends Screen{
 		protected ResearchCategory category;
 		
 		public CategoryButton(int categoryNum, int x, int y, ResearchCategory category){
-			super(x, y, 16, 16, "", button -> {});
+			super(x, y, 16, 16, "", button -> {
+				if(Minecraft.getInstance().currentScreen instanceof ResearchBookGUI)
+					((ResearchBookGUI)Minecraft.getInstance().currentScreen).tab = categoryNum;
+			});
 			this.categoryNum = categoryNum;
 			this.category = category;
 			visible = true;
@@ -539,7 +535,7 @@ public class ResearchBookGUI extends Screen{
 				Minecraft.getInstance().getTextureManager().bindTexture(category.icon());
 				drawModalRectWithCustomSizedTexture(x - (categoryNum == tab ? 6 : (isHovered) ? 4 : 0), y, 0, 0, 16, 16, 16, 16);
 				
-				isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 				if(isHovered)
 					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name())), mouseX, mouseY, ResearchBookGUI.this.width, ResearchBookGUI.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}

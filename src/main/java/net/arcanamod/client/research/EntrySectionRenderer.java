@@ -32,25 +32,24 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	
 	/**
 	 * Called when the mouse is clicked anywhere on the screen while this section is visible.
-	 *
-	 * @param section
+	 *  @param section
 	 * 		The section that is visible.
 	 * @param pageIndex
 	 * 		The index within the section that is visible.
 	 * @param screenWidth
-	 * 		The width of the screen.
+ * 		The width of the screen.
 	 * @param screenHeight
-	 * 		The height of the screen.
+* 		The height of the screen.
 	 * @param mouseX
-	 * 		The x location of the mouse.
+* 		The x location of the mouse.
 	 * @param mouseY
-	 * 		The y location of the mouse.
+* 		The y location of the mouse.
 	 * @param right
-	 * 		Whether the section that is visible is on the left or right.
+* 		Whether the section that is visible is on the left or right.
 	 * @param player
-	 * 		The player that clicked.
 	 */
-	default void onClick(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
+	default boolean onClick(T section, int pageIndex, int screenWidth, int screenHeight, double mouseX, double mouseY, boolean right, PlayerEntity player){
+		return false;
 	}
 	
 	@SuppressWarnings("unchecked")

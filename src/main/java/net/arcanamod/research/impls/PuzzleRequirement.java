@@ -37,10 +37,11 @@ public class PuzzleRequirement extends Requirement{
 		return compound;
 	}
 	
-	public void onClick(ResearchEntry entry){
+	public boolean onClick(ResearchEntry entry){
 		// TODO
 		/*if(!(ResearchBooks.puzzles.get(puzzleId) instanceof Fieldwork))
 			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId.toString(), entry.key().toString()));*/
+		return false;
 	}
 	
 	public ResourceLocation getPuzzleId(){

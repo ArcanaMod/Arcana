@@ -1,12 +1,29 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.arcanamod.client.research.EntrySectionRenderer;
+import net.arcanamod.client.research.RequirementRenderer;
+import net.arcanamod.research.EntrySection;
+import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchEntry;
+import net.arcanamod.research.Researcher;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
-//import javafx.geometry.Side;
+import javax.annotation.Nonnull;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ResearchEntryGUI extends Screen{
 	
@@ -33,27 +50,36 @@ public class ResearchEntryGUI extends Screen{
 		bg = new ResourceLocation(entry.key().getNamespace(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
 	}
 	
-	/*public void drawScreen(int mouseX, int mouseY, float partialTicks){
-		drawDefaultBackground();
-		super.drawScreen(mouseX, mouseY, partialTicks);
-		mc.getTextureManager().bindTexture(bg);
-		GlStateManager.color(1f, 1f, 1f, 1f);
+	public static void drawModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
+		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
+		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
+	}
+	
+	public static void drawTexturedModalRect(int x, int y, float texX, float texY, int width, int height){
+		drawModalRectWithCustomSizedTexture(x, y, texX, texY, width, height, 256, 256);
+	}
+	
+	public void render(int mouseX, int mouseY, float partialTicks){
+		renderBackground();
+		super.render(mouseX, mouseY, partialTicks);
+		getMinecraft().getTextureManager().bindTexture(bg);
+		RenderSystem.color4f(1f, 1f, 1f, 1f);
 		drawTexturedModalRect((width - 256) / 2, (height - 181) / 2, 0, 0, 256, 181);
 		
 		// Main rendering
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);
 			if(section != null)
-				EntrySectionRenderer.get(section).render(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
+				EntrySectionRenderer.get(section).render(section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
 		}
 		if(totalLength() > index + 1){
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section).render(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
+				EntrySectionRenderer.get(section).render(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
 		
 		// Requirements
-		Researcher r = Researcher.getFrom(mc.player);
+		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
 			final int y = (height - 181) / 2 + 190;
@@ -61,13 +87,13 @@ public class ResearchEntryGUI extends Screen{
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++){
 				Requirement requirement = requirements.get(i);
-				renderer(requirement).render(baseX + i * reqWidth + 2, y, requirement, mc.player.ticksExisted, partialTicks, mc.player);
-				renderAmount(baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfied(mc.player));
+				renderer(requirement).render(baseX + i * reqWidth + 2, y, requirement, getMinecraft().player.ticksExisted, partialTicks, getMinecraft().player);
+				renderAmount(baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfied(getMinecraft().player));
 			}
 			// Show tooltips
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
-					List<String> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), mc.player);
+					List<String> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), getMinecraft().player);
 					List<String> lines = new ArrayList<>();
 					for(int i1 = 0, tooltipSize = tooltip.size(); i1 < tooltipSize; i1++){
 						String s = tooltip.get(i1);
@@ -75,7 +101,7 @@ public class ResearchEntryGUI extends Screen{
 						s = (i1 == 0 ? TextFormatting.WHITE : TextFormatting.GRAY) + s;
 						lines.add(s);
 					}
-					GuiUtils.drawHoveringText(lines, mouseX, mouseY, width, height, -1, mc.fontRenderer);
+					GuiUtils.drawHoveringText(lines, mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
 					break;
 				}
 		}
@@ -84,28 +110,40 @@ public class ResearchEntryGUI extends Screen{
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);
 			if(section != null)
-				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
+				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
 		}
 		if(totalLength() > index + 1){
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
+				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
 	}
 	
-	public void initGui(){
+	public void init(@Nonnull Minecraft mc, int p_init_2_, int p_init_3_){
+		super.init(mc, p_init_2_, p_init_3_);
 		final int y = (height - 181) / 2 + 190;
 		final int x = width / 2 - 6;
 		final int dist = 127;
-		left = addButton(new ChangePageButton(0, x - dist, y, false));
-		right = addButton(new ChangePageButton(1, x + dist, y, true));
+		left = addButton(new ChangePageButton(x - dist, y, false, button -> {
+			if(canTurnLeft())
+				index -= 2;
+			updateButtonVisibility();
+		}));
+		right = addButton(new ChangePageButton(x + dist, y, true, button -> {
+			if(canTurnRight())
+				index += 2;
+			updateButtonVisibility();
+		}));
 		String text = I18n.format("researchEntry.continue");
-		GuiButtonExt button = new GuiButtonExt(2, x - fontRenderer.getStringWidth(text) / 2 + 2, y + 20, fontRenderer.getStringWidth(text) + 10, 18, text){
+		ExtendedButton button = new ExtendedButton(x - getMinecraft().fontRenderer.getStringWidth(text) / 2 + 2, y + 20, getMinecraft().fontRenderer.getStringWidth(text) + 10, 18, text, __ -> {
+			// send tryAdvance
+			updateButtonVisibility();
+		}){
 			// I can't be bothered to make a new type for something which will use this behaviours exactly once.
 			// If I ever need this behaviour elsewhere, I'll move it to a proper class.
-			public void drawButton(Minecraft mc, int mouseX, int mouseY, float partial){
-				enabled = Researcher.getFrom(mc.player).entryStage(entry) < entry.sections().size() && entry.sections().get(Researcher.getFrom(mc.player).entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfied(mc.player));
-				super.drawButton(mc, mouseX, mouseY, partial);
+			public void renderButton(int mouseX, int mouseY, float partial){
+				active = Researcher.getFrom(mc.player).entryStage(entry) < entry.sections().size() && entry.sections().get(Researcher.getFrom(getMinecraft().player).entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfied(getMinecraft().player));
+				super.renderButton(mouseX, mouseY, partial);
 			}
 		};
 		cont = addButton(button);
@@ -113,57 +151,60 @@ public class ResearchEntryGUI extends Screen{
 		updateButtonVisibility();
 	}
 	
-	protected void actionPerformed(GuiButton button){
-		if(button == left && canTurnLeft())
+	/*protected void actionPerformed(Button button){
+		*//*if(button == left && canTurnLeft())
 			index -= 2;
 		else if(button == right && canTurnRight())
 			index += 2;
 		else if(button == cont)
-			Connection.sendTryAdvance(entry);
+			Connection.sendTryAdvance(entry);*//*
 		updateButtonVisibility();
-	}
+	}*/
 	
 	public void updateButtonVisibility(){
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
-		cont.visible = Researcher.getFrom(mc.player).entryStage(entry) < getVisibleSections().size();
+		cont.visible = Researcher.getFrom(getMinecraft().player).entryStage(entry) < getVisibleSections().size();
 	}
 	
-	protected void keyTyped(char typedChar, int keyCode) throws IOException{
-		if(this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)){
-			ResearchBookGUI gui = new ResearchBookGUI(entry.category().book());
-			gui.tab = entry.category().book().getCategories().indexOf(entry.category());
-			if(gui.tab < 0)
-				gui.tab = 0;
-			mc.displayGuiScreen(gui);
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers){
+		if(super.keyPressed(keyCode, scanCode, modifiers))
+			return true;
+		else{
+			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
+			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
+				ResearchBookGUI gui = new ResearchBookGUI(entry.category().book());
+				gui.tab = entry.category().book().getCategories().indexOf(entry.category());
+				if(gui.tab < 0)
+					gui.tab = 0;
+			}
+			return false;
 		}
-		super.keyTyped(typedChar, keyCode);
 	}
 	
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);
 			if(section != null)
-				EntrySectionRenderer.get(section).onClick(section, sectionIndex(index), width, height, mouseX, mouseY, false, mc.player);
+				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
 		}
 		if(totalLength() > index + 1){
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section).onClick(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, mc.player);
+				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
-		Researcher r = Researcher.getFrom(mc.player);
+		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
 			final int y = (height - 181) / 2 + 190;
 			final int reqWidth = 20;
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++)
-				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
-					requirements.get(i).onClick(entry);
-					break;
-				}
+				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18)
+					return requirements.get(i).onClick(entry);
 		}
+		return false;
 	}
 	
 	private boolean canTurnRight(){
@@ -205,7 +246,7 @@ public class ResearchEntryGUI extends Screen{
 	}
 	
 	private boolean visible(EntrySection section){
-		return Researcher.getFrom(Minecraft.getMinecraft().player).entryStage(entry) >= entry.sections().indexOf(section);
+		return Researcher.getFrom(getMinecraft().player).entryStage(entry) >= entry.sections().indexOf(section);
 	}
 	
 	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){
@@ -215,53 +256,53 @@ public class ResearchEntryGUI extends Screen{
 	private void renderAmount(int x, int y, int amount, boolean complete){
 		if(amount == 1 || amount == 0){
 			//display tick or cross
-			mc.getTextureManager().bindTexture(bg);
-			GlStateManager.color(1f, 1f, 1f, 1f);
+			getMinecraft().getTextureManager().bindTexture(bg);
+			RenderSystem.color4f(1f, 1f, 1f, 1f);
 			// ensure it renders over items
-			zLevel = 300;
+			setBlitOffset(300);
 			drawTexturedModalRect(x + 10, y + 9, complete ? 0 : 8, 247, 8, 9);
-			zLevel = 0;
+			setBlitOffset(0);
 		}else{
 			String s = String.valueOf(amount);
-			GlStateManager.disableLighting();
-			GlStateManager.disableDepth();
-			GlStateManager.disableBlend();
-			mc.fontRenderer.drawStringWithShadow(s, (float)(x + 17 - mc.fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa);
-			GlStateManager.enableBlend();
-			GlStateManager.enableLighting();
-			GlStateManager.enableDepth();
+			RenderSystem.disableLighting();
+			RenderSystem.disableDepthTest();
+			RenderSystem.disableBlend();
+			getMinecraft().fontRenderer.drawStringWithShadow(s, (float)(x + 17 - getMinecraft().fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa);
+			RenderSystem.enableBlend();
+			RenderSystem.enableLighting();
+			RenderSystem.enableDepthTest();
 		}
 	}
 	
 	private int span(EntrySection section){
-		return EntrySectionRenderer.get(section).span(section, mc.player);
+		return EntrySectionRenderer.get(section).span(section, getMinecraft().player);
 	}
 	
-	public boolean doesGuiPauseGame(){
+	public boolean isPauseScreen(){
 		return false;
 	}
 	
-	class ChangePageButton extends GuiButton{
+	class ChangePageButton extends Button{
 		
 		boolean right;
 		
-		public ChangePageButton(int buttonId, int x, int y, boolean right){
-			super(buttonId, x, y, 12, 6, "");
+		public ChangePageButton(int x, int y, boolean right, IPressable pressable){
+			super(x, y, 12, 6, "", pressable);
 			this.right = right;
 		}
 		
 		@ParametersAreNonnullByDefault
-		public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks){
+		public void renderButton(int mouseX, int mouseY, float partialTicks){
 			if(visible){
-				hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-				float mult = hovered ? 1f : 0.5f;
-				GlStateManager.color(mult, mult, mult, 1f);
+				isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+				float mult = isHovered ? 1f : 0.5f;
+				RenderSystem.color4f(mult, mult, mult, 1f);
 				int texX = right ? 12 : 0;
 				int texY = 185;
-				mc.getTextureManager().bindTexture(bg);
+				getMinecraft().getTextureManager().bindTexture(bg);
 				drawTexturedModalRect(x, y, texX, texY, width, height);
-				GlStateManager.color(1f, 1f, 1f, 1f);
+				RenderSystem.color4f(1f, 1f, 1f, 1f);
 			}
 		}
-	}*/
+	}
 }
