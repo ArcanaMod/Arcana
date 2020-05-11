@@ -9,6 +9,7 @@ import net.arcanamod.research.impls.ItemRequirement;
 import net.arcanamod.research.impls.XpRequirement;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 
 import java.util.HashMap;
 import java.util.List;
@@ -34,5 +35,5 @@ public interface RequirementRenderer<T extends Requirement>{
 	
 	void render(int x, int y, T requirement, int ticks, float partialTicks, PlayerEntity player);
 	
-	List<String> tooltip(T requirement, PlayerEntity player);
+	List<ITextComponent> tooltip(T requirement, PlayerEntity player);
 }

@@ -1,5 +1,7 @@
 package net.arcanamod.client.research.impls;
 
+import com.mojang.blaze3d.systems.RenderSystem;
+import net.arcanamod.client.gui.ResearchEntryGUI;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
@@ -8,6 +10,9 @@ import net.arcanamod.research.impls.PuzzleRequirement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,16 +23,16 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 	public void render(int x, int y, PuzzleRequirement requirement, int ticks, float partialTicks, PlayerEntity player){
 		ResourceLocation icon = getFrom(requirement).getIcon();
 		Minecraft.getInstance().getTextureManager().bindTexture(icon != null ? icon : getFrom(requirement).getDefaultIcon());
-		//GlStateManager.color(1f, 1f, 1f, 1f);
-		//AbstractGui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+		RenderSystem.color4f(1f, 1f, 1f, 1f);
+		ResearchEntryGUI.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 	}
 	
-	public List<String> tooltip(PuzzleRequirement requirement, PlayerEntity player){
+	public List<ITextComponent> tooltip(PuzzleRequirement requirement, PlayerEntity player){
 		if(!(getFrom(requirement) instanceof Fieldwork)){
 			String desc = getFrom(requirement).getDesc();
-			return Arrays.asList((desc != null ? desc : getFrom(requirement).getDefaultDesc()), "requirement.puzzle.get_note.1", "requirement.puzzle.get_note.2");
+			return Arrays.asList(new TranslationTextComponent(desc != null ? desc : getFrom(requirement).getDefaultDesc()), new TranslationTextComponent("requirement.puzzle.get_note.1"), new TranslationTextComponent("requirement.puzzle.get_note.2"));
 		}else
-			return Collections.singletonList(getFrom(requirement).getDesc());
+			return Collections.singletonList(new StringTextComponent(getFrom(requirement).getDesc()));
 	}
 	
 	private Puzzle getFrom(PuzzleRequirement pr){

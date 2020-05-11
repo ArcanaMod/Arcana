@@ -628,7 +628,8 @@
     "requirement.chemistry": "Complete the Chemistry",
     "requirement.experience": "%sx Experience Levels",
     "requirement.fieldwork": "Do ???",
-    "requirement.item.have": "Have:",
+    "requirement.item.have": "Have: %s",
+    "requirement.item.num": "%sx %s",
     "requirement.puzzle.get_note.1": "Click to get research note",
     "requirement.puzzle.get_note.2": "Requires scribing tools and paper",
 

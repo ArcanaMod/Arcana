@@ -2,9 +2,10 @@ package net.arcanamod.client.research.impls;
 
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.research.impls.XpRequirement;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,8 +18,8 @@ public class XpRequirementRenderer implements RequirementRenderer<XpRequirement>
 		doXPRender(ticks, x, y, partialTicks);
 	}
 	
-	public List<String> tooltip(XpRequirement requirement, PlayerEntity player){
-		return Collections.singletonList(I18n.format("requirement.experience", requirement.getAmount()));
+	public List<ITextComponent> tooltip(XpRequirement requirement, PlayerEntity player){
+		return Collections.singletonList(new TranslationTextComponent("requirement.experience", requirement.getAmount()));
 	}
 	
 	public static void doXPRender(int ticks, double x, double y, float partialTicks){

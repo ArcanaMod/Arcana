@@ -3,6 +3,7 @@ package net.arcanamod.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
+import net.arcanamod.network.Connection;
 import net.arcanamod.research.EntrySection;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchEntry;
@@ -14,6 +15,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -93,11 +95,10 @@ public class ResearchEntryGUI extends Screen{
 			// Show tooltips
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18){
-					List<String> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), getMinecraft().player);
+					List<ITextComponent> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), getMinecraft().player);
 					List<String> lines = new ArrayList<>();
 					for(int i1 = 0, tooltipSize = tooltip.size(); i1 < tooltipSize; i1++){
-						String s = tooltip.get(i1);
-						s = I18n.format(s);
+						String s = tooltip.get(i1).getFormattedText();
 						s = (i1 == 0 ? TextFormatting.WHITE : TextFormatting.GRAY) + s;
 						lines.add(s);
 					}
@@ -136,7 +137,7 @@ public class ResearchEntryGUI extends Screen{
 		}));
 		String text = I18n.format("researchEntry.continue");
 		ExtendedButton button = new ExtendedButton(x - getMinecraft().fontRenderer.getStringWidth(text) / 2 + 2, y + 20, getMinecraft().fontRenderer.getStringWidth(text) + 10, 18, text, __ -> {
-			// send tryAdvance
+			Connection.sendTryAdvance(entry.key());
 			updateButtonVisibility();
 		}){
 			// I can't be bothered to make a new type for something which will use this behaviours exactly once.
@@ -150,16 +151,6 @@ public class ResearchEntryGUI extends Screen{
 		
 		updateButtonVisibility();
 	}
-	
-	/*protected void actionPerformed(Button button){
-		*//*if(button == left && canTurnLeft())
-			index -= 2;
-		else if(button == right && canTurnRight())
-			index += 2;
-		else if(button == cont)
-			Connection.sendTryAdvance(entry);*//*
-		updateButtonVisibility();
-	}*/
 	
 	public void updateButtonVisibility(){
 		left.visible = canTurnLeft();
