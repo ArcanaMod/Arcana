@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "arcana:block/dungeon_bricks_slab_top"
+    },
+    "type=bottom": {
+      "model": "arcana:block/dungeon_bricks_slab"
+    },
+    "type=double": {
+      "model": "arcana:block/dungeon_bricks"
+    }
+  }
+}

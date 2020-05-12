@@ -4,7 +4,7 @@
   "ambientocclusion": false,
   "textures": {
     "0": "arcana:block/arcane_crafting_table",
-    "partcles": "arcana:block/arcane_crafting_table"
+    "particle": "arcana:block/arcane_crafting_table"
   },
   "elements": [
     {

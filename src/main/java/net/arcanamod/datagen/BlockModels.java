@@ -1,14 +1,12 @@
 package net.arcanamod.datagen;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
-
-import static net.arcanamod.datagen.ArcanaDataGenerators.DAIR;
 
 public class BlockModels extends BlockModelProvider{
 	
@@ -27,6 +25,34 @@ public class BlockModels extends BlockModelProvider{
 			fenceGateWall(name + "_fence_gate", texture);
 			fenceGateWallOpen(name + "_fence_gate", texture);
 		});
+		
+		ArcanaDataGenerators.STONES.forEach((name, texture) -> {
+			cubeAll(name, texture);
+			slab(name + "_slab", texture, texture, texture);
+			slabTop(name + "_slab_top", texture, texture, texture);
+			stairs(name + "_stairs", texture, texture, texture);
+			stairsInner(name + "_stairs_inner", texture, texture, texture);
+			stairsOuter(name + "_stairs_outer", texture, texture, texture);
+			pressurePlate(name, texture);
+			wallInventory(name + "_wall_inventory", texture);
+			wallPost(name + "_wall_post", texture);
+			wallSide(name + "_wall_side", texture);
+		});
+	}
+	
+	public void pressurePlate(String name, ResourceLocation texture){
+		pressurePlateUp(name, texture);
+		pressurePlateDown(name, texture);
+	}
+	
+	public void pressurePlateUp(String name, ResourceLocation texture){
+		withExistingParent(name + "_pressure_plate", "pressure_plate_up")
+			.texture("texture", texture);
+	}
+	
+	public void pressurePlateDown(String name, ResourceLocation texture){
+		withExistingParent(name + "_pressure_plate_down", "pressure_plate_down")
+				.texture("texture", texture);
 	}
 	
 	@Nonnull

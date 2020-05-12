@@ -17,8 +17,16 @@ public class ItemModels extends ItemModelProvider{
 	
 	protected void registerModels(){
 		ArcanaDataGenerators.WOODS.forEach((name, texture) -> {
-			withExistingParent(name + "_fence", new ResourceLocation(Arcana.MODID, "block/" + name + "_fence_inventory"));
-			withExistingParent(name + "_fence_gate", new ResourceLocation(Arcana.MODID, "block/" + name + "_fence_gate"));
+			withExistingParent(name + "_fence", arcBlockLoc(name + "_fence_inventory"));
+			withExistingParent(name + "_fence_gate", arcBlockLoc(name + "_fence_gate"));
+		});
+		
+		ArcanaDataGenerators.STONES.forEach((name, texture) -> {
+			withExistingParent(name, arcBlockLoc(name));
+			withExistingParent(name + "_slab", arcBlockLoc(name + "_slab"));
+			withExistingParent(name + "_stairs", arcBlockLoc(name + "_stairs"));
+			withExistingParent(name + "_pressure_plate", arcBlockLoc(name + "_pressure_plate"));
+			withExistingParent(name + "_wall", arcBlockLoc(name + "_wall_inventory"));
 		});
 		
 		Aspect.aspects.forEach(aspect -> {
@@ -27,6 +35,10 @@ public class ItemModels extends ItemModelProvider{
 			//withExistingParent("phial_" + aspect.name().toLowerCase(), "item/generated")
 			//		.texture("layer0", new ResourceLocation(Arcana.MODID, "item/phial_" + aspect.name().toLowerCase()));
 		});
+	}
+	
+	public ResourceLocation arcBlockLoc(String loc){
+		return new ResourceLocation(Arcana.MODID, "block/" + loc);
 	}
 	
 	@Nonnull

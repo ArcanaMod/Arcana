@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
-    "arcana:arcane_stone_bricks"
+    "arcana:arcane_stone_bricks",
+    "arcana:dungeon_bricks",
+    "arcana:cracked_dungeon_bricks",
+    "arcana:mossy_dungeon_bricks"
   ]
 }

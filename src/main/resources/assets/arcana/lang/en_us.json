@@ -276,6 +276,24 @@
     "block.arcana.arcane_stone_bricks_pressure_plate": "Arcane Stone Brick Pressure Plate",
     "block.arcana.arcane_stone_bricks_wall": "Arcane Stone Brick Wall",
 
+    "block.arcana.dungeon_bricks": "Dungeon Bricks",
+    "block.arcana.dungeon_bricks_slab": "Dungeon Brick Slab",
+    "block.arcana.dungeon_bricks_stairs": "Dungeon Brick Stairs",
+    "block.arcana.dungeon_bricks_pressure_plate": "Dungeon Brick Pressure Plate",
+    "block.arcana.dungeon_bricks_wall": "Dungeon Brick Wall",
+
+    "block.arcana.cracked_dungeon_bricks": "Cracked Dungeon Bricks",
+    "block.arcana.cracked_dungeon_bricks_slab": "Cracked Dungeon Brick Slab",
+    "block.arcana.cracked_dungeon_bricks_stairs": "Cracked Dungeon Brick Stairs",
+    "block.arcana.cracked_dungeon_bricks_pressure_plate": "Cracked Dungeon Brick Pressure Plate",
+    "block.arcana.cracked_dungeon_bricks_wall": "Cracked Dungeon Brick Wall",
+
+    "block.arcana.mossy_dungeon_bricks": "Mossy Dungeon Bricks",
+    "block.arcana.mossy_dungeon_bricks_slab": "Mossy Dungeon Brick Slab",
+    "block.arcana.mossy_dungeon_bricks_stairs": "Mossy Dungeon Brick Stairs",
+    "block.arcana.mossy_dungeon_bricks_pressure_plate": "Mossy Dungeon Brick Pressure Plate",
+    "block.arcana.mossy_dungeon_bricks_wall": "Mossy Dungeon Brick Wall",
+
     "block.arcana.infusion_arcane_stone": "Infused Arcane Stone",
     "block.arcana.magical_grass": "Magical Grass",
     "block.arcana.table": "Table",
@@ -283,6 +301,7 @@
     "block.arcana.jar": "Warded Jar",
     "block.arcana.void_jar": "Void Jar",
     "block.arcana.aspect_bookshelf": "Aspect Bookshelf",
+    "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
 
     "_comment": "Ore",
     "block.arcana.amber_ore": "Amber Ore",

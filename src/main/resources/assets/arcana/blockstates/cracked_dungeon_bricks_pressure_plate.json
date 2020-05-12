@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "arcana:block/cracked_dungeon_bricks_pressure_plate" },
+    "powered=true": { "model": "arcana:block/cracked_dungeon_bricks_pressure_plate_down" }
+  }
+}

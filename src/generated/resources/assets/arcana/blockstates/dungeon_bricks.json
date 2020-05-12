@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "arcana:block/dungeon_bricks"
+    }
+  }
+}

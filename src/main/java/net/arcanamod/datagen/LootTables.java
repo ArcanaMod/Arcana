@@ -46,6 +46,24 @@ public class LootTables extends LootTableProvider{
 		addStandardTable(TRYPOPHOBIUS_FENCE_GATE);
 		addStandardTable(WILLOW_FENCE_GATE);
 		
+		addStandardTable(DUNGEON_BRICKS);
+		addStandardTable(DUNGEON_BRICKS_SLAB);
+		addStandardTable(DUNGEON_BRICKS_STAIRS);
+		addStandardTable(DUNGEON_BRICKS_PRESSURE_PLATE);
+		addStandardTable(DUNGEON_BRICKS_WALL);
+		
+		addStandardTable(MOSSY_DUNGEON_BRICKS);
+		addStandardTable(MOSSY_DUNGEON_BRICKS_SLAB);
+		addStandardTable(MOSSY_DUNGEON_BRICKS_STAIRS);
+		addStandardTable(MOSSY_DUNGEON_BRICKS_PRESSURE_PLATE);
+		addStandardTable(MOSSY_DUNGEON_BRICKS_WALL);
+		
+		addStandardTable(CRACKED_DUNGEON_BRICKS);
+		addStandardTable(CRACKED_DUNGEON_BRICKS_SLAB);
+		addStandardTable(CRACKED_DUNGEON_BRICKS_STAIRS);
+		addStandardTable(CRACKED_DUNGEON_BRICKS_PRESSURE_PLATE);
+		addStandardTable(CRACKED_DUNGEON_BRICKS_WALL);
+		
 		Map<ResourceLocation, LootTable> tables = new HashMap<>();
 		for(Map.Entry<Block, LootTable.Builder> entry : lootTables.entrySet())
 			tables.put(entry.getKey().getLootTable(), entry.getValue().setParameterSet(LootParameterSets.BLOCK).build());

@@ -1,0 +1,8 @@
+{
+  "parent": "block/slab_top",
+  "textures": {
+    "side": "arcana:block/mossy_dungeon_bricks",
+    "bottom": "arcana:block/mossy_dungeon_bricks",
+    "top": "arcana:block/mossy_dungeon_bricks"
+  }
+}
