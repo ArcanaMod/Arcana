@@ -14,6 +14,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @SuppressWarnings("deprecation")
@@ -28,6 +29,7 @@ public class WaterloggableBlock extends Block implements IWaterLoggable{
 		setDefaultState(stateContainer.getBaseState().with(WATERLOGGED, Boolean.FALSE));
 	}
 	
+	@Nonnull
 	public BlockState getStateForPlacement(BlockItemUseContext context){
 		BlockPos blockpos = context.getPos();
 		IFluidState ifluidstate = context.getWorld().getFluidState(blockpos);

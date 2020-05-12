@@ -1,0 +1,46 @@
+{
+  "parent": "block",
+  "credit": "Made with Blockbench",
+  "textures": {
+    "0": "arcana:block/infusion_pedestal",
+    "particle": "arcana:block/infusion_pedestal"
+  },
+  "elements": [
+    {
+      "from": [1, 0, 1],
+      "to": [15, 4, 15],
+      "faces": {
+        "north": {"uv": [7, 7, 14, 9], "texture": "#0"},
+        "east": {"uv": [7, 7, 14, 9], "texture": "#0"},
+        "south": {"uv": [7, 7, 14, 9], "texture": "#0"},
+        "west": {"uv": [7, 7, 14, 9], "texture": "#0"},
+        "up": {"uv": [7, 0, 14, 7], "texture": "#0"},
+        "down": {"uv": [7, 9, 14, 16], "texture": "#0"}
+      }
+    },
+    {
+      "from": [3, 12, 3],
+      "to": [13, 16, 13],
+      "faces": {
+        "north": {"uv": [0, 5, 5, 7], "texture": "#0"},
+        "east": {"uv": [0, 5, 5, 7], "texture": "#0"},
+        "south": {"uv": [0, 5, 5, 7], "texture": "#0"},
+        "west": {"uv": [0, 5, 5, 7], "texture": "#0"},
+        "up": {"uv": [0, 0, 5, 5], "texture": "#0"},
+        "down": {"uv": [0, 7, 5, 12], "texture": "#0"}
+      }
+    },
+    {
+      "from": [6, 4, 6],
+      "to": [10, 12, 10],
+      "faces": {
+        "north": {"uv": [5, 2, 7, 6], "texture": "#0"},
+        "east": {"uv": [5, 2, 7, 6], "texture": "#0"},
+        "south": {"uv": [5, 2, 7, 6], "texture": "#0"},
+        "west": {"uv": [5, 2, 7, 6], "texture": "#0"},
+        "up": {"uv": [5, 0, 7, 2], "texture": "#0"},
+        "down": {"uv": [5, 6, 7, 8], "texture": "#0"}
+      }
+    }
+  ]
+}

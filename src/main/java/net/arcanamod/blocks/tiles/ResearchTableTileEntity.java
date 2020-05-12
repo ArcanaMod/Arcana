@@ -6,6 +6,7 @@ import net.arcanamod.aspects.VisHandlerCapability;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
@@ -18,11 +19,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableTileEntity{// extends TileEntity{
+public class ResearchTableTileEntity extends TileEntity{
 	
-	/*public static final ResourceLocation ID = new ResourceLocation("arcana:research_table");
+	public ResearchTableTileEntity(){
+		super(ArcanaTiles.RESEARCH_TABLE_TE.get());
+	}
 	
-	private boolean shouldDrop = true;
+	/*
 	
 	// Three slots for wand (OR any AspectHandler, but research games can only be performed with a wand), ink, note
 	// up to 9 for crafting guesswork for arcane crafting

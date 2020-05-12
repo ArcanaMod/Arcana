@@ -1,18 +1,18 @@
 {
   "variants": {
     "facing=north": {
-      "model": "arcana:hear_no_evil"
+      "model": "arcana:block/hear_no_evil"
     },
     "facing=south": {
-      "model": "arcana:hear_no_evil",
+      "model": "arcana:block/hear_no_evil",
       "y": 180
     },
     "facing=west": {
-      "model": "arcana:hear_no_evil",
+      "model": "arcana:block/hear_no_evil",
       "y": 270
     },
     "facing=east": {
-      "model": "arcana:hear_no_evil",
+      "model": "arcana:block/hear_no_evil",
       "y": 90
     }
   }

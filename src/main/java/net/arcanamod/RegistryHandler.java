@@ -5,6 +5,7 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -26,9 +27,12 @@ public class RegistryHandler{
 		IForgeRegistry<Item> registry = event.getRegistry();
 		ArcanaBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
 			Item.Properties properties = new Item.Properties();
-			if(block instanceof GroupedBlock)
-				properties = properties.group(((GroupedBlock)block).getGroup());
-			else
+			if(block instanceof GroupedBlock){
+				GroupedBlock grouped = (GroupedBlock)block;
+				ItemGroup group = grouped.getGroup();
+				if(group != null)
+					properties = properties.group(group);
+			}else
 				properties = properties.group(Arcana.ITEMS);
 			BlockItem blockItem = new BlockItem(block, properties);
 			blockItem.setRegistryName(block.getRegistryName());

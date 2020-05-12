@@ -59,8 +59,8 @@ public class ArcanaItems{
 	
 	//	public static Item RESEARCH_NOTE_COMPLETE = new ItemResearchNote("research_note_complete", true).setCreativeTab(Arcana.TAB_ARCANA);
 	//	public static Item RESEARCH_NOTE = new ItemResearchNote("research_note", false).setCreativeTab(Arcana.TAB_ARCANA);
-	public static final RegistryObject<Item> SCRIBING_TOOLS = ITEMS.register("scribing_tools", () -> new Item(new Properties().group(Arcana.ITEMS).maxStackSize(1).maxDamage(100)));
-	//	public static Item RESEARCH_TABLE_PLACER = new ItemResearchTable().setCreativeTab(Arcana.TAB_ARCANA);
+	public static final RegistryObject<Item> SCRIBING_TOOLS = ITEMS.register("scribing_tools", () -> new Item(new Properties().group(Arcana.ITEMS).maxStackSize(1).maxDamage(100).setNoRepair()));
+	public static final RegistryObject<Item> RESEARCH_TABLE_PLACER = ITEMS.register("research_table_placer", () -> new ResearchTableItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	//	public static Item VIS_MANIPULATORS = new ItemVisManipulators().setCreativeTab(Arcana.TAB_ARCANA);
 	public static final RegistryObject<Item> EMPTY_PHIAL = ITEMS.register("empty_phial", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	
