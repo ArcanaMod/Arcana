@@ -1,8 +1,9 @@
 {
-  "parent": "block",
+  "parent": "block/block",
   "credit": "Made with Blockbench",
   "textures": {
-    "0": "arcana/seeNoEvil"
+    "particle": "arcana:block/greatwood_planks",
+    "0": "arcana:block/see_no_evil"
   },
   "elements": [
     {

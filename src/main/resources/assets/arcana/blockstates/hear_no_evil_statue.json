@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "arcana:block/hear_no_evil_statue"
+    },
+    "facing=south": {
+      "model": "arcana:block/hear_no_evil_statue",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "arcana:block/hear_no_evil_statue",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "arcana:block/hear_no_evil_statue",
+      "y": 90
+    }
+  }
+}

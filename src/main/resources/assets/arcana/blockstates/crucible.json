@@ -1,9 +1,7 @@
 {
   "variants": {
-    "normal": [
-      {
-        "model": "arcana:crucible"
-      }
-    ]
+    "": {
+      "model": "arcana:block/crucible"
+    }
   }
 }

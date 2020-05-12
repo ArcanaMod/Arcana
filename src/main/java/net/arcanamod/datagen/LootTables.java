@@ -64,6 +64,12 @@ public class LootTables extends LootTableProvider{
 		addStandardTable(CRACKED_DUNGEON_BRICKS_PRESSURE_PLATE);
 		addStandardTable(CRACKED_DUNGEON_BRICKS_WALL);
 		
+		addStandardTable(INFUSION_PEDESTAL);
+		addStandardTable(ARCANE_CRAFTING_TABLE);
+		addStandardTable(SEE_NO_EVIL_STATUE);
+		addStandardTable(HEAR_NO_EVIL_STATUE);
+		addStandardTable(SPEAK_NO_EVIL_STATUE);
+		
 		Map<ResourceLocation, LootTable> tables = new HashMap<>();
 		for(Map.Entry<Block, LootTable.Builder> entry : lootTables.entrySet())
 			tables.put(entry.getKey().getLootTable(), entry.getValue().setParameterSet(LootParameterSets.BLOCK).build());

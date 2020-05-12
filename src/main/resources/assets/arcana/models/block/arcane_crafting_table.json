@@ -1,5 +1,5 @@
 {
-  "parent": "block",
+  "parent": "block/block",
   "credit": "Made with Blockbench",
   "ambientocclusion": false,
   "textures": {
