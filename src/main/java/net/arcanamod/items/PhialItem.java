@@ -1,5 +1,6 @@
 package net.arcanamod.items;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -11,25 +12,27 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
-public class PhialItem extends Item
-{
-    private String aspectName;
-
-    public PhialItem(String aspectName){
-        super(new Properties().group(Arcana.ASPECTS));
-        if(aspectName.startsWith("phial_"))
-            aspectName = aspectName.substring(6);
-        this.aspectName = aspectName;
-    }
-
-    public ITextComponent getDisplayName(ItemStack stack){
-        return new TranslationTextComponent("phial." + aspectName).applyTextStyle(TextFormatting.AQUA);
-    }
-
-    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
-        tooltip.add(new TranslationTextComponent("aspect." + aspectName + ".desc"));
-        tooltip.add(new StringTextComponent("x8"));
-    }
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
+public class PhialItem extends Item{
+	private String aspectName;
+	
+	public PhialItem(String aspectName){
+		super(new Properties().group(Arcana.ASPECTS));
+		if(aspectName.startsWith("phial_"))
+			aspectName = aspectName.substring(6);
+		this.aspectName = aspectName;
+	}
+	
+	public ITextComponent getDisplayName(ItemStack stack){
+		return new TranslationTextComponent("item.arcana.phial", new TranslationTextComponent("aspect." + aspectName)).applyTextStyle(TextFormatting.AQUA);
+	}
+	
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
+		tooltip.add(new TranslationTextComponent("aspect." + aspectName + ".desc"));
+		tooltip.add(new StringTextComponent("x8"));
+	}
 }
