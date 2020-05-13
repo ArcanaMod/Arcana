@@ -1,5 +1,6 @@
 package net.arcanamod.items;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
@@ -11,13 +12,17 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class PhialItem extends Item
 {
     //private String aspectName;
 
-    public PhialItem(String aspectName){
+    public PhialItem(String aspectName)
+    {
         super(new Properties().group(Arcana.ITEMS));
         /*if(aspectName.startsWith("phial_"))
             aspectName = aspectName.substring(6);

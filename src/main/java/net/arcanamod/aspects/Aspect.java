@@ -27,6 +27,7 @@ public enum Aspect{
 	AURA(0x456978, 0x699fa7, 0x82c7bd, 0xa0e2cb, 0xefeee6),
 	BEAST(0x5a1925, 0x87332d, 0x9c533f, 0xb27357, 0xd09c6b),
 	CRAFTING(0x381627, 0x5a2835, 0x804246, 0xa25f52, 0xb2826b),
+	CREATION(0x0, 0x0, 0x0, 0x0, 0x0),
 	CRYSTAL(0x505fbe, 0x6aa5d6, 0x90cfed, 0xbeedf6, 0xffffff),
 	DARKNESS(0x0, 0x0, 0x0, 0x0, 0x0),
 	DEATH(0xb0b10, 0x1e1b28, 0x2c2438, 0x3f354a, 0x644d6a),
@@ -51,13 +52,12 @@ public enum Aspect{
 	MACHINE(0xd0d1b, 0x201a34, 0x2a2b56, 0x404e6f, 0x52677e),
 	MANA(0x400e6f, 0x8d1ca9, 0xc21ec7, 0xe242b3, 0xf881d6),
 	METAL(0x3a383b, 0x504d51, 0x6e6a6f, 0x97939a, 0xb7b5c2),
-	MIND(0x116d95, 0x14cbcb, 0x33e9ce, 0x74fab8, 0xd3fbd2),
 	MINING(0xae6658, 0xd09367, 0xe9bf7c, 0xfaeaa8, 0xfafbd4),
+	MIND(0x116d95, 0x14cbcb, 0x33e9ce, 0x74fab8, 0xd3fbd2),
 	MOVEMENT(0x716468, 0x918a8a, 0xab9a96, 0xd0b9ac, 0xe6d3c0),
 	NETHER(0x141229, 0x251b42, 0x481d5c, 0x631d6f, 0x911f8d),
 	OVERWORLD(0x261e1d, 0x3d312c, 0x544c3e, 0x677841, 0x6dac4c),
 	PLANT(0x30a01d, 0x95e92e, 0xcaf464, 0xeef88d, 0xf7f8e6),
-	VENOM(0xa0812, 0x1d1429, 0x2c223f, 0x2f3953, 0x36685d),
 	PRIDE(0x227748, 0x2da23a, 0x88ed6a, 0xc1fb99, 0xf4fad5),
 	SEEDS(0x4f5c22, 0x7a7927, 0x8d9135, 0xab983d, 0xc2bd59),
 	SENSES(0x38258e, 0x3f4dbb, 0x5374cf, 0x73b0f2, 0xa2dff6),
@@ -70,6 +70,7 @@ public enum Aspect{
 	TREE(0x462635, 0x5d303b, 0x783b41, 0x955549, 0xb06756),
 	UNDEAD(0x16261e, 0x1f4d27, 0x396c28, 0x6d8e37, 0xb9c450),
 	VACUUM(0x1a1a26, 0x1a1a26, 0x1a1a26, 0x262036, 0x2e2c4b),
+	VENOM(0xa0812, 0x1d1429, 0x2c223f, 0x2f3953, 0x36685d),
 	WEAPON(0x6a1445, 0x911b41, 0xb71831, 0xd94023, 0xf67c30),
 	WIND(0x5d5f71, 0x888599, 0x9ea0bd, 0xccd0df, 0xfffde8),
 	WRATH(0x5a0b3d, 0x8e0f3e, 0xc61626, 0xed1507, 0xffbe8d);
@@ -77,56 +78,63 @@ public enum Aspect{
 	public static final BiMap<Pair<Aspect, Aspect>, Aspect> combinations = HashBiMap.create(Aspect.values().length);
 	
 	static{
-		combinations.put(of(MANA, AIR), AURA);
-		combinations.put(of(WATER, EARTH), LIFE);
-		combinations.put(of(LIFE, EARTH), PLANT);
-		combinations.put(of(PLANT, AIR), TREE);
-		combinations.put(of(LIFE, WATER), SLIME);
-		combinations.put(of(ORDER, FIRE), ENERGY);
-		combinations.put(of(ORDER, EARTH), CRYSTAL);
-		combinations.put(of(CRYSTAL, EARTH), METAL);
-		combinations.put(of(ENERGY, AIR), MOVEMENT);
-		combinations.put(of(ENERGY, MOVEMENT), WIND);
-		combinations.put(of(CHAOS, WATER), VENOM);
-		combinations.put(of(CHAOS, LIFE), DEATH);
-		combinations.put(of(ORDER, ENERGY), LIGHT);
+		combinations.put(of(FIRE, CHAOS), ICE);
+		combinations.put(of(FIRE, AIR), LIGHT);
+		combinations.put(of(ORDER, AIR), MOVEMENT);
 		combinations.put(of(ORDER, CHAOS), EXCHANGE);
-		combinations.put(of(CHAOS, AIR), VACUUM);
-		combinations.put(of(VACUUM, LIGHT), DARKNESS);
-		combinations.put(of(VACUUM, ENERGY), MANA);
-		combinations.put(of(LIFE, DEATH), SPIRIT);
-		combinations.put(of(MOVEMENT, LIFE), BEAST);
-		combinations.put(of(SPIRIT, AIR), SENSES);
-		combinations.put(of(MANA, CHAOS), TAINT);
-		combinations.put(of(MOVEMENT, AIR), FLIGHT);
-		combinations.put(of(CHAOS, MOVEMENT), IMPRISON);
-		combinations.put(of(FIRE, SPIRIT), MIND);
-		combinations.put(of(MIND, BEAST), HUMAN);
-		combinations.put(of(HUMAN, ORDER), TOOL);
-		combinations.put(of(TOOL, FIRE), WEAPON);
-		combinations.put(of(MOVEMENT, EARTH), JOURNEY);
-		combinations.put(of(MOVEMENT, TOOL), MACHINE);
-		combinations.put(of(DEATH, MOVEMENT), UNDEAD);
-		combinations.put(of(VACUUM, LIGHT), GREED);
-		combinations.put(of(CHAOS, FIRE), ICE);
-		combinations.put(of(TOOL, EARTH), ARMOUR);
-		combinations.put(of(HUMAN, TOOL), CRAFTING);
-		combinations.put(of(DARKNESS, VACUUM), ELDRITCH);
-		combinations.put(of(ELDRITCH, AIR), ENDER);
-		combinations.put(of(FLESH, GREED), LUST);
-		combinations.put(of(GREED, SENSES), ENVY);
-		combinations.put(of(ORDER, LIFE), SEEDS);
-		combinations.put(of(TOOL, BEAST), FABRIC);
-		combinations.put(of(DEATH, BEAST), FLESH);
-		combinations.put(of(FLESH, LIFE), GLUTTONY);
-		combinations.put(of(TOOL, PLANT), HARVEST);
-		combinations.put(of(HUMAN, EARTH), MINING);
-		combinations.put(of(EARTH, FIRE), NETHER);
+		combinations.put(of(FIRE, ORDER), STRENGTH);
+		combinations.put(of(AIR, WATER), WIND);
+		combinations.put(of(AIR, CHAOS), VACUUM);
+		combinations.put(of(WATER, CHAOS), VENOM);
+		combinations.put(of(WATER, EARTH), LIFE);
+		combinations.put(of(ORDER, EARTH), CRYSTAL);
+
 		combinations.put(of(LIGHT, LIFE), OVERWORLD);
-		combinations.put(of(WEAPON, ARMOUR), STRENGTH);
-		combinations.put(of(GLUTTONY, MOVEMENT), SLOTH);
-		combinations.put(of(GLUTTONY, STRENGTH), PRIDE);
-		combinations.put(of(STRENGTH, FIRE), WRATH);
+		combinations.put(of(MOVEMENT, LIFE), BEAST);
+		combinations.put(of(EARTH, LIFE), PLANT);
+		combinations.put(of(EARTH, MOVEMENT), JOURNEY);
+		combinations.put(of(WATER, LIFE), SLIME);
+		combinations.put(of(EARTH, CRYSTAL), METAL);
+		combinations.put(of(LIFE, CHAOS), DEATH);
+		combinations.put(of(STRENGTH, VACUUM), MANA);
+		combinations.put(of(LIGHT, VACUUM), DARKNESS);
+		combinations.put(of(MOVEMENT, CHAOS), IMPRISON);
+		combinations.put(of(AIR, MOVEMENT), FLIGHT);
+
+		combinations.put(of(VACUUM, DARKNESS), ENDER);
+		combinations.put(of(AIR, PLANT), TREE);
+		combinations.put(of(AIR, MANA), AURA);
+		combinations.put(of(BEAST, DEATH), FLESH);
+		combinations.put(of(MOVEMENT, DEATH), UNDEAD);
+		combinations.put(of(LIFE, DEATH), SPIRIT);
+
+		combinations.put(of(AIR, SPIRIT), SENSES);
+		combinations.put(of(ORDER, SPIRIT), MIND);
+		combinations.put(of(FIRE, SPIRIT), NETHER);
+
+		combinations.put(of(MIND, CHAOS), ELDRITCH);
+		combinations.put(of(MANA, CHAOS), TAINT);
+		combinations.put(of(MIND, SENSES), CREATION);
+
+		combinations.put(of(CREATION, ORDER), TOOL);
+		combinations.put(of(CREATION, PLANT), SEEDS);
+		combinations.put(of(CREATION, EARTH), MINING);
+
+		combinations.put(of(CREATION, TOOL), CRAFTING);
+		combinations.put(of(MOVEMENT, TOOL), MACHINE);
+		combinations.put(of(SEEDS, TOOL), HARVEST);
+		combinations.put(of(BEAST, TOOL), FABRIC);
+		combinations.put(of(FIRE, TOOL), WEAPON);
+		combinations.put(of(CREATION, TOOL), ARMOUR);
+		combinations.put(of(CREATION, MIND), HUMAN);
+
+		combinations.put(of(HUMAN, FLESH), LUST);
+		combinations.put(of(HUMAN, IMPRISON), SLOTH);
+		combinations.put(of(HUMAN, VACUUM), GLUTTONY);
+		combinations.put(of(HUMAN, WEAPON), WRATH);
+		combinations.put(of(HUMAN, CREATION), ENVY);
+		combinations.put(of(HUMAN, FABRIC), PRIDE);
+		combinations.put(of(HUMAN, METAL), GREED);
 	}
 
 	private final int color_0;
