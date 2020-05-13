@@ -2,6 +2,8 @@
   "replace": false,
   "values": [
     "#forge:ingots/thaumium",
-    "#forge:ingots/arcanium"
+    "#forge:ingots/arcanium",
+    "#forge:ingots/silver",
+    "#forge:ingots/void_metal"
   ]
 }

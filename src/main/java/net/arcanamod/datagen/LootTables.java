@@ -69,6 +69,9 @@ public class LootTables extends LootTableProvider{
 		addStandardTable(SEE_NO_EVIL_STATUE);
 		addStandardTable(HEAR_NO_EVIL_STATUE);
 		addStandardTable(SPEAK_NO_EVIL_STATUE);
+		addStandardTable(SILVER_BLOCK);
+		addStandardTable(SILVER_ORE);
+		addStandardTable(VOID_METAL_BLOCK);
 		
 		Map<ResourceLocation, LootTable> tables = new HashMap<>();
 		for(Map.Entry<Block, LootTable.Builder> entry : lootTables.entrySet())

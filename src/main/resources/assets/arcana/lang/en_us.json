@@ -76,10 +76,13 @@
     "item.arcana.void_metal_shovel": "Void Metal Shovel",
     "item.arcana.void_metal_hoe": "Void Metal Hoe",
 
-    "_comment": "Ingots",
+    "_comment": "Materials",
     "item.arcana.thaumium_ingot": "Thaumium Ingot",
     "item.arcana.arcanium_ingot": "Arcanium Ingot",
     "item.arcana.void_metal_ingot": "Void Metal Ingot",
+    "item.arcana.void_metal_nugget": "Void Metal Nugget",
+    "item.arcana.silver_ingot": "Silver Ingot",
+
     "item.arcana.silverwood_stick": "Silverwood Stick",
     "item.arcana.amber": "Amber",
     "item.arcana.quicksilver": "Quicksilver",
@@ -308,12 +311,15 @@
     "block.arcana.hear_no_evil_statue": "Hear No Evil Statue",
     "block.arcana.speak_no_evil_statue": "Speak No Evil Statue",
 
-    "_comment": "Ore",
+    "_comment": "Ores",
     "block.arcana.amber_ore": "Amber Ore",
+    "block.arcana.silver_ore": "Silver Ore",
 
     "_comment": "Metals",
     "block.arcana.arcanium_block": "Block of Arcanium",
     "block.arcana.thaumium_block": "Block of Thaumium",
+    "block.arcana.silver_block": "Block of Silver",
+    "block.arcana.void_metal_block": "Block of Void Metal",
 
     "_comment": "Wood",
     "block.arcana.dair_leaves": "Dair Leaves",

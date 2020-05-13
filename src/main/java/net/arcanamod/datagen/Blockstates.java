@@ -64,6 +64,10 @@ public class Blockstates extends BlockStateProvider{
 		wallBlock(DUNGEON_BRICKS_WALL.get(), ArcanaDataGenerators.DUNGEON_BRICKS);
 		wallBlock(CRACKED_DUNGEON_BRICKS_WALL.get(), ArcanaDataGenerators.CRACKED_DUNGEON_BRICKS);
 		wallBlock(MOSSY_DUNGEON_BRICKS_WALL.get(), ArcanaDataGenerators.MOSSY_DUNGEON_BRICKS);
+		
+		simpleBlock(SILVER_BLOCK.get());
+		simpleBlock(SILVER_ORE.get());
+		simpleBlock(VOID_METAL_BLOCK.get());
 	}
 	
 	@Nonnull
