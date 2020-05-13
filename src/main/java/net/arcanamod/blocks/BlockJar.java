@@ -63,13 +63,14 @@ public class BlockJar extends Block{
 			if (worldIn.getTileEntity(pos) instanceof JarTileEntity)
 			{
 				JarTileEntity jarTE = ((JarTileEntity) worldIn.getTileEntity(pos));
-				if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)<100)
+				/*if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)<100)
 				{
+					if (jarTE.getAllowedAspect()!=)
 					player.getHeldItem(handIn).shrink(1);
 					player.addItemStackToInventory(new ItemStack(ArcanaItems.EMPTY_PHIAL.get()));
 					jarTE.fill(2);
 					return ActionResultType.SUCCESS;
-				}
+				}*/
 			}
 		}
 		//Empty Phial isn't instance of PhialItem because has no aspect inside.
@@ -78,13 +79,13 @@ public class BlockJar extends Block{
 			if (worldIn.getTileEntity(pos) instanceof JarTileEntity)
 			{
 				JarTileEntity jarTE = ((JarTileEntity) worldIn.getTileEntity(pos));
-				if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)<100)
+				/*if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)<100)
 				{
 					player.getHeldItem(handIn).shrink(1);
 					player.addItemStackToInventory(new ItemStack(Aspects.getPhialItemStackForAspect(Aspect.GREED).getItem()));//TODO: check aspect in jar and get PhialItem with that aspect.
 					jarTE.drain(2);
 					return ActionResultType.SUCCESS;
-				}
+				}*/
 			}
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class JarTileEntity extends TileEntity{
 
 	public VisHandler vis = VisHandlerCapability.ASPECT_HANDLER.getDefaultInstance();
-	public Aspect allowedAspect = Aspect.GREED;
+	public Aspect allowedAspect = null;
 
 	protected float smoothAmountVisContentAnimation = 0;
 	protected float lastVisAmount = 0;
@@ -25,8 +25,14 @@ public class JarTileEntity extends TileEntity{
 		super(ArcanaTiles.JAR_TE.get());
 	}
 
-	public void fill(int amount)
+	public Aspect getAllowedAspect()
 	{
+		return allowedAspect;
+	}
+
+	public void fill(int amount, Aspect aspect)
+	{
+		allowedAspect = aspect;
 		vis.insert(allowedAspect,amount,false);
 		lastVisAmount = vis.getCurrentVis(allowedAspect)-amount;
 	}
@@ -44,8 +50,8 @@ public class JarTileEntity extends TileEntity{
 		int delta_time = (int) ((time - last_time) / 1000000);
 		last_time = time;
 
-		float visScaled = vis.getCurrentVis(allowedAspect);
-		Arcana.logger.debug("Combined: "+ (visScaled-lastVisAmount) + " Full: "+ (visScaled-lastVisAmount)/10f/delta_time + " Only: "+ smoothAmountVisContentAnimation
+		float visScaled = vis.getCurrentVis(allowedAspect)/20f;
+		Arcana.logger.debug("Combined: "+ (visScaled-lastVisAmount) + " Full: "+ (visScaled-lastVisAmount)/10f/delta_time/10f + " Only: "+ smoothAmountVisContentAnimation
 				+ " All: "+ visScaled+ " Last: "+ lastVisAmount);
 		if (smoothAmountVisContentAnimation <= visScaled)
 		smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/10f/delta_time;
@@ -58,7 +64,7 @@ public class JarTileEntity extends TileEntity{
 	{
 		if (this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.HAWTHORN_PLANKS.get())
 			return getCreativeJarColor();
-		else return Aspects.getAspectColor(allowedAspect);
+		else return new Color(Aspect.AIR.getAspectColor()[2]);
 	}
 
 	public int nextColor = 0;

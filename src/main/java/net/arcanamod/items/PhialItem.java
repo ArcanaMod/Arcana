@@ -15,21 +15,21 @@ import java.util.List;
 
 public class PhialItem extends Item
 {
-    private String aspectName;
+    //private String aspectName;
 
     public PhialItem(String aspectName){
-        super(new Properties().group(Arcana.ASPECTS));
-        if(aspectName.startsWith("phial_"))
+        super(new Properties().group(Arcana.ITEMS));
+        /*if(aspectName.startsWith("phial_"))
             aspectName = aspectName.substring(6);
-        this.aspectName = aspectName;
+        this.aspectName = aspectName;*/
     }
 
-    public ITextComponent getDisplayName(ItemStack stack){
+    /*public ITextComponent getDisplayName(ItemStack stack){
         return new TranslationTextComponent("phial." + aspectName).applyTextStyle(TextFormatting.AQUA);
     }
 
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
         tooltip.add(new TranslationTextComponent("aspect." + aspectName + ".desc"));
         tooltip.add(new StringTextComponent("x8"));
-    }
+    }*/
 }
