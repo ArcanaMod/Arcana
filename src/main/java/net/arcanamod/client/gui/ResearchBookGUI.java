@@ -1,22 +1,24 @@
 package net.arcanamod.client.gui;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.network.Connection;
 import net.arcanamod.research.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.MouseHelper;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.Matrix4f;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -50,7 +52,8 @@ public class ResearchBookGUI extends Screen{
 	
 	static float xPan = 0;
 	static float yPan = 0;
-	static float zoom = 0.7f;//1f;
+	static float zoom = 0.7f;
+	static boolean show_zoom = false;
 	
 	public ResearchBookGUI(ResearchBook book){
 		super(new StringTextComponent(""));
@@ -344,15 +347,26 @@ public class ResearchBookGUI extends Screen{
 		// 69x69 corners, 2px sides, then add decorations
 		int width = getFrameWidth();
 		int height = getFrameHeight();
-		GuiUtils.drawContinuousTexturedBox((this.width - width) / 2, (this.height - height) / 2, 0, 0, width, height, 140, 140, 69, getBlitOffset());
+		int x = (this.width - width) / 2;
+		int y = (this.height - height) / 2;
+		GuiUtils.drawContinuousTexturedBox(x, y, 0, 0, width, height, 140, 140, 69, getBlitOffset());
 		// draw top
-		drawTexturedModalRect((((this.width - width) / 2) + (width / 2)) - 36, ((this.height - height) / 2), 140, 0, 72, 17);
+		drawTexturedModalRect((x + (width / 2)) - 36, y, 140, 0, 72, 17);
 		// draw bottom
-		drawTexturedModalRect((((this.width - width) / 2) + (width / 2)) - 36, ((this.height - height) / 2 + height) - 18, 140, 17, 72, 18);
+		drawTexturedModalRect((x + (width / 2)) - 36, (y + height) - 18, 140, 17, 72, 18);
 		// draw left
-		drawTexturedModalRect((this.width - width) / 2, (((this.height - height) / 2) + (height / 2)) - 35, 140, 35, 17, 70);
+		drawTexturedModalRect(x, (y + (height / 2)) - 35, 140, 35, 17, 70);
 		// draw right
-		drawTexturedModalRect((this.width - width) / 2 + width - 17, (((this.height - height) / 2) + (height / 2)) - 35, 157, 35, 17, 70);
+		drawTexturedModalRect(x + width - 17, (y + (height / 2)) - 35, 157, 35, 17, 70);
+		if(show_zoom){
+			MatrixStack textStack = new MatrixStack();
+			textStack.translate(0.0D, 0.0D, 299);
+			Matrix4f textLocation = textStack.getLast().getMatrix();
+			IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+			minecraft.fontRenderer.renderString("Zoom: " + zoom, x + 22, y + 5, -1, false, textLocation, renderType, false, 0, 15728880);
+			renderType.finish();
+			RenderSystem.enableDepthTest();
+		}
 	}
 	
 	private int getFrameWidth(){
@@ -409,6 +423,10 @@ public class ResearchBookGUI extends Screen{
 			if(keyCode == 256 || getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
 				getMinecraft().player.closeScreen();
 				return true;
+			}
+			if(keyCode == 292){
+				// F3 pressed
+				show_zoom = !show_zoom;
 			}
 			return false;
 		}
