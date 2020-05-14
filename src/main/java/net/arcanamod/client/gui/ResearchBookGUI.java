@@ -3,8 +3,10 @@ package net.arcanamod.client.gui;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
+import net.arcanamod.network.Connection;
 import net.arcanamod.research.*;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.MouseHelper;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -14,6 +16,7 @@ import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -25,6 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.*;
+import static net.minecraft.util.math.MathHelper.clamp;
 import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
 
 public class ResearchBookGUI extends Screen{
@@ -39,6 +43,7 @@ public class ResearchBookGUI extends Screen{
 	public static final ResourceLocation ARROWS_AND_BASES = new ResourceLocation(Arcana.MODID, "textures/gui/research/research_bases.png");
 	
 	private static final int MAX_PAN = 512;
+	private static final int ZOOM_MULT = 2;
 	
 	// drawing helper
 	private final Arrows arrows = new Arrows();
@@ -328,50 +333,57 @@ public class ResearchBookGUI extends Screen{
 		int x = (int)((entry.x() * 30 + getXOffset() + 2) * zoom);
 		int y = (int)((entry.y() * 30 + getYOffset() + 2) * zoom);
 		int scrx = (width - getFrameWidth()) / 2 + 16, scry = (height - getFrameHeight()) / 2 + 17;
-		return mouseX >= x && mouseX <= x + (26 * zoom) && mouseY >= y && mouseY <= y + (26 * zoom) && mouseX >= scrx && mouseX <= scrx + 224 && mouseY >= scry && mouseY <= scry + 196;
+		int visibleWidth = getFrameWidth() - 32, visibleHeight = getFrameHeight() - 34;
+		return mouseX >= x && mouseX <= x + (26 * zoom) && mouseY >= y && mouseY <= y + (26 * zoom) && mouseX >= scrx && mouseX <= scrx + visibleWidth && mouseY >= scry && mouseY <= scry + visibleHeight;
 	}
 	
 	private void renderFrame(){
 		getMinecraft().getTextureManager().bindTexture(texture);
 		RenderSystem.enableBlend();
-		//drawTexturedModalRect((width - fWidth) / 2, (height - fHeight) / 2, 0, 0, fWidth, fHeight);
 		// resizable gui!
 		// 69x69 corners, 2px sides, then add decorations
 		int width = getFrameWidth();
 		int height = getFrameHeight();
 		GuiUtils.drawContinuousTexturedBox((this.width - width) / 2, (this.height - height) / 2, 0, 0, width, height, 140, 140, 69, getBlitOffset());
+		// draw top
+		drawTexturedModalRect((((this.width - width) / 2) + (width / 2)) - 36, ((this.height - height) / 2), 140, 0, 72, 17);
+		// draw bottom
+		drawTexturedModalRect((((this.width - width) / 2) + (width / 2)) - 36, ((this.height - height) / 2 + height) - 18, 140, 17, 72, 18);
+		// draw left
+		drawTexturedModalRect((this.width - width) / 2, (((this.height - height) / 2) + (height / 2)) - 35, 140, 35, 17, 70);
+		// draw right
+		drawTexturedModalRect((this.width - width) / 2 + width - 17, (((this.height - height) / 2) + (height / 2)) - 35, 157, 35, 17, 70);
 	}
 	
 	private int getFrameWidth(){
-		// 256
 		return width - 40;
 	}
 	
 	private int getFrameHeight(){
-		// 230
 		return height - 20;
 	}
 	
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY){
-		xPan += deltaX / zoom;
-		yPan -= deltaY / zoom;
-		xPan = min(max(xPan, -MAX_PAN), MAX_PAN);
-		yPan = min(max(yPan, -MAX_PAN), MAX_PAN);
+		xPan += (deltaX * ZOOM_MULT) / zoom;
+		yPan -= (deltaY * ZOOM_MULT) / zoom;
+		xPan = clamp(xPan, -MAX_PAN, MAX_PAN);
+		yPan = clamp(yPan, -MAX_PAN, MAX_PAN);
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int button){
 		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style;
-			if(hovering(entry, (int)mouseX, (int)mouseY))
+			if(hovering(entry, (int)mouseX, (int)mouseY)){
 				if(button != 2){
 					if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS)
 						// left/right (& other) click: open page
 						getMinecraft().displayGuiScreen(new ResearchEntryGUI(entry));
 				}else
 					// middle click: try advance
-					//Connection.sendTryAdvance(entry);
-					break;
+					Connection.sendTryAdvance(entry.key());
+				break;
+			}
 		}
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
