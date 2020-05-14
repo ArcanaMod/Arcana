@@ -34,10 +34,10 @@ public class ResearchBookGUI extends Screen{
 	ResourceLocation texture;
 	int tab = 0;
 	
-	public static final String SUFFIX = "_menu_gui.png";
+	// public static final String SUFFIX = "_menu_gui.png";
+	public static final String SUFFIX_RESIZABLE = "_menu_resizable.png";
 	public static final ResourceLocation ARROWS_AND_BASES = new ResourceLocation(Arcana.MODID, "textures/gui/research/research_bases.png");
 	
-	private static final int fWidth = 256, fHeight = 230;
 	private static final int MAX_PAN = 512;
 	
 	// drawing helper
@@ -50,7 +50,7 @@ public class ResearchBookGUI extends Screen{
 	public ResearchBookGUI(ResearchBook book){
 		super(new StringTextComponent(""));
 		this.book = book;
-		texture = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + SUFFIX);
+		texture = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + SUFFIX_RESIZABLE);
 		PlayerEntity player = Minecraft.getInstance().player;
 		categories = book.getCategories().stream().filter(category -> {
 			if(category.requirement() == null)
@@ -86,8 +86,8 @@ public class ResearchBookGUI extends Screen{
 		// draw stuff
 		// 224x196 viewing area
 		int scale = (int)getMinecraft().getMainWindow().getGuiScaleFactor();//new ScaledResolution(mc).getScaleFactor();
-		int x = (width - fWidth) / 2 + 16, y = (height - fHeight) / 2 + 17;
-		int visibleWidth = 224, visibleHeight = 196;
+		int x = (width - getFrameWidth()) / 2 + 16, y = (height - getFrameHeight()) / 2 + 17;
+		int visibleWidth = getFrameWidth() - 32, visibleHeight = getFrameHeight() - 34;
 		GL11.glScissor(x * scale, y * scale, visibleWidth * scale, visibleHeight * scale);
 		GL11.glEnable(GL_SCISSOR_TEST);
 		// scissors on
@@ -113,7 +113,7 @@ public class ResearchBookGUI extends Screen{
 		// add buttons
 		for(int i = 0, size = categories.size(); i < size; i++){
 			ResearchCategory category = categories.get(i);
-			addButton(new CategoryButton(i, (width - fWidth) / 2 - 12, 32 + ((height - fHeight) / 2) + 20 * i, category));
+			addButton(new CategoryButton(i, (width - getFrameWidth()) / 2 - 12, 32 + ((height - getFrameHeight()) / 2) + 20 * i, category));
 		}
 	}
 	
@@ -124,9 +124,8 @@ public class ResearchBookGUI extends Screen{
 		// which is only 32
 		// let's scale is up x2, and also pan with half speed (which is what I'd do anyways) so we get 128 pan
 		getMinecraft().getTextureManager().bindTexture(categories.get(tab).bg());
-		drawModalRectWithCustomSizedTexture((width - fWidth) / 2 + 16, (height - fHeight) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, 224, 196, 512, 512);
+		drawModalRectWithCustomSizedTexture((width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, getFrameWidth() - 32, getFrameHeight() - 34, 512, 512);
 	}
-	
 	
 	private void renderEntries(float partialTicks){
 		RenderSystem.scaled(zoom, zoom, 1f);
@@ -328,15 +327,29 @@ public class ResearchBookGUI extends Screen{
 	private boolean hovering(ResearchEntry entry, int mouseX, int mouseY){
 		int x = (int)((entry.x() * 30 + getXOffset() + 2) * zoom);
 		int y = (int)((entry.y() * 30 + getYOffset() + 2) * zoom);
-		// 224x196 viewing area
-		int scrx = (width - fWidth) / 2 + 16, scry = (height - fHeight) / 2 + 17;
+		int scrx = (width - getFrameWidth()) / 2 + 16, scry = (height - getFrameHeight()) / 2 + 17;
 		return mouseX >= x && mouseX <= x + (26 * zoom) && mouseY >= y && mouseY <= y + (26 * zoom) && mouseX >= scrx && mouseX <= scrx + 224 && mouseY >= scry && mouseY <= scry + 196;
 	}
 	
 	private void renderFrame(){
 		getMinecraft().getTextureManager().bindTexture(texture);
 		RenderSystem.enableBlend();
-		drawTexturedModalRect((width - fWidth) / 2, (height - fHeight) / 2, 0, 0, fWidth, fHeight);
+		//drawTexturedModalRect((width - fWidth) / 2, (height - fHeight) / 2, 0, 0, fWidth, fHeight);
+		// resizable gui!
+		// 69x69 corners, 2px sides, then add decorations
+		int width = getFrameWidth();
+		int height = getFrameHeight();
+		GuiUtils.drawContinuousTexturedBox((this.width - width) / 2, (this.height - height) / 2, 0, 0, width, height, 140, 140, 69, getBlitOffset());
+	}
+	
+	private int getFrameWidth(){
+		// 256
+		return width - 40;
+	}
+	
+	private int getFrameHeight(){
+		// 230
+		return height - 20;
 	}
 	
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY){
