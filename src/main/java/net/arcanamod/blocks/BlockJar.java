@@ -74,7 +74,7 @@ public class BlockJar extends Block{
 			}
 		}
 		//Empty Phial isn't instance of PhialItem because has no aspect inside.
-		else if (player.getHeldItem(handIn).getItem() == ArcanaItems.EMPTY_PHIAL.get())
+		else if (/*player.getHeldItem(handIn).getItem() == ArcanaItems.EMPTY_PHIAL.get()*/false)
 		{
 			if (worldIn.getTileEntity(pos) instanceof JarTileEntity)
 			{
