@@ -12,7 +12,7 @@ import java.util.Set;
  * Implement this interface as a capability which should handle aspects, especially storing
  * vis. This should not be used for essentia (which doesn't exist yet anyways).
  */
-public interface VisHandler extends INBTSerializable<CompoundNBT>{
+public interface VisHandler extends INBTSerializable<CompoundNBT> {
 	
 	/**
 	 * Inserts an amount of vis of an aspect, and returns the remainder.

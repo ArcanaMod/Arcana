@@ -51,8 +51,8 @@ public class JarTileEntity extends TileEntity{
 		last_time = time;
 
 		float visScaled = vis.getCurrentVis(allowedAspect)/20f;
-		Arcana.logger.debug("Combined: "+ (visScaled-lastVisAmount) + " Full: "+ (visScaled-lastVisAmount)/10f/delta_time/10f + " Only: "+ smoothAmountVisContentAnimation
-				+ " All: "+ visScaled+ " Last: "+ lastVisAmount);
+		//Arcana.logger.debug("Combined: "+ (visScaled-lastVisAmount) + " Full: "+ (visScaled-lastVisAmount)/10f/delta_time/10f + " Only: "+ smoothAmountVisContentAnimation
+		//		+ " All: "+ visScaled+ " Last: "+ lastVisAmount);
 		if (smoothAmountVisContentAnimation <= visScaled)
 		smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/10f/delta_time;
 		//if (smoothAmountVisContentAnimation > visScaled) // TODO: Fix Jar draining animation

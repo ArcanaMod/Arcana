@@ -64,7 +64,7 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> RESEARCH_TABLE_PLACER = ITEMS.register("research_table_placer", () -> new ResearchTableItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	//	public static Item VIS_MANIPULATORS = new ItemVisManipulators().setCreativeTab(Arcana.TAB_ARCANA);
 	//public static final RegistryObject<Item> EMPTY_PHIAL = ITEMS.register("empty_phial", () -> new Item(new Properties().group(Arcana.ITEMS)));
-	public static final RegistryObject<Item> PHIAL = ITEMS.register("phial", () -> new PhialItem(Aspect.AIR));
+	public static final RegistryObject<Item> PHIAL = ITEMS.register("phial", () -> new PhialItem());
 	
 	// Books
 	public static final RegistryObject<Item> ARCANUM = ITEMS.register("arcanum", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(Arcana.MODID, "arcanum")));

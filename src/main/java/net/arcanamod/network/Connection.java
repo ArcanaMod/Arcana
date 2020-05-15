@@ -25,6 +25,7 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkModifyResearch.class, PkModifyResearch::encode, PkModifyResearch::decode, PkModifyResearch::handle);
 		INSTANCE.registerMessage(id++, PkSyncPlayerResearch.class, PkSyncPlayerResearch::encode, PkSyncPlayerResearch::decode, PkSyncPlayerResearch::handle);
 		INSTANCE.registerMessage(id++, PkTryAdvance.class, PkTryAdvance::encode, PkTryAdvance::decode, PkTryAdvance::handle);
+		INSTANCE.registerMessage(id++, PkPhialFillCommand.class, PkPhialFillCommand::encode, PkPhialFillCommand::decode, PkPhialFillCommand::handle);
 	}
 	
 	public static void sendModifyResearch(PkModifyResearch.Diff change, ResourceLocation research, ServerPlayerEntity target){
@@ -37,5 +38,9 @@ public class Connection{
 	
 	public static void sendSyncPlayerResearch(Researcher from, ServerPlayerEntity target){
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncPlayerResearch(from.getEntryData(), from.getPuzzleData()));
+	}
+
+	public static void sendFilledPhial(ServerPlayerEntity target){
+		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkPhialFillCommand());
 	}
 }
