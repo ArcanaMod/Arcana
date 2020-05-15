@@ -5,6 +5,7 @@ import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.research.impls.Guesswork;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.util.ResourceLocation;
@@ -12,6 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static net.arcanamod.client.gui.ResearchEntryGUI.drawTexturedModalRect;
 
 public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRenderer<Guesswork>{
 	
@@ -26,12 +29,12 @@ public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRender
 		// render result
 		int rX = paperLeft(screenWidth) + 78;
 		int rY = paperTop(screenHeight) + 13;
-		//drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
+		drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
 		int ulX = paperLeft(screenWidth) + 10;
 		int ulY = paperTop(screenHeight) + 49;
-		//drawTexturedModalRect(ulX, ulY, 145, 1, 72, 72);
-		//RenderHelper.enableGUIStandardItemLighting();
-		//mc().getRenderItem().renderItemAndEffectIntoGUI(CraftingManager.getRecipe(puzzle.getRecipe()).getRecipeOutput(), rX + 29 - 8, rY + 10 - 8);
+		drawTexturedModalRect(ulX, ulY, 145, 1, 72, 72);
+		RenderHelper.enableStandardItemLighting();
+		//mc().getItemRenderer().renderItemAndEffectIntoGUI(CraftingManager.getRecipe(puzzle.getRecipe()).getRecipeOutput(), rX + 29 - 8, rY + 10 - 8);
 		
 		List<Map.Entry<ResourceLocation, String>> indexHelper = new ArrayList<>(puzzle.getHints().entrySet());
 		//IRecipe recipe = CraftingManager.getRecipe(puzzle.getRecipe());
