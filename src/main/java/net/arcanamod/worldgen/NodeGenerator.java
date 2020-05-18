@@ -20,13 +20,13 @@ public class NodeGenerator{// implements IWorldGenerator{
 	}
 	
 	public void generateWorld(Random random, int chunkX, int chunkZ, World world, boolean newGen){
-		if(!newGen && !ArcanaConfig.NODE_RETROGEN)
+		if(!newGen && !ArcanaConfig.NODE_RETROGEN.get())
 			return;
 		boolean chunkWritten = false;
 		
 		// TODO: node generation in other dimensions
 		if(world.getDimension().isSurfaceWorld()){
-			if(random.nextInt(1000) < ArcanaConfig.NODE_CHANCE){
+			if(random.nextInt(1000) < ArcanaConfig.NODE_CHANCE.get()){
 				// pick random x/y
 				int x = random.nextInt(16), z = random.nextInt(16);
 				// 2-10 blocks above highest block at x/y

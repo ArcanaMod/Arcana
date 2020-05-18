@@ -13,14 +13,12 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class FeatureGenerator{
 	//Not used ArcanaConfig.AMBER_MIN_VEIN_SIZE
-	private static final CountRangeConfig AMBER_BLOCK_CONFIG = new CountRangeConfig(ArcanaConfig.AMBER_CHANCES_TO_SPAWN, ArcanaConfig.AMBER_MIN_Y, 0, ArcanaConfig.AMBER_MAX_Y);
+	private static final CountRangeConfig AMBER_BLOCK_CONFIG = new CountRangeConfig(ArcanaConfig.AMBER_CHANCES_TO_SPAWN.get(), ArcanaConfig.AMBER_MIN_Y.get(), 0, ArcanaConfig.AMBER_MAX_Y.get());
 	
 	public static void setupFeatureGeneraton(){
-		for(Biome biome : ForgeRegistries.BIOMES){
-			if(biome.getCategory() != Biome.Category.NETHER && biome.getCategory() != Biome.Category.THEEND){
-				oreFeature(biome, OreFeatureConfig.FillerBlockType.NATURAL_STONE, ArcanaBlocks.AMBER_ORE.get(), AMBER_BLOCK_CONFIG, ArcanaConfig.AMBER_MAX_VEIN_SIZE);
-			}
-		}
+		for(Biome biome : ForgeRegistries.BIOMES)
+			if(biome.getCategory() != Biome.Category.NETHER && biome.getCategory() != Biome.Category.THEEND)
+				oreFeature(biome, OreFeatureConfig.FillerBlockType.NATURAL_STONE, ArcanaBlocks.AMBER_ORE.get(), AMBER_BLOCK_CONFIG, ArcanaConfig.AMBER_MAX_VEIN_SIZE.get());
 	}
 	
 	/**
