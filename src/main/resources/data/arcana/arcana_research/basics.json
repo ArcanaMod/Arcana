@@ -61,8 +61,8 @@
           "content": "research.arcana.vis_manipulators.stage.2"
         },
         {
-          "type": "recipe",
-          "content": "arcana:temp_vis_manipulators_1",
+          "type": "crafting",
+          "content": "arcana:iron_cap",
           "requirements": [
             "0*arcana:vis_manipulation_tools"
           ]
@@ -95,12 +95,12 @@
           "content": "research.arcana.research_intro.stage.1"
         },
         {
-          "type": "recipe",
+          "type": "crafting",
           "content": "arcana:ink"
         },
         {
-          "type": "recipe",
-          "content": "arcana:temp_research_table",
+          "type": "crafting",
+          "content": "arcana:gold_cap",
           "requirements": [
             "0*arcana:research_table_placer"
           ]
@@ -134,7 +134,7 @@
           "content": "research.arcana.revealing.stage.1"
         },
         {
-          "type": "recipe",
+          "type": "crafting",
           "content": "arcana:temp_goggles_of_revealing",
           "requirements": [
             "0*arcana:goggles_of_revealing"
@@ -175,7 +175,7 @@
           "content": "research.arcana.alchemy_intro.stage.2"
         },
         {
-          "type": "recipe",
+          "type": "crafting",
           "content": "arcana:temp_arcanium_ingot",
           "requirements": [
             "0*arcana:arcanium_ingot"

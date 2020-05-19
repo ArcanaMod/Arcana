@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundNBT;
  */
 public class StringSection extends EntrySection{
 	
-	public static final String TYPE = "StringSection";
+	public static final String TYPE = "string";
 	
 	String content;
 	

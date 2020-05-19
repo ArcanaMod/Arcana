@@ -21,10 +21,14 @@
           "content": "research.arcana.tainted.stage.1"
         },
         {
-          "type": "recipe",
-          "content": "__furnace__:arcana-tainted_oak_log.arcana-tainted_wand_core",
+          "type": "smelting",
+          "content": "minecraft:iron_nugget_from_smelting"
+        },
+        {
+          "type": "smelting",
+          "content": "arcana:silver_ingot_from_smelting",
           "requirements": [
-            "0*arcana:tainted_wand_core"
+            "0*arcana:silver_ingot"
           ]
         }
       ]

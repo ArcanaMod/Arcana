@@ -1,8 +1,6 @@
 package net.arcanamod.research;
 
-import net.arcanamod.research.impls.GuessworkSection;
-import net.arcanamod.research.impls.RecipeSection;
-import net.arcanamod.research.impls.StringSection;
+import net.arcanamod.research.impls.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
@@ -50,12 +48,14 @@ public abstract class EntrySection{
 	}
 	
 	public static void init(){
-		factories.put("string", StringSection::new);
+		factories.put(StringSection.TYPE, StringSection::new);
 		deserializers.put(StringSection.TYPE, nbt -> new StringSection(nbt.getString("text")));
-		factories.put("guesswork", GuessworkSection::new);
+		factories.put(GuessworkSection.TYPE, GuessworkSection::new);
 		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getString("guesswork")));
-		factories.put("recipe", RecipeSection::new);
-		deserializers.put(RecipeSection.TYPE, nbt -> new RecipeSection(new ResourceLocation(nbt.getString("recipe"))));
+		factories.put(CraftingSection.TYPE, CraftingSection::new);
+		deserializers.put(CraftingSection.TYPE, nbt -> new CraftingSection(nbt.getString("recipe")));
+		factories.put(SmeltingSection.TYPE, SmeltingSection::new);
+		deserializers.put(SmeltingSection.TYPE, nbt -> new SmeltingSection(nbt.getString("recipe")));
 	}
 	
 	// instance stuff

@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class GuessworkSection extends EntrySection{
 	
-	public static final String TYPE = "GuessworkSection";
+	public static final String TYPE = "guesswork";
 	
 	protected ResourceLocation puzzleId;
 	

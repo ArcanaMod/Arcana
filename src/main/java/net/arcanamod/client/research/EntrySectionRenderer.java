@@ -1,11 +1,13 @@
 package net.arcanamod.client.research;
 
+import net.arcanamod.client.research.impls.CraftingSectionRenderer;
 import net.arcanamod.client.research.impls.GuessworkSectionRenderer;
-import net.arcanamod.client.research.impls.RecipeSectionRenderer;
+import net.arcanamod.client.research.impls.SmeltingSectionRenderer;
 import net.arcanamod.client.research.impls.StringSectionRenderer;
 import net.arcanamod.research.EntrySection;
+import net.arcanamod.research.impls.CraftingSection;
 import net.arcanamod.research.impls.GuessworkSection;
-import net.arcanamod.research.impls.RecipeSection;
+import net.arcanamod.research.impls.SmeltingSection;
 import net.arcanamod.research.impls.StringSection;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -21,7 +23,8 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	static void init(){
 		map.put(StringSection.TYPE, new StringSectionRenderer());
 		map.put(GuessworkSection.TYPE, new GuessworkSectionRenderer());
-		map.put(RecipeSection.TYPE, new RecipeSectionRenderer());
+		map.put(CraftingSection.TYPE, new CraftingSectionRenderer());
+		map.put(SmeltingSection.TYPE, new SmeltingSectionRenderer());
 	}
 	
 	void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);

@@ -4,22 +4,16 @@ import net.arcanamod.research.EntrySection;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
-public class RecipeSection extends EntrySection{
-	
-	public static final String TYPE = "RecipeSection";
+public abstract class AbstractCraftingSection extends EntrySection{
 	
 	ResourceLocation recipe;
 	
-	public RecipeSection(ResourceLocation recipe){
+	public AbstractCraftingSection(ResourceLocation recipe){
 		this.recipe = recipe;
 	}
 	
-	public RecipeSection(String s){
+	public AbstractCraftingSection(String s){
 		this(new ResourceLocation(s));
-	}
-	
-	public String getType(){
-		return TYPE;
 	}
 	
 	public CompoundNBT getData(){
