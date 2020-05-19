@@ -29,7 +29,7 @@ public class ArcanaConfig{
 				.comment("Enables ore generation in the overworld.", "If disabled, Arcana's ores will not generate.")
 				.define("OverworldGeneration", true);
 		AMBER_MIN_VEIN_SIZE = COMMON_BUILDER
-				.comment("The minimum size of amber ore veins.")
+				.comment("The minimum size of amber ore veins.", "(Currently unused.)")
 				.define("MinAmberSize", 4);
 		AMBER_MAX_VEIN_SIZE = COMMON_BUILDER
 				.comment("The maximum size of amber ore veins.")

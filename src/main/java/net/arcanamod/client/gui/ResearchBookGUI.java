@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.network.Connection;
 import net.arcanamod.research.*;
 import net.minecraft.client.Minecraft;
@@ -370,11 +371,19 @@ public class ResearchBookGUI extends Screen{
 	}
 	
 	private int getFrameWidth(){
-		return width - 40;
+		int conf = ArcanaConfig.CUSTOM_BOOK_WIDTH.get();
+		if(conf == -1)
+			return width - 40;
+		else
+			return clamp(conf, 220, width);
 	}
 	
 	private int getFrameHeight(){
-		return height - 20;
+		int conf = ArcanaConfig.CUSTOM_BOOK_HEIGHT.get();
+		if(conf == -1)
+			return height - 20;
+		else
+			return clamp(conf, 220, height);
 	}
 	
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY){
