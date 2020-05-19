@@ -8,6 +8,8 @@ import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.List;
 
+import static net.arcanamod.client.gui.ResearchEntryGUI.HEIGHT_OFFSET;
+
 public class StringSectionRenderer implements EntrySectionRenderer<StringSection>{
 	
 	private static int linesPerPage = (ResearchEntryGUI.PAGE_HEIGHT / 10) + 1;
@@ -26,7 +28,7 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 		
 		int x = right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X;
 		for(int i = 0; i < lines.size(); i++)
-			fr().drawString(lines.get(i), (int)((screenWidth - 256) / 2f) + x, (int)((screenHeight - 181) / 2f) + ResearchEntryGUI.PAGE_Y + i * 10, 0x383838);
+			fr().drawString(lines.get(i), (int)((screenWidth - 256) / 2f) + x, (int)((screenHeight - 181) / 2f) + ResearchEntryGUI.PAGE_Y + i * 10 + HEIGHT_OFFSET, 0x383838);
 	}
 	
 	public void renderAfter(StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){

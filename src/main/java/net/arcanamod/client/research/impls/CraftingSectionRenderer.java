@@ -8,6 +8,7 @@ import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
+import static net.arcanamod.client.gui.ResearchEntryGUI.HEIGHT_OFFSET;
 import static net.arcanamod.client.gui.ResearchEntryGUI.drawTexturedModalRect;
 
 public class CraftingSectionRenderer extends AbstractCraftingSectionRenderer<CraftingSection>{
@@ -15,7 +16,7 @@ public class CraftingSectionRenderer extends AbstractCraftingSectionRenderer<Cra
 	void renderRecipe(IRecipe<?> recipe, CraftingSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		if(recipe instanceof ICraftingRecipe){
 			int x = right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X, y = ResearchEntryGUI.PAGE_Y;
-			int ulX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 - 10;
+			int ulX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 - 10 + HEIGHT_OFFSET;
 			ICraftingRecipe craftingRecipe = (ICraftingRecipe)recipe;
 			mc().getTextureManager().bindTexture(textures);
 			drawTexturedModalRect(ulX - 4, ulY - 4, 145, 1, 72, 72);
@@ -41,7 +42,7 @@ public class CraftingSectionRenderer extends AbstractCraftingSectionRenderer<Cra
 	void renderRecipeTooltips(IRecipe<?> recipe, CraftingSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		if(recipe instanceof ICraftingRecipe){
 			int x = right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X, y = ResearchEntryGUI.PAGE_Y;
-			int ulX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 - 10;
+			int ulX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 32, ulY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 - 10 + HEIGHT_OFFSET;
 			ICraftingRecipe craftingRecipe = (ICraftingRecipe)recipe;
 			
 			int width = recipe instanceof IShapedRecipe ? ((IShapedRecipe<?>)craftingRecipe).getRecipeWidth() : 3;

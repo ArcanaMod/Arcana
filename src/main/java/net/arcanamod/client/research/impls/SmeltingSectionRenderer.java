@@ -9,6 +9,7 @@ import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 
+import static net.arcanamod.client.gui.ResearchEntryGUI.HEIGHT_OFFSET;
 import static net.arcanamod.client.gui.ResearchEntryGUI.drawTexturedModalRect;
 
 public class SmeltingSectionRenderer extends AbstractCraftingSectionRenderer<SmeltingSection>{
@@ -17,7 +18,7 @@ public class SmeltingSectionRenderer extends AbstractCraftingSectionRenderer<Sme
 		if(recipe instanceof AbstractCookingRecipe){
 			AbstractCookingRecipe cookingRecipe = (AbstractCookingRecipe)recipe;
 			int x = right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X, y = ResearchEntryGUI.PAGE_Y;
-			int inputX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 + 8;
+			int inputX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 + 8 + HEIGHT_OFFSET;
 			mc().getTextureManager().bindTexture(textures);
 			drawTexturedModalRect(inputX - 9, inputY - 9, 219, 1, 34, 48);
 			ItemStack[] stacks = cookingRecipe.getIngredients().get(0).getMatchingStacks();
@@ -30,7 +31,7 @@ public class SmeltingSectionRenderer extends AbstractCraftingSectionRenderer<Sme
 		if(recipe instanceof AbstractCookingRecipe){
 			AbstractCookingRecipe cookingRecipe = (AbstractCookingRecipe)recipe;
 			int x = right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X, y = ResearchEntryGUI.PAGE_Y;
-			int inputX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 + 8;
+			int inputX = x + (screenWidth - 256 + ResearchEntryGUI.PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + ResearchEntryGUI.PAGE_HEIGHT) / 2 + 8 + HEIGHT_OFFSET;
 			ItemStack[] stacks = cookingRecipe.getIngredients().get(0).getMatchingStacks();
 			tooltipArea(stacks[dispIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, inputX, inputY);
 		}

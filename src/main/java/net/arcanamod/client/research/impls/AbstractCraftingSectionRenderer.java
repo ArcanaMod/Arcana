@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static net.arcanamod.client.gui.ResearchEntryGUI.HEIGHT_OFFSET;
 import static net.arcanamod.client.gui.ResearchEntryGUI.drawTexturedModalRect;
 
 public abstract class AbstractCraftingSectionRenderer<T extends AbstractCraftingSection> implements EntrySectionRenderer<T>{
@@ -63,11 +64,11 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 	private void renderResult(int x, int y, ItemStack result, int screenWidth, int screenHeight){
 		mc().getTextureManager().bindTexture(textures);
 		int rX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - 58) / 2;
-		int rY = y + (screenHeight - 181) / 2 + 16;
+		int rY = y + (screenHeight - 181) / 2 + 16 + HEIGHT_OFFSET;
 		drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
 		item(result, rX + 29 - 8, rY + 10 - 8);
 		int stX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - fr().getStringWidth(result.getTextComponent().getFormattedText())) / 2;
-		int stY = y + (screenHeight - 181) / 2 + 11 - fr().FONT_HEIGHT;
+		int stY = y + (screenHeight - 181) / 2 + 11 - fr().FONT_HEIGHT + HEIGHT_OFFSET;
 		fr().drawString(result.getDisplayName().getFormattedText(), stX, stY, 0);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
 		RenderSystem.enableBlend();
@@ -76,7 +77,7 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 	
 	protected void renderResultTooltips(int x, int y, ItemStack result, int screenWidth, int screenHeight, int mouseX, int mouseY){
 		int rX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - 58) / 2 + 21;
-		int rY = y + (screenHeight - 181) / 2 + 18;
+		int rY = y + (screenHeight - 181) / 2 + 18 + HEIGHT_OFFSET;
 		tooltipArea(result, mouseX, mouseY, screenWidth, screenHeight, rX, rY);
 	}
 	

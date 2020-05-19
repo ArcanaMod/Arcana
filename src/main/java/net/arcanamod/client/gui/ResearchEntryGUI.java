@@ -45,6 +45,7 @@ public class ResearchEntryGUI extends Screen{
 	public static final int PAGE_WIDTH = 105;
 	public static final int PAGE_HEIGHT = 155;
 	public static final int RIGHT_X_OFFSET = 119;
+	public static final int HEIGHT_OFFSET = -10;
 	
 	public ResearchEntryGUI(ResearchEntry entry){
 		super(new StringTextComponent(""));
@@ -66,7 +67,7 @@ public class ResearchEntryGUI extends Screen{
 		super.render(mouseX, mouseY, partialTicks);
 		getMinecraft().getTextureManager().bindTexture(bg);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
-		drawTexturedModalRect((width - 256) / 2, (height - 181) / 2, 0, 0, 256, 181);
+		drawTexturedModalRect((width - 256) / 2, (height - 181) / 2 + HEIGHT_OFFSET, 0, 0, 256, 181);
 		
 		// Main rendering
 		if(totalLength() > index){
@@ -84,7 +85,7 @@ public class ResearchEntryGUI extends Screen{
 		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
-			final int y = (height - 181) / 2 + 190;
+			final int y = (height - 181) / 2 + 180;
 			final int reqWidth = 20;
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++){
@@ -122,7 +123,7 @@ public class ResearchEntryGUI extends Screen{
 	
 	public void init(@Nonnull Minecraft mc, int p_init_2_, int p_init_3_){
 		super.init(mc, p_init_2_, p_init_3_);
-		final int y = (height - 181) / 2 + 190;
+		final int y = (height - 181) / 2 + 190 + HEIGHT_OFFSET;
 		final int x = width / 2 - 6;
 		final int dist = 127;
 		left = addButton(new ChangePageButton(x - dist, y, false, button -> {
