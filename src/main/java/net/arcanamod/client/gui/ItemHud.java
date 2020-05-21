@@ -1,7 +1,7 @@
 package net.arcanamod.client.gui;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.items.ItemWand;
+import net.arcanamod.items.OldItemWand;
 import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.aspects.Aspects;
 import net.minecraft.client.Minecraft;
@@ -17,7 +17,7 @@ public final class ItemHud{
 	//@SubscribeEvent
 	public static void onRenderGameOverlay(RenderGameOverlayEvent.Post event){
 		if(Minecraft.getInstance().player != null && event.getType().equals(RenderGameOverlayEvent.ElementType.ALL))
-			if(Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof ItemWand){
+			if(Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof OldItemWand){
 				VisHandler aspects = VisHandler.getFrom(Minecraft.getInstance().player.getHeldItemMainhand());
 				for(int i = 0; i < Aspects.primalAspects.length; i++){
 					Aspect primal = Aspects.primalAspects[i];

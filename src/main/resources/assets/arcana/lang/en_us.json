@@ -9,6 +9,7 @@
 
     "_comment": "Items",
     "_comment": "Wands",
+    "item.arcana.error_wand": "%s Errorred Wand",
     "item.arcana.wood_wand": "%s Wooden Wand",
     "item.arcana.greatwood_wand": "%s Greatwood Wand",
     "item.arcana.tainted_wand": "%s Tainted Wand",

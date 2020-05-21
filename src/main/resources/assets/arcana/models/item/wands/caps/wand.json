@@ -1,8 +1,5 @@
 {
 	"credit": "Made with Blockbench",
-	"textures": {
-		"0": "arcana:wands/iron_cap"
-	},
 	"elements": [
 		{
 			"from": [7, 0, 8],

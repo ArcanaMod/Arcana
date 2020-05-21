@@ -1,15 +1,12 @@
 package net.arcanamod.items;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.Aspect;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.items.armor.ArcanaArmourMaterials;
 import net.arcanamod.items.armor.AutoRepairArmorItem;
 import net.arcanamod.items.armor.GoggleBase;
-import net.arcanamod.items.attachment.Cap;
-import net.arcanamod.items.attachment.Focus;
-import net.arcanamod.items.attachment.WandCore;
+import net.arcanamod.items.attachment.*;
 import net.arcanamod.items.tools.*;
 import net.arcanamod.util.GogglePriority;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -19,6 +16,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import static net.arcanamod.Arcana.MODID;
 
 /**
  * Initialize Items here
@@ -30,7 +29,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @SuppressWarnings("unused")
 public class ArcanaItems{
 	
-	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Arcana.MODID);
+	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MODID);
 	
 	// Arcanium
 	public static final RegistryObject<Item> ARCANIUM_SWORD = ITEMS.register("arcanium_sword", () -> new SwordItem(ArcanaToolTiers.ARCANIUM, 3, -2.4f, new Properties().group(Arcana.ITEMS)));
@@ -64,13 +63,13 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> RESEARCH_TABLE_PLACER = ITEMS.register("research_table_placer", () -> new ResearchTableItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	//	public static Item VIS_MANIPULATORS = new ItemVisManipulators().setCreativeTab(Arcana.TAB_ARCANA);
 	//public static final RegistryObject<Item> EMPTY_PHIAL = ITEMS.register("empty_phial", () -> new Item(new Properties().group(Arcana.ITEMS)));
-	public static final RegistryObject<Item> PHIAL = ITEMS.register("phial", () -> new PhialItem());
+	public static final RegistryObject<Item> PHIAL = ITEMS.register("phial", PhialItem::new);
 	
 	// Books
-	public static final RegistryObject<Item> ARCANUM = ITEMS.register("arcanum", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(Arcana.MODID, "arcanum")));
-	public static final RegistryObject<Item> GRIMOIRE = ITEMS.register("illustrious_grimoire", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(Arcana.MODID, "illustrious_grimoire")));
-	public static final RegistryObject<Item> CODEX = ITEMS.register("tainted_codex", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(Arcana.MODID, "tainted_codex")));
-	public static final RegistryObject<Item> RITES = ITEMS.register("crimson_rites", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(Arcana.MODID, "crimson_rites")));
+	public static final RegistryObject<Item> ARCANUM = ITEMS.register("arcanum", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(MODID, "arcanum")));
+	public static final RegistryObject<Item> GRIMOIRE = ITEMS.register("illustrious_grimoire", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(MODID, "illustrious_grimoire")));
+	public static final RegistryObject<Item> CODEX = ITEMS.register("tainted_codex", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(MODID, "tainted_codex")));
+	public static final RegistryObject<Item> RITES = ITEMS.register("crimson_rites", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS), new ResourceLocation(MODID, "crimson_rites")));
 	
 	// Materials
 	public static final RegistryObject<Item> THAUMIUM_INGOT = ITEMS.register("thaumium_ingot", () -> new Item(new Properties().group(Arcana.ITEMS)));
@@ -90,32 +89,31 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> FOCUS_PARTS = ITEMS.register("focus_parts", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
 	// Wand Attachments
-	public static final RegistryObject<Cap> VOID_CAP = ITEMS.register("void_cap", () -> new Cap(new Properties().group(Arcana.ITEMS)).setLevel(3));
-	public static final RegistryObject<Cap> IRON_CAP = ITEMS.register("iron_cap", () -> new Cap(new Properties().group(Arcana.ITEMS)).setLevel(1));
-	public static final RegistryObject<Cap> GOLD_CAP = ITEMS.register("gold_cap", () -> new Cap(new Properties().group(Arcana.ITEMS)).setLevel(2));
-	public static final RegistryObject<Cap> COPPER_CAP = ITEMS.register("copper_cap", () -> new Cap(new Properties().group(Arcana.ITEMS)).setLevel(2));
-	public static final RegistryObject<Cap> SILVER_CAP = ITEMS.register("silver_cap", () -> new Cap(new Properties().group(Arcana.ITEMS)).setLevel(2));
-	public static final RegistryObject<Cap> THAUMIUM_CAP = ITEMS.register("thaumium_cap", () -> new Cap(new Properties().group(Arcana.ITEMS)).setLevel(3));
+	public static final Cap.Impl ERROR_CAP = new Cap.Impl(0, 0, 0, "invalid_cap", arcLoc("error_cap"));
+	public static final RegistryObject<CapItem> IRON_CAP = ITEMS.register("iron_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 2, 1, 1, arcLoc("models/wands/caps/iron_cap")));
+	public static final RegistryObject<CapItem> GOLD_CAP = ITEMS.register("gold_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 3, 2, 2, arcLoc("models/wands/caps/gold_cap")));
+	public static final RegistryObject<CapItem> COPPER_CAP = ITEMS.register("copper_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 2, 1, 2, arcLoc("models/wands/caps/copper_cap")));
+	public static final RegistryObject<CapItem> SILVER_CAP = ITEMS.register("silver_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 3, 2, 2, arcLoc("models/wands/caps/silver_cap")));
+	public static final RegistryObject<CapItem> THAUMIUM_CAP = ITEMS.register("thaumium_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 6, 4, 3, arcLoc("models/wands/caps/thaumium_cap")));
+	public static final RegistryObject<CapItem> VOID_CAP = ITEMS.register("void_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 8, 4, 3, arcLoc("models/wands/caps/void_cap")));
 	
-	public static RegistryObject<Focus> FOCUS_NONE = ITEMS.register("focus_none", () -> new Focus(new Properties()).setId(0));
-	public static RegistryObject<Focus> FOCUS_DEFAULT = ITEMS.register("focus_default", () -> new Focus(new Properties()).setId(1));
+	public static Focus.Impl ERROR_FOCUS = new Focus.Impl(arcLoc("error_focus"));
+	public static Focus.Impl NO_FOCUS = new Focus.Impl(arcLoc("no_focus"));
+	public static RegistryObject<FocusItem> DEFAULT_FOCUS = ITEMS.register("wand_focus", () -> new FocusItem(new Properties(), arcLoc("wand_focus")));
 	
 	// Wands
-	public static final RegistryObject<ItemWand> WOOD_WAND = ITEMS.register("wood_wand", () -> new ItemWand(new Properties().group(Arcana.ITEMS)).setLevel(1));
-	// 2 is the default level
-	public static final RegistryObject<ItemWand> GREATWOOD_WAND = ITEMS.register("greatwood_wand", () -> new ItemWand(new Properties().group(Arcana.ITEMS)));
-	public static final RegistryObject<ItemWand> TAINTED_WAND = ITEMS.register("tainted_wand", () -> new ItemWand(new Properties().group(Arcana.ITEMS)));
-	public static final RegistryObject<ItemWand> DAIR_WAND = ITEMS.register("dair_wand", () -> new ItemWand(new Properties().group(Arcana.ITEMS)).setLevel(3));
-	public static final RegistryObject<ItemWand> HAWTHORN_WAND = ITEMS.register("hawthorn_wand", () -> new ItemWand(new Properties().group(Arcana.ITEMS)).setLevel(3));
-	public static final RegistryObject<ItemWand> SILVERWOOD_WAND = ITEMS.register("silverwood_wand", () -> new ItemWand(new Properties().group(Arcana.ITEMS)).setLevel(4));
-	public static final RegistryObject<ItemWand> ARCANIUM_WAND = ITEMS.register("arcanium_wand", () -> new ItemWand(new Properties().group(Arcana.ITEMS)).setLevel(4));
+	public static final Core.Impl ERROR_WAND_CORE = new Core.Impl(0, 0, "item.arcana.error_wand", arcLoc("error_wand"));
+	public static final Core.Impl WOOD_WAND_CORE = new Core.Impl(25, 1, "item.arcana.wood_wand", arcLoc("models/wands/materials/wood_wand"));
+	public static final RegistryObject<Item> GREATWOOD_WAND_CORE = ITEMS.register("greatwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 35, 2, arcLoc("models/wands/materials/greatwood_wand")));
+	public static final RegistryObject<Item> TAINTED_WAND_CORE = ITEMS.register("tainted_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 35, 2, arcLoc("models/wands/materials/tainted_wand")));
+	public static final RegistryObject<Item> DAIR_WAND_CORE = ITEMS.register("dair_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 30, 3, arcLoc("models/wands/materials/dair_wand")));
+	public static final RegistryObject<Item> HAWTHORN_WAND_CORE = ITEMS.register("hawthorn_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 30, 3, arcLoc("models/wands/materials/hawthorn_wand")));
+	public static final RegistryObject<Item> SILVERWOOD_WAND_CORE = ITEMS.register("silverwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 40, 4, arcLoc("models/wands/materials/silverwood_wand")));
+	public static final RegistryObject<Item> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 50, 4, arcLoc("models/wands/materials/arcanium_wand")));
 	
-	// iLlEgAl fOrWaRd rEfErEnCe I don't care
+	public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new WandItem(new Properties().group(Arcana.ITEMS)));
 	
-	public static final RegistryObject<Item> GREATWOOD_WAND_CORE = ITEMS.register("greatwood_wand_core", () -> new WandCore(new Properties().group(Arcana.ITEMS), GREATWOOD_WAND.get()));
-	public static final RegistryObject<Item> TAINTED_WAND_CORE = ITEMS.register("tainted_wand_core", () -> new WandCore(new Properties().group(Arcana.ITEMS), TAINTED_WAND.get()));
-	public static final RegistryObject<Item> DAIR_WAND_CORE = ITEMS.register("dair_wand_core", () -> new WandCore(new Properties().group(Arcana.ITEMS), DAIR_WAND.get()));
-	public static final RegistryObject<Item> HAWTHORN_WAND_CORE = ITEMS.register("hawthorn_wand_core", () -> new WandCore(new Properties().group(Arcana.ITEMS), HAWTHORN_WAND.get()));
-	public static final RegistryObject<Item> SILVERWOOD_WAND_CORE = ITEMS.register("silverwood_wand_core", () -> new WandCore(new Properties().group(Arcana.ITEMS), SILVERWOOD_WAND.get()));
-	public static final RegistryObject<Item> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new WandCore(new Properties().group(Arcana.ITEMS), ARCANIUM_WAND.get()));
+	public static ResourceLocation arcLoc(String path){
+		return new ResourceLocation(MODID, path);
+	}
 }

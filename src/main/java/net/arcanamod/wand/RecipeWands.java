@@ -1,21 +1,7 @@
 package net.arcanamod.wand;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.Arcana;
-import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.ItemWand;
-import net.arcanamod.items.attachment.Cap;
-import net.arcanamod.items.attachment.WandCore;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.ICraftingRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault

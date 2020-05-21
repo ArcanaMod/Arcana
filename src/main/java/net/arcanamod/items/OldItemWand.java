@@ -15,12 +15,12 @@ import java.util.List;
  */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class ItemWand extends Item{
+public class OldItemWand extends Item{
 	
-	public static List<ItemWand> WANDS = new ArrayList<>();
+	public static List<OldItemWand> WANDS = new ArrayList<>();
 	protected int level = 2;
 	
-	public ItemWand(Properties properties){
+	public OldItemWand(Properties properties){
 		super(properties);
 		WANDS.add(this);
 	}
@@ -29,27 +29,24 @@ public class ItemWand extends Item{
 		return level;
 	}
 	
-	public ItemWand setLevel(int level){
+	public OldItemWand setLevel(int level){
 		this.level = level;
 		return this;
 	}
 	
-	/*
-	
-	
-	protected ItemAttachment[][] attachments;
+	protected WandPart[][] attachments;
 	
 	// remove at some point
-	public static final Supplier<ItemAttachment[][]> supplierAttachments = () -> {
-		List<Cap> allowed = new ArrayList<>(Cap.CAPS);
+	/*public static final Supplier<WandPart[][]> supplierAttachments = () -> {
+		List<CapItem> allowed = new ArrayList<>(Cap.CAPS);
 		// fix models
-		allowed.sort(Comparator.comparingInt(Cap::getID));
-		List<Focus> allowedFoci = ImmutableList.of(Focus.NONE, Focus.DEFAULT); //TODO: change with foci
-		return new ItemAttachment[][]{allowed.toArray(new Cap[0]), allowedFoci.toArray(new Focus[0])};
-	};
+		allowed.sort(Comparator.comparingInt(CapItem::getID));
+		List<FocusItem> allowedFoci = ImmutableList.of(*//*Focus.NONE, Focus.DEFAULT*//*); //TODO: change with foci
+		return new WandPart[][]{allowed.toArray(new CapItem[0]), allowedFoci.toArray(new FocusItem[0])};
+	};*/
 	
 	
-	
+	/*
 	@Nullable
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
 		return TypedVisBattery.primalBattery(WandUtil.getCore(stack).getMaxVis());
@@ -151,42 +148,39 @@ public class ItemWand extends Item{
 	 * Getter of the attached attachments.
 	 *
 	 * @return an array of the attached attachments
-	 *//*
-	public ItemAttachment[][] getAttachments(){
+	 */
+	/*public WandPart[][] getAttachments(){
 		if(this.attachments == null)
 			this.attachments = supplierAttachments.get();
 		
 		return this.attachments;
-	}
+	}*/
 	
-	*//**
+	/**
 	 * Gets an attachment based on {@link EnumAttachmentType} and the ID of the attachment
 	 *
 	 * @param type
 	 * 		Attachment type
 	 * @param id
 	 * 		ID of the attachment
-	 * @return {@link AttachmentItem} of the given type and id
-	 *//*
-	@Nullable
-	public ItemAttachment getAttachment(EnumAttachmentType type, int id){
-		ItemAttachment attachment = null;
+	 * @return {@link WandPart} of the given type and id
+	 */
+	/*@Nullable
+	public WandPart getAttachment(EnumAttachmentType type, int id){
+		WandPart attachment = null;
 		
-		for(ItemAttachment a : this.getAttachments()[type.getSlot()]){
-			if(a.getID() == id){
+		for(WandPart a : this.getAttachments()[type.getSlot()])
+			if(a.getID() == id)
 				attachment = a;
-			}
-		}
 		return attachment;
-	}
+	}*/
 	
-	*//**
+	/**
 	 * Gets amount of the allowed types
 	 *
 	 * @param type
 	 * 		Attachement type {@link EnumAttachmentType}
 	 * @return Amount of the given types
-	 *//*
 	public int getAmountForSlot(EnumAttachmentType type){
 		return this.getAttachments()[type.getSlot()].length;
 	}
@@ -198,21 +192,19 @@ public class ItemWand extends Item{
 	 * 		Itemstack to get the NBT from
 	 * @param type
 	 * 		Type of the requested attachment
-	 * @return {@link AttachmentItem} of the given type and ItemStack NBT
+	 * @return {@link WandPart} of the given type and ItemStack NBT
 	 *//*
 	@Nullable
-	public ItemAttachment getAttachment(ItemStack itemStack, EnumAttachmentType type){
-		return this.getAttachment(type, Arcana.getNBT(itemStack).getInteger(type.getKey()));
+	public WandPart getAttachment(ItemStack itemStack, EnumAttachmentType type){
+		return this.getAttachment(type, itemStack.getOrCreateTag().getInt(type.getKey()));
 	}
 	
-	public boolean capAllowed(Cap cap){
+	public boolean capAllowed(CapItem cap){
 		return cap.getLevel() <= level;
 	}
 	
-	public String getItemStackDisplayName(ItemStack stack){
-		String s = getUnlocalizedName(stack) + ".name";
-		// Using server-side I18n -- replace when updating.
-		ItemAttachment attachment = getAttachment(stack, EnumAttachmentType.CAP);
-		return I18n.translateToLocalFormatted(s, I18n.translateToLocal(attachment != null ? attachment.getUnlocalizedName() + ".prefix" : "invalid_cap.prefix"));
+	public ITextComponent getDisplayName(ItemStack stack){
+		WandPart attachment = getAttachment(stack, EnumAttachmentType.CAP);
+		return new TranslationTextComponent(getTranslationKey(stack), new TranslationTextComponent(attachment != null ? attachment.getTranslationKey() + ".prefix" : "invalid_cap.prefix"));
 	}*/
 }

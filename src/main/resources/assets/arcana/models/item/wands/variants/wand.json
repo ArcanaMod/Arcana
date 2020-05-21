@@ -1,9 +1,6 @@
 {
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
-	"textures": {
-		"0": "arcana:wands/hawthorn_wand"
-	},
 	"elements": [
 		{
 			"from": [7, 2, 8],

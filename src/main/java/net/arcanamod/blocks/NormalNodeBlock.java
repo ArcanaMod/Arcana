@@ -4,14 +4,12 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.VisHandler;
-import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.blocks.tiles.NodeTileEntity;
-import net.arcanamod.items.ItemWand;
+import net.arcanamod.items.OldItemWand;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -105,7 +103,7 @@ public class NormalNodeBlock extends Block{
 		//CoreType core = WandUtil.getCore(itemActivated);
 		//CapType cap = WandUtil.getCap(itemActivated);
 		// although other items can store aspects, only wands can draw them directly from nodes ATM
-		if(itemActivated.getItem() instanceof ItemWand){
+		if(itemActivated.getItem() instanceof OldItemWand){
 			TileEntity entity = world.getTileEntity(pos);
 			if(entity instanceof NodeTileEntity){
 				NodeTileEntity tileEntity = (NodeTileEntity)entity;

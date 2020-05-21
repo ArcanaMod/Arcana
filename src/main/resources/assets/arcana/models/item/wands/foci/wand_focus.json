@@ -1,9 +1,5 @@
 {
 	"credit": "Made with Blockbench",
-	"textures": {
-		"1": "arcana:wands/wand_focus",
-		"particle": "arcana:wands/wand_focus"
-	},
 	"elements": [
 		{
 			"from": [6.5, 14.5, 7.5],

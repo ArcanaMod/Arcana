@@ -23,5 +23,4 @@ public class Sounds{
 		ForgeRegistries.SOUND_EVENTS.register(event);
 		return event;
 	}
-	
 }

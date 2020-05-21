@@ -5,6 +5,7 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.Sounds;
 import net.arcanamod.client.event.TextureStitch;
+import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
@@ -22,6 +23,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -88,6 +90,7 @@ public class Arcana{
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
 		
 		Connection.init();
+		ModelLoaderRegistry.registerLoader(new ResourceLocation(MODID, "wand_loader"), new WandModelLoader());
 		//NetworkRegistry.INSTANCE.registerGuiHandler(Arcana.instance, new ArcanaGuiHandler());
 		
 		Sounds.registerSounds();

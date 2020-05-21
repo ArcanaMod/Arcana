@@ -1,35 +1,35 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.items.AttachmentItem;
-import net.arcanamod.wand.EnumAttachmentType;
+import net.minecraft.util.ResourceLocation;
 
-/**
- * Wand Focus Attachment
- *
- * @author Merijn
- * @see Cap
- * @see AttachmentItem
- */
-public class Focus extends AttachmentItem{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+public interface Focus{
 	
-	private int id;
+	List<Focus> FOCI = new ArrayList<>();
 	
-	public Focus(Properties properties){
-		super(properties);
+	static Optional<Focus> getFocusById(int id){
+		if(id < 0 || id >= FOCI.size())
+			return Optional.empty();
+		else
+			return Optional.of(FOCI.get(id));
 	}
 	
-	@Override
-	public EnumAttachmentType getType(){
-		return EnumAttachmentType.FOCUS;
-	}
+	ResourceLocation getModelLocation();
 	
-	@Override
-	public int getID(){
-		return id;
-	}
-	
-	public Focus setId(int id){
-		this.id = id;
-		return this;
+	class Impl implements Focus{
+		
+		ResourceLocation modelLocation;
+		
+		public Impl(ResourceLocation modelLocation){
+			this.modelLocation = modelLocation;
+			FOCI.add(this);
+		}
+		
+		public ResourceLocation getModelLocation(){
+			return modelLocation;
+		}
 	}
 }

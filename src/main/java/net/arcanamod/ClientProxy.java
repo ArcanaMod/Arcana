@@ -7,7 +7,7 @@ import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.event.ResearchEvent;
-import net.arcanamod.items.ItemWand;
+import net.arcanamod.items.OldItemWand;
 import net.arcanamod.research.ResearchBooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
@@ -15,9 +15,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.ArrayList;
 
@@ -42,8 +40,8 @@ public class ClientProxy extends CommonProxy{
 	}
 	
 	@Override
-	public void registerWand(IForgeRegistry<Item> registry, ItemWand wand){
-		super.registerWand(registry, wand);
+	public void registerWand(OldItemWand wand){
+		super.registerWand(wand);
 		
 		ModelResourceLocation main = new ModelResourceLocation(Arcana.MODID + ":wands/" + wand.getRegistryName().getPath(), "inventory");
 		//ModelLoader.setCustomModelResourceLocation(wand, 0, main);
