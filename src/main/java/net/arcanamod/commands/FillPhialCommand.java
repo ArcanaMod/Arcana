@@ -4,7 +4,9 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.network.Connection;
@@ -15,8 +17,14 @@ import net.arcanamod.research.Researcher;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.EntityArgument;
+import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static net.minecraft.command.Commands.argument;
@@ -25,13 +33,13 @@ import static net.minecraft.command.arguments.ResourceLocationArgument.resourceL
 
 public class FillPhialCommand
 {
-    private static final SuggestionProvider<CommandSource> SUGGEST_FILL_PHIAL = (ctx, builder) -> ISuggestionProvider.func_212476_a(ResearchBooks.streamEntries().map(ResearchEntry::key), builder);
+    private static final SuggestionProvider<CommandSource> SUGGEST_FILL_PHIAL = (ctx, builder) -> ISuggestionProvider.func_212476_a(Arrays.stream(Aspect.values()).map(aspect -> new ResourceLocation(Arcana.MODID,aspect.toString().toLowerCase())), builder);
 
     public static void register(CommandDispatcher<CommandSource> dispatcher){
         dispatcher.register(
                 literal("arcana-phial").requires(source -> source.hasPermissionLevel(2))
                         .then(argument("targets", EntityArgument.players())
-                                .then(literal("fill").executes(FillPhialCommand::fill))
+                                .then(literal("fill").then(argument("aspect", resourceLocation()).executes(FillPhialCommand::fill).suggests(SUGGEST_FILL_PHIAL)))
                         )
         );
     }
@@ -42,12 +50,22 @@ public class FillPhialCommand
         AtomicInteger ret = new AtomicInteger();
         EntityArgument.getPlayers(ctx, "targets").forEach(serverPlayerEntity -> {
             VisHandler vis = serverPlayerEntity.getHeldItemMainhand().getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+            ResourceLocation aspect_name = ResourceLocationArgument.getResourceLocation(ctx, "aspect");
             if (vis!=null)
             {
                 ItemStack is = serverPlayerEntity.getHeldItemMainhand();
-                vis.insert(Aspect.EXCHANGE, 8, false);
-                if(is.getTag() == null){
-                    is.setTag(is.getShareTag());
+                Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
+                if (targettedStack!=null)
+                {
+                    vis.insert(targettedStack, 8, false);
+                    if (is.getTag() == null)
+                    {
+                        is.setTag(is.getShareTag());
+                    }
+                }
+                else
+                {
+                    serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcanafill.invalid_aspect",aspect_name).applyTextStyle(TextFormatting.RED));
                 }
             }
             ret.getAndIncrement();
