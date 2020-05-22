@@ -63,7 +63,7 @@ public class Aspects{
 			return null;
 		for (Aspect aspect : Aspect.values())
 		{
-			if (aspect.name().toLowerCase().equals(name.toLowerCase()))
+			if (aspect.name().equalsIgnoreCase(name))
 			{
 				return aspect;
 			}

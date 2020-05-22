@@ -39,9 +39,10 @@ public class FillPhialCommand
     public static void register(CommandDispatcher<CommandSource> dispatcher){
         dispatcher.register(
                 literal("arcana-phial").requires(source -> source.hasPermissionLevel(2))
-                        .then(argument("targets", EntityArgument.players())
-                                .then(literal("fill").then(argument("aspect", resourceLocation()).executes(FillPhialCommand::fill).suggests(SUGGEST_FILL_PHIAL)))
-                        )
+                        .then(literal("fill")
+                                .then(argument("targets", EntityArgument.players())
+                                        .then(argument("aspect", resourceLocation()).executes(FillPhialCommand::fill).suggests(SUGGEST_FILL_PHIAL)))
+                )
         );
     }
 
