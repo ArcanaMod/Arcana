@@ -9,6 +9,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.items.PhialItem;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkModifyResearch;
 import net.arcanamod.research.ResearchBooks;
@@ -49,25 +50,30 @@ public class FillPhialCommand
         // return number of players affected successfully
         AtomicInteger ret = new AtomicInteger();
         EntityArgument.getPlayers(ctx, "targets").forEach(serverPlayerEntity -> {
-            VisHandler vis = serverPlayerEntity.getHeldItemMainhand().getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+            ItemStack is = serverPlayerEntity.getHeldItemMainhand();
+            VisHandler vis = is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
             ResourceLocation aspect_name = ResourceLocationArgument.getResourceLocation(ctx, "aspect");
             if (vis!=null)
             {
-                ItemStack is = serverPlayerEntity.getHeldItemMainhand();
-                Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
-                if (targettedStack!=null)
+                if (is.getItem() instanceof PhialItem)
                 {
-                    vis.insert(targettedStack, 8, false);
-                    if (is.getTag() == null)
+                    Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
+                    if (targettedStack != null)
                     {
-                        is.setTag(is.getShareTag());
+                        vis.insert(targettedStack, 8, false);
+                        if (is.getTag() == null)
+                        {
+                            is.setTag(is.getShareTag());
+                        }
+                    } else {
+                        serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcanafill.invalid_aspect", aspect_name).applyTextStyle(TextFormatting.RED));
                     }
                 }
                 else
-                {
-                    serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcanafill.invalid_aspect",aspect_name).applyTextStyle(TextFormatting.RED));
-                }
+                    serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcanafill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
             }
+            else
+                serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcanafill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
             ret.getAndIncrement();
         });
         return ret.get();

@@ -596,6 +596,7 @@
     "commands.arcanaresearch.operations": "Operations: reset (sets progress to zero), complete (sets progress to maximum), tryAdvance (advances if requirements are met), forceAdvance (advances regardless of if requirements are met).",
     "commands.arcanaresearch.invalid_entry": "Invalid entry \"%s\"!",
     "commands.arcanafill.invalid_aspect": "Invalid aspect: \"%s\"!",
+    "commands.arcanafill.invalid_item": "Holding item (%s) isn't a phial",
 
     "_comment": "Guis",
     "researchEntry.continue": "Continue",
