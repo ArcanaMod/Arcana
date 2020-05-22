@@ -15,6 +15,7 @@ import net.arcanamod.research.Researcher;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.EntityArgument;
+import net.minecraft.item.ItemStack;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -43,8 +44,11 @@ public class FillPhialCommand
             VisHandler vis = serverPlayerEntity.getHeldItemMainhand().getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
             if (vis!=null)
             {
+                ItemStack is = serverPlayerEntity.getHeldItemMainhand();
                 vis.insert(Aspect.EXCHANGE, 8, false);
-                Connection.sendFilledPhial(serverPlayerEntity);
+                if(is.getTag() == null){
+                    is.setTag(is.getShareTag());
+                }
             }
             ret.getAndIncrement();
         });
