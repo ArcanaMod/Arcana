@@ -1,11 +1,5 @@
 package net.arcanamod.client.gui;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.items.OldItemWand;
-import net.arcanamod.aspects.VisHandler;
-import net.arcanamod.aspects.Aspects;
-import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
@@ -15,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 public final class ItemHud{
 	
 	//@SubscribeEvent
-	public static void onRenderGameOverlay(RenderGameOverlayEvent.Post event){
+	/*public static void onRenderGameOverlay(RenderGameOverlayEvent.Post event){
 		if(Minecraft.getInstance().player != null && event.getType().equals(RenderGameOverlayEvent.ElementType.ALL))
 			if(Minecraft.getInstance().player.getHeldItemMainhand().getItem() instanceof OldItemWand){
 				VisHandler aspects = VisHandler.getFrom(Minecraft.getInstance().player.getHeldItemMainhand());
@@ -31,5 +25,5 @@ public final class ItemHud{
 				}
 			}
 		
-	}
+	}*/
 }

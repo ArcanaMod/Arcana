@@ -3,6 +3,7 @@ package net.arcanamod.client.model;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
+import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.items.attachment.Cap;
@@ -21,6 +22,8 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelTransformComposition;
 import net.minecraftforge.client.model.PerspectiveMapWrapper;
 import net.minecraftforge.client.model.geometry.IModelGeometry;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -41,6 +44,8 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 	ResourceLocation variant;
 	ResourceLocation focus;
 	
+	Logger LOGGER = LogManager.getLogger();
+	
 	public WandModelGeometry(ResourceLocation cap, ResourceLocation material, ResourceLocation variant, ResourceLocation focus){
 		this.cap = cap;
 		this.material = material;
@@ -53,30 +58,41 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 		ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transformMap = PerspectiveMapWrapper.getTransforms(new ModelTransformComposition(transformsFromModel, modelTransform));
 		ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 		
-		// get variant MODEL
-		IBakedModel coreModel = bakery.getBakedModel(arcLoc("item/wands/variants/wand"), modelTransform, spriteGetter);
 		// get core texture
-		TextureAtlasSprite coreTex = spriteGetter.apply(new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, material));
-		// apply texture and add to builder
-		if(coreModel != null)
-			for(BakedQuad quad : coreModel.getQuads(null, null, new Random()))
-				builder.add(new BakedQuad(quad.getVertexData(), quad.getTintIndex(), quad.getFace(), coreTex, quad.shouldApplyDiffuseLighting()));
-		// get variant cap model
-		IBakedModel capModel = bakery.getBakedModel(arcLoc("item/wands/caps/wand"), modelTransform, spriteGetter);
+		Material coreTex = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, material);
 		// get cap texture
-		TextureAtlasSprite capTex = spriteGetter.apply(new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, cap));
-		// apply texture and add to builder
-		if(capModel != null)
-			for(BakedQuad quad : capModel.getQuads(null, null, new Random()))
-				builder.add(new BakedQuad(quad.getVertexData(), quad.getTintIndex(), quad.getFace(), capTex, quad.shouldApplyDiffuseLighting()));
+		Material capTex = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, cap);
+		
+		// get variant model
+		ResourceLocation coreLoc = arcLoc("item/wands/variants/wand");
+		IUnbakedModel coreModel = bakery.getUnbakedModel(coreLoc);
+		// get variant cap model
+		ResourceLocation capLoc = arcLoc("item/wands/caps/wand");
+		IUnbakedModel capModel = bakery.getUnbakedModel(capLoc);
+		
+		// they *should* be, but jusst checking.
+		if(coreModel instanceof BlockModel)
+			((BlockModel)coreModel).textures.put("core", Either.left(coreTex));
+		else
+			LOGGER.error("Core model isn't a block model!");
+		if(capModel instanceof BlockModel)
+			((BlockModel)capModel).textures.put("cap", Either.left(capTex));
+		else
+			LOGGER.error("Cap model isn't a block model!");
+		
 		// get focus model and texture, apply, and add
+		Random rand = new Random();
 		if(focus != null){
 			IBakedModel focusModel = bakery.getBakedModel(new ResourceLocation(focus.getNamespace(), "item/wands/foci/" + focus.getPath()), modelTransform, spriteGetter);
-			if(focusModel != null)
-				builder.addAll(focusModel.getQuads(null, null, new Random()));
+			if(focusModel != null){
+				builder.addAll(focusModel.getQuads(null, null, rand));
+			}
 		}
 		
-		return new WandBakedModel(builder.build(), coreTex, Maps.immutableEnumMap(transformMap), new AttachmentOverrideHandler(bakery), true, true, this, owner, modelTransform);
+		builder.addAll(coreModel.bakeModel(bakery, spriteGetter, transformsFromModel, coreLoc).getQuads(null, null, rand));
+		builder.addAll(capModel.bakeModel(bakery, spriteGetter, transformsFromModel, capLoc).getQuads(null, null, rand));
+		
+		return new WandBakedModel(builder.build(), spriteGetter.apply(coreTex), Maps.immutableEnumMap(transformMap), new AttachmentOverrideHandler(bakery), true, true, this, owner, modelTransform);
 	}
 	
 	public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors){

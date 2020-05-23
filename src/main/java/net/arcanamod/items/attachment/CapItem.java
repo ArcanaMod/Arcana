@@ -44,6 +44,10 @@ public class CapItem extends WandPart implements Cap{
 		return level;
 	}
 	
+	public String getPrefixTranslationKey(){
+		return getTranslationKey() + ".prefix";
+	}
+	
 	public ResourceLocation getTextureLocation(){
 		return modelLocation;
 	}

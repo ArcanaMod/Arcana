@@ -1,32 +1,19 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.blocks.tiles.NodeTileEntity;
-import net.arcanamod.items.OldItemWand;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -94,7 +81,7 @@ public class NormalNodeBlock extends Block{
 		return VoxelShapes.empty();
 	}
 	
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult p_225533_6_){
+	/*public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult p_225533_6_){
 		if(world.isRemote)
 			return ActionResultType.PASS;
 		if(hand != Hand.MAIN_HAND)
@@ -123,7 +110,7 @@ public class NormalNodeBlock extends Block{
 									CompoundNBT compound = (CompoundNBT)base;
 									if(coreAspect.toString().equals(compound.getString("type"))){
 										tileEntity.storedAspects.replace(coreAspect, tileEntity.storedAspects.get(coreAspect) - 1);
-										if(compound.getInt("amount") < /*core.getMaxVis()*/ 35){
+										if(compound.getInt("amount") < *//*core.getMaxVis()*//* 35){
 											compound.putInt("amount", compound.getInt("amount") + 1);
 											newAspects.add(compound);
 										}
@@ -143,5 +130,5 @@ public class NormalNodeBlock extends Block{
 			}
 		}
 		return ActionResultType.SUCCESS;
-	}
+	}*/
 }

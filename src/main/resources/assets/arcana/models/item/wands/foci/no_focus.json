@@ -1,9 +1,5 @@
 {
   "comment": "Does this need to have so much display/rotation information when its empty?",
-  "textures": {
-    "1": "arcana:wands/wand_focus",
-    "particle": "arcana:wands/wand_focus"
-  },
   "elements": [],
   "display": {
     "thirdperson_righthand": {

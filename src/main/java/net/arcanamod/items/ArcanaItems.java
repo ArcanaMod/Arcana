@@ -89,7 +89,7 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> FOCUS_PARTS = ITEMS.register("focus_parts", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
 	// Wand Attachments
-	public static final Cap.Impl ERROR_CAP = new Cap.Impl(0, 0, 0, "invalid_cap", arcLoc("error_cap"));
+	public static final Cap.Impl ERROR_CAP = new Cap.Impl(0, 0, 0, "invalid_cap.prefix", arcLoc("error_cap"));
 	public static final RegistryObject<CapItem> IRON_CAP = ITEMS.register("iron_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 2, 1, 1, arcLoc("models/wands/caps/iron_cap")));
 	public static final RegistryObject<CapItem> GOLD_CAP = ITEMS.register("gold_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 3, 2, 2, arcLoc("models/wands/caps/gold_cap")));
 	public static final RegistryObject<CapItem> COPPER_CAP = ITEMS.register("copper_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 2, 1, 2, arcLoc("models/wands/caps/copper_cap")));
@@ -104,12 +104,12 @@ public class ArcanaItems{
 	// Wands
 	public static final Core.Impl ERROR_WAND_CORE = new Core.Impl(0, 0, "item.arcana.error_wand", arcLoc("error_wand"));
 	public static final Core.Impl WOOD_WAND_CORE = new Core.Impl(25, 1, "item.arcana.wood_wand", arcLoc("models/wands/materials/wood_wand"));
-	public static final RegistryObject<Item> GREATWOOD_WAND_CORE = ITEMS.register("greatwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 35, 2, arcLoc("models/wands/materials/greatwood_wand")));
-	public static final RegistryObject<Item> TAINTED_WAND_CORE = ITEMS.register("tainted_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 35, 2, arcLoc("models/wands/materials/tainted_wand")));
-	public static final RegistryObject<Item> DAIR_WAND_CORE = ITEMS.register("dair_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 30, 3, arcLoc("models/wands/materials/dair_wand")));
-	public static final RegistryObject<Item> HAWTHORN_WAND_CORE = ITEMS.register("hawthorn_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 30, 3, arcLoc("models/wands/materials/hawthorn_wand")));
-	public static final RegistryObject<Item> SILVERWOOD_WAND_CORE = ITEMS.register("silverwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 40, 4, arcLoc("models/wands/materials/silverwood_wand")));
-	public static final RegistryObject<Item> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 50, 4, arcLoc("models/wands/materials/arcanium_wand")));
+	public static final RegistryObject<CoreItem> GREATWOOD_WAND_CORE = ITEMS.register("greatwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 35, 2, arcLoc("models/wands/materials/greatwood_wand"), "item.arcana.greatwood_wand"));
+	public static final RegistryObject<CoreItem> TAINTED_WAND_CORE = ITEMS.register("tainted_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 35, 2, arcLoc("models/wands/materials/tainted_wand"), "item.arcana.tainted_wand"));
+	public static final RegistryObject<CoreItem> DAIR_WAND_CORE = ITEMS.register("dair_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 30, 3, arcLoc("models/wands/materials/dair_wand"), "item.arcana.dair_wand"));
+	public static final RegistryObject<CoreItem> HAWTHORN_WAND_CORE = ITEMS.register("hawthorn_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 30, 3, arcLoc("models/wands/materials/hawthorn_wand"), "item.arcana.hawthorn_wand"));
+	public static final RegistryObject<CoreItem> SILVERWOOD_WAND_CORE = ITEMS.register("silverwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 40, 4, arcLoc("models/wands/materials/silverwood_wand"), "item.arcana.silverwood_wand"));
+	public static final RegistryObject<CoreItem> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 50, 4, arcLoc("models/wands/materials/arcanium_wand"), "item.arcana.arcanium_wand"));
 	
 	public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new WandItem(new Properties().group(Arcana.ITEMS)));
 	

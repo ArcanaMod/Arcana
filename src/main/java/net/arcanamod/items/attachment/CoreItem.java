@@ -10,12 +10,15 @@ public class CoreItem extends WandPart implements Core{
 	private final int maxVis;
 	private final int level;
 	private final ResourceLocation textureLocation;
+	private final String coreTranslationKey;
 	
-	public CoreItem(Properties properties, int maxVis, int level, ResourceLocation location){
+	public CoreItem(Properties properties, int maxVis, int level, ResourceLocation location, String key){
 		super(properties);
 		this.maxVis = maxVis;
 		this.level = level;
 		textureLocation = location;
+		coreTranslationKey = key;
+		CORES.add(this);
 	}
 	
 	public int getID(){
@@ -28,6 +31,10 @@ public class CoreItem extends WandPart implements Core{
 	
 	public int level(){
 		return level;
+	}
+	
+	public String getCoreTranslationKey(){
+		return coreTranslationKey;
 	}
 	
 	public ResourceLocation getTextureLocation(){

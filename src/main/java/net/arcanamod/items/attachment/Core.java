@@ -26,7 +26,7 @@ public interface Core{
 	
 	int level();
 	
-	String getTranslationKey();
+	String getCoreTranslationKey();
 	
 	ResourceLocation getTextureLocation();
 	
@@ -52,7 +52,7 @@ public interface Core{
 			return level;
 		}
 		
-		public String getTranslationKey(){
+		public String getCoreTranslationKey(){
 			return translationKey;
 		}
 		

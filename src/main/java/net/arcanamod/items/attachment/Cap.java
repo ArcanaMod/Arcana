@@ -28,7 +28,7 @@ public interface Cap{
 	
 	int level();
 	
-	String getTranslationKey();
+	String getPrefixTranslationKey();
 	
 	ResourceLocation getTextureLocation();
 	
@@ -61,7 +61,7 @@ public interface Cap{
 			return level;
 		}
 		
-		public String getTranslationKey(){
+		public String getPrefixTranslationKey(){
 			return translationKey;
 		}
 		
