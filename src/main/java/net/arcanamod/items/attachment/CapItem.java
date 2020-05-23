@@ -1,31 +1,26 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.items.WandPart;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 /**
- * Wand Cap Attachment
+ * An item that implements {@link Cap}. Allows for registering an item and cap type together.
  *
- * @author Merijn
- * @see WandPart
- * @see FocusItem
+ * @author Merijn, Luna
+ * @see Cap
  */
-public class CapItem extends WandPart implements Cap{
+public class CapItem extends Item implements Cap{
 	
 	private final int power, maxEffects, level;
-	private final ResourceLocation modelLocation;
+	private final ResourceLocation id;
 	
-	public CapItem(Properties properties, int power, int maxEffects, int level, ResourceLocation location){
+	public CapItem(Properties properties, int power, int maxEffects, int level, ResourceLocation id){
 		super(properties);
 		this.power = power;
 		this.maxEffects = maxEffects;
 		this.level = level;
-		modelLocation = location;
-		CAPS.add(this);
-	}
-	
-	public int getID(){
-		return CAPS.indexOf(this);
+		this.id = id;
+		CAPS.put(getId(), this);
 	}
 	
 	public int getLevel(){
@@ -44,11 +39,7 @@ public class CapItem extends WandPart implements Cap{
 		return level;
 	}
 	
-	public String getPrefixTranslationKey(){
-		return getTranslationKey() + ".prefix";
-	}
-	
-	public ResourceLocation getTextureLocation(){
-		return modelLocation;
+	public ResourceLocation getId(){
+		return id;
 	}
 }

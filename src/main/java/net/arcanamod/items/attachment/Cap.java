@@ -3,23 +3,30 @@ package net.arcanamod.items.attachment;
 import net.arcanamod.items.ArcanaItems;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+/**
+ * Represents a type of wand cap. Provides access to relevant stats, such as the cap's
+ * maximum power, number of effects, or required wand core level.
+ *
+ * @author Luna
+ * @see Core
+ * @see CapItem
+ * @see Impl
+ */
 public interface Cap{
 	
-	List<Cap> CAPS = new ArrayList<>();
+	// Diet registry, lol
+	Map<ResourceLocation, Cap> CAPS = new LinkedHashMap<>();
 	
-	static Optional<Cap> getCapById(int id){
-		if(id < 0 || id >= CAPS.size())
-			return Optional.empty();
-		else
-			return Optional.of(CAPS.get(id));
+	Impl ERROR_CAP = new Impl(0, 0, 0, ArcanaItems.arcLoc("error_cap"));
+	
+	static Optional<Cap> getCapById(ResourceLocation id){
+		return Optional.ofNullable(CAPS.getOrDefault(id, null));
 	}
 	
-	static Cap getCapOrError(int id){
-		return getCapById(id).orElse(ArcanaItems.ERROR_CAP);
+	static Cap getCapOrError(ResourceLocation id){
+		return getCapById(id).orElse(ERROR_CAP);
 	}
 	
 	int power();
@@ -28,25 +35,37 @@ public interface Cap{
 	
 	int level();
 	
-	String getPrefixTranslationKey();
+	default String getPrefixTranslationKey(){
+		return "item." + getId().getNamespace() + "." + getId().getPath() + ".prefix";
+	}
 	
-	ResourceLocation getTextureLocation();
+	default ResourceLocation getTextureLocation(){
+		return new ResourceLocation(getId().getNamespace(), "models/wands/caps/" + getId().getPath());
+	}
 	
+	ResourceLocation getId();
+	
+	/**
+	 * An object that implements {@link Cap}. Allows for registering a cap type without an item - currently
+	 * only used for invalid caps, but may be useful for e.g. a special prebuilt wand type that doesn't have a
+	 * separate cap and core.
+	 *
+	 * @author Luna
+	 * @see Cap
+	 */
 	class Impl implements Cap{
 		
 		int power;
 		int maxEffects;
 		int level;
-		String translationKey;
-		ResourceLocation modelLocation;
+		ResourceLocation id;
 		
-		public Impl(int power, int maxEffects, int level, String translationKey, ResourceLocation modelLocation){
+		public Impl(int power, int maxEffects, int level, ResourceLocation id){
 			this.power = power;
 			this.maxEffects = maxEffects;
 			this.level = level;
-			this.translationKey = translationKey;
-			this.modelLocation = modelLocation;
-			CAPS.add(this);
+			this.id = id;
+			CAPS.put(getId(), this);
 		}
 		
 		public int power(){
@@ -61,12 +80,8 @@ public interface Cap{
 			return level;
 		}
 		
-		public String getPrefixTranslationKey(){
-			return translationKey;
-		}
-		
-		public ResourceLocation getTextureLocation(){
-			return modelLocation;
+		public ResourceLocation getId(){
+			return id;
 		}
 	}
 }

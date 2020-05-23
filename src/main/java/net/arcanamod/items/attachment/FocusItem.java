@@ -1,6 +1,6 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.items.WandPart;
+import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 /**
@@ -8,9 +8,8 @@ import net.minecraft.util.ResourceLocation;
  *
  * @author Merijn
  * @see CapItem
- * @see WandPart
  */
-public class FocusItem extends WandPart implements Focus{
+public class FocusItem extends Item implements Focus{
 	
 	private final ResourceLocation modelLocation;
 	
@@ -20,10 +19,6 @@ public class FocusItem extends WandPart implements Focus{
 		Focus.FOCI.add(this);
 	}
 	
-	@Override
-	public int getID(){
-		return Focus.FOCI.indexOf(this);
-	}
 	
 	public ResourceLocation getModelLocation(){
 		return modelLocation;

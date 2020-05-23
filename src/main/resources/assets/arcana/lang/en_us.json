@@ -33,6 +33,7 @@
     "item.arcana.copper_cap": "Copper Wand Cap",
     "item.arcana.silver_cap": "Silver Wand Cap",
 
+    "item.arcana.error_cap.prefix": "Invalid Capped",
     "item.arcana.iron_cap.prefix": "Iron Capped",
     "item.arcana.gold_cap.prefix": "Gold Topped",
     "item.arcana.thaumium_cap.prefix": "Thaumium Capped",
@@ -42,7 +43,6 @@
     "item.arcana.manasteel_cap.prefix": "Manasteel Capped",
     "item.arcana.elementium_cap.prefix": "Elementium Capped",
     "item.arcana.terrasteel_cap.prefix": "Terrasteel Capped",
-    "invalid_cap.prefix": "Invalid Capped",
 
     "item.arcana.greatwood_wand_core": "Greatwood Wand Core",
     "item.arcana.tainted_wand_core": "Tainted Wand Core",

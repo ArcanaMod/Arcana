@@ -3,45 +3,55 @@ package net.arcanamod.items.attachment;
 import net.arcanamod.items.ArcanaItems;
 import net.minecraft.util.ResourceLocation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+/**
+ * Represents a type of wand core. Provides access to relevant stats, such as the core's
+ * maximum vis or level.
+ *
+ * @author Luna
+ * @see Cap
+ * @see CoreItem
+ * @see Core.Impl
+ */
 public interface Core{
 	
-	List<Core> CORES = new ArrayList<>();
+	Map<ResourceLocation, Core> CORES = new LinkedHashMap<>();
 	
-	static Optional<Core> getCoreById(int id){
-		if(id < 0 || id >= CORES.size())
-			return Optional.empty();
-		else
-			return Optional.of(CORES.get(id));
+	Impl ERROR_WAND_CORE = new Impl(0, 0, ArcanaItems.arcLoc("error_wand"));
+	
+	static Optional<Core> getCoreById(ResourceLocation id){
+		return Optional.ofNullable(CORES.getOrDefault(id, null));
 	}
 	
-	static Core getCoreOrError(int id){
-		return getCoreById(id).orElse(ArcanaItems.ERROR_WAND_CORE);
+	static Core getCoreOrError(ResourceLocation id){
+		return getCoreById(id).orElse(ERROR_WAND_CORE);
 	}
 	
 	int maxVis();
 	
 	int level();
 	
-	String getCoreTranslationKey();
+	default String getCoreTranslationKey(){
+		return "item." + getId().getNamespace() + "." + getId().getPath();
+	}
 	
-	ResourceLocation getTextureLocation();
+	default ResourceLocation getTextureLocation(){
+		return new ResourceLocation(getId().getNamespace(), "models/wands/materials/" + getId().getPath());
+	}
+	
+	ResourceLocation getId();
 	
 	class Impl implements Core{
 		
 		int maxVis, level;
-		String translationKey;
-		ResourceLocation textureLocation;
+		ResourceLocation id;
 		
-		public Impl(int maxVis, int level, String translationKey, ResourceLocation textureLocation){
+		public Impl(int maxVis, int level, ResourceLocation id){
 			this.maxVis = maxVis;
 			this.level = level;
-			this.translationKey = translationKey;
-			this.textureLocation = textureLocation;
-			CORES.add(this);
+			this.id = id;
+			CORES.put(getId(), this);
 		}
 		
 		public int maxVis(){
@@ -52,12 +62,8 @@ public interface Core{
 			return level;
 		}
 		
-		public String getCoreTranslationKey(){
-			return translationKey;
-		}
-		
-		public ResourceLocation getTextureLocation(){
-			return textureLocation;
+		public ResourceLocation getId(){
+			return id;
 		}
 	}
 }

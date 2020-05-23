@@ -19,14 +19,12 @@ public class TextureStitch{
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);
 			
 			// add all of the wand related textures
-			for(Cap cap : Cap.CAPS)
+			for(Cap cap : Cap.CAPS.values())
 				event.addSprite(cap.getTextureLocation());
-			for(Core core : Core.CORES)
+			for(Core core : Core.CORES.values())
 				event.addSprite(core.getTextureLocation());
 			for(Focus focus : Focus.FOCI)
 				event.addSprite(focus.getModelLocation());
 		}
-		//Sprites.NORMAL_NODE = event.getMap().registerSprite(new ResourceLocation(Arcana.MODID, "nodes/normal_node"));
-		//event.getMap().registerSprite(new ResourceLocation(Arcana.MODID, "gui/container/unknown_slot"));
 	}
 }

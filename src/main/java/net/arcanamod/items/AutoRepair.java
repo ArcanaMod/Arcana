@@ -8,6 +8,17 @@ import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+/**
+ * Helper class that implements auto-repair functionality, used by void metal tools.
+ *
+ * @author Luna
+ * @see net.arcanamod.items.armor.AutoRepairArmorItem
+ * @see net.arcanamod.items.tools.AutoRepairSwordItem
+ * @see net.arcanamod.items.tools.AutoRepairShovelItem
+ * @see net.arcanamod.items.tools.AutoRepairPickaxeItem
+ * @see net.arcanamod.items.tools.AutoRepairHoeItem
+ * @see net.arcanamod.items.tools.AutoRepairAxeItem
+ */
 @ParametersAreNonnullByDefault
 public class AutoRepair{
 	
