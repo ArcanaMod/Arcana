@@ -9,6 +9,7 @@ import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.ArcanaRecipes;
 import net.arcanamod.network.Connection;
 import net.arcanamod.research.EntrySection;
 import net.arcanamod.research.Puzzle;
@@ -73,6 +74,7 @@ public class Arcana{
 		
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaItems.ITEMS.register(modEventBus);
+		ArcanaRecipes.SERIALIZERS.register(modEventBus);
 		ArcanaTiles.TES.register(modEventBus);
 		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 		// etc

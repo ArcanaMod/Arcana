@@ -43,20 +43,36 @@ public class WandItem extends Item{
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items){
 		if(isInGroup(group)){
 			// iron/wooden, silver/dair, gold/greatwood, thaumium/silverwood, void/arcanium
-			items.add(withCapAndCore("iron_cap", "wood_wand"));
-			items.add(withCapAndCore("silver_cap", "dair_wand"));
-			items.add(withCapAndCore("gold_cap", "greatwood_wand"));
-			items.add(withCapAndCore("void_cap", "arcanium_wand"));
+			items.add(withCapAndCoreForCt("iron_cap", "wood_wand"));
+			items.add(withCapAndCoreForCt("silver_cap", "dair_wand"));
+			items.add(withCapAndCoreForCt("gold_cap", "greatwood_wand"));
+			items.add(withCapAndCoreForCt("void_cap", "arcanium_wand"));
 		}
 	}
 	
-	// change for recipes
-	private ItemStack withCapAndCore(String cap, String core){
+	public static ItemStack withCapAndCoreForCt(String cap, String core){
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putString("cap", "arcana:" + cap);
 		nbt.putString("core", "arcana:" + core);
-		ItemStack stack = new ItemStack(this, 1);
+		ItemStack stack = new ItemStack(ArcanaItems.WAND.get(), 1);
 		stack.setTag(nbt);
 		return stack;
+	}
+
+	public static ItemStack withCapAndCore(String cap, String core){
+		CompoundNBT nbt = new CompoundNBT();
+		nbt.putString("cap", cap);
+		nbt.putString("core", core);
+		ItemStack stack = new ItemStack(ArcanaItems.WAND.get(), 1);
+		stack.setTag(nbt);
+		return stack;
+	}
+
+	public static ItemStack withCapAndCore(ResourceLocation cap, ResourceLocation core){
+		return withCapAndCore(cap.toString(), core.toString());
+	}
+
+	public static ItemStack withCapAndCore(Cap cap, Core core){
+		return withCapAndCore(cap.getId(), core.getId());
 	}
 }

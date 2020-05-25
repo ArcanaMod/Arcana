@@ -40,6 +40,10 @@ public interface Core{
 		return new ResourceLocation(getId().getNamespace(), "models/wands/materials/" + getId().getPath());
 	}
 	
+	default boolean capAllowed(Cap cap){
+		return level() >= cap.level();
+	}
+	
 	ResourceLocation getId();
 	
 	class Impl implements Core{
