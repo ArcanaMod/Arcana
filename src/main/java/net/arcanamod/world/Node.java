@@ -12,6 +12,4 @@ public interface Node extends IPosition{
 	Reference2IntMap<Aspect> aspects();
 	
 	NodeType type();
-	
-	void tick(IWorld world);
 }

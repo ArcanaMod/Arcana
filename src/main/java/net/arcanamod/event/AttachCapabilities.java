@@ -24,7 +24,7 @@ public class AttachCapabilities{
 	
 	@SubscribeEvent
 	public static void attachChunkCapabilities(AttachCapabilitiesEvent<Chunk> event){
-		System.out.println("adding chunk stuff");
+	
 	}
 	
 	@SubscribeEvent
