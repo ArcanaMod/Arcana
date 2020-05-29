@@ -50,7 +50,7 @@ public class WorldTickHandler{
 			if(world instanceof ServerWorld){
 				ServerWorld serverWorld = (ServerWorld)world;
 				NodeView view = new NodeView(serverWorld);
-				view.getAllNodes().forEach(node -> node.type().tick(serverWorld, view));
+				view.getAllNodes().forEach(node -> node.type().tick(serverWorld, view, node));
 			}
 		}
 	}

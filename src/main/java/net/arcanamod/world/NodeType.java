@@ -5,6 +5,7 @@ import com.google.common.collect.HashBiMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.arcanamod.aspects.Aspect;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -47,7 +48,9 @@ public abstract class NodeType{
 		GENERATED_TYPES.add(HUNGRY);
 	}
 	
-	public void tick(IWorld world, NodeView nodes){
+	public void tick(IWorld world, NodeView nodes, Node node){
+		// add particles for debug
+		world.addParticle(ParticleTypes.ANGRY_VILLAGER, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
 	}
 	
 	/**
