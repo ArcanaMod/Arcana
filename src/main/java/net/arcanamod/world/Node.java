@@ -22,11 +22,11 @@ public class Node implements IPosition{
 	}
 	
 	// might as well pick the fast version
-	Reference2IntMap<Aspect> aspects(){
+	public Reference2IntMap<Aspect> aspects(){
 		return aspects;
 	}
 	
-	NodeType type(){
+	public NodeType type(){
 		return type;
 	}
 	

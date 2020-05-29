@@ -12,6 +12,7 @@ import net.minecraftforge.common.util.Constants;
 import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class NodeChunkImpl implements NodeChunk{
 	
@@ -22,15 +23,22 @@ public class NodeChunkImpl implements NodeChunk{
 	}
 	
 	public Set<Node> getNodesWithinAABB(AxisAlignedBB bounds){
-		return null;
+		return getNodes().stream()
+				.filter(node -> bounds.contains(node.getX(), node.getY(), node.getZ()))
+				.collect(Collectors.toSet());
 	}
 	
 	public Set<Node> getNodesOfType(NodeType type){
-		return null;
+		return getNodes().parallelStream()
+				.filter(node -> node.type().equals(type))
+				.collect(Collectors.toSet());
 	}
 	
 	public Set<Node> getNodesOfTypeWithinAABB(NodeType type, AxisAlignedBB bounds){
-		return null;
+		return getNodes().stream()
+				.filter(node -> node.type().equals(type))
+				.filter(node -> bounds.contains(node.getX(), node.getY(), node.getZ()))
+				.collect(Collectors.toSet());
 	}
 	
 	public CompoundNBT serializeNBT(){
