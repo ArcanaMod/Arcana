@@ -1,20 +1,14 @@
 package net.arcanamod.event;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Focus;
-import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.ModelBakeEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static net.arcanamod.items.ArcanaItems.arcLoc;
+import static net.arcanamod.Arcana.arcLoc;
 
 /**
  * Event Handler for ModelBakeEvent

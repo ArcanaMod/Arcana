@@ -33,7 +33,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 
-import static net.arcanamod.items.ArcanaItems.arcLoc;
+import static net.arcanamod.Arcana.arcLoc;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
 public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{

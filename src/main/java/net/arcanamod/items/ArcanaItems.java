@@ -18,6 +18,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.arcanamod.Arcana.MODID;
+import static net.arcanamod.Arcana.arcLoc;
 
 /**
  * Initialize Items here
@@ -108,7 +109,4 @@ public class ArcanaItems{
 	
 	public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new WandItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	
-	public static ResourceLocation arcLoc(String path){
-		return new ResourceLocation(MODID, path);
-	}
 }

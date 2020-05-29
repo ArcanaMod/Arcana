@@ -16,15 +16,15 @@ import static net.arcanamod.util.Pair.of;
  * @author Atlas
  */
 public enum Aspect{
-	EMPTY(0x0,0x0,0x0,0x0,0x0),
-
+	EMPTY(0x0, 0x0, 0x0, 0x0, 0x0),
+	
 	AIR(0x7c554b, 0xa7846a, 0xe8d2a0, 0xf4f0c4, 0xfdffe5),
 	CHAOS(0x90909, 0x1e1e1f, 0x4d4d4d, 0x757377, 0x9a979c),
 	FIRE(0x972015, 0xd73d21, 0xed8a50, 0xf2c66c, 0xf4f2c6),
 	EARTH(0x1d6861, 0x2ba24e, 0x58dd5f, 0xb4f87e, 0xfdffe5),
 	ORDER(0x6a686c, 0x9a979c, 0xb7b7b7, 0xd9d9d4, 0xfefff7),
 	WATER(0x26317c, 0x4b6fb0, 0x4aaed6, 0xa0e2cb, 0xefeee6),
-
+	
 	ARMOUR(0x4a456f, 0x685683, 0x7a71b4, 0xa589cb, 0xd0b5e0),
 	AURA(0x456978, 0x699fa7, 0x82c7bd, 0xa0e2cb, 0xefeee6),
 	BEAST(0x5a1925, 0x87332d, 0x9c533f, 0xb27357, 0xd09c6b),
@@ -90,7 +90,7 @@ public enum Aspect{
 		combinations.put(of(WATER, CHAOS), VENOM);
 		combinations.put(of(WATER, EARTH), LIFE);
 		combinations.put(of(ORDER, EARTH), CRYSTAL);
-
+		
 		combinations.put(of(LIGHT, LIFE), OVERWORLD);
 		combinations.put(of(MOVEMENT, LIFE), BEAST);
 		combinations.put(of(EARTH, LIFE), PLANT);
@@ -102,26 +102,26 @@ public enum Aspect{
 		combinations.put(of(LIGHT, VACUUM), DARKNESS);
 		combinations.put(of(MOVEMENT, CHAOS), IMPRISON);
 		combinations.put(of(AIR, MOVEMENT), FLIGHT);
-
+		
 		combinations.put(of(VACUUM, DARKNESS), ENDER);
 		combinations.put(of(AIR, PLANT), TREE);
 		combinations.put(of(AIR, MANA), AURA);
 		combinations.put(of(BEAST, DEATH), FLESH);
 		combinations.put(of(MOVEMENT, DEATH), UNDEAD);
 		combinations.put(of(LIFE, DEATH), SPIRIT);
-
+		
 		combinations.put(of(AIR, SPIRIT), SENSES);
 		combinations.put(of(ORDER, SPIRIT), MIND);
 		combinations.put(of(FIRE, SPIRIT), NETHER);
-
+		
 		combinations.put(of(MIND, CHAOS), ELDRITCH);
 		combinations.put(of(MANA, CHAOS), TAINT);
 		combinations.put(of(MIND, SENSES), CREATION);
-
+		
 		combinations.put(of(CREATION, ORDER), TOOL);
 		combinations.put(of(CREATION, PLANT), SEEDS);
 		combinations.put(of(CREATION, EARTH), MINING);
-
+		
 		combinations.put(of(CREATION, TOOL), CRAFTING);
 		combinations.put(of(MOVEMENT, TOOL), MACHINE);
 		combinations.put(of(SEEDS, TOOL), HARVEST);
@@ -129,7 +129,7 @@ public enum Aspect{
 		combinations.put(of(FIRE, TOOL), WEAPON);
 		combinations.put(of(CREATION, TOOL), ARMOUR);
 		combinations.put(of(CREATION, MIND), HUMAN);
-
+		
 		combinations.put(of(HUMAN, FLESH), LUST);
 		combinations.put(of(HUMAN, IMPRISON), SLOTH);
 		combinations.put(of(HUMAN, VACUUM), GLUTTONY);
@@ -138,26 +138,25 @@ public enum Aspect{
 		combinations.put(of(HUMAN, FABRIC), PRIDE);
 		combinations.put(of(HUMAN, METAL), GREED);
 	}
-
+	
 	private final int color_0;
 	private final int color_1;
 	private final int color_2;
 	private final int color_3;
 	private final int color_l;
-	Aspect(int color_0, int color_1, int color_2, int color_3, int color_l)
-	{
+	
+	Aspect(int color_0, int color_1, int color_2, int color_3, int color_l){
 		this.color_0 = color_0;
 		this.color_1 = color_1;
 		this.color_2 = color_2;
 		this.color_3 = color_3;
 		this.color_l = color_l;
 	}
-
-	public int[] getAspectColor()
-	{
-		return new int[] {color_0,color_1,color_2,color_3,color_l};
+	
+	public int[] getAspectColor(){
+		return new int[]{color_0, color_1, color_2, color_3, color_l};
 	}
-
+	
 	@Nullable
 	public static Aspect getCompound(Pair<Aspect, Aspect> components){
 		return Aspect.combinations.containsKey(components) ? Aspect.combinations.get(components) : Aspect.combinations.getOrDefault(components.flip(), null);

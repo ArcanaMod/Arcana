@@ -1,6 +1,6 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.Arcana;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.*;
@@ -18,7 +18,7 @@ public interface Core{
 	
 	Map<ResourceLocation, Core> CORES = new LinkedHashMap<>();
 	
-	Impl ERROR_WAND_CORE = new Impl(0, 0, ArcanaItems.arcLoc("error_wand"));
+	Impl ERROR_WAND_CORE = new Impl(0, 0, Arcana.arcLoc("error_wand"));
 	
 	static Optional<Core> getCoreById(ResourceLocation id){
 		return Optional.ofNullable(CORES.getOrDefault(id, null));

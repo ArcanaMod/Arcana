@@ -1,6 +1,6 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.Arcana;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface Focus{
 	
 	List<Focus> FOCI = new ArrayList<>();
-	Impl NO_FOCUS = new Impl(ArcanaItems.arcLoc("no_focus"));
+	Impl NO_FOCUS = new Impl(Arcana.arcLoc("no_focus"));
 	
 	static Optional<Focus> getFocusById(int id){
 		if(id < 0 || id >= FOCI.size())

@@ -80,6 +80,10 @@ public class Arcana{
 		// etc
 	}
 	
+	public static ResourceLocation arcLoc(String path){
+		return new ResourceLocation(MODID, path);
+	}
+	
 	private void setup(FMLCommonSetupEvent event){
 		EntrySection.init();
 		Requirement.init();
