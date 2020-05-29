@@ -9,6 +9,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -92,7 +93,7 @@ public interface Researcher{
 	
 	void setPuzzleData(Set<ResourceLocation> data);
 	
-	default INBT serialize(){
+	default CompoundNBT serializeNBT(){
 		CompoundNBT compound = new CompoundNBT();
 		
 		CompoundNBT entries = new CompoundNBT();
@@ -105,7 +106,7 @@ public interface Researcher{
 		return compound;
 	}
 	
-	default void deserialize(@Nonnull CompoundNBT data){
+	default void deserializeNBT(@Nonnull CompoundNBT data){
 		Map<ResourceLocation, Integer> entryDat = new HashMap<>();
 		CompoundNBT entries = data.getCompound("entries");
 		for(String s : entries.keySet())

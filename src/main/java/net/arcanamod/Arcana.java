@@ -17,6 +17,7 @@ import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchLoader;
 import net.arcanamod.research.impls.ResearcherCapability;
 import net.arcanamod.spells.SpellEffectHandler;
+import net.arcanamod.world.impl.NodeChunkCapability;
 import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -85,10 +86,12 @@ public class Arcana{
 	}
 	
 	private void setup(FMLCommonSetupEvent event){
+		// init, init, init, init, init, init, init, init
 		EntrySection.init();
 		Requirement.init();
 		ResearcherCapability.init();
 		VisHandlerCapability.init();
+		NodeChunkCapability.init();
 		Puzzle.init();
 		
 		proxy.preInit(event);

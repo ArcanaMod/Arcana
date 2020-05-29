@@ -1,7 +1,17 @@
 package net.arcanamod.world;
 
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.StringNBT;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.common.util.Constants;
 
+import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -87,5 +97,12 @@ public interface NodeChunk{
 		Set<Node> all = getNodesOfTypeWithinAABB(type, bounds);
 		all.remove(excluded);
 		return all;
+	}
+	
+	default CompoundNBT serializeNBT(){
+		return new CompoundNBT();
+	}
+	
+	default void deserializeNBT(@Nonnull CompoundNBT data){
 	}
 }
