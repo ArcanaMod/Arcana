@@ -1,17 +1,12 @@
 package net.arcanamod.world;
 
+import net.arcanamod.world.impl.NodeChunkCapability;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import javax.annotation.Nullable;
 import java.util.Set;
 
 /**
@@ -99,10 +94,13 @@ public interface NodeChunk{
 		return all;
 	}
 	
-	default CompoundNBT serializeNBT(){
-		return new CompoundNBT();
-	}
+	CompoundNBT serializeNBT();
 	
-	default void deserializeNBT(@Nonnull CompoundNBT data){
+	void deserializeNBT(@Nonnull CompoundNBT data);
+	
+	@SuppressWarnings("ConstantConditions")
+	@Nullable
+	static NodeChunk getFrom(@Nonnull ICapabilityProvider holder){
+		return holder.getCapability(NodeChunkCapability.NODE_CHUNK_CAPABILITY, null).orElse(null);
 	}
 }

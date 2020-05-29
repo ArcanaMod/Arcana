@@ -47,7 +47,7 @@ public abstract class NodeType{
 		GENERATED_TYPES.add(HUNGRY);
 	}
 	
-	void tick(IWorld world, NodeView nodes){
+	public void tick(IWorld world, NodeView nodes){
 	}
 	
 	/**

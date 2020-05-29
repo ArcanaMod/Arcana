@@ -1,6 +1,8 @@
 package net.arcanamod.event;
 
+import net.arcanamod.world.NodeView;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
@@ -10,7 +12,9 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
  * @author Mozaran
  */
 public class WorldTickHandler{
+	
 	public static WorldTickHandler instance = new WorldTickHandler();
+	
 	
 	//public static TIntObjectHashMap<ArrayDeque<ChunkPos>> chunksToGen = new TIntObjectHashMap<>();
 	
@@ -26,12 +30,10 @@ public class WorldTickHandler{
 		}
 		
 		if(event.phase == TickEvent.Phase.END){
-			
 			World world = event.world;
+			
 			//int dim = world.provider.getDimension();
-			
 			//ArrayDeque<ChunkPos> chunks = chunksToGen.get(dim);
-			
 			/*if(chunks != null && !chunks.isEmpty()){
 				ChunkPos c = chunks.pollFirst();
 				long worldSeed = world.getSeed();
@@ -44,6 +46,12 @@ public class WorldTickHandler{
 			}else if(chunks != null){
 				chunksToGen.remove(dim);
 			}*/
+			
+			if(world instanceof ServerWorld){
+				ServerWorld serverWorld = (ServerWorld)world;
+				NodeView view = new NodeView(serverWorld);
+				view.getAllNodes().forEach(node -> node.type().tick(serverWorld, view));
+			}
 		}
 	}
 }
