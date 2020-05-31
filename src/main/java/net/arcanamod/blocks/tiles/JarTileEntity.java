@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class JarTileEntity extends TileEntity{
 
 	public VisHandler vis = VisHandlerCapability.ASPECT_HANDLER.getDefaultInstance();
-	public Aspect allowedAspect = null;
+	public Aspect allowedAspect = Aspect.EMPTY;
 
 	protected float smoothAmountVisContentAnimation = 0;
 	protected float lastVisAmount = 0;
@@ -32,14 +32,14 @@ public class JarTileEntity extends TileEntity{
 
 	public void fill(int amount, Aspect aspect)
 	{
+		lastVisAmount = vis.getCurrentVis(allowedAspect)/8f;
 		allowedAspect = aspect;
 		vis.insert(allowedAspect,amount,false);
-		lastVisAmount = vis.getCurrentVis(allowedAspect)-amount;
 	}
 	public void drain(int amount)
 	{
+		lastVisAmount = vis.getCurrentVis(allowedAspect)/8f;
 		vis.drain(allowedAspect,amount,false);
-		lastVisAmount = vis.getCurrentVis(allowedAspect)+amount;
 	}
 
 	public float getAspectAmount()
@@ -50,21 +50,22 @@ public class JarTileEntity extends TileEntity{
 		int delta_time = (int) ((time - last_time) / 1000000);
 		last_time = time;
 
-		float visScaled = vis.getCurrentVis(allowedAspect)/20f;
-		//Arcana.logger.debug("Combined: "+ (visScaled-lastVisAmount) + " Full: "+ (visScaled-lastVisAmount)/10f/delta_time/10f + " Only: "+ smoothAmountVisContentAnimation
-		//		+ " All: "+ visScaled+ " Last: "+ lastVisAmount);
-		if (smoothAmountVisContentAnimation <= visScaled)
-		smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/10f/delta_time;
-		//if (smoothAmountVisContentAnimation > visScaled) // TODO: Fix Jar draining animation
-		//smoothAmountVisContentAnimation -= (visScaled-lastVisAmount)/10f/delta_time;
+		float visScaled = vis.getCurrentVis(allowedAspect)/8f;
+		Arcana.logger.debug("visScaled: "+ visScaled + " lastVisAmount: "+ lastVisAmount + " sAVCA: "+ smoothAmountVisContentAnimation);
+		if (Math.round(smoothAmountVisContentAnimation*10f)/10f!=Math.round(visScaled*10f)/10f)
+			smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/10f/delta_time;
+		else if (smoothAmountVisContentAnimation != Math.round(smoothAmountVisContentAnimation*100f)/100f)
+			smoothAmountVisContentAnimation = Math.round(smoothAmountVisContentAnimation*100f)/100f;
+		if (visScaled==0)
+			smoothAmountVisContentAnimation = 0;
 		return -(smoothAmountVisContentAnimation-fullness);
 	}
 
 	public Color getAspectColor()
 	{
-		if (this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.HAWTHORN_PLANKS.get())
+		if (this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.DUNGEON_BRICKS.get())
 			return getCreativeJarColor();
-		else return new Color(Aspect.AIR.getAspectColor()[2]);
+		else return allowedAspect != Aspect.EMPTY ? new Color(allowedAspect.getAspectColor()[2]) : Color.WHITE;
 	}
 
 	public int nextColor = 0;

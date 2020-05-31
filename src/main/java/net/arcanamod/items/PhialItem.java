@@ -32,8 +32,7 @@ import java.util.List;
 @ParametersAreNonnullByDefault
 public class PhialItem extends Item
 {
-    public PhialItem()
-    {
+    public PhialItem() {
         super(new Properties().group(Arcana.ITEMS));
         this.addPropertyOverride(new ResourceLocation("aspect"), new IItemPropertyGetter() {
             @OnlyIn(Dist.CLIENT)
@@ -63,13 +62,12 @@ public class PhialItem extends Item
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack is = playerIn.getHeldItem(handIn);
 
-        if (!is.isEmpty())
-        if (is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).getContainedAspects().size()==0)
-        {
-            is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).insert(Aspect.STRENGTH,8,false);
-        }
+        /*if (!is.isEmpty())
+            if (is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).getContainedAspects().size()==0) {
+                is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).insert(Aspect.STRENGTH,8,false);
+            }*/
 
-        if(is.getTag() == null){
+        if(is.getTag() == null) {
             is.setTag(getShareTag(is));
         }
 
@@ -84,9 +82,8 @@ public class PhialItem extends Item
     }
 
     @Override
-    public ITextComponent getDisplayName(ItemStack stack)
-    {
-        if (stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).getContainedAspects().size()!=0)
+    public ITextComponent getDisplayName(ItemStack stack) {
+        if (getAspectFromBattery(stack)!=Aspect.EMPTY)
         {
             String aspectName = getAspectFromBattery(stack).toString().toLowerCase();
             return new TranslationTextComponent("item.arcana.phial", aspectName.substring(0, 1).toUpperCase() + aspectName.substring(1)).applyTextStyle(Rarity.RARE.color);
@@ -95,19 +92,35 @@ public class PhialItem extends Item
             return new TranslationTextComponent("item.arcana.empty_phial");
     }
 
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        VisHandler vis = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+        Aspect aspect = getAspectFromBattery(stack);
+        if (vis!=null && aspect!=null) {
+            int amount = vis.getCurrentVis(aspect);
+            tooltip.add(new TranslationTextComponent("tooltip.contains_aspect", aspect.name().toLowerCase().substring(0, 1).toUpperCase() + aspect.name().toLowerCase().substring(1),amount));
+        }
+        super.addInformation(stack, worldIn, tooltip, flagIn);
+    }
+
     @Nullable
     @Override
-    public CompoundNBT getShareTag(ItemStack stack)
-    {
-        CompoundNBT compoundNBT = new CompoundNBT();
-        compoundNBT.putInt("id",getAspectFromBattery(stack).ordinal()-1);
-        return compoundNBT;
+    public CompoundNBT getShareTag(ItemStack stack) {
+        VisHandler vis = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+        Aspect aspect = getAspectFromBattery(stack);
+        if (vis!=null && aspect!=null) {
+            int amount = vis.getCurrentVis(aspect);
+            CompoundNBT compoundNBT = new CompoundNBT();
+            compoundNBT.putInt("id", getAspectFromBattery(stack).ordinal() - 1);
+            compoundNBT.putInt("amount", amount);
+            return compoundNBT;
+        }
+        else return null;
     }
 
     @Override
-    public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt)
-    {
+    public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
         VisHandler cap = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
-        cap.insert(Aspect.values()[nbt.getInt("id")-1],8,false);
+        cap.insert(Aspect.values()[nbt.getInt("id")-1],nbt.getInt("amount"),false);
     }
 }

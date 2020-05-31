@@ -1,6 +1,7 @@
 package net.arcanamod.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -41,7 +42,9 @@ public class FillPhialCommand
                 literal("arcana-phial").requires(source -> source.hasPermissionLevel(2))
                         .then(literal("fill")
                                 .then(argument("targets", EntityArgument.players())
-                                        .then(argument("aspect", resourceLocation()).executes(FillPhialCommand::fill).suggests(SUGGEST_FILL_PHIAL)))
+                                        .then(argument("amount", IntegerArgumentType.integer())
+                                                .then(argument("aspect", resourceLocation()).executes(FillPhialCommand::fill).suggests(SUGGEST_FILL_PHIAL))))
+
                 )
         );
     }
@@ -54,6 +57,7 @@ public class FillPhialCommand
             ItemStack is = serverPlayerEntity.getHeldItemMainhand();
             VisHandler vis = is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
             ResourceLocation aspect_name = ResourceLocationArgument.getResourceLocation(ctx, "aspect");
+            int amount = IntegerArgumentType.getInteger(ctx,"amount");
             if (vis!=null)
             {
                 if (is.getItem() instanceof PhialItem)
@@ -61,7 +65,7 @@ public class FillPhialCommand
                     Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
                     if (targettedStack != null)
                     {
-                        vis.insert(targettedStack, 8, false);
+                        vis.insert(targettedStack, amount, false);
                         if (is.getTag() == null)
                         {
                             is.setTag(is.getShareTag());

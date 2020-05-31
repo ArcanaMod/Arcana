@@ -3,6 +3,8 @@ package net.arcanamod.blocks;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.VisHandler;
+import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.PhialItem;
@@ -58,34 +60,42 @@ public class BlockJar extends Block{
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_)
 	{
-		if (player.getHeldItem(handIn).getItem() instanceof PhialItem)
+		ItemStack heldItem = player.getHeldItem(handIn);
+		if (heldItem.getItem() instanceof PhialItem)
 		{
 			if (worldIn.getTileEntity(pos) instanceof JarTileEntity)
 			{
 				JarTileEntity jarTE = ((JarTileEntity) worldIn.getTileEntity(pos));
-				/*if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)<100)
+
+				VisHandler vis = heldItem.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+				if (vis != null)
 				{
-					if (jarTE.getAllowedAspect()!=)
-					player.getHeldItem(handIn).shrink(1);
-					player.addItemStackToInventory(new ItemStack(ArcanaItems.EMPTY_PHIAL.get()));
-					jarTE.fill(2);
+					if (vis.getContainedAspects().size()==0)
+					{
+						if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)>=8)
+						{
+							ItemStack capedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
+							capedItemStack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).insert(jarTE.allowedAspect,8,false);
+							player.addItemStackToInventory(capedItemStack);
+							jarTE.drain(8);
+						}
+					}
+					else
+					{
+						if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)<100)
+						{
+							Aspect target = ((Aspect)(vis.getContainedAspects().toArray()[0]));
+							if (target==jarTE.allowedAspect||jarTE.allowedAspect==Aspect.EMPTY)
+							{
+								//vis.drain(target,vis.getCurrentVis(target),false);
+								heldItem.shrink(1);
+								player.addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
+								jarTE.fill(vis.getCurrentVis(target), target);
+							}
+						}
+					}
 					return ActionResultType.SUCCESS;
-				}*/
-			}
-		}
-		//Empty Phial isn't instance of PhialItem because has no aspect inside.
-		else if (/*player.getHeldItem(handIn).getItem() == ArcanaItems.EMPTY_PHIAL.get()*/false)
-		{
-			if (worldIn.getTileEntity(pos) instanceof JarTileEntity)
-			{
-				JarTileEntity jarTE = ((JarTileEntity) worldIn.getTileEntity(pos));
-				/*if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)<100)
-				{
-					player.getHeldItem(handIn).shrink(1);
-					player.addItemStackToInventory(new ItemStack(Aspects.getPhialItemStackForAspect(Aspect.GREED).getItem()));//TODO: check aspect in jar and get PhialItem with that aspect.
-					jarTE.drain(2);
-					return ActionResultType.SUCCESS;
-				}*/
+				}
 			}
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);

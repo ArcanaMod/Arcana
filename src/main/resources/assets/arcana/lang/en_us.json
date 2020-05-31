@@ -599,6 +599,9 @@
     "commands.arcanafill.invalid_aspect": "Invalid aspect: \"%s\"!",
     "commands.arcanafill.invalid_item": "Holding item (%s) isn't a phial",
 
+    "_comment": "Tooltips",
+    "tooltip.contains_aspect": "%s x%s",
+
     "_comment": "Guis",
     "researchEntry.continue": "Continue",
     "researchTable.ink_needed": "Scribing tools required",
