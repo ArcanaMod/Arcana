@@ -58,39 +58,34 @@ public class BlockJar extends Block{
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_)
-	{
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
 		ItemStack heldItem = player.getHeldItem(handIn);
-		if (heldItem.getItem() instanceof PhialItem)
-		{
-			if (worldIn.getTileEntity(pos) instanceof JarTileEntity)
-			{
-				JarTileEntity jarTE = ((JarTileEntity) worldIn.getTileEntity(pos));
+		if (heldItem.getItem() instanceof PhialItem) {
+			if (worldIn.getTileEntity(pos) instanceof JarTileEntity) {
+				JarTileEntity jarTileEntity = ((JarTileEntity) worldIn.getTileEntity(pos));
 
 				VisHandler vis = heldItem.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
-				if (vis != null)
-				{
-					if (vis.getContainedAspects().size()==0)
-					{
-						if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)>=8)
+				if (vis != null) {
+					if (vis.getContainedAspects().size()==0) {
+						int amount = jarTileEntity.vis.getCurrentVis(jarTileEntity.allowedAspect);
+						heldItem.shrink(1);
+						ItemStack capedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
+						capedItemStack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null)
+								.insert(jarTileEntity.allowedAspect, amount >= 8 ? 8 : amount,false);
+						if (capedItemStack.getTag() == null)
 						{
-							ItemStack capedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
-							capedItemStack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).insert(jarTE.allowedAspect,8,false);
-							player.addItemStackToInventory(capedItemStack);
-							jarTE.drain(8);
+							capedItemStack.setTag(capedItemStack.getShareTag());
 						}
-					}
-					else
-					{
-						if (jarTE.vis.getCurrentVis(jarTE.allowedAspect)<100)
-						{
+						player.addItemStackToInventory(capedItemStack);
+						jarTileEntity.drain(amount >= 8 ? 8 : amount);
+					} else {
+						if (jarTileEntity.vis.getCurrentVis(jarTileEntity.allowedAspect)<100) {
 							Aspect target = ((Aspect)(vis.getContainedAspects().toArray()[0]));
-							if (target==jarTE.allowedAspect||jarTE.allowedAspect==Aspect.EMPTY)
-							{
+							if (target==jarTileEntity.allowedAspect||jarTileEntity.allowedAspect==Aspect.EMPTY) {
 								//vis.drain(target,vis.getCurrentVis(target),false);
 								heldItem.shrink(1);
 								player.addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
-								jarTE.fill(vis.getCurrentVis(target), target);
+								jarTileEntity.fill(vis.getCurrentVis(target), target);
 							}
 						}
 					}

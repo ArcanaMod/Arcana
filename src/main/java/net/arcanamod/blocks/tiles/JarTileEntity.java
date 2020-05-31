@@ -30,20 +30,17 @@ public class JarTileEntity extends TileEntity{
 		return allowedAspect;
 	}
 
-	public void fill(int amount, Aspect aspect)
-	{
+	public void fill(int amount, Aspect aspect) {
 		lastVisAmount = vis.getCurrentVis(allowedAspect)/8f;
 		allowedAspect = aspect;
 		vis.insert(allowedAspect,amount,false);
 	}
-	public void drain(int amount)
-	{
+	public void drain(int amount) {
 		lastVisAmount = vis.getCurrentVis(allowedAspect)/8f;
 		vis.drain(allowedAspect,amount,false);
 	}
 
-	public float getAspectAmount()
-	{
+	public float getAspectAmount() {
 		float fullness = 12f;
 
 		long time = System.nanoTime();
@@ -51,9 +48,9 @@ public class JarTileEntity extends TileEntity{
 		last_time = time;
 
 		float visScaled = vis.getCurrentVis(allowedAspect)/8f;
-		Arcana.logger.debug("visScaled: "+ visScaled + " lastVisAmount: "+ lastVisAmount + " sAVCA: "+ smoothAmountVisContentAnimation);
+		//Arcana.logger.debug("visScaled: "+ visScaled + " lastVisAmount: "+ lastVisAmount + " sAVCA: "+ smoothAmountVisContentAnimation);
 		if (Math.round(smoothAmountVisContentAnimation*10f)/10f!=Math.round(visScaled*10f)/10f)
-			smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/10f/delta_time;
+				smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/10f/delta_time;
 		else if (smoothAmountVisContentAnimation != Math.round(smoothAmountVisContentAnimation*100f)/100f)
 			smoothAmountVisContentAnimation = Math.round(smoothAmountVisContentAnimation*100f)/100f;
 		if (visScaled==0)

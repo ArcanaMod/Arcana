@@ -62,14 +62,10 @@ public class PhialItem extends Item
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack is = playerIn.getHeldItem(handIn);
 
-        /*if (!is.isEmpty())
-            if (is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).getContainedAspects().size()==0) {
-                is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).insert(Aspect.STRENGTH,8,false);
-            }*/
-
-        if(is.getTag() == null) {
+        /*if(is.getTag() == null) {
             is.setTag(getShareTag(is));
-        }
+        }*/
+        Arcana.logger.debug(is.getTag().toString());
 
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
@@ -108,8 +104,8 @@ public class PhialItem extends Item
     public CompoundNBT getShareTag(ItemStack stack) {
         VisHandler vis = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
         Aspect aspect = getAspectFromBattery(stack);
-        if (vis!=null && aspect!=null) {
-            int amount = vis.getCurrentVis(aspect);
+        int amount = vis.getCurrentVis(aspect);
+        if (vis!=null && aspect!=null && amount!=0) {
             CompoundNBT compoundNBT = new CompoundNBT();
             compoundNBT.putInt("id", getAspectFromBattery(stack).ordinal() - 1);
             compoundNBT.putInt("amount", amount);
