@@ -2,7 +2,6 @@ package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.bases.*;
-import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.worldgen.DummyTree;
 import net.minecraft.block.*;
@@ -23,7 +22,6 @@ import static net.minecraft.block.material.MaterialColor.SAND;
  * Initialize Blocks here
  *
  * @author Atlas, Mozaran, Tea
- * @see ArcanaEntities
  * @see ArcanaItems
  */
 @SuppressWarnings("unused")

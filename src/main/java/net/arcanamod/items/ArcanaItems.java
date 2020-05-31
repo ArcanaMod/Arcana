@@ -2,7 +2,6 @@ package net.arcanamod.items;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.items.armor.ArcanaArmourMaterials;
 import net.arcanamod.items.armor.AutoRepairArmorItem;
 import net.arcanamod.items.armor.GoggleBase;
@@ -24,7 +23,6 @@ import static net.arcanamod.Arcana.arcLoc;
  * Initialize Items here
  *
  * @author Merijn, Tea, Luna
- * @see ArcanaEntities
  * @see ArcanaBlocks
  */
 @SuppressWarnings("unused")
