@@ -35,7 +35,12 @@ public class ItemModels extends ItemModelProvider{
 			//withExistingParent("phial_" + aspect.name().toLowerCase(), "item/generated")
 			//		.texture("layer0", new ResourceLocation(Arcana.MODID, "item/phial_" + aspect.name().toLowerCase()));
 		});
-		
+
+
+		withExistingParent("pridestone_bricks",arcBlockLoc("pridestone_bricks"));
+		withExistingParent("pridestone_small_bricks",arcBlockLoc("pridestone_small_bricks"));
+		withExistingParent("wet_pridestone",arcBlockLoc("wet_pridestone"));
+		withExistingParent("wet_smooth_pridestone",arcBlockLoc("wet_smooth_pridestone"));
 		withExistingParent("silver_block", arcBlockLoc("silver_block"));
 		withExistingParent("silver_ore", arcBlockLoc("silver_ore"));
 		withExistingParent("void_metal_block", arcBlockLoc("void_metal_block"));

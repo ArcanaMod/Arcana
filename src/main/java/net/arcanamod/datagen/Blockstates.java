@@ -44,6 +44,11 @@ public class Blockstates extends BlockStateProvider{
 		simpleBlock(ArcanaBlocks.DUNGEON_BRICKS.get());
 		simpleBlock(ArcanaBlocks.CRACKED_DUNGEON_BRICKS.get());
 		simpleBlock(ArcanaBlocks.MOSSY_DUNGEON_BRICKS.get());
+
+		simpleBlock(ArcanaBlocks.PRIDESTONE_BRICKS.get());
+		simpleBlock(ArcanaBlocks.PRIDESTONE_SMALL_BRICKS.get());
+		simpleBlock(WET_PRIDESTONE.get());
+		simpleBlock(WET_SMOOTH_PRIDESTONE.get());
 		
 		slabBlock(ARCANE_STONE_SLAB.get(), ArcanaDataGenerators.ARCANE_STONE, ArcanaDataGenerators.ARCANE_STONE);
 		slabBlock(ARCANE_STONE_BRICKS_SLAB.get(), ArcanaDataGenerators.ARCANE_STONE_BRICKS, ArcanaDataGenerators.ARCANE_STONE_BRICKS);

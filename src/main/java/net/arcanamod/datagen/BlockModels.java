@@ -38,7 +38,12 @@ public class BlockModels extends BlockModelProvider{
 			wallPost(name + "_wall_post", texture);
 			wallSide(name + "_wall_side", texture);
 		});
-		
+
+		cubeAll("pridestone_bricks", new ResourceLocation(Arcana.MODID, "block/pridestone_bricks"));
+		cubeAll("pridestone_small_bricks", new ResourceLocation(Arcana.MODID, "block/pridestone_small_bricks"));
+		cubeAll("wet_pridestone", new ResourceLocation(Arcana.MODID, "block/wet_pridestone"));
+		cubeAll("wet_smooth_pridestone", new ResourceLocation(Arcana.MODID, "block/wet_smooth_pridestone"));
+
 		cubeAll("silver_block", new ResourceLocation(Arcana.MODID, "block/silver_block"));
 		cubeAll("silver_ore", new ResourceLocation(Arcana.MODID, "block/silver_ore"));
 		cubeAll("void_metal_block", new ResourceLocation(Arcana.MODID, "block/void_metal_block"));

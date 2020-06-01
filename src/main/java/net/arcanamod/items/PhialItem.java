@@ -62,10 +62,9 @@ public class PhialItem extends Item
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack is = playerIn.getHeldItem(handIn);
 
-        /*if(is.getTag() == null) {
-            is.setTag(getShareTag(is));
-        }*/
-        Arcana.logger.debug(is.getTag().toString());
+        if(is.getTag() != null) {
+            Arcana.logger.debug(is.getTag().toString());
+        }
 
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }

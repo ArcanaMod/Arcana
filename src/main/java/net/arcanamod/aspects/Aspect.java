@@ -162,5 +162,12 @@ public enum Aspect{
 		return Aspect.combinations.containsKey(components) ? Aspect.combinations.get(components) : Aspect.combinations.getOrDefault(components.flip(), null);
 	}
 	
-	public static final List<Aspect> aspects = Arrays.asList(values());
+	public static final List<Aspect> aspects = getAllAspects();
+
+	private static List<Aspect> getAllAspects()
+	{
+		Aspect[] modified_values = Arrays.copyOfRange(values(),1,values().length);
+		List<Aspect> aspects = Arrays.asList(modified_values);
+		return aspects;
+	}
 }
