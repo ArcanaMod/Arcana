@@ -39,12 +39,20 @@ public class BlockModels extends BlockModelProvider{
 			wallSide(name + "_wall_side", texture);
 		});
 
+		cubeAll("rough_limestone", new ResourceLocation(Arcana.MODID, "block/rough_limestone"));
+		cubeAll("smooth_limestone", new ResourceLocation(Arcana.MODID, "block/smooth_limestone"));
 		cubeAll("pridestone_bricks", new ResourceLocation(Arcana.MODID, "block/pridestone_bricks"));
 		cubeAll("pridestone_small_bricks", new ResourceLocation(Arcana.MODID, "block/pridestone_small_bricks"));
 		cubeAll("wet_pridestone", new ResourceLocation(Arcana.MODID, "block/wet_pridestone"));
 		cubeAll("wet_smooth_pridestone", new ResourceLocation(Arcana.MODID, "block/wet_smooth_pridestone"));
 		cubeAll("pridestone", new ResourceLocation(Arcana.MODID, "block/pridestone"));
 		cubeAll("smooth_pridestone", new ResourceLocation(Arcana.MODID, "block/smooth_pridestone"));
+		cubeAll("prideclay", new ResourceLocation(Arcana.MODID, "block/prideclay"));
+		cubeAll("gilded_prideclay", new ResourceLocation(Arcana.MODID, "block/gilded_prideclay"));
+		cubeAll("chiseled_prideful_gold_block", new ResourceLocation(Arcana.MODID, "block/chiseled_prideful_gold_block"));
+		cubeAll("carved_prideful_gold_block", new ResourceLocation(Arcana.MODID, "block/carved_prideful_gold_block"));
+		cubeAll("prideful_gold_block", new ResourceLocation(Arcana.MODID, "block/prideful_gold_block"));
+		cubeAll("prideful_gold_tile", new ResourceLocation(Arcana.MODID, "block/prideful_gold_tile"));
 
 		cubeAll("silver_block", new ResourceLocation(Arcana.MODID, "block/silver_block"));
 		cubeAll("silver_ore", new ResourceLocation(Arcana.MODID, "block/silver_ore"));

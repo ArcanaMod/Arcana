@@ -37,12 +37,20 @@ public class ItemModels extends ItemModelProvider{
 		});
 
 
+		withExistingParent("rough_limestone",arcBlockLoc("rough_limestone"));
+		withExistingParent("smooth_limestone",arcBlockLoc("smooth_limestone"));
 		withExistingParent("pridestone_bricks",arcBlockLoc("pridestone_bricks"));
 		withExistingParent("pridestone_small_bricks",arcBlockLoc("pridestone_small_bricks"));
 		withExistingParent("wet_pridestone",arcBlockLoc("wet_pridestone"));
 		withExistingParent("wet_smooth_pridestone",arcBlockLoc("wet_smooth_pridestone"));
 		withExistingParent("pridestone",arcBlockLoc("pridestone"));
 		withExistingParent("smooth_pridestone",arcBlockLoc("smooth_pridestone"));
+		withExistingParent("prideclay",arcBlockLoc("prideclay"));
+		withExistingParent("gilded_prideclay",arcBlockLoc("gilded_prideclay"));
+		withExistingParent("carved_prideful_gold_block",arcBlockLoc("carved_prideful_gold_block"));
+		withExistingParent("chiseled_prideful_gold_block",arcBlockLoc("chiseled_prideful_gold_block"));
+		withExistingParent("prideful_gold_block",arcBlockLoc("prideful_gold_block"));
+		withExistingParent("prideful_gold_tile",arcBlockLoc("prideful_gold_tile"));
 		withExistingParent("silver_block", arcBlockLoc("silver_block"));
 		withExistingParent("silver_ore", arcBlockLoc("silver_ore"));
 		withExistingParent("void_metal_block", arcBlockLoc("void_metal_block"));

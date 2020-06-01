@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "top": "arcana:block/limestone_tile_top",
+    "bottom": "arcana:block/limestone_tile_bottom",
+    "side": "arcana:block/limestone_tile_side"
+  }
+}

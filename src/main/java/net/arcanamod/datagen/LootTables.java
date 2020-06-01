@@ -63,6 +63,25 @@ public class LootTables extends LootTableProvider{
 		addStandardTable(CRACKED_DUNGEON_BRICKS_STAIRS);
 		addStandardTable(CRACKED_DUNGEON_BRICKS_PRESSURE_PLATE);
 		addStandardTable(CRACKED_DUNGEON_BRICKS_WALL);
+
+		addStandardTable(PRIDEFUL_GOLD_PILLAR);
+		addStandardTable(PRIDESTONE);
+		addStandardTable(PRIDESTONE_BRICKS);
+		addStandardTable(PRIDESTONE_PILLAR);
+		addStandardTable(PRIDESTONE_PILLAR_COAL);
+		addStandardTable(PRIDESTONE_SMALL_BRICKS);
+		addStandardTable(PRIDESTONE_TILE);
+		addStandardTable(SMOOTH_PRIDESTONE);
+		addStandardTable(SMOOTH_PRIDESTONE_TILE);
+		addStandardTable(ROUGH_LIMESTONE);
+		addStandardTable(SMOOTH_LIMESTONE);
+		addStandardTable(LIMESTONE_TILE);
+		addStandardTable(PRIDECLAY);
+		addStandardTable(GILDED_PRIDECLAY);
+		addStandardTable(PRIDEFUL_GOLD_BLOCK);
+		addStandardTable(PRIDEFUL_GOLD_TILE);
+		addStandardTable(CARVED_PRIDEFUL_GOLD_BLOCK);
+		addStandardTable(CHISELED_PRIDEFUL_GOLD_BLOCK);
 		
 		addStandardTable(INFUSION_PEDESTAL);
 		addStandardTable(ARCANE_CRAFTING_TABLE);
