@@ -43,6 +43,8 @@ public class BlockModels extends BlockModelProvider{
 		cubeAll("pridestone_small_bricks", new ResourceLocation(Arcana.MODID, "block/pridestone_small_bricks"));
 		cubeAll("wet_pridestone", new ResourceLocation(Arcana.MODID, "block/wet_pridestone"));
 		cubeAll("wet_smooth_pridestone", new ResourceLocation(Arcana.MODID, "block/wet_smooth_pridestone"));
+		cubeAll("pridestone", new ResourceLocation(Arcana.MODID, "block/pridestone"));
+		cubeAll("smooth_pridestone", new ResourceLocation(Arcana.MODID, "block/smooth_pridestone"));
 
 		cubeAll("silver_block", new ResourceLocation(Arcana.MODID, "block/silver_block"));
 		cubeAll("silver_ore", new ResourceLocation(Arcana.MODID, "block/silver_ore"));

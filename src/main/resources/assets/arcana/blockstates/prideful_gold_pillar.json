@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "up=true,down=true": {
+      "model": "arcana:block/prideful_gold_pillar_middle"
+    },
+    "up=false,down=true": {
+      "model": "arcana:block/prideful_gold_pillar_top"
+    },
+    "up=true,down=false": {
+      "model": "arcana:block/prideful_gold_pillar_bottom"
+    },
+    "up=false,down=false": {
+      "model": "arcana:block/prideful_gold_pillar_single"
+    }
+  }
+}

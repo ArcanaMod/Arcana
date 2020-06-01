@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "arcana:block/pridestone_pillar_bottom",
+    "side": "arcana:block/pridestone_pillar_side_bottom"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "particle": "arcana:block/prideful_gold_pillar_side",
+    "top": "arcana:block/prideful_gold_pillar_top",
+    "side": "arcana:block/prideful_gold_pillar_side",
+    "bottom": "arcana:block/prideful_gold_pillar_top"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_column",
+  "textures": {
+    "end": "arcana:block/prideful_gold_pillar_top",
+    "side": "arcana:block/prideful_gold_pillar_side_bottom"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "up=true,down=true": {
+      "model": "arcana:block/pridestone_pillar_middle"
+    },
+    "up=false,down=true": {
+      "model": "arcana:block/pridestone_pillar_top_coal"
+    },
+    "up=true,down=false": {
+      "model": "arcana:block/pridestone_pillar_bottom"
+    },
+    "up=false,down=false": {
+      "model": "arcana:block/pridestone_pillar_single_coal"
+    }
+  }
+}

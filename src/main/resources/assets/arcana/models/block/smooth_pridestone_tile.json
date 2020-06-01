@@ -1,0 +1,8 @@
+{
+  "parent": "block/cube_bottom_top",
+  "textures": {
+    "top": "arcana:block/pridestone_tile_top",
+    "bottom": "arcana:block/smooth_pridestone_tile_bottom",
+    "side": "arcana:block/smooth_pridestone_tile_side"
+  }
+}

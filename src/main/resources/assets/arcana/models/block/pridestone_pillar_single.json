@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "arcana:block/pridestone_pillar_bottom",
+    "up": "arcana:block/pridestone_pillar_top",
+    "north": "arcana:block/pridestone_pillar_side",
+    "south": "arcana:block/pridestone_pillar_side",
+    "west": "arcana:block/pridestone_pillar_side",
+    "east": "arcana:block/pridestone_pillar_side",
+    "down": "arcana:block/pridestone_pillar_bottom"
+  }
+}

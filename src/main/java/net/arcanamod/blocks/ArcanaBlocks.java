@@ -68,14 +68,15 @@ public class ArcanaBlocks{
 	//Pridestone
 	public static final RegistryObject<Block> PRIDESTONE_BRICKS = BLOCKS.register("pridestone_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> PRIDESTONE_SMALL_BRICKS = BLOCKS.register("pridestone_small_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	public static final RegistryObject<Block> PRIDEFUL_GOLD_PILLAR = BLOCKS.register("prideful_gold_pillar", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> PRIDESTONE_PILLAR = BLOCKS.register("pridestone_pillar", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> PRIDESTONE_PILLAR_COAL = BLOCKS.register("pridestone_pillar_coal", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	public static final RegistryObject<Block> PRIDESTONE_TILE_PLATE = BLOCKS.register("pridestone_plate", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	public static final RegistryObject<Block> SMOOTH_PRIDESTONE_TILE_PLATE = BLOCKS.register("smooth_pridestone_plate", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	public static final RegistryObject<Block> PRIDESTONE = BLOCKS.register("pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	public static final RegistryObject<Block> SMOOTH_PRIDESTONE = BLOCKS.register("smooth_pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> PRIDESTONE_TILE = BLOCKS.register("pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> SMOOTH_PRIDESTONE_TILE = BLOCKS.register("smooth_pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	public static final RegistryObject<Block> WET_PRIDESTONE = BLOCKS.register("wet_pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	public static final RegistryObject<Block> WET_SMOOTH_PRIDESTONE = BLOCKS.register("wet_smooth_pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	public static final RegistryObject<Block> WET_PRIDESTONE = BLOCKS.register("wet_pridestone", () -> new Block(create(ROCK).sound(SoundType.WET_GRASS).hardnessAndResistance(2.0F, 6.0F)));
+	public static final RegistryObject<Block> WET_SMOOTH_PRIDESTONE = BLOCKS.register("wet_smooth_pridestone", () -> new Block(create(ROCK).sound(SoundType.WET_GRASS).hardnessAndResistance(2.0F, 6.0F)));
 
 	// Functional
 	public static final RegistryObject<Block> AMBER_ORE = BLOCKS.register("amber_ore", () -> new Block(create(ROCK).harvestLevel(1).hardnessAndResistance(3.0F,3.0F)));
