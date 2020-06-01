@@ -68,8 +68,8 @@ public class ArcanaBlocks{
 	//Pridestone
 	public static final RegistryObject<Block> PRIDESTONE_BRICKS = BLOCKS.register("pridestone_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> PRIDESTONE_SMALL_BRICKS = BLOCKS.register("pridestone_small_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	public static final RegistryObject<Block> PRIDESTONE_PILLAR = BLOCKS.register("pridestone_pillar", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	public static final RegistryObject<Block> PRIDESTONE_PILLAR_COAL = BLOCKS.register("pridestone_pillar_coal", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	public static final RegistryObject<Block> PRIDESTONE_PILLAR = BLOCKS.register("pridestone_pillar", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	public static final RegistryObject<Block> PRIDESTONE_PILLAR_COAL = BLOCKS.register("pridestone_pillar_coal", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> PRIDESTONE_TILE_PLATE = BLOCKS.register("pridestone_plate", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> SMOOTH_PRIDESTONE_TILE_PLATE = BLOCKS.register("smooth_pridestone_plate", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> PRIDESTONE_TILE = BLOCKS.register("pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
