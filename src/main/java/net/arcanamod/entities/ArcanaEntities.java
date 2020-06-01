@@ -1,18 +1,23 @@
 package net.arcanamod.entities;
 
-import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.Arcana;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 /**
  * Initialize Entities here
  *
- * @author Merijn
- * @see ArcanaBlocks
- * @see ArcanaItems
+ * @author Mozaran
  */
 public class ArcanaEntities{
-	public static void init(){
-		int id = 1;
-		//EntityRegistry.registerModEntity(new ResourceLocation(Arcana.MODID, "spellentity"), SpellEntity.class, "spellentity", id++, Arcana.instance, 0, 3, true);
-	}
+	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES,
+			Arcana.MODID);
+
+	public static final RegistryObject<EntityType<KoalaEntity>> KOALA_ENTITY = ENTITY_TYPES
+			.register("koala_entity", () -> EntityType.Builder.<KoalaEntity>create(KoalaEntity::new, EntityClassification.CREATURE)
+				.size(0.6f, 0.6f).build(new ResourceLocation(Arcana.MODID, "koala_entity").toString()));
 }

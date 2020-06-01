@@ -7,6 +7,8 @@ import net.arcanamod.client.Sounds;
 import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.render.JarTileEntityRender;
+import net.arcanamod.client.render.KoalaEntityRender;
+import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaRecipes;
@@ -31,6 +33,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -74,6 +77,7 @@ public class Arcana{
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		
 		ArcanaBlocks.BLOCKS.register(modEventBus);
+		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
 		ArcanaItems.ITEMS.register(modEventBus);
 		ArcanaRecipes.SERIALIZERS.register(modEventBus);
 		ArcanaTiles.TES.register(modEventBus);
@@ -138,6 +142,8 @@ public class Arcana{
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);
 
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));
+
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
 	}
 	
 	private void enqueueIMC(InterModEnqueueEvent event){

@@ -26,7 +26,7 @@ public class Node implements IPosition{
 		return aspects;
 	}
 	
-	NodeType type(){
+	public NodeType type(){
 		return type;
 	}
 	
