@@ -15,5 +15,5 @@ public class ArcanaContainers
 {
 	public static final DeferredRegister<ContainerType<?>> CON = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Arcana.MODID);
 
-	public static final RegistryObject<ContainerType<ResearchTableContainer>> VERY_USEFUL_CONTAINER_TYPE_NAME_AND_NOT_ONLY_REASERCH_TABLE_CONTAINER_TYPE_HELP_ME = CON.register("research_table", () -> IForgeContainerType.create(ResearchTableContainer::new));
+	public static final RegistryObject<ContainerType<ResearchTableContainer>> REASERCH_TABLE = CON.register("research_table", () -> IForgeContainerType.create(ResearchTableContainer::new));
 }

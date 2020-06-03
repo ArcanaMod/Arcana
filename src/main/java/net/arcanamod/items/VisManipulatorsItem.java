@@ -1,8 +1,7 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.Arcana;
-import net.arcanamod.ArcanaGuiHandler;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

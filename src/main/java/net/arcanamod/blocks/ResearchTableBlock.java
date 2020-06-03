@@ -1,8 +1,6 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.Arcana;
-import net.arcanamod.ArcanaGuiHandler;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;

@@ -149,7 +149,7 @@ public class Arcana{
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);
 
 		//Screens
-		ScreenManager.registerFactory(ArcanaContainers.VERY_USEFUL_CONTAINER_TYPE_NAME_AND_NOT_ONLY_REASERCH_TABLE_CONTAINER_TYPE_HELP_ME.get(), ResearchTableScreen::new);
+		ScreenManager.registerFactory(ArcanaContainers.REASERCH_TABLE.get(), ResearchTableScreen::new);
 
 		//Special Render
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));
