@@ -87,13 +87,6 @@ public class ResearchTableContainer extends AspectContainer{
 		IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElse(null);
 		note = te.note();
 		ink = te.ink();
-		// 9, 10
-		addSlot(new SlotItemHandler(itemHandler, 0, 9, 10){
-			/*public boolean isItemValid(@Nonnull ItemStack stack){
-				// only vis storages
-				return super.isItemValid(stack) && stack.hasCapability(VisHandlerCapability.ASPECT_HANDLER, null);
-			}*/
-		});
 		// 137, 11
 		addSlot(new SlotItemHandler(itemHandler, 1, 137, 11){
 			public boolean isItemValid(@Nonnull ItemStack stack){

@@ -43,8 +43,10 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	// so its ~15 max?
 	
 	// slots 0-2 are always there, the rest are reserved for the games themselves
-	
-	protected ItemStackHandler items = new ItemStackHandler(15){
+
+	//protected NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
+
+	protected ItemStackHandler items = new ItemStackHandler(14){
 		protected void onContentsChanged(int slot){
 			super.onContentsChanged(slot);
 			markDirty();

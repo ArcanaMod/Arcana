@@ -24,6 +24,8 @@ import net.minecraft.util.text.StringTextComponent;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class ResearchTableScreen extends AspectContainerScreen<ResearchTableContainer> {
 	
@@ -41,6 +43,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	public ResearchTableScreen(ResearchTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
 		this.te = screenContainer.te;
+		this.aspectContainer = screenContainer;
 		xSize = WIDTH;
 		ySize = HEIGHT;
 	}
@@ -83,20 +86,19 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	protected void init() {
 		super.init();
 
-		leftArrow = addButton(new ChangeAspectPageButton(11, 183, false));
-		rightArrow = addButton(new ChangeAspectPageButton(112, 183, true));
+		leftArrow = addButton(new ChangeAspectPageButton(11, 183, false, this::actionPerformed));
+		rightArrow = addButton(new ChangeAspectPageButton(112, 183, true, this::actionPerformed));
 
 		//Connection.network.sendToServer(new PktRequestAspectSync());
 	}
-	
-	protected void actionPerformed(@Nonnull Button button) throws IOException {
-		//super.actionPerformed(button);
+
+	protected void actionPerformed(@Nonnull Button button) {
 		if(button == leftArrow && page > 0)
 			page--;
 		ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
 		if(button == rightArrow && container.scrollableSlots.size() > 30 * (page + 1))
 			page++;
-		
+
 		refreshSlotVisibility();
 	}
 	
@@ -113,35 +115,37 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		
 		boolean right;
 		
-		public ChangeAspectPageButton(int x, int y, boolean right){
-			super(x, y, 15, 11, "", button->{});
+		public ChangeAspectPageButton(int x, int y, boolean right, Button.IPressable onPress){
+			super(x, y, 15, 11, "", onPress);
 			this.right = right;
 		}
-		
-		public void drawButton(@Nonnull Minecraft minecraft, int mouseX, int mouseY, float partialTicks){
+
+		@Override
+		public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
 			if(visible){
 				//hovered = mouseX >= guiLeft + x && mouseY >= guiTop + y && mouseX < guiLeft + x + width && mouseY < guiTop + y + height;
 				int teX = right ? 120 : 135;
 				int teY = 307;
 				ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
 				// first check if there are multiple pages
-				/*if(container.scrollableSlots.size() > 30)
+				if (container!=null)
+				if(container.scrollableSlots.size() > 30)
 					if(right){
 						// if I am not on the last page
 						if(container.scrollableSlots.size() > 30 * (page + 1)){
 							teY -= 11;
-							if(hovered)
+							if(isHovered)
 								teY -= 11;
 						}
 					}else{
 						// if I am not on the first page
 						if(page > 0){
 							teY -= 11;
-							if(hovered)
+							if(isHovered)
 								teY -= 11;
 						}
 					}
-				// then just draw*/
+				// then just draw
 				minecraft.getTextureManager().bindTexture(BG);
 				GlStateManager.disableLighting();
 				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
