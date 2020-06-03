@@ -34,7 +34,7 @@ import static java.lang.Math.*;
 import static net.minecraft.util.math.MathHelper.clamp;
 import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
 
-public class ResearchBookGUI extends Screen{
+public class ResearchBookScreen extends Screen{
 	
 	ResearchBook book;
 	List<ResearchCategory> categories;
@@ -56,7 +56,7 @@ public class ResearchBookGUI extends Screen{
 	static float zoom = 0.7f;
 	static boolean show_zoom = false;
 	
-	public ResearchBookGUI(ResearchBook book){
+	public ResearchBookScreen(ResearchBook book){
 		super(new StringTextComponent(""));
 		this.book = book;
 		texture = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + SUFFIX_RESIZABLE);
@@ -401,7 +401,7 @@ public class ResearchBookGUI extends Screen{
 				if(button != 2){
 					if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS)
 						// left/right (& other) click: open page
-						getMinecraft().displayGuiScreen(new ResearchEntryGUI(entry));
+						getMinecraft().displayGuiScreen(new ResearchEntryScreen(entry));
 				}else
 					// middle click: try advance
 					Connection.sendTryAdvance(entry.key());
@@ -570,8 +570,8 @@ public class ResearchBookGUI extends Screen{
 		
 		public CategoryButton(int categoryNum, int x, int y, ResearchCategory category){
 			super(x, y, 16, 16, "", button -> {
-				if(Minecraft.getInstance().currentScreen instanceof ResearchBookGUI)
-					((ResearchBookGUI)Minecraft.getInstance().currentScreen).tab = categoryNum;
+				if(Minecraft.getInstance().currentScreen instanceof ResearchBookScreen)
+					((ResearchBookScreen)Minecraft.getInstance().currentScreen).tab = categoryNum;
 			});
 			this.categoryNum = categoryNum;
 			this.category = category;
@@ -589,7 +589,7 @@ public class ResearchBookGUI extends Screen{
 				
 				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 				if(isHovered)
-					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name())), mouseX, mouseY, ResearchBookGUI.this.width, ResearchBookGUI.this.height, -1, Minecraft.getInstance().fontRenderer);
+					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name())), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
 		}
 	}

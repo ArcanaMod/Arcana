@@ -1,7 +1,7 @@
 package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.client.gui.ResearchEntryGUI;
+import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
@@ -24,7 +24,7 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 		ResourceLocation icon = getFrom(requirement).getIcon();
 		Minecraft.getInstance().getTextureManager().bindTexture(icon != null ? icon : getFrom(requirement).getDefaultIcon());
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
-		ResearchEntryGUI.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+		ResearchEntryScreen.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 	}
 	
 	public List<ITextComponent> tooltip(PuzzleRequirement requirement, PlayerEntity player){

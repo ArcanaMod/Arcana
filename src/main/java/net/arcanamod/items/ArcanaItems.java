@@ -106,5 +106,9 @@ public class ArcanaItems{
 	public static final RegistryObject<CoreItem> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 50, 4, arcLoc("arcanium_wand")));
 	
 	public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new WandItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
-	
+
+	//Testing
+	public static final RegistryObject<Item> RESEARCH_NOTE_COMPLETE = ITEMS.register("research_note_complete", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> RESEARCH_NOTE = ITEMS.register("research_note", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> INK = ITEMS.register("ink", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 }

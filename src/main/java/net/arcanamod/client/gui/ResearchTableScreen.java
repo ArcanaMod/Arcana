@@ -4,10 +4,12 @@ import net.arcanamod.Arcana;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
-public class ResearchTableGUI extends GuiAspectContainer{
+public class ResearchTableScreen extends AspectContainerScreen<ResearchTableContainer> {
 	
 	public static final int WIDTH = 376;
 	public static final int HEIGHT = 280;
@@ -20,9 +22,9 @@ public class ResearchTableGUI extends GuiAspectContainer{
 	
 	Button leftArrow, rightArrow;
 	
-	public ResearchTableGUI(ResearchTableTileEntity te, ResearchTableContainer container){
-		super(container, null, new StringTextComponent(""));
-		this.te = te;
+	public ResearchTableScreen(ResearchTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){
+		super(screenContainer, inv, titleIn);
+		this.te = screenContainer.te;
 		xSize = WIDTH;
 		ySize = HEIGHT;
 	}

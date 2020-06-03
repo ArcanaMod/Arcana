@@ -9,11 +9,11 @@ import net.minecraft.util.text.ITextComponent;
 
 import java.io.IOException;
 
-public abstract class GuiAspectContainer extends ContainerScreen{
+public abstract class AspectContainerScreen<T extends Container> extends ContainerScreen<T>{
 	
 	protected AspectContainer aspectContainer;
 	
-	public GuiAspectContainer(Container screenContainer, PlayerInventory inv, ITextComponent titleIn){
+	public AspectContainerScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
 	}
 	

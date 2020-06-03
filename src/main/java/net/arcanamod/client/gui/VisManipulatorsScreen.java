@@ -9,7 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class VisManipulatorsGUI extends GuiAspectContainer{// implements VisManipulatorsContainer.ScrollRefreshListener{
+public class VisManipulatorsScreen extends AspectContainerScreen {// implements VisManipulatorsContainer.ScrollRefreshListener{
 	
 	public static final int WIDTH = 176;
 	public static final int HEIGHT = 256;
@@ -18,7 +18,7 @@ public class VisManipulatorsGUI extends GuiAspectContainer{// implements VisMani
 	
 	int leftScroll = 0, rightScroll = 0;
 	
-	public VisManipulatorsGUI(Container screenContainer, PlayerInventory inv, ITextComponent titleIn){
+	public VisManipulatorsScreen(Container screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
 	}
 	

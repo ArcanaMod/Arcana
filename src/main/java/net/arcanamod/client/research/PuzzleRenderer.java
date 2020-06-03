@@ -1,6 +1,6 @@
 package net.arcanamod.client.research;
 
-import net.arcanamod.client.gui.ResearchTableGUI;
+import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.research.impls.ChemistryPuzzleRenderer;
 import net.arcanamod.research.impls.Chemistry;
 import net.arcanamod.Arcana;
@@ -55,11 +55,11 @@ public interface PuzzleRenderer<T extends Puzzle>{
 	}
 	
 	default int guiLeft(int screenWidth){
-		return (screenWidth - ResearchTableGUI.WIDTH) / 2;
+		return (screenWidth - ResearchTableScreen.WIDTH) / 2;
 	}
 	
 	default int guiTop(int screenHeight){
-		return (screenHeight - ResearchTableGUI.HEIGHT) / 2;
+		return (screenHeight - ResearchTableScreen.HEIGHT) / 2;
 	}
 	
 	default int paperLeft(int screenWidth){

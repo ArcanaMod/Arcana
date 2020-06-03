@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ResearchEntryGUI extends Screen{
+public class ResearchEntryScreen extends Screen{
 	
 	ResourceLocation bg;
 	ResearchEntry entry;
@@ -47,7 +47,7 @@ public class ResearchEntryGUI extends Screen{
 	public static final int RIGHT_X_OFFSET = 119;
 	public static final int HEIGHT_OFFSET = -10;
 	
-	public ResearchEntryGUI(ResearchEntry entry){
+	public ResearchEntryScreen(ResearchEntry entry){
 		super(new StringTextComponent(""));
 		this.entry = entry;
 		bg = new ResourceLocation(entry.key().getNamespace(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
@@ -165,7 +165,7 @@ public class ResearchEntryGUI extends Screen{
 		else{
 			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
 			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
-				ResearchBookGUI gui = new ResearchBookGUI(entry.category().book());
+				ResearchBookScreen gui = new ResearchBookScreen(entry.category().book());
 				gui.tab = entry.category().book().getCategories().indexOf(entry.category());
 				if(gui.tab < 0)
 					gui.tab = 0;

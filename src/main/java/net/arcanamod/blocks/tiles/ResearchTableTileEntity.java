@@ -1,15 +1,26 @@
 package net.arcanamod.blocks.tiles;
 
+import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.VisBattery;
 import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.containers.ResearchTableContainer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -19,13 +30,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableTileEntity extends TileEntity{
+public class ResearchTableTileEntity extends LockableTileEntity {
 	
 	public ResearchTableTileEntity(){
 		super(ArcanaTiles.RESEARCH_TABLE_TE.get());
 	}
-	
-	/*
 	
 	// Three slots for wand (OR any AspectHandler, but research games can only be performed with a wand), ink, note
 	// up to 9 for crafting guesswork for arcane crafting
@@ -43,36 +52,50 @@ public class ResearchTableTileEntity extends TileEntity{
 	};
 	
 	protected VisBattery aspects = new VisBattery();
-	
+
 	@Override
-	public void readFromNBT(CompoundNBT compound){
-		super.readFromNBT(compound);
-		if(compound.hasKey("items"))
-			items.deserializeNBT(compound.getCompoundTag("items"));
-		if(compound.hasKey("aspects"))
-			aspects.deserializeNBT(compound.getCompoundTag("aspects"));
+	public void read(CompoundNBT compound){
+		super.read(compound);
+		if(compound.contains("items"))
+			items.deserializeNBT(compound.getCompound("items"));
+		if(compound.contains("aspects"))
+			aspects.deserializeNBT(compound.getCompound("aspects"));
 	}
 	
 	@Override
-	public CompoundNBT writeToNBT(CompoundNBT compound){
-		super.writeToNBT(compound);
-		compound.setTag("items", items.serializeNBT());
-		compound.setTag("aspects", aspects.serializeNBT());
+	public CompoundNBT write(CompoundNBT compound){
+		super.write(compound);
+		compound.put("items", items.serializeNBT());
+		compound.put("aspects", aspects.serializeNBT());
 		return compound;
 	}
-	
+
+	@Override
+	protected ITextComponent getDefaultName() {
+		return new StringTextComponent("research_table");
+	}
+
+	@Override
+	protected Container createMenu(int id, PlayerInventory player) {
+		PacketBuffer buffer = new PacketBuffer(Unpooled.buffer(8,8));
+		buffer.writeBlockPos(pos);
+		return new ResearchTableContainer(id,player,buffer);
+	}
+
+	//net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
+	//		net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 	@Nullable
-	public <T> T getCapability(Capability<T> capability, @Nullable Direction facing){
-		if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return (T)items;
-		else if(capability == VisHandlerCapability.ASPECT_HANDLER)
-			return (T)aspects;
-		return super.getCapability(capability, facing);
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing){
+		/*if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			return items.cast();
+		else*/ if(capability == VisHandlerCapability.ASPECT_HANDLER)
+			return aspects.getCapability(VisHandlerCapability.ASPECT_HANDLER).cast();
+		return super.getCapability(capability, facing).cast();
 	}
 	
 	public CompoundNBT saveToNBT(){
 		CompoundNBT compound = new CompoundNBT();
-		compound.setTag("aspects", aspects.serializeNBT());
+		compound.put("aspects", aspects.serializeNBT());
 		return compound;
 	}
 	
@@ -88,12 +111,88 @@ public class ResearchTableTileEntity extends TileEntity{
 	public ItemStack note(){
 		return items.getStackInSlot(2);
 	}
-	
-	public void setShouldDrop(boolean shouldDrop){
-		this.shouldDrop = shouldDrop;
+
+	/**
+	 * Returns the number of slots in the inventory.
+	 */
+	@Override
+	public int getSizeInventory() {
+		return items.getSlots();
 	}
-	
-	public boolean shouldDrop(){
-		return shouldDrop;
-	}*/
+
+	@Override
+	public boolean isEmpty() {
+		return false;
+	}
+
+	/**
+	 * Returns the stack in the given slot.
+	 *
+	 * @param index
+	 */
+	@Override
+	public ItemStack getStackInSlot(int index) {
+		return this.items.getStackInSlot(index);
+	}
+
+	/**
+	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
+	 *
+	 * @param index
+	 * @param count
+	 */
+	@Override
+	public ItemStack decrStackSize(int index, int count) {
+		//return ItemStackHelper.getAndSplit(this.items.getStackInSlot(index), index, count);
+		return null;
+	}
+
+	/**
+	 * Removes a stack from the given slot and returns it.
+	 *
+	 * @param index
+	 */
+	@Override
+	public ItemStack removeStackFromSlot(int index) {
+		ItemStack stack = this.items.getStackInSlot(index).copy();
+		this.items.getStackInSlot(index).setCount(0);
+		return stack;
+	}
+
+	/**
+	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
+	 *
+	 * @param index
+	 * @param stack
+	 */
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack) {
+		ItemStack itemstack = this.items.getStackInSlot(index);
+		boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
+		this.items.setStackInSlot(index, stack);
+		if (stack.getCount() > this.getInventoryStackLimit()) {
+			stack.setCount(this.getInventoryStackLimit());
+		}
+	}
+
+	/**
+	 * Don't rename this method to canInteractWith due to conflicts with Container
+	 *
+	 * @param player
+	 */
+	@Override
+	public boolean isUsableByPlayer(PlayerEntity player) {
+		if (this.world.getTileEntity(this.pos) != this) {
+			return false;
+		} else {
+			return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+		}
+	}
+
+	@Override
+	public void clear() {
+		for (int i = 0; i < items.getSlots()-1; i++) {
+			items.getStackInSlot(i).setCount(0);
+		}
+	}
 }

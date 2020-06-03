@@ -1,11 +1,15 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaGuiHandler;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.DirectionProperty;
@@ -14,8 +18,10 @@ import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -107,28 +113,32 @@ public class ResearchTableBlock extends WaterloggableBlock implements GroupedBlo
 	public ItemGroup getGroup(){
 		return null;
 	}
-	
-	/*
-	public boolean onBlockActivated(World world, BlockPos pos, BlockState state, PlayerEntity player, Hand hand, Direction facing, float hitX, float hitY, float hitZ){
+
+	@Override
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rayTraceResult) {
 		if(world.isRemote)
-			return true;
-		if(state.getValue(PART) == RIGHT)
-			pos = pos.offset(state.getValue(FACING).rotateYCCW());
+			return ActionResultType.PASS;
+		if(state.get(PART) == RIGHT)
+			pos = pos.offset(state.get(FACING).rotateYCCW());
 		TileEntity te = getTE(pos, world);
 		if(te instanceof ResearchTableTileEntity)
-			player.openGui(Arcana.instance, ArcanaGuiHandler.RESEARCH_TABLE_ID, world, pos.getX(), pos.getY(), pos.getZ());
-		return true;
+		{
+			BlockPos finalPos = te.getPos();
+			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, buf -> buf.writeBlockPos(finalPos));
+			return ActionResultType.SUCCESS;
+		}
+		return super.onBlockActivated(state, world, pos, player, handIn, rayTraceResult);
 	}
 	
 	@Nullable
 	private static TileEntity getTE(BlockPos pos, World world){
-		if(world.getBlockState(pos).getValue(PART).equals(LEFT))
+		if(world.getBlockState(pos).get(PART).equals(LEFT))
 			return world.getTileEntity(pos);
 		else
-			return world.getTileEntity(pos.offset(world.getBlockState(pos).getValue(FACING).rotateYCCW()));
+			return world.getTileEntity(pos.offset(world.getBlockState(pos).get(FACING).rotateYCCW()));
 	}
 	
-	public void breakBlock(World world, BlockPos pos, BlockState state){
+	/*public void breakBlock(World world, BlockPos pos, BlockState state){
 		TileEntity te;
 		if(state.getValue(PART).equals(LEFT))
 			te = world.getTileEntity(pos);
@@ -161,7 +171,7 @@ public class ResearchTableBlock extends WaterloggableBlock implements GroupedBlo
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 		return tileentity != null && tileentity.receiveClientEvent(id, param);
 	}
-	
+
 	public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player){
 		return new ItemStack(ArcanaItems.RESEARCH_TABLE_PLACER);
 	}

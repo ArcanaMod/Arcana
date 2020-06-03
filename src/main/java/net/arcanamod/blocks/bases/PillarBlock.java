@@ -1,12 +1,15 @@
 package net.arcanamod.blocks.bases;
 
+import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Explosion;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
@@ -26,6 +29,11 @@ public class PillarBlock extends Block {
 		BlockPos blockpos = context.getPos();
 		World world = context.getWorld();
 		return getDefaultState().with(UP, world.getBlockState(blockpos.up()).getBlock() instanceof PillarBlock).with(DOWN, world.getBlockState(blockpos.down()).getBlock() instanceof PillarBlock);
+	}
+
+	@Override
+	public boolean isFlammable(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
+		return state.getBlock().equals(ArcanaBlocks.PRIDESTONE_PILLAR_COAL.get());
 	}
 
 	@Override

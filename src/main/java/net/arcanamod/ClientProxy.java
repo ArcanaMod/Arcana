@@ -1,8 +1,8 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.client.gui.ResearchBookGUI;
-import net.arcanamod.client.gui.ResearchEntryGUI;
+import net.arcanamod.client.gui.ResearchBookScreen;
+import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
@@ -30,12 +30,12 @@ public class ClientProxy extends CommonProxy{
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){
-		Minecraft.getInstance().displayGuiScreen(new ResearchBookGUI(ResearchBooks.books.get(book)));
+		Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book)));
 	}
 	
 	public void onResearchChange(ResearchEvent event){
-		if(Minecraft.getInstance().currentScreen instanceof ResearchEntryGUI)
-			((ResearchEntryGUI)Minecraft.getInstance().currentScreen).updateButtonVisibility();
+		if(Minecraft.getInstance().currentScreen instanceof ResearchEntryScreen)
+			((ResearchEntryScreen)Minecraft.getInstance().currentScreen).updateButtonVisibility();
 	}
 	
 	public PlayerEntity getPlayerOnClient(){

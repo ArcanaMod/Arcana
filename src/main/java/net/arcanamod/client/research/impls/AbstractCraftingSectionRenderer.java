@@ -1,7 +1,7 @@
 package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.client.gui.ResearchEntryGUI;
+import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.research.ResearchBook;
 import net.arcanamod.research.ResearchBooks;
@@ -19,8 +19,8 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static net.arcanamod.client.gui.ResearchEntryGUI.HEIGHT_OFFSET;
-import static net.arcanamod.client.gui.ResearchEntryGUI.drawTexturedModalRect;
+import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
+import static net.arcanamod.client.gui.ResearchEntryScreen.drawTexturedModalRect;
 
 public abstract class AbstractCraftingSectionRenderer<T extends AbstractCraftingSection> implements EntrySectionRenderer<T>{
 	
@@ -30,12 +30,12 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 		// if recipe exists: render result at specified position, defer drawing recipe
 		// otherwise: render error message
 		ResearchBook book = ResearchBooks.getEntry(section.getEntry()).category().book();
-		textures = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + ResearchEntryGUI.OVERLAY_SUFFIX);
+		textures = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + ResearchEntryScreen.OVERLAY_SUFFIX);
 		Optional<? extends IRecipe<?>> optRecipe = player.world.getRecipeManager().getRecipe(section.getRecipe());
 		optRecipe.ifPresent(recipe -> {
 			// draw result
 			ItemStack result = recipe.getRecipeOutput();
-			renderResult(right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X, resultOffset(recipe, section, pageIndex, screenWidth, screenHeight, mouseX, mouseY, right, player), result, screenWidth, screenHeight);
+			renderResult(right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X, resultOffset(recipe, section, pageIndex, screenWidth, screenHeight, mouseX, mouseY, right, player), result, screenWidth, screenHeight);
 			renderRecipe(recipe, section, pageIndex, screenWidth, screenHeight, mouseX, mouseY, right, player);
 		});
 		// else display error
@@ -46,7 +46,7 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 		optRecipe.ifPresent(recipe -> {
 			// draw result
 			ItemStack result = recipe.getRecipeOutput();
-			renderResultTooltips(right ? ResearchEntryGUI.PAGE_X + ResearchEntryGUI.RIGHT_X_OFFSET : ResearchEntryGUI.PAGE_X, resultOffset(recipe, section, pageIndex, screenWidth, screenHeight, mouseX, mouseY, right, player), result, screenWidth, screenHeight, mouseX, mouseY);
+			renderResultTooltips(right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X, resultOffset(recipe, section, pageIndex, screenWidth, screenHeight, mouseX, mouseY, right, player), result, screenWidth, screenHeight, mouseX, mouseY);
 			renderRecipeTooltips(recipe, section, pageIndex, screenWidth, screenHeight, mouseX, mouseY, right, player);
 		});
 		if(!optRecipe.isPresent())
@@ -58,16 +58,16 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 	abstract void renderRecipeTooltips(IRecipe<?> recipe, T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);
 	
 	int resultOffset(IRecipe<?> recipe, T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
-		return ResearchEntryGUI.PAGE_Y;
+		return ResearchEntryScreen.PAGE_Y;
 	}
 	
 	private void renderResult(int x, int y, ItemStack result, int screenWidth, int screenHeight){
 		mc().getTextureManager().bindTexture(textures);
-		int rX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - 58) / 2;
+		int rX = x + (screenWidth - 256) / 2 + (ResearchEntryScreen.PAGE_WIDTH - 58) / 2;
 		int rY = y + (screenHeight - 181) / 2 + 16 + HEIGHT_OFFSET;
 		drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
 		item(result, rX + 29 - 8, rY + 10 - 8);
-		int stX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - fr().getStringWidth(result.getTextComponent().getFormattedText())) / 2;
+		int stX = x + (screenWidth - 256) / 2 + (ResearchEntryScreen.PAGE_WIDTH - fr().getStringWidth(result.getTextComponent().getFormattedText())) / 2;
 		int stY = y + (screenHeight - 181) / 2 + 11 - fr().FONT_HEIGHT + HEIGHT_OFFSET;
 		fr().drawString(result.getDisplayName().getFormattedText(), stX, stY, 0);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
@@ -76,7 +76,7 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 	}
 	
 	protected void renderResultTooltips(int x, int y, ItemStack result, int screenWidth, int screenHeight, int mouseX, int mouseY){
-		int rX = x + (screenWidth - 256) / 2 + (ResearchEntryGUI.PAGE_WIDTH - 58) / 2 + 21;
+		int rX = x + (screenWidth - 256) / 2 + (ResearchEntryScreen.PAGE_WIDTH - 58) / 2 + 21;
 		int rY = y + (screenHeight - 181) / 2 + 18 + HEIGHT_OFFSET;
 		tooltipArea(result, mouseX, mouseY, screenWidth, screenHeight, rX, rY);
 	}

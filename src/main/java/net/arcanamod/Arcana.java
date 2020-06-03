@@ -5,9 +5,11 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.Sounds;
 import net.arcanamod.client.event.TextureStitch;
+import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.client.render.KoalaEntityRender;
+import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
@@ -21,6 +23,7 @@ import net.arcanamod.research.impls.ResearcherCapability;
 import net.arcanamod.spells.SpellEffectHandler;
 import net.arcanamod.world.impl.NodeChunkCapability;
 import net.arcanamod.worldgen.FeatureGenerator;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
@@ -81,6 +84,7 @@ public class Arcana{
 		ArcanaItems.ITEMS.register(modEventBus);
 		ArcanaRecipes.SERIALIZERS.register(modEventBus);
 		ArcanaTiles.TES.register(modEventBus);
+		ArcanaContainers.CON.register(modEventBus);
 		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 		// etc
 	}
@@ -114,6 +118,8 @@ public class Arcana{
 	
 	private void setupClient(FMLClientSetupEvent event){
 		// TODO: move to ClientProxy for servers
+
+		//Render Layers for Blocks
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.JAR.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.RESEARCH_TABLE.get(), RenderType.getTranslucent());
 		
@@ -138,11 +144,17 @@ public class Arcana{
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.GREATWOOD_TRAPDOOR.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.HAWTHORN_TRAPDOOR.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WILLOW_TRAPDOOR.get(), RenderType.getCutout());
-		
+
+		//Tile Entity Special Render
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);
 
+		//Screens
+		ScreenManager.registerFactory(ArcanaContainers.VERY_USEFUL_CONTAINER_TYPE_NAME_AND_NOT_ONLY_REASERCH_TABLE_CONTAINER_TYPE_HELP_ME.get(), ResearchTableScreen::new);
+
+		//Special Render
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));
 
+		//Entity Render
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
 	}
 	

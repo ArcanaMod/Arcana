@@ -1,18 +1,7 @@
 package net.arcanamod;
 
-import net.arcanamod.client.gui.ResearchTableGUI;
-import net.arcanamod.client.gui.VisManipulatorsGUI;
-import net.arcanamod.containers.ResearchTableContainer;
-import net.arcanamod.containers.VisManipulatorsContainer;
-import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import javax.annotation.Nullable;
 
 /**
  * Handles opening containers.

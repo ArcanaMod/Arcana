@@ -1,7 +1,6 @@
 package net.arcanamod.client.research.impls;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.client.gui.ResearchEntryGUI;
 import net.arcanamod.research.impls.Chemistry;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.PuzzleRenderer;
@@ -15,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import java.util.List;
 
 import static net.arcanamod.aspects.Aspects.areAspectsConnected;
-import static net.arcanamod.client.gui.ResearchEntryGUI.drawTexturedModalRect;
+import static net.arcanamod.client.gui.ResearchEntryScreen.drawTexturedModalRect;
 
 public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRenderer<Chemistry>{
 	

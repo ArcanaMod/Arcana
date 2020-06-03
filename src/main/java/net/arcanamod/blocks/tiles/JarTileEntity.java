@@ -50,7 +50,7 @@ public class JarTileEntity extends TileEntity{
 		float visScaled = vis.getCurrentVis(allowedAspect)/8f;
 		//Arcana.logger.debug("visScaled: "+ visScaled + " lastVisAmount: "+ lastVisAmount + " sAVCA: "+ smoothAmountVisContentAnimation);
 		if (Math.round(smoothAmountVisContentAnimation*10f)/10f!=Math.round(visScaled*10f)/10f)
-				smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/2f/delta_time;
+				smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/5f/delta_time;
 		else if (smoothAmountVisContentAnimation != Math.round(smoothAmountVisContentAnimation*100f)/100f)
 			smoothAmountVisContentAnimation = Math.round(smoothAmountVisContentAnimation*100f)/100f;
 		if (visScaled==0)
