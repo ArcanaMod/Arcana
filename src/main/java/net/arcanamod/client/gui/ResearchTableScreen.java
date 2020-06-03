@@ -29,7 +29,7 @@ import java.util.function.Supplier;
 
 public class ResearchTableScreen extends AspectContainerScreen<ResearchTableContainer> {
 	
-	public static final int WIDTH = 376;
+	public static final int WIDTH = 378;
 	public static final int HEIGHT = 280;
 	
 	private static final ResourceLocation BG = new ResourceLocation(Arcana.MODID, "textures/gui/container/gui_researchbook.png");
@@ -49,6 +49,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	}
 	
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
+		renderBackground();
 		minecraft.getTextureManager().bindTexture(BG);
 		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
@@ -77,7 +78,6 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	}
 	
 	public void drawScreen(int mouseX, int mouseY, float partialTicks){
-		renderBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
 	}
@@ -86,8 +86,8 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	protected void init() {
 		super.init();
 
-		leftArrow = addButton(new ChangeAspectPageButton(11, 183, false, this::actionPerformed));
-		rightArrow = addButton(new ChangeAspectPageButton(112, 183, true, this::actionPerformed));
+		leftArrow = addButton(new ChangeAspectPageButton(guiLeft + 11, guiTop + 183, false, this::actionPerformed));
+		rightArrow = addButton(new ChangeAspectPageButton(guiLeft + 112, guiTop + 183, true, this::actionPerformed));
 
 		//Connection.network.sendToServer(new PktRequestAspectSync());
 	}
@@ -149,12 +149,9 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				minecraft.getTextureManager().bindTexture(BG);
 				GlStateManager.disableLighting();
 				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				drawModalRectWithCustomSizedTexture(guiLeft + x, guiTop + y, teX, teY, width, height, 378, 378);
+				drawModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
 			}
-		}
-		
-		public boolean mousePressed(@Nonnull Minecraft mc, int mouseX, int mouseY){
-			return mouseX >= guiLeft + x && mouseY >= guiTop + y && mouseX < guiLeft + x + width && mouseY < guiTop + y + height;
+			//super.render(p_render_1_,p_render_2_,p_render_3_); //Don't render default button! //TODO: Hover dosn't work
 		}
 	}
 }
