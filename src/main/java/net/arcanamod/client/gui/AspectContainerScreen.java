@@ -7,15 +7,16 @@ import net.arcanamod.containers.AspectSlot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.io.IOException;
 
-public abstract class AspectContainerScreen<T extends Container> extends ContainerScreen<T>{
+public abstract class AspectContainerScreen<T extends AspectContainer> extends ContainerScreen<T>{
 	
-	protected AspectContainer aspectContainer;
+	protected T aspectContainer;
 	
 	public AspectContainerScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
@@ -45,6 +46,7 @@ public abstract class AspectContainerScreen<T extends Container> extends Contain
 	@Override
 	public void render(int mouseX, int mouseY, float partialTicks) {
 		super.render(mouseX, mouseY, partialTicks);
+		renderHoveredToolTip(mouseX, mouseY);
 		if(aspectContainer.getHeldAspect() != null){
 			float temp = itemRenderer.zLevel;
 			itemRenderer.zLevel = 500;
@@ -53,10 +55,11 @@ public abstract class AspectContainerScreen<T extends Container> extends Contain
 			itemRenderer.zLevel = temp;
 		}
 	}
-	
-	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException{
-		super.mouseClicked(mouseX, mouseY, mouseButton);
-		aspectContainer.handleClick(mouseX, mouseY, mouseButton, this);
+
+	@Override
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+		aspectContainer.handleClick((int)mouseX, (int)mouseY, mouseButton, this);
+		return true;
 	}
 	
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot){

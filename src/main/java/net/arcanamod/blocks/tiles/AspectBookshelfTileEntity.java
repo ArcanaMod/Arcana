@@ -19,7 +19,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
 
-public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity
+public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable
 {
 	public AspectBookshelfTileEntity() {
 		super(ArcanaTiles.ASPECT_SHELF_TE.get());
@@ -29,7 +29,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 
 	@Override
 	public void tick() {
-		if (world.isRemote) return;
+		//if (world.isRemote) return;
 		if (getBlockState().get(BlockAspectBookshelf.LEVEL_0_9)!=getNonEmptyItemsStoredCount()) {
 			world.setBlockState(pos,getBlockState().with(BlockAspectBookshelf.LEVEL_0_9,getNonEmptyItemsStoredCount()));
 		}
@@ -64,9 +64,11 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 		VisBattery new_vis = new VisBattery();
 		for (ItemStack stack : items)
 		{
-			VisBattery vis = (VisBattery) stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
-			Aspect target = Aspects.getAspectFromBattery(stack);
-			new_vis.insert(target,vis.getCurrentVis(target),false);
+			if (!stack.isEmpty()) {
+				VisBattery vis = (VisBattery) stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+				Aspect target = Aspects.getAspectFromBattery(stack);
+				new_vis.insert(target, vis.getCurrentVis(target), false);
+			}
 		}
 
 		return new_vis;
@@ -146,5 +148,10 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 			items.set(id_stack.getSecond(),ItemStack.EMPTY);
 		}
 		return id_stack.getFirst();
+	}
+
+	@Override
+	public boolean isVisShareable() {
+		return true;
 	}
 }

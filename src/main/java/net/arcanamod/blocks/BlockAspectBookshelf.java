@@ -94,7 +94,7 @@ public class BlockAspectBookshelf extends WaterloggableBlock{
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_)
 	{
-		if (worldIn.isRemote) return ActionResultType.SUCCESS;
+		//if (worldIn.isRemote) return ActionResultType.SUCCESS;
 
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te instanceof AspectBookshelfTileEntity)

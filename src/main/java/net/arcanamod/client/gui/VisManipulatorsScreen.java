@@ -1,6 +1,7 @@
 package net.arcanamod.client.gui;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.containers.AspectContainer;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.util.ResourceLocation;
@@ -18,7 +19,7 @@ public class VisManipulatorsScreen extends AspectContainerScreen {// implements 
 	
 	int leftScroll = 0, rightScroll = 0;
 	
-	public VisManipulatorsScreen(Container screenContainer, PlayerInventory inv, ITextComponent titleIn){
+	public VisManipulatorsScreen(AspectContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
 	}
 	

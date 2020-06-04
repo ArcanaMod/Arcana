@@ -73,12 +73,6 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
 	}
 
-	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
-		super.render(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
-	}
-
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
@@ -90,7 +84,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		leftArrow = addButton(new ChangeAspectPageButton(guiLeft + 11, guiTop + 183, false, this::actionPerformed));
 		rightArrow = addButton(new ChangeAspectPageButton(guiLeft + 112, guiTop + 183, true, this::actionPerformed));
 
-		//Connection.network.sendToServer(new PktRequestAspectSync());
+		Connection.sendSyncAspectContainer(aspectContainer);
 	}
 
 	protected void actionPerformed(@Nonnull Button button) {
