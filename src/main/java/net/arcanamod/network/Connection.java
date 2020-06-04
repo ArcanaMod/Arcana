@@ -25,6 +25,16 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkModifyResearch.class, PkModifyResearch::encode, PkModifyResearch::decode, PkModifyResearch::handle);
 		INSTANCE.registerMessage(id++, PkSyncPlayerResearch.class, PkSyncPlayerResearch::encode, PkSyncPlayerResearch::decode, PkSyncPlayerResearch::handle);
 		INSTANCE.registerMessage(id++, PkTryAdvance.class, PkTryAdvance::encode, PkTryAdvance::decode, PkTryAdvance::handle);
+		INSTANCE.registerMessage(id++, PkSyncChunkNodes.class, PkSyncChunkNodes::encode, PkSyncChunkNodes::decode, PkSyncChunkNodes::handle);
+		INSTANCE.registerMessage(id++, PkRequestNodeSync.class, PkRequestNodeSync::encode, PkRequestNodeSync::decode, PkRequestNodeSync::handle);
+	}
+	
+	public static void sendTo(Object packet, ServerPlayerEntity target){
+		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), packet);
+	}
+	
+	public static void sendToServer(Object packet){
+		INSTANCE.send(PacketDistributor.SERVER.noArg(), packet);
 	}
 	
 	public static void sendModifyResearch(PkModifyResearch.Diff change, ResourceLocation research, ServerPlayerEntity target){

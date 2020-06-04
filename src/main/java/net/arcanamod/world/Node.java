@@ -16,9 +16,12 @@ public class Node implements IPosition{
 	NodeType type;
 	double x, y, z;
 	
-	public Node(Reference2IntMap<Aspect> aspects, NodeType type){
+	public Node(Reference2IntMap<Aspect> aspects, NodeType type, double x, double y, double z){
 		this.aspects = aspects;
 		this.type = type;
+		this.x = x;
+		this.y = y;
+		this.z = z;
 	}
 	
 	// might as well pick the fast version
@@ -36,6 +39,9 @@ public class Node implements IPosition{
 		CompoundNBT aspectsNBT = new CompoundNBT();
 		aspects().forEach((aspect, integer) -> aspectsNBT.putInt(aspect.name(), integer));
 		nbt.put("aspects", aspectsNBT);
+		nbt.putDouble("x", getX());
+		nbt.putDouble("y", getY());
+		nbt.putDouble("z", getZ());
 		return nbt;
 	}
 	
@@ -45,7 +51,8 @@ public class Node implements IPosition{
 		for(String s : aspectsNBT.keySet())
 			aspects.put(Aspect.valueOf(s), aspectsNBT.getInt(s));
 		NodeType type = NodeType.TYPES.get(new ResourceLocation(nbt.getString("type")));
-		return new Node(aspects, type);
+		double x = nbt.getDouble("x"), y = nbt.getDouble("y"), z = nbt.getDouble("z");
+		return new Node(aspects, type, x, y, z);
 	}
 	
 	/**

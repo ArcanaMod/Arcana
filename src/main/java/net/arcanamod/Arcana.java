@@ -17,7 +17,9 @@ import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchLoader;
 import net.arcanamod.research.impls.ResearcherCapability;
 import net.arcanamod.spells.SpellEffectHandler;
+import net.arcanamod.world.NodeType;
 import net.arcanamod.world.impl.NodeChunkCapability;
+import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -72,11 +74,13 @@ public class Arcana{
 		
 		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		NodeType.init();
 		
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaItems.ITEMS.register(modEventBus);
 		ArcanaRecipes.SERIALIZERS.register(modEventBus);
 		ArcanaTiles.TES.register(modEventBus);
+		ArcanaFeatures.FEATURES.register(modEventBus);
 		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 		// etc
 	}

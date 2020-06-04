@@ -5,6 +5,7 @@ import net.arcanamod.event.ResearchEvent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -35,6 +36,10 @@ public class CommonProxy{
 	}
 	
 	public PlayerEntity getPlayerOnClient(){
+		return null;
+	}
+	
+	public World getWorldOnClient(){
 		return null;
 	}
 	
