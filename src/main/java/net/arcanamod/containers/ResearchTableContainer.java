@@ -91,7 +91,7 @@ public class ResearchTableContainer extends AspectContainer{
 		addSlot(new SlotItemHandler(itemHandler, 1, 137, 11){
 			public boolean isItemValid(@Nonnull ItemStack stack){
 				// only ink
-				return super.isItemValid(stack) && stack.getItem() == ArcanaItems.INK.get();
+				return super.isItemValid(stack) && stack.getItem() == ArcanaItems.SCRIBING_TOOLS.get();
 			}
 			
 			public void onSlotChanged(){
@@ -192,7 +192,7 @@ public class ResearchTableContainer extends AspectContainer{
 				y += 5;
 			getAspectSlots().add(new AspectSlot(primal, aspects, x, y));
 		}
-		Aspect[] values = Aspect.values();
+		Aspect[] values = (Aspect[]) Aspect.aspects.toArray();
 		Supplier<VisHandler> table = () -> VisHandler.getFrom(te);
 		for(int i = 0; i < values.length; i++){
 			Aspect aspect = values[i];

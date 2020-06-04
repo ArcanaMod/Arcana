@@ -43,19 +43,11 @@ public class PhialItem extends Item
                 if (itemStack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).getContainedAspects().size()==0)
                     return -1;
                 if (world.dimension.isSurfaceWorld())
-                    return getAspectFromBattery(itemStack).ordinal()-1;
+                    return Aspects.getAspectFromBattery(itemStack).ordinal()-1;
                 else
                     return random.nextInt(58);
             }
         });
-    }
-
-    private Aspect getAspectFromBattery(ItemStack stack) {
-        VisHandler handler = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
-        if (handler.getContainedAspects().size()!=0)
-            return (Aspect)(handler.getContainedAspects().toArray()[0]);
-        else
-            return Aspect.EMPTY;
     }
 
     @Override
@@ -78,9 +70,9 @@ public class PhialItem extends Item
 
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
-        if (getAspectFromBattery(stack)!=Aspect.EMPTY)
+        if (Aspects.getAspectFromBattery(stack)!=Aspect.EMPTY)
         {
-            String aspectName = getAspectFromBattery(stack).toString().toLowerCase();
+            String aspectName = Aspects.getAspectFromBattery(stack).toString().toLowerCase();
             return new TranslationTextComponent("item.arcana.phial", aspectName.substring(0, 1).toUpperCase() + aspectName.substring(1)).applyTextStyle(Rarity.RARE.color);
         }
         else
@@ -90,7 +82,7 @@ public class PhialItem extends Item
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         VisHandler vis = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
-        Aspect aspect = getAspectFromBattery(stack);
+        Aspect aspect = Aspects.getAspectFromBattery(stack);
         if (vis!=null && aspect!=null) {
             int amount = vis.getCurrentVis(aspect);
             tooltip.add(new TranslationTextComponent("tooltip.contains_aspect", aspect.name().toLowerCase().substring(0, 1).toUpperCase() + aspect.name().toLowerCase().substring(1),amount));
@@ -102,11 +94,11 @@ public class PhialItem extends Item
     @Override
     public CompoundNBT getShareTag(ItemStack stack) {
         VisHandler vis = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
-        Aspect aspect = getAspectFromBattery(stack);
+        Aspect aspect = Aspects.getAspectFromBattery(stack);
         int amount = vis.getCurrentVis(aspect);
         if (vis!=null && aspect!=null && amount!=0) {
             CompoundNBT compoundNBT = new CompoundNBT();
-            compoundNBT.putInt("id", getAspectFromBattery(stack).ordinal() - 1);
+            compoundNBT.putInt("id", Aspects.getAspectFromBattery(stack).ordinal() - 1);
             compoundNBT.putInt("amount", amount);
             return compoundNBT;
         }

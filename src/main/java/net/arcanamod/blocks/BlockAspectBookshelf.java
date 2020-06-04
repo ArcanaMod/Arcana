@@ -2,15 +2,21 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
+import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
+import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.items.PhialItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
@@ -18,7 +24,9 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @SuppressWarnings("deprecation")
@@ -33,7 +41,7 @@ public class BlockAspectBookshelf extends WaterloggableBlock{
 	public VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0, 0, 0, 16, 16, 9);
 	public VoxelShape SHAPE_EAST = Block.makeCuboidShape(0, 0, 0, 9, 16, 16);
 	public VoxelShape SHAPE_WEST = Block.makeCuboidShape(7, 0, 0, 16, 16, 16);
-	
+
 	public BlockAspectBookshelf(Properties properties){
 		super(properties);
 		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(LEVEL_0_9, 0));
@@ -72,18 +80,44 @@ public class BlockAspectBookshelf extends WaterloggableBlock{
 		return state.rotate(mirrorIn.toRotation(state.get(HORIZONTAL_FACING)));
 	}
 
+	@Nullable
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+		return new AspectBookshelfTileEntity();
+	}
+
+	@Override
+	public boolean hasTileEntity(BlockState state) {
+		return true;
+	}
+
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_)
 	{
-		if (player.getHeldItem(handIn).getItem() instanceof PhialItem)
+		if (worldIn.isRemote) return ActionResultType.SUCCESS;
+
+		TileEntity te = worldIn.getTileEntity(pos);
+		if(te instanceof AspectBookshelfTileEntity)
 		{
-			if (state.get(LEVEL_0_9) < 9)
+			if (player.getHeldItem(handIn).getItem() instanceof PhialItem)
 			{
-				player.getHeldItem(handIn).shrink(1);
-				worldIn.setBlockState(pos,state.with(LEVEL_0_9, state.get(LEVEL_0_9)+1));
+				boolean isSuccess = ((AspectBookshelfTileEntity) te).addPhial(player.getHeldItem(handIn));
+				if (isSuccess)
+					player.getHeldItem(handIn).shrink(1);
 				return ActionResultType.SUCCESS;
 			}
+			else
+			{
+				if (state.get(LEVEL_0_9) > 0)
+				{
+					ItemStack returned = ((AspectBookshelfTileEntity) te).removePhial();
+
+					if (returned!=ItemStack.EMPTY)
+						player.addItemStackToInventory(returned);
+					return ActionResultType.SUCCESS;
+				}
+			}
 		}
-		return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);
+		return ActionResultType.PASS;
 	}
 }

@@ -44,8 +44,6 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	
 	// slots 0-2 are always there, the rest are reserved for the games themselves
 
-	//protected NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
-
 	protected ItemStackHandler items = new ItemStackHandler(14){
 		protected void onContentsChanged(int slot){
 			super.onContentsChanged(slot);
@@ -145,8 +143,11 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	 */
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		//return ItemStackHelper.getAndSplit(this.items.getStackInSlot(index), index, count);
-		return null;
+		ItemStack stack0 = this.items.getStackInSlot(index);
+		ItemStack stack1 = this.items.getStackInSlot(index).copy();
+		stack0.shrink(count);
+		stack1.setCount(count);
+		return stack1; //TODO: Check of works fine (custom impl)
 	}
 
 	/**

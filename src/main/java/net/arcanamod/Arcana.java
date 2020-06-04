@@ -64,6 +64,8 @@ public class Arcana{
 	
 	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 	public static ItemGroup ASPECTS = new SupplierItemGroup("aspects", proxy::getAspectItemStackForDisplay);
+
+	public static final boolean debug = true;
 	
 	public Arcana(){
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);

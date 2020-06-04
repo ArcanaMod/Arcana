@@ -110,5 +110,4 @@ public class ArcanaItems{
 	//Testing
 	public static final RegistryObject<Item> RESEARCH_NOTE_COMPLETE = ITEMS.register("research_note_complete", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> RESEARCH_NOTE = ITEMS.register("research_note", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
-	public static final RegistryObject<Item> INK = ITEMS.register("ink", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 }
