@@ -1,13 +1,10 @@
 package net.arcanamod.world;
 
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.server.ChunkHolder;
-import net.minecraft.world.server.ChunkManager;
 import net.minecraft.world.server.ServerWorld;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -33,5 +30,9 @@ public class ServerNodeView implements INodeView{
 			}
 		}
 		return allNodes;
+	}
+	
+	public World getWorld(){
+		return world;
 	}
 }

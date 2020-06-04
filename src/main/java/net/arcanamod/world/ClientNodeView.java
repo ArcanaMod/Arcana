@@ -3,6 +3,7 @@ package net.arcanamod.world;
 import net.arcanamod.client.ClientNodeHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
@@ -32,5 +33,9 @@ public class ClientNodeView implements INodeView{
 			}
 		}
 		return allNodes;
+	}
+	
+	public World getWorld(){
+		return world;
 	}
 }
