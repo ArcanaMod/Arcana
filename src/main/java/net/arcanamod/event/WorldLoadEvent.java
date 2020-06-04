@@ -48,21 +48,4 @@ public class WorldLoadEvent{
 		ResearchCommand.register(event.getCommandDispatcher());
 		FillPhialCommand.register(event.getCommandDispatcher());
 	}
-	
-	// ew client stuff
-	
-	public static List<ChunkPos> clientLoadedChunks = new ArrayList<>();
-	
-	@SubscribeEvent
-	public static void chunkLoadOnClient(ChunkEvent.Load event){
-		// on client
-		// send PkRequestClientSync
-		WorldTickHandler.untilPlayerJoin.add(() -> Connection.sendToServer(new PkRequestNodeSync(event.getChunk().getPos())));
-		clientLoadedChunks.add(event.getChunk().getPos());
-	}
-	
-	@SubscribeEvent
-	public static void chunkUnloadOnClient(ChunkEvent.Unload event){
-		clientLoadedChunks.remove(event.getChunk().getPos());
-	}
 }

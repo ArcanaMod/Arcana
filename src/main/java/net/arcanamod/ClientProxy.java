@@ -1,8 +1,10 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.gui.ResearchBookGUI;
 import net.arcanamod.client.gui.ResearchEntryGUI;
+import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
@@ -13,7 +15,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import static net.arcanamod.Arcana.MODID;
 
 /**
  * Client Proxy
@@ -28,6 +34,7 @@ public class ClientProxy extends CommonProxy{
 		EntrySectionRenderer.init();
 		RequirementRenderer.init();
 		PuzzleRenderer.init();
+		ModelLoaderRegistry.registerLoader(new ResourceLocation(MODID, "wand_loader"), new WandModelLoader());
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){

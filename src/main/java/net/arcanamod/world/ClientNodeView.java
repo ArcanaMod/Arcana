@@ -1,6 +1,6 @@
 package net.arcanamod.world;
 
-import net.arcanamod.event.WorldLoadEvent;
+import net.arcanamod.client.ClientNodeHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
@@ -23,7 +23,7 @@ public class ClientNodeView implements INodeView{
 	
 	public Set<Node> getAllNodes(){
 		Set<Node> allNodes = new HashSet<>();
-		for(ChunkPos chunkPos : WorldLoadEvent.clientLoadedChunks){
+		for(ChunkPos chunkPos : ClientNodeHandler.clientLoadedChunks){
 			IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, false);
 			if(chunk instanceof Chunk){ // also a nonnull check
 				NodeChunk nc = NodeChunk.getFrom((Chunk)chunk);
