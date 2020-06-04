@@ -48,16 +48,17 @@ public abstract class NodeType{
 		GENERATED_TYPES.add(HUNGRY);
 	}
 	
-	public void tick(IWorld world, NodeView nodes, Node node){
+	public void tick(IWorld world, INodeView nodes, Node node){
 		// add particles for debug
-		world.addParticle(ParticleTypes.ANGRY_VILLAGER, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+		if(world.isRemote())
+			world.addParticle(ParticleTypes.ANGRY_VILLAGER, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
 	}
 	
 	/**
 	 * The aspects that a new node of this type will have.
 	 */
 	// default impl should handle normal nodes; maybe bright and pale ones.
-	Reference2IntMap<Aspect> genNodeAspects(BlockPos location, IWorld world, Random random){
+	public Reference2IntMap<Aspect> genNodeAspects(BlockPos location, IWorld world, Random random){
 		return new Reference2IntOpenHashMap<>();
 	}
 	

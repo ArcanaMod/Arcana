@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 /**
@@ -40,6 +41,10 @@ public class ClientProxy extends CommonProxy{
 	
 	public PlayerEntity getPlayerOnClient(){
 		return Minecraft.getInstance().player;
+	}
+	
+	public World getWorldOnClient(){
+		return Minecraft.getInstance().world;
 	}
 	
 	public void scheduleOnClient(Runnable runnable){

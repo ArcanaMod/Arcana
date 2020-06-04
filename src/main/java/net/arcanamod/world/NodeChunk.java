@@ -7,6 +7,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.Set;
 
 /**
@@ -14,6 +15,33 @@ import java.util.Set;
  */
 // Will be stored as a capability and do the actual work of storing nodes.
 public interface NodeChunk{
+	
+	/**
+	 * Adds a node to this chunk.
+	 *
+	 * @param node
+	 * 		The node to be added.
+	 */
+	void addNode(Node node);
+	
+	/**
+	 * Adds a collection of nodes to this chunk. By default, iterates through the iterable and adds each node.
+	 *
+	 * @param nodes
+	 * 		The nodes to be added.
+	 */
+	default void addNodes(Iterable<Node> nodes){
+		for(Node node : nodes)
+			addNode(node);
+	}
+	
+	/**
+	 * Sets this chunk's node set. Modifications to the set passed in are reflected in world.
+	 *
+	 * @param nodes
+	 * 		The set of nodes to set.
+	 */
+	void setNodes(Set<Node> nodes);
 	
 	/**
 	 * Returns a set containing all nodes in this chunk. Changes to this set are *not* reflected in-world.
