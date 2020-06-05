@@ -135,4 +135,14 @@ public interface INodeView{
 				.filter(node -> node != excluded)
 				.collect(Collectors.toSet());
 	}
+	
+	default boolean addNode(Node node){
+		// get the relevant chunk
+		NodeChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
+		if(nc != null){
+			nc.addNode(node);
+			return true;
+		}
+		return false;
+	}
 }

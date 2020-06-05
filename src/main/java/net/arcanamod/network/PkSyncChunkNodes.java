@@ -59,11 +59,8 @@ public class PkSyncChunkNodes{
 			// I'm on client
 			Chunk chunk = Arcana.proxy.getWorldOnClient().getChunk(msg.chunk.x, msg.chunk.z);
 			NodeChunk nc = NodeChunk.getFrom(chunk);
-			if(nc != null){
+			if(nc != null)
 				nc.setNodes(new HashSet<>(msg.nodes));
-				if(new ClientNodeView((ClientWorld)Arcana.proxy.getWorldOnClient()).getAllNodes().size() > 0)
-					System.out.println(">0 nodes exist on client");
-			}
 		});
 		supplier.get().setPacketHandled(true);
 	}

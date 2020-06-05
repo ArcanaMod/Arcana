@@ -48,11 +48,7 @@ public abstract class NodeType{
 		GENERATED_TYPES.add(HUNGRY);
 	}
 	
-	public void tick(IWorld world, INodeView nodes, Node node){
-		// add particles for debug
-		if(world.isRemote())
-			world.addParticle(ParticleTypes.ANGRY_VILLAGER, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
-	}
+	public abstract void tick(IWorld world, INodeView nodes, Node node);
 	
 	/**
 	 * The aspects that a new node of this type will have.
@@ -62,10 +58,45 @@ public abstract class NodeType{
 		return new Reference2IntOpenHashMap<>();
 	}
 	
-	public static class NormalNodeType extends NodeType{}
-	public static class BrightNodeType extends NodeType{}
-	public static class PaleNodeType extends NodeType{}
-	public static class EldritchNodeType extends NodeType{}
-	public static class HungryNodeType extends NodeType{}
-	public static class TaintedNodeType extends NodeType{}
+	public static class NormalNodeType extends NodeType{
+		public void tick(IWorld world, INodeView nodes, Node node){
+			if(world.isRemote())
+				world.addParticle(ParticleTypes.CLOUD, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+		}
+	}
+	
+	public static class BrightNodeType extends NodeType{
+		public void tick(IWorld world, INodeView nodes, Node node){
+			if(world.isRemote())
+				world.addParticle(ParticleTypes.CRIT, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+		}
+	}
+	
+	public static class PaleNodeType extends NodeType{
+		public void tick(IWorld world, INodeView nodes, Node node){
+			if(world.isRemote())
+				world.addParticle(ParticleTypes.SMOKE, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+		}
+	}
+	
+	public static class EldritchNodeType extends NodeType{
+		public void tick(IWorld world, INodeView nodes, Node node){
+			if(world.isRemote())
+				world.addParticle(ParticleTypes.END_ROD, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+		}
+	}
+	
+	public static class HungryNodeType extends NodeType{
+		public void tick(IWorld world, INodeView nodes, Node node){
+			if(world.isRemote())
+				world.addParticle(ParticleTypes.PORTAL, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+		}
+	}
+	
+	public static class TaintedNodeType extends NodeType{
+		public void tick(IWorld world, INodeView nodes, Node node){
+			if(world.isRemote())
+				world.addParticle(ParticleTypes.NOTE, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+		}
+	}
 }
