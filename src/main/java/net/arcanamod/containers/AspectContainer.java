@@ -70,9 +70,9 @@ public abstract class AspectContainer extends Container{
 			}
 		}
 	}
-	
+
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot, AspectContainerScreen gui){
-		return true;
+		return mouseX >= gui.getGuiLeft() + slot.x && mouseY >= gui.getGuiTop() + slot.y && mouseX < gui.getGuiLeft() + slot.x + 16 && mouseY < gui.getGuiTop() + slot.y + 16;
 	}
 	
 	/**

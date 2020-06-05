@@ -57,9 +57,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 
 	public VisBattery getVisBattery()
 	{
-		//return getVisShareablesAsBattery();
-		VisBattery vis = new VisBattery();
-		vis.insert(Aspect.EXCHANGE,8,false);
+		VisBattery vis = getVisShareablesAsBattery();
 		return vis;
 	}
 
