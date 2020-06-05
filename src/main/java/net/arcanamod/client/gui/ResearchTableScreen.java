@@ -56,25 +56,24 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 			CompoundNBT compound = te.note().getTag();
 			if(compound != null){
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
-				PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer)aspectContainer).puzzleSlots, ((ResearchTableContainer)aspectContainer).puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
-				if(te.ink().isEmpty()){
-					// tell them "no u cant do research without a pen"
-					this.minecraft.getTextureManager().bindTexture(this.NO_INK);
-					renderModalRectWithCustomSizedTexture(guiLeft + 137, guiTop + 31, 0, 0, 223, 143, 223, 143);
-					String noInk = I18n.format("researchTable.ink_needed");
-					font.drawString(noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2, -1);
+				if (puzzle!=null) {
+					PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer) aspectContainer).puzzleSlots, ((ResearchTableContainer) aspectContainer).puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
+					if (te.ink().isEmpty()) {
+						// tell them "no u cant do research without a pen"
+						this.minecraft.getTextureManager().bindTexture(this.NO_INK);
+						renderModalRectWithCustomSizedTexture(guiLeft + 137, guiTop + 31, 0, 0, 223, 143, 223, 143);
+						String noInk = I18n.format("researchTable.ink_needed");
+						font.drawString(noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2, -1);
+					}
 				}
 			}
 		}
+		//Connection.sendSyncAspectContainer(aspectContainer,minecraft.getIntegratedServer().getPlayerList().getPlayerByUsername("Dev"));
 	}
 
 	public static void renderModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
 		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
 		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
-	}
-
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 	}
 
 	@Override
@@ -83,8 +82,6 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 
 		leftArrow = addButton(new ChangeAspectPageButton(guiLeft + 11, guiTop + 183, false, this::actionPerformed));
 		rightArrow = addButton(new ChangeAspectPageButton(guiLeft + 112, guiTop + 183, true, this::actionPerformed));
-
-		Connection.sendSyncAspectContainer(aspectContainer);
 	}
 
 	protected void actionPerformed(@Nonnull Button button) {

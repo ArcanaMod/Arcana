@@ -58,8 +58,9 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+		super.mouseClicked(mouseX, mouseY, mouseButton);
 		aspectContainer.handleClick((int)mouseX, (int)mouseY, mouseButton, this);
-		return true;
+		return false;
 	}
 	
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot){

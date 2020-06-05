@@ -68,6 +68,7 @@ public class PkAspectClick {
 						slot.onChange();
 					}
 					container.onAspectSlotChange();
+					Connection.sendSyncAspectContainer(container, epm);
 					//return new PktSyncAspectContainerHandler.PktSyncAspectContainer(container);
 				}else{
 					LOGGER.error(String.format("Tried to click on invalid aspect slot; out of bounds! (size: %d, slot index: %d).", container.getAspectSlots().size(), msg.slotId));

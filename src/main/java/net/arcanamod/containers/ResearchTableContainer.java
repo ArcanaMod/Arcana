@@ -11,6 +11,7 @@ import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ContainerType;
@@ -153,12 +154,12 @@ public class ResearchTableContainer extends AspectContainer{
 					}
 					List<Puzzle.SlotInfo> locations = puzzle.getItemSlotLocations(lastClickPlayer);
 					int size = locations.size();
-					/*puzzleInventorySlots = new Inventory("", false, size){
+					puzzleInventorySlots = new Inventory(size){
 						public void markDirty(){
 							super.markDirty();
 							ResearchTableContainer.this.onCraftMatrixChanged(this);
 						}
-					};*/
+					};
 					for(int i = 0; i < locations.size(); i++){
 						Puzzle.SlotInfo slotInfo = locations.get(i);
 						Slot slot = new Slot(puzzleInventorySlots, i, slotInfo.x, slotInfo.y){
@@ -268,7 +269,7 @@ public class ResearchTableContainer extends AspectContainer{
 			
 			for(int i = puzzleItemSlots.size() - 1; i >= 0; i--){
 				Slot slot = puzzleItemSlots.get(i);
-				//inventoryItemStacks.remove(slot.slotNumber);
+				//getInventory().remove(slot.slotNumber);
 				inventorySlots.remove(slot);
 			}
 			puzzleItemSlots.clear();

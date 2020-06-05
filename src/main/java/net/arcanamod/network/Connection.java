@@ -28,6 +28,7 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkTryAdvance.class, PkTryAdvance::encode, PkTryAdvance::decode, PkTryAdvance::handle);
 		INSTANCE.registerMessage(id++, PkAspectClick.class, PkAspectClick::encode, PkAspectClick::decode, PkAspectClick::handle);
 		INSTANCE.registerMessage(id++, PkSyncAspectContainer.class, PkSyncAspectContainer::encode, PkSyncAspectContainer::decode, PkSyncAspectContainer::handle);
+		INSTANCE.registerMessage(id++, PkGetNoteHandler.class, PkGetNoteHandler::encode, PkGetNoteHandler::decode, PkGetNoteHandler::handle);
 	}
 	
 	public static void sendModifyResearch(PkModifyResearch.Diff change, ResourceLocation research, ServerPlayerEntity target){
@@ -46,7 +47,11 @@ public class Connection{
 		INSTANCE.sendToServer(new PkAspectClick(windowId, slotId, type));
 	}
 
-	public static void sendSyncAspectContainer(AspectContainer container) {
-		INSTANCE.sendToServer(new PkSyncAspectContainer(container));
+	public static void sendSyncAspectContainer(AspectContainer container, ServerPlayerEntity target) {
+		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncAspectContainer(container));
+	}
+
+	public static void sendGetNoteHandler(ResourceLocation id, String pageName) {
+		INSTANCE.sendToServer(new PkGetNoteHandler(id,pageName));
 	}
 }

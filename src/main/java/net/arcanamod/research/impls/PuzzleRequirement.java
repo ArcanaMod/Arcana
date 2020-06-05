@@ -1,6 +1,7 @@
 package net.arcanamod.research.impls;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.network.Connection;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
@@ -38,9 +39,8 @@ public class PuzzleRequirement extends Requirement{
 	}
 	
 	public boolean onClick(ResearchEntry entry){
-		// TODO
-		/*if(!(ResearchBooks.puzzles.get(puzzleId) instanceof Fieldwork))
-			Connection.network.sendToServer(new PktGetNoteHandler.PktGetNote(puzzleId.toString(), entry.key().toString()));*/
+		if(!(ResearchBooks.puzzles.get(puzzleId) instanceof Fieldwork))
+			Connection.sendGetNoteHandler(puzzleId, entry.key().toString());
 		return false;
 	}
 	

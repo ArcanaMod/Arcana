@@ -1,10 +1,12 @@
 package net.arcanamod.network;
 
 import io.netty.buffer.ByteBuf;
+import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -97,15 +99,17 @@ public class PkSyncAspectContainer {
 
 	public static void handle(PkSyncAspectContainer msg, Supplier<NetworkEvent.Context> supplier){
 		supplier.get().enqueueWork(() -> {
-			ServerPlayerEntity eps = supplier.get().getSender();
-			AspectContainer container = (AspectContainer)eps.openContainer;
-			container.setHeldAspect(msg.heldAspect);
-			container.setHeldCount(msg.heldCount);
-			for(Pair<Integer, Aspect> storeSlot : msg.storeSlotAspects)
-				container.getAspectSlots().get(storeSlot.getLeft()).setAspect(storeSlot.getRight());
-			for(Pair<Integer, CompoundNBT> handler : msg.handlers)
-				container.getAllOpenHandlers().get(handler.getLeft()).deserializeNBT(handler.getRight());
-			container.onAspectSlotChange();
+			PlayerEntity eps = Arcana.proxy.getPlayerOnClient();
+			if (eps != null) {
+				AspectContainer container = (AspectContainer) eps.openContainer;
+				container.setHeldAspect(msg.heldAspect);
+				container.setHeldCount(msg.heldCount);
+				for (Pair<Integer, Aspect> storeSlot : msg.storeSlotAspects)
+					container.getAspectSlots().get(storeSlot.getLeft()).setAspect(storeSlot.getRight());
+				for (Pair<Integer, CompoundNBT> handler : msg.handlers)
+					container.getAllOpenHandlers().get(handler.getLeft()).deserializeNBT(handler.getRight());
+				container.onAspectSlotChange();
+			}
 		});
 		supplier.get().setPacketHandled(true);
 	}
