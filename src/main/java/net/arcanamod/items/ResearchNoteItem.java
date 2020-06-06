@@ -39,7 +39,7 @@ public class ResearchNoteItem extends Item{
 			return super.onItemRightClick(world, player, hand);
 		ItemStack stack = player.getHeldItem(hand);
 		CompoundNBT compound = stack.getTag();
-		if(compound != null && compound.hasUniqueId("puzzle")){
+		if(compound != null && compound.contains("puzzle")){
 			Researcher from = Researcher.getFrom(player);
 			Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
 			if(!from.isPuzzleCompleted(puzzle)){
@@ -54,7 +54,7 @@ public class ResearchNoteItem extends Item{
 	
 	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
 		CompoundNBT compound = stack.getTag();
-		if(compound != null && compound.hasUniqueId("research")){
+		if(compound != null && compound.contains("research")){
 			ResourceLocation research = new ResourceLocation(compound.getString("research"));
 			//tooltip.add(TextFormatting.AQUA + I18n.format(ResearchBooks.getEntry(research).name()));
 			tooltip.add(new TranslationTextComponent(ResearchBooks.getEntry(research).name()).applyTextStyle(TextFormatting.AQUA));
