@@ -9,6 +9,7 @@ import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -56,9 +57,9 @@ public class ResearchTableContainer extends AspectContainer{
 	public ResearchTableContainer(ContainerType type, int id, IInventory playerInventory, ResearchTableTileEntity te){
 		super(type,id);
 		this.te = te;
-		addOwnSlots();
+		addOwnSlots(playerInventory);
 		addPlayerSlots(playerInventory);
-		addAspectSlots();
+		addAspectSlots(playerInventory);
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -84,7 +85,7 @@ public class ResearchTableContainer extends AspectContainer{
 			}
 	}
 	
-	private void addOwnSlots(){
+	private void addOwnSlots(IInventory playerInventory){
 		IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElse(null);
 		note = te.note();
 		ink = te.ink();
@@ -99,7 +100,7 @@ public class ResearchTableContainer extends AspectContainer{
 				super.onSlotChanged();
 				if((ink.isEmpty() && !te.ink().isEmpty()) || (!ink.isEmpty() && te.ink().isEmpty())){
 					ink = te.ink();
-					refreshPuzzleSlots();
+					refreshPuzzleSlots(playerInventory);
 				}
 			}
 		});
@@ -115,7 +116,7 @@ public class ResearchTableContainer extends AspectContainer{
 				if(!ItemStack.areItemStacksEqual(note, te.note())){
 					note = te.note();
 					// remove added slots & aspect slots
-					refreshPuzzleSlots();
+					refreshPuzzleSlots(playerInventory);
 				}
 			}
 		});
@@ -129,14 +130,17 @@ public class ResearchTableContainer extends AspectContainer{
 		return stack;
 	}
 	
-	private void refreshPuzzleSlots(){
+	private void refreshPuzzleSlots(IInventory playerInventory){
+		PlayerEntity playerEntity = lastClickPlayer;
+		if (playerEntity==null)
+			playerEntity = ((PlayerInventory)playerInventory).player;
 		aspectSlots.removeAll(puzzleSlots);
 		puzzleSlots.forEach(AspectSlot::onClose);
 		puzzleSlots.clear();
 		
 		if(puzzleInventorySlots != null)
-			if(!lastClickPlayer.world.isRemote)
-				clearContainer(lastClickPlayer, lastClickPlayer.world, puzzleInventorySlots);
+			if(!playerEntity.world.isRemote)
+				clearContainer(playerEntity, playerEntity.world, puzzleInventorySlots);
 		
 		for(int i = puzzleItemSlots.size() - 1; i >= 0; i--){
 			Slot slot = puzzleItemSlots.get(i);
@@ -144,7 +148,8 @@ public class ResearchTableContainer extends AspectContainer{
 			inventorySlots.remove(slot);
 		}
 		puzzleItemSlots.clear();
-		
+
+		PlayerEntity finalPlayerEntity = playerEntity;
 		getFromNote().ifPresent(puzzle -> {
 			if(!ink.isEmpty())
 				if(note.getItem() == ArcanaItems.RESEARCH_NOTE.get()){
@@ -152,7 +157,7 @@ public class ResearchTableContainer extends AspectContainer{
 						puzzleSlots.add(slot);
 						aspectSlots.add(slot);
 					}
-					List<Puzzle.SlotInfo> locations = puzzle.getItemSlotLocations(lastClickPlayer);
+					List<Puzzle.SlotInfo> locations = puzzle.getItemSlotLocations(finalPlayerEntity);
 					int size = locations.size();
 					puzzleInventorySlots = new Inventory(size){
 						public void markDirty(){
@@ -183,7 +188,7 @@ public class ResearchTableContainer extends AspectContainer{
 				clearContainer(player, player.world, puzzleInventorySlots);
 	}
 	
-	protected void addAspectSlots(){
+	protected void addAspectSlots(IInventory playerInventory){
 		Supplier<VisHandler> aspects = () -> VisHandler.getFrom(te.visItem());
 		for(int i = 0; i < Aspects.primalAspects.length; i++){
 			Aspect primal = Aspects.primalAspects[i];
@@ -219,7 +224,7 @@ public class ResearchTableContainer extends AspectContainer{
 		aspectSlots.add(rightStoreSlot = new AspectStoreSlot(table, 92, 179));
 		aspectSlots.add(new CombinatorAspectSlot(leftStoreSlot, rightStoreSlot, 61, 179));
 		
-		refreshPuzzleSlots();
+		refreshPuzzleSlots(playerInventory);
 	}
 	
 	@Override

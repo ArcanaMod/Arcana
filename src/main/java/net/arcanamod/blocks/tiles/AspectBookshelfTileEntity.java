@@ -7,6 +7,8 @@ import net.arcanamod.util.Pair;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -29,8 +31,8 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 
 	@Override
 	public void tick() {
-		//if (world.isRemote) return;
 		if (getBlockState().get(BlockAspectBookshelf.LEVEL_0_9)!=getNonEmptyItemsStoredCount()) {
+			if (!world.isRemote)
 			world.setBlockState(pos,getBlockState().with(BlockAspectBookshelf.LEVEL_0_9,getNonEmptyItemsStoredCount()));
 		}
 	}
@@ -149,6 +151,43 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 		}
 		return id_stack.getFirst();
 	}
+
+	//  When the world loads from disk, the server needs to send the TileEntity information to the client
+	//  it uses getUpdatePacket(), getUpdateTag(), onDataPacket(), and handleUpdateTag() to do this:
+	//  getUpdatePacket() and onDataPacket() are used for one-at-a-time TileEntity updates
+	//  getUpdateTag() and handleUpdateTag() are used by vanilla to collate together into a single chunk update packet
+	//  Not really required for this example since we only use the timer on the client, but included anyway for illustration
+	@Override
+	@Nullable
+	public SUpdateTileEntityPacket getUpdatePacket()
+	{
+		CompoundNBT nbtTagCompound = new CompoundNBT();
+		write(nbtTagCompound);
+		int tileEntityType = ArcanaTiles.ASPECT_SHELF_TE.hashCode();
+		return new SUpdateTileEntityPacket(this.pos, tileEntityType, nbtTagCompound);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+		read(pkt.getNbtCompound());
+	}
+
+	/* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client */
+	@Override
+	public CompoundNBT getUpdateTag()
+	{
+		CompoundNBT nbtTagCompound = new CompoundNBT();
+		write(nbtTagCompound);
+		return nbtTagCompound;
+	}
+
+	/* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client */
+	@Override
+	public void handleUpdateTag(CompoundNBT tag)
+	{
+		this.read(tag);
+	}
+
 
 	@Override
 	public boolean isVisShareable() {
