@@ -72,9 +72,7 @@ public class Arcana{
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
 		
-		// TODO: split into server and common config?
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ArcanaConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ArcanaConfig.CLIENT_SPEC);
 		
@@ -91,6 +89,8 @@ public class Arcana{
 		ArcanaFeatures.FEATURES.register(modEventBus);
 		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 		// etc
+		
+		proxy.construct();
 	}
 	
 	public static ResourceLocation arcLoc(String path){
@@ -111,7 +111,6 @@ public class Arcana{
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
 		
 		Connection.init();
-		ModelLoaderRegistry.registerLoader(new ResourceLocation(MODID, "wand_loader"), new WandModelLoader());
 		//NetworkRegistry.INSTANCE.registerGuiHandler(Arcana.instance, new ArcanaGuiHandler());
 		
 		Sounds.registerSounds();
@@ -127,7 +126,7 @@ public class Arcana{
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.JAR.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.RESEARCH_TABLE.get(), RenderType.getTranslucent());
 		
-		RenderTypeLookup.setRenderLayer(ArcanaBlocks.NORMAL_NODE.get(), RenderType.getCutout());
+		//RenderTypeLookup.setRenderLayer(ArcanaBlocks.NORMAL_NODE.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SILVERWOOD_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DAIR_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.EUCALYPTUS_SAPLING.get(), RenderType.getCutout());

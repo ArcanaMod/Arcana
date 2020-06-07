@@ -8,7 +8,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Stores nodes that are inside of this chunk. May also store taint or aura if we make them chunk stuff.
@@ -23,6 +22,14 @@ public interface NodeChunk{
 	 * 		The node to be added.
 	 */
 	void addNode(Node node);
+	
+	/**
+	 * Removes a node from this chunk. Has no effect if the node is not in this chunk.
+	 *
+	 * @param node
+	 * 		The node to be removed.
+	 */
+	void removeNode(Node node);
 	
 	/**
 	 * Adds a collection of nodes to this chunk. By default, iterates through the iterable and adds each node.
@@ -41,14 +48,14 @@ public interface NodeChunk{
 	 * @param nodes
 	 * 		The set of nodes to set.
 	 */
-	void setNodes(Set<Node> nodes);
+	void setNodes(Collection<Node> nodes);
 	
 	/**
 	 * Returns a set containing all nodes in this chunk. Changes to this set are *not* reflected in-world.
 	 *
 	 * @return A set containing all nodes in this chunk.
 	 */
-	Set<Node> getNodes();
+	Collection<Node> getNodes();
 	
 	/**
 	 * Returns a set containing all nodes in this chunk within the specified bounds.
@@ -56,7 +63,7 @@ public interface NodeChunk{
 	 *
 	 * @return A set containing all nodes in this chunk within bounds.
 	 */
-	Set<Node> getNodesWithinAABB(AxisAlignedBB bounds);
+	Collection<Node> getNodesWithinAABB(AxisAlignedBB bounds);
 	
 	/**
 	 * Returns a set containing all nodes in this chunk with the specified node type.
@@ -64,7 +71,7 @@ public interface NodeChunk{
 	 *
 	 * @return A set containing all nodes in this chunk of the specified type.
 	 */
-	Set<Node> getNodesOfType(NodeType type);
+	Collection<Node> getNodesOfType(NodeType type);
 	
 	/**
 	 * Returns a set containing all nodes in this chunk within the specified bounds, with the specified node type.
@@ -72,7 +79,7 @@ public interface NodeChunk{
 	 *
 	 * @return A set containing all nodes in this chunk within bounds of the specified type.
 	 */
-	Set<Node> getNodesOfTypeWithinAABB(NodeType type, AxisAlignedBB bounds);
+	Collection<Node> getNodesOfTypeWithinAABB(NodeType type, AxisAlignedBB bounds);
 	
 	/**
 	 * Returns a set containing all nodes in this chunk, except for the specified node.
@@ -80,8 +87,8 @@ public interface NodeChunk{
 	 *
 	 * @return A set containing all nodes in this chunk, excluding a specified node.
 	 */
-	default Set<Node> getNodesExcluding(Node excluded){
-		Set<Node> all = getNodes();
+	default Collection<Node> getNodesExcluding(Node excluded){
+		Collection<Node> all = getNodes();
 		all.remove(excluded);
 		return all;
 	}
@@ -92,8 +99,8 @@ public interface NodeChunk{
 	 *
 	 * @return A set containing all nodes in this chunk within bounds, excluding a specified node.
 	 */
-	default Set<Node> getNodesWithinAABBExcluding(AxisAlignedBB bounds, Node excluded){
-		Set<Node> all = getNodesWithinAABB(bounds);
+	default Collection<Node> getNodesWithinAABBExcluding(AxisAlignedBB bounds, Node excluded){
+		Collection<Node> all = getNodesWithinAABB(bounds);
 		all.remove(excluded);
 		return all;
 	}
@@ -104,8 +111,8 @@ public interface NodeChunk{
 	 *
 	 * @return A set containing all nodes in this chunk within bounds of the specified type, excluding a specified node.
 	 */
-	default Set<Node> getNodesOfTypeExcluding(NodeType type, Node excluded){
-		Set<Node> all = getNodesOfType(type);
+	default Collection<Node> getNodesOfTypeExcluding(NodeType type, Node excluded){
+		Collection<Node> all = getNodesOfType(type);
 		all.remove(excluded);
 		return all;
 	}
@@ -116,8 +123,8 @@ public interface NodeChunk{
 	 *
 	 * @return A set containing all nodes in this chunk within bounds of the specified type, excluding a specified node.
 	 */
-	default Set<Node> getNodesOfTypeWithinAABBExcluding(NodeType type, AxisAlignedBB bounds, Node excluded){
-		Set<Node> all = getNodesOfTypeWithinAABB(type, bounds);
+	default Collection<Node> getNodesOfTypeWithinAABBExcluding(NodeType type, AxisAlignedBB bounds, Node excluded){
+		Collection<Node> all = getNodesOfTypeWithinAABB(type, bounds);
 		all.remove(excluded);
 		return all;
 	}

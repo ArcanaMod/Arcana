@@ -13,7 +13,6 @@ public class ArcanaTiles{
 	
 	public static final DeferredRegister<TileEntityType<?>> TES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Arcana.MODID);
 	
-	public static final RegistryObject<TileEntityType<NodeTileEntity>> NODE_TE = TES.register("node", () -> new TileEntityType<>(NodeTileEntity::new, Sets.newHashSet(ArcanaBlocks.NORMAL_NODE.get()), null));
 	public static final RegistryObject<TileEntityType<JarTileEntity>> JAR_TE = TES.register("jar", () -> new TileEntityType<>(JarTileEntity::new, Sets.newHashSet(ArcanaBlocks.JAR.get()), null));
 	public static final RegistryObject<TileEntityType<AspectBookshelfTileEntity>> ASPECT_SHELF_TE = TES.register("aspect_shelf", () -> new TileEntityType<>(AspectBookshelfTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_BOOKSHELF.get()), null));
 	public static final RegistryObject<TileEntityType<ResearchTableTileEntity>> RESEARCH_TABLE_TE = TES.register("research_table", () -> new TileEntityType<>(ResearchTableTileEntity::new, Sets.newHashSet(ArcanaBlocks.RESEARCH_TABLE.get()), null));

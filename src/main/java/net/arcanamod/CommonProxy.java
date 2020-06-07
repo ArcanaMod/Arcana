@@ -10,8 +10,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
-//import net.arcanamod.blocks.bases.LeavesBase;
-
 /**
  * Common Proxy
  *
@@ -19,6 +17,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
  */
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class CommonProxy{
+	
+	public void construct(){
+	}
 	
 	public void preInit(FMLCommonSetupEvent event){
 	}

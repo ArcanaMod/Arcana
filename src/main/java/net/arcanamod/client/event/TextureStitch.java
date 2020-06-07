@@ -5,15 +5,16 @@ import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+import javax.annotation.Nonnull;
+
 public class TextureStitch{
 	
-	@SubscribeEvent
-	public static void onTextureStitch(TextureStitchEvent.Pre event){
+	public static void onTextureStitch(@Nonnull TextureStitchEvent.Pre event){
 		if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)){
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);

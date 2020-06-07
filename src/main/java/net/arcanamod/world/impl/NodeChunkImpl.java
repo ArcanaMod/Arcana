@@ -10,43 +10,52 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class NodeChunkImpl implements NodeChunk{
 	
-	Set<Node> nodes = new HashSet<>();
+	Collection<Node> nodes = new ArrayList<>();
 	
 	public void addNode(Node node){
 		nodes.add(node);
 	}
 	
-	public void setNodes(Set<Node> nodes){
+	public void removeNode(Node node){
+		nodes.remove(node);
+	}
+	
+	public void setNodes(Collection<Node> nodes){
 		this.nodes = nodes;
 	}
 	
-	public Set<Node> getNodes(){
-		return new HashSet<>(nodes);
+	public Collection<Node> getNodes(){
+		return new ArrayList<>(nodes);
 	}
 	
-	public Set<Node> getNodesWithinAABB(AxisAlignedBB bounds){
-		return getNodes().stream()
-				.filter(node -> bounds.contains(node.getX(), node.getY(), node.getZ()))
-				.collect(Collectors.toSet());
+	public Collection<Node> getNodesWithinAABB(AxisAlignedBB bounds){
+		Collection<Node> set = new ArrayList<>();
+		for(Node node : getNodes())
+			if(bounds.contains(node.getX(), node.getY(), node.getZ()))
+				set.add(node);
+		return set;
 	}
 	
-	public Set<Node> getNodesOfType(NodeType type){
-		return getNodes().parallelStream()
-				.filter(node -> node.type().equals(type))
-				.collect(Collectors.toSet());
+	public Collection<Node> getNodesOfType(NodeType type){
+		Collection<Node> set = new ArrayList<>();
+		for(Node node : getNodes())
+			if(node.type().equals(type))
+				set.add(node);
+		return set;
 	}
 	
-	public Set<Node> getNodesOfTypeWithinAABB(NodeType type, AxisAlignedBB bounds){
-		return getNodes().stream()
-				.filter(node -> node.type().equals(type))
-				.filter(node -> bounds.contains(node.getX(), node.getY(), node.getZ()))
-				.collect(Collectors.toSet());
+	public Collection<Node> getNodesOfTypeWithinAABB(NodeType type, AxisAlignedBB bounds){
+		Collection<Node> set = new ArrayList<>();
+		for(Node node : getNodes())
+			if(node.type().equals(type))
+				if(bounds.contains(node.getX(), node.getY(), node.getZ()))
+					set.add(node);
+		return set;
 	}
 	
 	public CompoundNBT serializeNBT(){
@@ -62,7 +71,7 @@ public class NodeChunkImpl implements NodeChunk{
 	public void deserializeNBT(@Nonnull CompoundNBT data){
 		// Go through the list and deserialize each entry
 		ListNBT list = data.getList("nodes", Constants.NBT.TAG_COMPOUND);
-		Set<Node> nodeSet = new HashSet<>(list.size());
+		Collection<Node> nodeSet = new ArrayList<>(list.size());
 		for(INBT nodeNBT : list)
 			if(nodeNBT instanceof CompoundNBT)
 				nodeSet.add(Node.fromNBT((CompoundNBT)nodeNBT));

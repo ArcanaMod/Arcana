@@ -593,16 +593,32 @@
     "block.untainted_willow_stairs": "Tainted Willow Stairs",
 
     "_comment": "Commands",
-    "commands.arcanaresearch.usage": "arcana-research [<entry> <player> <operation> | reload]",
+    "commands.arcanaresearch.usage": "arcana-research <entry> <player> <operation>",
     "commands.arcanaresearch.operations": "Operations: reset (sets progress to zero), complete (sets progress to maximum), tryAdvance (advances if requirements are met), forceAdvance (advances regardless of if requirements are met).",
     "commands.arcanaresearch.invalid_entry": "Invalid entry \"%s\"!",
+
     "commands.arcanafill.invalid_aspect": "Invalid aspect: \"%s\"!",
-    "commands.arcanafill.invalid_item": "Holding item (%s) isn't a phial",
+    "commands.arcanafill.invalid_item": "Held item (%s) isn't a phial!",
+
+    "commands.arcananodes.usage": "arcana-nodes add <type> <x> <y> <z> | remove <nodes> | modify <new type> | info <nodes>",
+    "commands.arcananodes.no_type": "Invalid node type: \"%s\"!",
+    "commands.arcananodes.add_success": "Successfully added node.",
+    "commands.arcananodes.add_fail": "Unable to add node.",
+    "commands.arcananodes.empty_selection": "No nodes were selected.",
+    "commands.arcananodes.remove_fail": "Unable to remove any nodes.",
+    "commands.arcananodes.remove_success.single": "Successfully removed node.",
+    "commands.arcananodes.remove_success.many": "Successfully removed %s nodes.",
+    "commands.arcananodes.modify_success.single": "Successfully changed node's type.",
+    "commands.arcananodes.modify_success.many": "Successfully changed %s nodes' types.",
+    "commands.arcananodes.info": "Selected nodes: %s.",
 
     "_comment": "Tooltips",
     "tooltip.contains_aspect": "%s x%s",
 
     "_comment": "Guis",
+    "argument.arcana.node.selector.invalid": "Invalid node selector. Valid selectors are @n, @n[max], and @i[x1,y1,z1,x2,y2,z2].",
+
+    "_comment": "GUIs",
     "researchEntry.continue": "Continue",
     "researchTable.ink_needed": "Scribing tools required",
 

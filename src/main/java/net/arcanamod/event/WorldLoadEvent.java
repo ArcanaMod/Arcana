@@ -2,6 +2,7 @@ package net.arcanamod.event;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.commands.FillPhialCommand;
+import net.arcanamod.commands.NodeCommand;
 import net.arcanamod.commands.ResearchCommand;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkRequestNodeSync;
@@ -47,6 +48,7 @@ public class WorldLoadEvent{
 	public static void serverStarting(FMLServerStartingEvent event){
 		ResearchCommand.register(event.getCommandDispatcher());
 		FillPhialCommand.register(event.getCommandDispatcher());
+		NodeCommand.register(event.getCommandDispatcher());
 	}
 	
 	// ew client stuff
