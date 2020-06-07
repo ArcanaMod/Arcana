@@ -30,7 +30,8 @@ public class NodeArgument implements ArgumentType<NodeSelector>{
 				if(reader.canRead() && reader.peek() == '['){
 					skipAndWhitespace(reader);
 					max = reader.readInt();
-					skipAndWhitespace(reader);
+					reader.skipWhitespace();
+					reader.skip();
 				}
 				// return nearest selector with given max
 				return new NodeSelector(false, null, max);
@@ -50,7 +51,8 @@ public class NodeArgument implements ArgumentType<NodeSelector>{
 					y1 = reader.readInt();
 					skipAndWhitespace(reader);
 					z1 = reader.readInt();
-					skipAndWhitespace(reader);
+					reader.skipWhitespace();
+					reader.skip();
 				}
 				return new NodeSelector(true, new AxisAlignedBB(x0, y0, z0, x1, y1, z1), 0);
 			}

@@ -608,6 +608,9 @@
     "commands.arcananodes.remove_fail": "Unable to remove any nodes.",
     "commands.arcananodes.remove_success.single": "Successfully removed node.",
     "commands.arcananodes.remove_success.many": "Successfully removed %s nodes.",
+    "commands.arcananodes.modify_success.single": "Successfully changed node's type.",
+    "commands.arcananodes.modify_success.many": "Successfully changed %s nodes' types.",
+    "commands.arcananodes.info": "Selected nodes: %s.",
 
     "argument.arcana.node.selector.invalid": "Invalid node selector. Valid selectors are @n, @n[max], and @i[x1,y1,z1,x2,y2,z2].",
 

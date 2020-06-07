@@ -91,7 +91,7 @@ public class NodeCommand{
 		return 0;
 	}
 	
-	public static int remove(CommandContext<CommandSource> ctx) throws CommandSyntaxException{
+	public static int remove(CommandContext<CommandSource> ctx){
 		Collection<Node> nodes = NodeArgument.getNodes(ctx, "nodes");
 		if(nodes.size() == 0){
 			// send feedback
@@ -117,10 +117,38 @@ public class NodeCommand{
 	}
 	
 	public static int modify(CommandContext<CommandSource> ctx) throws CommandSyntaxException{
-		return 0;
+		Collection<Node> nodes = NodeArgument.getNodes(ctx, "nodes");
+		if(nodes.size() == 0){
+			// send feedback
+			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcananodes.empty_selection"));
+			return 0;
+		}
+		
+		ResourceLocation type = ResourceLocationArgument.getResourceLocation(ctx, "type");
+		NodeType nt;
+		if(!NodeType.TYPES.containsKey(type)){
+			// throw exception "nonexistent type"
+			Message noSuchEntry = new TranslationTextComponent("commands.arcananodes.no_type", type.toString());
+			throw new CommandSyntaxException(new SimpleCommandExceptionType(noSuchEntry), noSuchEntry);
+		}else
+			nt = NodeType.TYPES.get(type);
+		
+		ServerNodeView view = new ServerNodeView(ctx.getSource().getWorld());
+		for(Node node : nodes)
+			node.setType(nt);
+		
+		if(nodes.size() == 1)
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.modify_success.single"), true);
+		else
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.modify_success.many", nodes.size()), true);
+		
+		view.sendAllChunksToClients(nodes);
+		return nodes.size();
 	}
 	
-	public static int info(CommandContext<CommandSource> ctx) throws CommandSyntaxException{
-		return 0;
+	public static int info(CommandContext<CommandSource> ctx){
+		Collection<Node> nodes = NodeArgument.getNodes(ctx, "nodes");
+		ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.info", nodes), true);
+		return nodes.size();
 	}
 }

@@ -76,4 +76,30 @@ public class Node implements IPosition{
 	public double getZ(){
 		return z;
 	}
+	
+	public void setType(NodeType type){
+		this.type = type;
+	}
+	
+	public void setX(double x){
+		this.x = x;
+	}
+	
+	public void setY(double y){
+		this.y = y;
+	}
+	
+	public void setZ(double z){
+		this.z = z;
+	}
+	
+	public String toString(){
+		return "Node{" +
+				"aspects=" + aspects +
+				", type=" + type +
+				", x=" + x +
+				", y=" + y +
+				", z=" + z +
+				'}';
+	}
 }

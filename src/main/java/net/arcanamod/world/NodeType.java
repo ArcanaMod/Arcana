@@ -60,43 +60,56 @@ public abstract class NodeType{
 	
 	public static class NormalNodeType extends NodeType{
 		public void tick(IWorld world, INodeView nodes, Node node){
-			if(world.isRemote())
-				world.addParticle(ParticleTypes.CLOUD, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+			if(world.isRemote()){
+				Random random = world.getRandom();
+				world.addParticle(ParticleTypes.CLOUD, node.getX(), node.getY(), node.getZ(), random.nextGaussian() / 6, random.nextGaussian() / 6, random.nextGaussian() / 6);
+			}
 		}
 	}
 	
 	public static class BrightNodeType extends NodeType{
 		public void tick(IWorld world, INodeView nodes, Node node){
-			if(world.isRemote())
-				world.addParticle(ParticleTypes.CRIT, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+			if(world.isRemote()){
+				Random random = world.getRandom();
+				world.addParticle(ParticleTypes.ENCHANTED_HIT, node.getX(), node.getY(), node.getZ(), random.nextGaussian(), random.nextGaussian(), random.nextGaussian());
+			}
 		}
 	}
 	
 	public static class PaleNodeType extends NodeType{
 		public void tick(IWorld world, INodeView nodes, Node node){
-			if(world.isRemote())
-				world.addParticle(ParticleTypes.SMOKE, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+			if(world.isRemote()){
+				Random random = world.getRandom();
+				world.addParticle(ParticleTypes.SMOKE, node.getX(), node.getY(), node.getZ(), random.nextGaussian() / 6, random.nextGaussian() / 6, random.nextGaussian() / 6);
+			}
 		}
 	}
 	
 	public static class EldritchNodeType extends NodeType{
 		public void tick(IWorld world, INodeView nodes, Node node){
-			if(world.isRemote())
-				world.addParticle(ParticleTypes.END_ROD, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+			if(world.isRemote()){
+				Random random = world.getRandom();
+				world.addParticle(ParticleTypes.END_ROD, node.getX(), node.getY(), node.getZ(), random.nextGaussian() / 6, random.nextGaussian() / 6, random.nextGaussian() / 6);
+			}
 		}
 	}
 	
 	public static class HungryNodeType extends NodeType{
 		public void tick(IWorld world, INodeView nodes, Node node){
-			if(world.isRemote())
-				world.addParticle(ParticleTypes.PORTAL, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+			if(world.isRemote()){
+				Random random = world.getRandom();
+				world.addParticle(ParticleTypes.PORTAL, node.getX(), node.getY(), node.getZ(), random.nextGaussian(), random.nextGaussian(), random.nextGaussian());
+				world.addParticle(ParticleTypes.PORTAL, node.getX(), node.getY(), node.getZ(), random.nextGaussian(), random.nextGaussian(), random.nextGaussian());
+			}
 		}
 	}
 	
 	public static class TaintedNodeType extends NodeType{
 		public void tick(IWorld world, INodeView nodes, Node node){
-			if(world.isRemote())
-				world.addParticle(ParticleTypes.NOTE, node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+			if(world.isRemote()){
+				Random random = world.getRandom();
+				world.addParticle(ParticleTypes.BUBBLE_POP, node.getX(), node.getY(), node.getZ(), random.nextGaussian(), random.nextGaussian(), random.nextGaussian());
+			}
 		}
 	}
 }
