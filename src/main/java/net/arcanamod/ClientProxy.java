@@ -28,6 +28,11 @@ import static net.arcanamod.Arcana.MODID;
  */
 public class ClientProxy extends CommonProxy{
 	
+	public void construct(){
+		super.construct();
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
+	}
+	
 	@Override
 	public void preInit(FMLCommonSetupEvent event){
 		super.preInit(event);

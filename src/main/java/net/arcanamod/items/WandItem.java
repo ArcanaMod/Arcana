@@ -60,11 +60,6 @@ public class WandItem extends Item{
 		}
 	}
 	
-	public ActionResultType onItemUse(ItemUseContext context){
-		requireNonNull(NodeChunk.getFrom((Chunk)context.getWorld().getChunk(context.getPos()))).addNode(new Node(NORMAL.genNodeAspects(context.getPos(), context.getWorld(), new Random()), NORMAL, context.getPos().getX(), context.getPos().getY(), context.getPos().getZ()));
-		return super.onItemUse(context);
-	}
-	
 	public static ItemStack withCapAndCoreForCt(String cap, String core){
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putString("cap", "arcana:" + cap);

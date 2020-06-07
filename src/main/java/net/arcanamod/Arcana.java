@@ -81,6 +81,8 @@ public class Arcana{
 		ArcanaFeatures.FEATURES.register(modEventBus);
 		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 		// etc
+		
+		proxy.construct();
 	}
 	
 	public static ResourceLocation arcLoc(String path){

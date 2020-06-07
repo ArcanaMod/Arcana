@@ -10,11 +10,11 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber({Dist.CLIENT})
+import javax.annotation.Nonnull;
+
 public class TextureStitch{
 	
-	@SubscribeEvent
-	public static void onTextureStitch(TextureStitchEvent.Pre event){
+	public static void onTextureStitch(@Nonnull TextureStitchEvent.Pre event){
 		if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)){
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);
