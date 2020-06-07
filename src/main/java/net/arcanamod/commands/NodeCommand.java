@@ -110,7 +110,7 @@ public class NodeCommand{
 		else if(removed.size() == 1)
 			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.remove_success.single"), true);
 		else
-			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.remove_success.many", removed), true);
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.remove_success.many", removed.size()), true);
 		
 		view.sendAllChunksToClients(removed);
 		return removed.size();

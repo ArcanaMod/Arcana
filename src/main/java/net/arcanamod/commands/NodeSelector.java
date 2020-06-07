@@ -8,10 +8,7 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class NodeSelector{
@@ -39,7 +36,7 @@ public class NodeSelector{
 		return max;
 	}
 	
-	public Set<Node> select(CommandSource source) throws CommandSyntaxException{
+	public Collection<Node> select(CommandSource source){
 		if(type){
 			// in aabb
 			INodeView view = new ServerNodeView(source.getWorld());
@@ -49,11 +46,12 @@ public class NodeSelector{
 			Vec3d caller = source.getPos();
 			// get all nodes in a 300x300 chunk area
 			INodeView view = new ServerNodeView(source.getWorld());
-			List<Node> ranged = new ArrayList<>(view.getNodesWithinAABB(new AxisAlignedBB(caller.x - 150, 0, caller.z - 150, caller.x + 150, 0, caller.z + 150)));
+			Collection<Node> ranged = new ArrayList<>(view.getNodesWithinAABB(new AxisAlignedBB(caller.x - 150, 0, caller.z - 150, caller.x + 150, 256, caller.z + 150)));
+			// sort by distance
 			return ranged.stream()
 					.sorted(Comparator.comparingDouble(node -> new Vec3d(node.getX(), node.getY(), node.getZ()).distanceTo(caller)))
 					.limit(max)
-					.collect(Collectors.toSet());
+					.collect(Collectors.toList());
 		}
 	}
 }

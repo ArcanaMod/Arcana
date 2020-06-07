@@ -47,12 +47,11 @@ public interface INodeView{
 					relevant.add(new ChunkPos(xx, zz));
 		else
 			relevant.add(min);
-		//then getNodesWithinAABB foreach
-		return relevant.stream()
-				.map(this::getNodeChunk)
-				.map(chunk -> chunk.getNodesWithinAABB(bounds))
-				.flatMap(Collection::stream)
-				.collect(Collectors.toList());
+		//then getNodesWithinAABB for each
+		List<Node> list = new ArrayList<>();
+		for(ChunkPos pos : relevant)
+			list.addAll(getNodeChunk(pos).getNodesWithinAABB(bounds));
+		return list;
 	}
 	
 	default Collection<Node> getNodesOfType(NodeType type){

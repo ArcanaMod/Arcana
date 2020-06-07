@@ -12,13 +12,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Set;
 
 public class NodeArgument implements ArgumentType<NodeSelector>{
 	
 	private static final Collection<String> EXAMPLES = Arrays.asList("@n", "@i[0, 0, 0, 20, 20, 20]", "@n[5]");
 	public static final SimpleCommandExceptionType SELECTOR_TYPE_INVALID = new SimpleCommandExceptionType(new TranslationTextComponent("argument.arcana.node.selector.invalid"));
-	//public static final SimpleCommandExceptionType MISSING_SELECTOR = new SimpleCommandExceptionType(new TranslationTextComponent("argument.arcana.node.selector.missing"));
 	
 	public NodeSelector parse(StringReader reader) throws CommandSyntaxException{
 		// check if it starts with "@", otherwise throw
@@ -74,7 +72,7 @@ public class NodeArgument implements ArgumentType<NodeSelector>{
 		return EXAMPLES;
 	}
 	
-	public static Set<Node> getNodes(CommandContext<CommandSource> context, String name) throws CommandSyntaxException{
+	public static Collection<Node> getNodes(CommandContext<CommandSource> context, String name){
 		return context.getArgument(name, NodeSelector.class).select(context.getSource());
 	}
 }
