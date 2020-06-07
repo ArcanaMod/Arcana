@@ -8,6 +8,8 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,8 +24,8 @@ public class ClientNodeView implements INodeView{
 		this.world = world;
 	}
 	
-	public Set<Node> getAllNodes(){
-		Set<Node> allNodes = new HashSet<>();
+	public Collection<Node> getAllNodes(){
+		Collection<Node> allNodes = new ArrayList<>();
 		for(ChunkPos chunkPos : ClientNodeHandler.clientLoadedChunks){
 			IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, false);
 			if(chunk instanceof Chunk){ // also a nonnull check

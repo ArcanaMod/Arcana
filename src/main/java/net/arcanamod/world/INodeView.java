@@ -19,13 +19,13 @@ public interface INodeView{
 	
 	Function<World, INodeView> SIDED_FACTORY = DistExecutor.runForDist(() -> () -> (world) -> world instanceof ClientWorld ? new ClientNodeView((ClientWorld)world) : null, () -> () -> (world) -> world instanceof ServerWorld ? new ServerNodeView((ServerWorld)world) : null);
 	
-	Set<Node> getAllNodes();
+	Collection<Node> getAllNodes();
 	
 	World getWorld();
 	
-	default Set<Node> getNodesWithinChunk(ChunkPos pos){
+	default Collection<Node> getNodesWithinChunk(ChunkPos pos){
 		NodeChunk nc = getNodeChunk(pos);
-		return nc != null ? nc.getNodes() : Collections.emptySet();
+		return nc != null ? nc.getNodes() : Collections.emptyList();
 	}
 	
 	default NodeChunk getNodeChunk(ChunkPos pos){
@@ -35,7 +35,7 @@ public interface INodeView{
 		return null;
 	}
 	
-	default Set<Node> getNodesWithinAABB(AxisAlignedBB bounds){
+	default Collection<Node> getNodesWithinAABB(AxisAlignedBB bounds){
 		// get all related chunks
 		// that is, all chunks between minX and maxX, minZ and maxZ
 		ChunkPos min = new ChunkPos(new BlockPos(bounds.minX, 0, bounds.minZ));
@@ -52,48 +52,50 @@ public interface INodeView{
 				.map(this::getNodeChunk)
 				.map(chunk -> chunk.getNodesWithinAABB(bounds))
 				.flatMap(Collection::stream)
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 	}
 	
-	default Set<Node> getNodesOfType(NodeType type){
-		return getAllNodes().stream().filter(node -> node.type() == type).collect(Collectors.toSet());
-	}
-	
-	default Set<Node> getNodesOfTypeWithinAABB(AxisAlignedBB bounds, NodeType type){
-		// get all related chunks
-		// that is, all chunks between minX and maxX, minZ and maxZ
-		ChunkPos min = new ChunkPos(new BlockPos(bounds.minX, 0, bounds.minZ));
-		ChunkPos max = new ChunkPos(new BlockPos(bounds.maxX, 0, bounds.maxZ));
-		List<ChunkPos> relevant = new ArrayList<>();
-		if(!min.equals(max))
-			for(int xx = min.x; xx <= max.x; xx++)
-				for(int zz = min.z; zz <= max.z; zz++)
-					relevant.add(new ChunkPos(xx, zz));
-		else
-			relevant.add(min);
-		//then getNodesWithinAABB foreach
-		return relevant.stream()
-				.map(this::getNodeChunk)
-				.map(chunk -> chunk.getNodesWithinAABB(bounds))
-				.flatMap(Collection::stream)
-				.filter(node -> node.type() == type)
-				.collect(Collectors.toSet());
-	}
-	
-	default Set<Node> getNodesExcluding(Node excluded){
-		return getAllNodes().stream()
-				.filter(node -> node != excluded)
-				.collect(Collectors.toSet());
-	}
-	
-	default Set<Node> getNodesOfTypeExcluding(NodeType type, Node excluded){
+	default Collection<Node> getNodesOfType(NodeType type){
 		return getAllNodes().stream()
 				.filter(node -> node.type() == type)
-				.filter(node -> node != excluded)
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 	}
 	
-	default Set<Node> getNodesWithinAABBExcluding(AxisAlignedBB bounds, Node excluded){
+	default Collection<Node> getNodesOfTypeWithinAABB(AxisAlignedBB bounds, NodeType type){
+		// get all related chunks
+		// that is, all chunks between minX and maxX, minZ and maxZ
+		ChunkPos min = new ChunkPos(new BlockPos(bounds.minX, 0, bounds.minZ));
+		ChunkPos max = new ChunkPos(new BlockPos(bounds.maxX, 0, bounds.maxZ));
+		List<ChunkPos> relevant = new ArrayList<>();
+		if(!min.equals(max))
+			for(int xx = min.x; xx <= max.x; xx++)
+				for(int zz = min.z; zz <= max.z; zz++)
+					relevant.add(new ChunkPos(xx, zz));
+		else
+			relevant.add(min);
+		//then getNodesWithinAABB foreach
+		return relevant.stream()
+				.map(this::getNodeChunk)
+				.map(chunk -> chunk.getNodesWithinAABB(bounds))
+				.flatMap(Collection::stream)
+				.filter(node -> node.type() == type)
+				.collect(Collectors.toList());
+	}
+	
+	default Collection<Node> getNodesExcluding(Node excluded){
+		return getAllNodes().stream()
+				.filter(node -> node != excluded)
+				.collect(Collectors.toList());
+	}
+	
+	default Collection<Node> getNodesOfTypeExcluding(NodeType type, Node excluded){
+		return getAllNodes().stream()
+				.filter(node -> node.type() == type)
+				.filter(node -> node != excluded)
+				.collect(Collectors.toList());
+	}
+	
+	default Collection<Node> getNodesWithinAABBExcluding(AxisAlignedBB bounds, Node excluded){
 		// get all related chunks
 		// that is, all chunks between minX and maxX, minZ and maxZ
 		ChunkPos min = new ChunkPos(new BlockPos(bounds.minX, 0, bounds.minZ));
@@ -111,10 +113,10 @@ public interface INodeView{
 				.map(chunk -> chunk.getNodesWithinAABB(bounds))
 				.flatMap(Collection::stream)
 				.filter(node -> node != excluded)
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 	}
 	
-	default Set<Node> getNodesOfTypeWithinAABBExcluding(AxisAlignedBB bounds, NodeType type, Node excluded){
+	default Collection<Node> getNodesOfTypeWithinAABBExcluding(AxisAlignedBB bounds, NodeType type, Node excluded){
 		// get all related chunks
 		// that is, all chunks between minX and maxX, minZ and maxZ
 		ChunkPos min = new ChunkPos(new BlockPos(bounds.minX, 0, bounds.minZ));
@@ -133,7 +135,7 @@ public interface INodeView{
 				.flatMap(Collection::stream)
 				.filter(node -> node.type() == type)
 				.filter(node -> node != excluded)
-				.collect(Collectors.toSet());
+				.collect(Collectors.toList());
 	}
 	
 	default boolean addNode(Node node){
@@ -141,6 +143,16 @@ public interface INodeView{
 		NodeChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
 		if(nc != null){
 			nc.addNode(node);
+			return true;
+		}
+		return false;
+	}
+	
+	default boolean removeNode(Node node){
+		// get the relevant chunk
+		NodeChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
+		if(nc != null && nc.getNodes().contains(node)){
+			nc.removeNode(node);
 			return true;
 		}
 		return false;

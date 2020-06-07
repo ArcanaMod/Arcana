@@ -2,14 +2,10 @@ package net.arcanamod.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.Message;
-import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.world.INodeView;
 import net.arcanamod.world.Node;
 import net.arcanamod.world.NodeType;
 import net.arcanamod.world.ServerNodeView;
@@ -22,6 +18,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Random;
 
 import static net.minecraft.command.Commands.argument;
@@ -46,6 +44,7 @@ public class NodeCommand{
 								.then(argument("position", Vec3Argument.vec3())
 										.executes(NodeCommand::add)
 								)
+								.suggests(SUGGEST_TYPES)
 						)
 				)
 				.then(literal("remove")
@@ -57,6 +56,7 @@ public class NodeCommand{
 						.then(argument("nodes", NodeArgument.nodes())
 								.then(argument("type", ResourceLocationArgument.resourceLocation())
 										.executes(NodeCommand::modify)
+										.suggests(SUGGEST_TYPES)
 								)
 						)
 				)
@@ -73,19 +73,47 @@ public class NodeCommand{
 		NodeType nt;
 		if(!NodeType.TYPES.containsKey(type)){
 			// throw exception "nonexistent type"
-			Message noSuchEntry = new TranslationTextComponent("command.arcana.nodes.no_type", type.toString());
+			Message noSuchEntry = new TranslationTextComponent("commands.arcananodes.no_type", type.toString());
 			throw new CommandSyntaxException(new SimpleCommandExceptionType(noSuchEntry), noSuchEntry);
 		}else
 			nt = NodeType.TYPES.get(type);
 		Vec3d loc = Vec3Argument.getVec3(ctx, "position");
 		Node node = new Node(nt.genNodeAspects(new BlockPos(loc), ctx.getSource().getWorld(), new Random()), nt, loc.x, loc.y, loc.z);
-		INodeView view = new ServerNodeView(ctx.getSource().getWorld());
-		// Send PkSyncChunkNodes
-		return view.addNode(node) ? 1 : 0;
+		ServerNodeView view = new ServerNodeView(ctx.getSource().getWorld());
+		boolean added = view.addNode(node);
+		// Send PkSyncChunkNodes and feedback
+		if(added){
+			view.sendChunkToClients(node);
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.add_success"), true);
+			return 1;
+		}
+		ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcananodes.add_fail"));
+		return 0;
 	}
 	
 	public static int remove(CommandContext<CommandSource> ctx) throws CommandSyntaxException{
-		return 0;
+		Collection<Node> nodes = NodeArgument.getNodes(ctx, "nodes");
+		if(nodes.size() == 0){
+			// send feedback
+			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcananodes.empty_selection"));
+			return 0;
+		}
+		
+		ServerNodeView view = new ServerNodeView(ctx.getSource().getWorld());
+		Collection<Node> removed = new ArrayList<>();
+		for(Node node : nodes)
+			if(view.removeNode(node))
+				removed.add(node);
+			
+		if(removed.size() == 0)
+			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcananodes.remove_fail"));
+		else if(removed.size() == 1)
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.remove_success.single"), true);
+		else
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.remove_success.many", removed), true);
+		
+		view.sendAllChunksToClients(removed);
+		return removed.size();
 	}
 	
 	public static int modify(CommandContext<CommandSource> ctx) throws CommandSyntaxException{

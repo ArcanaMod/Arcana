@@ -7,7 +7,6 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.arcanamod.world.Node;
 import net.minecraft.command.CommandSource;
-import net.minecraft.command.arguments.EntitySelector;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -18,8 +17,8 @@ import java.util.Set;
 public class NodeArgument implements ArgumentType<NodeSelector>{
 	
 	private static final Collection<String> EXAMPLES = Arrays.asList("@n", "@i[0, 0, 0, 20, 20, 20]", "@n[5]");
-	public static final SimpleCommandExceptionType NODE_NOT_FOUND = new SimpleCommandExceptionType(new TranslationTextComponent("argument.arcana.node.notfound"));
-	public static final SimpleCommandExceptionType SELECTOR_TYPE_INVALID = new SimpleCommandExceptionType(new TranslationTextComponent("argument.arcana.node.selector.missing"));
+	public static final SimpleCommandExceptionType SELECTOR_TYPE_INVALID = new SimpleCommandExceptionType(new TranslationTextComponent("argument.arcana.node.selector.invalid"));
+	//public static final SimpleCommandExceptionType MISSING_SELECTOR = new SimpleCommandExceptionType(new TranslationTextComponent("argument.arcana.node.selector.missing"));
 	
 	public NodeSelector parse(StringReader reader) throws CommandSyntaxException{
 		// check if it starts with "@", otherwise throw
@@ -30,7 +29,7 @@ public class NodeArgument implements ArgumentType<NodeSelector>{
 				reader.skip();
 				int max = 1;
 				// if it has '[', parse maximum
-				if(reader.peek() == '['){
+				if(reader.canRead() && reader.peek() == '['){
 					skipAndWhitespace(reader);
 					max = reader.readInt();
 					skipAndWhitespace(reader);
