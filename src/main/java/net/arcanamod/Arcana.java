@@ -78,9 +78,6 @@ public class Arcana{
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
-
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onPlayerInteractEvent);
 		
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ArcanaConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ArcanaConfig.CLIENT_SPEC);

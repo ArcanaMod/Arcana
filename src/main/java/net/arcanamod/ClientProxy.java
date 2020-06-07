@@ -2,8 +2,6 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.event.TextureStitch;
-import net.arcanamod.client.gui.ResearchBookGUI;
-import net.arcanamod.client.gui.ResearchEntryGUI;
 import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.gui.ResearchBookScreen;
 import net.arcanamod.client.gui.ResearchEntryScreen;
@@ -33,6 +31,7 @@ public class ClientProxy extends CommonProxy{
 	public void construct(){
 		super.construct();
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onPlayerInteractEvent);
 	}
 	
 	@Override

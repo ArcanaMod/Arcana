@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 import javax.annotation.Nonnull;
 
@@ -32,15 +31,13 @@ public class TextureStitch{
 				event.addSprite(focus.getModelLocation());
 		}
 	}
-
+	
 	//TODO: Move this to another place.
-	@SubscribeEvent
-	public static void onPlayerInteractEvent(PlayerInteractEvent event)
-	{
+	public static void onPlayerInteractEvent(PlayerInteractEvent event){
 		//if (event.getWorld().isRemote) return;
-		if (Arcana.debug)
-		if (event.getItemStack().getItem() == ArcanaItems.VIS_MANIPULATION_TOOLS.get()&&event.getWorld().getTileEntity(event.getPos())!=null)
-			if (event.getWorld().getTileEntity(event.getPos()).getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null)!=null)
-				event.getPlayer().sendMessage(new StringTextComponent(((VisBattery)event.getWorld().getTileEntity(event.getPos()).getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null)).toString()));
+		if(Arcana.debug)
+			if(event.getItemStack().getItem() == ArcanaItems.VIS_MANIPULATION_TOOLS.get() && event.getWorld().getTileEntity(event.getPos()) != null)
+				if(event.getWorld().getTileEntity(event.getPos()).getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null) != null)
+					event.getPlayer().sendMessage(new StringTextComponent(((VisBattery)event.getWorld().getTileEntity(event.getPos()).getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null)).toString()));
 	}
 }
