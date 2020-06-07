@@ -18,6 +18,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static net.minecraft.client.gui.AbstractGui.blit;
+
 public interface PuzzleRenderer<T extends Puzzle>{
 	
 	ResourceLocation PAPER = new ResourceLocation(Arcana.MODID, "textures/gui/research/temp_puzzle_overlay.png");
@@ -50,8 +52,7 @@ public interface PuzzleRenderer<T extends Puzzle>{
 	
 	default void drawPaper(int screenWidth, int screenHeight){
 		mc().getTextureManager().bindTexture(PAPER);
-		// TODO: blit
-		//drawModalRectWithCustomSizedTexture(guiLeft(screenWidth) + 141, guiTop(screenHeight) + 35, 0, 0, 214, 134, 214, 134);
+		blit(guiLeft(screenWidth) + 141, guiTop(screenHeight) + 35, 0, 0, 214, 134, 214, 134);
 	}
 	
 	default int guiLeft(int screenWidth){

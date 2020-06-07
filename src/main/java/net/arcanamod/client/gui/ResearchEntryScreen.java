@@ -176,16 +176,6 @@ public class ResearchEntryScreen extends Screen{
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
 		super.mouseClicked(mouseX, mouseY, mouseButton);
-		if(totalLength() > index){
-			EntrySection section = getSectionAtIndex(index);
-			if(section != null)
-				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
-		}
-		if(totalLength() > index + 1){
-			EntrySection section = getSectionAtIndex(index + 1);
-			if(section != null)
-				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
-		}
 		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
@@ -195,6 +185,16 @@ public class ResearchEntryScreen extends Screen{
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18)
 					return requirements.get(i).onClick(entry);
+		}
+		if(totalLength() > index){
+			EntrySection section = getSectionAtIndex(index);
+			if(section != null)
+				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
+		}
+		if(totalLength() > index + 1){
+			EntrySection section = getSectionAtIndex(index + 1);
+			if(section != null)
+				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
 		return false;
 	}

@@ -2,9 +2,11 @@ package net.arcanamod.blocks.tiles;
 
 import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.VisBattery;
-import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.Arcana;
+import net.arcanamod.aspects.*;
+import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.containers.ResearchTableContainer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -17,6 +19,7 @@ import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
@@ -27,6 +30,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -44,31 +48,52 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	
 	// slots 0-2 are always there, the rest are reserved for the games themselves
 
-	//protected NonNullList<ItemStack> items = NonNullList.withSize(4, ItemStack.EMPTY);
-
 	protected ItemStackHandler items = new ItemStackHandler(14){
 		protected void onContentsChanged(int slot){
 			super.onContentsChanged(slot);
 			markDirty();
 		}
 	};
-	
-	protected VisBattery aspects = new VisBattery();
+
+	public VisBattery getVisBattery()
+	{
+		VisBattery vis = getVisShareablesAsBattery();
+		return vis;
+	}
+
+	//TODO: FIX PERFORMANCE (-20 FPS) Caching or something.
+	private VisBattery getVisShareablesAsBattery() {
+		//if (world.isRemote) return null;
+		VisBattery battery = new VisBattery(Integer.MAX_VALUE);
+		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
+			if (world.getBlockState(blockPos).hasTileEntity()) {
+				TileEntity teinbox = world.getTileEntity(blockPos);
+				if (teinbox != null)
+					if (teinbox instanceof IVisShareable)
+						if (((IVisShareable) teinbox).isVisShareable()) {
+							VisHandler vis = teinbox.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+							if (vis != null) {
+								for (Aspect aspect : vis.getContainedAspects()) {
+									battery.insert(aspect, vis.getCurrentVis(aspect), false);
+								}
+							}
+						}
+			}
+		});
+		return battery;
+	}
 
 	@Override
 	public void read(CompoundNBT compound){
 		super.read(compound);
 		if(compound.contains("items"))
 			items.deserializeNBT(compound.getCompound("items"));
-		if(compound.contains("aspects"))
-			aspects.deserializeNBT(compound.getCompound("aspects"));
 	}
 	
 	@Override
 	public CompoundNBT write(CompoundNBT compound){
 		super.write(compound);
 		compound.put("items", items.serializeNBT());
-		compound.put("aspects", aspects.serializeNBT());
 		return compound;
 	}
 
@@ -90,15 +115,11 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing){
 		/*if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			return items.cast();
-		else*/ if(capability == VisHandlerCapability.ASPECT_HANDLER)
-			return aspects.getCapability(VisHandlerCapability.ASPECT_HANDLER).cast();
+		else*/ if(capability == VisHandlerCapability.ASPECT_HANDLER) {
+			VisBattery battery = getVisBattery();
+			return battery.getCapability(VisHandlerCapability.ASPECT_HANDLER).cast();
+		}
 		return super.getCapability(capability, facing).cast();
-	}
-	
-	public CompoundNBT saveToNBT(){
-		CompoundNBT compound = new CompoundNBT();
-		compound.put("aspects", aspects.serializeNBT());
-		return compound;
 	}
 	
 	public ItemStack visItem(){
@@ -145,8 +166,11 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	 */
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		//return ItemStackHelper.getAndSplit(this.items.getStackInSlot(index), index, count);
-		return null;
+		ItemStack stack0 = this.items.getStackInSlot(index);
+		ItemStack stack1 = this.items.getStackInSlot(index).copy();
+		stack0.shrink(count);
+		stack1.setCount(count);
+		return stack1; //TODO: Check of works fine (custom impl)
 	}
 
 	/**

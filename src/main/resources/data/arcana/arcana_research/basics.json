@@ -51,9 +51,9 @@
             "2*minecraft:glass",
             "3*minecraft:redstone",
             "minecraft:diamond",
-            "minecraft:dye{/4}",
+            "minecraft:lapis_lazuli",
             "minecraft:gold_ingot",
-            "minecraft:log"
+            "minecraft:oak_log"
           ]
         },
         {

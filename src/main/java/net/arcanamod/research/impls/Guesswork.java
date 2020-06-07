@@ -130,7 +130,8 @@ public class Guesswork extends Puzzle{
 		CraftingInventory inv = new CraftingInventory(container, 3, 3);
 		for(int i = 0; i < itemSlots.size(); i++){
 			Slot slot = itemSlots.get(i);
-			inv.setInventorySlotContents(i, slot.getStack());
+			if (slot.getStack()!=null)
+				inv.setInventorySlotContents(i, slot.getStack());
 		}
 		return ((ICraftingRecipe)recipe).matches(inv, player.world);
 	}

@@ -133,7 +133,7 @@ public class ResearchBookScreen extends Screen{
 		// which is only 32
 		// let's scale is up x2, and also pan with half speed (which is what I'd do anyways) so we get 128 pan
 		getMinecraft().getTextureManager().bindTexture(categories.get(tab).bg());
-		drawModalRectWithCustomSizedTexture((width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, getFrameWidth() - 32, getFrameHeight() - 34, 512, 512);
+		drawModalRectWithCustomSizedTexture((width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, getFrameWidth() - 32, getFrameHeight() - 34, (int)(width*1.2f), (int)(width*1.2f));
 	}
 	
 	private void renderEntries(float partialTicks){

@@ -1,13 +1,16 @@
 package net.arcanamod.client.research.impls;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.research.impls.Guesswork;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRender
 	
 	public void render(Guesswork puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player){
 		drawPaper(screenWidth, screenHeight);
+		RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc().getTextureManager().bindTexture(texture);
 		// render result
 		int rX = paperLeft(screenWidth) + 78;
@@ -34,14 +38,12 @@ public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRender
 		int ulY = paperTop(screenHeight) + 49;
 		drawTexturedModalRect(ulX, ulY, 145, 1, 72, 72);
 		RenderHelper.enableStandardItemLighting();
-		//mc().getItemRenderer().renderItemAndEffectIntoGUI(CraftingManager.getRecipe(puzzle.getRecipe()).getRecipeOutput(), rX + 29 - 8, rY + 10 - 8);
+		mc().getItemRenderer().renderItemAndEffectIntoGUI(player.world.getRecipeManager().getRecipe(puzzle.getRecipe()).orElse(null).getRecipeOutput(), rX + 29 - 8, rY + 10 - 8);
 		
 		List<Map.Entry<ResourceLocation, String>> indexHelper = new ArrayList<>(puzzle.getHints().entrySet());
-		//IRecipe recipe = CraftingManager.getRecipe(puzzle.getRecipe());
+		IRecipe<?> recipe = player.world.getRecipeManager().getRecipe(puzzle.getRecipe()).orElse(null);
 		
-		//if(recipe == null){
-		
-		/*}else{
+		if(recipe != null){
 			for(int y = 0; y < 3; y++)
 				for(int x = 0; x < 3; x++){
 					int index = x + y * 3;
@@ -59,7 +61,7 @@ public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRender
 				int hintY = ulY + i * 12;
 				fr().drawString(hintSymbols[i % hintSymbols.length] + " = " + I18n.format(entry.getValue()), hintX, hintY, hintColours[i % hintColours.length]);
 			}
-		}*/
+		}
 	}
 	
 	private static int indexMatchingKey(List<Map.Entry<ResourceLocation, String>> indexHelper, ResourceLocation key){

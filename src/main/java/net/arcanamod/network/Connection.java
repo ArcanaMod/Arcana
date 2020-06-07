@@ -1,6 +1,7 @@
 package net.arcanamod.network;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.research.Researcher;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -25,6 +26,9 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkModifyResearch.class, PkModifyResearch::encode, PkModifyResearch::decode, PkModifyResearch::handle);
 		INSTANCE.registerMessage(id++, PkSyncPlayerResearch.class, PkSyncPlayerResearch::encode, PkSyncPlayerResearch::decode, PkSyncPlayerResearch::handle);
 		INSTANCE.registerMessage(id++, PkTryAdvance.class, PkTryAdvance::encode, PkTryAdvance::decode, PkTryAdvance::handle);
+		INSTANCE.registerMessage(id++, PkAspectClick.class, PkAspectClick::encode, PkAspectClick::decode, PkAspectClick::handle);
+		INSTANCE.registerMessage(id++, PkSyncAspectContainer.class, PkSyncAspectContainer::encode, PkSyncAspectContainer::decode, PkSyncAspectContainer::handle);
+		INSTANCE.registerMessage(id++, PkGetNoteHandler.class, PkGetNoteHandler::encode, PkGetNoteHandler::decode, PkGetNoteHandler::handle);
 		INSTANCE.registerMessage(id++, PkSyncChunkNodes.class, PkSyncChunkNodes::encode, PkSyncChunkNodes::decode, PkSyncChunkNodes::handle);
 		INSTANCE.registerMessage(id++, PkRequestNodeSync.class, PkRequestNodeSync::encode, PkRequestNodeSync::decode, PkRequestNodeSync::handle);
 	}
@@ -47,5 +51,17 @@ public class Connection{
 	
 	public static void sendSyncPlayerResearch(Researcher from, ServerPlayerEntity target){
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncPlayerResearch(from.getEntryData(), from.getPuzzleData()));
+	}
+
+	public static void sendAspectClick(int windowId, int slotId, PkAspectClick.ClickType type){
+		INSTANCE.sendToServer(new PkAspectClick(windowId, slotId, type));
+	}
+
+	public static void sendSyncAspectContainer(AspectContainer container, ServerPlayerEntity target) {
+		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncAspectContainer(container));
+	}
+
+	public static void sendGetNoteHandler(ResourceLocation id, String pageName) {
+		INSTANCE.sendToServer(new PkGetNoteHandler(id,pageName));
 	}
 }

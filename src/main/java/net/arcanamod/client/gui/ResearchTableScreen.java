@@ -51,35 +51,29 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
 		minecraft.getTextureManager().bindTexture(BG);
-		drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
+		renderModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
 			CompoundNBT compound = te.note().getTag();
 			if(compound != null){
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
-				PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer)aspectContainer).puzzleSlots, ((ResearchTableContainer)aspectContainer).puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
-				if(te.ink().isEmpty()){
-					// tell them "no u cant do research without a pen"
-					this.minecraft.getTextureManager().bindTexture(this.NO_INK);
-					drawModalRectWithCustomSizedTexture(guiLeft + 137, guiTop + 31, 0, 0, 223, 143, 223, 143);
-					String noInk = I18n.format("researchTable.ink_needed");
-					font.drawString(noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2, -1);
+				if (puzzle!=null) {
+					PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer) aspectContainer).puzzleSlots, ((ResearchTableContainer) aspectContainer).puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
+					if (te.ink().isEmpty()) {
+						// tell them "no u cant do research without a pen"
+						this.minecraft.getTextureManager().bindTexture(this.NO_INK);
+						renderModalRectWithCustomSizedTexture(guiLeft + 137, guiTop + 31, 0, 0, 223, 143, 223, 143);
+						String noInk = I18n.format("researchTable.ink_needed");
+						font.drawString(noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2, -1);
+					}
 				}
 			}
 		}
+		//Connection.sendSyncAspectContainer(aspectContainer,minecraft.getIntegratedServer().getPlayerList().getPlayerByUsername("Dev"));
 	}
 
-	public static void drawModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
+	public static void renderModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
 		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
 		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
-	}
-	
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-	}
-	
-	public void drawScreen(int mouseX, int mouseY, float partialTicks){
-		super.drawScreen(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
 	}
 
 	@Override
@@ -88,8 +82,6 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 
 		leftArrow = addButton(new ChangeAspectPageButton(guiLeft + 11, guiTop + 183, false, this::actionPerformed));
 		rightArrow = addButton(new ChangeAspectPageButton(guiLeft + 112, guiTop + 183, true, this::actionPerformed));
-
-		//Connection.network.sendToServer(new PktRequestAspectSync());
 	}
 
 	protected void actionPerformed(@Nonnull Button button) {
@@ -149,7 +141,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				minecraft.getTextureManager().bindTexture(BG);
 				GlStateManager.disableLighting();
 				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				drawModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
+				renderModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
 			}
 			//super.render(p_render_1_,p_render_2_,p_render_3_); //Don't render default button! //TODO: Hover dosn't work
 		}

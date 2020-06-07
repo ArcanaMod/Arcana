@@ -107,4 +107,12 @@ public class VisBattery implements VisHandler, ICapabilityProvider{
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing){
 		return capability == VisHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();
 	}
+
+	@Override
+	public String toString() {
+		return "VisBattery{" +
+				"stored=" + stored +
+				", capacity=" + capacity +
+				'}';
+	}
 }

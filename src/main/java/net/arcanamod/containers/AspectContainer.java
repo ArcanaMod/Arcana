@@ -3,7 +3,11 @@ package net.arcanamod.containers;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.client.gui.AspectContainerScreen;
+import net.arcanamod.network.Connection;
+import net.arcanamod.network.PkAspectClick;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 
@@ -47,27 +51,26 @@ public abstract class AspectContainer extends Container{
 	}
 	
 	public void handleClick(int mouseX, int mouseY, int button, AspectContainerScreen gui){
-		/*for(AspectSlot slot : getAspectSlots()){
+		for(AspectSlot slot : getAspectSlots()){
 			if(slot.getInventory().get() != null && gui.isSlotVisible(slot) && isMouseOverSlot(mouseX, mouseY, slot, gui)){
 				// gonna send a packet
-				PktAspectClickHandler.ClickType type;
+				PkAspectClick.ClickType type;
 				if(button == 0)
-					type = PktAspectClickHandler.ClickType.TAKE;
+					type = PkAspectClick.ClickType.TAKE;
 				else if(button == 1)
-					type = PktAspectClickHandler.ClickType.PUT;
+					type = PkAspectClick.ClickType.PUT;
 				else
 					return;
 				if(Screen.hasShiftDown())
-					type = type == PktAspectClickHandler.ClickType.PUT ? PktAspectClickHandler.ClickType.PUT_ALL : PktAspectClickHandler.ClickType.TAKE_ALL;
+					type = type == PkAspectClick.ClickType.PUT ? PkAspectClick.ClickType.PUT_ALL : PkAspectClick.ClickType.TAKE_ALL;
 				// do some quick checking to make sure that the packet won't just do nothing
 				// don't actually modify anything though!
 				// <blah>
-				PktAspectClickHandler.PktAspectClick packet = new PktAspectClickHandler.PktAspectClick(windowId, aspectSlots.indexOf(slot), type);
-				//Connection.network.sendToServer(packet);
+				Connection.sendAspectClick(windowId,aspectSlots.indexOf(slot),type);
 			}
-		}*/
+		}
 	}
-	
+
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot, AspectContainerScreen gui){
 		return mouseX >= gui.getGuiLeft() + slot.x && mouseY >= gui.getGuiTop() + slot.y && mouseX < gui.getGuiLeft() + slot.x + 16 && mouseY < gui.getGuiTop() + slot.y + 16;
 	}
