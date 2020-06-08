@@ -33,36 +33,36 @@ public class KoalaEntityModel<T extends KoalaEntity> extends EntityModel<T> {
         Body.setTextureOffset(0, 18).addBox(-2.5F, -5.5F, -0.5F, 5.0F, 9.0F, 4.0F, 0.0F, false);
 
         Tail = new ModelRenderer(this);
-        Tail.setRotationPoint(0.0F, 3.5F, 3.0F);
+        Tail.setRotationPoint(0.0F, 0.0F, 0.0F);
         Body.addChild(Tail);
-        setRotationAngle(Tail, 0.0F, 0.0F, 0.0873F);
-        Tail.setTextureOffset(22, 23).addBox(-1.0F, -1.0F, -1.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
+        Tail.setTextureOffset(22, 23).addBox(-1.0F, 2.5F, 2.0F, 2.0F, 2.0F, 2.0F, 0.0F, false);
 
         Head = new ModelRenderer(this);
-        Head.setRotationPoint(0.0F, -5.5F, 2.5F);
+        Head.setRotationPoint(0.0F, -4.5F, 2.5F);
         Body.addChild(Head);
-        setRotationAngle(Head, 1.5708F, 0.0F, -3.1416F);
-        Head.setTextureOffset(0, 0).addBox(-3.0F, -2.0F, -4.0F, 6.0F, 5.0F, 5.0F, 0.0F, false);
+        Head.setTextureOffset(0, 0).addBox(-3.0F, -4.0F, -2.0F, 6.0F, 5.0F, 5.0F, 0.0F, false);
 
         Ears = new ModelRenderer(this);
-        Ears.setRotationPoint(-3.0F, 0.0F, 0.0F);
+        Ears.setRotationPoint(-3.0F, -1.5F, 2.0F);
         Head.addChild(Ears);
+        setRotationAngle(Ears, 1.5708F, 0.0F, -3.1416F);
 
 
         Right = new ModelRenderer(this);
-        Right.setRotationPoint(6.5F, 3.5F, -1.5F);
+        Right.setRotationPoint(5.5F, 3.0F, -3.5F);
         Ears.addChild(Right);
-        Right.setTextureOffset(6, 10).addBox(-1.5F, -2.0F, -0.5F, 3.0F, 3.0F, 1.0F, 0.0F, false);
+        Right.setTextureOffset(6, 10).addBox(-6.5F, -3.5F, 3.0F, 3.0F, 3.0F, 1.0F, 0.0F, false);
 
         Left = new ModelRenderer(this);
-        Left.setRotationPoint(0.0F, 0.0F, 0.0F);
+        Left.setRotationPoint(-1.0F, -0.5F, -2.0F);
         Ears.addChild(Left);
-        Left.setTextureOffset(6, 10).addBox(-2.0F, 1.5F, -2.0F, 3.0F, 3.0F, 1.0F, 0.0F, true);
+        Left.setTextureOffset(6, 10).addBox(-7.0F, 0.0F, 1.5F, 3.0F, 3.0F, 1.0F, 0.0F, true);
 
         Nose = new ModelRenderer(this);
-        Nose.setRotationPoint(-3.0F, 0.0F, 0.0F);
+        Nose.setRotationPoint(0.0F, -3.5F, -0.5F);
         Head.addChild(Nose);
-        Nose.setTextureOffset(0, 10).addBox(2.0F, -1.5F, -5.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
+        setRotationAngle(Nose, 1.5708F, 3.1416F, -3.1416F);
+        Nose.setTextureOffset(0, 10).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 3.0F, 1.0F, 0.0F, false);
 
         Legs = new ModelRenderer(this);
         Legs.setRotationPoint(-3.0F, 0.5F, -3.5F);
@@ -103,7 +103,12 @@ public class KoalaEntityModel<T extends KoalaEntity> extends EntityModel<T> {
 
     @Override
     public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-        //previously the render function, render code was moved to a method below
+        this.Head.rotateAngleX = headPitch / (180F / (float)Math.PI);
+        this.Head.rotateAngleZ = netHeadYaw / (180F / (float)Math.PI);
+        this.RightBack.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.LeftBack.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        this.RightFront.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float) Math.PI) * 1.4F * limbSwingAmount;
+        this.LeftFront.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
     }
 
     @Override
