@@ -8,6 +8,7 @@ import net.arcanamod.client.Sounds;
 import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.model.WandModelLoader;
+import net.arcanamod.client.render.DairSpiritRenderer;
 import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.client.render.KoalaEntityRender;
 import net.arcanamod.containers.ArcanaContainers;
@@ -165,6 +166,7 @@ public class Arcana{
 
 		//Entity Render
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 	}
 	
 	private void enqueueIMC(InterModEnqueueEvent event){
