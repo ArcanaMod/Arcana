@@ -15,13 +15,15 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
 public class ClientNodeHandler{
 	
-	public static final List<ChunkPos> clientLoadedChunks = new ArrayList<>();
+	public static final Collection<ChunkPos> clientLoadedChunks = new ConcurrentSkipListSet<>(Comparator.<ChunkPos>comparingInt(value -> value.x).thenComparingInt(value -> value.z));
 	public static final Collection<Runnable> untilPlayerJoin = new CopyOnWriteArrayList<>();
 	
 	// Keep track of loaded chunks on client using events.
