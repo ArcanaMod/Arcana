@@ -67,8 +67,8 @@ public class DairEntityModel<T extends DairSpiritEntity> extends EntityModel<T> 
 
     @Override
     public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-        this.Head.rotateAngleY = headPitch / (180F / (float)Math.PI);
-        this.Head.rotateAngleZ = netHeadYaw / (180F / (float)Math.PI);
+        this.Head.rotateAngleX = headPitch / (180F / (float)Math.PI);
+        this.Head.rotateAngleY = netHeadYaw / (180F / (float)Math.PI);
     }
 
     @Override
