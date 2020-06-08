@@ -7,7 +7,8 @@ import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.client.render.ArcanaParticles;
 import net.arcanamod.client.render.NodeParticleData;
-import net.minecraft.particles.ParticleTypes;
+import net.arcanamod.util.GogglePriority;
+import net.arcanamod.util.NodeHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -50,8 +51,9 @@ public abstract class NodeType{
 	
 	public void tick(IWorld world, INodeView nodes, Node node){
 		if(world.isRemote()){
-			//world.addParticle(ParticleTypes.CLOUD, node.getX(), node.getY(), node.getZ(), random.nextGaussian() / 6, random.nextGaussian() / 6, random.nextGaussian() / 6);
-			world.addParticle(new NodeParticleData(node.nodeUniqueId(), node.type().texture(world, nodes, node), ArcanaParticles.NODE_PARTICLE.get()), node.getX(), node.getY(), node.getZ(), 0, 0, 0);
+			GogglePriority priority = NodeHelper.getGogglePriority();
+			if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
+				world.addParticle(new NodeParticleData(node.nodeUniqueId(), node.type().texture(world, nodes, node), ArcanaParticles.NODE_PARTICLE.get()), node.getX(), node.getY(), node.getZ(), 0, 0, 0);
 		}
 	}
 	
