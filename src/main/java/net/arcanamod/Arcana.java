@@ -1,5 +1,6 @@
 package net.arcanamod;
 
+import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.aspects.VisBattery;
 import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
@@ -107,6 +108,7 @@ public class Arcana{
 		Requirement.init();
 		ResearcherCapability.init();
 		VisHandlerCapability.init();
+		AspectHandlerCapability.init();
 		NodeChunkCapability.init();
 		Puzzle.init();
 		

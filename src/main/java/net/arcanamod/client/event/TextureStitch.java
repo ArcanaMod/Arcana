@@ -1,6 +1,8 @@
 package net.arcanamod.client.event;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.AspectBattery;
+import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.aspects.VisBattery;
 import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.client.render.JarTileEntityRender;
@@ -41,7 +43,7 @@ public class TextureStitch{
 		//if (event.getWorld().isRemote) return;
 		if (Arcana.debug)
 		if (event.getItemStack().getItem() == ArcanaItems.VIS_MANIPULATION_TOOLS.get()&&event.getWorld().getTileEntity(event.getPos())!=null)
-			if (event.getWorld().getTileEntity(event.getPos()).getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null)!=null)
-				event.getPlayer().sendMessage(new StringTextComponent(((VisBattery)event.getWorld().getTileEntity(event.getPos()).getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null)).toString()));
+			if (event.getWorld().getTileEntity(event.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null)!=null)
+				event.getPlayer().sendMessage(new StringTextComponent(((AspectBattery)event.getWorld().getTileEntity(event.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null)).toString()));
 	}
 }
