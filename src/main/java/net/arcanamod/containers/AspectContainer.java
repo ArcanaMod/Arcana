@@ -1,13 +1,12 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.VisHandler;
+import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.client.gui.AspectContainerScreen;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkAspectClick;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 
@@ -81,10 +80,10 @@ public abstract class AspectContainer extends Container{
 	 *
 	 * @return A list containing all open AspectHandlers.
 	 */
-	public abstract List<VisHandler> getOpenHandlers();
+	public abstract List<IAspectHandler> getOpenHandlers();
 	
-	public List<VisHandler> getAllOpenHandlers(){
-		List<VisHandler> handlers = new ArrayList<>(getOpenHandlers());
+	public List<IAspectHandler> getAllOpenHandlers(){
+		List<IAspectHandler> handlers = new ArrayList<>(getOpenHandlers());
 		for(AspectSlot slot : aspectSlots)
 			if(slot instanceof AspectStoreSlot)
 				handlers.add(((AspectStoreSlot)slot).getHolder());

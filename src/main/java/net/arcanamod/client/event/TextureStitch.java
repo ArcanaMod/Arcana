@@ -3,8 +3,6 @@ package net.arcanamod.client.event;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.aspects.AspectHandlerCapability;
-import net.arcanamod.aspects.VisBattery;
-import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.Cap;

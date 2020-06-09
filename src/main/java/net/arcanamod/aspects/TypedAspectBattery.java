@@ -8,15 +8,15 @@ import net.minecraft.nbt.StringNBT;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class TypedVisBattery extends VisBattery{
+public class TypedAspectBattery extends AspectBattery {
 	
 	List<Aspect> allowed = new ArrayList<>();
 	
-	public TypedVisBattery(Collection<Aspect> allowed){
+	public TypedAspectBattery(Collection<Aspect> allowed){
 		this(100, allowed);
 	}
 	
-	public TypedVisBattery(int capacity, Collection<Aspect> allowed){
+	public TypedAspectBattery(int capacity, Collection<Aspect> allowed){
 		super(capacity);
 		this.allowed.addAll(allowed);
 	}
@@ -72,11 +72,11 @@ public class TypedVisBattery extends VisBattery{
 		this.allowed = StreamUtils.streamAndApply(data.getList("allowed", 8), StringNBT.class, StringNBT::getString).map(String::toUpperCase).map(Aspect::valueOf).collect(Collectors.toList());
 	}
 	
-	public static TypedVisBattery primalBattery(){
-		return new TypedVisBattery(Arrays.asList(Aspects.primalAspects));
+	public static TypedAspectBattery primalBattery(){
+		return new TypedAspectBattery(Arrays.asList(Aspects.primalAspects));
 	}
 	
-	public static TypedVisBattery primalBattery(int capacity){
-		return new TypedVisBattery(capacity, Arrays.asList(Aspects.primalAspects));
+	public static TypedAspectBattery primalBattery(int capacity){
+		return new TypedAspectBattery(capacity, Arrays.asList(Aspects.primalAspects));
 	}
 }

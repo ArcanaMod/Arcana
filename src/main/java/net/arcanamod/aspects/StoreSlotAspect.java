@@ -13,28 +13,28 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Simple implementation of {@link VisHandler} that can store a single aspect up to a set amount.
+ * Simple implementation of {@link IAspectHandler} that can store a single aspect up to a set amount.
  */
-public class StoreSlotVis implements VisHandler, ICapabilityProvider{
+public class StoreSlotAspect implements IAspectHandler, ICapabilityProvider{
 	
 	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
-		return capability == VisHandlerCapability.ASPECT_HANDLER;
+		return capability == AspectHandlerCapability.ASPECT_HANDLER;
 	}
 	
 	@Nonnull
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing){
-		return capability == VisHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();
+		return capability == AspectHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();
 	}
 	
 	public Aspect stored;
 	public int held;
 	int capacity;
 	
-	public StoreSlotVis(){
+	public StoreSlotAspect(){
 		this(100);
 	}
 	
-	public StoreSlotVis(int capacity){
+	public StoreSlotAspect(int capacity){
 		this.capacity = capacity;
 	}
 	

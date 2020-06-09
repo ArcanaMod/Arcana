@@ -15,14 +15,11 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -40,7 +37,7 @@ public class PhialItem extends Item
             public float call(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity livingEntity) {
                 if (world == null)
                     world = livingEntity.world;
-                if (itemStack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null).getContainedAspects().size()==0)
+                if (itemStack.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null).getContainedAspects().size()==0)
                     return -1;
                 if (world.dimension.isSurfaceWorld())
                     return Aspects.getAspectFromBattery(itemStack).ordinal()-1;
@@ -64,7 +61,7 @@ public class PhialItem extends Item
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        VisBattery battery = new VisBattery(8);
+        AspectBattery battery = new AspectBattery(8);
         return battery;
     }
 
@@ -81,7 +78,7 @@ public class PhialItem extends Item
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-        VisHandler vis = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+        IAspectHandler vis = stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
         Aspect aspect = Aspects.getAspectFromBattery(stack);
         if (vis!=null && aspect!=null) {
             int amount = vis.getCurrentVis(aspect);
@@ -93,7 +90,7 @@ public class PhialItem extends Item
     @Nullable
     @Override
     public CompoundNBT getShareTag(ItemStack stack) {
-        VisHandler vis = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+        IAspectHandler vis = stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
         Aspect aspect = Aspects.getAspectFromBattery(stack);
         int amount = vis.getCurrentVis(aspect);
         if (vis!=null && aspect!=null && amount!=0) {
@@ -107,7 +104,7 @@ public class PhialItem extends Item
 
     @Override
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
-        VisHandler cap = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+        IAspectHandler cap = stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
         cap.insert(Aspect.values()[nbt.getInt("id")-1],nbt.getInt("amount"),false);
     }
 }

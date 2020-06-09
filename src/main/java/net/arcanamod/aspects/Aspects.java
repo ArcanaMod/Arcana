@@ -70,7 +70,7 @@ public class Aspects{
 	}
 
 	public static Aspect getAspectFromBattery(ItemStack stack) {
-		VisHandler handler = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+		IAspectHandler handler = stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
 		if (handler.getContainedAspects().size()!=0)
 			return (Aspect)(handler.getContainedAspects().toArray()[0]);
 		else

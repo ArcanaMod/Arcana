@@ -1,19 +1,16 @@
 package net.arcanamod.blocks.tiles;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.VisHandler;
-import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.tileentity.TileEntity;
 
 import java.awt.*;
-import java.time.LocalDateTime;
 
 public class JarTileEntity extends TileEntity{
 
-	public VisHandler vis = VisHandlerCapability.ASPECT_HANDLER.getDefaultInstance();
+	public IAspectHandler vis = AspectHandlerCapability.ASPECT_HANDLER.getDefaultInstance();
 	public Aspect allowedAspect = Aspect.EMPTY;
 
 	protected float smoothAmountVisContentAnimation = 0;

@@ -11,7 +11,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,7 +18,6 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Set;
 
 public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable
 {
@@ -61,13 +59,13 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 		return count;
 	}
 
-	public VisBattery getCombinedAspectHandler()
+	public AspectBattery getCombinedAspectHandler()
 	{
-		VisBattery new_vis = new VisBattery();
+		AspectBattery new_vis = new AspectBattery();
 		for (ItemStack stack : items)
 		{
 			if (!stack.isEmpty()) {
-				VisBattery vis = (VisBattery) stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+				AspectBattery vis = (AspectBattery) stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
 				Aspect target = Aspects.getAspectFromBattery(stack);
 				new_vis.insert(target, vis.getCurrentVis(target), false);
 			}
@@ -79,8 +77,8 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-		if (cap == VisHandlerCapability.ASPECT_HANDLER)
-			return getCombinedAspectHandler().getCapability(VisHandlerCapability.ASPECT_HANDLER).cast();
+		if (cap == AspectHandlerCapability.ASPECT_HANDLER)
+			return getCombinedAspectHandler().getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		else return null;
 	}
 
@@ -99,7 +97,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	{
 		if (getNonEmptyItemsStoredCount() < 9 && toAdd != ItemStack.EMPTY)
 		{
-			VisBattery vis = (VisBattery) toAdd.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+			AspectBattery vis = (AspectBattery) toAdd.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
 			if (vis!=null&&(Arcana.debug||vis.getCurrentVis(Aspects.getAspectFromBattery(toAdd))==0))
 			{
 				ItemStack stack = toAdd.copy();
@@ -134,7 +132,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 				{
 					id_stack.setFirst(stack.copy());
 					id_stack.setSecond(i);
-					VisBattery vis = (VisBattery) stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+					AspectBattery vis = (AspectBattery) stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
 					//Remove empty phials
 					if (vis.getCurrentVis(Aspects.getAspectFromBattery(stack))==0)
 					{

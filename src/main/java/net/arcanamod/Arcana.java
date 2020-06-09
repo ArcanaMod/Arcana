@@ -1,8 +1,6 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.AspectHandlerCapability;
-import net.arcanamod.aspects.VisBattery;
-import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.Sounds;
@@ -31,13 +29,10 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -107,7 +102,7 @@ public class Arcana{
 		EntrySection.init();
 		Requirement.init();
 		ResearcherCapability.init();
-		VisHandlerCapability.init();
+		AspectHandlerCapability.init();
 		AspectHandlerCapability.init();
 		NodeChunkCapability.init();
 		Puzzle.init();

@@ -1,29 +1,29 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.StoreSlotVis;
-import net.arcanamod.aspects.VisHandler;
+import net.arcanamod.aspects.StoreSlotAspect;
+import net.arcanamod.aspects.IAspectHandler;
 
 import java.util.function.Supplier;
 
 public class AspectStoreSlot extends AspectSlot{
 	
-	Supplier<VisHandler> returnInv;
-	StoreSlotVis holder;
+	Supplier<IAspectHandler> returnInv;
+	StoreSlotAspect holder;
 	
-	public AspectStoreSlot(Supplier<VisHandler> returnInv, int x, int y){
+	public AspectStoreSlot(Supplier<IAspectHandler> returnInv, int x, int y){
 		super(null, null, x, y, true);
 		this.returnInv = returnInv;
-		holder = new StoreSlotVis(10);
+		holder = new StoreSlotAspect(10);
 	}
 	
-	public AspectStoreSlot(Supplier<VisHandler> returnInv, int x, int y, int capacity){
+	public AspectStoreSlot(Supplier<IAspectHandler> returnInv, int x, int y, int capacity){
 		super(null, null, x, y, true);
 		this.returnInv = returnInv;
-		holder = new StoreSlotVis(capacity);
+		holder = new StoreSlotAspect(capacity);
 	}
 	
-	public Supplier<VisHandler> getInventory(){
+	public Supplier<IAspectHandler> getInventory(){
 		return () -> holder;
 	}
 	
@@ -53,7 +53,7 @@ public class AspectStoreSlot extends AspectSlot{
 		return holder.getCapacity() > 1;
 	}
 	
-	public VisHandler getHolder(){
+	public IAspectHandler getHolder(){
 		return holder;
 	}
 }

@@ -33,6 +33,10 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		return cells;
 	}
 
+	public AspectCell getCell(int index) {
+		return cells.get(index);
+	}
+
 	/**
 	 * Returns the number of aspects storage units ("cells") available
 	 *

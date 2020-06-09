@@ -5,6 +5,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 import java.util.Optional;
 
 public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
@@ -14,6 +15,12 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 	 * @return The number of cells available
 	 */
 	int getCellsAmount();
+
+	void addCell(AspectCell cell);
+
+	List<AspectCell> getCells();
+
+	AspectCell getCell(int index);
 
 	@Nonnull
 	AspectStack getAspectStackInCell(int cell);

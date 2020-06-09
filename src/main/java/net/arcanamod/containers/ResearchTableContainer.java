@@ -3,13 +3,12 @@ package net.arcanamod.containers;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.VisHandler;
+import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
@@ -153,7 +152,7 @@ public class ResearchTableContainer extends AspectContainer{
 		getFromNote().ifPresent(puzzle -> {
 			if(!ink.isEmpty())
 				if(note.getItem() == ArcanaItems.RESEARCH_NOTE.get()){
-					for(AspectSlot slot : puzzle.getAspectSlots(() -> VisHandler.getFrom(te))){
+					for(AspectSlot slot : puzzle.getAspectSlots(() -> IAspectHandler.getFrom(te))){
 						puzzleSlots.add(slot);
 						aspectSlots.add(slot);
 					}
@@ -189,7 +188,7 @@ public class ResearchTableContainer extends AspectContainer{
 	}
 	
 	protected void addAspectSlots(IInventory playerInventory){
-		Supplier<VisHandler> aspects = () -> VisHandler.getFrom(te.visItem());
+		Supplier<IAspectHandler> aspects = () -> IAspectHandler.getFrom(te.visItem());
 		for(int i = 0; i < Aspects.primalAspects.length; i++){
 			Aspect primal = Aspects.primalAspects[i];
 			int x = 31 + 16 * i;
@@ -199,7 +198,7 @@ public class ResearchTableContainer extends AspectContainer{
 			getAspectSlots().add(new AspectSlot(primal, aspects, x, y));
 		}
 		Aspect[] values = (Aspect[]) Aspect.aspects.toArray();
-		Supplier<VisHandler> table = () -> VisHandler.getFrom(te);
+		Supplier<IAspectHandler> table = () -> IAspectHandler.getFrom(te);
 		for(int i = 0; i < values.length; i++){
 			Aspect aspect = values[i];
 			int yy = i / 6;
@@ -310,11 +309,11 @@ public class ResearchTableContainer extends AspectContainer{
 	 *
 	 * @return A list containing all open AspectHandlers.
 	 */
-	public List<VisHandler> getOpenHandlers(){
-		VisHandler item = VisHandler.getFrom(te.visItem());
+	public List<IAspectHandler> getOpenHandlers(){
+		IAspectHandler item = IAspectHandler.getFrom(te.visItem());
 		if(item != null)
-			return Arrays.asList(VisHandler.getFrom(te), item);
+			return Arrays.asList(IAspectHandler.getFrom(te), item);
 		else
-			return Collections.singletonList(VisHandler.getFrom(te));
+			return Collections.singletonList(IAspectHandler.getFrom(te));
 	}
 }

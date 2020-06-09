@@ -1,14 +1,14 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.VisHandler;
+import net.arcanamod.aspects.IAspectHandler;
 
 import java.util.function.Supplier;
 
 public class AspectSlot{
 	
 	private Aspect aspect;
-	private final Supplier<VisHandler> inventory;
+	private final Supplier<IAspectHandler> inventory;
 	
 	public int x, y;
 	
@@ -25,14 +25,14 @@ public class AspectSlot{
 	 */
 	public boolean storeSlot = false;
 	
-	public AspectSlot(Aspect aspect, Supplier<VisHandler> inventory, int x, int y){
+	public AspectSlot(Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y){
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
 		this.y = y;
 	}
 	
-	public AspectSlot(Aspect aspect, Supplier<VisHandler> inventory, int x, int y, boolean storeSlot){
+	public AspectSlot(Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y, boolean storeSlot){
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
@@ -52,7 +52,7 @@ public class AspectSlot{
 			aspect = null;
 	}
 	
-	public Supplier<VisHandler> getInventory(){
+	public Supplier<IAspectHandler> getInventory(){
 		return inventory;
 	}
 	

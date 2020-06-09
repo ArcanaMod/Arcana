@@ -3,7 +3,7 @@ package net.arcanamod.research.impls;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.arcanamod.aspects.VisHandler;
+import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.Arcana;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
@@ -13,7 +13,6 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipe;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
@@ -117,7 +116,7 @@ public class Guesswork extends Puzzle{
 		return ret;
 	}
 	
-	public List<AspectSlot> getAspectSlots(Supplier<VisHandler> returnInv){
+	public List<AspectSlot> getAspectSlots(Supplier<IAspectHandler> returnInv){
 		return Collections.emptyList();
 	}
 	
