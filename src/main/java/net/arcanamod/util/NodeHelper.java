@@ -9,6 +9,6 @@ public class NodeHelper{
 	
 	public static GogglePriority getGogglePriority(){
 		ClientPlayerEntity player = Minecraft.getInstance().player;
-		return !player.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty() && player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof GoggleBase ? ((GoggleBase)player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem()).priority : GogglePriority.SHOW_NONE;
+		return !(player == null) && !player.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty() && player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof GoggleBase ? ((GoggleBase)player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem()).priority : GogglePriority.SHOW_NONE;
 	}
 }

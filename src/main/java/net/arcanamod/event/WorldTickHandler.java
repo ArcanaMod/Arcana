@@ -1,11 +1,17 @@
 package net.arcanamod.event;
 
+import com.google.common.collect.ConcurrentHashMultiset;
 import net.arcanamod.world.INodeView;
 import net.arcanamod.world.ServerNodeView;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Handles processing at end of world tick
@@ -16,6 +22,7 @@ public class WorldTickHandler{
 	
 	public static WorldTickHandler instance = new WorldTickHandler();
 	//public static TIntObjectHashMap<ArrayDeque<ChunkPos>> chunksToGen = new TIntObjectHashMap<>();
+	public static Collection<Consumer<World>> onTick = ConcurrentHashMultiset.create();
 	
 	/**
 	 * @param event
@@ -47,6 +54,12 @@ public class WorldTickHandler{
 				ServerWorld serverWorld = (ServerWorld)world;
 				INodeView view = new ServerNodeView(serverWorld);
 				view.getAllNodes().forEach(node -> node.type().tick(serverWorld, view, node));
+			}
+			
+			if(!onTick.isEmpty()){
+				List<Consumer<World>> temp = new ArrayList<>(onTick);
+				temp.forEach(consumer -> consumer.accept(world));
+				onTick.removeAll(temp);
 			}
 		}
 	}

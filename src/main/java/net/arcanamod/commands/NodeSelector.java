@@ -1,6 +1,5 @@
 package net.arcanamod.commands;
 
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.arcanamod.world.INodeView;
 import net.arcanamod.world.Node;
 import net.arcanamod.world.ServerNodeView;
@@ -8,7 +7,9 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class NodeSelector{
@@ -22,14 +23,6 @@ public class NodeSelector{
 		this.type = type;
 		this.aabb = aabb;
 		this.max = max;
-	}
-	
-	public boolean isBoxSelector(){
-		return type;
-	}
-	
-	public AxisAlignedBB getAabb(){
-		return aabb;
 	}
 	
 	public int getMax(){

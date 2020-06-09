@@ -5,6 +5,7 @@ import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.gui.ResearchBookScreen;
 import net.arcanamod.client.gui.ResearchEntryScreen;
+import net.arcanamod.client.render.ArcanaParticles;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
@@ -16,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -32,6 +34,10 @@ public class ClientProxy extends CommonProxy{
 		super.construct();
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onPlayerInteractEvent);
+		
+		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		
+		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
 	}
 	
 	@Override

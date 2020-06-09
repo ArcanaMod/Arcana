@@ -1,16 +1,11 @@
 package net.arcanamod;
 
-import net.arcanamod.aspects.VisBattery;
 import net.arcanamod.aspects.VisHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.Sounds;
-import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.gui.ResearchTableScreen;
-import net.arcanamod.client.model.WandModelLoader;
-import net.arcanamod.client.render.DairSpiritRenderer;
-import net.arcanamod.client.render.JarTileEntityRender;
-import net.arcanamod.client.render.KoalaEntityRender;
+import net.arcanamod.client.render.*;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.event.PlayerTickHandler;
@@ -28,19 +23,16 @@ import net.arcanamod.world.NodeType;
 import net.arcanamod.world.impl.NodeChunkCapability;
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.FeatureGenerator;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -125,7 +117,7 @@ public class Arcana{
 		Sounds.registerSounds();
 		SpellEffectHandler.init();
 
-		FeatureGenerator.setupFeatureGeneraton();
+		FeatureGenerator.setupFeatureGeneration();
 	}
 	
 	private void setupClient(FMLClientSetupEvent event){
@@ -169,6 +161,8 @@ public class Arcana{
 		//Entity Render
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
+		
+		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.NODE_PARTICLE.get(), new NodeParticle.Factory());
 	}
 	
 	private void enqueueIMC(InterModEnqueueEvent event){

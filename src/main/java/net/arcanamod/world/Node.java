@@ -6,8 +6,10 @@ import net.arcanamod.aspects.Aspect;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.Objects;
+import java.util.UUID;
 
 // implements position for BlockPos constructor convenience
 public class Node implements IPosition{
@@ -15,6 +17,7 @@ public class Node implements IPosition{
 	Reference2IntMap<Aspect> aspects;
 	NodeType type;
 	double x, y, z;
+	UUID nodeUniqueId = MathHelper.getRandomUUID();
 	
 	public Node(Reference2IntMap<Aspect> aspects, NodeType type, double x, double y, double z){
 		this.aspects = aspects;
@@ -22,6 +25,15 @@ public class Node implements IPosition{
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+	
+	public Node(Reference2IntMap<Aspect> aspects, NodeType type, double x, double y, double z, UUID nodeUniqueId){
+		this.aspects = aspects;
+		this.type = type;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.nodeUniqueId = nodeUniqueId;
 	}
 	
 	// might as well pick the fast version
@@ -42,6 +54,7 @@ public class Node implements IPosition{
 		nbt.putDouble("x", getX());
 		nbt.putDouble("y", getY());
 		nbt.putDouble("z", getZ());
+		nbt.putUniqueId("nodeUniqueId", nodeUniqueId);
 		return nbt;
 	}
 	
@@ -52,17 +65,7 @@ public class Node implements IPosition{
 			aspects.put(Aspect.valueOf(s), aspectsNBT.getInt(s));
 		NodeType type = NodeType.TYPES.get(new ResourceLocation(nbt.getString("type")));
 		double x = nbt.getDouble("x"), y = nbt.getDouble("y"), z = nbt.getDouble("z");
-		return new Node(aspects, type, x, y, z);
-	}
-	
-	/**
-	 * Implementations still need to override hashCode. This version hashes the node's
-	 * position, type, and aspects.
-	 *
-	 * @return A default hashcode implementation for nodes.
-	 */
-	public int hashCode(){
-		return Objects.hash(getX(), getY(), getZ(), type(), aspects());
+		return nbt.hasUniqueId("nodeUniqueId") ? new Node(aspects, type, x, y, z, nbt.getUniqueId("nodeUniqueId")) : new Node(aspects, type, x, y, z);
 	}
 	
 	public double getX(){
@@ -93,6 +96,10 @@ public class Node implements IPosition{
 		this.z = z;
 	}
 	
+	public UUID nodeUniqueId(){
+		return nodeUniqueId;
+	}
+	
 	public String toString(){
 		return "Node{" +
 				"aspects=" + aspects +
@@ -100,6 +107,7 @@ public class Node implements IPosition{
 				", x=" + x +
 				", y=" + y +
 				", z=" + z +
+				", nodeUniqueId=" + nodeUniqueId +
 				'}';
 	}
 }
