@@ -44,7 +44,7 @@ public class ArcanaConfig{
 				.comment("The maximum Y level that amber ore will generate at.")
 				.define("MaxAmberY", 50);
 		NODE_CHANCE = COMMON_BUILDER
-				.comment("The chance of an aura node generating in a chunk, out of 1000.")
+				.comment("The chance of an aura node generating in a chunk, out of 100.")
 				.define("NodeChance", 1);
 		SPECIAL_NODE_CHANCE = COMMON_BUILDER
 				.comment("The chance of an aura node being a special (hungry, eldritch, bright, or pale) node, out of 100.")
