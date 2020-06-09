@@ -16,6 +16,10 @@ public class ArcanaConfig{
 	
 	static{
 		COMMON_BUILDER.push("General");
+
+		SPAWN_WITH_NOTES = COMMON_BUILDER
+				.comment("If the player should spawn with the Scribbled notes item when first joining the world")
+				.define("SpawnWithNotes", true);
 		ORE_RETROGEN = COMMON_BUILDER
 				.comment("Enables Arcana ore generation in already-generated chunks.", "Chunks generated with Arcana will stay unaffected.")
 				.define("OreRetrogen", false);
@@ -65,6 +69,7 @@ public class ArcanaConfig{
 	public static final ForgeConfigSpec CLIENT_SPEC = CLIENT_BUILDER.build();
 	
 	// Common
+	public static ConfigValue<Boolean> SPAWN_WITH_NOTES; // true
 	public static ConfigValue<Boolean> ORE_RETROGEN; // false
 	public static ConfigValue<Boolean> NODE_RETROGEN; // false
 	public static ConfigValue<Boolean> VERBOSE; // false
@@ -76,6 +81,7 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> AMBER_MAX_Y; // 50
 	public static ConfigValue<Integer> NODE_CHANCE; // 1
 	public static ConfigValue<Integer> SPECIAL_NODE_CHANCE; // 15
+
 	
 	// Client
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1

@@ -1,0 +1,14 @@
+{
+  "criteria": {
+    "lexicon": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "item": [
+          {
+            "item": "arcana:scribbled_notes"
+          }
+        ]
+      }
+    }
+  }
+}

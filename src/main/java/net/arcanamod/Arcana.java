@@ -13,6 +13,7 @@ import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.client.render.KoalaEntityRender;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.event.PlayerTickHandler;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaRecipes;
@@ -116,6 +117,7 @@ public class Arcana{
 		proxy.preInit(event);
 		
 		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
+		MinecraftForge.EVENT_BUS.register(PlayerTickHandler.instance);
 		
 		Connection.init();
 		//NetworkRegistry.INSTANCE.registerGuiHandler(Arcana.instance, new ArcanaGuiHandler());

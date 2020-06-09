@@ -8,6 +8,9 @@
     "arcana.sounds.spell_cast": "Spell Cast",
 
     "_comment": "Items",
+    "item.arcana.scribbled_notes": "Scribbled Notes",
+    "item.arcana.scribbled_notes_complete": "Complete Scribbled Notes",
+
     "_comment": "Wands",
     "item.arcana.error_wand": "%s Errorred Wand",
     "item.arcana.wood_wand": "%s Wooden Wand",
