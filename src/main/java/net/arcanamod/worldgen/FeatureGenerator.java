@@ -17,9 +17,9 @@ public class FeatureGenerator{
 	
 	//Not used ArcanaConfig.AMBER_MIN_VEIN_SIZE
 	private static final CountRangeConfig AMBER_BLOCK_CONFIG = new CountRangeConfig(ArcanaConfig.AMBER_CHANCES_TO_SPAWN.get(), ArcanaConfig.AMBER_MIN_Y.get(), 0, ArcanaConfig.AMBER_MAX_Y.get());
-	private static final ChanceConfig NODE_CONFIG = new ChanceConfig(ArcanaConfig.NODE_CHANCE.get());
+	private static final ChanceConfig NODE_CONFIG = new ChanceConfig(1); // Probability config is used in NodeFeature.
 	
-	public static void setupFeatureGeneraton(){
+	public static void setupFeatureGeneration(){
 		for(Biome biome : ForgeRegistries.BIOMES)
 			if(biome.getCategory() != Biome.Category.NETHER && biome.getCategory() != Biome.Category.THEEND){
 				oreFeature(biome, OreFeatureConfig.FillerBlockType.NATURAL_STONE, ArcanaBlocks.AMBER_ORE.get(), AMBER_BLOCK_CONFIG, ArcanaConfig.AMBER_MAX_VEIN_SIZE.get());

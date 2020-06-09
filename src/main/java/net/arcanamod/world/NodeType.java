@@ -24,7 +24,7 @@ public abstract class NodeType{
 	
 	// A diet registry, used for serialization and deserialization.
 	public static final BiMap<ResourceLocation, NodeType> TYPES = HashBiMap.create(6);
-	public static final Set<NodeType> GENERATED_TYPES = new HashSet<>(5);
+	public static final Set<NodeType> SPECIAL_TYPES = new HashSet<>(4);
 	
 	public static final NodeType
 			NORMAL = new NormalNodeType(),
@@ -34,6 +34,8 @@ public abstract class NodeType{
 			HUNGRY = new HungryNodeType(),
 			TAINTED = new TaintedNodeType();
 	
+	public static final NodeType DEFAULT = NORMAL;
+	
 	public static void init(){
 		TYPES.put(arcLoc("normal"), NORMAL);
 		TYPES.put(arcLoc("bright"), BRIGHT);
@@ -42,11 +44,10 @@ public abstract class NodeType{
 		TYPES.put(arcLoc("hungry"), HUNGRY);
 		TYPES.put(arcLoc("tainted"), TAINTED);
 		
-		GENERATED_TYPES.add(NORMAL);
-		GENERATED_TYPES.add(BRIGHT);
-		GENERATED_TYPES.add(PALE);
-		GENERATED_TYPES.add(ELDRITCH);
-		GENERATED_TYPES.add(HUNGRY);
+		SPECIAL_TYPES.add(BRIGHT);
+		SPECIAL_TYPES.add(PALE);
+		SPECIAL_TYPES.add(ELDRITCH);
+		SPECIAL_TYPES.add(HUNGRY);
 	}
 	
 	public void tick(IWorld world, INodeView nodes, Node node){

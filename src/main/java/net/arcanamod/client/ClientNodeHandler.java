@@ -53,7 +53,7 @@ public class ClientNodeHandler{
 				view.getAllNodes().forEach(node -> node.type().tick(world, view, node));
 			}
 			
-			if(!ClientNodeHandler.untilPlayerJoin.isEmpty() && Minecraft.getInstance().player != null){
+			if(!untilPlayerJoin.isEmpty() && Minecraft.getInstance().player != null){
 				List<Runnable> temp = new ArrayList<>(ClientNodeHandler.untilPlayerJoin);
 				temp.forEach(Runnable::run);
 				ClientNodeHandler.untilPlayerJoin.removeAll(temp);

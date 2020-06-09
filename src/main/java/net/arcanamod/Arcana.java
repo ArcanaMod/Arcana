@@ -115,7 +115,7 @@ public class Arcana{
 		Sounds.registerSounds();
 		SpellEffectHandler.init();
 
-		FeatureGenerator.setupFeatureGeneraton();
+		FeatureGenerator.setupFeatureGeneration();
 	}
 	
 	private void setupClient(FMLClientSetupEvent event){
