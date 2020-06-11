@@ -9,6 +9,7 @@ import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;

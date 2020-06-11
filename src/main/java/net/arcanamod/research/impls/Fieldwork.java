@@ -1,8 +1,8 @@
 package net.arcanamod.research.impls;
 
 import com.google.gson.JsonObject;
-import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.research.Puzzle;

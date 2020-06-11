@@ -81,7 +81,7 @@ public class AspectCell implements IAspectHolder {
 	public static AspectCell fromNBT(CompoundNBT compoundNBT)
 	{
 		int amount = compoundNBT.getInt("amount");
-		Aspect aspect = Aspect.valueOf(compoundNBT.getString("aspect"));
+		Aspect aspect = Aspect.valueOf(compoundNBT.getString("aspect").toUpperCase());
 		AspectCell cell = new AspectCell();
 		cell.insert(new AspectStack(aspect,amount),false);
 		return cell;
@@ -89,6 +89,10 @@ public class AspectCell implements IAspectHolder {
 
 	public AspectStack getContainedAspectStack(){
 		return stored;
+	}
+
+	public Aspect getContainedAspect(){
+		return stored.getAspect();
 	}
 
 	@Override

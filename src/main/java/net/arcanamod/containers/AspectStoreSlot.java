@@ -1,8 +1,9 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.StoreSlotAspect;
+import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.StoreSlotAspect;
 
 import java.util.function.Supplier;
 
@@ -30,7 +31,7 @@ public class AspectStoreSlot extends AspectSlot{
 	public void onClose(){
 		super.onClose();
 		if(returnInv != null && returnInv.get() != null && holder.stored != null)
-			holder.getContainedAspects().forEach(aspect -> returnInv.get().insert(aspect, holder.getCurrentVis(aspect), false));
+			holder.getContainedAspects().forEach(aspect -> returnInv.get().insert(0,new AspectStack(aspect, holder.getHolder(0).getCurrentVis()), false));
 	}
 	
 	public Aspect getAspect(){

@@ -6,11 +6,13 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.aspects.AspectHandlerCapability;
+import net.arcanamod.aspects.*;
 import net.arcanamod.items.PhialItem;
+import net.arcanamod.network.Connection;
+import net.arcanamod.network.PkModifyResearch;
+import net.arcanamod.research.ResearchBooks;
+import net.arcanamod.research.ResearchEntry;
+import net.arcanamod.research.Researcher;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.EntityArgument;
@@ -21,6 +23,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static net.minecraft.command.Commands.argument;
@@ -59,7 +62,7 @@ public class FillPhialCommand
                     Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
                     if (targettedStack != null)
                     {
-                        vis.insert(targettedStack, amount, false);
+                        vis.insert(0,new AspectStack(targettedStack, amount), false);
                         if (is.getTag() == null)
                         {
                             is.setTag(is.getShareTag());

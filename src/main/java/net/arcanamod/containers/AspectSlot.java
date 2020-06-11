@@ -1,6 +1,7 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.IAspectHandler;
 
 import java.util.function.Supplier;
@@ -42,7 +43,7 @@ public class AspectSlot{
 	
 	public int getAmount(){
 		if(getInventory().get() != null)
-			return getInventory().get().getCurrentVis(getAspect());
+			return getInventory().get().getHolder(0).getCurrentVis();
 		else
 			return -1;
 	}
@@ -76,7 +77,7 @@ public class AspectSlot{
 	public int drain(Aspect aspect, int amount, boolean simulate){
 		int result = 0;
 		if(getInventory().get() != null)
-			result = getInventory().get().drain(aspect, amount, simulate);
+			result = getInventory().get().drain(0,new AspectStack(aspect, amount), simulate);
 		onChange();
 		return result;
 	}
@@ -89,7 +90,7 @@ public class AspectSlot{
 	public int insert(Aspect aspect, int amount, boolean simulate){
 		int result = amount;
 		if(getInventory().get() != null)
-			result = getInventory().get().insert(aspect, amount, simulate);
+			result = getInventory().get().insert(0,new AspectStack(aspect, amount), simulate);
 		onChange();
 		return result;
 	}

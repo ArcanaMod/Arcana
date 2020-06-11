@@ -68,12 +68,4 @@ public class Aspects{
 				return Aspect.combinations.inverse().getOrDefault(a, Pair.of(null, null)).contains(b) || Aspect.combinations.inverse().getOrDefault(b, Pair.of(null, null)).contains(a);
 		return false;
 	}
-
-	public static Aspect getAspectFromBattery(ItemStack stack) {
-		IAspectHandler handler = stack.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
-		if (handler.getContainedAspects().size()!=0)
-			return (Aspect)(handler.getContainedAspects().toArray()[0]);
-		else
-			return Aspect.EMPTY;
-	}
 }

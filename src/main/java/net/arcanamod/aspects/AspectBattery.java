@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
-	private List<AspectCell> cells = new ArrayList<>();
+	private List<IAspectHolder> cells = new ArrayList<>();
 	private int maxCells;
 
 	public AspectBattery() {
@@ -22,19 +22,28 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
 	public AspectBattery(int maxCells) {
 		this.maxCells = maxCells;
+		for (int i = 0; i < maxCells; i++) {
+			cells.add(new AspectCell());
+		}
 	}
 
-	public void addCell(AspectCell cell){
-		if (maxCells != getCellsAmount())
+	public void createCell(AspectCell cell){
+		if (getHoldersAmount() != maxCells)
 			cells.add(cell);
 	}
 
-	public List<AspectCell> getCells() {
-		return cells;
+	public void deleteCell(AspectCell cell){
+		if (getHoldersAmount() > 0)
+			cells.remove(cell);
 	}
 
-	public AspectCell getCell(int index) {
-		return cells.get(index);
+	@Deprecated
+	public void setCellAtIndex(int index, AspectCell cell){
+		replaceCell(index, cell);
+	}
+
+	public void replaceCell(int index, AspectCell cell){
+		cells.set(index,cell);
 	}
 
 	/**
@@ -43,42 +52,89 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 * @return The number of cells available
 	 */
 	@Override
-	public int getCellsAmount() {
+	public int getHoldersAmount() {
 		return cells.size();
 	}
 
-	@Nonnull
+	/**
+	 * Gets List of IAspectHolders
+	 *
+	 * @return List of IAspectHolders
+	 */
 	@Override
-	public AspectStack getAspectStackInCell(int cell) {
-		return cells.get(cell).getContainedAspectStack();
+	public List<IAspectHolder> getHolders() {
+		return cells;
 	}
 
+	/**
+	 * Gets IAspectHolder by index.
+	 *
+	 * @param index index of holder.
+	 * @return IAspectHolder.
+	 */
 	@Override
-	public int getCellCapacity(int cell) {
-		return cells.get(cell).getCapacity();
+	public IAspectHolder getHolder(int index) {
+		if (index >= cells.size())
+		return null;
+		else return cells.get(index);
 	}
 
+	/**
+	 * Inserts AspectStack that contains Aspect and Amount.
+	 *
+	 * @param holder   index of a holder.
+	 * @param resource AspectStack to insert.
+	 * @param simulate Is Simulating?
+	 * @return Inserted amount
+	 */
 	@Override
-	public int fill(int cell, AspectStack resource) {
-		return cells.get(cell).insert(resource,false);
+	public int insert(int holder, AspectStack resource, boolean simulate) {
+		return cells.get(holder).insert(resource,simulate);
 	}
 
-	@Nonnull
+	/**
+	 * Inserts amount of existing AspectStack inside.
+	 *
+	 * @param holder    index of a holder.
+	 * @param maxInsert amount to insert.
+	 * @param simulate  Is Simulating?
+	 * @return Inserted amount
+	 */
 	@Override
-	public int drain(int cell, AspectStack resource) {
-		return cells.get(cell).drain(resource,false);
+	public int insert(int holder, int maxInsert, boolean simulate) {
+		return cells.get(holder).insert(new AspectStack(cells.get(holder).getContainedAspect(),maxInsert),simulate);
 	}
 
-	@Nonnull
+	/**
+	 * Drains AspectStack that contains Aspect and Amount.
+	 *
+	 * @param holder   index of a holder.
+	 * @param resource AspectStack to drain.
+	 * @param simulate Is Simulating?
+	 * @return Drained amount
+	 */
 	@Override
-	public int drain(int cell, int maxDrain) {
-		return cells.get(cell).drain(new AspectStack(cells.get(cell).getContainedAspectStack().getAspect(),maxDrain),false);
+	public int drain(int holder, AspectStack resource, boolean simulate) {
+		return cells.get(holder).drain(resource,simulate);
+	}
+
+	/**
+	 * Drains amount of existing AspectStack inside.
+	 *
+	 * @param holder   index of a holder.
+	 * @param maxDrain amount to drain.
+	 * @param simulate Is Simulating?
+	 * @return Drained amount
+	 */
+	@Override
+	public int drain(int holder, int maxDrain, boolean simulate) {
+		return cells.get(holder).drain(new AspectStack(cells.get(holder).getContainedAspect(),maxDrain),simulate);
 	}
 
 	public CompoundNBT serializeNBT(){
 		CompoundNBT compound = new CompoundNBT();
 		CompoundNBT storedCells = new CompoundNBT();
-		cells.forEach(aspectCell -> storedCells.put("cell_"+cells.indexOf(aspectCell),aspectCell.toNBT()));
+		cells.forEach(aspectCell -> storedCells.put("cell_"+cells.indexOf(aspectCell),((AspectCell)aspectCell).toNBT()));
 		compound.put("cells",storedCells);
 		return compound;
 	}
@@ -87,7 +143,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		AspectStack stack = AspectStack.EMPTY;
 		CompoundNBT storedCells = data.getCompound("cells");
 		for(String s : storedCells.keySet())
-			cells.set(Integer.parseInt(s),AspectCell.fromNBT(storedCells.getCompound("cell_"+s)));
+			cells.set(Integer.parseInt(s.replace("cell_","")),AspectCell.fromNBT(storedCells.getCompound(s)));
 	}
 
 	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
@@ -102,8 +158,9 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	@Override
 	public String toString() {
 		String cs = "";
-		for (AspectCell c : cells)
-			cs += c.toString();
+		for (IAspectHolder c : cells) {
+			cs += ((AspectCell)c).toString();
+		}
 		return "AspectBattery{" +
 				"cells=" + cs +
 				'}';

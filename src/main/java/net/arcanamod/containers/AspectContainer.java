@@ -7,6 +7,7 @@ import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkAspectClick;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 

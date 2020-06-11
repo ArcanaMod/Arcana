@@ -1,10 +1,7 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectHandlerCapability;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.PhialItem;
@@ -64,13 +61,14 @@ public class BlockJar extends Block{
 			if (worldIn.getTileEntity(pos) instanceof JarTileEntity) {
 				JarTileEntity jarTileEntity = ((JarTileEntity) worldIn.getTileEntity(pos));
 
-				IAspectHandler vis = heldItem.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
+				IAspectHandler vis = IAspectHandler.getFrom(heldItem);
 				if (vis != null) {
-					if (vis.getCellsAmount()==0) {
-						int amount = jarTileEntity.vis.getCell(0).getCurrentVis();
+					if (vis.getHolder(0).getCurrentVis() <= 0) {
+						int amount = jarTileEntity.vis.getHolder(0).getCurrentVis();
 						heldItem.shrink(1);
 						ItemStack capedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
-						vis.getCell(0).insert(new AspectStack(jarTileEntity.allowedAspect, amount >= 8 ? 8 : amount),false);
+						IAspectHandler.getFrom(capedItemStack)
+								.insert(0, new AspectStack(jarTileEntity.allowedAspect, amount >= 8 ? 8 : amount),false);
 						if (capedItemStack.getTag() == null)
 						{
 							capedItemStack.setTag(capedItemStack.getShareTag());
@@ -78,13 +76,13 @@ public class BlockJar extends Block{
 						player.addItemStackToInventory(capedItemStack);
 						jarTileEntity.drain(amount >= 8 ? 8 : amount);
 					} else {
-						if (jarTileEntity.vis.getCell(0).getCurrentVis()<100) {
-							Aspect target = vis.getCell(0).getContainedAspectStack().getAspect();
+						if (jarTileEntity.vis.getHolder(0).getCurrentVis()<100) {
+							Aspect target = vis.getHolder(0).getContainedAspect();
 							if (target==jarTileEntity.allowedAspect||jarTileEntity.allowedAspect==Aspect.EMPTY) {
 								//vis.drain(target,vis.getCurrentVis(target),false);
 								heldItem.shrink(1);
 								player.addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
-								jarTileEntity.fill(vis.getCell(0).getCurrentVis(), target);
+								jarTileEntity.fill(vis.getHolder(0).getCurrentVis(), target);
 							}
 						}
 					}

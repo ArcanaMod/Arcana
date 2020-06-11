@@ -82,10 +82,16 @@ public interface IAspectHolder {
 	Set<Aspect> getAllowedAspects();
 
 	/**
-	 * Returns a set containing all aspects that are currently stored in this handler.`getCurrentVis` will
-	 * return a non-zero amount for all of these.
+	 * Returns an AspectStack that contains Aspect with Amount.
 	 *
-	 * @return All aspects allowed in this handler.
+	 * @return AspectStack.
 	 */
 	AspectStack getContainedAspectStack();
+
+	/**
+	 * Returns an Aspect that Holder contains.
+	 *
+	 * @return Aspect.
+	 */
+	Aspect getContainedAspect();
 }
