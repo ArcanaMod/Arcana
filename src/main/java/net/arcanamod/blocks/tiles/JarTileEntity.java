@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 public class JarTileEntity extends TileEntity{
 
-	public AspectBattery vis = new AspectBattery(1);
+	public AspectBattery vis = new AspectBattery(1,100);
 	public Aspect allowedAspect = Aspect.EMPTY;
 
 	protected float smoothAmountVisContentAnimation = 0;

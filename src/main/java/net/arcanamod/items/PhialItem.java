@@ -65,8 +65,7 @@ public class PhialItem extends Item
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        AspectBattery battery = new AspectBattery(1);
-        battery.createCell(new AspectCell(8));
+        AspectBattery battery = new AspectBattery(1,18);
         return battery;
     }
 

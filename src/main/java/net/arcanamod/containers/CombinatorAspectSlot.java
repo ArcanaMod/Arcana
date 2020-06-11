@@ -12,7 +12,7 @@ class CombinatorAspectSlot extends AspectSlot{
 	private AspectSlot rightStoreSlot;
 	
 	public CombinatorAspectSlot(AspectSlot leftStoreSlot, AspectSlot rightStoreSlot, int x, int y){
-		super(null, () -> new AspectBattery(1), x, y);
+		super(null, () -> new AspectBattery(1,100), x, y);
 		this.leftStoreSlot = leftStoreSlot;
 		this.rightStoreSlot = rightStoreSlot;
 	}

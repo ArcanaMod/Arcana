@@ -65,7 +65,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 
 	public AspectBattery UpdateBatteryAndReturn()
 	{
-		for (int i = 0; i < items.size()+1; i++) {
+		for (int i = 0; i < items.size(); i++) {
 			if (!items.get(i).isEmpty()) {
 				AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(items.get(i));
 				IAspectHolder target = vis.getHolder(i);

@@ -64,7 +64,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	//TODO: FIX PERFORMANCE (-20 FPS) Caching or something.
 	private AspectBattery getVisShareablesAsBattery() {
 		//if (world.isRemote) return null;
-		AspectBattery battery = new AspectBattery(Integer.MAX_VALUE);
+		AspectBattery battery = new AspectBattery(Integer.MAX_VALUE, 100);
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
 			if (world.getBlockState(blockPos).hasTileEntity()) {
 				TileEntity teinbox = world.getTileEntity(blockPos);

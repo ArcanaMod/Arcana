@@ -9,7 +9,7 @@ import javax.annotation.Nonnull;
 
 public class AspectTesterTileEntity extends TileEntity {
 
-	public AspectBattery battery = new AspectBattery(100);
+	public AspectBattery battery = new AspectBattery(100,100);
 
 	public AspectTesterTileEntity() {
 		super(ArcanaTiles.ASPECT_TESTER.get());

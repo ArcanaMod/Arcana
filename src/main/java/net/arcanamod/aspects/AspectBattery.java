@@ -15,16 +15,15 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
 	private List<IAspectHolder> cells = new ArrayList<>();
 	private int maxCells;
+	private int defaultCellSize;
 
 	public AspectBattery() {
-		this(1);
+		this(1,100);
 	}
 
-	public AspectBattery(int maxCells) {
+	public AspectBattery(int maxCells, int defaultCellSize) {
 		this.maxCells = maxCells;
-		for (int i = 0; i < maxCells; i++) {
-			cells.add(new AspectCell());
-		}
+		this.defaultCellSize = defaultCellSize;
 	}
 
 	public void createCell(AspectCell cell){
@@ -43,7 +42,10 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	}
 
 	public void replaceCell(int index, AspectCell cell){
-		cells.set(index,cell);
+		if (index >= cells.size())
+			cells.add(index,cell);
+		else
+			cells.set(index,cell);
 	}
 
 	/**
@@ -67,7 +69,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	}
 
 	/**
-	 * Gets IAspectHolder by index.
+	 * Gets IAspectHolder by index. If cell doesn't exist is automatically created.
 	 *
 	 * @param index index of holder.
 	 * @return IAspectHolder.
@@ -75,12 +77,12 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	@Override
 	public IAspectHolder getHolder(int index) {
 		if (index >= cells.size())
-		return null;
-		else return cells.get(index);
+			cells.add(index,new AspectCell(defaultCellSize));
+		return cells.get(index);
 	}
 
 	/**
-	 * Inserts AspectStack that contains Aspect and Amount.
+	 * Inserts AspectStack that contains Aspect and Amount. If cell doesn't exist is automatically created.
 	 *
 	 * @param holder   index of a holder.
 	 * @param resource AspectStack to insert.
@@ -89,11 +91,13 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int insert(int holder, AspectStack resource, boolean simulate) {
+		if (holder >= cells.size())
+			cells.add(holder,new AspectCell(defaultCellSize));
 		return cells.get(holder).insert(resource,simulate);
 	}
 
 	/**
-	 * Inserts amount of existing AspectStack inside.
+	 * Inserts amount of existing AspectStack inside. If cell doesn't exist is automatically created.
 	 *
 	 * @param holder    index of a holder.
 	 * @param maxInsert amount to insert.
@@ -102,6 +106,8 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int insert(int holder, int maxInsert, boolean simulate) {
+		if (holder >= cells.size())
+			cells.add(holder,new AspectCell(defaultCellSize));
 		return cells.get(holder).insert(new AspectStack(cells.get(holder).getContainedAspect(),maxInsert),simulate);
 	}
 
@@ -115,6 +121,8 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int drain(int holder, AspectStack resource, boolean simulate) {
+		if (holder >= cells.size())
+			return 0;
 		return cells.get(holder).drain(resource,simulate);
 	}
 
@@ -128,6 +136,8 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int drain(int holder, int maxDrain, boolean simulate) {
+		if (holder >= cells.size())
+			return 0;
 		return cells.get(holder).drain(new AspectStack(cells.get(holder).getContainedAspect(),maxDrain),simulate);
 	}
 
@@ -142,8 +152,14 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	public void deserializeNBT(CompoundNBT data){
 		AspectStack stack = AspectStack.EMPTY;
 		CompoundNBT storedCells = data.getCompound("cells");
-		for(String s : storedCells.keySet())
-			cells.set(Integer.parseInt(s.replace("cell_","")),AspectCell.fromNBT(storedCells.getCompound(s)));
+		int i = 0;
+		for(String s : storedCells.keySet()) {
+			if (i >= cells.size())
+				cells.add(Integer.parseInt(s.replace("cell_", "")), AspectCell.fromNBT(storedCells.getCompound(s)));
+			else
+				cells.set(Integer.parseInt(s.replace("cell_", "")), AspectCell.fromNBT(storedCells.getCompound(s)));
+			i++;
+		}
 	}
 
 	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
