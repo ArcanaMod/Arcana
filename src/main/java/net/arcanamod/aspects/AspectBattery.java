@@ -29,11 +29,20 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	public void createCell(AspectCell cell){
 		if (getHoldersAmount() != maxCells)
 			cells.add(cell);
+		setCellSizes();
 	}
 
 	public void deleteCell(AspectCell cell){
 		if (getHoldersAmount() > 0)
 			cells.remove(cell);
+	}
+
+	private void setCellSizes()
+	{
+		for (IAspectHolder cell : cells)
+		{
+			cell.setCapacity(defaultCellSize);
+		}
 	}
 
 	@Deprecated
@@ -43,9 +52,11 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
 	public void replaceCell(int index, AspectCell cell){
 		if (index >= cells.size())
-			cells.add(index,cell);
-		else
-			cells.set(index,cell);
+			if (getHoldersAmount() != maxCells)
+				while (index >= cells.size())
+					cells.add(cell);
+		else cells.set(index,cell);
+		setCellSizes();
 	}
 
 	/**
@@ -76,9 +87,12 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public IAspectHolder getHolder(int index) {
-		if (index >= cells.size())
-			cells.add(index,new AspectCell(defaultCellSize));
-		return cells.get(index);
+		if (getHoldersAmount() != maxCells) {
+			while (index >= cells.size())
+				cells.add(new AspectCell(defaultCellSize));
+			setCellSizes();
+			return cells.get(index);
+		} else return null;
 	}
 
 	/**
@@ -91,8 +105,9 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int insert(int holder, AspectStack resource, boolean simulate) {
-		if (holder >= cells.size())
-			cells.add(holder,new AspectCell(defaultCellSize));
+		if (getHoldersAmount() != maxCells)
+			if (holder >= cells.size())
+				cells.add(holder,new AspectCell(defaultCellSize));
 		return cells.get(holder).insert(resource,simulate);
 	}
 
@@ -106,8 +121,9 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int insert(int holder, int maxInsert, boolean simulate) {
-		if (holder >= cells.size())
-			cells.add(holder,new AspectCell(defaultCellSize));
+		if (getHoldersAmount() != maxCells)
+			if (holder >= cells.size())
+				cells.add(holder,new AspectCell(defaultCellSize));
 		return cells.get(holder).insert(new AspectStack(cells.get(holder).getContainedAspect(),maxInsert),simulate);
 	}
 
@@ -141,6 +157,26 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		return cells.get(holder).drain(new AspectStack(cells.get(holder).getContainedAspect(),maxDrain),simulate);
 	}
 
+	@Override
+	public IAspectHolder findAspectInHolders(Aspect aspect) {
+		for (IAspectHolder cell : cells)
+		{
+			if (cell.getContainedAspect()==aspect)
+				return cell;
+		}
+		return null;
+	}
+
+	@Override
+	public int findIndexFromAspectInHolders(Aspect aspect) {
+		for (IAspectHolder cell : cells)
+		{
+			if (cell.getContainedAspect()==aspect)
+				return cells.indexOf(cell);
+		}
+		return 0;
+	}
+
 	public CompoundNBT serializeNBT(){
 		CompoundNBT compound = new CompoundNBT();
 		CompoundNBT storedCells = new CompoundNBT();
@@ -155,7 +191,8 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		int i = 0;
 		for(String s : storedCells.keySet()) {
 			if (i >= cells.size())
-				cells.add(Integer.parseInt(s.replace("cell_", "")), AspectCell.fromNBT(storedCells.getCompound(s)));
+				if (storedCells.getCompound(s)!=null)
+					cells.add(AspectCell.fromNBT(storedCells.getCompound(s)));
 			else
 				cells.set(Integer.parseInt(s.replace("cell_", "")), AspectCell.fromNBT(storedCells.getCompound(s)));
 			i++;
@@ -179,6 +216,6 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		}
 		return "AspectBattery{" +
 				"cells=" + cs +
-				'}';
+				", d="+defaultCellSize+", max="+maxCells+'}';
 	}
 }

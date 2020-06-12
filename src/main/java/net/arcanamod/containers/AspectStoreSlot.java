@@ -15,7 +15,7 @@ public class AspectStoreSlot extends AspectSlot{
 	public AspectStoreSlot(Supplier<IAspectHandler> returnInv, int x, int y){
 		super(null, null, x, y, true);
 		this.returnInv = returnInv;
-		holder = new StoreSlotAspect(10);
+		holder = new StoreSlotAspect(100);
 	}
 	
 	public AspectStoreSlot(Supplier<IAspectHandler> returnInv, int x, int y, int capacity){

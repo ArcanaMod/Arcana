@@ -17,7 +17,7 @@ public class AspectTesterTileEntity extends TileEntity {
 	}
 
 	private void init() {
-		AspectCell cell = new AspectCell();
+		AspectCell cell = new AspectCell(100);
 		cell.insert(new AspectStack(Aspect.EXCHANGE,16),false);
 		battery.createCell(cell);
 	}

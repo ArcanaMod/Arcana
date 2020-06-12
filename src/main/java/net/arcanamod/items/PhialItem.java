@@ -43,6 +43,8 @@ public class PhialItem extends Item
                     world = livingEntity.world;
                 if (vis.getHoldersAmount()==0)
                     return -1;
+                if (vis.getHolder(0)!=null)
+                    return -1;
                 if (world.dimension.isSurfaceWorld())
                     return vis.getHolder(0).getContainedAspect().ordinal()-1;
                 else
@@ -56,7 +58,7 @@ public class PhialItem extends Item
         ItemStack is = playerIn.getHeldItem(handIn);
 
         if(is.getTag() != null) {
-            Arcana.logger.debug(is.getTag().toString());
+            Arcana.logger.debug(is.getTag().toString() + " : " + IAspectHandler.getFrom(is).toString());
         }
 
         return super.onItemRightClick(worldIn, playerIn, handIn);
@@ -65,14 +67,14 @@ public class PhialItem extends Item
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-        AspectBattery battery = new AspectBattery(1,18);
+        AspectBattery battery = new AspectBattery(1,8);
         return battery;
     }
 
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
         IAspectHandler aspectHandler = IAspectHandler.getFrom(stack);
-        if (aspectHandler!=null && aspectHandler.getHolder(0).getContainedAspect()!=Aspect.EMPTY)
+        if (aspectHandler!=null && aspectHandler.getHolder(0)!=null)
         {
             String aspectName = aspectHandler.getHolder(0).getContainedAspect().toString().toLowerCase();
             return new TranslationTextComponent("item.arcana.phial", aspectName.substring(0, 1).toUpperCase() + aspectName.substring(1)).applyTextStyle(Rarity.RARE.color);
@@ -85,9 +87,11 @@ public class PhialItem extends Item
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
         AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stack);
         if (vis!=null) {
-            AspectStack aspectStack = vis.getHolder(0).getContainedAspectStack();
-            tooltip.add(new TranslationTextComponent("tooltip.contains_aspect",
-                    aspectStack.getAspect().name().toLowerCase().substring(0, 1).toUpperCase() + aspectStack.getAspect().name().toLowerCase().substring(1),aspectStack.getAmount()));
+            if (vis.getHolder(0)!=null) {
+                AspectStack aspectStack = vis.getHolder(0).getContainedAspectStack();
+                tooltip.add(new TranslationTextComponent("tooltip.contains_aspect",
+                        aspectStack.getAspect().name().toLowerCase().substring(0, 1).toUpperCase() + aspectStack.getAspect().name().toLowerCase().substring(1), aspectStack.getAmount()));
+            }
         }
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }

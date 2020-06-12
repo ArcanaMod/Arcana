@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable
 {
-	AspectBattery aspectBattery = new AspectBattery();
+	AspectBattery aspectBattery = new AspectBattery(9,8);
 
 	public AspectBookshelfTileEntity() {
 		super(ArcanaTiles.ASPECT_SHELF_TE.get());
@@ -68,7 +68,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 		for (int i = 0; i < items.size(); i++) {
 			if (!items.get(i).isEmpty()) {
 				AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(items.get(i));
-				IAspectHolder target = vis.getHolder(i);
+				IAspectHolder target = vis.getHolder(0);
 				aspectBattery.setCellAtIndex(i,(AspectCell)target);
 			}
 		}
@@ -118,7 +118,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 
 	/**
 	 * Removes phial from shelf
-	 * @return removed phial stack
+	 * @return removed phial stack with vis inside
 	 */
 	public ItemStack removePhial()
 	{

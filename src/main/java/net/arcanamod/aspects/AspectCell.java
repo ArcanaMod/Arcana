@@ -74,15 +74,17 @@ public class AspectCell implements IAspectHolder {
 	{
 		CompoundNBT compoundNBT = new CompoundNBT();
 		compoundNBT.putInt("amount",stored.getAmount());
+		compoundNBT.putInt("capacity",getCapacity());
 		compoundNBT.putString("aspect",stored.getAspect().name().toLowerCase());
 		return compoundNBT;
 	}
 
 	public static AspectCell fromNBT(CompoundNBT compoundNBT)
 	{
+		int capacity = compoundNBT.getInt("capacity");
 		int amount = compoundNBT.getInt("amount");
 		Aspect aspect = Aspect.valueOf(compoundNBT.getString("aspect").toUpperCase());
-		AspectCell cell = new AspectCell();
+		AspectCell cell = new AspectCell(capacity != 0 ? capacity : 100);
 		cell.insert(new AspectStack(aspect,amount),false);
 		return cell;
 	}
@@ -93,6 +95,11 @@ public class AspectCell implements IAspectHolder {
 
 	public Aspect getContainedAspect(){
 		return stored.getAspect();
+	}
+
+	@Override
+	public void setCapacity(int defaultCellSize) {
+		capacity = defaultCellSize;
 	}
 
 	@Override

@@ -145,6 +145,11 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 		return stored;
 	}
 
+	@Override
+	public void setCapacity(int defaultCellSize) {
+		capacity = defaultCellSize;
+	}
+
 	public Set<Aspect> getContainedAspects(){
 		return Collections.singleton(stored);
 	}
@@ -232,6 +237,16 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	@Override
 	public int drain(int holder, int maxDrain, boolean simulate) {
 		return drain(holder, new AspectStack(stored,maxDrain), simulate);
+	}
+
+	@Override
+	public IAspectHolder findAspectInHolders(Aspect aspect) {
+		return this;
+	}
+
+	@Override
+	public int findIndexFromAspectInHolders(Aspect aspect) {
+		return 0;
 	}
 
 	public CompoundNBT serializeNBT(){

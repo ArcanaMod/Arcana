@@ -65,6 +65,10 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 	 */
 	int drain(int holder, int maxDrain, boolean simulate);
 
+	IAspectHolder findAspectInHolders(Aspect aspect);
+
+	int findIndexFromAspectInHolders(Aspect aspect);
+
 	CompoundNBT serializeNBT();
 
 	void deserializeNBT(CompoundNBT data);

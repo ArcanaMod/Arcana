@@ -94,4 +94,6 @@ public interface IAspectHolder {
 	 * @return Aspect.
 	 */
 	Aspect getContainedAspect();
+
+	void setCapacity(int defaultCellSize);
 }
