@@ -7,6 +7,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,9 +19,9 @@ import java.util.function.Consumer;
  *
  * @author Mozaran
  */
+@Mod.EventBusSubscriber
 public class WorldTickHandler{
 	
-	public static WorldTickHandler instance = new WorldTickHandler();
 	//public static TIntObjectHashMap<ArrayDeque<ChunkPos>> chunksToGen = new TIntObjectHashMap<>();
 	public static Collection<Consumer<World>> onTick = ConcurrentHashMultiset.create();
 	
@@ -29,7 +30,7 @@ public class WorldTickHandler{
 	 * 		- WorldTickEvent Executes every world tick
 	 */
 	@SubscribeEvent
-	public void tickEnd(TickEvent.WorldTickEvent event){
+	public static void tickEnd(TickEvent.WorldTickEvent event){
 		// probably fixes retrogenning -- a bit late lol
 		
 		if(event.phase == TickEvent.Phase.END){

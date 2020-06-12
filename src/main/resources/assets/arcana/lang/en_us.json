@@ -1,5 +1,5 @@
 {
-    "_comment": "Creativetabs",
+    "_comment": "Creative Tabs",
     "itemGroup.arcana": "Arcana",
     "itemGroup.taint": "Tainted Blocks",
     "itemGroup.aspects": "Aspects",
@@ -373,7 +373,7 @@
     "block.arcana.research_table": "Research Table Block",
     "block.arcana.crucible": "Crucible",
 
-    "_comment": "#Tainted",
+    "_comment": "Tainted",
     "block.tainted_acacia_leaves": "Tainted Acacia Leaves",
     "block.tainted_acacia_log": "Tainted Acacia Wood",
     "block.tainted_acacia_planks": "Tainted Acacia Planks",
@@ -617,8 +617,9 @@
 
     "argument.arcana.node.selector.invalid": "Invalid node selector. Valid selectors are @n, @n[max], and @i[x1,y1,z1,x2,y2,z2].",
 
-    "_comment": "Tooltips",
+    "_comment": "Tooltips and statuses",
     "tooltip.contains_aspect": "%s x%s",
+    "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration. Maybe you should look at those notes again.",
 
     "_comment": "GUIs",
     "researchEntry.continue": "Continue",

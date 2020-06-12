@@ -108,9 +108,6 @@ public class Arcana{
 		
 		proxy.preInit(event);
 		
-		MinecraftForge.EVENT_BUS.register(WorldTickHandler.instance);
-		MinecraftForge.EVENT_BUS.register(PlayerTickHandler.instance);
-		
 		Connection.init();
 		//NetworkRegistry.INSTANCE.registerGuiHandler(Arcana.instance, new ArcanaGuiHandler());
 		

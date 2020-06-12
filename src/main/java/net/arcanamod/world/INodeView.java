@@ -50,7 +50,8 @@ public interface INodeView{
 		//then getNodesWithinAABB for each
 		List<Node> list = new ArrayList<>();
 		for(ChunkPos pos : relevant)
-			list.addAll(getNodeChunk(pos).getNodesWithinAABB(bounds));
+			if(getNodeChunk(pos) != null)
+				list.addAll(getNodeChunk(pos).getNodesWithinAABB(bounds));
 		return list;
 	}
 	
