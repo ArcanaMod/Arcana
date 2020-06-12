@@ -29,7 +29,6 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	public void createCell(AspectCell cell){
 		if (getHoldersAmount() != maxCells)
 			cells.add(cell);
-		setCellSizes();
 	}
 
 	public void deleteCell(AspectCell cell){
@@ -56,7 +55,6 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 				while (index >= cells.size())
 					cells.add(cell);
 		else cells.set(index,cell);
-		setCellSizes();
 	}
 
 	/**
@@ -87,10 +85,9 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public IAspectHolder getHolder(int index) {
-		if (getHoldersAmount() != maxCells) {
+		if (getHoldersAmount() <= maxCells) {
 			while (index >= cells.size())
 				cells.add(new AspectCell(defaultCellSize));
-			setCellSizes();
 			return cells.get(index);
 		} else return null;
 	}

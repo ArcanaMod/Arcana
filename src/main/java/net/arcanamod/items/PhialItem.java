@@ -43,7 +43,7 @@ public class PhialItem extends Item
                     world = livingEntity.world;
                 if (vis.getHoldersAmount()==0)
                     return -1;
-                if (vis.getHolder(0)!=null)
+                if (vis.getHolder(0)==null)
                     return -1;
                 if (world.dimension.isSurfaceWorld())
                     return vis.getHolder(0).getContainedAspect().ordinal()-1;
