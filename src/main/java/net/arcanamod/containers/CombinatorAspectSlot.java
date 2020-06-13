@@ -1,7 +1,7 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.VisBattery;
+import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.util.Pair;
 
 import javax.annotation.Nullable;
@@ -12,7 +12,7 @@ class CombinatorAspectSlot extends AspectSlot{
 	private AspectSlot rightStoreSlot;
 	
 	public CombinatorAspectSlot(AspectSlot leftStoreSlot, AspectSlot rightStoreSlot, int x, int y){
-		super(null, () -> new VisBattery(1), x, y);
+		super(null, () -> new AspectBattery(1,100), x, y);
 		this.leftStoreSlot = leftStoreSlot;
 		this.rightStoreSlot = rightStoreSlot;
 	}

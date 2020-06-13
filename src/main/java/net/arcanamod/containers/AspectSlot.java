@@ -1,14 +1,16 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.VisHandler;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.IAspectHolder;
 
 import java.util.function.Supplier;
 
 public class AspectSlot{
 	
 	private Aspect aspect;
-	private final Supplier<VisHandler> inventory;
+	private final Supplier<IAspectHandler> inventory;
 	
 	public int x, y;
 	
@@ -25,14 +27,14 @@ public class AspectSlot{
 	 */
 	public boolean storeSlot = false;
 	
-	public AspectSlot(Aspect aspect, Supplier<VisHandler> inventory, int x, int y){
+	public AspectSlot(Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y){
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
 		this.y = y;
 	}
 	
-	public AspectSlot(Aspect aspect, Supplier<VisHandler> inventory, int x, int y, boolean storeSlot){
+	public AspectSlot(Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y, boolean storeSlot){
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
@@ -41,8 +43,12 @@ public class AspectSlot{
 	}
 	
 	public int getAmount(){
-		if(getInventory().get() != null)
-			return getInventory().get().getCurrentVis(getAspect());
+		if(getInventory().get() != null) {
+			IAspectHolder holder = getInventory().get().findAspectInHolders(getAspect());
+			if (holder != null)
+				return holder.getCurrentVis();
+			else return 0;
+		}
 		else
 			return -1;
 	}
@@ -52,7 +58,7 @@ public class AspectSlot{
 			aspect = null;
 	}
 	
-	public Supplier<VisHandler> getInventory(){
+	public Supplier<IAspectHandler> getInventory(){
 		return inventory;
 	}
 	
@@ -76,7 +82,7 @@ public class AspectSlot{
 	public int drain(Aspect aspect, int amount, boolean simulate){
 		int result = 0;
 		if(getInventory().get() != null)
-			result = getInventory().get().drain(aspect, amount, simulate);
+			result = getInventory().get().drain(getInventory().get().findIndexFromAspectInHolders(getAspect()),new AspectStack(aspect, amount), simulate);
 		onChange();
 		return result;
 	}
@@ -89,7 +95,7 @@ public class AspectSlot{
 	public int insert(Aspect aspect, int amount, boolean simulate){
 		int result = amount;
 		if(getInventory().get() != null)
-			result = getInventory().get().insert(aspect, amount, simulate);
+			result = getInventory().get().insert(0,new AspectStack(aspect, amount), simulate);
 		onChange();
 		return result;
 	}
