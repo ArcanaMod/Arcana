@@ -22,7 +22,7 @@ public class AspectTesterBlock extends Block {
 	@Override
 	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(new StringTextComponent("DEV: Only for testing new AspectHandler.").applyTextStyle(TextFormatting.GRAY));
-		tooltip.add(new StringTextComponent("Please remove when This Block is on another branch than AspectHandlerDev.").applyTextStyle(TextFormatting.RED));
+		tooltip.add(new StringTextComponent("Can crash the game.").applyTextStyle(TextFormatting.RED));
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
