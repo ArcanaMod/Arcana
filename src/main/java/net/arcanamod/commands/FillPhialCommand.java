@@ -6,10 +6,7 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.VisHandler;
-import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.aspects.*;
 import net.arcanamod.items.PhialItem;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkModifyResearch;
@@ -55,7 +52,7 @@ public class FillPhialCommand
         AtomicInteger ret = new AtomicInteger();
         EntityArgument.getPlayers(ctx, "targets").forEach(serverPlayerEntity -> {
             ItemStack is = serverPlayerEntity.getHeldItemMainhand();
-            VisHandler vis = is.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+            IAspectHandler vis = is.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
             ResourceLocation aspect_name = ResourceLocationArgument.getResourceLocation(ctx, "aspect");
             int amount = IntegerArgumentType.getInteger(ctx,"amount");
             if (vis!=null)
@@ -65,7 +62,7 @@ public class FillPhialCommand
                     Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
                     if (targettedStack != null)
                     {
-                        vis.insert(targettedStack, amount, false);
+                        vis.insert(0,new AspectStack(targettedStack, amount), false);
                         if (is.getTag() == null)
                         {
                             is.setTag(is.getShareTag());

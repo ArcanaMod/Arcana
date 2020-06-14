@@ -3,8 +3,8 @@ package net.arcanamod.research.impls;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.arcanamod.aspects.VisHandler;
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.research.Puzzle;
@@ -117,7 +117,7 @@ public class Guesswork extends Puzzle{
 		return ret;
 	}
 	
-	public List<AspectSlot> getAspectSlots(Supplier<VisHandler> returnInv){
+	public List<AspectSlot> getAspectSlots(Supplier<IAspectHandler> returnInv){
 		return Collections.emptyList();
 	}
 	

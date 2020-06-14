@@ -1,8 +1,8 @@
 package net.arcanamod.client.event;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.VisBattery;
-import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.aspects.AspectBattery;
+import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.Cap;
@@ -30,19 +30,19 @@ public class TextureStitch{
 				event.addSprite(core.getTextureLocation());
 			for(Focus focus : Focus.FOCI)
 				event.addSprite(focus.getModelLocation());
-			
+
 			for(NodeType value : NodeType.TYPES.values()){
 				event.addSprite(value.texture(null, null, null));
 			}
 		}
 	}
-	
+
 	//TODO: Move this to another place.
 	public static void onPlayerInteractEvent(PlayerInteractEvent event){
 		//if (event.getWorld().isRemote) return;
-		if(Arcana.debug)
-			if(event.getItemStack().getItem() == ArcanaItems.VIS_MANIPULATION_TOOLS.get() && event.getWorld().getTileEntity(event.getPos()) != null)
-				if(event.getWorld().getTileEntity(event.getPos()).getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null) != null)
-					event.getPlayer().sendMessage(new StringTextComponent(((VisBattery)event.getWorld().getTileEntity(event.getPos()).getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null)).toString()));
+		if (Arcana.debug)
+		if (event.getItemStack().getItem() == ArcanaItems.VIS_MANIPULATION_TOOLS.get()&&event.getWorld().getTileEntity(event.getPos())!=null)
+			if (event.getWorld().getTileEntity(event.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null)!=null)
+				event.getPlayer().sendMessage(new StringTextComponent(((AspectBattery)event.getWorld().getTileEntity(event.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null)).toString()));
 	}
 }

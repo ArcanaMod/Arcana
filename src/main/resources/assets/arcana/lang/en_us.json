@@ -1,4 +1,7 @@
 {
+    "_comment": "Test",
+    "block.arcana.aspect_tester": "Advanced New Aspect Handler Tester Block For No Reason (ANAHTBFNR)",
+
     "_comment": "Creative Tabs",
     "itemGroup.arcana": "Arcana",
     "itemGroup.taint": "Tainted Blocks",

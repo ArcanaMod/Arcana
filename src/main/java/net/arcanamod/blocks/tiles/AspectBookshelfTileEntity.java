@@ -23,6 +23,8 @@ import java.util.Set;
 
 public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable
 {
+	AspectBattery aspectBattery = new AspectBattery(9,8);
+
 	public AspectBookshelfTileEntity() {
 		super(ArcanaTiles.ASPECT_SHELF_TE.get());
 	}
@@ -61,26 +63,24 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 		return count;
 	}
 
-	public VisBattery getCombinedAspectHandler()
+	public AspectBattery UpdateBatteryAndReturn()
 	{
-		VisBattery new_vis = new VisBattery();
-		for (ItemStack stack : items)
-		{
-			if (!stack.isEmpty()) {
-				VisBattery vis = (VisBattery) stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
-				Aspect target = Aspects.getAspectFromBattery(stack);
-				new_vis.insert(target, vis.getCurrentVis(target), false);
+		for (int i = 0; i < items.size(); i++) {
+			if (!items.get(i).isEmpty()) {
+				AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(items.get(i));
+				IAspectHolder target = vis.getHolder(0);
+				aspectBattery.setCellAtIndex(i,(AspectCell)target);
 			}
 		}
 
-		return new_vis;
+		return aspectBattery;
 	}
 
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-		if (cap == VisHandlerCapability.ASPECT_HANDLER)
-			return getCombinedAspectHandler().getCapability(VisHandlerCapability.ASPECT_HANDLER).cast();
+		if (cap == AspectHandlerCapability.ASPECT_HANDLER)
+			return UpdateBatteryAndReturn().getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		else return null;
 	}
 
@@ -99,8 +99,8 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	{
 		if (getNonEmptyItemsStoredCount() < 9 && toAdd != ItemStack.EMPTY)
 		{
-			VisBattery vis = (VisBattery) toAdd.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
-			if (vis!=null&&(Arcana.debug||vis.getCurrentVis(Aspects.getAspectFromBattery(toAdd))==0))
+			AspectBattery vis = (AspectBattery) toAdd.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
+			if (vis!=null&&(Arcana.debug||vis.getHolder(0).getCurrentVis()==0))
 			{
 				ItemStack stack = toAdd.copy();
 				stack.setCount(1);
@@ -118,7 +118,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 
 	/**
 	 * Removes phial from shelf
-	 * @return removed phial stack
+	 * @return removed phial stack with vis inside
 	 */
 	public ItemStack removePhial()
 	{
@@ -134,9 +134,9 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 				{
 					id_stack.setFirst(stack.copy());
 					id_stack.setSecond(i);
-					VisBattery vis = (VisBattery) stack.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+					AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stack);
 					//Remove empty phials
-					if (vis.getCurrentVis(Aspects.getAspectFromBattery(stack))==0)
+					if (vis.getHolder(i).getCurrentVis()==0)
 					{
 						items.set(i,ItemStack.EMPTY);
 						empty_phial = stack.copy();

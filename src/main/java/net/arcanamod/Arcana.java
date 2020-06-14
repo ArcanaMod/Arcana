@@ -1,6 +1,6 @@
 package net.arcanamod;
 
-import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.Sounds;
@@ -72,14 +72,14 @@ public class Arcana{
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-		
+
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ArcanaConfig.COMMON_SPEC);
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ArcanaConfig.CLIENT_SPEC);
 		
 		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		NodeType.init();
-		
+
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
 		ArcanaItems.ITEMS.register(modEventBus);
@@ -89,7 +89,7 @@ public class Arcana{
 		ArcanaFeatures.FEATURES.register(modEventBus);
 		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
 		// etc
-		
+
 		proxy.construct();
 	}
 	
@@ -102,12 +102,12 @@ public class Arcana{
 		EntrySection.init();
 		Requirement.init();
 		ResearcherCapability.init();
-		VisHandlerCapability.init();
+		AspectHandlerCapability.init();
 		NodeChunkCapability.init();
 		Puzzle.init();
 		
 		proxy.preInit(event);
-		
+
 		Connection.init();
 		//NetworkRegistry.INSTANCE.registerGuiHandler(Arcana.instance, new ArcanaGuiHandler());
 		
@@ -158,7 +158,7 @@ public class Arcana{
 		//Entity Render
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
-		
+
 		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.NODE_PARTICLE.get(), new NodeParticle.Factory());
 	}
 	

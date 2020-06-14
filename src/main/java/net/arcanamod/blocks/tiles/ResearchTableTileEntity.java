@@ -55,26 +55,26 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 		}
 	};
 
-	public VisBattery getVisBattery()
+	public AspectBattery getVisBattery()
 	{
-		VisBattery vis = getVisShareablesAsBattery();
+		AspectBattery vis = getVisShareablesAsBattery();
 		return vis;
 	}
 
 	//TODO: FIX PERFORMANCE (-20 FPS) Caching or something.
-	private VisBattery getVisShareablesAsBattery() {
+	private AspectBattery getVisShareablesAsBattery() {
 		//if (world.isRemote) return null;
-		VisBattery battery = new VisBattery(Integer.MAX_VALUE);
+		AspectBattery battery = new AspectBattery(Integer.MAX_VALUE, 100);
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
 			if (world.getBlockState(blockPos).hasTileEntity()) {
 				TileEntity teinbox = world.getTileEntity(blockPos);
 				if (teinbox != null)
 					if (teinbox instanceof IVisShareable)
 						if (((IVisShareable) teinbox).isVisShareable()) {
-							VisHandler vis = teinbox.getCapability(VisHandlerCapability.ASPECT_HANDLER).orElse(null);
+							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
-								for (Aspect aspect : vis.getContainedAspects()) {
-									battery.insert(aspect, vis.getCurrentVis(aspect), false);
+								for (int i = 0; i < vis.getHoldersAmount(); i++) {
+									battery.replaceCell(i,(AspectCell) vis.getHolder(i));
 								}
 							}
 						}
@@ -115,9 +115,9 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing){
 		/*if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			return items.cast();
-		else*/ if(capability == VisHandlerCapability.ASPECT_HANDLER) {
-			VisBattery battery = getVisBattery();
-			return battery.getCapability(VisHandlerCapability.ASPECT_HANDLER).cast();
+		else*/ if(capability == AspectHandlerCapability.ASPECT_HANDLER) {
+			AspectBattery battery = getVisBattery();
+			return battery.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		}
 		return super.getCapability(capability, facing).cast();
 	}

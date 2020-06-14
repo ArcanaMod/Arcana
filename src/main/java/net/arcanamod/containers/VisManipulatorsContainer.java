@@ -2,8 +2,6 @@ package net.arcanamod.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.VisHandler;
-import net.arcanamod.aspects.VisHandlerCapability;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;

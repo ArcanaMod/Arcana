@@ -1,36 +1,37 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.StoreSlotVis;
-import net.arcanamod.aspects.VisHandler;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.StoreSlotAspect;
 
 import java.util.function.Supplier;
 
 public class AspectStoreSlot extends AspectSlot{
 	
-	Supplier<VisHandler> returnInv;
-	StoreSlotVis holder;
+	Supplier<IAspectHandler> returnInv;
+	StoreSlotAspect holder;
 	
-	public AspectStoreSlot(Supplier<VisHandler> returnInv, int x, int y){
+	public AspectStoreSlot(Supplier<IAspectHandler> returnInv, int x, int y){
 		super(null, null, x, y, true);
 		this.returnInv = returnInv;
-		holder = new StoreSlotVis(10);
+		holder = new StoreSlotAspect(100);
 	}
 	
-	public AspectStoreSlot(Supplier<VisHandler> returnInv, int x, int y, int capacity){
+	public AspectStoreSlot(Supplier<IAspectHandler> returnInv, int x, int y, int capacity){
 		super(null, null, x, y, true);
 		this.returnInv = returnInv;
-		holder = new StoreSlotVis(capacity);
+		holder = new StoreSlotAspect(capacity);
 	}
 	
-	public Supplier<VisHandler> getInventory(){
+	public Supplier<IAspectHandler> getInventory(){
 		return () -> holder;
 	}
 	
 	public void onClose(){
 		super.onClose();
 		if(returnInv != null && returnInv.get() != null && holder.stored != null)
-			holder.getContainedAspects().forEach(aspect -> returnInv.get().insert(aspect, holder.getCurrentVis(aspect), false));
+			holder.getContainedAspects().forEach(aspect -> returnInv.get().insert(0,new AspectStack(aspect, holder.getHolder(0).getCurrentVis()), false));
 	}
 	
 	public Aspect getAspect(){
@@ -53,7 +54,7 @@ public class AspectStoreSlot extends AspectSlot{
 		return holder.getCapacity() > 1;
 	}
 	
-	public VisHandler getHolder(){
+	public IAspectHandler getHolder(){
 		return holder;
 	}
 }

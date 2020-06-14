@@ -1,19 +1,19 @@
 package net.arcanamod.blocks.tiles;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.VisHandler;
-import net.arcanamod.aspects.VisHandlerCapability;
+import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 
+import javax.annotation.Nonnull;
 import java.awt.*;
 import java.time.LocalDateTime;
 
 public class JarTileEntity extends TileEntity{
 
-	public VisHandler vis = VisHandlerCapability.ASPECT_HANDLER.getDefaultInstance();
+	public AspectBattery vis = new AspectBattery(1,100);
 	public Aspect allowedAspect = Aspect.EMPTY;
 
 	protected float smoothAmountVisContentAnimation = 0;
@@ -31,13 +31,13 @@ public class JarTileEntity extends TileEntity{
 	}
 
 	public void fill(int amount, Aspect aspect) {
-		lastVisAmount = vis.getCurrentVis(allowedAspect)/8f;
+		lastVisAmount = vis.getHolder(0).getCurrentVis()/8f;
 		allowedAspect = aspect;
-		vis.insert(allowedAspect,amount,false);
+		vis.insert(0, new AspectStack(allowedAspect,amount),false);
 	}
 	public void drain(int amount) {
-		lastVisAmount = vis.getCurrentVis(allowedAspect)/8f;
-		vis.drain(allowedAspect,amount,false);
+		lastVisAmount = vis.getHolder(0).getCurrentVis()/8f;
+		vis.drain(0, new AspectStack(allowedAspect,amount),false);
 	}
 
 	public float getAspectAmount() {
@@ -47,14 +47,16 @@ public class JarTileEntity extends TileEntity{
 		int delta_time = (int) ((time - last_time) / 1000000);
 		last_time = time;
 
-		float visScaled = vis.getCurrentVis(allowedAspect)/8f;
-		//Arcana.logger.debug("visScaled: "+ visScaled + " lastVisAmount: "+ lastVisAmount + " sAVCA: "+ smoothAmountVisContentAnimation);
-		if (Math.round(smoothAmountVisContentAnimation*10f)/10f!=Math.round(visScaled*10f)/10f)
+		if (vis.getHoldersAmount()!=0){
+			float visScaled = vis.getHolder(0).getCurrentVis()/8f;
+			//Arcana.logger.debug("visScaled: "+ visScaled + " lastVisAmount: "+ lastVisAmount + " sAVCA: "+ smoothAmountVisContentAnimation);
+			if (Math.round(smoothAmountVisContentAnimation*10f)/10f!=Math.round(visScaled*10f)/10f)
 				smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/5f/delta_time;
-		else if (smoothAmountVisContentAnimation != Math.round(smoothAmountVisContentAnimation*100f)/100f)
-			smoothAmountVisContentAnimation = Math.round(smoothAmountVisContentAnimation*100f)/100f;
-		if (visScaled==0)
-			smoothAmountVisContentAnimation = 0;
+			else if (smoothAmountVisContentAnimation != Math.round(smoothAmountVisContentAnimation*100f)/100f)
+				smoothAmountVisContentAnimation = Math.round(smoothAmountVisContentAnimation*100f)/100f;
+			if (visScaled==0)
+				smoothAmountVisContentAnimation = 0;
+		}
 		return -(smoothAmountVisContentAnimation-fullness);
 	}
 
@@ -80,5 +82,13 @@ public class JarTileEntity extends TileEntity{
 			colors[i] = Color.HSBtoRGB((float) (jump*i), 1.0f, 1.0f);
 		}
 		return new Color(colors[nextColor/8]);
+	}
+
+	@Nonnull
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+		if (cap == AspectHandlerCapability.ASPECT_HANDLER)
+			return vis.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
+		return null;
 	}
 }
