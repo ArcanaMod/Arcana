@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_dair_planks"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_dair_planks"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_dair_planks"
+    }
   }
 }
