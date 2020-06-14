@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA",
+    "SA",
+    "S "
+  ],
+  "key": {
+    "A": {
+      "tag": "forge:ingots/void_metal"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "arcana:void_metal_axe"
+  }
+}

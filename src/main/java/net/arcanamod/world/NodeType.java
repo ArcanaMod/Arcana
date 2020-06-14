@@ -61,6 +61,10 @@ public abstract class NodeType{
 	public abstract ResourceLocation texture(IWorld world, INodeView nodes, Node node);
 	public abstract Collection<ResourceLocation> textures();
 	
+	public String toString(){
+		return TYPES.containsValue(this) ? TYPES.inverse().get(this).toString() : super.toString();
+	}
+	
 	/**
 	 * The aspects that a new node of this type will have.
 	 */
