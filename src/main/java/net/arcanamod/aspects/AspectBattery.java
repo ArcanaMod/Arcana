@@ -27,7 +27,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	}
 
 	public void createCell(AspectCell cell){
-		if (getHoldersAmount() != maxCells)
+		if (getHoldersAmount() < maxCells)
 			cells.add(cell);
 	}
 
