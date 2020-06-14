@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "S",
+    "S"
+  ],
+  "key": {
+    "A": {
+      "tag": "forge:ingots/silver"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "arcana:silver_shovel"
+  }
+}
