@@ -687,6 +687,37 @@
     "research.arcana.root.stage.1": "There is more than meets the eye when it comes to this wand. By tapping it against a bookshelf, I have created a magical book, capable of storing large amounts of knowledge - especially magical knowledge. Information is organised into entries, such as the one I'm reading right now, which can have multiple stages. To complete a stage, I must fulfill its requirements, shown just below the book itself. Once I have everything I need, I can move onto the next stage. Some requirements will require me to use up resources, such as experience levels or items, while others simply require me to do tasks or have items present.\\n\\nThere seems to be more to this book than that; I'll require some further investigation.",
     "research.arcana.root.stage.2": "After some further observation, I have found that the knowledge written in this book is bound to me, somehow; any copy of this book will present the same set of information, regardless of who made it or previously used it; and any knowledge I write will also persist after death.\\n\\nFinally, the book seems to have a kind of subtle intelligence of its own, trying to guide me into further more advanced and interesting magic. This is exciting! I can't wait to see what kind of inventions await me.",
 
+    "research.arcana.willow_tree": "Willow Tree",
+    "research.arcana.willow_tree.desc": "WIP",
+    "research.arcana.willow_tree.stage.1": "Work In Progress",
+    "research.arcana.willow_tree.stage.2": "Work In Progress",
+
+    "research.arcana.dair_tree": "Dair Tree",
+    "research.arcana.dair_tree.desc": "WIP",
+    "research.arcana.dair_tree.stage.1": "Work In Progress",
+    "research.arcana.dair_tree.stage.2": "Work In Progress",
+
+    "research.arcana.hawthorn_tree": "Hawthorn Tree",
+    "research.arcana.hawthorn_tree.desc": "WIP",
+    "research.arcana.hawthorn_tree.stage.1": "Work In Progress",
+    "research.arcana.hawthorn_tree.stage.2": "Work In Progress",
+
+    "research.arcana.greatwood_tree": "Greatwood Tree",
+    "research.arcana.greatwood_tree.desc": "WIP",
+    "research.arcana.greatwood_tree.stage.1": "Work In Progress",
+    "research.arcana.greatwood_tree.stage.2": "Work In Progress",
+
+    "research.arcana.silverwood_tree": "Silverwood Tree",
+    "research.arcana.silverwood_tree.desc": "WIP",
+    "research.arcana.silverwood_tree.stage.1": "Work In Progress",
+    "research.arcana.silverwood_tree.stage.2": "Work In Progress",
+
+    "research.arcana.eucalyptus_tree": "Eucalyptus Tree",
+    "research.arcana.eucalyptus_tree.desc": "WIP",
+    "research.arcana.eucalyptus_tree.stage.1": "Work In Progress",
+    "research.arcana.eucalyptus_tree.stage.2": "Work In Progress",
+
+
     "research.arcana.revealing": "Revealing the Arcane",
     "research.arcana.revealing.desc": "Now you see me, now you don't",
     "research.arcana.revealing.stage.1": "Although this wand is somewhat magical on its own, it does seem to have the capacity to do so much more, if I could use it correctly. My experience using it has taught me something vital about the world: energy is all around me. Energy that can't be seen or felt directly - at least, not at its usual concentration. I have dubbed this energy *vis*, and need to find a proper source of it to do anything more powerful than creating fancy books. Scattered around the world are glowing points in space, which seem to have a higher-than-average concentration of vis. I have designed a set of goggles with which I can view vis, and nodes too, directly.",

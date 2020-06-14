@@ -31,6 +31,180 @@
       ]
     },
     {
+      "key": "arcana:willow_tree",
+      "name": "research.arcana.willow_tree",
+      "desc": "research.arcana.willow_tree.desc",
+      "icons": [
+        "arcana:willow_sapling"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -4,
+      "y": -1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.willow_tree.stage.1",
+          "requirements": [
+            "arcana:willow_log"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.willow_tree.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:dair_tree",
+      "name": "research.arcana.dair_tree",
+      "desc": "research.arcana.dair_tree.desc",
+      "icons": [
+        "arcana:dair_sapling"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -5,
+      "y": -1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.dair_tree.stage.1",
+          "requirements": [
+            "arcana:dair_log"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.dair_tree.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:hawthorn_tree",
+      "name": "research.arcana.hawthorn_tree",
+      "desc": "research.arcana.hawthorn_tree.desc",
+      "icons": [
+        "arcana:hawthorn_sapling"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -6,
+      "y": -1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.hawthorn_tree.stage.1",
+          "requirements": [
+            "arcana:hawthorn_log"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.hawthorn_tree.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:greatwood_tree",
+      "name": "research.arcana.greatwood_tree",
+      "desc": "research.arcana.greatwood_tree.desc",
+      "icons": [
+        "arcana:greatwood_sapling"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -7,
+      "y": -1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.greatwood_tree.stage.1",
+          "requirements": [
+            "arcana:greatwood_log"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.greatwood_tree.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:silverwood_tree",
+      "name": "research.arcana.silverwood_tree",
+      "desc": "research.arcana.silverwood_tree.desc",
+      "icons": [
+        "arcana:silverwood_sapling"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -5,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.silverwood_tree.stage.1",
+          "requirements": [
+            "arcana:silverwood_log"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.silverwood_tree.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:eucalyptus_tree",
+      "name": "research.arcana.eucalyptus_tree",
+      "desc": "research.arcana.eucalyptus_tree.desc",
+      "icons": [
+        "arcana:eucalyptus_sapling"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -4,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.eucalyptus_tree.stage.1",
+          "requirements": [
+            "arcana:eucalyptus_log"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.eucalyptus_tree.stage.2"
+        }
+      ]
+    },
+    {
       "key": "arcana:vis_manipulators",
       "name": "research.arcana.vis_manipulators",
       "icons": [
