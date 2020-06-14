@@ -649,6 +649,10 @@
 
     "argument.arcana.node.selector.invalid": "Invalid node selector. Valid selectors are @n, @n[max], and @i[x1,y1,z1,x2,y2,z2].",
 
+    "_comment": "Entities",
+    "entity.arcana.dair_spirit_entity": "Dair Spirit",
+    "entity.arcana.koala_entity": "Koala",
+
     "_comment": "Tooltips and statuses",
     "tooltip.contains_aspect": "%s x%s",
     "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration. Maybe you should look at those notes again.",
