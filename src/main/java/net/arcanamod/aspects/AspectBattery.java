@@ -85,11 +85,9 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public IAspectHolder getHolder(int index) {
-		if (getHoldersAmount() <= maxCells) {
-			while (index >= cells.size())
-				cells.add(new AspectCell(defaultCellSize));
-			return cells.get(index);
-		} else return null;
+		while (index >= cells.size())
+			cells.add(new AspectCell(defaultCellSize));
+		return cells.get(index);
 	}
 
 	/**
@@ -102,7 +100,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int insert(int holder, AspectStack resource, boolean simulate) {
-		if (getHoldersAmount() != maxCells)
+		if (getHoldersAmount() <= maxCells)
 			if (holder >= cells.size())
 				cells.add(holder,new AspectCell(defaultCellSize));
 		return cells.get(holder).insert(resource,simulate);
@@ -118,7 +116,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int insert(int holder, int maxInsert, boolean simulate) {
-		if (getHoldersAmount() != maxCells)
+		if (getHoldersAmount() <= maxCells)
 			if (holder >= cells.size())
 				cells.add(holder,new AspectCell(defaultCellSize));
 		return cells.get(holder).insert(new AspectStack(cells.get(holder).getContainedAspect(),maxInsert),simulate);

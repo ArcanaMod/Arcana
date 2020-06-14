@@ -136,11 +136,13 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 					id_stack.setSecond(i);
 					AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stack);
 					//Remove empty phials
-					if (vis.getHolder(i).getCurrentVis()==0)
+					if (vis.getHolder(0)!=null)
 					{
-						items.set(i,ItemStack.EMPTY);
-						empty_phial = stack.copy();
-						return empty_phial;
+						if (vis.getHolder(i).getCurrentVis()==0) {
+							items.set(i, ItemStack.EMPTY);
+							empty_phial = stack.copy();
+							return empty_phial;
+						}
 					}
 				}
 			}
