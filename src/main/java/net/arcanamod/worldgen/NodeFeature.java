@@ -40,7 +40,7 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 		NodeType type = rand.nextInt(100) < ArcanaConfig.SPECIAL_NODE_CHANCE.get() ? new ArrayList<>(SPECIAL_TYPES).get(rand.nextInt(SPECIAL_TYPES.size())) : DEFAULT;
 		BlockPos finalPos = pos;
 		if(rand.nextInt(100) < ArcanaConfig.NODE_CHANCE.get())
-			WorldTickHandler.onTick.add(newWorld -> requireNonNull(NodeChunk.getFrom((Chunk)newWorld.getChunk(finalPos))).addNode(new Node(type.genNodeAspects(finalPos, newWorld, rand), type, finalPos.getX(), finalPos.getY(), finalPos.getZ())));
+			WorldTickHandler.onTick.add(newWorld -> requireNonNull(NodeChunk.getFrom((Chunk)newWorld.getChunk(finalPos))).addNode(new Node(type.genBattery(finalPos, newWorld, rand), type, finalPos.getX(), finalPos.getY(), finalPos.getZ())));
 		return true;
 	}
 }

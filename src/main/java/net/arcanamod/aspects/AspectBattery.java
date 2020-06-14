@@ -35,11 +35,9 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		if (getHoldersAmount() > 0)
 			cells.remove(cell);
 	}
-
-	private void setCellSizes()
-	{
-		for (IAspectHolder cell : cells)
-		{
+	
+	private void setCellSizes(){
+		for(IAspectHolder cell : cells){
 			cell.setCapacity(defaultCellSize);
 		}
 	}
@@ -154,9 +152,8 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
 	@Override
 	public IAspectHolder findAspectInHolders(Aspect aspect) {
-		for (IAspectHolder cell : cells)
-		{
-			if (cell.getContainedAspect()==aspect)
+		for (IAspectHolder cell : cells) {
+			if (cell.getContainedAspect() == aspect)
 				return cell;
 		}
 		return null;
@@ -164,8 +161,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
 	@Override
 	public int findIndexFromAspectInHolders(Aspect aspect) {
-		for (IAspectHolder cell : cells)
-		{
+		for (IAspectHolder cell : cells){
 			if (cell.getContainedAspect()==aspect)
 				return cells.indexOf(cell);
 		}
@@ -181,13 +177,11 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	}
 
 	public void deserializeNBT(CompoundNBT data){
-		AspectStack stack = AspectStack.EMPTY;
 		CompoundNBT storedCells = data.getCompound("cells");
 		int i = 0;
 		for(String s : storedCells.keySet()) {
 			if (i >= cells.size())
-				if (storedCells.getCompound(s)!=null)
-					cells.add(AspectCell.fromNBT(storedCells.getCompound(s)));
+				cells.add(AspectCell.fromNBT(storedCells.getCompound(s)));
 			else
 				cells.set(Integer.parseInt(s.replace("cell_", "")), AspectCell.fromNBT(storedCells.getCompound(s)));
 			i++;
@@ -197,8 +191,8 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
 		return capability == AspectHandlerCapability.ASPECT_HANDLER;
 	}
-
-	@Nullable
+	
+	@Nonnull
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing){
 		return capability == AspectHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();
 	}
@@ -207,7 +201,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	public String toString() {
 		String cs = "";
 		for (IAspectHolder c : cells) {
-			cs += ((AspectCell)c).toString();
+			cs += c.toString();
 		}
 		return "AspectBattery{" +
 				"cells=" + cs +

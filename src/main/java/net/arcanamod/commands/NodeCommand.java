@@ -78,7 +78,7 @@ public class NodeCommand{
 		}else
 			nt = NodeType.TYPES.get(type);
 		Vec3d loc = Vec3Argument.getVec3(ctx, "position");
-		Node node = new Node(nt.genNodeAspects(new BlockPos(loc), ctx.getSource().getWorld(), new Random()), nt, loc.x, loc.y, loc.z);
+		Node node = new Node(nt.genBattery(new BlockPos(loc), ctx.getSource().getWorld(), new Random()), nt, loc.x, loc.y, loc.z);
 		ServerNodeView view = new ServerNodeView(ctx.getSource().getWorld());
 		boolean added = view.addNode(node);
 		// Send PkSyncChunkNodes and feedback

@@ -6,7 +6,7 @@ import java.util.*;
 
 public class AspectCell implements IAspectHolder {
 
-	private AspectStack stored = AspectStack.EMPTY;;
+	private AspectStack stored = AspectStack.EMPTY;
 	private int capacity;
 
 	public AspectCell(){
@@ -18,8 +18,8 @@ public class AspectCell implements IAspectHolder {
 	}
 
 	public int insert(AspectStack stack, boolean simulate){
-		int capacityRemaining = getCapacity(stack.getAspect()) - getCurrentVis();
-		if(stack.getAmount() <= capacityRemaining){
+		int capacityRemaining = getCapacity(stack.getAspect()) == -1 ? -1 : Math.max(getCapacity(stack.getAspect()) - getCurrentVis(), 0);
+		if(capacityRemaining == -1 || stack.getAmount() <= capacityRemaining){
 			if(!simulate)
 				stored = new AspectStack(stack.getAspect(), getCurrentVis() + stack.getAmount());
 			return 0;
@@ -50,7 +50,7 @@ public class AspectCell implements IAspectHolder {
 	}
 
 	public boolean canInsert(Aspect aspect){
-		return getCurrentVis() < getCapacity(aspect);
+		return getCapacity(aspect) == -1 || getCurrentVis() < getCapacity(aspect);
 	}
 
 	public boolean canStore(Aspect aspect){
@@ -70,8 +70,7 @@ public class AspectCell implements IAspectHolder {
 		return new LinkedHashSet<>(Aspect.aspects);
 	}
 
-	public CompoundNBT toNBT()
-	{
+	public CompoundNBT toNBT(){
 		CompoundNBT compoundNBT = new CompoundNBT();
 		compoundNBT.putInt("amount",stored.getAmount());
 		compoundNBT.putInt("capacity",getCapacity());
@@ -79,8 +78,7 @@ public class AspectCell implements IAspectHolder {
 		return compoundNBT;
 	}
 
-	public static AspectCell fromNBT(CompoundNBT compoundNBT)
-	{
+	public static AspectCell fromNBT(CompoundNBT compoundNBT){
 		int capacity = compoundNBT.getInt("capacity");
 		int amount = compoundNBT.getInt("amount");
 		Aspect aspect = Aspect.valueOf(compoundNBT.getString("aspect").toUpperCase());

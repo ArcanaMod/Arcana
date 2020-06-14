@@ -1,27 +1,19 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.items.attachment.*;
-import net.arcanamod.world.Node;
-import net.arcanamod.world.NodeChunk;
+import net.arcanamod.items.attachment.Cap;
+import net.arcanamod.items.attachment.Core;
+import net.arcanamod.items.attachment.Focus;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.chunk.Chunk;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-
-import java.util.Random;
-
-import static java.util.Objects.requireNonNull;
-import static net.arcanamod.world.NodeType.NORMAL;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -58,11 +50,6 @@ public class WandItem extends Item{
 			items.add(withCapAndCoreForCt("gold_cap", "greatwood_wand"));
 			items.add(withCapAndCoreForCt("void_cap", "arcanium_wand"));
 		}
-	}
-	
-	public ActionResultType onItemUse(ItemUseContext context){
-		requireNonNull(NodeChunk.getFrom((Chunk)context.getWorld().getChunk(context.getPos()))).addNode(new Node(NORMAL.genNodeAspects(context.getPos(), context.getWorld(), new Random()), NORMAL, context.getPos().getX(), context.getPos().getY(), context.getPos().getZ()));
-		return super.onItemUse(context);
 	}
 	
 	public static ItemStack withCapAndCoreForCt(String cap, String core){
