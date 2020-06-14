@@ -26,18 +26,20 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		this.defaultCellSize = defaultCellSize;
 	}
 
-	public void createCell(AspectCell cell){
+	public void createCell(IAspectHolder cell){
 		if (getHoldersAmount() < maxCells)
 			cells.add(cell);
 	}
 
-	public void deleteCell(AspectCell cell){
+	public void deleteCell(IAspectHolder cell){
 		if (getHoldersAmount() > 0)
 			cells.remove(cell);
 	}
-	
-	private void setCellSizes(){
-		for(IAspectHolder cell : cells){
+
+	public void setCellSizes()
+	{
+		for (IAspectHolder cell : cells)
+		{
 			cell.setCapacity(defaultCellSize);
 		}
 	}
@@ -49,7 +51,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
 	public void replaceCell(int index, AspectCell cell){
 		if (index >= cells.size())
-			if (getHoldersAmount() != maxCells)
+			if (getHoldersAmount() < maxCells)
 				while (index >= cells.size())
 					cells.add(cell);
 		else cells.set(index,cell);
@@ -98,9 +100,10 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int insert(int holder, AspectStack resource, boolean simulate) {
-		if (getHoldersAmount() <= maxCells)
+		if (getHoldersAmount() < maxCells)
 			if (holder >= cells.size())
 				cells.add(holder,new AspectCell(defaultCellSize));
+		//if (resource.getAspect()==cells.get(holder).getContainedAspect())
 		return cells.get(holder).insert(resource,simulate);
 	}
 
@@ -114,7 +117,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	 */
 	@Override
 	public int insert(int holder, int maxInsert, boolean simulate) {
-		if (getHoldersAmount() <= maxCells)
+		if (getHoldersAmount() < maxCells)
 			if (holder >= cells.size())
 				cells.add(holder,new AspectCell(defaultCellSize));
 		return cells.get(holder).insert(new AspectStack(cells.get(holder).getContainedAspect(),maxInsert),simulate);
@@ -191,7 +194,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
 		return capability == AspectHandlerCapability.ASPECT_HANDLER;
 	}
-	
+
 	@Nonnull
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing){
 		return capability == AspectHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();

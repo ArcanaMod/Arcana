@@ -29,6 +29,12 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 	 */
 	IAspectHolder getHolder(int index);
 
+	void createCell(IAspectHolder cell);
+
+	void deleteCell(IAspectHolder cell);
+
+	void setCellSizes();
+
 	/**
 	 * Inserts AspectStack that contains Aspect and Amount.
 	 * @param holder index of a holder.

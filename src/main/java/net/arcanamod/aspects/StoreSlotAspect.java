@@ -187,6 +187,21 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 		return this;
 	}
 
+	@Override
+	public void createCell(IAspectHolder cell) {
+
+	}
+
+	@Override
+	public void deleteCell(IAspectHolder cell) {
+
+	}
+
+	@Override
+	public void setCellSizes() {
+
+	}
+
 	/**
 	 * Inserts AspectStack that contains Aspect and Amount.
 	 *
