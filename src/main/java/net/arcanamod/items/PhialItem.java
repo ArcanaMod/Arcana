@@ -76,11 +76,12 @@ public class PhialItem extends Item
         IAspectHandler aspectHandler = IAspectHandler.getFrom(stack);
         if (aspectHandler!=null && aspectHandler.getHolder(0)!=null)
         {
-            String aspectName = aspectHandler.getHolder(0).getContainedAspect().toString().toLowerCase();
-            return new TranslationTextComponent("item.arcana.phial", aspectName.substring(0, 1).toUpperCase() + aspectName.substring(1)).applyTextStyle(Rarity.RARE.color);
+            if (aspectHandler.getHolder(0).getContainedAspect()!=Aspect.EMPTY) {
+                String aspectName = aspectHandler.getHolder(0).getContainedAspect().toString().toLowerCase();
+                return new TranslationTextComponent("item.arcana.phial", aspectName.substring(0, 1).toUpperCase() + aspectName.substring(1)).applyTextStyle(Rarity.RARE.color);
+            }
         }
-        else
-            return new TranslationTextComponent("item.arcana.empty_phial");
+        return new TranslationTextComponent("item.arcana.empty_phial");
     }
 
     @Override
@@ -101,13 +102,15 @@ public class PhialItem extends Item
     public CompoundNBT getShareTag(ItemStack stack) {
         IAspectHandler vis = IAspectHandler.getFrom(stack);
         if (vis!=null) {
-            Aspect aspect = vis.getHolder(0).getContainedAspect();
-            int amount = vis.getHolder(0).getCurrentVis();
-            if (aspect!=null && amount!=0) {
-                CompoundNBT compoundNBT = new CompoundNBT();
-                compoundNBT.putInt("id", aspect.ordinal() - 1);
-                compoundNBT.putInt("amount", amount);
-                return compoundNBT;
+            if (vis.getHolder(0)!=null) {
+                Aspect aspect = vis.getHolder(0).getContainedAspect();
+                int amount = vis.getHolder(0).getCurrentVis();
+                if (aspect != null && amount != 0) {
+                    CompoundNBT compoundNBT = new CompoundNBT();
+                    compoundNBT.putInt("id", aspect.ordinal() - 1);
+                    compoundNBT.putInt("amount", amount);
+                    return compoundNBT;
+                }
             }
         }
         return null;
