@@ -692,6 +692,11 @@
     "research.arcana.willow_tree.stage.1": "Work In Progress",
     "research.arcana.willow_tree.stage.2": "Work In Progress",
 
+    "research.arcana.amber": "amber",
+    "research.arcana.amber.desc": "WIP",
+    "research.arcana.amber.stage.1": "Work In Progress",
+    "research.arcana.amber.stage.2": "Work In Progress",
+
     "research.arcana.dair_tree": "Dair Tree",
     "research.arcana.dair_tree.desc": "WIP",
     "research.arcana.dair_tree.stage.1": "Work In Progress",
@@ -717,6 +722,10 @@
     "research.arcana.eucalyptus_tree.stage.1": "Work In Progress",
     "research.arcana.eucalyptus_tree.stage.2": "Work In Progress",
 
+    "research.arcana.silver": "Silver",
+    "research.arcana.silver.desc": "WIP",
+    "research.arcana.silver.stage.1": "Work In Progress",
+    "research.arcana.silver.stage.2": "Work In Progress",
 
     "research.arcana.revealing": "Revealing the Arcane",
     "research.arcana.revealing.desc": "Now you see me, now you don't",
