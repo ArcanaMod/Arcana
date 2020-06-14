@@ -89,9 +89,11 @@ public class PhialItem extends Item
         AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stack);
         if (vis!=null) {
             if (vis.getHolder(0)!=null) {
-                AspectStack aspectStack = vis.getHolder(0).getContainedAspectStack();
-                tooltip.add(new TranslationTextComponent("tooltip.contains_aspect",
-                        aspectStack.getAspect().name().toLowerCase().substring(0, 1).toUpperCase() + aspectStack.getAspect().name().toLowerCase().substring(1), aspectStack.getAmount()));
+                if (vis.getHolder(0).getContainedAspect()!=Aspect.EMPTY) {
+                    AspectStack aspectStack = vis.getHolder(0).getContainedAspectStack();
+                    tooltip.add(new TranslationTextComponent("tooltip.contains_aspect",
+                            aspectStack.getAspect().name().toLowerCase().substring(0, 1).toUpperCase() + aspectStack.getAspect().name().toLowerCase().substring(1), aspectStack.getAmount()));
+                }
             }
         }
         super.addInformation(stack, worldIn, tooltip, flagIn);
