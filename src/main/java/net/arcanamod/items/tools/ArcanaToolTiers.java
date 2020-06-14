@@ -9,8 +9,10 @@ import java.util.function.Supplier;
 
 public enum ArcanaToolTiers implements IItemTier{
 	ARCANIUM(3, 1125, 7.0F, 2.5F, 17, () -> Ingredient.fromItems(ArcanaItems.ARCANIUM_INGOT.get())),
+	SILVER(2, 400, 6.5F, 2.5F, 16, () -> Ingredient.fromItems(ArcanaItems.ARCANIUM_INGOT.get())),
 	VOID_METAL(3, 300, 8.0F, 3.5F, 10, () -> Ingredient.fromItems(ArcanaItems.VOID_METAL_INGOT.get()));
-	
+	//Silver has the correct HarvestLevel and MaxUses right now
+
 	private final int harvestLevel;
 	private final int maxUses;
 	private final float efficiency;

@@ -77,11 +77,17 @@
     "item.arcana.arcanium_axe": "Arcanium Axe",
     "item.arcana.arcanium_shovel": "Arcanium Shovel",
     "item.arcana.arcanium_hoe": "Arcanium Hoe",
+    "item.arcana.silver_sword": "Silver Sword",
+    "item.arcana.silver_pickaxe": "Silver Pickaxe",
+    "item.arcana.silver_axe": "Silver Axe",
+    "item.arcana.silver_shovel": "Silver Shovel",
+    "item.arcana.silver_hoe": "Silver Hoe",
     "item.arcana.void_metal_sword": "Void Metal Sword",
     "item.arcana.void_metal_pickaxe": "Void Metal Pickaxe",
     "item.arcana.void_metal_axe": "Void Metal Axe",
     "item.arcana.void_metal_shovel": "Void Metal Shovel",
     "item.arcana.void_metal_hoe": "Void Metal Hoe",
+
 
     "_comment": "Materials",
     "item.arcana.thaumium_ingot": "Thaumium Ingot",

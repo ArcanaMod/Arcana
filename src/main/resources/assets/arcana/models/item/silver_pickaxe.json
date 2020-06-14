@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "arcana:item/silver_pickaxe"
+  }
+}
