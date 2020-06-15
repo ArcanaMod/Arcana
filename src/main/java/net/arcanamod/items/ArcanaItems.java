@@ -48,11 +48,11 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> SILVER_PICKAXE = ITEMS.register("silver_pickaxe", () -> new PickaxeItem(ArcanaToolTiers.SILVER, 1, -2.8f, new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> SILVER_AXE = ITEMS.register("silver_axe", () -> new AxeItem(ArcanaToolTiers.SILVER, 5.5f, -3, new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> SILVER_HOE = ITEMS.register("silver_hoe", () -> new HoeItem(ArcanaToolTiers.SILVER, -.5f, new Properties().group(Arcana.ITEMS)));
-	// Values all copied from Arcanium gear, Silver armor currently not
-	// public static final RegistryObject<Item> SILVER_HELMET = ITEMS.register("silver_helmet", () -> new ArmorItem(ArcanaArmourMaterials.SILVER, EquipmentSlotType.HEAD, new Properties().group(Arcana.ITEMS)));
-	// public static final RegistryObject<Item> SILVER_CHESTPLATE = ITEMS.register("silver_chestplate", () -> new ArmorItem(ArcanaArmourMaterials.SILVER, EquipmentSlotType.CHEST, new Properties().group(Arcana.ITEMS)));
-	// public static final RegistryObject<Item> SILVER_LEGGINGS = ITEMS.register("silver_leggings", () -> new ArmorItem(ArcanaArmourMaterials.SILVER, EquipmentSlotType.LEGS, new Properties().group(Arcana.ITEMS)));
-	// public static final RegistryObject<Item> SILVER_BOOTS = ITEMS.register("silver_boots", () -> new ArmorItem(ArcanaArmourMaterials.SILVER, EquipmentSlotType.FEET, new Properties().group(Arcana.ITEMS)));
+
+	public static final RegistryObject<Item> SILVER_HELMET = ITEMS.register("silver_helmet", () -> new ArmorItem(ArcanaArmourMaterials.SILVER, EquipmentSlotType.HEAD, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> SILVER_CHESTPLATE = ITEMS.register("silver_chestplate", () -> new ArmorItem(ArcanaArmourMaterials.SILVER, EquipmentSlotType.CHEST, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> SILVER_LEGGINGS = ITEMS.register("silver_leggings", () -> new ArmorItem(ArcanaArmourMaterials.SILVER, EquipmentSlotType.LEGS, new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> SILVER_BOOTS = ITEMS.register("silver_boots", () -> new ArmorItem(ArcanaArmourMaterials.SILVER, EquipmentSlotType.FEET, new Properties().group(Arcana.ITEMS)));
 
 
 	// Void Metal
