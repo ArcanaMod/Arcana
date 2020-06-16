@@ -14,8 +14,8 @@ import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public enum ArcanaArmourMaterials implements IArmorMaterial{
-	
 	GOGGLES("arcana:goggles_of_revealing", 5, new int[]{0, 0, 0, 2}, 15, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 0, Ingredient::fromItems),
+	SILVER("arcana:silver_armor", 10, new int[]{2, 5, 4, 1}, 5, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1, () -> Ingredient.fromItems(ArcanaItems.SILVER_INGOT.get())),
 	ARCANIUM("arcana:arcanium_armor", 20, new int[]{2, 5, 7, 3}, 20, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 1, () -> Ingredient.fromItems(ArcanaItems.ARCANIUM_INGOT.get())),
 	VOID_METAL("arcana:void_metal_armor", 17, new int[]{3, 6, 8, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2, () -> Ingredient.fromItems(ArcanaItems.VOID_METAL_INGOT.get()))
 	;

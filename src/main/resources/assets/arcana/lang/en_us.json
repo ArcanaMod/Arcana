@@ -62,6 +62,10 @@
     "item.arcana.arcanium_chestplate": "Arcanium Chestplate",
     "item.arcana.arcanium_leggings": "Arcanium Leggings",
     "item.arcana.arcanium_boots": "Arcanium Boots",
+    "item.arcana.silver_helmet": "Silver Helmet",
+    "item.arcana.silver_chestplate": "Silver Chestplate",
+    "item.arcana.silver_leggings": "Silver Leggings",
+    "item.arcana.silver_boots": "Silver Boots",
     "item.arcana.void_metal_helmet": "Void Metal Hood",
     "item.arcana.void_metal_chestplate": "Void Metal Curiass",
     "item.arcana.void_metal_leggings": "Void Metal Leggings",
@@ -77,11 +81,13 @@
     "item.arcana.arcanium_axe": "Arcanium Axe",
     "item.arcana.arcanium_shovel": "Arcanium Shovel",
     "item.arcana.arcanium_hoe": "Arcanium Hoe",
+
     "item.arcana.silver_sword": "Silver Sword",
     "item.arcana.silver_pickaxe": "Silver Pickaxe",
     "item.arcana.silver_axe": "Silver Axe",
     "item.arcana.silver_shovel": "Silver Shovel",
     "item.arcana.silver_hoe": "Silver Hoe",
+
     "item.arcana.void_metal_sword": "Void Metal Sword",
     "item.arcana.void_metal_pickaxe": "Void Metal Pickaxe",
     "item.arcana.void_metal_axe": "Void Metal Axe",
@@ -692,6 +698,11 @@
     "research.arcana.willow_tree.stage.1": "Work In Progress",
     "research.arcana.willow_tree.stage.2": "Work In Progress",
 
+    "research.arcana.amber": "amber",
+    "research.arcana.amber.desc": "WIP",
+    "research.arcana.amber.stage.1": "Work In Progress",
+    "research.arcana.amber.stage.2": "Work In Progress",
+
     "research.arcana.dair_tree": "Dair Tree",
     "research.arcana.dair_tree.desc": "WIP",
     "research.arcana.dair_tree.stage.1": "Work In Progress",
@@ -717,6 +728,10 @@
     "research.arcana.eucalyptus_tree.stage.1": "Work In Progress",
     "research.arcana.eucalyptus_tree.stage.2": "Work In Progress",
 
+    "research.arcana.silver": "Silver",
+    "research.arcana.silver.desc": "WIP",
+    "research.arcana.silver.stage.1": "Work In Progress",
+    "research.arcana.silver.stage.2": "Work In Progress",
 
     "research.arcana.revealing": "Revealing the Arcane",
     "research.arcana.revealing.desc": "Now you see me, now you don't",

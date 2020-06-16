@@ -205,6 +205,93 @@
       ]
     },
     {
+      "key": "arcana:silver",
+      "name": "research.arcana.silver",
+      "desc": "research.arcana.silver.desc",
+      "icons": [
+        "arcana:silver_ingot",
+        "arcana:silver_pickaxe",
+        "arcana:silver_axe",
+        "arcana:silver_shovel",
+        "arcana:silver_hoe",
+        "arcana:silver_sword"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -6,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.silver.stage.1",
+          "requirements": [
+            "arcana:silver_ore"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.silver.stage.2"
+        },
+        {
+          "type": "smelting",
+          "content": "arcana:silver_ingot_from_smelting"
+        },
+        {
+          "type": "crafting",
+        "content": "arcana:silver_pickaxe"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:silver_axe"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:silver_hoe"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:silver_shovel"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:silver_sword"
+        }
+      ]
+    },
+    {
+      "key": "arcana:amber",
+      "name": "research.arcana.amber",
+      "desc": "research.arcana.amber.desc",
+      "icons": [
+        "arcana:amber"
+      ],
+      "category": "arcana:basics",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -7,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.amber.stage.1",
+          "requirements": [
+            "arcana:amber"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.amber.stage.2"
+        }
+      ]
+    },
+    {
       "key": "arcana:vis_manipulators",
       "name": "research.arcana.vis_manipulators",
       "icons": [
