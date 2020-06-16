@@ -31,6 +31,10 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 
 	protected NonNullList<ItemStack> items = NonNullList.withSize(9, ItemStack.EMPTY);
 
+	public NonNullList<ItemStack> getItems() {
+		return items;
+	}
+
 	@Override
 	public void tick() {
 		if (getBlockState().get(BlockAspectBookshelf.LEVEL_0_9)!=getNonEmptyItemsStoredCount()) {
@@ -138,7 +142,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 					//Remove empty phials
 					if (vis.getHolder(0)!=null)
 					{
-						if (vis.getHolder(i).getCurrentVis()==0) {
+						if (vis.getHolder(0).getCurrentVis()==0) {
 							items.set(i, ItemStack.EMPTY);
 							empty_phial = stack.copy();
 							return empty_phial;
