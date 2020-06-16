@@ -36,13 +36,4 @@ public class TextureStitch{
 			}
 		}
 	}
-
-	//TODO: Move this to another place.
-	public static void onPlayerInteractEvent(PlayerInteractEvent event){
-		//if (event.getWorld().isRemote) return;
-		if (Arcana.debug)
-		if (event.getItemStack().getItem() == ArcanaItems.VIS_MANIPULATION_TOOLS.get()&&event.getWorld().getTileEntity(event.getPos())!=null)
-			if (event.getWorld().getTileEntity(event.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null)!=null)
-				event.getPlayer().sendMessage(new StringTextComponent(((AspectBattery)event.getWorld().getTileEntity(event.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null)).toString()));
-	}
 }

@@ -77,7 +77,7 @@
       "in": "arcana:tainted_codex",
       "icon": "arcana:research/tainted_basics.png",
       "name": "research.arcana.category.taint",
-      "bg": "arcana:research/static_bg.png"
+      "bg": "arcana:research/tainted_bg.png"
     },
     {
       "key": "arcana:crimson_basics",

@@ -33,7 +33,7 @@ public class Aspects{
 			if(aspect != Aspect.EMPTY){
 				AspectItem e = new AspectItem("aspect_" + aspect.name().toLowerCase());
 				ArcanaItems.ITEMS.register("aspect_" + aspect.name().toLowerCase(), () -> e);
-				aspectItems.add(e);//.setCreativeTab(Arcana.TAB_ASPECTS_ARCANA));
+				aspectItems.add(e);
 			}
 		aspectStacks = aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
 	}
