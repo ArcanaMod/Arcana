@@ -2,40 +2,35 @@ package net.arcanamod.blocks.tiles;
 
 import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
-import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.containers.ResearchTableContainer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ResearchTableTileEntity extends LockableTileEntity {
-	
+
+	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE,100);
+
 	public ResearchTableTileEntity(){
 		super(ArcanaTiles.RESEARCH_TABLE_TE.get());
 	}
@@ -55,16 +50,14 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 		}
 	};
 
-	public AspectBattery getVisBattery()
-	{
-		AspectBattery vis = getVisShareablesAsBattery();
-		return vis;
+	public AspectBattery getVisBattery() {
+		return getVisShareablesAsBattery();
 	}
 
 	//TODO: FIX PERFORMANCE (-20 FPS) Caching or something.
 	private AspectBattery getVisShareablesAsBattery() {
 		//if (world.isRemote) return null;
-		AspectBattery battery = new AspectBattery(Integer.MAX_VALUE, 100);
+		//AtomicInteger j = new AtomicInteger();
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
 			if (world.getBlockState(blockPos).hasTileEntity()) {
 				TileEntity teinbox = world.getTileEntity(blockPos);
@@ -73,9 +66,16 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 						if (((IVisShareable) teinbox).isVisShareable()) {
 							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
-								for (int i = 0; i < vis.getHoldersAmount(); i++) {
-									battery.replaceCell(i,(AspectCell) vis.getHolder(i));
-								}
+								AspectBattery.merge(battery, vis);
+								//int i = 0;
+ 								/*while (i < vis.getHoldersAmount()) {
+ 									battery = AspectBattery.merge(battery,vis);
+ 									AspectCell c = new AspectCell();
+ 									c.insert(vis.getHolder(i).getContainedAspectStack(),false);
+									battery.setCellAtIndex(i+ j.get(),c);
+									i++;
+								}*/
+								//j.getAndAdd(i);
 							}
 						}
 			}

@@ -255,6 +255,11 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	}
 
 	@Override
+	public void clear() {
+
+	}
+
+	@Override
 	public IAspectHolder findAspectInHolders(Aspect aspect) {
 		return this;
 	}

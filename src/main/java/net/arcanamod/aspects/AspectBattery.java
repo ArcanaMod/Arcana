@@ -26,6 +26,13 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		this.defaultCellSize = defaultCellSize;
 	}
 
+	public static AspectBattery merge(AspectBattery defaultBattery, AspectBattery... batteries) {
+		for (AspectBattery battery : batteries) {
+			defaultBattery.cells.addAll(battery.cells);
+		}
+		return defaultBattery;
+	}
+
 	public void createCell(IAspectHolder cell){
 		if (getHoldersAmount() < maxCells)
 			cells.add(cell);
@@ -34,6 +41,11 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	public void deleteCell(IAspectHolder cell){
 		if (getHoldersAmount() > 0)
 			cells.remove(cell);
+	}
+
+	@Override
+	public void clear() {
+		cells.clear();
 	}
 
 	public void setCellSizes()
