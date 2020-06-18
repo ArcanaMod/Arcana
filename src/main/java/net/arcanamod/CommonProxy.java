@@ -26,6 +26,9 @@ public class CommonProxy{
 	
 	public void openResearchBookUI(ResourceLocation book){
 	}
+
+	public void openScribbledNotesUI(){
+	}
 	
 	public void onResearchChange(ResearchEvent event){
 	}

@@ -2,6 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.event.TextureStitch;
+import net.arcanamod.client.gui.ScribbledNoteScreen;
 import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.gui.ResearchBookScreen;
 import net.arcanamod.client.gui.ResearchEntryScreen;
@@ -15,6 +16,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -51,6 +53,12 @@ public class ClientProxy extends CommonProxy{
 	
 	public void openResearchBookUI(ResourceLocation book){
 		Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book)));
+	}
+
+	@Override
+	public void openScribbledNotesUI(){
+		Minecraft.getInstance().displayGuiScreen(new ScribbledNoteScreen(new StringTextComponent("")));
+
 	}
 	
 	public void onResearchChange(ResearchEvent event){
