@@ -1,10 +1,15 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.Arcana;
+import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
+import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.AspectItem;
 import net.arcanamod.items.PhialItem;
+import net.arcanamod.items.VisManipulatorsItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,6 +27,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -99,7 +106,20 @@ public class BlockAspectBookshelf extends WaterloggableBlock{
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te instanceof AspectBookshelfTileEntity)
 		{
-			if (player.getHeldItem(handIn).getItem() instanceof PhialItem)
+			// TODO: Remove this d_remove«» segment if everything is done
+			/*d_remove«*/if (player.getHeldItem(handIn).getItem() == ArcanaItems.SCRIBING_TOOLS.get() && Arcana.debug)
+			{
+				if (!worldIn.isRemote)
+					player.sendMessage(new StringTextComponent("You write something on a bookshelf. Look at your logs.").applyTextStyles(TextFormatting.ITALIC, TextFormatting.LIGHT_PURPLE));
+				Arcana.logger.debug(((AspectBookshelfTileEntity)te).getItems().toString() + ", remote = "+worldIn.isRemote);
+				Arcana.logger.debug("[");
+				for (ItemStack stack : ((AspectBookshelfTileEntity)te).getItems()){
+					Arcana.logger.debug("(item: "+stack.getItem()+", count: "+stack.getCount()+", cap: "+ IAspectHandler.getFrom(stack)+"),");
+				}
+				Arcana.logger.debug("]" + ", remote = "+worldIn.isRemote);
+				return ActionResultType.SUCCESS;
+			}/*»;*/
+			else if (player.getHeldItem(handIn).getItem() instanceof PhialItem)
 			{
 				boolean isSuccess = ((AspectBookshelfTileEntity) te).addPhial(player.getHeldItem(handIn));
 				if (isSuccess)

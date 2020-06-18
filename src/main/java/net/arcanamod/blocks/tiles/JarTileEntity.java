@@ -4,14 +4,16 @@ import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.time.LocalDateTime;
 
-public class JarTileEntity extends TileEntity{
+public class JarTileEntity extends TileEntity implements IVisShareable{
 
 	public AspectBattery vis = new AspectBattery(1,100);
 	public Aspect allowedAspect = Aspect.EMPTY;
@@ -90,5 +92,16 @@ public class JarTileEntity extends TileEntity{
 		if (cap == AspectHandlerCapability.ASPECT_HANDLER)
 			return vis.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		return null;
+	}
+
+	@Nonnull
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+		return getCapability(cap);
+	}
+
+	@Override
+	public boolean isVisShareable() {
+		return true;
 	}
 }

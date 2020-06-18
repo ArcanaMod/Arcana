@@ -35,7 +35,6 @@ public class ClientProxy extends CommonProxy{
 	public void construct(){
 		super.construct();
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onPlayerInteractEvent);
 		
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		
