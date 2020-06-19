@@ -43,6 +43,11 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 			cells.remove(cell);
 	}
 
+	public void deleteCell(int index){
+		if (getHoldersAmount() > 0)
+			cells.remove(index);
+	}
+
 	@Override
 	public void clear() {
 		cells.clear();
@@ -100,6 +105,11 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		while (index >= cells.size())
 			cells.add(new AspectCell(defaultCellSize));
 		return cells.get(index);
+	}
+
+	@Override
+	public boolean exist(int index) {
+		return cells.get(index)!=null;
 	}
 
 	/**

@@ -31,6 +31,7 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkGetNoteHandler.class, PkGetNoteHandler::encode, PkGetNoteHandler::decode, PkGetNoteHandler::handle);
 		INSTANCE.registerMessage(id++, PkSyncChunkNodes.class, PkSyncChunkNodes::encode, PkSyncChunkNodes::decode, PkSyncChunkNodes::handle);
 		INSTANCE.registerMessage(id++, PkRequestNodeSync.class, PkRequestNodeSync::encode, PkRequestNodeSync::decode, PkRequestNodeSync::handle);
+		INSTANCE.registerMessage(id++, PkClientSlotDrain.class, PkClientSlotDrain::encode, PkClientSlotDrain::decode, PkClientSlotDrain::handle);
 	}
 	
 	public static void sendTo(Object packet, ServerPlayerEntity target){
@@ -63,5 +64,9 @@ public class Connection{
 
 	public static void sendGetNoteHandler(ResourceLocation id, String pageName) {
 		INSTANCE.sendToServer(new PkGetNoteHandler(id,pageName));
+	}
+
+	public static void sendClientSlotDrain(int windowId, int slotId, PkAspectClick.ClickType type, ServerPlayerEntity target) {
+		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkClientSlotDrain(windowId, slotId, type));
 	}
 }

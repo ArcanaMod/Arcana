@@ -66,6 +66,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 						if (((IVisShareable) teinbox).isVisShareable()) {
 							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
+								battery.clear();
 								AspectBattery.merge(battery, vis);
 								//int i = 0;
  								/*while (i < vis.getHoldersAmount()) {
@@ -121,7 +122,13 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 		}
 		return super.getCapability(capability, facing).cast();
 	}
-	
+
+	@Nonnull
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+		return this.getCapability(cap,null);
+	}
+
 	public ItemStack visItem(){
 		return items.getStackInSlot(0);
 	}

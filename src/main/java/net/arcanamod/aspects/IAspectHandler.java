@@ -29,9 +29,13 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 	 */
 	IAspectHolder getHolder(int index);
 
+	boolean exist(int index);
+
 	void createCell(IAspectHolder cell);
 
 	void deleteCell(IAspectHolder cell);
+
+	void deleteCell(int index);
 
 	void setCellSizes();
 
