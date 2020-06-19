@@ -190,7 +190,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 
 	@Override
 	public boolean exist(int index) {
-		return false;
+		return true;
 	}
 
 	@Override

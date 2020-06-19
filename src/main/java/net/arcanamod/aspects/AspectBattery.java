@@ -109,7 +109,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
 	@Override
 	public boolean exist(int index) {
-		return cells.get(index)!=null;
+		return index >= 0 && index < cells.size();
 	}
 
 	/**
