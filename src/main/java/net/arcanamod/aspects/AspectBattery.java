@@ -192,7 +192,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 			if (cell.getContainedAspect()==aspect)
 				return cells.indexOf(cell);
 		}
-		return 0;
+		return -1;
 	}
 
 	public CompoundNBT serializeNBT(){

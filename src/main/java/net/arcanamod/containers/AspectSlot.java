@@ -1,9 +1,6 @@
 package net.arcanamod.containers;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.aspects.IAspectHolder;
+import net.arcanamod.aspects.*;
 
 import java.util.function.Supplier;
 
@@ -81,8 +78,10 @@ public class AspectSlot{
 	 */
 	public int drain(Aspect aspect, int amount, boolean simulate){
 		int result = 0;
-		if(getInventory().get() != null)
-			result = getInventory().get().drain(getInventory().get().findIndexFromAspectInHolders(getAspect()),new AspectStack(aspect, amount), simulate);
+		if(getInventory().get() != null) {
+			int aspectIndex = getInventory().get().findIndexFromAspectInHolders(getAspect());
+			result = getInventory().get().drain(aspectIndex == -1 ? Aspects.getEmptyCell(getInventory().get()) : aspectIndex,new AspectStack(aspect, amount), simulate); // BUG!!!
+		}
 		onChange();
 		return result;
 	}
@@ -94,8 +93,10 @@ public class AspectSlot{
 	 */
 	public int insert(Aspect aspect, int amount, boolean simulate){
 		int result = amount;
-		if(getInventory().get() != null)
-			result = getInventory().get().insert(0,new AspectStack(aspect, amount), simulate);
+		if(getInventory().get() != null) {
+			int aspectIndex = getInventory().get().findIndexFromAspectInHolders(getAspect());
+			result = getInventory().get().insert(aspectIndex == -1 ? Aspects.getEmptyCell(getInventory().get()) : aspectIndex,new AspectStack(aspect, amount), simulate); // BUG!!!
+		}
 		onChange();
 		return result;
 	}
