@@ -67,11 +67,13 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	}
 
 	public void replaceCell(int index, AspectCell cell){
-		if (index >= cells.size())
+		if (index >= cells.size()) {
 			if (getHoldersAmount() < maxCells)
 				while (index >= cells.size())
 					cells.add(cell);
-		else cells.set(index,cell);
+		} else {
+			cells.set(index,cell);
+		}
 	}
 
 	/**
