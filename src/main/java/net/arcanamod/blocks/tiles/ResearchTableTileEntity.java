@@ -58,6 +58,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	private AspectBattery getVisShareablesAsBattery() {
 		//if (world.isRemote) return null;
 		//AtomicInteger j = new AtomicInteger();
+		battery.clear();
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
 			if (world.getBlockState(blockPos).hasTileEntity()) {
 				TileEntity teinbox = world.getTileEntity(blockPos);
@@ -66,17 +67,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 						if (((IVisShareable) teinbox).isVisShareable()) {
 							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
-								battery.clear();
 								AspectBattery.merge(battery, vis);
-								//int i = 0;
- 								/*while (i < vis.getHoldersAmount()) {
- 									battery = AspectBattery.merge(battery,vis);
- 									AspectCell c = new AspectCell();
- 									c.insert(vis.getHolder(i).getContainedAspectStack(),false);
-									battery.setCellAtIndex(i+ j.get(),c);
-									i++;
-								}*/
-								//j.getAndAdd(i);
 							}
 						}
 			}
