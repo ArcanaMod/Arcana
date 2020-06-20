@@ -70,6 +70,6 @@ public class Aspects{
 	}
 
 	public static int getEmptyCell(IAspectHandler handler) {
-		return handler.findIndexFromAspectInHolders(Aspect.EMPTY);
+		return handler.findIndexesFromAspectInHolders(Aspect.EMPTY)[0];
 	}
 }

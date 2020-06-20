@@ -149,6 +149,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 							items.set(i, ItemStack.EMPTY);
 							empty_phial = stack.copy();
 							aspectBattery.setCellAtIndex(i,new AspectCell(8));
+							empty_phial.setTag(empty_phial.getShareTag());
 							return empty_phial;
 						}
 					}

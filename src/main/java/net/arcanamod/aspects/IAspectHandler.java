@@ -79,7 +79,7 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 
 	IAspectHolder findAspectInHolders(Aspect aspect);
 
-	int findIndexFromAspectInHolders(Aspect aspect);
+	int[] findIndexesFromAspectInHolders(Aspect aspect);
 
 	CompoundNBT serializeNBT();
 

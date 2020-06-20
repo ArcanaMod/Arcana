@@ -277,8 +277,8 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	}
 
 	@Override
-	public int findIndexFromAspectInHolders(Aspect aspect) {
-		return 0;
+	public int[] findIndexesFromAspectInHolders(Aspect aspect) {
+		return new int[] {0};
 	}
 
 	public CompoundNBT serializeNBT(){
