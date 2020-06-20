@@ -73,7 +73,7 @@ public class NodeCommand{
 		NodeType nt;
 		if(!NodeType.TYPES.containsKey(type)){
 			// throw exception "nonexistent type"
-			Message noSuchEntry = new TranslationTextComponent("commands.arcananodes.no_type", type.toString());
+			Message noSuchEntry = new TranslationTextComponent("commands.arcana.nodes.no_type", type.toString());
 			throw new CommandSyntaxException(new SimpleCommandExceptionType(noSuchEntry), noSuchEntry);
 		}else
 			nt = NodeType.TYPES.get(type);
@@ -84,10 +84,10 @@ public class NodeCommand{
 		// Send PkSyncChunkNodes and feedback
 		if(added){
 			view.sendChunkToClients(node);
-			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.add_success"), true);
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcana.nodes.add_success"), true);
 			return 1;
 		}
-		ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcananodes.add_fail"));
+		ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcana.nodes.add_fail"));
 		return 0;
 	}
 	
@@ -95,7 +95,7 @@ public class NodeCommand{
 		Collection<Node> nodes = NodeArgument.getNodes(ctx, "nodes");
 		if(nodes.size() == 0){
 			// send feedback
-			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcananodes.empty_selection"));
+			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcana.nodes.empty_selection"));
 			return 0;
 		}
 		
@@ -106,11 +106,11 @@ public class NodeCommand{
 				removed.add(node);
 			
 		if(removed.size() == 0)
-			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcananodes.remove_fail"));
+			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcana.nodes.remove_fail"));
 		else if(removed.size() == 1)
-			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.remove_success.single"), true);
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcana.nodes.remove_success.single"), true);
 		else
-			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.remove_success.many", removed.size()), true);
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcana.nodes.remove_success.many", removed.size()), true);
 		
 		view.sendAllChunksToClients(removed);
 		return removed.size();
@@ -120,7 +120,7 @@ public class NodeCommand{
 		Collection<Node> nodes = NodeArgument.getNodes(ctx, "nodes");
 		if(nodes.size() == 0){
 			// send feedback
-			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcananodes.empty_selection"));
+			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcana.nodes.empty_selection"));
 			return 0;
 		}
 		
@@ -128,7 +128,7 @@ public class NodeCommand{
 		NodeType nt;
 		if(!NodeType.TYPES.containsKey(type)){
 			// throw exception "nonexistent type"
-			Message noSuchEntry = new TranslationTextComponent("commands.arcananodes.no_type", type.toString());
+			Message noSuchEntry = new TranslationTextComponent("commands.arcana.nodes.no_type", type.toString());
 			throw new CommandSyntaxException(new SimpleCommandExceptionType(noSuchEntry), noSuchEntry);
 		}else
 			nt = NodeType.TYPES.get(type);
@@ -138,9 +138,9 @@ public class NodeCommand{
 			node.setType(nt);
 		
 		if(nodes.size() == 1)
-			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.modify_success.single"), true);
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcana.nodes.modify_success.single"), true);
 		else
-			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.modify_success.many", nodes.size()), true);
+			ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcana.nodes.modify_success.many", nodes.size()), true);
 		
 		view.sendAllChunksToClients(nodes);
 		return nodes.size();
@@ -148,7 +148,7 @@ public class NodeCommand{
 	
 	public static int info(CommandContext<CommandSource> ctx){
 		Collection<Node> nodes = NodeArgument.getNodes(ctx, "nodes");
-		ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcananodes.info", nodes), true);
+		ctx.getSource().sendFeedback(new TranslationTextComponent("commands.arcana.nodes.info", nodes), true);
 		return nodes.size();
 	}
 }

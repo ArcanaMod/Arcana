@@ -5,6 +5,7 @@ import net.arcanamod.ArcanaConfig;
 import net.arcanamod.commands.FillPhialCommand;
 import net.arcanamod.commands.NodeCommand;
 import net.arcanamod.commands.ResearchCommand;
+import net.arcanamod.commands.TaintCommand;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkSyncResearch;
@@ -62,5 +63,6 @@ public class WorldLoadEvent{
 		ResearchCommand.register(event.getCommandDispatcher());
 		FillPhialCommand.register(event.getCommandDispatcher());
 		NodeCommand.register(event.getCommandDispatcher());
+		TaintCommand.register(event.getCommandDispatcher());
 	}
 }
