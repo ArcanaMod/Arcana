@@ -1,6 +1,6 @@
 package net.arcanamod.world.impl;
 
-import net.arcanamod.world.NodeChunk;
+import net.arcanamod.world.AuraChunk;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
@@ -16,25 +16,25 @@ import javax.annotation.Nullable;
 
 import static net.arcanamod.Arcana.arcLoc;
 
-public class NodeChunkCapability{
+public class AuraChunkCapability{
 	
-	@CapabilityInject(NodeChunk.class)
-	public static Capability<NodeChunk> NODE_CHUNK_CAPABILITY = null;
+	@CapabilityInject(AuraChunk.class)
+	public static Capability<AuraChunk> NODE_CHUNK_CAPABILITY = null;
 	
 	public static final ResourceLocation KEY = arcLoc("node_chunk_capability");
 	
 	public static void init(){
-		CapabilityManager.INSTANCE.register(NodeChunk.class, new Storage(), NodeChunkImpl::new);
+		CapabilityManager.INSTANCE.register(AuraChunk.class, new Storage(), AuraChunkImpl::new);
 	}
 	
-	private static class Storage implements Capability.IStorage<NodeChunk>{
+	private static class Storage implements Capability.IStorage<AuraChunk>{
 		
 		@Nullable
-		public INBT writeNBT(Capability<NodeChunk> capability, NodeChunk instance, Direction side){
+		public INBT writeNBT(Capability<AuraChunk> capability, AuraChunk instance, Direction side){
 			return instance.serializeNBT();
 		}
 		
-		public void readNBT(Capability<NodeChunk> capability, NodeChunk instance, Direction side, INBT nbt){
+		public void readNBT(Capability<AuraChunk> capability, AuraChunk instance, Direction side, INBT nbt){
 			if(nbt instanceof CompoundNBT)
 				instance.deserializeNBT((CompoundNBT)nbt);
 		}
@@ -42,7 +42,7 @@ public class NodeChunkCapability{
 	
 	public static class Provider implements ICapabilitySerializable<CompoundNBT>{
 		
-		private final NodeChunk cap = new NodeChunkImpl();
+		private final AuraChunk cap = new AuraChunkImpl();
 		
 		public CompoundNBT serializeNBT(){
 			return cap.serializeNBT();

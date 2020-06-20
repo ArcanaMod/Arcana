@@ -1,6 +1,6 @@
 package net.arcanamod.network;
 
-import net.arcanamod.world.NodeChunk;
+import net.arcanamod.world.AuraChunk;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;
@@ -9,35 +9,35 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class PkRequestNodeSync{
+public class PkRequestAuraSync{
 	
 	ChunkPos chunk;
 	
-	public PkRequestNodeSync(ChunkPos chunk){
+	public PkRequestAuraSync(ChunkPos chunk){
 		this.chunk = chunk;
 	}
 	
-	public static void encode(PkRequestNodeSync msg, PacketBuffer buffer){
+	public static void encode(PkRequestAuraSync msg, PacketBuffer buffer){
 		buffer.writeInt(msg.chunk.x);
 		buffer.writeInt(msg.chunk.z);
 	}
 	
-	public static PkRequestNodeSync decode(PacketBuffer buffer){
+	public static PkRequestAuraSync decode(PacketBuffer buffer){
 		int x = buffer.readInt();
 		int z = buffer.readInt();
-		return new PkRequestNodeSync(new ChunkPos(x, z));
+		return new PkRequestAuraSync(new ChunkPos(x, z));
 	}
 	
-	public static void handle(PkRequestNodeSync msg, Supplier<NetworkEvent.Context> supplier){
+	public static void handle(PkRequestAuraSync msg, Supplier<NetworkEvent.Context> supplier){
 		supplier.get().enqueueWork(() -> {
 			// I'm on server
 			// Get nodes at chunk
 			Chunk chunk = (Chunk)supplier.get().getSender().world.getChunk(msg.chunk.x, msg.chunk.z, ChunkStatus.FULL, false);
 			if(chunk != null){
-				NodeChunk nc = NodeChunk.getFrom(chunk);
+				AuraChunk nc = AuraChunk.getFrom(chunk);
 				// Send a PkSyncChunkNodes
 				if(nc != null)
-					Connection.sendTo(new PkSyncChunkNodes(msg.chunk, nc.getNodes()), supplier.get().getSender());
+					Connection.sendTo(new PkSyncChunkAura(msg.chunk, nc.getNodes(), nc.getTaintLevel()), supplier.get().getSender());
 			}
 		});
 		supplier.get().setPacketHandled(true);

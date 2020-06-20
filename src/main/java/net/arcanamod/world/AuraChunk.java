@@ -1,6 +1,6 @@
 package net.arcanamod.world;
 
-import net.arcanamod.world.impl.NodeChunkCapability;
+import net.arcanamod.world.impl.AuraChunkCapability;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -10,10 +10,9 @@ import javax.annotation.Nullable;
 import java.util.Collection;
 
 /**
- * Stores nodes that are inside of this chunk. May also store taint or aura if we make them chunk stuff.
+ * Allows access to this chunk's nodes and taint level.
  */
-// Will be stored as a capability and do the actual work of storing nodes.
-public interface NodeChunk{
+public interface AuraChunk{
 	
 	/**
 	 * Adds a node to this chunk.
@@ -81,6 +80,12 @@ public interface NodeChunk{
 	 */
 	Collection<Node> getNodesOfTypeWithinAABB(NodeType type, AxisAlignedBB bounds);
 	
+	int getTaintLevel();
+	
+	void addTaint(int amount);
+	
+	void setTaint(int newTaint);
+	
 	/**
 	 * Returns a set containing all nodes in this chunk, except for the specified node.
 	 * Changes to this set are *not* reflected in-world.
@@ -135,7 +140,7 @@ public interface NodeChunk{
 	
 	@SuppressWarnings("ConstantConditions")
 	@Nullable
-	static NodeChunk getFrom(@Nonnull ICapabilityProvider holder){
-		return holder.getCapability(NodeChunkCapability.NODE_CHUNK_CAPABILITY, null).orElse(null);
+	static AuraChunk getFrom(@Nonnull ICapabilityProvider holder){
+		return holder.getCapability(AuraChunkCapability.NODE_CHUNK_CAPABILITY, null).orElse(null);
 	}
 }

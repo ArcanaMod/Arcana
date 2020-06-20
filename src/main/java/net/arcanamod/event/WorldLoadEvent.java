@@ -7,26 +7,19 @@ import net.arcanamod.commands.NodeCommand;
 import net.arcanamod.commands.ResearchCommand;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.network.Connection;
-import net.arcanamod.network.PkRequestNodeSync;
 import net.arcanamod.network.PkSyncResearch;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchLoader;
 import net.arcanamod.research.Researcher;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static net.arcanamod.Arcana.arcLoc;
 

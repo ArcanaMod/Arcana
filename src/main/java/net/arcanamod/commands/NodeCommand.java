@@ -8,7 +8,7 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.arcanamod.world.Node;
 import net.arcanamod.world.NodeType;
-import net.arcanamod.world.ServerNodeView;
+import net.arcanamod.world.ServerAuraView;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.ResourceLocationArgument;
@@ -79,7 +79,7 @@ public class NodeCommand{
 			nt = NodeType.TYPES.get(type);
 		Vec3d loc = Vec3Argument.getVec3(ctx, "position");
 		Node node = new Node(nt.genBattery(new BlockPos(loc), ctx.getSource().getWorld(), new Random()), nt, loc.x, loc.y, loc.z);
-		ServerNodeView view = new ServerNodeView(ctx.getSource().getWorld());
+		ServerAuraView view = new ServerAuraView(ctx.getSource().getWorld());
 		boolean added = view.addNode(node);
 		// Send PkSyncChunkNodes and feedback
 		if(added){
@@ -99,7 +99,7 @@ public class NodeCommand{
 			return 0;
 		}
 		
-		ServerNodeView view = new ServerNodeView(ctx.getSource().getWorld());
+		ServerAuraView view = new ServerAuraView(ctx.getSource().getWorld());
 		Collection<Node> removed = new ArrayList<>();
 		for(Node node : nodes)
 			if(view.removeNode(node))
@@ -133,7 +133,7 @@ public class NodeCommand{
 		}else
 			nt = NodeType.TYPES.get(type);
 		
-		ServerNodeView view = new ServerNodeView(ctx.getSource().getWorld());
+		ServerAuraView view = new ServerAuraView(ctx.getSource().getWorld());
 		for(Node node : nodes)
 			node.setType(nt);
 		

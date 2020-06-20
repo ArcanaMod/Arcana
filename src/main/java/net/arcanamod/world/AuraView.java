@@ -15,24 +15,33 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public interface INodeView{
+public interface AuraView{
 	
-	Function<World, INodeView> SIDED_FACTORY = DistExecutor.runForDist(() -> () -> (world) -> world instanceof ClientWorld ? new ClientNodeView((ClientWorld)world) : null, () -> () -> (world) -> world instanceof ServerWorld ? new ServerNodeView((ServerWorld)world) : null);
+	Function<World, AuraView> SIDED_FACTORY = DistExecutor.runForDist(() -> () -> (world) -> world instanceof ClientWorld ? new ClientAuraView((ClientWorld)world) : null, () -> () -> (world) -> world instanceof ServerWorld ? new ServerAuraView((ServerWorld)world) : null);
 	
 	Collection<Node> getAllNodes();
 	
 	World getWorld();
 	
+	default AuraChunk getNodeChunk(ChunkPos pos){
+		IChunk chunk = getWorld().getChunk(pos.x, pos.z, ChunkStatus.FULL, false);
+		if(chunk instanceof Chunk)
+			return AuraChunk.getFrom((Chunk)chunk);
+		return null;
+	}
+	
 	default Collection<Node> getNodesWithinChunk(ChunkPos pos){
-		NodeChunk nc = getNodeChunk(pos);
+		AuraChunk nc = getNodeChunk(pos);
 		return nc != null ? nc.getNodes() : Collections.emptyList();
 	}
 	
-	default NodeChunk getNodeChunk(ChunkPos pos){
-		IChunk chunk = getWorld().getChunk(pos.x, pos.z, ChunkStatus.FULL, false);
-		if(chunk instanceof Chunk)
-			return NodeChunk.getFrom((Chunk)chunk);
-		return null;
+	default int getTaintWithinChunk(ChunkPos pos){
+		AuraChunk nc = getNodeChunk(pos);
+		return nc != null ? nc.getTaintLevel() : -1;
+	}
+	
+	default int getTaintAt(BlockPos pos){
+		return getTaintWithinChunk(new ChunkPos(pos));
 	}
 	
 	default Collection<Node> getNodesWithinAABB(AxisAlignedBB bounds){
@@ -140,7 +149,7 @@ public interface INodeView{
 	
 	default boolean addNode(Node node){
 		// get the relevant chunk
-		NodeChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
+		AuraChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
 		if(nc != null){
 			nc.addNode(node);
 			return true;
@@ -150,7 +159,7 @@ public interface INodeView{
 	
 	default boolean removeNode(Node node){
 		// get the relevant chunk
-		NodeChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
+		AuraChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
 		if(nc != null && nc.getNodes().contains(node)){
 			nc.removeNode(node);
 			return true;
