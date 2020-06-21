@@ -23,7 +23,7 @@ public class AspectParticle extends SpriteTexturedParticle {
 		super(world, x, y, z);
 		particleGravity = 0;
 		maxAge = 0;
-		particleScale = .7f;
+		particleScale = .14f;
 		canCollide = false;
 		setSprite(sprite);
 	}

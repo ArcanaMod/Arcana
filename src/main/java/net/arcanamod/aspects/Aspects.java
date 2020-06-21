@@ -1,10 +1,12 @@
 package net.arcanamod.aspects;
 
+import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.AspectItem;
 import net.arcanamod.util.Pair;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -67,6 +69,10 @@ public class Aspects{
 			if(b != null)
 				return Aspect.combinations.inverse().getOrDefault(a, Pair.of(null, null)).contains(b) || Aspect.combinations.inverse().getOrDefault(b, Pair.of(null, null)).contains(a);
 		return false;
+	}
+
+	public static ResourceLocation getAspectTextureLocation(Aspect aspect) {
+		return Arcana.arcLoc("aspect/"+aspect.name().toLowerCase());
 	}
 
 	public static int getEmptyCell(IAspectHandler handler) {

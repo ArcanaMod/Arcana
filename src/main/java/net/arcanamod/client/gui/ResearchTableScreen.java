@@ -13,6 +13,7 @@ import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -22,6 +23,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
 import javax.annotation.Nonnull;
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.function.Consumer;
@@ -39,6 +41,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	int page = 0;
 	
 	Button leftArrow, rightArrow;
+	TextFieldWidget searchWidget;
 	
 	public ResearchTableScreen(ResearchTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
@@ -68,6 +71,9 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				}
 			}
 		}
+		renderModalRectWithCustomSizedTexture(9,10,0,300,120,15,120,15);
+		//String searchText = I18n.format("researchTable.search");
+		//font.drawString(searchText, guiLeft + 13, guiTop + 13, Color.decode("#CECECE").getRGB());
 		//Connection.sendSyncAspectContainer(aspectContainer,minecraft.getIntegratedServer().getPlayerList().getPlayerByUsername("Dev"));
 	}
 
@@ -77,9 +83,23 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+		if (this.searchWidget != null) {
+			this.searchWidget.tick();
+		}
+	}
+
+	@Override
 	protected void init() {
 		super.init();
 
+		searchWidget = new TextFieldWidget(font,guiLeft + 9,guiLeft + 10,120,15,I18n.format("researchTable.search"));
+		searchWidget.setMaxStringLength(30);
+		searchWidget.setEnableBackgroundDrawing(false);
+		searchWidget.setVisible(true);
+		searchWidget.setTextColor(16777215);
+		children.add(searchWidget);
 		leftArrow = addButton(new ChangeAspectPageButton(guiLeft + 11, guiTop + 183, false, this::actionPerformed));
 		rightArrow = addButton(new ChangeAspectPageButton(guiLeft + 112, guiTop + 183, true, this::actionPerformed));
 	}
@@ -88,7 +108,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		if(button == leftArrow && page > 0)
 			page--;
 		ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
-		if(button == rightArrow && container.scrollableSlots.size() > 30 * (page + 1))
+		if(button == rightArrow && container.scrollableSlots.size() > 36 * (page + 1))
 			page++;
 
 		refreshSlotVisibility();
@@ -99,7 +119,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		List<AspectSlot> slots = container.scrollableSlots;
 		for(int i = 0; i < slots.size(); i++){
 			AspectSlot slot = slots.get(i);
-			slot.visible = i >= 30 * page && i < 30 * (page + 1);
+			slot.visible = i >= 36 * page && i < 36 * (page + 1);
 		}
 	}
 	
@@ -121,10 +141,10 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
 				// first check if there are multiple pages
 				if (container!=null)
-				if(container.scrollableSlots.size() > 30)
+				if(container.scrollableSlots.size() > 36)
 					if(right){
 						// if I am not on the last page
-						if(container.scrollableSlots.size() > 30 * (page + 1)){
+						if(container.scrollableSlots.size() > 36 * (page + 1)){
 							teY -= 11;
 							if(isHovered)
 								teY -= 11;
