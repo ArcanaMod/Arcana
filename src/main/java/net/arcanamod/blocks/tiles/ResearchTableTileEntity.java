@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableTileEntity extends LockableTileEntity implements IPreActionEventCallable {
+public class ResearchTableTileEntity extends LockableTileEntity {
 
 	ArrayList<BlockPos> visContainers = new ArrayList<>();
 	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE,100);
@@ -219,16 +219,6 @@ public class ResearchTableTileEntity extends LockableTileEntity implements IPreA
 	public void clear() {
 		for (int i = 0; i < items.getSlots()-1; i++) {
 			items.getStackInSlot(i).setCount(0);
-		}
-	}
-
-	@Override
-	public void onAction(Action action, @Nullable Object... args) {
-		for (BlockPos visPos : visContainers) {
-			TileEntity te = world.getTileEntity(visPos);
-			if (te instanceof IPreActionEventCallable) {
-				((IPreActionEventCallable)te).onAction(action,args);
-			}
 		}
 	}
 }

@@ -1,17 +1,10 @@
 package net.arcanamod.network;
 
-import io.netty.buffer.ByteBuf;
-import net.arcanamod.aspects.IPreActionEventCallable;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.Researcher;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,11 +48,6 @@ public class PkAspectClick {
 					if((msg.type == ClickType.TAKE || msg.type == ClickType.TAKE_ALL) && (container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0){
 						container.setHeldAspect(slot.getAspect());
 						int drain = msg.type == ClickType.TAKE_ALL ? slot.getAmount() : 1;
-
-						//refresh jar content
-						if (container instanceof ResearchTableContainer)
-							((ResearchTableContainer)container).te.onAction(IPreActionEventCallable.Action.IASPECTHANDLER_CAP_DRAIN,null);
-
 						container.setHeldCount(container.getHeldCount() + syncAndGet(slot,drain,msg.windowId,msg.slotId,msg.type,spe,true));
 						if(slot.getAmount() <= 0 && slot.storeSlot)
 							slot.setAspect(null);
@@ -68,11 +56,6 @@ public class PkAspectClick {
 						int drain = msg.type == ClickType.PUT_ALL ? container.getHeldCount() : 1;
 						if(slot.getAspect() == null && slot.storeSlot)
 							slot.setAspect(container.getHeldAspect());
-
-						//refresh jar content
-						if (container instanceof ResearchTableContainer)
-							((ResearchTableContainer)container).te.onAction(IPreActionEventCallable.Action.IASPECTHANDLER_CAP_INSERT,null);
-
 						container.setHeldCount(container.getHeldCount() - (drain - syncAndGet(slot, drain,msg.windowId,msg.slotId,msg.type,spe,false)));
 						if(container.getHeldCount() <= 0){
 							container.setHeldCount(0);

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "arcana:item/darkness"
+    "layer0": "arcana:aspect/darkness"
   }
 }
