@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_gold_ore"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_gold_ore"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_gold_ore"
+    }
   }
 }

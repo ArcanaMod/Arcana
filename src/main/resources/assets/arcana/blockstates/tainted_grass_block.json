@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_grass_block"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_grass_block"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_grass_block"
+    }
   }
 }

@@ -9,7 +9,7 @@
   },
   "variants": {
     "": {
-      "model": "arcana:block/dair_leaves"
+      "model": "arcana:block/tainted_dair_leaves"
     }
   }
 }

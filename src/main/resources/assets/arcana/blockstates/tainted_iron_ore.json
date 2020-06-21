@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_iron_ore"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_iron_ore"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_iron_ore"
+    }
   }
 }
