@@ -16,7 +16,7 @@ public class ScribbledNoteScreen extends Screen {
     @Override
     public void render(int p_render_1_, int p_render_2_, float p_render_3_){
         String text = I18n.format("scribbledNote.text");
+        minecraft.fontRenderer.drawString(text, (width - minecraft.fontRenderer.getStringWidth(text)) /2, (height / 2), 1);
         minecraft.getTextureManager().bindTexture(SCRIBBLED_NOTE_TEXTURE);
-        minecraft.fontRenderer.drawString(text, 2, 2, 1);
     }
 }
