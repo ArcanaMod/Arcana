@@ -1,8 +1,8 @@
 package net.arcanamod.event;
 
 import com.google.common.collect.ConcurrentHashMultiset;
-import net.arcanamod.world.INodeView;
-import net.arcanamod.world.ServerNodeView;
+import net.arcanamod.world.AuraView;
+import net.arcanamod.world.ServerAuraView;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.TickEvent;
@@ -53,7 +53,7 @@ public class WorldTickHandler{
 			
 			if(world instanceof ServerWorld){
 				ServerWorld serverWorld = (ServerWorld)world;
-				INodeView view = new ServerNodeView(serverWorld);
+				AuraView view = new ServerAuraView(serverWorld);
 				view.getAllNodes().forEach(node -> node.type().tick(serverWorld, view, node));
 			}
 			

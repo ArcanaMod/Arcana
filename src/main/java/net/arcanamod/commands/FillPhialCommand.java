@@ -46,36 +46,29 @@ public class FillPhialCommand
         );
     }
 
-    public static int fill(CommandContext<CommandSource> ctx) throws CommandSyntaxException
-    {
+    public static int fill(CommandContext<CommandSource> ctx) throws CommandSyntaxException{
         // return number of players affected successfully
         AtomicInteger ret = new AtomicInteger();
         EntityArgument.getPlayers(ctx, "targets").forEach(serverPlayerEntity -> {
             ItemStack is = serverPlayerEntity.getHeldItemMainhand();
             IAspectHandler vis = is.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
             ResourceLocation aspect_name = ResourceLocationArgument.getResourceLocation(ctx, "aspect");
-            int amount = IntegerArgumentType.getInteger(ctx,"amount");
-            if (vis!=null)
-            {
-                if (is.getItem() instanceof PhialItem)
-                {
+            int amount = IntegerArgumentType.getInteger(ctx, "amount");
+            if(vis != null){
+                if(is.getItem() instanceof PhialItem){
                     Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
-                    if (targettedStack != null)
-                    {
-                        vis.insert(0,new AspectStack(targettedStack, amount), false);
-                        if (is.getTag() == null)
-                        {
+                    if(targettedStack != null){
+                        vis.insert(0, new AspectStack(targettedStack, amount), false);
+                        if(is.getTag() == null){
                             is.setTag(is.getShareTag());
                         }
-                    } else {
-                        serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcanafill.invalid_aspect", aspect_name).applyTextStyle(TextFormatting.RED));
+                    }else{
+                        serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_aspect", aspect_name).applyTextStyle(TextFormatting.RED));
                     }
-                }
-                else
-                    serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcanafill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
-            }
-            else
-                serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcanafill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
+                }else
+                    serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
+            }else
+                serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
             ret.getAndIncrement();
         });
         return ret.get();

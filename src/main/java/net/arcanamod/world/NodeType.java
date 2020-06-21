@@ -50,7 +50,7 @@ public abstract class NodeType{
 		SPECIAL_TYPES.add(HUNGRY);
 	}
 	
-	public void tick(IWorld world, INodeView nodes, Node node){
+	public void tick(IWorld world, AuraView nodes, Node node){
 		if(world.isRemote()){
 			GogglePriority priority = NodeHelper.getGogglePriority();
 			if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
@@ -58,7 +58,7 @@ public abstract class NodeType{
 		}
 	}
 	
-	public abstract ResourceLocation texture(IWorld world, INodeView nodes, Node node);
+	public abstract ResourceLocation texture(IWorld world, AuraView nodes, Node node);
 	public abstract Collection<ResourceLocation> textures();
 	
 	public String toString(){
@@ -101,7 +101,7 @@ public abstract class NodeType{
 	
 	public static class NormalNodeType extends NodeType{
 		
-		public ResourceLocation texture(IWorld world, INodeView nodes, Node node){
+		public ResourceLocation texture(IWorld world, AuraView nodes, Node node){
 			return arcLoc("nodes/normal_node");
 		}
 		
@@ -112,7 +112,7 @@ public abstract class NodeType{
 	
 	public static class BrightNodeType extends NodeType{
 		
-		public ResourceLocation texture(IWorld world, INodeView nodes, Node node){
+		public ResourceLocation texture(IWorld world, AuraView nodes, Node node){
 			return arcLoc("nodes/bright_node");
 		}
 		
@@ -131,7 +131,7 @@ public abstract class NodeType{
 	
 	public static class PaleNodeType extends NodeType{
 		
-		public ResourceLocation texture(IWorld world, INodeView nodes, Node node){
+		public ResourceLocation texture(IWorld world, AuraView nodes, Node node){
 			return arcLoc("nodes/fading_node");
 		}
 		
@@ -150,7 +150,7 @@ public abstract class NodeType{
 	
 	public static class EldritchNodeType extends NodeType{
 		
-		public ResourceLocation texture(IWorld world, INodeView nodes, Node node){
+		public ResourceLocation texture(IWorld world, AuraView nodes, Node node){
 			return arcLoc("nodes/eldritch_node");
 		}
 		
@@ -161,7 +161,7 @@ public abstract class NodeType{
 	
 	public static class HungryNodeType extends NodeType{
 		
-		public ResourceLocation texture(IWorld world, INodeView nodes, Node node){
+		public ResourceLocation texture(IWorld world, AuraView nodes, Node node){
 			return arcLoc("nodes/hungry_node");
 		}
 		
@@ -172,7 +172,7 @@ public abstract class NodeType{
 	
 	public static class TaintedNodeType extends NodeType{
 		
-		public ResourceLocation texture(IWorld world, INodeView nodes, Node node){
+		public ResourceLocation texture(IWorld world, AuraView nodes, Node node){
 			return arcLoc("nodes/tainted_node");
 		}
 		

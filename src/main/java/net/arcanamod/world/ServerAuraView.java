@@ -1,7 +1,7 @@
 package net.arcanamod.world;
 
 import net.arcanamod.network.Connection;
-import net.arcanamod.network.PkSyncChunkNodes;
+import net.arcanamod.network.PkSyncChunkAura;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -13,17 +13,15 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * A view of the nodes in the world for a particular tick.
  */
-public class ServerNodeView implements INodeView{
+public class ServerAuraView implements AuraView{
 	
 	ServerWorld world;
 	
-	public ServerNodeView(ServerWorld world){
+	public ServerAuraView(ServerWorld world){
 		this.world = world;
 	}
 	
@@ -32,7 +30,7 @@ public class ServerNodeView implements INodeView{
 		for(ChunkHolder holder : world.getChunkProvider().chunkManager.getLoadedChunksIterable()){
 			Chunk chunk = holder.getChunkIfComplete();
 			if(chunk != null){
-				NodeChunk nc = NodeChunk.getFrom(chunk);
+				AuraChunk nc = AuraChunk.getFrom(chunk);
 				if(nc != null)
 					allNodes.addAll(nc.getNodes());
 			}
@@ -49,7 +47,7 @@ public class ServerNodeView implements INodeView{
 	}
 	
 	public void sendChunkToClients(ChunkPos pos){
-		Connection.INSTANCE.send(PacketDistributor.ALL.noArg(), new PkSyncChunkNodes(pos, getNodesWithinChunk(pos)));
+		Connection.INSTANCE.send(PacketDistributor.ALL.noArg(), new PkSyncChunkAura(pos, getNodesWithinChunk(pos), getTaintWithinChunk(pos)));
 	}
 	
 	public void sendAllChunksToClients(Collection<? extends IPosition> pos){

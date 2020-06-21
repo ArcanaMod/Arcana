@@ -18,7 +18,7 @@ import net.arcanamod.research.ResearchLoader;
 import net.arcanamod.research.impls.ResearcherCapability;
 import net.arcanamod.spells.SpellEffectHandler;
 import net.arcanamod.world.NodeType;
-import net.arcanamod.world.impl.NodeChunkCapability;
+import net.arcanamod.world.impl.AuraChunkCapability;
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.client.Minecraft;
@@ -100,7 +100,7 @@ public class Arcana{
 		Requirement.init();
 		ResearcherCapability.init();
 		AspectHandlerCapability.init();
-		NodeChunkCapability.init();
+		AuraChunkCapability.init();
 		Puzzle.init();
 		
 		proxy.preInit(event);

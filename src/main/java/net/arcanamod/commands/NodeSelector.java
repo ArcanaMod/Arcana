@@ -1,8 +1,8 @@
 package net.arcanamod.commands;
 
-import net.arcanamod.world.INodeView;
+import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
-import net.arcanamod.world.ServerNodeView;
+import net.arcanamod.world.ServerAuraView;
 import net.minecraft.command.CommandSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
@@ -32,13 +32,13 @@ public class NodeSelector{
 	public Collection<Node> select(CommandSource source){
 		if(type){
 			// in aabb
-			INodeView view = new ServerNodeView(source.getWorld());
+			AuraView view = new ServerAuraView(source.getWorld());
 			return view.getNodesWithinAABB(aabb);
 		}else{
 			// nearest to caller
 			Vec3d caller = source.getPos();
 			// get all nodes in a 300x300 chunk area
-			INodeView view = new ServerNodeView(source.getWorld());
+			AuraView view = new ServerAuraView(source.getWorld());
 			Collection<Node> ranged = new ArrayList<>(view.getNodesWithinAABB(new AxisAlignedBB(caller.x - 150, 0, caller.z - 150, caller.x + 150, 256, caller.z + 150)));
 			// sort by distance
 			return ranged.stream()
