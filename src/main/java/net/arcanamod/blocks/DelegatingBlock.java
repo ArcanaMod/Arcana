@@ -9,6 +9,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -66,8 +68,13 @@ public class DelegatingBlock extends Block{
 		return parentBlock.getFluidState(state);
 	}
 	
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public static BlockState switchBlock(BlockState state, Block block){
-		return new BlockState(block, state.getValues());
+		BlockState base = block.stateContainer.getBaseState();
+		// A helper method doesn't work here...
+		for(IProperty property : state.getProperties())
+			base = base.with(property, state.get(property));
+		return base;
 	}
 	
 	public BlockState getStateForPlacement(BlockItemUseContext context){
@@ -88,14 +95,6 @@ public class DelegatingBlock extends Block{
 	public BlockState mirror(BlockState state, Mirror mirror){
 		return switchBlock(parentBlock.mirror(state, mirror), this);
 	}
-	
-	/*public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos){
-		return switchBlock(parentBlock.updatePostPlacement(state, facing, facingState, world, currentPos, facingPos), this);
-	}*/
-	
-	/*public BlockState getExtendedState(BlockState state, IBlockReader world, BlockPos pos){
-		return switchBlock(parentBlock.getExtendedState(state, world, pos), this);
-	}*/
 	
 	public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand){
 		return switchBlock(parentBlock.getStateForPlacement(state, facing, state2, world, pos1, pos2, hand), this);
