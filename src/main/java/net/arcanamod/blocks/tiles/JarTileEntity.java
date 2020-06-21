@@ -153,10 +153,6 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, IV
 
 	@Override
 	public void tick() {
-		if(world.isRemote()){
-			GogglePriority priority = NodeHelper.getGogglePriority();
-			if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
-				world.addParticle(new AspectParticleData(arcLoc("aspect/slime"), ArcanaParticles.ASPECT_PARTICLE.get()), pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
-		}
+
 	}
 }
