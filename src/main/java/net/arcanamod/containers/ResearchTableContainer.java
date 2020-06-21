@@ -205,13 +205,13 @@ public class ResearchTableContainer extends AspectContainer{
 			int yy = i / 6;
 			int xx = i % 6;
 			boolean visible = true;
-			if(yy >= 5){
+			if(yy >= 6){
 				visible = false;
 				// wrap
-				yy %= 5;
+				yy %= 6;
 			}
 			int x = 11 + 20 * xx;
-			int y = 65 + 21 * yy;
+			int y = 32 + 21 * yy;
 			if(xx % 2 == 0)
 				y += 5;
 			AspectSlot slot = new AspectSlot(aspect, table, x, y);
