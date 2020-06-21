@@ -96,6 +96,7 @@ public class AspectSlot{
 	public int insert(Aspect aspect, int amount, boolean simulate){
 		int result = amount;
 		if(getInventory().get() != null) {
+
 			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
 
 			boolean isInserted = false;

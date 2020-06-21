@@ -23,12 +23,13 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableTileEntity extends LockableTileEntity {
+public class ResearchTableTileEntity extends LockableTileEntity implements IPreActionEventCallable {
 
+	ArrayList<BlockPos> visContainers = new ArrayList<>();
 	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE,100);
 
 	public ResearchTableTileEntity(){
@@ -67,6 +68,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 						if (((IVisShareable) teinbox).isVisShareable()) {
 							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
+								visContainers.add(new BlockPos(blockPos)); // Removing reference
 								AspectBattery.merge(battery, vis);
 							}
 						}
@@ -217,6 +219,16 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	public void clear() {
 		for (int i = 0; i < items.getSlots()-1; i++) {
 			items.getStackInSlot(i).setCount(0);
+		}
+	}
+
+	@Override
+	public void onAction(Action action, @Nullable Object... args) {
+		for (BlockPos visPos : visContainers) {
+			TileEntity te = world.getTileEntity(visPos);
+			if (te instanceof IPreActionEventCallable) {
+				((IPreActionEventCallable)te).onAction(action,args);
+			}
 		}
 	}
 }

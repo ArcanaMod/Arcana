@@ -8,8 +8,6 @@ import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
-import net.arcanamod.event.PlayerTickHandler;
-import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaRecipes;
 import net.arcanamod.network.Connection;
@@ -31,7 +29,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -160,6 +157,7 @@ public class Arcana{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 
 		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.NODE_PARTICLE.get(), new NodeParticle.Factory());
+		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.ASPECT_PARTICLE.get(), new AspectParticle.Factory());
 	}
 	
 	private void enqueueIMC(InterModEnqueueEvent event){

@@ -64,25 +64,28 @@ public class BlockJar extends Block{
 				IAspectHandler vis = IAspectHandler.getFrom(heldItem);
 				if (vis != null) {
 					if (vis.getHolder(0).getCurrentVis() <= 0) {
+						// drain
 						int amount = jarTileEntity.vis.getHolder(0).getCurrentVis();
+						Aspect jarAspect = jarTileEntity.vis.getHolder(0).getContainedAspect();
 						heldItem.shrink(1);
 						ItemStack capedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
 						IAspectHandler.getFrom(capedItemStack)
-								.insert(0, new AspectStack(jarTileEntity.allowedAspect, amount >= 8 ? 8 : amount),false);
+								.insert(0, new AspectStack(jarAspect, Math.min(amount, 8)),false);
 						if (capedItemStack.getTag() == null)
 						{
 							capedItemStack.setTag(capedItemStack.getShareTag());
 						}
 						player.addItemStackToInventory(capedItemStack);
-						jarTileEntity.drain(amount >= 8 ? 8 : amount);
+						jarTileEntity.vis.drain(0, Math.min(amount, 8), false);
 					} else {
+						// fill
 						if (jarTileEntity.vis.getHolder(0).getCurrentVis()<100) {
 							Aspect target = vis.getHolder(0).getContainedAspect();
-							if (target==jarTileEntity.allowedAspect||jarTileEntity.allowedAspect==Aspect.EMPTY) {
-								//vis.drain(target,vis.getCurrentVis(target),false);
+							Aspect jarAspect = jarTileEntity.vis.getHolder(0).getContainedAspect();
+							if (target==jarAspect||jarAspect==Aspect.EMPTY) {
 								heldItem.shrink(1);
 								player.addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
-								jarTileEntity.fill(vis.getHolder(0).getCurrentVis(), target);
+								jarTileEntity.vis.insert(0,new AspectStack(target, vis.getHolder(0).getCurrentVis()),false);
 							}
 						}
 					}
