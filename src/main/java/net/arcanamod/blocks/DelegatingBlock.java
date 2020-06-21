@@ -66,7 +66,7 @@ public class DelegatingBlock extends Block{
 		return parentBlock.getFluidState(state);
 	}
 	
-	protected BlockState switchBlock(BlockState state, Block block){
+	public static BlockState switchBlock(BlockState state, Block block){
 		return new BlockState(block, state.getValues());
 	}
 	
@@ -103,6 +103,14 @@ public class DelegatingBlock extends Block{
 	
 	public BlockState getStateAtViewpoint(BlockState state, IBlockReader world, BlockPos pos, Vec3d viewpoint){
 		return switchBlock(parentBlock.getStateAtViewpoint(state, world, pos, viewpoint), this);
+	}
+	
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
+		parentBlock.randomTick(switchBlock(state, parentBlock), world, pos, random);
+	}
+	
+	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand){
+		parentBlock.tick(switchBlock(state, parentBlock), world, pos, rand);
 	}
 	
 	public boolean isTransparent(BlockState state){
