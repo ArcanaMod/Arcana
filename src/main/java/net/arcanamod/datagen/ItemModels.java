@@ -31,7 +31,7 @@ public class ItemModels extends ItemModelProvider{
 		
 		Aspect.aspects.forEach(aspect -> {
 			withExistingParent("aspect_" + aspect.name().toLowerCase(), "item/generated")
-					.texture("layer0", new ResourceLocation(Arcana.MODID, "item/" + aspect.name().toLowerCase()));
+					.texture("layer0", new ResourceLocation(Arcana.MODID, "aspect/" + aspect.name().toLowerCase()));
 			//withExistingParent("phial_" + aspect.name().toLowerCase(), "item/generated")
 			//		.texture("layer0", new ResourceLocation(Arcana.MODID, "item/phial_" + aspect.name().toLowerCase()));
 		});

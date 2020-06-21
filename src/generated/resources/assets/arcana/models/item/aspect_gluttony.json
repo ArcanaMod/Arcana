@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "arcana:item/gluttony"
+    "layer0": "arcana:aspect/gluttony"
   }
 }

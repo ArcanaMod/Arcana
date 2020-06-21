@@ -76,7 +76,7 @@ public class ResearchCommand{
 		EntityArgument.getPlayers(ctx, "targets").forEach(entity -> {
 			ResourceLocation key = ResourceLocationArgument.getResourceLocation(ctx, "research");
 			ResearchEntry entry = ResearchBooks.streamEntries().filter(e -> e.key().equals(key)).findFirst().orElseThrow(() -> {
-				Message noSuchEntry = new TranslationTextComponent("command.arcana.research.no_entry", key.toString());
+				Message noSuchEntry = new TranslationTextComponent("commands.arcana.research.no_entry", key.toString());
 				return new RuntimeException(new CommandSyntaxException(new SimpleCommandExceptionType(noSuchEntry), noSuchEntry));
 			});
 			Researcher researcher = Researcher.getFrom(entity);

@@ -14,11 +14,11 @@ import java.util.Collection;
 /**
  * A view of the nodes in the world for a particular tick.
  */
-public class ClientNodeView implements INodeView{
+public class ClientAuraView implements AuraView{
 	
 	ClientWorld world;
 	
-	public ClientNodeView(ClientWorld world){
+	public ClientAuraView(ClientWorld world){
 		this.world = world;
 	}
 	
@@ -27,7 +27,7 @@ public class ClientNodeView implements INodeView{
 		for(ChunkPos chunkPos : ClientNodeHandler.clientLoadedChunks){
 			IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, false);
 			if(chunk instanceof Chunk){ // also a nonnull check
-				NodeChunk nc = NodeChunk.getFrom((Chunk)chunk);
+				AuraChunk nc = AuraChunk.getFrom((Chunk)chunk);
 				if(nc != null)
 					allNodes.addAll(nc.getNodes());
 			}

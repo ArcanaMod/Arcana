@@ -68,4 +68,8 @@ public class Aspects{
 				return Aspect.combinations.inverse().getOrDefault(a, Pair.of(null, null)).contains(b) || Aspect.combinations.inverse().getOrDefault(b, Pair.of(null, null)).contains(a);
 		return false;
 	}
+
+	public static int getEmptyCell(IAspectHandler handler) {
+		return handler.findIndexesFromAspectInHolders(Aspect.EMPTY)[0];
+	}
 }

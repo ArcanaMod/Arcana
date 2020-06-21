@@ -2,7 +2,7 @@ package net.arcanamod.event;
 
 import net.arcanamod.research.Researcher;
 import net.arcanamod.research.impls.ResearcherCapability;
-import net.arcanamod.world.impl.NodeChunkCapability;
+import net.arcanamod.world.impl.AuraChunkCapability;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.chunk.Chunk;
@@ -25,8 +25,8 @@ public class AttachCapabilities{
 	
 	@SubscribeEvent
 	public static void attachChunkCapabilities(AttachCapabilitiesEvent<Chunk> event){
-		NodeChunkCapability.Provider cap = new NodeChunkCapability.Provider();
-		event.addCapability(NodeChunkCapability.KEY, cap);
+		AuraChunkCapability.Provider cap = new AuraChunkCapability.Provider();
+		event.addCapability(AuraChunkCapability.KEY, cap);
 	}
 	
 	@SubscribeEvent

@@ -15,24 +15,81 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public interface INodeView{
+public interface AuraView{
 	
-	Function<World, INodeView> SIDED_FACTORY = DistExecutor.runForDist(() -> () -> (world) -> world instanceof ClientWorld ? new ClientNodeView((ClientWorld)world) : null, () -> () -> (world) -> world instanceof ServerWorld ? new ServerNodeView((ServerWorld)world) : null);
+	Function<World, AuraView> SIDED_FACTORY = DistExecutor.runForDist(() -> () -> (world) -> world instanceof ClientWorld ? new ClientAuraView((ClientWorld)world) : null, () -> () -> (world) -> world instanceof ServerWorld ? new ServerAuraView((ServerWorld)world) : null);
 	
 	Collection<Node> getAllNodes();
 	
 	World getWorld();
 	
+	default AuraChunk getAuraChunk(ChunkPos pos){
+		IChunk chunk = getWorld().getChunk(pos.x, pos.z, ChunkStatus.FULL, false);
+		if(chunk instanceof Chunk)
+			return AuraChunk.getFrom((Chunk)chunk);
+		return null;
+	}
+	
+	default AuraChunk getAuraChunk(BlockPos pos){
+		return getAuraChunk(new ChunkPos(pos));
+	}
+	
 	default Collection<Node> getNodesWithinChunk(ChunkPos pos){
-		NodeChunk nc = getNodeChunk(pos);
+		AuraChunk nc = getAuraChunk(pos);
 		return nc != null ? nc.getNodes() : Collections.emptyList();
 	}
 	
-	default NodeChunk getNodeChunk(ChunkPos pos){
-		IChunk chunk = getWorld().getChunk(pos.x, pos.z, ChunkStatus.FULL, false);
-		if(chunk instanceof Chunk)
-			return NodeChunk.getFrom((Chunk)chunk);
-		return null;
+	default int getTaintWithinChunk(ChunkPos pos){
+		AuraChunk nc = getAuraChunk(pos);
+		return nc != null ? nc.getTaintLevel() : -1;
+	}
+	
+	default int getTaintAt(BlockPos pos){
+		return getTaintWithinChunk(new ChunkPos(pos));
+	}
+	
+	/**
+	 * Adds taint to a particular chunk. Returns the previous taint level, or -1 if the chunk isn't loaded.
+	 *
+	 * @param pos
+	 * 		The chunk to add taint to.
+	 * @return The previous taint level.
+	 */
+	default int addTaintToChunk(ChunkPos pos, int amount){
+		AuraChunk nc = getAuraChunk(pos);
+		if(nc != null){
+			int level = nc.getTaintLevel();
+			nc.addTaint(amount);
+			return level;
+		}else{
+			return -1;
+		}
+	}
+	
+	default int addTaintAt(BlockPos pos, int amount){
+		return addTaintToChunk(new ChunkPos(pos), amount);
+	}
+	
+	/**
+	 * Sets the taint level of a particular chunk. Returns the previous taint level, or -1 if the chunk isn't loaded.
+	 *
+	 * @param pos
+	 * 		The chunk to set the taint of.
+	 * @return The previous taint level.
+	 */
+	default int setTaintOfChunk(ChunkPos pos, int amount){
+		AuraChunk nc = getAuraChunk(pos);
+		if(nc != null){
+			int level = nc.getTaintLevel();
+			nc.setTaint(amount);
+			return level;
+		}else{
+			return -1;
+		}
+	}
+	
+	default int setTaintAt(BlockPos pos, int amount){
+		return setTaintOfChunk(new ChunkPos(pos), amount);
 	}
 	
 	default Collection<Node> getNodesWithinAABB(AxisAlignedBB bounds){
@@ -50,8 +107,8 @@ public interface INodeView{
 		//then getNodesWithinAABB for each
 		List<Node> list = new ArrayList<>();
 		for(ChunkPos pos : relevant)
-			if(getNodeChunk(pos) != null)
-				list.addAll(getNodeChunk(pos).getNodesWithinAABB(bounds));
+			if(getAuraChunk(pos) != null)
+				list.addAll(getAuraChunk(pos).getNodesWithinAABB(bounds));
 		return list;
 	}
 	
@@ -75,7 +132,7 @@ public interface INodeView{
 			relevant.add(min);
 		//then getNodesWithinAABB foreach
 		return relevant.stream()
-				.map(this::getNodeChunk)
+				.map(this::getAuraChunk)
 				.map(chunk -> chunk.getNodesWithinAABB(bounds))
 				.flatMap(Collection::stream)
 				.filter(node -> node.type() == type)
@@ -109,7 +166,7 @@ public interface INodeView{
 			relevant.add(min);
 		//then getNodesWithinAABB foreach
 		return relevant.stream()
-				.map(this::getNodeChunk)
+				.map(this::getAuraChunk)
 				.map(chunk -> chunk.getNodesWithinAABB(bounds))
 				.flatMap(Collection::stream)
 				.filter(node -> node != excluded)
@@ -130,7 +187,7 @@ public interface INodeView{
 			relevant.add(min);
 		//then getNodesWithinAABB foreach
 		return relevant.stream()
-				.map(this::getNodeChunk)
+				.map(this::getAuraChunk)
 				.map(chunk -> chunk.getNodesWithinAABB(bounds))
 				.flatMap(Collection::stream)
 				.filter(node -> node.type() == type)
@@ -140,7 +197,7 @@ public interface INodeView{
 	
 	default boolean addNode(Node node){
 		// get the relevant chunk
-		NodeChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
+		AuraChunk nc = getAuraChunk(new ChunkPos(new BlockPos(node)));
 		if(nc != null){
 			nc.addNode(node);
 			return true;
@@ -150,7 +207,7 @@ public interface INodeView{
 	
 	default boolean removeNode(Node node){
 		// get the relevant chunk
-		NodeChunk nc = getNodeChunk(new ChunkPos(new BlockPos(node)));
+		AuraChunk nc = getAuraChunk(new ChunkPos(new BlockPos(node)));
 		if(nc != null && nc.getNodes().contains(node)){
 			nc.removeNode(node);
 			return true;

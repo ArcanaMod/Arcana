@@ -1,7 +1,7 @@
 package net.arcanamod.world.impl;
 
 import net.arcanamod.world.Node;
-import net.arcanamod.world.NodeChunk;
+import net.arcanamod.world.AuraChunk;
 import net.arcanamod.world.NodeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -13,9 +13,10 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class NodeChunkImpl implements NodeChunk{
+public class AuraChunkImpl implements AuraChunk{
 	
 	Collection<Node> nodes = new ArrayList<>();
+	int taint;
 	
 	public void addNode(Node node){
 		nodes.add(node);
@@ -58,6 +59,19 @@ public class NodeChunkImpl implements NodeChunk{
 		return set;
 	}
 	
+	public int getTaintLevel(){
+		return taint;
+	}
+	
+	public void addTaint(int amount){
+		taint += amount;
+		taint = Math.max(taint, 0);
+	}
+	
+	public void setTaint(int newTaint){
+		taint = Math.max(newTaint, 0);
+	}
+	
 	public CompoundNBT serializeNBT(){
 		// Just make a list of CompoundNBTs from each node.
 		CompoundNBT compound = new CompoundNBT();
@@ -65,6 +79,7 @@ public class NodeChunkImpl implements NodeChunk{
 		for(Node node : nodes)
 			data.add(node.serializeNBT());
 		compound.put("nodes", data);
+		compound.putInt("taint", taint);
 		return compound;
 	}
 	
@@ -76,5 +91,6 @@ public class NodeChunkImpl implements NodeChunk{
 			if(nodeNBT instanceof CompoundNBT)
 				nodeSet.add(Node.fromNBT((CompoundNBT)nodeNBT));
 		nodes = nodeSet;
+		taint = data.getInt("taint");
 	}
 }

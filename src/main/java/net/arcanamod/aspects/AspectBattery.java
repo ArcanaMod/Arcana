@@ -5,10 +5,13 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class AspectBattery implements ICapabilityProvider, IAspectHandler {
@@ -43,6 +46,11 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 			cells.remove(cell);
 	}
 
+	public void deleteCell(int index){
+		if (getHoldersAmount() > 0)
+			cells.remove(index);
+	}
+
 	@Override
 	public void clear() {
 		cells.clear();
@@ -62,11 +70,13 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	}
 
 	public void replaceCell(int index, AspectCell cell){
-		if (index >= cells.size())
+		if (index >= cells.size()) {
 			if (getHoldersAmount() < maxCells)
 				while (index >= cells.size())
 					cells.add(cell);
-		else cells.set(index,cell);
+		} else {
+			cells.set(index,cell);
+		}
 	}
 
 	/**
@@ -100,6 +110,11 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		while (index >= cells.size())
 			cells.add(new AspectCell(defaultCellSize));
 		return cells.get(index);
+	}
+
+	@Override
+	public boolean exist(int index) {
+		return index >= 0 && index < cells.size();
 	}
 
 	/**
@@ -175,12 +190,13 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 	}
 
 	@Override
-	public int findIndexFromAspectInHolders(Aspect aspect) {
+	public int[] findIndexesFromAspectInHolders(Aspect aspect) {
+		List<Integer> indexes = new ArrayList<>();
 		for (IAspectHolder cell : cells){
 			if (cell.getContainedAspect()==aspect)
-				return cells.indexOf(cell);
+				indexes.add(new Integer(cells.indexOf(cell)));
 		}
-		return 0;
+		return ArrayUtils.toPrimitive(indexes.toArray(new Integer[indexes.size()]));
 	}
 
 	public CompoundNBT serializeNBT(){

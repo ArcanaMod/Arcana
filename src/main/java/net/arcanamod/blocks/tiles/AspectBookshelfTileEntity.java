@@ -11,7 +11,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
@@ -19,7 +18,6 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Set;
 
 public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable
 {
@@ -74,6 +72,9 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 				AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(items.get(i));
 				IAspectHolder target = vis.getHolder(0);
 				aspectBattery.setCellAtIndex(i,(AspectCell)target);
+			} else {
+				if (aspectBattery.exist(i))
+					aspectBattery.deleteCell(i);
 			}
 		}
 
@@ -145,6 +146,8 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 						if (vis.getHolder(0).getCurrentVis()==0) {
 							items.set(i, ItemStack.EMPTY);
 							empty_phial = stack.copy();
+							aspectBattery.setCellAtIndex(i,new AspectCell(8));
+							empty_phial.setTag(empty_phial.getShareTag());
 							return empty_phial;
 						}
 					}
@@ -154,6 +157,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 		if (id_stack.getSecond() != -1)
 		{
 			items.set(id_stack.getSecond(),ItemStack.EMPTY);
+			aspectBattery.setCellAtIndex(id_stack.getSecond(),new AspectCell(8));
 		}
 		return id_stack.getFirst();
 	}

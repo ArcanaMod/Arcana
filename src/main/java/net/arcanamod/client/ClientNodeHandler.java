@@ -1,9 +1,9 @@
 package net.arcanamod.client;
 
 import net.arcanamod.network.Connection;
-import net.arcanamod.network.PkRequestNodeSync;
-import net.arcanamod.world.ClientNodeView;
-import net.arcanamod.world.INodeView;
+import net.arcanamod.network.PkRequestAuraSync;
+import net.arcanamod.world.ClientAuraView;
+import net.arcanamod.world.AuraView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.ChunkPos;
@@ -32,7 +32,7 @@ public class ClientNodeHandler{
 	public static void chunkLoadOnClient(ChunkEvent.Load event){
 		// on client
 		// send PkRequestClientSync
-		untilPlayerJoin.add(() -> Connection.sendToServer(new PkRequestNodeSync(event.getChunk().getPos())));
+		untilPlayerJoin.add(() -> Connection.sendToServer(new PkRequestAuraSync(event.getChunk().getPos())));
 		clientLoadedChunks.add(event.getChunk().getPos());
 	}
 	
@@ -49,7 +49,7 @@ public class ClientNodeHandler{
 			ClientWorld world = Minecraft.getInstance().world;
 			
 			if(world != null){
-				INodeView view = new ClientNodeView(world);
+				AuraView view = new ClientAuraView(world);
 				view.getAllNodes().forEach(node -> node.type().tick(world, view, node));
 			}
 			

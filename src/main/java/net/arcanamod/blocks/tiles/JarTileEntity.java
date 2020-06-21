@@ -1,8 +1,15 @@
 package net.arcanamod.blocks.tiles;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.client.render.ArcanaParticles;
+import net.arcanamod.client.render.AspectParticleData;
+import net.arcanamod.util.GogglePriority;
+import net.arcanamod.util.NodeHelper;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
@@ -11,15 +18,14 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.time.LocalDateTime;
 
-public class JarTileEntity extends TileEntity implements IVisShareable{
+import static net.arcanamod.Arcana.arcLoc;
+
+public class JarTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable{
 
 	public AspectBattery vis = new AspectBattery(1,100);
-	public Aspect allowedAspect = Aspect.EMPTY;
 
 	protected float smoothAmountVisContentAnimation = 0;
-	protected float lastVisAmount = 0;
 
 	long last_time = System.nanoTime();
 
@@ -27,19 +33,20 @@ public class JarTileEntity extends TileEntity implements IVisShareable{
 		super(ArcanaTiles.JAR_TE.get());
 	}
 
-	public Aspect getAllowedAspect()
-	{
-		return allowedAspect;
+	@Override
+	public void read(CompoundNBT compound) {
+		super.read(compound);
+		Aspect aspect = compound.getInt("aspect") != -1 ? Aspect.values()[compound.getInt("aspect")+1] : Aspect.EMPTY;
+		AspectCell cell = new AspectCell();
+		cell.insert(new AspectStack(aspect,compound.getInt("amount")),false);
+		vis.setCellAtIndex(0,cell);
 	}
 
-	public void fill(int amount, Aspect aspect) {
-		lastVisAmount = vis.getHolder(0).getCurrentVis()/8f;
-		allowedAspect = aspect;
-		vis.insert(0, new AspectStack(allowedAspect,amount),false);
-	}
-	public void drain(int amount) {
-		lastVisAmount = vis.getHolder(0).getCurrentVis()/8f;
-		vis.drain(0, new AspectStack(allowedAspect,amount),false);
+	@Override
+	public CompoundNBT write(CompoundNBT compound) {
+		compound.putInt("aspect", vis.getHolder(0).getContainedAspect().ordinal()-1);
+		compound.putInt("amount", vis.getHolder(0).getCurrentVis());
+		return super.write(compound);
 	}
 
 	public float getAspectAmount() {
@@ -51,12 +58,15 @@ public class JarTileEntity extends TileEntity implements IVisShareable{
 
 		if (vis.getHoldersAmount()!=0){
 			float visScaled = vis.getHolder(0).getCurrentVis()/8f;
-			//Arcana.logger.debug("visScaled: "+ visScaled + " lastVisAmount: "+ lastVisAmount + " sAVCA: "+ smoothAmountVisContentAnimation);
-			if (Math.round(smoothAmountVisContentAnimation*10f)/10f!=Math.round(visScaled*10f)/10f)
-				smoothAmountVisContentAnimation += (visScaled-lastVisAmount)/5f/delta_time;
+			if (Math.round(smoothAmountVisContentAnimation*10f)/10f<Math.round(visScaled*10f)/10f)
+				smoothAmountVisContentAnimation += 0.2f/delta_time;
+			else if (Math.round(smoothAmountVisContentAnimation*10f)/10f>Math.round(visScaled*10f)/10f)
+				smoothAmountVisContentAnimation += -0.2f/delta_time;
 			else if (smoothAmountVisContentAnimation != Math.round(smoothAmountVisContentAnimation*100f)/100f)
 				smoothAmountVisContentAnimation = Math.round(smoothAmountVisContentAnimation*100f)/100f;
 			if (visScaled==0)
+				smoothAmountVisContentAnimation = 0;
+			if (smoothAmountVisContentAnimation > 20) //Resets if it is bugged
 				smoothAmountVisContentAnimation = 0;
 		}
 		return -(smoothAmountVisContentAnimation-fullness);
@@ -66,7 +76,7 @@ public class JarTileEntity extends TileEntity implements IVisShareable{
 	{
 		if (this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.DUNGEON_BRICKS.get())
 			return getCreativeJarColor();
-		else return allowedAspect != Aspect.EMPTY ? new Color(allowedAspect.getAspectColor()[2]) : Color.WHITE;
+		else return vis.getHolder(0).getContainedAspect() != Aspect.EMPTY ? new Color(vis.getHolder(0).getContainedAspect().getAspectColor()[2]) : Color.WHITE;
 	}
 
 	public int nextColor = 0;
@@ -100,8 +110,53 @@ public class JarTileEntity extends TileEntity implements IVisShareable{
 		return getCapability(cap);
 	}
 
+	//  When the world loads from disk, the server needs to send the TileEntity information to the client
+	//  it uses getUpdatePacket(), getUpdateTag(), onDataPacket(), and handleUpdateTag() to do this:
+	//  getUpdatePacket() and onDataPacket() are used for one-at-a-time TileEntity updates
+	//  getUpdateTag() and handleUpdateTag() are used by vanilla to collate together into a single chunk update packet
+	//  Not really required for this example since we only use the timer on the client, but included anyway for illustration
+	@Override
+	@Nullable
+	public SUpdateTileEntityPacket getUpdatePacket()
+	{
+		CompoundNBT nbtTagCompound = new CompoundNBT();
+		write(nbtTagCompound);
+		int tileEntityType = ArcanaTiles.JAR_TE.hashCode();
+		return new SUpdateTileEntityPacket(this.pos, tileEntityType, nbtTagCompound);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+		read(pkt.getNbtCompound());
+	}
+
+	/* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client */
+	@Override
+	public CompoundNBT getUpdateTag()
+	{
+		CompoundNBT nbtTagCompound = new CompoundNBT();
+		write(nbtTagCompound);
+		return nbtTagCompound;
+	}
+
+	/* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client */
+	@Override
+	public void handleUpdateTag(CompoundNBT tag)
+	{
+		this.read(tag);
+	}
+
 	@Override
 	public boolean isVisShareable() {
 		return true;
+	}
+
+	@Override
+	public void tick() {
+		if(world.isRemote()){
+			GogglePriority priority = NodeHelper.getGogglePriority();
+			if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
+				world.addParticle(new AspectParticleData(arcLoc("aspect/slime"), ArcanaParticles.ASPECT_PARTICLE.get()), pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+		}
 	}
 }

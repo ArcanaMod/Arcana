@@ -5,6 +5,7 @@ import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -188,18 +189,28 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	}
 
 	@Override
-	public void createCell(IAspectHolder cell) {
+	public boolean exist(int index) {
+		return true;
+	}
 
+	@Override
+	public void createCell(IAspectHolder cell) {
+		throw new IndexOutOfBoundsException("You can't add or remove IAspectHolder in singleton IAspectHandler");
 	}
 
 	@Override
 	public void deleteCell(IAspectHolder cell) {
+		throw new IndexOutOfBoundsException("You can't add or remove IAspectHolder in singleton IAspectHandler");
+	}
 
+	@Override
+	public void deleteCell(int index) {
+		throw new IndexOutOfBoundsException("You can't add or remove IAspectHolder in singleton IAspectHandler");
 	}
 
 	@Override
 	public void setCellSizes() {
-
+		throw new NotImplementedException();
 	}
 
 	/**
@@ -256,7 +267,8 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 
 	@Override
 	public void clear() {
-
+		stored = Aspect.EMPTY;
+		held = 0;
 	}
 
 	@Override
@@ -265,8 +277,8 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	}
 
 	@Override
-	public int findIndexFromAspectInHolders(Aspect aspect) {
-		return 0;
+	public int[] findIndexesFromAspectInHolders(Aspect aspect) {
+		return new int[] {0};
 	}
 
 	public CompoundNBT serializeNBT(){

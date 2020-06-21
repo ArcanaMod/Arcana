@@ -23,12 +23,13 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ResearchTableTileEntity extends LockableTileEntity {
 
+	ArrayList<BlockPos> visContainers = new ArrayList<>();
 	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE,100);
 
 	public ResearchTableTileEntity(){
@@ -58,6 +59,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	private AspectBattery getVisShareablesAsBattery() {
 		//if (world.isRemote) return null;
 		//AtomicInteger j = new AtomicInteger();
+		battery.clear();
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
 			if (world.getBlockState(blockPos).hasTileEntity()) {
 				TileEntity teinbox = world.getTileEntity(blockPos);
@@ -66,16 +68,8 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 						if (((IVisShareable) teinbox).isVisShareable()) {
 							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
+								visContainers.add(new BlockPos(blockPos)); // Removing reference
 								AspectBattery.merge(battery, vis);
-								//int i = 0;
- 								/*while (i < vis.getHoldersAmount()) {
- 									battery = AspectBattery.merge(battery,vis);
- 									AspectCell c = new AspectCell();
- 									c.insert(vis.getHolder(i).getContainedAspectStack(),false);
-									battery.setCellAtIndex(i+ j.get(),c);
-									i++;
-								}*/
-								//j.getAndAdd(i);
 							}
 						}
 			}
@@ -121,7 +115,13 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 		}
 		return super.getCapability(capability, facing).cast();
 	}
-	
+
+	@Nonnull
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+		return this.getCapability(cap,null);
+	}
+
 	public ItemStack visItem(){
 		return items.getStackInSlot(0);
 	}

@@ -1,9 +1,6 @@
 package net.arcanamod.containers;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.aspects.IAspectHolder;
+import net.arcanamod.aspects.*;
 
 import java.util.function.Supplier;
 
@@ -44,10 +41,12 @@ public class AspectSlot{
 	
 	public int getAmount(){
 		if(getInventory().get() != null) {
-			IAspectHolder holder = getInventory().get().findAspectInHolders(getAspect());
-			if (holder != null)
-				return holder.getCurrentVis();
-			else return 0;
+			int amount = 0;
+			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
+			for (int i = 0; i < aspectIndexes.length; i++) {
+				amount += getInventory().get().getHolder(aspectIndexes[i]).getCurrentVis();
+			}
+			return amount;
 		}
 		else
 			return -1;
@@ -81,8 +80,10 @@ public class AspectSlot{
 	 */
 	public int drain(Aspect aspect, int amount, boolean simulate){
 		int result = 0;
-		if(getInventory().get() != null)
-			result = getInventory().get().drain(getInventory().get().findIndexFromAspectInHolders(getAspect()),new AspectStack(aspect, amount), simulate);
+		if(getInventory().get() != null) {
+			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
+			result = getInventory().get().drain(aspectIndexes[0], new AspectStack(aspect, amount), simulate);
+		}
 		onChange();
 		return result;
 	}
@@ -94,8 +95,24 @@ public class AspectSlot{
 	 */
 	public int insert(Aspect aspect, int amount, boolean simulate){
 		int result = amount;
-		if(getInventory().get() != null)
-			result = getInventory().get().insert(0,new AspectStack(aspect, amount), simulate);
+		if(getInventory().get() != null) {
+
+			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
+
+			boolean isInserted = false;
+			if (aspectIndexes.length == 0) {
+				result = getInventory().get().insert(Aspects.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
+				isInserted = true;
+			}
+			for (int i = 0; i < aspectIndexes.length; i++) {
+				if (getInventory().get().getHolder(aspectIndexes[i]).getCurrentVis() < getInventory().get().getHolder(aspectIndexes[i]).getCapacity()) {
+					result = getInventory().get().insert(aspectIndexes[i],new AspectStack(aspect, amount), simulate);
+					isInserted = true;
+					break;
+				}
+			}
+			if (!isInserted) result = getInventory().get().insert(Aspects.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
+		}
 		onChange();
 		return result;
 	}
