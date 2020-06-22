@@ -8,7 +8,6 @@ import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.network.Connection;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
 import net.minecraft.client.Minecraft;
@@ -20,14 +19,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
-import java.io.IOException;
 import java.util.List;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class ResearchTableScreen extends AspectContainerScreen<ResearchTableContainer> {
 	
@@ -71,10 +65,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				}
 			}
 		}
-		renderModalRectWithCustomSizedTexture(9,10,0,300,120,15,120,15);
-		//String searchText = I18n.format("researchTable.search");
-		//font.drawString(searchText, guiLeft + 13, guiTop + 13, Color.decode("#CECECE").getRGB());
-		//Connection.sendSyncAspectContainer(aspectContainer,minecraft.getIntegratedServer().getPlayerList().getPlayerByUsername("Dev"));
+		searchWidget.render(mouseX, mouseY, partialTicks);
 	}
 
 	public static void renderModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
@@ -87,18 +78,43 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		super.tick();
 		if (this.searchWidget != null) {
 			this.searchWidget.tick();
+			searchWidget.setSuggestion(searchWidget.getText().equals("") ? I18n.format("researchTable.search") : "");
+			this.updateAspectSearch();
 		}
+	}
+
+	@Override
+	public boolean keyPressed(int p_keyPressed_1_, int p_keyPressed_2_, int p_keyPressed_3_) {
+		if (searchWidget.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_)) {
+			return true;
+		} else {
+			return searchWidget.isFocused() && searchWidget.getVisible() && p_keyPressed_1_ != 256 || super.keyPressed(p_keyPressed_1_, p_keyPressed_2_, p_keyPressed_3_);
+		}
+	}
+
+	private void updateAspectSearch() {
+		if (!this.searchWidget.getText().equals("")) {
+			ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
+			List<AspectSlot> slots = container.scrollableSlots;
+			for(int i = 0; i < slots.size(); i++){
+				AspectSlot slot = slots.get(i);
+				slot.visible = (i >= 36 * page && i < 36 * (page + 1)) && this.searchWidget.getText().equalsIgnoreCase(slot.getAspect().name());
+			}
+		}
+		else refreshSlotVisibility();
 	}
 
 	@Override
 	protected void init() {
 		super.init();
 
-		searchWidget = new TextFieldWidget(font,guiLeft + 9,guiLeft + 10,120,15,I18n.format("researchTable.search"));
+		searchWidget = new TextFieldWidget(font,guiLeft + 13,guiTop + 14,120,15,I18n.format("researchTable.search"));
 		searchWidget.setMaxStringLength(30);
 		searchWidget.setEnableBackgroundDrawing(false);
-		searchWidget.setVisible(true);
 		searchWidget.setTextColor(16777215);
+		searchWidget.setVisible(true);
+		searchWidget.setCanLoseFocus(false);
+		searchWidget.setFocused2(true);
 		children.add(searchWidget);
 		leftArrow = addButton(new ChangeAspectPageButton(guiLeft + 11, guiTop + 183, false, this::actionPerformed));
 		rightArrow = addButton(new ChangeAspectPageButton(guiLeft + 112, guiTop + 183, true, this::actionPerformed));
@@ -111,7 +127,8 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		if(button == rightArrow && container.scrollableSlots.size() > 36 * (page + 1))
 			page++;
 
-		refreshSlotVisibility();
+		if (searchWidget.getText().equals(""))
+			refreshSlotVisibility();
 	}
 	
 	protected void refreshSlotVisibility(){
