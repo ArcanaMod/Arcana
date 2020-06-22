@@ -129,10 +129,10 @@ public class ArcanaBlocks{
 	public static final RegistryObject<FenceBlock> DAIR_FENCE = BLOCKS.register("dair_fence", () -> new FenceBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 	public static final RegistryObject<FenceGateBlock> DAIR_FENCE_GATE = BLOCKS.register("dair_fence_gate", () -> new FenceGateBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 	
-	public static final RegistryObject<Block> TAINTED_DAIR_LEAVES = BLOCKS.register("tainted_dair_leaves", () -> new TaintedBlock(DAIR_LEAVES.get()));
-	public static final RegistryObject<Block> TAINTED_DAIR_LOG = BLOCKS.register("tainted_dair_log", () -> new TaintedBlock(DAIR_LOG.get()));
-	public static final RegistryObject<Block> TAINTED_DAIR_PLANKS = BLOCKS.register("tainted_dair_planks", () -> new TaintedBlock(DAIR_PLANKS.get()));
-	public static final RegistryObject<Block> TAINTED_DAIR_SAPLING = BLOCKS.register("tainted_dair_sapling", () -> new TaintedBlock(DAIR_SAPLING.get()));
+	public static final RegistryObject<Block> TAINTED_DAIR_LEAVES = BLOCKS.register("tainted_dair_leaves", () -> new TaintedBlock(ArcanaBlocks.DAIR_LEAVES.get()));
+	public static final RegistryObject<Block> TAINTED_DAIR_LOG = BLOCKS.register("tainted_dair_log", () -> new TaintedBlock(ArcanaBlocks.DAIR_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_DAIR_PLANKS = BLOCKS.register("tainted_dair_planks", () -> new TaintedBlock(ArcanaBlocks.DAIR_PLANKS.get()));
+	public static final RegistryObject<Block> TAINTED_DAIR_SAPLING = BLOCKS.register("tainted_dair_sapling", () -> new TaintedBlock(ArcanaBlocks.DAIR_SAPLING.get()));
 	public static final RegistryObject<Block> TAINTED_DAIR_SLAB = BLOCKS.register("tainted_dair_slab", () -> new TaintedBlock(ArcanaBlocks.DAIR_SLAB.get()));
 	public static final RegistryObject<Block> TAINTED_DAIR_STAIRS = BLOCKS.register("tainted_dair_stairs", () -> new TaintedBlock(ArcanaBlocks.DAIR_STAIRS.get()));
 
@@ -160,10 +160,10 @@ public class ArcanaBlocks{
 	public static final RegistryObject<FenceBlock> EUCALYPTUS_FENCE = BLOCKS.register("eucalyptus_fence", () -> new FenceBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 	public static final RegistryObject<FenceGateBlock> EUCALYPTUS_FENCE_GATE = BLOCKS.register("eucalyptus_fence_gate", () -> new FenceGateBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 
-	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_LEAVES = BLOCKS.register("tainted_eucalyptus_leaves", () -> new TaintedBlock(EUCALYPTUS_LEAVES.get()));
-	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_LOG = BLOCKS.register("tainted_eucalyptus_log", () -> new TaintedBlock(EUCALYPTUS_LOG.get()));
-	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_PLANKS = BLOCKS.register("tainted_eucalyptus_planks", () -> new TaintedBlock(EUCALYPTUS_PLANKS.get()));
-	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_SAPLING = BLOCKS.register("tainted_eucalyptus_sapling", () -> new TaintedBlock(EUCALYPTUS_SAPLING.get()));
+	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_LEAVES = BLOCKS.register("tainted_eucalyptus_leaves", () -> new TaintedBlock(ArcanaBlocks.EUCALYPTUS_LEAVES.get()));
+	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_LOG = BLOCKS.register("tainted_eucalyptus_log", () -> new TaintedBlock(ArcanaBlocks.EUCALYPTUS_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_PLANKS = BLOCKS.register("tainted_eucalyptus_planks", () -> new TaintedBlock(ArcanaBlocks.EUCALYPTUS_PLANKS.get()));
+	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_SAPLING = BLOCKS.register("tainted_eucalyptus_sapling", () -> new TaintedBlock(ArcanaBlocks.EUCALYPTUS_SAPLING.get()));
 	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_SLAB = BLOCKS.register("tainted_eucalyptus_slab", () -> new TaintedBlock(ArcanaBlocks.EUCALYPTUS_SLAB.get()));
 	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_STAIRS = BLOCKS.register("tainted_eucalyptus_stairs", () -> new TaintedBlock(ArcanaBlocks.EUCALYPTUS_STAIRS.get()));
 	
@@ -180,6 +180,13 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> GREATWOOD_BUTTON = BLOCKS.register("greatwood_button", () -> new AWoodButtonBlock(create(MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)));
 	public static final RegistryObject<FenceBlock> GREATWOOD_FENCE = BLOCKS.register("greatwood_fence", () -> new FenceBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 	public static final RegistryObject<FenceGateBlock> GREATWOOD_FENCE_GATE = BLOCKS.register("greatwood_fence_gate", () -> new FenceGateBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
+
+	public static final RegistryObject<Block> TAINTED_GREATWOOD_LEAVES = BLOCKS.register("tainted_greatwood_leaves", () -> new TaintedBlock(ArcanaBlocks.GREATWOOD_LEAVES.get()));
+	public static final RegistryObject<Block> TAINTED_GREATWOOD_LOG = BLOCKS.register("tainted_greatwood_log", () -> new TaintedBlock(ArcanaBlocks.GREATWOOD_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_GREATWOOD_PLANKS = BLOCKS.register("tainted_greatwood_planks", () -> new TaintedBlock(ArcanaBlocks.GREATWOOD_PLANKS.get()));
+	public static final RegistryObject<Block> TAINTED_GREATWOOD_SAPLING = BLOCKS.register("tainted_greatwood_sapling", () -> new TaintedBlock(ArcanaBlocks.GREATWOOD_SAPLING.get()));
+	public static final RegistryObject<Block> TAINTED_GREATWOOD_SLAB = BLOCKS.register("tainted_greatwood_slab", () -> new TaintedBlock(ArcanaBlocks.GREATWOOD_SLAB.get()));
+	public static final RegistryObject<Block> TAINTED_GREATWOOD_STAIRS = BLOCKS.register("tainted_greatwood_stairs", () -> new TaintedBlock(ArcanaBlocks.GREATWOOD_STAIRS.get()));
 	
 	// Hawthorn Wood
 	public static final RegistryObject<Block> HAWTHORN_LEAVES = BLOCKS.register("hawthorn_leaves", () -> new LeavesBlock(create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid()));
@@ -194,6 +201,13 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> HAWTHORN_BUTTON = BLOCKS.register("hawthorn_button", () -> new AWoodButtonBlock(create(MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)));
 	public static final RegistryObject<FenceBlock> HAWTHORN_FENCE = BLOCKS.register("hawthorn_fence", () -> new FenceBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 	public static final RegistryObject<FenceGateBlock> HAWTHORN_FENCE_GATE = BLOCKS.register("hawthorn_fence_gate", () -> new FenceGateBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
+
+	public static final RegistryObject<Block> TAINTED_HAWTHORN_LEAVES = BLOCKS.register("tainted_hawthorn_leaves", () -> new TaintedBlock(ArcanaBlocks.HAWTHORN_LEAVES.get()));
+	public static final RegistryObject<Block> TAINTED_HAWTHORN_LOG = BLOCKS.register("tainted_hawthorn_log", () -> new TaintedBlock(ArcanaBlocks.HAWTHORN_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_HAWTHORN_PLANKS = BLOCKS.register("tainted_hawthorn_planks", () -> new TaintedBlock(ArcanaBlocks.HAWTHORN_PLANKS.get()));
+	public static final RegistryObject<Block> TAINTED_HAWTHORN_SAPLING = BLOCKS.register("tainted_hawthorn_sapling", () -> new TaintedBlock(ArcanaBlocks.HAWTHORN_SAPLING.get()));
+	public static final RegistryObject<Block> TAINTED_HAWTHORN_SLAB = BLOCKS.register("tainted_hawthorn_slab", () -> new TaintedBlock(ArcanaBlocks.HAWTHORN_SLAB.get()));
+	public static final RegistryObject<Block> TAINTED_HAWTHORN_STAIRS = BLOCKS.register("tainted_hawthorn_stairs", () -> new TaintedBlock(ArcanaBlocks.HAWTHORN_STAIRS.get()));
 	
 	// Silverwood
 	public static final RegistryObject<Block> SILVERWOOD_LEAVES = BLOCKS.register("silverwood_leaves", () -> new LeavesBlock(create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid()));
@@ -242,20 +256,24 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_ARCANIUM_BLOCK = BLOCKS.register("tainted_arcanium_block", () -> new TaintedBlock(ArcanaBlocks.ARCANIUM_BLOCK.get()));
 
 	//Misc Tainted Blocks
-	public static final RegistryObject<Block> TAINTED_DESTROYED_ORE = BLOCKS.register("tainted_destroyed_ore", () -> new TaintedBlock(Blocks.STONE));
+	public static final RegistryObject<Block> TAINTED_DESTROYED_ORE = BLOCKS.register("tainted_destroyed_ore", () -> new TaintedBlock(Blocks.STONE_BRICKS));
 
 
 	//Tainted vanilla blocks
-	public static final RegistryObject<Block> TAINTED_CRUST = BLOCKS.register("tainted_crust", () -> new TaintedBlock(Blocks.COBBLESTONE));
-	public static final RegistryObject<Block> TAINTED_CRUST_SLAB = BLOCKS.register("tainted_crust_slab", () -> new TaintedBlock(Blocks.COBBLESTONE_SLAB));
+	public static final RegistryObject<Block> TAINTED_CRUST = BLOCKS.register("tainted_crust", () -> new TaintedBlock(Blocks.STONE));
+	public static final RegistryObject<Block> TAINTED_CRUST_SLAB = BLOCKS.register("tainted_crust_slab", () -> new TaintedBlock(Blocks.STONE_SLAB));
+	public static final RegistryObject<Block> TAINTED_GRAVEL = BLOCKS.register("tainted_gravel", () -> new TaintedBlock(Blocks.GRAVEL));
 
 	public static final RegistryObject<Block> TAINTED_GRASS_BLOCK = BLOCKS.register("tainted_grass_block", () -> new TaintedBlock(Blocks.GRASS_BLOCK));
+	public static final RegistryObject<Block> TAINTED_FARMLAND = BLOCKS.register("tainted_farmland", () -> new TaintedBlock(Blocks.FARMLAND));
 
 	public static final RegistryObject<Block> TAINTED_COAL_BLOCK = BLOCKS.register("tainted_coal_block", () -> new TaintedBlock(Blocks.COAL_BLOCK));
 	public static final RegistryObject<Block> TAINTED_EMERALD_BLOCK = BLOCKS.register("tainted_emerald_block", () -> new TaintedBlock(Blocks.EMERALD_BLOCK));
 	public static final RegistryObject<Block> TAINTED_DIAMOND_BLOCK = BLOCKS.register("tainted_diamond_block", () -> new TaintedBlock(Blocks.DIAMOND_BLOCK));
+	public static final RegistryObject<Block> TAINTED_GOLDx_BLOCK = BLOCKS.register("tainted_gold_block", () -> new TaintedBlock(Blocks.GOLD_BLOCK));
 
 	public static final RegistryObject<Block> TAINTED_BUSH = BLOCKS.register("tainted_bush", () -> new TaintedBlock(Blocks.GRASS));
+	public static final RegistryObject<Block> TAINTED_FLOWER = BLOCKS.register("tainted_flower", () -> new TaintedBlock(Blocks.CORNFLOWER));
 	public static final RegistryObject<Block> TAINTED_CARVED_PUMPKIN = BLOCKS.register("tainted_carved_pumpkin", () -> new TaintedBlock(Blocks.CARVED_PUMPKIN));
 
 	public static final RegistryObject<Block> TAINTED_COAL_ORE = BLOCKS.register("tainted_coal_ore", () -> new TaintedBlock(Blocks.COAL_ORE));

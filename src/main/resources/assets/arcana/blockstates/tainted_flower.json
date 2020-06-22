@@ -1,9 +1,7 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_flower"
-      }
-    ]
+    "": {
+        "model": "arcana:block/tainted_flower"
+    }
   }
 }
