@@ -1,6 +1,7 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.event.FogColorHandler;
 import net.arcanamod.client.event.RenderTooltip;
 import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.gui.ScribbledNoteScreen;
@@ -32,13 +33,14 @@ import static net.arcanamod.Arcana.MODID;
  * @author Atlas, Luna
  */
 public class ClientProxy extends CommonProxy{
-	
+
 	public void construct(){
 		super.construct();
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
 		
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		modEventBus.addListener(RenderTooltip::onRenderToolTip);
+		modEventBus.addListener(RenderTooltip::onRenderToolTipColor);
+		modEventBus.addListener(FogColorHandler::setFog);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
 	}

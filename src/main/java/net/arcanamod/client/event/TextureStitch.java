@@ -6,6 +6,7 @@ import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.world.NodeType;
 import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
 
 import javax.annotation.Nonnull;

@@ -8,6 +8,7 @@ import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaRecipes;
 import net.arcanamod.network.Connection;
@@ -22,6 +23,7 @@ import net.arcanamod.world.impl.AuraChunkCapability;
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -77,6 +79,7 @@ public class Arcana{
 		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		NodeType.init();
+		ArcanaFluids.init(modEventBus);
 
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
@@ -94,7 +97,7 @@ public class Arcana{
 	public static ResourceLocation arcLoc(String path){
 		return new ResourceLocation(MODID, path);
 	}
-	
+
 	private void setup(FMLCommonSetupEvent event){
 		// init, init, init, init, init, init, init, init
 		EntrySection.init();

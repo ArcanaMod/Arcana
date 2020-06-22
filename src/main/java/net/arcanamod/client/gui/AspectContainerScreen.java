@@ -1,19 +1,18 @@
 package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public abstract class AspectContainerScreen<T extends AspectContainer> extends ContainerScreen<T>{
@@ -54,7 +53,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 					if (slot!=null) {
 						if (slot.getAspect() != Aspect.EMPTY && slot.getAspect() != null) {
 							String name = Aspects.getLocalizedAspectDisplayName(slot.getAspect());
-							renderTooltip(Arrays.asList(name + ((char) 20)), mouseX, mouseY);
+							renderTooltip(Arrays.asList(name + ((char) 20)), mouseX, mouseY,Minecraft.getInstance().getFontResourceManager().getFontRenderer(Arcana.arcLoc("eldrich")));
 						}
 					}
 				}
