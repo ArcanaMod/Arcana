@@ -20,6 +20,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.*;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
@@ -276,5 +278,25 @@ public class DelegatingBlock extends Block{
 	@Override
 	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable){
 		return parentBlock.canSustainPlant(state, world, pos, facing, plantable);
+	}
+
+	@Override
+	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return parentBlock.getRenderShape(state, worldIn, pos);
+	}
+
+	@Override
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return parentBlock.getCollisionShape(state, worldIn, pos, context);
+	}
+
+	@Override
+	public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+		return parentBlock.getRaytraceShape(state, worldIn, pos);
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		return parentBlock.getShape(state, worldIn, pos, context);
 	}
 }
