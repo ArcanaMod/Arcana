@@ -8,6 +8,7 @@ import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaRecipes;
 import net.arcanamod.network.Connection;
@@ -78,6 +79,7 @@ public class Arcana{
 		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		NodeType.init();
+		ArcanaFluids.init(modEventBus);
 
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
