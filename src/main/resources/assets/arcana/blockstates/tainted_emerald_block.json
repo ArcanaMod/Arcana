@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_emerald_block"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_emerald_block"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_emerald_block"
+    }
   }
 }

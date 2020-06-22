@@ -1,10 +1,14 @@
 {
   "variants": {
-    "half=bottom": {
-      "model": "arcana:tainted_birch_slab_bottom"
+    "type=bottom": {
+      "model": "arcana:block/tainted_birch_slab"
     },
-    "half=top": {
-      "model": "arcana:tainted_birch_slab_top"
+    "type=top": {
+      "model": "arcana:block/tainted_birch_slab_top"
+    },
+    "type=double": {
+      "model": "arcana:block/tainted_birch_planks"
     }
   }
 }
+

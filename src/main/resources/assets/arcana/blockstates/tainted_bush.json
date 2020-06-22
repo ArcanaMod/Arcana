@@ -1,9 +1,8 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_bush"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_bush"
+    }
   }
 }
+

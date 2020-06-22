@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_destroyed_ore"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_destroyed_ore"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_destroyed_ore"
+    }
   }
 }

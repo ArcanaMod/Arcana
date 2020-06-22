@@ -1,9 +1,8 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_carved_pumpkin"
-      }
-    ]
+    "facing=north": { "model": "arcana:block/tainted_carved_pumpkin" },
+    "facing=south": { "model": "arcana:block/tainted_carved_pumpkin", "y": 180 },
+    "facing=west":  { "model": "arcana:block/tainted_carved_pumpkin", "y": 270 },
+    "facing=east":  { "model": "arcana:block/tainted_carved_pumpkin", "y": 90 }
   }
 }

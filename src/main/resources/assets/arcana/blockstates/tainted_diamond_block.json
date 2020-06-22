@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_diamond_block"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_diamond_block"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_diamond_block"
+    }
   }
 }

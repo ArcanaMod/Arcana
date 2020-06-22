@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_crust"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_crust"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_crust"
+    }
   }
 }

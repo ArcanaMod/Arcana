@@ -1,10 +1,13 @@
 {
   "variants": {
-    "half=bottom": {
-      "model": "arcana:tainted_darkoak_slab_bottom"
+    "type=bottom": {
+      "model": "arcana:block/tainted_darkoak_slab"
     },
-    "half=top": {
-      "model": "arcana:tainted_darkoak_slab_top"
+    "type=top": {
+      "model": "arcana:block/tainted_darkoak_slab_top"
+    },
+    "type=double": {
+      "model": "arcana:block/tainted_darkoak_planks"
     }
   }
 }

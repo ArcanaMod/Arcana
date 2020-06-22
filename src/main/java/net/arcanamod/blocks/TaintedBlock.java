@@ -1,18 +1,22 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.Arcana;
+import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class TaintedBlock extends DelegatingBlock{
+public class TaintedBlock extends DelegatingBlock implements GroupedBlock {
 	
 	public TaintedBlock(Block block){
 		super(block);
@@ -50,5 +54,11 @@ public class TaintedBlock extends DelegatingBlock{
 			}
 			// Schedule a tick?
 		}
+	}
+
+	@Nullable
+	@Override
+	public ItemGroup getGroup() {
+		return Arcana.TAINT;
 	}
 }
