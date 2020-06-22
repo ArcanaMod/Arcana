@@ -32,13 +32,13 @@ import static net.arcanamod.Arcana.MODID;
  * @author Atlas, Luna
  */
 public class ClientProxy extends CommonProxy{
-	
+
 	public void construct(){
 		super.construct();
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
 		
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		modEventBus.addListener(RenderTooltip::onRenderToolTip);
+		modEventBus.addListener(RenderTooltip::onRenderToolTipColor);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
 	}

@@ -19,7 +19,7 @@ import java.awt.*;
 public class RenderTooltip {
 
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void onRenderToolTip(@Nonnull RenderTooltipEvent.Color event) {
+	public static void onRenderToolTipColor(@Nonnull RenderTooltipEvent.Color event) {
 		for (String line : event.getLines()) {
 			if (line.indexOf(((char) 20))!=-1) {
 				event.setBorderStart(new Color(0, 80, 95).getRGB());

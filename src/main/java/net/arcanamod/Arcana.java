@@ -22,6 +22,7 @@ import net.arcanamod.world.impl.AuraChunkCapability;
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -94,7 +95,7 @@ public class Arcana{
 	public static ResourceLocation arcLoc(String path){
 		return new ResourceLocation(MODID, path);
 	}
-	
+
 	private void setup(FMLCommonSetupEvent event){
 		// init, init, init, init, init, init, init, init
 		EntrySection.init();
