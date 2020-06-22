@@ -299,4 +299,14 @@ public class DelegatingBlock extends Block{
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return parentBlock.getShape(state, worldIn, pos, context);
 	}
+
+	@Override
+	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
+		return parentBlock.isValidPosition(state, worldIn, pos);
+	}
+
+	@Override
+	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+		return parentBlock.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+	}
 }
