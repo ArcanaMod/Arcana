@@ -77,8 +77,8 @@ public class PhialItem extends Item
         if (aspectHandler!=null && aspectHandler.getHolder(0)!=null)
         {
             if (aspectHandler.getHolder(0).getContainedAspect()!=Aspect.EMPTY) {
-                String aspectName = aspectHandler.getHolder(0).getContainedAspect().toString().toLowerCase();
-                return new TranslationTextComponent("item.arcana.phial", aspectName.substring(0, 1).toUpperCase() + aspectName.substring(1)).applyTextStyle(Rarity.RARE.color);
+                String aspectName = Aspects.getLocalizedAspectDisplayName(aspectHandler.getHolder(0).getContainedAspect());
+                return new TranslationTextComponent("item.arcana.phial", aspectName).applyTextStyle(Rarity.RARE.color);
             }
         }
         return new TranslationTextComponent("item.arcana.empty_phial");

@@ -4,6 +4,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.AspectItem;
 import net.arcanamod.util.Pair;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -77,5 +78,13 @@ public class Aspects{
 
 	public static int getEmptyCell(IAspectHandler handler) {
 		return handler.findIndexesFromAspectInHolders(Aspect.EMPTY)[0];
+	}
+
+	public static String getLocalizedAspectName(Aspect aspect) {
+		return I18n.format("aspect."+aspect.name().toLowerCase()+".desc");
+	}
+
+	public static String getLocalizedAspectDisplayName(Aspect aspect) {
+		return I18n.format("aspect."+aspect.name().toLowerCase());
 	}
 }

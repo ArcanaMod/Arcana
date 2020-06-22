@@ -1,6 +1,7 @@
 package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
@@ -13,6 +14,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public abstract class AspectContainerScreen<T extends AspectContainer> extends ContainerScreen<T>{
 	
@@ -39,6 +41,23 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 				}
 				if(slot.getAspect() != null)
 					itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, Aspects.getItemStackForAspect(slot.getAspect()), slot.x - 1, slot.y + 3, slot.shouldShowAmount() ? String.valueOf(slot.getAmount()) : "");
+			}
+		}
+	}
+
+	@Override
+	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+		super.renderHoveredToolTip(mouseX, mouseY);
+		for(AspectSlot slot : aspectContainer.getAspectSlots()) {
+			if (slot.getInventory().get() != null && slot.visible) {
+				if (isMouseOverSlot(mouseX, mouseY, slot)) {
+					if (slot!=null) {
+						if (slot.getAspect() != Aspect.EMPTY && slot.getAspect() != null) {
+							String name = Aspects.getLocalizedAspectDisplayName(slot.getAspect());
+							renderTooltip(Arrays.asList(name + ((char) 20)), mouseX, mouseY);
+						}
+					}
+				}
 			}
 		}
 	}

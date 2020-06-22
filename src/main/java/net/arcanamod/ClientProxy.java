@@ -1,6 +1,7 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.event.RenderTooltip;
 import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.gui.ScribbledNoteScreen;
 import net.arcanamod.client.model.WandModelLoader;
@@ -37,6 +38,7 @@ public class ClientProxy extends CommonProxy{
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
 		
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		modEventBus.addListener(RenderTooltip::onRenderToolTip);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
 	}
