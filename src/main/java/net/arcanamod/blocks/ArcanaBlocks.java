@@ -260,9 +260,12 @@ public class ArcanaBlocks{
 
 
 	//Tainted vanilla blocks
-	public static final RegistryObject<Block> TAINTED_CRUST = BLOCKS.register("tainted_crust", () -> new TaintedBlock(Blocks.STONE));
-	public static final RegistryObject<Block> TAINTED_CRUST_SLAB = BLOCKS.register("tainted_crust_slab", () -> new TaintedBlock(Blocks.STONE_SLAB));
+	public static final RegistryObject<Block> TAINTED_CRUST = BLOCKS.register("tainted_crust", () -> new TaintedBlock(Blocks.COBBLESTONE));
+	public static final RegistryObject<Block> TAINTED_CRUST_SLAB = BLOCKS.register("tainted_crust_slab", () -> new TaintedBlock(Blocks.COBBLESTONE_SLAB));
 	public static final RegistryObject<Block> TAINTED_GRAVEL = BLOCKS.register("tainted_gravel", () -> new TaintedBlock(Blocks.GRAVEL));
+
+	public static final RegistryObject<Block> TAINTED_ROCK = BLOCKS.register("tainted_rock", () -> new TaintedBlock(Blocks.STONE));
+	public static final RegistryObject<Block> TAINTED_ROCK_SLAB = BLOCKS.register("tainted_rock_slab", () -> new TaintedBlock(Blocks.STONE_SLAB));
 
 	public static final RegistryObject<Block> TAINTED_GRASS_BLOCK = BLOCKS.register("tainted_grass_block", () -> new TaintedBlock(Blocks.GRASS_BLOCK));
 	public static final RegistryObject<Block> TAINTED_FARMLAND = BLOCKS.register("tainted_farmland", () -> new TaintedBlock(Blocks.FARMLAND));
@@ -270,11 +273,14 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_COAL_BLOCK = BLOCKS.register("tainted_coal_block", () -> new TaintedBlock(Blocks.COAL_BLOCK));
 	public static final RegistryObject<Block> TAINTED_EMERALD_BLOCK = BLOCKS.register("tainted_emerald_block", () -> new TaintedBlock(Blocks.EMERALD_BLOCK));
 	public static final RegistryObject<Block> TAINTED_DIAMOND_BLOCK = BLOCKS.register("tainted_diamond_block", () -> new TaintedBlock(Blocks.DIAMOND_BLOCK));
-	public static final RegistryObject<Block> TAINTED_GOLDx_BLOCK = BLOCKS.register("tainted_gold_block", () -> new TaintedBlock(Blocks.GOLD_BLOCK));
+	public static final RegistryObject<Block> TAINTED_GOLD_BLOCK = BLOCKS.register("tainted_gold_block", () -> new TaintedBlock(Blocks.GOLD_BLOCK));
+	public static final RegistryObject<Block> TAINTED_IRON_BLOCK = BLOCKS.register("tainted_iron_block", () -> new TaintedBlock(Blocks.IRON_BLOCK));
+	public static final RegistryObject<Block> TAINTED_LAPIS_BLOCK = BLOCKS.register("tainted_lapis_block", () -> new TaintedBlock(Blocks.LAPIS_BLOCK));
 
 	public static final RegistryObject<Block> TAINTED_BUSH = BLOCKS.register("tainted_bush", () -> new TaintedBlock(Blocks.GRASS));
 	public static final RegistryObject<Block> TAINTED_FLOWER = BLOCKS.register("tainted_flower", () -> new TaintedBlock(Blocks.CORNFLOWER));
 	public static final RegistryObject<Block> TAINTED_CARVED_PUMPKIN = BLOCKS.register("tainted_carved_pumpkin", () -> new TaintedBlock(Blocks.CARVED_PUMPKIN));
+	public static final RegistryObject<Block> TAINTED_JACK_OLANTERN = BLOCKS.register("tainted_jack_olantern", () -> new TaintedBlock(Blocks.JACK_O_LANTERN));
 
 	public static final RegistryObject<Block> TAINTED_COAL_ORE = BLOCKS.register("tainted_coal_ore", () -> new TaintedBlock(Blocks.COAL_ORE));
 	public static final RegistryObject<Block> TAINTED_IRON_ORE = BLOCKS.register("tainted_iron_ore", () -> new TaintedBlock(Blocks.IRON_ORE));
@@ -304,4 +310,11 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_DARKOAK_SAPLING = BLOCKS.register("tainted_darkoak_sapling", () -> new TaintedBlock(Blocks.DARK_OAK_SAPLING));
 	public static final RegistryObject<Block> TAINTED_DARKOAK_SLAB = BLOCKS.register("tainted_darkoak_slab", () -> new TaintedBlock(Blocks.DARK_OAK_SLAB));
 	public static final RegistryObject<Block> TAINTED_DARKOAK_STAIRS = BLOCKS.register("tainted_darkoak_stairs", () -> new TaintedBlock(Blocks.DARK_OAK_STAIRS));
+
+	public static final RegistryObject<Block> TAINTED_JUNGLE_LEAVES = BLOCKS.register("tainted_jungle_leaves", () -> new TaintedBlock(Blocks.JUNGLE_LEAVES));
+	public static final RegistryObject<Block> TAINTED_JUNGLE_LOG = BLOCKS.register("tainted_jungle_log", () -> new TaintedBlock(Blocks.JUNGLE_LOG));
+	public static final RegistryObject<Block> TAINTED_JUNGLE_PLANKS = BLOCKS.register("tainted_jungle_planks", () -> new TaintedBlock(Blocks.JUNGLE_PLANKS));
+	public static final RegistryObject<Block> TAINTED_JUNGLE_SAPLING = BLOCKS.register("tainted_jungle_sapling", () -> new TaintedBlock(Blocks.JUNGLE_SAPLING));
+	public static final RegistryObject<Block> TAINTED_JUNGLE_SLAB = BLOCKS.register("tainted_jungle_slab", () -> new TaintedBlock(Blocks.JUNGLE_SLAB));
+	public static final RegistryObject<Block> TAINTED_JUNGLE_STAIRS = BLOCKS.register("tainted_jungle_stairs", () -> new TaintedBlock(Blocks.JUNGLE_STAIRS));
 }

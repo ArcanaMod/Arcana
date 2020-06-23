@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_lapis_block"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_lapis_block"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_lapis_block"
+    }
   }
 }
