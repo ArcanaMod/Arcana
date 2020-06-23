@@ -23,6 +23,9 @@ public interface AuraView{
 	
 	World getWorld();
 	
+	// no-op on client
+	default void tickTaintLevel(){}
+	
 	default AuraChunk getAuraChunk(ChunkPos pos){
 		IChunk chunk = getWorld().getChunk(pos.x, pos.z, ChunkStatus.FULL, false);
 		if(chunk instanceof Chunk)
