@@ -1,9 +1,7 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_mushroom"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_mushroom"
+    }
   }
 }

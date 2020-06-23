@@ -1,9 +1,7 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_melon"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_melon"
+    }
   }
 }

@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_oak_planks"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_oak_planks"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_oak_planks"
+    }
   }
 }
