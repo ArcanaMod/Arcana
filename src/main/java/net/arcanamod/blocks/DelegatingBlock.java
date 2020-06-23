@@ -7,6 +7,7 @@ import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.IProperty;
@@ -308,5 +309,15 @@ public class DelegatingBlock extends Block{
 	@Override
 	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
 		return parentBlock.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+	}
+
+	@Override
+	public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
+		return parentBlock.isReplaceable(state, useContext);
+	}
+
+	@Override
+	public boolean isReplaceable(BlockState p_225541_1_, Fluid p_225541_2_) {
+		return parentBlock.isReplaceable(p_225541_1_, p_225541_2_);
 	}
 }

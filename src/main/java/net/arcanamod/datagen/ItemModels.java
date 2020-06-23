@@ -54,6 +54,9 @@ public class ItemModels extends ItemModelProvider{
 		withExistingParent("silver_block", arcBlockLoc("silver_block"));
 		withExistingParent("silver_ore", arcBlockLoc("silver_ore"));
 		withExistingParent("void_metal_block", arcBlockLoc("void_metal_block"));
+		withExistingParent("tainted_granite", arcBlockLoc("tainted_granite"));
+		withExistingParent("tainted_diorite", arcBlockLoc("tainted_diorite"));
+		withExistingParent("tainted_andesite", arcBlockLoc("tainted_andesite"));
 		
 		generated("silver_ingot");
 		generated("void_metal_nugget");
