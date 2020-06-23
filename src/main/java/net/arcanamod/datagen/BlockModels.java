@@ -53,6 +53,9 @@ public class BlockModels extends BlockModelProvider{
 		cubeAll("carved_prideful_gold_block", new ResourceLocation(Arcana.MODID, "block/carved_prideful_gold_block"));
 		cubeAll("prideful_gold_block", new ResourceLocation(Arcana.MODID, "block/prideful_gold_block"));
 		cubeAll("prideful_gold_tile", new ResourceLocation(Arcana.MODID, "block/prideful_gold_tile"));
+		cubeAll("tainted_granite",new ResourceLocation(Arcana.MODID, "block/tainted_granite"));
+		cubeAll("tainted_diorite",new ResourceLocation(Arcana.MODID, "block/tainted_diorite"));
+		cubeAll("tainted_andesite",new ResourceLocation(Arcana.MODID, "block/tainted_andesite"));
 
 		cubeAll("silver_block", new ResourceLocation(Arcana.MODID, "block/silver_block"));
 		cubeAll("silver_ore", new ResourceLocation(Arcana.MODID, "block/silver_ore"));

@@ -55,6 +55,7 @@ public class WorldTickHandler{
 				ServerWorld serverWorld = (ServerWorld)world;
 				AuraView view = new ServerAuraView(serverWorld);
 				view.getAllNodes().forEach(node -> node.type().tick(serverWorld, view, node));
+				view.tickTaintLevel();
 			}
 			
 			if(!onTick.isEmpty()){

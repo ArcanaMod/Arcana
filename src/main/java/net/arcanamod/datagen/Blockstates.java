@@ -60,6 +60,10 @@ public class Blockstates extends BlockStateProvider{
 		simpleBlock(CARVED_PRIDEFUL_GOLD_BLOCK.get());
 		simpleBlock(CHISELED_PRIDEFUL_GOLD_BLOCK.get());
 		//simpleBlock(LIMESTONE_TILE.get());
+
+		simpleBlock(ArcanaBlocks.TAINTED_GRANITE.get());
+		simpleBlock(ArcanaBlocks.TAINTED_DIORITE.get());
+		simpleBlock(ArcanaBlocks.TAINTED_ANDESITE.get());
 		
 		slabBlock(ARCANE_STONE_SLAB.get(), ArcanaDataGenerators.ARCANE_STONE, ArcanaDataGenerators.ARCANE_STONE);
 		slabBlock(ARCANE_STONE_BRICKS_SLAB.get(), ArcanaDataGenerators.ARCANE_STONE_BRICKS, ArcanaDataGenerators.ARCANE_STONE_BRICKS);
