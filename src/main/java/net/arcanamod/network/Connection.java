@@ -28,7 +28,7 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkTryAdvance.class, PkTryAdvance::encode, PkTryAdvance::decode, PkTryAdvance::handle);
 		INSTANCE.registerMessage(id++, PkAspectClick.class, PkAspectClick::encode, PkAspectClick::decode, PkAspectClick::handle);
 		INSTANCE.registerMessage(id++, PkSyncAspectContainer.class, PkSyncAspectContainer::encode, PkSyncAspectContainer::decode, PkSyncAspectContainer::handle);
-		INSTANCE.registerMessage(id++, PkGetNoteHandler.class, PkGetNoteHandler::encode, PkGetNoteHandler::decode, PkGetNoteHandler::handle);
+		INSTANCE.registerMessage(id++, PkGetNote.class, PkGetNote::encode, PkGetNote::decode, PkGetNote::handle);
 		INSTANCE.registerMessage(id++, PkSyncChunkAura.class, PkSyncChunkAura::encode, PkSyncChunkAura::decode, PkSyncChunkAura::handle);
 		INSTANCE.registerMessage(id++, PkRequestAuraSync.class, PkRequestAuraSync::encode, PkRequestAuraSync::decode, PkRequestAuraSync::handle);
 		INSTANCE.registerMessage(id++, PkClientSlotDrain.class, PkClientSlotDrain::encode, PkClientSlotDrain::decode, PkClientSlotDrain::handle);
@@ -63,7 +63,7 @@ public class Connection{
 	}
 
 	public static void sendGetNoteHandler(ResourceLocation id, String pageName) {
-		INSTANCE.sendToServer(new PkGetNoteHandler(id,pageName));
+		INSTANCE.sendToServer(new PkGetNote(id,pageName));
 	}
 
 	public static void sendClientSlotDrain(int windowId, int slotId, PkAspectClick.ClickType type, ServerPlayerEntity target) {

@@ -9,29 +9,28 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
 
-import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class PkGetNoteHandler {
+public class PkGetNote{
 
 	String entryName;
 	ResourceLocation researchLocation;
 
-	public PkGetNoteHandler(ResourceLocation id, String entryName) {
+	public PkGetNote(ResourceLocation id, String entryName) {
 		this.researchLocation = id;
 		this.entryName = entryName;
 	}
 
-	public static void encode(PkGetNoteHandler msg, PacketBuffer buffer){
+	public static void encode(PkGetNote msg, PacketBuffer buffer){
 		buffer.writeResourceLocation(msg.researchLocation);
 		buffer.writeString(msg.entryName);
 	}
 
-	public static PkGetNoteHandler decode(PacketBuffer buffer){
-		return new PkGetNoteHandler(buffer.readResourceLocation(),buffer.readString());
+	public static PkGetNote decode(PacketBuffer buffer){
+		return new PkGetNote(buffer.readResourceLocation(),buffer.readString());
 	}
 
-	public static void handle(PkGetNoteHandler msg, Supplier<NetworkEvent.Context> supplier)
+	public static void handle(PkGetNote msg, Supplier<NetworkEvent.Context> supplier)
 	{
 		supplier.get().enqueueWork(() -> {
 			ServerPlayerEntity epm = supplier.get().getSender();
