@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_redstone_block"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_redstone_block"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_redstone_block"
+    }
   }
 }

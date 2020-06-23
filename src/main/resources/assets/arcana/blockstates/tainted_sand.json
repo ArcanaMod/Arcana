@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_sand"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_sand"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_sand"
+    }
   }
 }

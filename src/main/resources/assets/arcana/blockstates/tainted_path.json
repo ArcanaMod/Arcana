@@ -1,9 +1,7 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "arcana:tainted_path"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_path"
+    }
   }
 }
