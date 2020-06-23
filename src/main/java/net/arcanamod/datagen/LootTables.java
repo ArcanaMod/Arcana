@@ -91,7 +91,90 @@ public class LootTables extends LootTableProvider{
 		addStandardTable(SILVER_BLOCK);
 		addStandardTable(SILVER_ORE);
 		addStandardTable(VOID_METAL_BLOCK);
-		
+
+		addStandardTable(TAINTED_OAK_LOG);
+		addStandardTable(TAINTED_OAK_PLANKS);
+		addStandardTable(TAINTED_OAK_SAPLING);
+		addStandardTable(TAINTED_OAK_SLAB);
+		addStandardTable(TAINTED_OAK_STAIRS);
+
+		addStandardTable(TAINTED_SPRUCE_LOG);
+		addStandardTable(TAINTED_SPRUCE_PLANKS);
+		addStandardTable(TAINTED_SPRUCE_SAPLING);
+		addStandardTable(TAINTED_SPRUCE_SLAB);
+		addStandardTable(TAINTED_SPRUCE_STAIRS);
+
+		addStandardTable(TAINTED_JUNGLE_LOG);
+		addStandardTable(TAINTED_JUNGLE_PLANKS);
+		addStandardTable(TAINTED_JUNGLE_SAPLING);
+		addStandardTable(TAINTED_JUNGLE_SLAB);
+		addStandardTable(TAINTED_JUNGLE_STAIRS);
+
+		addStandardTable(TAINTED_WILLOW_LOG);
+		addStandardTable(TAINTED_WILLOW_PLANKS);
+		addStandardTable(TAINTED_WILLOW_SAPLING);
+		addStandardTable(TAINTED_WILLOW_SLAB);
+		addStandardTable(TAINTED_WILLOW_STAIRS);
+
+		addStandardTable(TAINTED_HAWTHORN_LOG);
+		addStandardTable(TAINTED_HAWTHORN_PLANKS);
+		addStandardTable(TAINTED_HAWTHORN_SAPLING);
+		addStandardTable(TAINTED_HAWTHORN_SLAB);
+		addStandardTable(TAINTED_HAWTHORN_STAIRS);
+
+		addStandardTable(TAINTED_GREATWOOD_LOG);
+		addStandardTable(TAINTED_GREATWOOD_PLANKS);
+		addStandardTable(TAINTED_GREATWOOD_SAPLING);
+		addStandardTable(TAINTED_GREATWOOD_SLAB);
+		addStandardTable(TAINTED_GREATWOOD_STAIRS);
+
+		addStandardTable(TAINTED_DARKOAK_LOG);
+		addStandardTable(TAINTED_DARKOAK_PLANKS);
+		addStandardTable(TAINTED_DARKOAK_SAPLING);
+		addStandardTable(TAINTED_DARKOAK_SLAB);
+		addStandardTable(TAINTED_DARKOAK_STAIRS);
+
+		addStandardTable(TAINTED_BIRCH_LOG);
+		addStandardTable(TAINTED_BIRCH_PLANKS);
+		addStandardTable(TAINTED_BIRCH_SAPLING);
+		addStandardTable(TAINTED_BIRCH_SLAB);
+		addStandardTable(TAINTED_BIRCH_STAIRS);
+
+		addStandardTable(TAINTED_ACACIA_LOG);
+		addStandardTable(TAINTED_ACACIA_PLANKS);
+		addStandardTable(TAINTED_ACACIA_SAPLING);
+		addStandardTable(TAINTED_ACACIA_SLAB);
+		addStandardTable(TAINTED_ACACIA_STAIRS);
+
+		addStandardTable(TAINTED_DAIR_LOG);
+		addStandardTable(TAINTED_DAIR_PLANKS);
+		addStandardTable(TAINTED_DAIR_SAPLING);
+		addStandardTable(TAINTED_DAIR_SLAB);
+		addStandardTable(TAINTED_DAIR_STAIRS);
+
+		addStandardTable(TAINTED_COAL_BLOCK);
+		addStandardTable(TAINTED_IRON_BLOCK);
+		addStandardTable(TAINTED_THAUMIUM_BLOCK);
+		addStandardTable(TAINTED_LAPIS_BLOCK);
+		addStandardTable(TAINTED_REDSTONE_BLOCK);
+		addStandardTable(TAINTED_GOLD_BLOCK);
+		addStandardTable(TAINTED_DIAMOND_BLOCK);
+		addStandardTable(TAINTED_EMERALD_BLOCK);
+		addStandardTable(TAINTED_ARCANIUM_BLOCK);
+
+		addStandardTable(TAINTED_GRAVEL);
+		addStandardTable(TAINTED_PUMPKIN);
+		addStandardTable(TAINTED_CARVED_PUMPKIN);
+		addStandardTable(TAINTED_JACK_OLANTERN);
+		addStandardTable(TAINTED_SAND);
+		addStandardTable(TAINTED_SOIL);
+		addStandardTable(TAINTED_ROCK);
+		addStandardTable(TAINTED_ROCK_SLAB);
+		addStandardTable(TAINTED_CRUST);
+		addStandardTable(TAINTED_CRUST_SLAB);
+
+		addStandardTable(TAINTED_FLOWER);
+
 		Map<ResourceLocation, LootTable> tables = new HashMap<>();
 		for(Map.Entry<Block, LootTable.Builder> entry : lootTables.entrySet())
 			tables.put(entry.getKey().getLootTable(), entry.getValue().setParameterSet(LootParameterSets.BLOCK).build());

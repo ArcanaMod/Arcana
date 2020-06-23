@@ -8,6 +8,18 @@
     "arcana:hawthorn_slab",
     "arcana:silverwood_slab",
     "arcana:trypophobius_slab",
-    "arcana:willow_slab"
+    "arcana:willow_slab",
+    "arcana:tainted_eucalyptus_slab",
+    "arcana:tainted_greatwood_slab",
+    "arcana:tainted_hawthorn_slab",
+    "arcana:tainted_silverwood_slab",
+    "arcana:tainted_trypophobius_slab",
+    "arcana:tainted_willow_slab",
+    "arcana:tainted_oak_slab",
+    "arcana:tainted_darkoak_slab",
+    "arcana:tainted_acacia_slab",
+    "arcana:tainted_birch_slab",
+    "arcana:tainted_jungle_slab",
+    "arcana:tainted_spruce_slab"
   ]
 }
