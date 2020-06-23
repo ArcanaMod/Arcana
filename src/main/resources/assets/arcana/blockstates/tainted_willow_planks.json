@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_willow_planks"
-      }
-    ],
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_willow_planks"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_willow_planks"
+    }
   }
 }

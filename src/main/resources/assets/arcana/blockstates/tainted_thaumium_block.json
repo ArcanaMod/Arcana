@@ -1,14 +1,7 @@
 {
   "variants": {
-    "fullytainted=false": [
-      {
-        "model": "arcana:tainted_thaumium_block"
-      }
-    ],
-    "fullytainted=true": [
-      {
-        "model": "arcana:tainted_thaumium_block"
-      }
-    ]
+    "": {
+      "model": "arcana:block/tainted_thaumium_block"
+    }
   }
 }
