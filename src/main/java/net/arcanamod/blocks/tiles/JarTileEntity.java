@@ -2,10 +2,6 @@ package net.arcanamod.blocks.tiles;
 
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.client.render.ArcanaParticles;
-import net.arcanamod.client.render.AspectParticleData;
-import net.arcanamod.util.GogglePriority;
-import net.arcanamod.util.NodeHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -18,8 +14,6 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
-
-import static net.arcanamod.Arcana.arcLoc;
 
 public class JarTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable{
 

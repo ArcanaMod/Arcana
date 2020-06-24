@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "arcana:taint_scrubber_mk2"
+      "model": "arcana:block/taint_scrubber_mk2"
     }
   }
 }
