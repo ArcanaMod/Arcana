@@ -2,9 +2,9 @@ package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.research.RequirementRenderer;
-import net.arcanamod.research.impls.ItemRequirement;
 import net.arcanamod.research.impls.ItemTagRequirement;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -13,7 +13,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static net.minecraft.client.util.ITooltipFlag.TooltipFlags.ADVANCED;
@@ -28,7 +27,8 @@ public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRe
 		
 		RenderHelper.enableStandardItemLighting();
 		RenderSystem.disableLighting();
-		Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(stack, x, y);
+		ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
+		renderer.renderItemAndEffectIntoGUI(stack, x, y);
 	}
 	
 	public List<ITextComponent> tooltip(ItemTagRequirement requirement, PlayerEntity player){

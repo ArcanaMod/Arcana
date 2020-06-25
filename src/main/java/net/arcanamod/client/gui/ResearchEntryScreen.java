@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
@@ -256,13 +257,17 @@ public class ResearchEntryScreen extends Screen{
 			setBlitOffset(0);
 		}else{
 			String s = String.valueOf(amount);
-			RenderSystem.disableLighting();
+			/*RenderSystem.disableLighting();
 			RenderSystem.disableDepthTest();
-			RenderSystem.disableBlend();
-			getMinecraft().fontRenderer.drawStringWithShadow(s, (float)(x + 17 - getMinecraft().fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa);
-			RenderSystem.enableBlend();
+			RenderSystem.disableBlend();*/
+			IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+			Matrix4f matrix = TransformationMatrix.identity().getMatrix();
+			matrix.translate(new Vector3f(0, 0, 300));
+			getMinecraft().fontRenderer.renderString(s, (float)(x + 17 - getMinecraft().fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa, true, matrix, buffer, false, 0, 15728880);
+			buffer.finish();
+			/*RenderSystem.enableBlend();
 			RenderSystem.enableLighting();
-			RenderSystem.enableDepthTest();
+			RenderSystem.enableDepthTest();*/
 		}
 	}
 	

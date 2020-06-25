@@ -21,7 +21,7 @@
     {
       "key": "arcana:basics",
       "in": "arcana:arcanum",
-      "icon": "arcana:item/light.png",
+      "icon": "arcana:aspect/light.png",
       "name": "research.arcana.category.basics",
       "bg": "arcana:research/research_bg1_b.png"
     },
@@ -52,7 +52,7 @@
     {
       "key": "arcana:infusion",
       "in": "arcana:arcanum",
-      "icon": "arcana:item/mana.png",
+      "icon": "arcana:aspect/mana.png",
       "name": "research.arcana.category.infusion",
       "bg": "arcana:research/starry_bg.png",
       "requires": "arcana:infusion_intro"
@@ -60,7 +60,7 @@
     {
       "key": "arcana:golemancy",
       "in": "arcana:arcanum",
-      "icon": "arcana:item/human.png",
+      "icon": "arcana:aspect/human.png",
       "name": "research.arcana.category.golemancy",
       "bg": "arcana:research/starry_bg.png",
       "requires": "arcana:golemancy_intro"

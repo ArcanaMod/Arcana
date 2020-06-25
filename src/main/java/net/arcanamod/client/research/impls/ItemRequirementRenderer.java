@@ -4,8 +4,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.research.impls.ItemRequirement;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -20,7 +20,8 @@ public class ItemRequirementRenderer implements RequirementRenderer<ItemRequirem
 	public void render(int x, int y, ItemRequirement requirement, int ticks, float partialTicks, PlayerEntity player){
 		RenderHelper.enableStandardItemLighting();
 		RenderSystem.disableLighting();
-		Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(requirement.getStack(), x, y);
+		ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
+		renderer.renderItemAndEffectIntoGUI(requirement.getStack(), x, y);
 	}
 	
 	public List<ITextComponent> tooltip(ItemRequirement requirement, PlayerEntity player){
