@@ -1,7 +1,9 @@
 package net.arcanamod.client.research;
 
+import net.arcanamod.client.research.impls.ItemTagRequirementRenderer;
 import net.arcanamod.client.research.impls.PuzzleRequirementRenderer;
 import net.arcanamod.client.research.impls.XpRequirementRenderer;
+import net.arcanamod.research.impls.ItemTagRequirement;
 import net.arcanamod.research.impls.PuzzleRequirement;
 import net.arcanamod.client.research.impls.ItemRequirementRenderer;
 import net.arcanamod.research.Requirement;
@@ -21,6 +23,7 @@ public interface RequirementRenderer<T extends Requirement>{
 	
 	static void init(){
 		map.put(ItemRequirement.TYPE, new ItemRequirementRenderer());
+		map.put(ItemTagRequirement.TYPE, new ItemTagRequirementRenderer());
 		map.put(XpRequirement.TYPE, new XpRequirementRenderer());
 		map.put(PuzzleRequirement.TYPE, new PuzzleRequirementRenderer());
 	}

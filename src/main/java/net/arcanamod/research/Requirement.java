@@ -1,10 +1,12 @@
 package net.arcanamod.research;
 
 import net.arcanamod.research.impls.ItemRequirement;
+import net.arcanamod.research.impls.ItemTagRequirement;
 import net.arcanamod.research.impls.PuzzleRequirement;
 import net.arcanamod.research.impls.XpRequirement;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -41,8 +43,9 @@ public abstract class Requirement{
 	}
 	
 	public static void init(){
-		// item requirement creation is handled by ResearchLoader -- an explicit form may be useful though.
-		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("itemType")))).setMeta(compound.getInt("meta")));
+		// item and item tag requirement creation is handled by ResearchLoader -- an explicit form may be useful though.
+		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("itemType")))));
+		deserializers.put(ItemTagRequirement.TYPE, compound -> new ItemTagRequirement(ItemTags.getCollection().get(new ResourceLocation(compound.getString("itemTag")))));
 		factories.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		deserializers.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		factories.put(PuzzleRequirement.TYPE, params -> new PuzzleRequirement(new ResourceLocation(params.get(0))));
