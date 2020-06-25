@@ -4,6 +4,7 @@
   "textures": {
     "particle": "block/dirt",
     "dirt": "arcana:block/tainted_farmland_side",
-    "top": "arcana:block/tainted_farmland_top"
+    "top": "arcana:block/tainted_farmland_top",
+    "bottom": "arcana:block/tainted_soil"
   }
 }
