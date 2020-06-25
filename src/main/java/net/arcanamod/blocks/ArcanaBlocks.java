@@ -2,6 +2,7 @@ package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.bases.*;
+import net.arcanamod.blocks.multiblocks.TaintScrubberBlock;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.worldgen.DummyTree;
 import net.minecraft.block.*;
@@ -109,6 +110,13 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> CRUCIBLE = BLOCKS.register("crucible", () -> new CrucibleBlock(create(IRON, MaterialColor.STONE).hardnessAndResistance(2).notSolid()));
 	public static final RegistryObject<Block> INFUSION_PEDESTAL = BLOCKS.register("infusion_pedestal", () -> new PedestalBlock(create(ROCK).hardnessAndResistance(3).notSolid()));
 	public static final RegistryObject<Block> ASPECT_TESTER = BLOCKS.register("aspect_tester", () -> new AspectTesterBlock(create(ROCK).hardnessAndResistance(3).notSolid()));
+
+	//Taint Scrubber //What is proper material for taint scrubber?
+	public static final RegistryObject<Block> TAINT_SCRUBBER_MK1 = BLOCKS.register("taint_scrubber_mk1", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberBlock.Level.MK1));
+	public static final RegistryObject<Block> TAINT_SCRUBBER_MK2 = BLOCKS.register("taint_scrubber_mk2", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberBlock.Level.MK2));
+	public static final RegistryObject<Block> TAINT_BOOSTER = BLOCKS.register("taint_booster", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberBlock.Level.MK2));
+	public static final RegistryObject<Block> TAINT_SUCKER = BLOCKS.register("taint_sucker", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberBlock.Level.MK2));
+	public static final RegistryObject<Block> TAINT_BORE = BLOCKS.register("taint_bore", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberBlock.Level.MK2));
 	
 	public static final RegistryObject<Block> SEE_NO_EVIL_STATUE = BLOCKS.register("see_no_evil_statue", () -> new StatueBlock(create(WOOD).hardnessAndResistance(4).notSolid()));
 	public static final RegistryObject<Block> HEAR_NO_EVIL_STATUE = BLOCKS.register("hear_no_evil_statue", () -> new StatueBlock(create(WOOD).hardnessAndResistance(4).notSolid()));

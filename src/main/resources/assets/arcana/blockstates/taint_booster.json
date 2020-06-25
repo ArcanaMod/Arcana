@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "arcana:taint_booster"
+      "model": "arcana:block/taint_booster"
     }
   }
 }
