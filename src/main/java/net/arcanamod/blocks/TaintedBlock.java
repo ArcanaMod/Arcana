@@ -16,7 +16,7 @@ import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class TaintedBlock extends DelegatingBlock implements GroupedBlock {
+public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 	
 	public TaintedBlock(Block block){
 		super(block);
@@ -30,7 +30,8 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock {
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
 		super.randomTick(state, world, pos, random);
 		// If taint level is greater than 5,
-		if(new ServerAuraView(world).getTaintAt(pos) > 5){
+		int at = new ServerAuraView(world).getTaintAt(pos);
+		if(at > 5){
 			// pick a block within a 4x6x4 area
 			// If this block is air, stop. If this block doesn't have a tainted form, re-roll.
 			// Do this up to 5 times.
@@ -51,14 +52,21 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock {
 			if(tainted != null){
 				BlockState taintedState = switchBlock(world.getBlockState(taintingPos), tainted);
 				world.setBlockState(taintingPos, taintedState);
+				// Schedule a tick
+				world.getPendingBlockTicks().scheduleTick(pos, this, taintTickWait(at));
 			}
-			// Schedule a tick?
 		}
 	}
-
+	
+	private int taintTickWait(int taintLevel){
+		// more taint level -> less tick wait
+		int base = (int)((1d / taintLevel) * 200);
+		return base > 0 ? base : 1;
+	}
+	
 	@Nullable
 	@Override
-	public ItemGroup getGroup() {
+	public ItemGroup getGroup(){
 		return Arcana.TAINT;
 	}
 }

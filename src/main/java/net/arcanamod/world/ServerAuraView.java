@@ -79,7 +79,7 @@ public class ServerAuraView implements AuraView{
 					AuraChunk chunk1 = loaded.get(neighbor);
 					if(chunk1.getTaintLevel() - chunk.getTaintLevel() > 8){
 						// take a third of the difference
-						int diff = (chunk1.getTaintLevel() - chunk.getTaintLevel()) / 3;
+						int diff = (chunk1.getTaintLevel() - chunk.getTaintLevel()) / 8;
 						chunk.addTaint(diff);
 						chunk1.addTaint(-diff);
 					}
