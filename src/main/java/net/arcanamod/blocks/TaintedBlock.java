@@ -54,7 +54,8 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 		// If I spread taint,
 		if(!state.get(UNTAINTED)){
 			// and if flux level is greater than 5,
-			int at = new ServerAuraView(world).getTaintAt(pos);
+			ServerAuraView auraView = new ServerAuraView(world);
+			int at = auraView.getTaintAt(pos);
 			if(at > 5){
 				// pick a block within a 4x6x4 area
 				// If this block is air, stop. If this block doesn't have a tainted form, re-roll.
@@ -76,6 +77,8 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 				if(tainted != null){
 					BlockState taintedState = switchBlock(world.getBlockState(taintingPos), tainted).with(UNTAINTED, false);
 					world.setBlockState(taintingPos, taintedState);
+					// Reduce flux level
+					auraView.addTaintAt(pos, -1);
 					// Schedule a tick
 					world.getPendingBlockTicks().scheduleTick(pos, this, taintTickWait(at));
 				}
