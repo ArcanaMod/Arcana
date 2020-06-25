@@ -11,7 +11,6 @@ import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.IProperty;
-import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
@@ -76,7 +75,8 @@ public class DelegatingBlock extends Block{
 		BlockState base = block.stateContainer.getBaseState();
 		// A helper method doesn't work here...
 		for(IProperty property : state.getProperties())
-			base = base.with(property, state.get(property));
+			if(base.has(property))
+				base = base.with(property, state.get(property));
 		return base;
 	}
 	
