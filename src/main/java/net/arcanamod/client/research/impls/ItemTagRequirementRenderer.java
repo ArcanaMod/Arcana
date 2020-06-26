@@ -10,6 +10,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRe
 			tooltip.set(0, new TranslationTextComponent("requirement.item.num", requirement.getAmount(), tooltip.get(0)));
 		else
 			tooltip.set(0, new TranslationTextComponent("requirement.item.have", tooltip.get(0)));
+		tooltip.add(new TranslationTextComponent("requirement.tag.accepts_any", requirement.getTag().getId().toString()).applyTextStyle(TextFormatting.DARK_GRAY));
 		return tooltip;
 	}
 }
