@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
-      "model": "arcana:block/tainted_grass_block"
-    }
+    "": [
+      { "model": "arcana:block/tainted_grass_block" },
+      { "model": "arcana:block/tainted_grass_block", "y": 90 },
+      { "model": "arcana:block/tainted_grass_block", "y": 180 },
+      { "model": "arcana:block/tainted_grass_block", "y": 270 }
+    ]
   }
 }
