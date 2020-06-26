@@ -1,0 +1,24 @@
+{
+  "replace": false,
+  "values": [
+    "arcana:dair_leaves",
+    "arcana:dead_leaves",
+    "arcana:eucalyptus_leaves",
+    "arcana:greatwood_leaves",
+    "arcana:hawthorn_leaves",
+    "arcana:silverwood_leaves",
+    "arcana:trypophobius_leaves",
+    "arcana:willow_leaves",
+    "arcana:tainted_dair_leaves",
+    "arcana:tainted_eucalyptus_leaves",
+    "arcana:tainted_greatwood_leaves",
+    "arcana:tainted_hawthorn_leaves",
+    "arcana:tainted_willow_leaves",
+    "arcana:tainted_oak_leaves",
+    "arcana:tainted_darkoak_leaves",
+    "arcana:tainted_acacia_leaves",
+    "arcana:tainted_birch_leaves",
+    "arcana:tainted_jungle_leaves",
+    "arcana:tainted_spruce_leaves"
+  ]
+}
