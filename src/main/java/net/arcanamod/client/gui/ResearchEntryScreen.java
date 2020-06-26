@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
@@ -33,7 +34,7 @@ public class ResearchEntryScreen extends Screen{
 	ResearchEntry entry;
 	int index;
 	
-	Button left, right, cont;
+	Button left, right, cont, ret;
 	
 	// there is: golem, crucible, crafting, infusion circle, arcane crafting, structure, wand(, arrow), crafting result
 	public static final String OVERLAY_SUFFIX = "_gui_overlay.png";
@@ -149,7 +150,7 @@ public class ResearchEntryScreen extends Screen{
 			}
 		};
 		cont = addButton(button);
-		
+		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, p_onPress_1_ -> returnToBook()));
 		updateButtonVisibility();
 	}
 	
@@ -164,14 +165,18 @@ public class ResearchEntryScreen extends Screen{
 			return true;
 		else{
 			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
-			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
-				ResearchBookScreen gui = new ResearchBookScreen(entry.category().book());
-				gui.tab = entry.category().book().getCategories().indexOf(entry.category());
-				if(gui.tab < 0)
-					gui.tab = 0;
-			}
+			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey))
+				returnToBook();
 			return false;
 		}
+	}
+	
+	private void returnToBook(){
+		ResearchBookScreen gui = new ResearchBookScreen(entry.category().book());
+		gui.tab = entry.category().book().getCategories().indexOf(entry.category());
+		if(gui.tab < 0)
+			gui.tab = 0;
+		Minecraft.getInstance().displayGuiScreen(gui);
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
@@ -256,13 +261,17 @@ public class ResearchEntryScreen extends Screen{
 			setBlitOffset(0);
 		}else{
 			String s = String.valueOf(amount);
-			RenderSystem.disableLighting();
+			/*RenderSystem.disableLighting();
 			RenderSystem.disableDepthTest();
-			RenderSystem.disableBlend();
-			getMinecraft().fontRenderer.drawStringWithShadow(s, (float)(x + 17 - getMinecraft().fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa);
-			RenderSystem.enableBlend();
+			RenderSystem.disableBlend();*/
+			IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+			Matrix4f matrix = TransformationMatrix.identity().getMatrix();
+			matrix.translate(new Vector3f(0, 0, 300));
+			getMinecraft().fontRenderer.renderString(s, (float)(x + 17 - getMinecraft().fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa, true, matrix, buffer, false, 0, 15728880);
+			buffer.finish();
+			/*RenderSystem.enableBlend();
 			RenderSystem.enableLighting();
-			RenderSystem.enableDepthTest();
+			RenderSystem.enableDepthTest();*/
 		}
 	}
 	
@@ -291,6 +300,27 @@ public class ResearchEntryScreen extends Screen{
 				RenderSystem.color4f(mult, mult, mult, 1f);
 				int texX = right ? 12 : 0;
 				int texY = 185;
+				getMinecraft().getTextureManager().bindTexture(bg);
+				drawTexturedModalRect(x, y, texX, texY, width, height);
+				RenderSystem.color4f(1f, 1f, 1f, 1f);
+			}
+		}
+	}
+	
+	class ReturnToBookButton extends Button{
+		
+		public ReturnToBookButton(int x, int y, IPressable pressable){
+			super(x, y, 15, 8, "text", pressable);
+		}
+		
+		@ParametersAreNonnullByDefault
+		public void renderButton(int mouseX, int mouseY, float partialTicks){
+			if(visible){
+				isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+				float mult = isHovered ? 1f : 0.5f;
+				RenderSystem.color4f(mult, mult, mult, 1f);
+				int texX = 41;
+				int texY = 204;
 				getMinecraft().getTextureManager().bindTexture(bg);
 				drawTexturedModalRect(x, y, texX, texY, width, height);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);

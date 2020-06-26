@@ -2,10 +2,13 @@ package net.arcanamod.research;
 
 import com.google.gson.*;
 import net.arcanamod.research.impls.ItemRequirement;
+import net.arcanamod.research.impls.ItemTagRequirement;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.item.Item;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -213,13 +216,13 @@ public class ResearchLoader extends JsonReloadListener{
 				}
 				List<String> params = new ArrayList<>();
 				// document this better.
+				// If this has a "{" it has parameters; remove those
 				if(desc.contains("{") && desc.endsWith("}")){
-					String[] paramparts = desc.split("\\{");
-					if(paramparts.length != 2)
-						LOGGER.error("Multiple \"{\"s found in requirement in " + file + "!");
-					desc = paramparts[0];
-					params = Arrays.asList(paramparts[1].substring(0, paramparts[1].length() - 1).split(", "));
+					String[] param_parts = desc.split("\\{", 2);
+					desc = param_parts[0];
+					params = Arrays.asList(param_parts[1].substring(0, param_parts[1].length() - 1).split(", "));
 				}
+				// If this has "::" it is a custom requirement
 				if(desc.contains("::")){
 					String[] parts = desc.split("::");
 					if(parts.length != 2)
@@ -231,22 +234,27 @@ public class ResearchLoader extends JsonReloadListener{
 						ret.add(add);
 					}else
 						LOGGER.error("Invalid requirement type " + type + " found in file " + file + "!");
+				// if this begins with a hash
+				}else if(desc.startsWith("#")){
+					// its a tag
+					ResourceLocation itemTagLoc = new ResourceLocation(desc.substring(1));
+					Tag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
+					if(itemTag != null){
+						ItemTagRequirement tagReq = new ItemTagRequirement(itemTag);
+						tagReq.amount = amount;
+						ret.add(tagReq);
+					}else
+						LOGGER.error("Invalid item tag " + itemTagLoc + " found in file " + file + "!");
 				}else{
 					// its an item
 					ResourceLocation item = new ResourceLocation(desc);
-					ItemRequirement add = new ItemRequirement(ForgeRegistries.ITEMS.getValue(item));
-					// a / means meta (intentionally temporary until we upgrade)
-					// any other param will be NBT eventually
-					// TODO: document properly
-					if(params.size() > 0 && params.get(0).startsWith("/")){
-						try{
-							add.setMeta(Integer.parseInt(params.get(0).substring(1)));
-						}catch(NumberFormatException exception){
-							LOGGER.error("Tried to set an item requirement's item's meta to a non-integer! (If the first parameter of an item requirement begins with a /, it will be parsed as meta.)");
-						}
-					}
-					add.amount = amount;
-					ret.add(add);
+					Item value = ForgeRegistries.ITEMS.getValue(item);
+					if(value != null){
+						ItemRequirement add = new ItemRequirement(value);
+						add.amount = amount;
+						ret.add(add);
+					}else
+						LOGGER.error("Invalid item " + item + " found in file " + file + "!");
 				}
 			}
 		}

@@ -309,12 +309,12 @@
           "type": "string",
           "content": "research.arcana.vis_manipulators.stage.1",
           "requirements": [
-            "2*minecraft:glass",
-            "3*minecraft:redstone",
-            "minecraft:diamond",
-            "minecraft:lapis_lazuli",
-            "minecraft:gold_ingot",
-            "minecraft:oak_log"
+            "2*#forge:glass",
+            "4*#forge:dusts/redstone",
+            "#forge:gems/diamond",
+            "#forge:gems/lapis",
+            "#forge:ingots/gold",
+            "#minecraft:logs"
           ]
         },
         {

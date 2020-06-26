@@ -681,6 +681,7 @@
     "requirement.item.num": "%sx %s",
     "requirement.puzzle.get_note.1": "Click to get research note",
     "requirement.puzzle.get_note.2": "Requires scribing tools and paper",
+    "requirement.tag.accepts_any": "Any %s",
 
     "research.arcana.category.basics": "Fundamentals",
     "research.arcana.category.artifice": "Artifice",
