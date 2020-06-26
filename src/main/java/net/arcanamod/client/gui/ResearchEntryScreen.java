@@ -34,7 +34,7 @@ public class ResearchEntryScreen extends Screen{
 	ResearchEntry entry;
 	int index;
 	
-	Button left, right, cont;
+	Button left, right, cont, ret;
 	
 	// there is: golem, crucible, crafting, infusion circle, arcane crafting, structure, wand(, arrow), crafting result
 	public static final String OVERLAY_SUFFIX = "_gui_overlay.png";
@@ -150,7 +150,7 @@ public class ResearchEntryScreen extends Screen{
 			}
 		};
 		cont = addButton(button);
-		
+		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, p_onPress_1_ -> returnToBook()));
 		updateButtonVisibility();
 	}
 	
@@ -165,14 +165,18 @@ public class ResearchEntryScreen extends Screen{
 			return true;
 		else{
 			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
-			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
-				ResearchBookScreen gui = new ResearchBookScreen(entry.category().book());
-				gui.tab = entry.category().book().getCategories().indexOf(entry.category());
-				if(gui.tab < 0)
-					gui.tab = 0;
-			}
+			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey))
+				returnToBook();
 			return false;
 		}
+	}
+	
+	private void returnToBook(){
+		ResearchBookScreen gui = new ResearchBookScreen(entry.category().book());
+		gui.tab = entry.category().book().getCategories().indexOf(entry.category());
+		if(gui.tab < 0)
+			gui.tab = 0;
+		Minecraft.getInstance().displayGuiScreen(gui);
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
@@ -296,6 +300,27 @@ public class ResearchEntryScreen extends Screen{
 				RenderSystem.color4f(mult, mult, mult, 1f);
 				int texX = right ? 12 : 0;
 				int texY = 185;
+				getMinecraft().getTextureManager().bindTexture(bg);
+				drawTexturedModalRect(x, y, texX, texY, width, height);
+				RenderSystem.color4f(1f, 1f, 1f, 1f);
+			}
+		}
+	}
+	
+	class ReturnToBookButton extends Button{
+		
+		public ReturnToBookButton(int x, int y, IPressable pressable){
+			super(x, y, 15, 8, "text", pressable);
+		}
+		
+		@ParametersAreNonnullByDefault
+		public void renderButton(int mouseX, int mouseY, float partialTicks){
+			if(visible){
+				isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
+				float mult = isHovered ? 1f : 0.5f;
+				RenderSystem.color4f(mult, mult, mult, 1f);
+				int texX = 41;
+				int texY = 204;
 				getMinecraft().getTextureManager().bindTexture(bg);
 				drawTexturedModalRect(x, y, texX, texY, width, height);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);

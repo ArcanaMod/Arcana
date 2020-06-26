@@ -126,7 +126,6 @@ public class ResearchBookScreen extends Screen{
 		}
 	}
 	
-	
 	private void renderResearchBackground(){
 		// 224x196 viewing area
 		// pans up to (256 - 224) x, (256 - 196) y            
