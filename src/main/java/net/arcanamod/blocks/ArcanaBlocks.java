@@ -358,24 +358,24 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_SPRUCE_SLAB = BLOCKS.register("tainted_spruce_slab", () -> taintedOf(Blocks.SPRUCE_SLAB));
 	public static final RegistryObject<Block> TAINTED_SPRUCE_STAIRS = BLOCKS.register("tainted_spruce_stairs", () -> taintedOf(Blocks.SPRUCE_STAIRS));
 
-	public static final RegistryObject<Block> TAINTED_POLISHED_GRANITE = BLOCKS.register("tainted_polished_granite", () -> new TaintedBlock(Blocks.POLISHED_GRANITE));
-	public static final RegistryObject<Block> TAINTED_POLISHED_GRANITE_SLAB = BLOCKS.register("tainted_polished_granite_slab", () -> new TaintedBlock(Blocks.POLISHED_GRANITE_SLAB));
-	public static final RegistryObject<Block> TAINTED_POLISHED_GRANITE_STAIRS = BLOCKS.register("tainted_polished_granite_stairs", () -> new TaintedBlock(Blocks.POLISHED_GRANITE_STAIRS));
+	public static final RegistryObject<Block> TAINTED_POLISHED_GRANITE = BLOCKS.register("tainted_polished_granite", () -> taintedOf(Blocks.POLISHED_GRANITE));
+	public static final RegistryObject<Block> TAINTED_POLISHED_GRANITE_SLAB = BLOCKS.register("tainted_polished_granite_slab", () -> taintedOf(Blocks.POLISHED_GRANITE_SLAB));
+	public static final RegistryObject<Block> TAINTED_POLISHED_GRANITE_STAIRS = BLOCKS.register("tainted_polished_granite_stairs", () -> taintedOf(Blocks.POLISHED_GRANITE_STAIRS));
 
-	public static final RegistryObject<Block> TAINTED_POLISHED_DIORITE = BLOCKS.register("tainted_polished_diorite", () -> new TaintedBlock(Blocks.POLISHED_DIORITE));
-	public static final RegistryObject<Block> TAINTED_POLISHED_DIORITE_SLAB = BLOCKS.register("tainted_polished_diorite_slab", () -> new TaintedBlock(Blocks.POLISHED_DIORITE_SLAB));
-	public static final RegistryObject<Block> TAINTED_POLISHED_DIORITE_STAIRS = BLOCKS.register("tainted_polished_diorite_stairs", () -> new TaintedBlock(Blocks.POLISHED_DIORITE_STAIRS));
+	public static final RegistryObject<Block> TAINTED_POLISHED_DIORITE = BLOCKS.register("tainted_polished_diorite", () -> taintedOf(Blocks.POLISHED_DIORITE));
+	public static final RegistryObject<Block> TAINTED_POLISHED_DIORITE_SLAB = BLOCKS.register("tainted_polished_diorite_slab", () -> taintedOf(Blocks.POLISHED_DIORITE_SLAB));
+	public static final RegistryObject<Block> TAINTED_POLISHED_DIORITE_STAIRS = BLOCKS.register("tainted_polished_diorite_stairs", () -> taintedOf(Blocks.POLISHED_DIORITE_STAIRS));
 
-	public static final RegistryObject<Block> TAINTED_POLISHED_ANDESITE = BLOCKS.register("tainted_polished_andesite", () -> new TaintedBlock(Blocks.POLISHED_ANDESITE));
-	public static final RegistryObject<Block> TAINTED_POLISHED_ANDESITE_SLAB = BLOCKS.register("tainted_polished_andesite_slab", () -> new TaintedBlock(Blocks.POLISHED_ANDESITE_SLAB));
-	public static final RegistryObject<Block> TAINTED_POLISHED_ANDESITE_STAIRS = BLOCKS.register("tainted_polished_andesite_stairs", () -> new TaintedBlock(Blocks.POLISHED_ANDESITE_STAIRS));
+	public static final RegistryObject<Block> TAINTED_POLISHED_ANDESITE = BLOCKS.register("tainted_polished_andesite", () -> taintedOf(Blocks.POLISHED_ANDESITE));
+	public static final RegistryObject<Block> TAINTED_POLISHED_ANDESITE_SLAB = BLOCKS.register("tainted_polished_andesite_slab", () -> taintedOf(Blocks.POLISHED_ANDESITE_SLAB));
+	public static final RegistryObject<Block> TAINTED_POLISHED_ANDESITE_STAIRS = BLOCKS.register("tainted_polished_andesite_stairs", () -> taintedOf(Blocks.POLISHED_ANDESITE_STAIRS));
 
-	public static final RegistryObject<Block> TAINTED_ANDESITE_SLAB = BLOCKS.register("tainted_andesite_slab", () -> new TaintedBlock(Blocks.POLISHED_ANDESITE_SLAB));
-	public static final RegistryObject<Block> TAINTED_ANDESITE_STAIRS = BLOCKS.register("tainted_andesite_stairs", () -> new TaintedBlock(Blocks.POLISHED_ANDESITE_STAIRS));
+	public static final RegistryObject<Block> TAINTED_ANDESITE_SLAB = BLOCKS.register("tainted_andesite_slab", () -> taintedOf(Blocks.POLISHED_ANDESITE_SLAB));
+	public static final RegistryObject<Block> TAINTED_ANDESITE_STAIRS = BLOCKS.register("tainted_andesite_stairs", () -> taintedOf(Blocks.POLISHED_ANDESITE_STAIRS));
 
-	public static final RegistryObject<Block> TAINTED_DIORITE_SLAB = BLOCKS.register("tainted_diorite_slab", () -> new TaintedBlock(Blocks.POLISHED_DIORITE_SLAB));
-	public static final RegistryObject<Block> TAINTED_DIORITE_STAIRS = BLOCKS.register("tainted_diorite_stairs", () -> new TaintedBlock(Blocks.POLISHED_DIORITE_STAIRS));
+	public static final RegistryObject<Block> TAINTED_DIORITE_SLAB = BLOCKS.register("tainted_diorite_slab", () -> taintedOf(Blocks.POLISHED_DIORITE_SLAB));
+	public static final RegistryObject<Block> TAINTED_DIORITE_STAIRS = BLOCKS.register("tainted_diorite_stairs", () -> taintedOf(Blocks.POLISHED_DIORITE_STAIRS));
 
-	public static final RegistryObject<Block> TAINTED_GRANITE_SLAB = BLOCKS.register("tainted_granite_slab", () -> new TaintedBlock(Blocks.POLISHED_GRANITE_SLAB));
-	public static final RegistryObject<Block> TAINTED_GRANITE_STAIRS = BLOCKS.register("tainted_granite_stairs", () -> new TaintedBlock(Blocks.POLISHED_GRANITE_STAIRS));
+	public static final RegistryObject<Block> TAINTED_GRANITE_SLAB = BLOCKS.register("tainted_granite_slab", () -> taintedOf(Blocks.POLISHED_GRANITE_SLAB));
+	public static final RegistryObject<Block> TAINTED_GRANITE_STAIRS = BLOCKS.register("tainted_granite_stairs", () -> taintedOf(Blocks.POLISHED_GRANITE_STAIRS));
 }
