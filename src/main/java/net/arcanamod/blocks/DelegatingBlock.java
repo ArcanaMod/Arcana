@@ -12,10 +12,7 @@ import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.IProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
@@ -26,6 +23,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -37,7 +35,8 @@ import java.util.Random;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class DelegatingBlock extends Block{
-	private final Block parentBlock;
+	protected final Block parentBlock;
+	private static final Method fillStateContainer = ObfuscationReflectionHelper.findMethod(Block.class, "func_206840_a", StateContainer.Builder.class);
 	
 	public DelegatingBlock(Block blockIn){
 		super(Properties.from(blockIn));
@@ -56,11 +55,11 @@ public class DelegatingBlock extends Block{
 		// can't AT it to public because its overriden with "less" (i.e. protected) visibility.
 		if(parentBlock != null)
 			try{
-				Method fillStateContainer = Block.class.getDeclaredMethod("fillStateContainer", StateContainer.Builder.class);
+				// (Lnet/minecraft/state/StateContainer$Builder;)V
 				fillStateContainer.setAccessible(true);
 				fillStateContainer.invoke(parentBlock, builder);
 				fillStateContainer.setAccessible(false);
-			}catch(IllegalAccessException | InvocationTargetException | NoSuchMethodException e){
+			}catch(IllegalAccessException | InvocationTargetException e){
 				e.printStackTrace();
 				System.err.println("Unable to delegate blockstate!");
 			}
@@ -108,11 +107,11 @@ public class DelegatingBlock extends Block{
 	}
 	
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
-		parentBlock.randomTick(switchBlock(state, parentBlock), world, pos, random);
+		parentBlock.randomTick(state, world, pos, random);
 	}
 	
 	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand){
-		parentBlock.tick(switchBlock(state, parentBlock), world, pos, rand);
+		parentBlock.tick(state, world, pos, rand);
 	}
 	
 	public boolean isTransparent(BlockState state){
@@ -280,44 +279,60 @@ public class DelegatingBlock extends Block{
 	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable){
 		return parentBlock.canSustainPlant(state, world, pos, facing, plantable);
 	}
-
+	
 	@Override
-	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public VoxelShape getRenderShape(BlockState state, IBlockReader worldIn, BlockPos pos){
 		return parentBlock.getRenderShape(state, worldIn, pos);
 	}
-
+	
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getCollisionShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
 		return parentBlock.getCollisionShape(state, worldIn, pos, context);
 	}
-
+	
 	@Override
-	public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public VoxelShape getRaytraceShape(BlockState state, IBlockReader worldIn, BlockPos pos){
 		return parentBlock.getRaytraceShape(state, worldIn, pos);
 	}
-
+	
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
 		return parentBlock.getShape(state, worldIn, pos, context);
 	}
-
+	
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
+	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos){
 		return parentBlock.isValidPosition(state, worldIn, pos);
 	}
-
+	
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos){
 		return parentBlock.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
 	}
-
+	
 	@Override
-	public boolean isReplaceable(BlockState state, BlockItemUseContext useContext) {
+	public boolean isReplaceable(BlockState state, BlockItemUseContext useContext){
 		return parentBlock.isReplaceable(state, useContext);
 	}
-
+	
 	@Override
-	public boolean isReplaceable(BlockState p_225541_1_, Fluid p_225541_2_) {
-		return parentBlock.isReplaceable(p_225541_1_, p_225541_2_);
+	public boolean isReplaceable(BlockState state, Fluid fluid){
+		return parentBlock.isReplaceable(state, fluid);
+	}
+	
+	public void onBlockClicked(BlockState state, World world, BlockPos pos, PlayerEntity player){
+		parentBlock.onBlockClicked(state, world, pos, player);
+	}
+	
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult raytrace){
+		return parentBlock.onBlockActivated(state, world, pos, player, hand, raytrace);
+	}
+	
+	public int getExpDrop(BlockState state, IWorldReader world, BlockPos pos, int fortune, int silktouch){
+		return parentBlock.getExpDrop(state, world, pos, fortune, silktouch);
+	}
+	
+	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos){
+		return parentBlock.getLightValue(state, world, pos);
 	}
 }

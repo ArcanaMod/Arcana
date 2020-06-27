@@ -3,29 +3,38 @@ package net.arcanamod.blocks;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.bases.GroupedBlock;
-import net.arcanamod.world.ServerAuraView;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.FarmlandWaterManager;
+import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
+import static net.minecraft.block.FarmlandBlock.MOISTURE;
+import static net.minecraftforge.common.ForgeHooks.onFarmlandTrample;
+
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 	
-	public static final BooleanProperty UNTAINTED = BooleanProperty.create("untainted"); // false by default
+	public static final BooleanProperty UNTAINTED = Taint.UNTAINTED;
 	
+	@Deprecated() // Use Taint#taintedOf instead
 	public TaintedBlock(Block block){
 		super(block);
 		Taint.addTaintMapping(block, this);
@@ -50,51 +59,64 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 	}
 	
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
-		super.randomTick(state, world, pos, random);
-		// If I spread taint,
-		if(!state.get(UNTAINTED)){
-			// and if flux level is greater than 5,
-			ServerAuraView auraView = new ServerAuraView(world);
-			int at = auraView.getTaintAt(pos);
-			if(at > 5){
-				// pick a block within a 4x6x4 area
-				// If this block is air, stop. If this block doesn't have a tainted form, re-roll.
-				// Do this up to 5 times.
-				Block tainted = null;
-				BlockPos taintingPos = pos;
-				int iter = 0;
-				while(tainted == null && iter < 5){
-					taintingPos = pos.north(random.nextInt(9) - 4).west(random.nextInt(9) - 4).up(random.nextInt(13) - 6);
-					tainted = world.getBlockState(taintingPos).getBlock();
-					if(tainted.isAir(world.getBlockState(taintingPos), world, taintingPos)){
-						tainted = null;
-						break;
+		// Tainted Farmland yet again
+		boolean continueTick = true;
+		if(parentBlock == Blocks.FARMLAND){
+			if(!state.isValidPosition(world, pos)){
+				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
+				continueTick = false;
+			}else if(!hasWater(world, pos) && !world.isRainingAt(pos.up()))
+				if(state.get(MOISTURE) == 0)
+					if(!hasCrops(world, pos)){
+						world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
+						continueTick = false;
 					}
-					tainted = Taint.getTaintedOfBlock(tainted);
-					iter++;
-				}
-				// Replace it with its tainted form if found.
-				if(tainted != null){
-					BlockState taintedState = switchBlock(world.getBlockState(taintingPos), tainted).with(UNTAINTED, false);
-					world.setBlockState(taintingPos, taintedState);
-					// Reduce flux level
-					auraView.addTaintAt(pos, -1);
-					// Schedule a tick
-					world.getPendingBlockTicks().scheduleTick(pos, this, taintTickWait(at));
-				}
-			}
 		}
+		if(continueTick)
+			super.randomTick(state, world, pos, random);
+		Taint.tickTaintedBlock(state, world, pos, random);
 	}
 	
-	private int taintTickWait(int taintLevel){
-		// more taint level -> less tick wait
-		int base = (int)((1d / taintLevel) * 200);
-		return base > 0 ? base : 1;
+	// Tainted Cactus and Sugar Cane
+	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable){
+		// BlockState plant = plantable.getPlant(world, pos.offset(facing));
+		return super.canSustainPlant(state, world, pos, facing, plantable);
+				/*|| ((parentBlock == Blocks.GRASS_BLOCK || parentBlock == Blocks.DIRT || parentBlock == Blocks.COARSE_DIRT || parentBlock == Blocks.PODZOL || parentBlock == Blocks.FARMLAND)
+						&& plantable instanceof BushBlock)
+				|| (parentBlock == Blocks.CACTUS
+						&& (plant.getBlock() == Blocks.CACTUS *//*|| plant.getBlock() == ArcanaBlocks.TAINTED_CACTUS*//*))
+				|| (parentBlock == Blocks.SUGAR_CANE
+						&& (plant.getBlock() == Blocks.SUGAR_CANE *//*|| plant.getBlock() == ArcanaBlocks.TAINTED_SUGAR_CANE*//*));*/
+	}
+	
+	// Make farmland turn to tainted soil
+	public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance){
+		if(parentBlock == Blocks.FARMLAND){
+			// Forge: Move logic to Entity#canTrample
+			if(!world.isRemote && onFarmlandTrample(world, pos, Blocks.DIRT.getDefaultState(), fallDistance, entity))
+				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
+			entity.onLivingFall(fallDistance, 1.0F);
+		}else
+			super.onFallenUpon(world, pos, entity, fallDistance);
 	}
 	
 	@Nullable
 	@Override
 	public ItemGroup getGroup(){
 		return Arcana.TAINT;
+	}
+	
+	// Private stuff in FarmlandBlock
+	// TODO: AT this
+	private boolean hasCrops(IBlockReader worldIn, BlockPos pos){
+		BlockState state = worldIn.getBlockState(pos.up());
+		return state.getBlock() instanceof IPlantable && canSustainPlant(state, worldIn, pos, Direction.UP, (IPlantable)state.getBlock());
+	}
+	
+	private static boolean hasWater(IWorldReader worldIn, BlockPos pos){
+		for(BlockPos blockpos : BlockPos.getAllInBoxMutable(pos.add(-4, 0, -4), pos.add(4, 1, 4)))
+			if(worldIn.getFluidState(blockpos).isTagged(FluidTags.WATER))
+				return true;
+		return FarmlandWaterManager.hasBlockWaterTicket(worldIn, pos);
 	}
 }
