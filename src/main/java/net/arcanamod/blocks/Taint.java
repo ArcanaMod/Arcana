@@ -1,12 +1,10 @@
 package net.arcanamod.blocks;
 
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
+import net.arcanamod.blocks.tainted.TaintedGrassPathBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.world.ServerAuraView;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FallingBlock;
-import net.minecraft.block.IGrowable;
+import net.minecraft.block.*;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
@@ -30,6 +28,8 @@ public class Taint{
 			return new TaintedFallingBlock(block);
 		else if(block instanceof IPlantable || block instanceof IShearable || block instanceof IGrowable)
 			return new TaintedPlantBlock(block);
+		else if(block instanceof GrassPathBlock)
+			return new TaintedGrassPathBlock(block);
 		else
 			return new TaintedBlock(block);
 	}
