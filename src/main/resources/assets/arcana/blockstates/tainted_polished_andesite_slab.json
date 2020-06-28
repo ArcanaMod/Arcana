@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "type=bottom": {
+            "model": "arcana:block/tainted_polished_andesite_slab"
+        },
+        "type=top": {
+            "model": "arcana:block/tainted_polished_andesite_slab_top"
+        },
+        "type=double": {
+            "model": "arcana:block/tainted_polished_andesite"
+        }
+    }
+}
