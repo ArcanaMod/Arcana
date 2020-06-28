@@ -61,7 +61,7 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
 		// Tainted Farmland yet again
 		boolean continueTick = true;
-		if(parentBlock == Blocks.FARMLAND){
+		if(parentBlock == Blocks.FARMLAND || parentBlock == Blocks.GRASS_PATH){
 			if(!state.isValidPosition(world, pos)){
 				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
 				continueTick = false;
