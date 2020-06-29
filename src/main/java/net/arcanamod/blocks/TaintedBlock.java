@@ -75,8 +75,8 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 		if(parentBlock == Blocks.GRASS_PATH){
 			if(!state.isValidPosition(world, pos)){
 				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
-				continueTick = false;
 			}
+			continueTick = false;
 		}
 		if(continueTick)
 			super.randomTick(state, world, pos, random);

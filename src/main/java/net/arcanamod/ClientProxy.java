@@ -14,6 +14,7 @@ import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.research.ResearchBooks;
+import net.arcanamod.util.Embargo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -21,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -41,6 +43,8 @@ public class ClientProxy extends CommonProxy{
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(RenderTooltip::onRenderToolTipColor);
 		modEventBus.addListener(FogColorHandler::setFog);
+
+		//MinecraftForge.EVENT_BUS.register(Embargo.class);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
 	}

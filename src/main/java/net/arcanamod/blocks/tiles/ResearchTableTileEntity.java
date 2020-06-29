@@ -57,8 +57,6 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 
 	//TODO: FIX PERFORMANCE (-20 FPS) Caching or something.
 	private AspectBattery getVisShareablesAsBattery() {
-		//if (world.isRemote) return null;
-		//AtomicInteger j = new AtomicInteger();
 		battery.clear();
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
 			if (world.getBlockState(blockPos).hasTileEntity()) {
