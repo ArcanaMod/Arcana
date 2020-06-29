@@ -22,6 +22,9 @@ public class TaintScrubberExtensionBlock extends Block implements ITaintScrubber
 
 	@Override
 	public boolean isValidConnection(World world, BlockPos pos){
+		//If block not exist return.
+		if (world.getBlockState(pos).getBlock()!=this) return false;
+
 		if (this.type.equals(Type.SCRUBBER_MK2)){
 
 		}
