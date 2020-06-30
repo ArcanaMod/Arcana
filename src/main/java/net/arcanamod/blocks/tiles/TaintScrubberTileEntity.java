@@ -1,14 +1,11 @@
 package net.arcanamod.blocks.tiles;
 
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.aspects.IVisShareable;
 import net.arcanamod.blocks.multiblocks.ITaintScrubberExtension;
 import net.arcanamod.util.Pair;
 import net.minecraft.block.BlockState;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.math.BlockPos;
 
 import java.util.ArrayList;
@@ -25,18 +22,34 @@ public class TaintScrubberTileEntity extends TileEntity implements ITickableTile
 
 	@Override
 	public void tick() {
+		CompoundNBT compoundNBT = new CompoundNBT();
+		List<Pair<ITaintScrubberExtension, BlockPos>> toRemove = new ArrayList<>();
+		//Update and get data
+		for (Pair<ITaintScrubberExtension, BlockPos> extension : extensions){
+			if (extension.getFirst().isValidConnection(world,extension.getSecond())){
+				extension.getFirst().sendUpdate(world,extension.getSecond());
+				extension.getFirst().getShareableData(compoundNBT);
+			} else {
+				extension.getFirst().sendUpdate(world,extension.getSecond()); toRemove.add(extension);
+			}
+		}
+
+		if (compoundNBT.getInt("range") == 0) compoundNBT.putInt("range",8);
+
+		//Run Task
+		for (Pair<ITaintScrubberExtension, BlockPos> extension : extensions){
+			if (extension.getFirst().isValidConnection(world,extension.getSecond())){
+				extension.getFirst().run(world,extension.getSecond(),compoundNBT);
+			} else {
+				extension.getFirst().sendUpdate(world,extension.getSecond()); toRemove.add(extension);
+			}
+		}
+		extensions.removeAll(toRemove);
+
 		if (nextRefresh>=10){
 			searchForExtensions();
 			nextRefresh%=10;
 		} else nextRefresh++;
-
-		List<Pair<ITaintScrubberExtension, BlockPos>> toRemove = new ArrayList<>();
-		for (Pair<ITaintScrubberExtension, BlockPos> extension : extensions){
-			if (extension.getFirst().isValidConnection(world,extension.getSecond())){
-				extension.getFirst().run(world,extension.getSecond());
-			} else {extension.getFirst().sendUpdate(world,extension.getSecond()); toRemove.add(extension);};
-		}
-		extensions.removeAll(toRemove);
 	}
 
 	private void searchForExtensions() {
