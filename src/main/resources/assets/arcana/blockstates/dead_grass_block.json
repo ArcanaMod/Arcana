@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "": [
+      { "model": "arcana:block/dead_grass_block" },
+      { "model": "arcana:block/dead_grass_block", "y": 90 },
+      { "model": "arcana:block/dead_grass_block", "y": 180 },
+      { "model": "arcana:block/dead_grass_block", "y": 270 }
+    ],
+    "snowy":[
+      { "model": "arcana:block/dead_snowy_grass_block" },
+      { "model": "arcana:block/dead_snowy_grass_block", "y": 90 },
+      { "model": "arcana:block/dead_snowy_grass_block", "y": 180 },
+      { "model": "arcana:block/dead_snowy_grass_block", "y": 270 }
+    ]
+  }
+}

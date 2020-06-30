@@ -1,0 +1,9 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "arcana:block/dead_grass_block_top",
+    "side": "arcana:block/dead_grass_block_side",
+    "front": "arcana:block/dead_grass_block_side",
+    "bottom": "arcana:block/dead_grass_block_bottom"
+  }
+}

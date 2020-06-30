@@ -10,6 +10,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -23,18 +24,33 @@ public class Taint{
 	private static final Map<Block, Block> deadMap = new HashMap<>();
 	
 	@SuppressWarnings("deprecation")
-	public static Block taintedOf(Block block){
-		if(block instanceof FallingBlock)
-			return new TaintedFallingBlock(block);
-		else if(block instanceof IPlantable || block instanceof IShearable || block instanceof IGrowable)
-			return new TaintedPlantBlock(block);
+	public static Block taintedOf(Block parent, Block... blocks){
+		Block tainted;
+		if (parent instanceof FallingBlock)
+			tainted = new TaintedFallingBlock(parent);
+		else if (parent instanceof IPlantable || parent instanceof IShearable || parent instanceof IGrowable)
+			tainted = new TaintedPlantBlock(parent);
 		else
-			return new TaintedBlock(block);
+			tainted = new TaintedBlock(parent);
+
+		//Add children to TaintMapping, NOT parent (see TaintedBlock)!
+		for (Block block : blocks) {
+			Taint.addTaintMapping(block, tainted);
+		}
+
+		return tainted;
 	}
 
 	@SuppressWarnings("deprecation")
-	public static Block deadOf(Block block){
-		return new DeadBlock(block);
+	public static Block deadOf(Block parent, Block... blocks){
+		Block dead = new DeadBlock(parent);
+
+		//Add children to DeadMapping, NOT parent (see DeadBlock)!
+		for (Block block : blocks) {
+			Taint.addDeadMapping(block, dead);
+		}
+
+		return dead;
 	}
 	
 	public static Block getPureOfBlock(Block block){
@@ -45,10 +61,7 @@ public class Taint{
 	}
 
 	public static Block getDeadOfBlock(Block block){
-		return deadMap.entrySet().stream()
-				.filter(entry -> entry.getValue() == block)
-				.map(Map.Entry::getKey)
-				.findAny().orElse(block);
+		return deadMap.getOrDefault(block,block);
 	}
 	
 	public static Block getTaintedOfBlock(Block block){
