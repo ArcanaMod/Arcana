@@ -1,0 +1,8 @@
+{
+    "parent": "block/slab",
+    "textures": {
+        "bottom": "arcana:block/dead_silverwood_planks",
+        "top": "arcana:block/dead_silverwood_planks",
+        "side": "arcana:block/dead_silverwood_planks"
+    }
+}

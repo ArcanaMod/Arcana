@@ -2,6 +2,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "arcana:block/tainted_bush"
+    "layer0": "arcana:block/tainted_grass"
   }
 }

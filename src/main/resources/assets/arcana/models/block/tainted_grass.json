@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "arcana:block/tainted_bush"
+    "cross": "arcana:block/tainted_grass"
   }
 }

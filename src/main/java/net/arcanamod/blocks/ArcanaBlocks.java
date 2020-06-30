@@ -284,8 +284,10 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_LAPIS_BLOCK = BLOCKS.register("tainted_lapis_block", () -> taintedOf(Blocks.LAPIS_BLOCK));
 	public static final RegistryObject<Block> TAINTED_REDSTONE_BLOCK = BLOCKS.register("tainted_redstone_block", () -> taintedOf(Blocks.REDSTONE_BLOCK));
 
-	public static final RegistryObject<Block> TAINTED_BUSH = BLOCKS.register("tainted_bush", () -> taintedOf(Blocks.GRASS));
-	public static final RegistryObject<Block> TAINTED_FLOWER = BLOCKS.register("tainted_flower", () -> taintedOf(Blocks.CORNFLOWER));
+	public static final RegistryObject<Block> TAINTED_GRASS = BLOCKS.register("tainted_grass", () -> taintedOf(Blocks.GRASS));
+	public static final RegistryObject<Block> TAINTED_FLOWER = BLOCKS.register("tainted_flower", () -> taintedOf(
+			Blocks.CORNFLOWER,Blocks.DANDELION,Blocks.POPPY,Blocks.BLUE_ORCHID,Blocks.ALLIUM,Blocks.AZURE_BLUET,Blocks.RED_TULIP,Blocks.ORANGE_TULIP,Blocks.WHITE_TULIP,Blocks.PINK_TULIP,Blocks.OXEYE_DAISY,Blocks.LILY_OF_THE_VALLEY
+	));
 	public static final RegistryObject<Block> TAINTED_CARVED_PUMPKIN = BLOCKS.register("tainted_carved_pumpkin", () -> taintedOf(Blocks.CARVED_PUMPKIN));
 	public static final RegistryObject<Block> TAINTED_JACK_OLANTERN = BLOCKS.register("tainted_jack_olantern", () -> taintedOf(Blocks.JACK_O_LANTERN));
 	public static final RegistryObject<Block> TAINTED_MELON = BLOCKS.register("tainted_melon", () -> taintedOf(Blocks.MELON));
@@ -385,6 +387,16 @@ public class ArcanaBlocks{
 
 	// Dead Blocks
 	public static final RegistryObject<Block> DEAD_GRASS_BLOCK = BLOCKS.register("dead_grass_block", () -> deadOf(Blocks.GRASS_BLOCK));
+	public static final RegistryObject<Block> DEAD_GRASS = BLOCKS.register("dead_grass", () -> deadOf(Blocks.GRASS));
+	public static final RegistryObject<Block> DEAD_FLOWER = BLOCKS.register("dead_flower", () -> deadOf(
+			Blocks.CORNFLOWER,Blocks.DANDELION,Blocks.POPPY,Blocks.BLUE_ORCHID,Blocks.ALLIUM,Blocks.AZURE_BLUET,Blocks.RED_TULIP,Blocks.ORANGE_TULIP,Blocks.WHITE_TULIP,Blocks.PINK_TULIP,Blocks.OXEYE_DAISY,Blocks.LILY_OF_THE_VALLEY
+	));
+
+	// Dead silverwood
+	//public static final RegistryObject<Block> DEAD_SILVERWOOD_LOG = BLOCKS.register("dead_silverwood_log", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	//public static final RegistryObject<Block> DEAD_SILVERWOOD_PLANKS = BLOCKS.register("dead_silverwood_planks", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	//public static final RegistryObject<Block> DEAD_SILVERWOOD_SLAB = BLOCKS.register("dead_silverwood_slab", () -> new SlabBlock(create(WOOD, MaterialColor.SAND).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
+	//public static final RegistryObject<Block> DEAD_SILVERWOOD_STAIRS = BLOCKS.register("dead_silverwood_stairs", () -> new StairsBlock(() -> DEAD_SILVERWOOD_PLANKS.get().getDefaultState(), create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 
 	// Dead wood
 	public static final RegistryObject<Block> DEAD_LOG = BLOCKS.register("dead_log", () -> deadOf(
