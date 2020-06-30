@@ -272,7 +272,7 @@
     "block.arcana.aspect_bookshelf": "Aspect Bookshelf",
     "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
     "block.arcana.infusion_pedestal": "Infusion Pedestal",
-    "block.arcana.essentia_tube": "Essentia Tube",
+    "block.arcana.essentia_tube": "Vis Tube",
 
     "block.arcana.see_no_evil_statue": "See No Evil Statue",
     "block.arcana.hear_no_evil_statue": "Hear No Evil Statue",
@@ -740,6 +740,9 @@
     "research.arcana.silver.stage.1": "Work In Progress",
     "research.arcana.silver.stage.2": "Work In Progress",
 
+    "research.arcana.vis_pipes_debug_1": "Vis Tubes (Debug Explanation)",
+    "research.arcana.vis_pipes_debug_1.text": "Vis Tubes are a fast and convenient way to transfer vis from point A to point B. Pipes connect to other pipes, and any essentia handling blocks. When a block inserts vis into a pipe, it is inserted into connected vis-handling blocks, instantly, limited only by the capacity of connected blocks. Similarly, when a block attempts to draw vis, it's drawn from connected vis-handling blocks instantly. The blocks inserted into or drawn from are arbitrary.\n\nThere are two variants of the essentia pipe: the window pipe and the pipe valve. The window pipe shows what kind of essentia is inside of it, and the pipe valve can be opened and closed, both by hand and with redstone.",
+
     "research.arcana.revealing": "Revealing the Arcane",
     "research.arcana.revealing.desc": "Now you see me, now you don't",
     "research.arcana.revealing.stage.1": "Although this wand is somewhat magical on its own, it does seem to have the capacity to do so much more, if I could use it correctly. My experience using it has taught me something vital about the world: energy is all around me. Energy that can't be seen or felt directly - at least, not at its usual concentration. I have dubbed this energy *vis*, and need to find a proper source of it to do anything more powerful than creating fancy books. Scattered around the world are glowing points in space, which seem to have a higher-than-average concentration of vis. I have designed a set of goggles with which I can view vis, and nodes too, directly.",
@@ -841,5 +844,4 @@
     "research.arcana.tainted": "Tainted Exploration",
     "research.arcana.tainted.desc": "A Second Look at the Common Fiend",
     "research.arcana.tainted.stage.1": "Taint, in its natural state, is unwieldy and unusable, corrupting all in its path and twisting them into husks of their former selves. Despite my best efforts to contain it, its spread seems inevitable at times, with only diligent cleanup and harsh work keeping it in check. Perhaps there's a better way -- perhaps I can instead tame the beast, and put it to my own uses.\\n\\nTo that end, I have created the §otainted codex§r: a safe store for my research, to contain whatever revelations or ramblings I create.\\n\\nThe first obvious usage of taint is in spellcasting; specifically, using it as part of a wand. I will need to test how a tainted component affects its spellcasting and vis storage capabilities."
-
 }

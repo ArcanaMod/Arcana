@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 
-public class JarTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable{
+public class JarTileEntity extends TileEntity implements ITickableTileEntity, VisShareable{
 
 	public AspectBattery vis = new AspectBattery(1,100);
 

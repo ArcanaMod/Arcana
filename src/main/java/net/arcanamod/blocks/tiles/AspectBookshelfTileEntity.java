@@ -19,7 +19,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, IVisShareable
+public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, VisShareable
 {
 	AspectBattery aspectBattery = new AspectBattery(9,8);
 

@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class EssentiaTubeBlock extends SixWayBlock{
 	
 	protected EssentiaTubeBlock(Properties properties){
-		super(.3f, properties);
+		super(.2f, properties);
 		setDefaultState(this.stateContainer.getBaseState()
 				.with(NORTH, Boolean.FALSE)
 				.with(EAST, Boolean.FALSE)
@@ -32,7 +32,7 @@ public class EssentiaTubeBlock extends SixWayBlock{
 				.with(DOWN, Boolean.FALSE));
 	}
 	
-	private boolean isValidLocation(IBlockReader world, BlockPos pos){
+	private boolean isVisHolder(IBlockReader world, BlockPos pos){
 		Block block = world.getBlockState(pos).getBlock();
 		TileEntity tile = world.getTileEntity(pos);
 		return (tile != null && tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()) || block instanceof EssentiaTubeBlock;
@@ -46,12 +46,12 @@ public class EssentiaTubeBlock extends SixWayBlock{
 	
 	public BlockState makeConnections(IBlockReader world, BlockPos pos){
 		return this.getDefaultState()
-				.with(DOWN, isValidLocation(world, pos.down()))
-				.with(UP, isValidLocation(world, pos.up()))
-				.with(NORTH, isValidLocation(world, pos.north()))
-				.with(EAST, isValidLocation(world, pos.east()))
-				.with(SOUTH, isValidLocation(world, pos.south()))
-				.with(WEST, isValidLocation(world, pos.west()));
+				.with(DOWN, isVisHolder(world, pos.down()))
+				.with(UP, isVisHolder(world, pos.up()))
+				.with(NORTH, isVisHolder(world, pos.north()))
+				.with(EAST, isVisHolder(world, pos.east()))
+				.with(SOUTH, isVisHolder(world, pos.south()))
+				.with(WEST, isVisHolder(world, pos.west()));
 	}
 	
 	/**
@@ -61,7 +61,7 @@ public class EssentiaTubeBlock extends SixWayBlock{
 	 * Note that this method should ideally consider only the specific face passed in.
 	 */
 	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos){
-		boolean flag = isValidLocation(world, facingPos);
+		boolean flag = isVisHolder(world, facingPos);
 		return state.with(FACING_TO_PROPERTY_MAP.get(facing), flag);
 	}
 	

@@ -62,8 +62,8 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 			if (world.getBlockState(blockPos).hasTileEntity()) {
 				TileEntity teinbox = world.getTileEntity(blockPos);
 				if (teinbox != null)
-					if (teinbox instanceof IVisShareable)
-						if (((IVisShareable) teinbox).isVisShareable()) {
+					if (teinbox instanceof VisShareable)
+						if (((VisShareable) teinbox).isVisShareable()) {
 							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
 								visContainers.add(new BlockPos(blockPos)); // Removing reference
