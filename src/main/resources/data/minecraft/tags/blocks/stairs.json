@@ -14,6 +14,21 @@
     "arcana:dungeon_bricks_stairs",
     "arcana:cracked_dungeon_bricks_stairs",
     "arcana:mossy_dungeon_bricks_stairs",
-    "arcana:tainted_"
+    "arcana:tainted_andesite_stairs",
+    "arcana:tainted_granite_stairs",
+    "arcana:tainted_diorite_stairs",
+    "arcana:tainted_polished_andesite_stairs",
+    "arcana:tainted_polished_granite_stairs",
+    "arcana:tainted_polished_diorite_stairs",
+    "arcana:tainted_willow_stairs",
+    "arcana:tainted_dair_stairs",
+    "arcana:tainted_birch_stairs",
+    "arcana:tainted_darkoak_stairs",
+    "arcana:tainted_eucalyptus_stairs",
+    "arcana:tainted_greatwood_stairs",
+    "arcana:tainted_jungle_stairs",
+    "arcana:tainted_hawthorn_stairs",
+    "arcana:tainted_oak_stairs",
+    "arcana:tainted_spruce_stairs"
   ]
 }

@@ -13,6 +13,23 @@
     "arcana:willow_slab",
     "arcana:dungeon_bricks_slab",
     "arcana:cracked_dungeon_bricks_slab",
-    "arcana:mossy_dungeon_bricks_slab"
+    "arcana:mossy_dungeon_bricks_slab",
+    "arcana:tainted_andesite_slab",
+    "arcana:tainted_granite_slab",
+    "arcana:tainted_diorite_slab",
+    "arcana:tainted_polished_andesite_slab",
+    "arcana:tainted_polished_granite_slab",
+    "arcana:tainted_polished_diorite_slab",
+    "arcana:tainted_willow_slab",
+    "arcana:tainted_dair_slab",
+    "arcana:tainted_birch_slab",
+    "arcana:tainted_darkoak_slab",
+    "arcana:tainted_eucalyptus_slab",
+    "arcana:tainted_greatwood_slab",
+    "arcana:tainted_jungle_slab",
+    "arcana:tainted_hawthorn_slab",
+    "arcana:tainted_oak_slab",
+    "arcana:tainted_spruce_slab",
+    "arcana:tainted_crust_slab"
   ]
 }

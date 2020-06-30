@@ -379,4 +379,24 @@ public class ArcanaBlocks{
 
 	public static final RegistryObject<Block> TAINTED_GRANITE_SLAB = BLOCKS.register("tainted_granite_slab", () -> taintedOf(Blocks.POLISHED_GRANITE_SLAB));
 	public static final RegistryObject<Block> TAINTED_GRANITE_STAIRS = BLOCKS.register("tainted_granite_stairs", () -> taintedOf(Blocks.POLISHED_GRANITE_STAIRS));
+
+	public static final RegistryObject<Block> TAINTED_BRICKS = BLOCKS.register("tainted_bricks", () -> taintedOf(Blocks.BRICKS));
+	public static final RegistryObject<Block> TAINTED_BRICKS_SLAB = BLOCKS.register("tainted_bricks_slab", () -> taintedOf(Blocks.BRICK_SLAB));
+	public static final RegistryObject<Block> TAINTED_BRICKS_STAIRS = BLOCKS.register("tainted_bricks_stairs", () -> taintedOf(Blocks.BRICK_STAIRS));
+
+	public static final RegistryObject<Block> TAINTED_STONE_BRICKS = BLOCKS.register("tainted_stone_bricks", () -> taintedOf(Blocks.STONE_BRICKS));
+	public static final RegistryObject<Block> TAINTED_STONE_BRICKS_SLAB = BLOCKS.register("tainted_stone_bricks_slab", () -> taintedOf(Blocks.STONE_BRICK_SLAB));
+	public static final RegistryObject<Block> TAINTED_STONE_BRICKS_STAIRS = BLOCKS.register("tainted_stone_bricks_stairs", () -> taintedOf(Blocks.STONE_BRICK_STAIRS));
+
+	public static final RegistryObject<Block> TAINTED_PRISMARINE = BLOCKS.register("tainted_prismarine", () -> taintedOf(Blocks.PRISMARINE));
+	public static final RegistryObject<Block> TAINTED_PRISMARINE_SLAB = BLOCKS.register("tainted_prismarine_slab", () -> taintedOf(Blocks.PRISMARINE_SLAB));
+	public static final RegistryObject<Block> TAINTED_PRISMARINE_STAIRS = BLOCKS.register("tainted_prismarine_stairs", () -> taintedOf(Blocks.PRISMARINE_STAIRS));
+
+	public static final RegistryObject<Block> TAINTED_PRISMARINE_BRICKS = BLOCKS.register("tainted_prismarine_bricks", () -> taintedOf(Blocks.PRISMARINE_BRICKS));
+	public static final RegistryObject<Block> TAINTED_PRISMARINE_BRICKS_SLAB = BLOCKS.register("tainted_prismarine_bricks_slab", () -> taintedOf(Blocks.PRISMARINE_BRICK_SLAB));
+	public static final RegistryObject<Block> TAINTED_PRISMARINE_BRICKS_STAIRS = BLOCKS.register("tainted_prismarine_bricks_stairs", () -> taintedOf(Blocks.PRISMARINE_BRICK_STAIRS));
+
+	public static final RegistryObject<Block> TAINTED_DARK_PRISMARINE = BLOCKS.register("tainted_dark_prismarine", () -> taintedOf(Blocks.DARK_PRISMARINE));
+	public static final RegistryObject<Block> TAINTED_DARK_PRISMARINE_SLAB = BLOCKS.register("tainted_dark_prismarine_slab", () -> taintedOf(Blocks.DARK_PRISMARINE_SLAB));
+	public static final RegistryObject<Block> TAINTED_DARK_PRISMARINE_STAIRS = BLOCKS.register("tainted_dark_prismarine_stairs", () -> taintedOf(Blocks.DARK_PRISMARINE_STAIRS));
 }
