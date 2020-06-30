@@ -3,8 +3,16 @@ package net.arcanamod.blocks.multiblocks;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.state.DirectionProperty;
+import net.minecraft.state.StateContainer;
+import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Mirror;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -30,12 +38,11 @@ public class TaintScrubberExtensionBlock extends Block implements ITaintScrubber
 			}
 		}
 		if (this.type.equals(Type.BORE)){
-			if (world.getBlockState(pos.up(1)).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK1.get())){
+			if (world.getBlockState(pos.up(2)).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK1.get()) && !world.getBlockState(pos.up(1)).getBlock().equals(Blocks.AIR)){
+				return true;
+			} else if (world.getBlockState(pos.up(1)).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK1.get())) {
 				return true;
 			}
-		}
-		if (this.type.equals(Type.BOOSTER)){
-
 		}
 		if (this.type.equals(Type.SUCKER)){
 			if (world.getBlockState(pos.down()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK1.get())){
@@ -64,7 +71,7 @@ public class TaintScrubberExtensionBlock extends Block implements ITaintScrubber
 		if (this.type.equals(Type.SUCKER)){
 			if (!world.isRemote) {
 				ServerAuraView auraView = new ServerAuraView((ServerWorld) world);
-				auraView.addTaintAt(pos, -1);
+				auraView.addTaintAt(pos, -Math.abs(compound.getInt("speed")+1));
 			}
 		}
 	}
@@ -72,10 +79,13 @@ public class TaintScrubberExtensionBlock extends Block implements ITaintScrubber
 	@Override
 	public CompoundNBT getShareableData(CompoundNBT compound) {
 		if (this.type.equals(Type.SCRUBBER_MK2)) {
-			compound.putInt("range",16);
+			if (compound.getInt("v_range") <= 8)
+				compound.putInt("h_range",16);
+			if (compound.getInt("v_range") <= 8)
+				compound.putInt("v_range",16);
 		}
-		if (this.type.equals(Type.BOOSTER)) {
-			compound.putInt("speed",compound.getInt("speed")+1);
+		if (this.type.equals(Type.BORE)) {
+			compound.putInt("v_range",510);
 		}
 		return compound;
 	}
@@ -86,7 +96,6 @@ public class TaintScrubberExtensionBlock extends Block implements ITaintScrubber
 	 */
 	public enum Type {
 		SCRUBBER_MK2,
-		BOOSTER,
 		SUCKER,
 		BORE
 	}

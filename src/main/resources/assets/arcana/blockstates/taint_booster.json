@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "arcana:block/taint_booster"
+    },
+    "facing=south": {
+      "model": "arcana:block/taint_booster",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "arcana:block/taint_booster",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "arcana:block/taint_booster",
+      "y": 270
     }
   }
 }

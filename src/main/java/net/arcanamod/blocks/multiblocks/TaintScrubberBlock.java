@@ -75,28 +75,31 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 	 */
 	@Override
 	public void run(World world, BlockPos pos, CompoundNBT compound) {
-		for (int i = 0; i < compound.getInt("speed")+1; i++) {
-			// pick a block within a 4x6x4 area
+		int rh = compound.getInt("h_range");
+		int rv = compound.getInt("v_range");
+		for (int i = 0; i < compound.getInt("speed")+(rv/32)+1; i++) {
+			// pick a block within a rh x rh x rv area
 			// If this block is air, stop. If this block doesn't have a tainted form, re-roll.
 			// Do this up to 5 times.
-			Block tainted = null; //TODO: rename tainted to pure
+			Block dead = null;
 			BlockPos taintingPos = pos;
 			int iter = 0;
-			while(tainted == null && iter < 5){
-				int r = compound.getInt("range");
-				taintingPos = pos.north(RANDOM.nextInt(r+1) - (r/2)).west(RANDOM.nextInt(r+1) - (r/2)).up(RANDOM.nextInt(r+1) - (r/2));
-				tainted = world.getBlockState(taintingPos).getBlock();
-				if(tainted.isAir(world.getBlockState(taintingPos), world, taintingPos)){
-					tainted = null;
+			while(dead == null && iter < 5){
+				taintingPos = pos.north(RANDOM.nextInt(rh+1) - (rh/2)).west(RANDOM.nextInt(rh+1) - (rh/2)).up(RANDOM.nextInt(rv+1) - (rv/2));
+				dead = world.getBlockState(taintingPos).getBlock();
+				if(dead.isAir(world.getBlockState(taintingPos), world, taintingPos)){
+					dead = null;
 					break;
 				}
-				tainted = Taint.getPureOfBlock(tainted);
+				dead = Taint.getDeadOfBlock(Taint.getPureOfBlock(dead));
+				if (compound.getBoolean("silk_touch"))
+					dead = Taint.getPureOfBlock(dead);
 				iter++;
 			}
-			// Replace it with its tainted form if found.
-			if(tainted != null){
-				BlockState taintedState = switchBlock(world.getBlockState(taintingPos), tainted);
-				world.setBlockState(taintingPos, taintedState);
+			// Replace it with its dead form if found.
+			if(dead != null){
+				BlockState deadState = switchBlock(world.getBlockState(taintingPos), dead);
+				world.setBlockState(taintingPos, deadState);
 			}
 		}
 	}

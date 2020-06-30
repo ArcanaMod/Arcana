@@ -2,6 +2,7 @@ package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.bases.*;
+import net.arcanamod.blocks.multiblocks.BoosterTaintScrubberExtensionBlock;
 import net.arcanamod.blocks.multiblocks.TaintScrubberBlock;
 import net.arcanamod.blocks.multiblocks.TaintScrubberExtensionBlock;
 import net.arcanamod.items.ArcanaItems;
@@ -15,6 +16,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.arcanamod.blocks.Taint.taintedOf;
+import static net.arcanamod.blocks.Taint.deadOf;
 import static net.minecraft.block.Block.Properties.create;
 import static net.minecraft.block.Block.Properties.from;
 import static net.minecraft.block.material.Material.*;
@@ -116,7 +118,7 @@ public class ArcanaBlocks{
 	//Taint Scrubber //What is proper material for taint scrubber?
 	public static final RegistryObject<Block> TAINT_SCRUBBER_MK1 = BLOCKS.register("taint_scrubber_mk1", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	public static final RegistryObject<Block> TAINT_SCRUBBER_MK2 = BLOCKS.register("taint_scrubber_mk2", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberExtensionBlock.Type.SCRUBBER_MK2));
-	public static final RegistryObject<Block> TAINT_BOOSTER = BLOCKS.register("taint_booster", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(), TaintScrubberExtensionBlock.Type.BOOSTER));
+	public static final RegistryObject<Block> TAINT_BOOSTER = BLOCKS.register("taint_booster", () -> new BoosterTaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	public static final RegistryObject<Block> TAINT_SUCKER = BLOCKS.register("taint_sucker", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberExtensionBlock.Type.SUCKER));
 	public static final RegistryObject<Block> TAINT_BORE = BLOCKS.register("taint_bore", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberExtensionBlock.Type.BORE));
 
@@ -399,4 +401,7 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_DARK_PRISMARINE = BLOCKS.register("tainted_dark_prismarine", () -> taintedOf(Blocks.DARK_PRISMARINE));
 	public static final RegistryObject<Block> TAINTED_DARK_PRISMARINE_SLAB = BLOCKS.register("tainted_dark_prismarine_slab", () -> taintedOf(Blocks.DARK_PRISMARINE_SLAB));
 	public static final RegistryObject<Block> TAINTED_DARK_PRISMARINE_STAIRS = BLOCKS.register("tainted_dark_prismarine_stairs", () -> taintedOf(Blocks.DARK_PRISMARINE_STAIRS));
+
+	//Dead Blocks
+	public static final RegistryObject<Block> DEAD_GRASS_BLOCK = BLOCKS.register("dead_grass_block", () -> deadOf(Blocks.GRASS_BLOCK));
 }

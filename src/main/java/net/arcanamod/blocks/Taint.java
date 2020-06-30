@@ -20,6 +20,7 @@ public class Taint{
 	
 	public static final BooleanProperty UNTAINTED = BooleanProperty.create("untainted"); // false by default
 	private static final Map<Block, Block> taintMap = new HashMap<>();
+	private static final Map<Block, Block> deadMap = new HashMap<>();
 	
 	@SuppressWarnings("deprecation")
 	public static Block taintedOf(Block block){
@@ -30,6 +31,11 @@ public class Taint{
 		else
 			return new TaintedBlock(block);
 	}
+
+	@SuppressWarnings("deprecation")
+	public static Block deadOf(Block block){
+		return new DeadBlock(block);
+	}
 	
 	public static Block getPureOfBlock(Block block){
 		return taintMap.entrySet().stream()
@@ -37,13 +43,24 @@ public class Taint{
 				.map(Map.Entry::getKey)
 				.findAny().orElse(null);
 	}
+
+	public static Block getDeadOfBlock(Block block){
+		return deadMap.entrySet().stream()
+				.filter(entry -> entry.getValue() == block)
+				.map(Map.Entry::getKey)
+				.findAny().orElse(block);
+	}
 	
 	public static Block getTaintedOfBlock(Block block){
 		return taintMap.get(block);
 	}
-	
+
 	public static void addTaintMapping(Block original, Block tainted){
 		taintMap.put(original, tainted);
+	}
+
+	public static void addDeadMapping(Block original, Block dead){
+		deadMap.put(original, dead);
 	}
 	
 	public static void tickTaintedBlock(BlockState state, ServerWorld world, BlockPos pos, Random random){

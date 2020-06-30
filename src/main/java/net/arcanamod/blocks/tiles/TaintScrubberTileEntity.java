@@ -34,7 +34,9 @@ public class TaintScrubberTileEntity extends TileEntity implements ITickableTile
 			}
 		}
 
-		if (compoundNBT.getInt("range") == 0) compoundNBT.putInt("range",8);
+		if (compoundNBT.getInt("h_range") == 0) compoundNBT.putInt("h_range",8);
+		if (compoundNBT.getInt("v_range") == 0) compoundNBT.putInt("v_range",8);
+		compoundNBT.putBoolean("silk_touch",true);
 
 		//Run Task
 		for (Pair<ITaintScrubberExtension, BlockPos> extension : extensions){
