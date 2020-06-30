@@ -62,6 +62,9 @@ public class ArcanaConfig{
 		CUSTOM_BOOK_HEIGHT = CLIENT_BUILDER
 				.comment("The height that the research book GUI should use.", "Setting it to -1 makes the GUI adjust to screen height automatically.")
 				.define("ResearchBookHeight", -1);
+		BOOK_TEXT_SCALING = CLIENT_BUILDER
+				.comment("Text scaling for the research entry GUI.")
+				.define("ResearchBookTextScaling", 0.7f);
 		CLIENT_BUILDER.pop();
 	}
 	
@@ -86,4 +89,5 @@ public class ArcanaConfig{
 	// Client
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1
 	public static ConfigValue<Integer> CUSTOM_BOOK_HEIGHT; // -1
+	public static ConfigValue<Float> BOOK_TEXT_SCALING; // 0.8
 }

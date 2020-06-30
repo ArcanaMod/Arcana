@@ -1,6 +1,7 @@
 package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.network.Connection;
@@ -47,6 +48,8 @@ public class ResearchEntryScreen extends Screen{
 	public static final int PAGE_HEIGHT = 155;
 	public static final int RIGHT_X_OFFSET = 119;
 	public static final int HEIGHT_OFFSET = -10;
+	
+	public static float TEXT_SCALING = ArcanaConfig.BOOK_TEXT_SCALING.get();
 	
 	public ResearchEntryScreen(ResearchEntry entry){
 		super(new StringTextComponent(""));
