@@ -107,15 +107,16 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_SILVER_ORE = BLOCKS.register("tainted_silver_ore", () -> taintedOf(SILVER_ORE.get()));
 
 	// Functional Blocks
-	public static final RegistryObject<Block> JAR = BLOCKS.register("jar", () -> new BlockJar(create(GLASS)));
+	public static final RegistryObject<Block> JAR = BLOCKS.register("jar", () -> new JarBlock(create(GLASS)));
 	public static final RegistryObject<Block> ASPECT_BOOKSHELF = BLOCKS.register("aspect_bookshelf", () -> new BlockAspectBookshelf(create(WOOD).hardnessAndResistance(6)));
 	public static final RegistryObject<Block> RESEARCH_TABLE = BLOCKS.register("research_table", () -> new ResearchTableBlock(create(WOOD).hardnessAndResistance(3).notSolid()));
 	public static final RegistryObject<Block> ARCANE_CRAFTING_TABLE = BLOCKS.register("arcane_crafting_table", () -> new WaterloggableBlock(create(WOOD).hardnessAndResistance(2).notSolid()));
 	public static final RegistryObject<Block> CRUCIBLE = BLOCKS.register("crucible", () -> new CrucibleBlock(create(IRON, MaterialColor.STONE).hardnessAndResistance(2).notSolid()));
 	public static final RegistryObject<Block> INFUSION_PEDESTAL = BLOCKS.register("infusion_pedestal", () -> new PedestalBlock(create(ROCK).hardnessAndResistance(3).notSolid()));
 	public static final RegistryObject<Block> ASPECT_TESTER = BLOCKS.register("aspect_tester", () -> new AspectTesterBlock(create(ROCK).hardnessAndResistance(3).notSolid()));
-
-	//Taint Scrubber //What is proper material for taint scrubber?
+	public static final RegistryObject<Block> ESSENTIA_TUBE = BLOCKS.register("essentia_tube", () -> new EssentiaTubeBlock(create(IRON).hardnessAndResistance(3).notSolid()));
+	
+	// Taint Scrubber //What is proper material for taint scrubber?
 	public static final RegistryObject<Block> TAINT_SCRUBBER_MK1 = BLOCKS.register("taint_scrubber_mk1", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	public static final RegistryObject<Block> TAINT_SCRUBBER_MK2 = BLOCKS.register("taint_scrubber_mk2", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberExtensionBlock.Type.SCRUBBER_MK2));
 	public static final RegistryObject<Block> TAINT_BOOSTER = BLOCKS.register("taint_booster", () -> new BoosterTaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid()));
@@ -278,7 +279,7 @@ public class ArcanaBlocks{
 	//Misc Tainted Blocks
 	//public static final RegistryObject<Block> TAINTED_DESTROYED_ORE = BLOCKS.register("tainted_destroyed_ore", () -> Taint.taintedOf(Blocks.STONE_BRICKS));
 
-	//Tainted vanilla blocks
+	// Tainted Blocks
 	public static final RegistryObject<Block> TAINTED_CRUST = BLOCKS.register("tainted_crust", () -> taintedOf(Blocks.COBBLESTONE));
 	public static final RegistryObject<Block> TAINTED_CRUST_SLAB = BLOCKS.register("tainted_crust_slab", () -> taintedOf(Blocks.COBBLESTONE_SLAB));
 	public static final RegistryObject<Block> TAINTED_GRAVEL = BLOCKS.register("tainted_gravel", () -> taintedOf(Blocks.GRAVEL));

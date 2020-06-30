@@ -1,0 +1,17 @@
+{
+  "parent": "block/block",
+  "elements": [
+    {
+      "from": [ 10, 10, 0 ],
+      "to": [ 6, 6, 5 ],
+      "faces": {
+        "down":  { "texture": "#missing" },
+        "up":    { "texture": "#missing" },
+        "north": { "texture": "#missing" },
+        "south": { "texture": "#missing" },
+        "west":  { "texture": "#missing" },
+        "east":  { "texture": "#missing" }
+      }
+    }
+  ]
+}

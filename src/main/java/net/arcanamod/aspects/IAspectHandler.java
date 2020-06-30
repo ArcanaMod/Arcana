@@ -5,6 +5,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +90,8 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 		return Optional.of(holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null).orElse(null));
 	}
 
+	@SuppressWarnings("ConstantConditions")
+	@Nullable
 	static IAspectHandler getFrom(@Nonnull ICapabilityProvider holder){
 		return holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null).orElse(null);
 	}
