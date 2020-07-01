@@ -99,7 +99,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
 		if (cap == AspectHandlerCapability.ASPECT_HANDLER)
 			return vis.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
-		return null;
+		return LazyOptional.empty();
 	}
 
 	@Nonnull

@@ -4,10 +4,14 @@ import com.google.common.collect.Sets;
 import net.arcanamod.aspects.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.LazyOptional;
 import org.apache.commons.lang3.ArrayUtils;
 
+import javax.annotation.Nonnull;
 import java.util.*;
 
 public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityProvider, IAspectHandler{
@@ -17,6 +21,13 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 	public EssentiaTubeTileEntity(){
 		super(ArcanaTiles.ESSENTIA_TUBE_TE.get());
 		//scan(Sets.newHashSet(getPos()));
+	}
+	
+	@Nonnull
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, Direction side){
+		if (cap == AspectHandlerCapability.ASPECT_HANDLER)
+			return LazyOptional.of(() -> this).cast();
+		return LazyOptional.empty();
 	}
 	
 	// This will be fun
