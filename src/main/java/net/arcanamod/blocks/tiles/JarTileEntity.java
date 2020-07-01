@@ -1,5 +1,6 @@
 package net.arcanamod.blocks.tiles;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,8 +14,11 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class JarTileEntity extends TileEntity implements ITickableTileEntity, VisShareable{
 
 	public AspectBattery vis = new AspectBattery(1,100);
@@ -146,7 +150,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	}
 
 	@Override
-	public void tick() {
+	public void tick(){
 
 	}
 }

@@ -64,7 +64,7 @@ public class ArcanaConfig{
 				.define("ResearchBookHeight", -1);
 		BOOK_TEXT_SCALING = CLIENT_BUILDER
 				.comment("Text scaling for the research entry GUI.")
-				.define("ResearchBookTextScaling", 0.7f);
+				.define("ResearchBookTextScaling", 0.7);
 		CLIENT_BUILDER.pop();
 	}
 	
@@ -89,5 +89,5 @@ public class ArcanaConfig{
 	// Client
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1
 	public static ConfigValue<Integer> CUSTOM_BOOK_HEIGHT; // -1
-	public static ConfigValue<Float> BOOK_TEXT_SCALING; // 0.8
+	public static ConfigValue<Double> BOOK_TEXT_SCALING; // 0.8
 }
