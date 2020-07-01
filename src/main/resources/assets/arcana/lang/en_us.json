@@ -411,7 +411,12 @@
 
     "_comment": "Functional",
     "block.arcana.research_table": "Research Table Block",
-    "block.arcana.crucible": "Crucible",
+    "block.arcana.taint_bore": "Taint Bore",
+    "block.arcana.taint_sucker": "Taint Sucker",
+    "block.arcana.taint_booster": "Taint Scrubber Booster",
+    "block.arcana.taint_scrubber_mk1": "Taint Scrubber",
+    "block.arcana.taint_scrubber_mk2": "Taint Scrubber Base",
+
 
     "_comment": "Tainted",
     "block.arcana.tainted_acacia_leaves": "Tainted Acacia Leaves",

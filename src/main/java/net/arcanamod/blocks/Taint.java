@@ -1,5 +1,6 @@
 package net.arcanamod.blocks;
 
+import com.google.common.collect.Lists;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.world.ServerAuraView;
@@ -9,11 +10,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
+import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static net.arcanamod.blocks.DelegatingBlock.switchBlock;
 
@@ -22,6 +25,13 @@ public class Taint{
 	public static final BooleanProperty UNTAINTED = BooleanProperty.create("untainted"); // false by default
 	private static final Map<Block, Block> taintMap = new HashMap<>();
 	private static final Map<Block, Block> deadMap = new HashMap<>();
+
+	public static void init(){
+		addDeadUnstableBlock(
+				Blocks.OAK_LEAVES,Blocks.BIRCH_LEAVES,Blocks.SPRUCE_LEAVES,Blocks.JUNGLE_LEAVES,Blocks.DARK_OAK_LEAVES,Blocks.ACACIA_LEAVES,
+				ArcanaBlocks.DAIR_LEAVES.get(),ArcanaBlocks.EUCALYPTUS_LEAVES.get(),ArcanaBlocks.GREATWOOD_LEAVES.get(),ArcanaBlocks.HAWTHORN_LEAVES.get(),ArcanaBlocks.SILVERWOOD_LEAVES.get()
+		);
+	}
 	
 	@SuppressWarnings("deprecation")
 	public static Block taintedOf(Block parent, Block... blocks){
@@ -41,9 +51,17 @@ public class Taint{
 		return tainted;
 	}
 
+	public static void addDeadUnstableBlock(Block... blocks) {
+		deadMap.putAll(Lists.newArrayList(blocks).stream().collect(Collectors.toMap(block -> block,block -> Blocks.AIR)));
+	}
+
 	@SuppressWarnings("deprecation")
 	public static Block deadOf(Block parent, Block... blocks){
-		Block dead = new DeadBlock(parent);
+		Block dead;
+		if (parent instanceof IPlantable || parent instanceof IShearable || parent instanceof IGrowable)
+			dead = new DeadPlantBlock(parent);
+		else
+			dead = new DeadBlock(parent);
 
 		//Add children to DeadMapping, NOT parent (see DeadBlock)!
 		for (Block block : blocks) {
@@ -55,6 +73,13 @@ public class Taint{
 	
 	public static Block getPureOfBlock(Block block){
 		return taintMap.entrySet().stream()
+				.filter(entry -> entry.getValue() == block)
+				.map(Map.Entry::getKey)
+				.findAny().orElse(null);
+	}
+
+	public static Block getLivingOfBlock(Block block){
+		return deadMap.entrySet().stream()
 				.filter(entry -> entry.getValue() == block)
 				.map(Map.Entry::getKey)
 				.findAny().orElse(null);
