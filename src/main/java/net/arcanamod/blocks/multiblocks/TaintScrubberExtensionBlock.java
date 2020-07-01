@@ -79,7 +79,7 @@ public class TaintScrubberExtensionBlock extends Block implements ITaintScrubber
 	@Override
 	public CompoundNBT getShareableData(CompoundNBT compound) {
 		if (this.type.equals(Type.SCRUBBER_MK2)) {
-			if (compound.getInt("v_range") <= 8)
+			if (compound.getInt("h_range") <= 8)
 				compound.putInt("h_range",16);
 			if (compound.getInt("v_range") <= 8)
 				compound.putInt("v_range",16);

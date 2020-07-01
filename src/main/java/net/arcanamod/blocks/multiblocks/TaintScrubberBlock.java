@@ -114,7 +114,6 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 						); // Ash Particle if block is destroyed
 					}
 				}
-				world.notifyBlockUpdate(taintingPos,deadState,deadState,3); //AntiGhostBlock
 			}
 		}
 	}
