@@ -7,6 +7,9 @@
     "itemGroup.taint": "Tainted Blocks",
     "itemGroup.aspects": "Aspects",
 
+    "_comment": "Effects",
+    "effect.arcana.tainted": "Tainted",
+
     "_comment": "Subtitles",
     "arcana.sounds.spell_cast": "Spell Cast",
 
