@@ -1,7 +1,5 @@
 package net.arcanamod.aspects;
 
-import net.minecraft.nbt.CompoundNBT;
-
 import java.util.Set;
 
 public interface IAspectHolder {

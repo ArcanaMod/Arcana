@@ -1,11 +1,18 @@
 package net.arcanamod.blocks.multiblocks;
 
+import net.arcanamod.aspects.AspectBattery;
+import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.VisShareable;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.TaintScrubberTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.command.arguments.ParticleArgument;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.BlockParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -91,6 +98,19 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 					dead = null;
 					break;
 				}
+				// Drain open/unsealed jars
+				if (dead.hasTileEntity(world.getBlockState(taintingPos))){
+					TileEntity teinbox = world.getTileEntity(taintingPos);
+					if (teinbox instanceof VisShareable){
+						if (((VisShareable)teinbox).isVisShareable()) {
+							AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(teinbox);
+							if (vis != null) {
+								vis.drain(RANDOM.nextInt(vis.getHoldersAmount()),8,false);
+							}
+						}
+						break;
+					}
+				}
 				dead = Taint.getDeadOfBlock(Taint.getPureOfBlock(dead));
 				if (compound.getBoolean("silk_touch"))
 					dead = Taint.getPureOfBlock(dead);
@@ -100,6 +120,16 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 			if(dead != null){
 				BlockState deadState = switchBlock(world.getBlockState(taintingPos), dead);
 				world.setBlockState(taintingPos, deadState);
+				if(dead.isAir(world.getBlockState(taintingPos), world, taintingPos)){
+					int rnd = RANDOM.nextInt(9)+4;
+					for (int j = 0; j < rnd; j++) {
+						world.addParticle(
+								new BlockParticleData(ParticleTypes.FALLING_DUST, Blocks.BLACK_CONCRETE_POWDER.getDefaultState()),
+								taintingPos.getX()+0.5f+((RANDOM.nextInt(9)-4)/10f),taintingPos.getY()+0.5f+((RANDOM.nextInt(9)-4)/10f),taintingPos.getZ()+0.5f+((RANDOM.nextInt(9)-4)/10f),
+								0.1f,0.1f,0.1f
+						); // Ash Particle if block is destroyed
+					}
+				}
 			}
 		}
 	}

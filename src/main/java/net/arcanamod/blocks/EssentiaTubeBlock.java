@@ -1,11 +1,15 @@
 package net.arcanamod.blocks;
 
+import com.google.common.collect.Sets;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.AspectHandlerCapability;
+import net.arcanamod.blocks.tiles.EssentiaTubeTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -13,7 +17,9 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @SuppressWarnings("deprecation")
@@ -71,5 +77,21 @@ public class EssentiaTubeBlock extends SixWayBlock{
 	
 	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type){
 		return false;
+	}
+	
+	@Override
+	public boolean hasTileEntity(BlockState state){
+		return true;
+	}
+	
+	@Nullable
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world){
+		return new EssentiaTubeTileEntity();
+	}
+	
+	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack){
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
+		((EssentiaTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
 	}
 }

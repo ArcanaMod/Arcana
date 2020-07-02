@@ -2,6 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.Sounds;
 import net.arcanamod.client.gui.ResearchTableScreen;
@@ -108,6 +109,7 @@ public class Arcana{
 		AspectHandlerCapability.init();
 		AuraChunkCapability.init();
 		Puzzle.init();
+		Taint.init();
 		
 		proxy.preInit(event);
 

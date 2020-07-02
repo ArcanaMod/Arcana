@@ -49,7 +49,7 @@ public class ResearchEntryScreen extends Screen{
 	public static final int RIGHT_X_OFFSET = 119;
 	public static final int HEIGHT_OFFSET = -10;
 	
-	public static float TEXT_SCALING = ArcanaConfig.BOOK_TEXT_SCALING.get();
+	public static float TEXT_SCALING = ArcanaConfig.BOOK_TEXT_SCALING.get().floatValue();
 	
 	public ResearchEntryScreen(ResearchEntry entry){
 		super(new StringTextComponent(""));
