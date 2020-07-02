@@ -7,6 +7,7 @@ import net.arcanamod.research.impls.Fieldwork;
 import net.arcanamod.research.impls.Guesswork;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
+import net.arcanamod.research.impls.Thaumaturgy;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.nbt.CompoundNBT;
@@ -67,6 +68,8 @@ public abstract class Puzzle{
 		deserializers.put(Fieldwork.TYPE, __ -> new Fieldwork());
 		factories.put(Chemistry.TYPE, Chemistry::new);
 		deserializers.put(Chemistry.TYPE, Chemistry::fromNBT);
+		factories.put(Thaumaturgy.TYPE, Thaumaturgy::new);
+		deserializers.put(Thaumaturgy.TYPE, Thaumaturgy::fromNBT);
 	}
 	
 	////////////////////// INSTANCE STUFF
