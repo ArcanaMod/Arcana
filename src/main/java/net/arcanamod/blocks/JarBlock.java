@@ -1,23 +1,14 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.tiles.JarTileEntity;
-import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.PhialItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -54,9 +45,9 @@ public class JarBlock extends Block{
 		return new JarTileEntity();
 	}
 	
-	@Override
+	/*@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_){
-		ItemStack heldItem = player.getHeldItem(handIn);
+		*//*ItemStack heldItem = player.getHeldItem(handIn);
 		if(heldItem.getItem() instanceof PhialItem){
 			if(worldIn.getTileEntity(pos) instanceof JarTileEntity){
 				JarTileEntity jarTileEntity = ((JarTileEntity)worldIn.getTileEntity(pos));
@@ -90,7 +81,7 @@ public class JarBlock extends Block{
 					return ActionResultType.SUCCESS;
 				}
 			}
-		}
+		}*//*
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);
-	}
+	}*/
 }

@@ -194,9 +194,9 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		List<Integer> indexes = new ArrayList<>();
 		for (IAspectHolder cell : cells){
 			if (cell.getContainedAspect()==aspect)
-				indexes.add(new Integer(cells.indexOf(cell)));
+				indexes.add(cells.indexOf(cell));
 		}
-		return ArrayUtils.toPrimitive(indexes.toArray(new Integer[indexes.size()]));
+		return ArrayUtils.toPrimitive(indexes.toArray(new Integer[0]));
 	}
 
 	public CompoundNBT serializeNBT(){

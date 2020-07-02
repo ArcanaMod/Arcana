@@ -9,6 +9,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+@SuppressWarnings("ConstantConditions")
 public class ArcanaTiles{
 	
 	public static final DeferredRegister<TileEntityType<?>> TES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Arcana.MODID);
@@ -23,4 +24,6 @@ public class ArcanaTiles{
 			TES.register("aspect_tester", () -> new TileEntityType<>(AspectTesterTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_TESTER.get()), null));
 	public static final RegistryObject<TileEntityType<TaintScrubberTileEntity>> TAINT_SCRUBBER_TE =
 			TES.register("taint_scrubber", () -> new TileEntityType<>(TaintScrubberTileEntity::new, Sets.newHashSet(ArcanaBlocks.TAINT_SCRUBBER_MK1.get()), null));
+	public static final RegistryObject<TileEntityType<EssentiaTubeTileEntity>> ESSENTIA_TUBE_TE =
+			TES.register("essentia_tube", () -> new TileEntityType<>(EssentiaTubeTileEntity::new, Sets.newHashSet(ArcanaBlocks.ESSENTIA_TUBE.get()), null));
 }

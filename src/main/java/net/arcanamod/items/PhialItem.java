@@ -3,26 +3,24 @@ package net.arcanamod.items;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
+import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -30,23 +28,23 @@ import java.util.List;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class PhialItem extends Item
-{
-    public PhialItem() {
+public class PhialItem extends Item{
+    
+    public PhialItem(){
         super(new Properties().group(Arcana.ITEMS));
-        this.addPropertyOverride(new ResourceLocation("aspect"), new IItemPropertyGetter() {
+        this.addPropertyOverride(new ResourceLocation("aspect"), new IItemPropertyGetter(){
             @OnlyIn(Dist.CLIENT)
             @Override
-            public float call(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity livingEntity) {
+            public float call(ItemStack itemStack, @Nullable World world, @Nullable LivingEntity livingEntity){
                 IAspectHandler vis = IAspectHandler.getFrom(itemStack);
-                if (world == null)
+                if(world == null)
                     world = livingEntity.world;
-                if (vis.getHoldersAmount()==0)
+                if(vis.getHoldersAmount() == 0)
                     return -1;
-                if (vis.getHolder(0)==null)
+                if(vis.getHolder(0) == null)
                     return -1;
-                if (world.dimension.isSurfaceWorld())
-                    return vis.getHolder(0).getContainedAspect().ordinal()-1;
+                if(world.dimension.isSurfaceWorld())
+                    return vis.getHolder(0).getContainedAspect().ordinal() - 1;
                 else
                     return random.nextInt(58);
             }
@@ -63,7 +61,49 @@ public class PhialItem extends Item
 
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
-
+    
+    public ActionResultType onItemUse(ItemUseContext context){
+        TileEntity tile = context.getWorld().getTileEntity(context.getPos());
+        if(tile != null){
+            LazyOptional<IAspectHandler> cap = tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER);
+            if(cap.isPresent()){
+                //noinspection ConstantConditions
+                IAspectHandler tileHandle = cap.orElse(null);
+                IAspectHolder myHandle = IAspectHandler.getFrom(context.getItem()).getHolder(0);
+                if(myHandle.getCurrentVis() <= 0){
+                    // drain from block
+                    // pick first holder with >0 vis
+                    // and take from it
+                    for(IAspectHolder holder : tileHandle.getHolders())
+                        if(holder.getCurrentVis() > 0){
+                            int min = Math.min(holder.getCurrentVis(), 8);
+                            Aspect aspect = holder.getContainedAspect();
+                            // create a filled phial
+                            ItemStack capedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
+                            IAspectHandler.getFrom(capedItemStack).insert(0, new AspectStack(aspect, min), false);
+                            if(capedItemStack.getTag() == null)
+                                capedItemStack.setTag(capedItemStack.getShareTag());
+                            // take an empty phial and give the filled one
+                            context.getItem().shrink(1);
+                            context.getPlayer().addItemStackToInventory(capedItemStack);
+                            holder.drain(new AspectStack(aspect, min), false);
+                            return ActionResultType.SUCCESS;
+                        }
+                }else{
+                    // insert to block
+                    for(IAspectHolder holder : tileHandle.getHolders())
+                        if(holder.getCapacity() - holder.getCurrentVis() > 0 && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspect.EMPTY)){
+                            holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
+                            context.getItem().shrink(1);
+                            context.getPlayer().addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
+                            return ActionResultType.SUCCESS;
+                        }
+                }
+            }
+        }
+        return super.onItemUse(context);
+    }
+    
     @Nullable
     @Override
     public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
