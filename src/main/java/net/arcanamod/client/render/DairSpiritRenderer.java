@@ -1,5 +1,6 @@
 package net.arcanamod.client.render;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.model.DairEntityModel;
 import net.arcanamod.entities.DairSpiritEntity;
@@ -7,6 +8,10 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class DairSpiritRenderer extends MobRenderer<DairSpiritEntity, DairEntityModel<DairSpiritEntity>> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(Arcana.MODID,
             "textures/entity/dair_spirit.png");

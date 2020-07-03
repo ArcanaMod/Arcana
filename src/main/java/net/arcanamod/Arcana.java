@@ -4,12 +4,10 @@ import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
-import net.arcanamod.client.Sounds;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.effects.ArcanaEffects;
-import net.arcanamod.effects.TaintedEffect;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
@@ -81,7 +79,6 @@ public class Arcana{
 		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		NodeType.init();
-		ArcanaFluids.init(modEventBus);
 
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
@@ -91,8 +88,7 @@ public class Arcana{
 		ArcanaTiles.TES.register(modEventBus);
 		ArcanaContainers.CON.register(modEventBus);
 		ArcanaFeatures.FEATURES.register(modEventBus);
-		// ArcanaRecipes.RECIPE_SERIALIZERS.register(modEventBus);
-		// etc
+		ArcanaFluids.FLUIDS.register(modEventBus);
 
 		proxy.construct();
 	}
@@ -114,9 +110,6 @@ public class Arcana{
 		proxy.preInit(event);
 
 		Connection.init();
-		//NetworkRegistry.INSTANCE.registerGuiHandler(Arcana.instance, new ArcanaGuiHandler());
-		
-		Sounds.registerSounds();
 		SpellEffectHandler.init();
 
 		FeatureGenerator.setupFeatureGeneration();

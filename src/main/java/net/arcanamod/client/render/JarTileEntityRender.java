@@ -2,6 +2,7 @@ package net.arcanamod.client.render;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.minecraft.client.Minecraft;
@@ -15,10 +16,12 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
 
-public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
-{
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
     public static final ResourceLocation JAR_CONTENT_SIDE = new ResourceLocation(Arcana.MODID, "models/parts/fluid_side");
     public static final ResourceLocation JAR_CONTENT_TOP = new ResourceLocation(Arcana.MODID, "models/parts/fluid_top");
 
@@ -35,15 +38,8 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
                 .normal(1, 0, 0)
                 .endVertex();
     }
-
-    private static float diffFunction(long time, long delta, float scale) {
-        long dt = time % (delta * 2);
-        if (dt > delta) {
-            dt = 2*delta - dt;
-        }
-        return dt * scale;
-    }
-
+    
+    @SuppressWarnings("deprecation")
     @Override
     public void render(JarTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
 
@@ -54,8 +50,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>
         float vis_amount = tileEntity.getAspectAmount();
         Color aspectColor = tileEntity.getAspectColor();
 
-        if (vis_amount < 12f)
-        {
+        if(vis_amount < 12f){
             float vis_scale = vis_amount/10f; //Don't touch this (Arcane Calculations)
             float vis_height = vis_scale-0.2f; //Don't touch this (Arcane Calculations)
             float vis_top = (vis_amount/10f)+0.2f; //Don't touch this (Arcane Calculations)

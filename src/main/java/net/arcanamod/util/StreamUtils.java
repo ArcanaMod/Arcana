@@ -10,6 +10,6 @@ import java.util.stream.StreamSupport;
 public final class StreamUtils{
 	
 	public static <X extends INBT, Z> Stream<Z> streamAndApply(ListNBT list, Class<X> filterType, Function<X, Z> applicator){
-		return StreamSupport.stream(list.spliterator(), false).filter(filterType::isInstance).map(filterType::cast).map(applicator);
+		return list.stream().filter(filterType::isInstance).map(filterType::cast).map(applicator);
 	}
 }

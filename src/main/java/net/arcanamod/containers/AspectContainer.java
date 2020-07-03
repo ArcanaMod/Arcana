@@ -7,7 +7,6 @@ import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkAspectClick;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
 
@@ -50,7 +49,7 @@ public abstract class AspectContainer extends Container{
 		this.heldCount = heldCount;
 	}
 	
-	public void handleClick(int mouseX, int mouseY, int button, AspectContainerScreen gui){
+	public void handleClick(int mouseX, int mouseY, int button, AspectContainerScreen<?> gui){
 		for(AspectSlot slot : getAspectSlots()){
 			if(slot.getInventory().get() != null && gui.isSlotVisible(slot) && isMouseOverSlot(mouseX, mouseY, slot, gui)){
 				// gonna send a packet
@@ -71,7 +70,7 @@ public abstract class AspectContainer extends Container{
 		}
 	}
 
-	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot, AspectContainerScreen gui){
+	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot, AspectContainerScreen<?> gui){
 		return mouseX >= gui.getGuiLeft() + slot.x && mouseY >= gui.getGuiTop() + slot.y && mouseX < gui.getGuiLeft() + slot.x + 16 && mouseY < gui.getGuiTop() + slot.y + 16;
 	}
 	
