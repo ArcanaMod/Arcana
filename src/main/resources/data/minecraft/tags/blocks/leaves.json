@@ -1,10 +1,8 @@
 {
   "replace": false,
   "values": [
-<<<<<<< HEAD
     "arcana:dair_leaves",
     "arcana:dead_leaves",
-=======
     "arcana:tainted_jungle_leaves",
     "arcana:tainted_oak_leaves",
     "arcana:tainted_spruce_leaves",
@@ -12,31 +10,24 @@
     "arcana:tainted_acacia_leaves",
     "arcana:tainted_birch_leaves",
     "arcana:dair_leaves",
->>>>>>> e1b7a54929ccd0ea765ba08c06d06db8a7ba1812
     "arcana:eucalyptus_leaves",
     "arcana:greatwood_leaves",
     "arcana:hawthorn_leaves",
     "arcana:silverwood_leaves",
-<<<<<<< HEAD
     "arcana:trypophobius_leaves",
     "arcana:willow_leaves",
     "arcana:tainted_dair_leaves",
-=======
     "arcana:willow_leaves",
->>>>>>> e1b7a54929ccd0ea765ba08c06d06db8a7ba1812
     "arcana:tainted_eucalyptus_leaves",
     "arcana:tainted_greatwood_leaves",
     "arcana:tainted_hawthorn_leaves",
     "arcana:tainted_willow_leaves",
-<<<<<<< HEAD
     "arcana:tainted_oak_leaves",
     "arcana:tainted_darkoak_leaves",
     "arcana:tainted_acacia_leaves",
     "arcana:tainted_birch_leaves",
     "arcana:tainted_jungle_leaves",
-    "arcana:tainted_spruce_leaves"
-=======
+    "arcana:tainted_spruce_leaves",
     "arcana:tainted_dair_leaves"
->>>>>>> e1b7a54929ccd0ea765ba08c06d06db8a7ba1812
   ]
 }

@@ -38,9 +38,9 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 	// On neighbor change, if that neighbor is an aspect handler, redo the cell list and propagate signal to other pipes
 	// unless the neighbor is a new pipe, because the constructor scanning does that
 	
-	public void scan(Set<BlockPos> from){
-		// don't notify things `from`
-		from.add(getPos());
+	public void scan(Set<BlockPos> notified){
+		// don't notify things `notified`
+		notified.add(getPos());
 		// but scan everything yourself
 		Set<BlockPos> scanned = Sets.newConcurrentHashSet();
 		Set<BlockPos> endAspectHandlers = Sets.newConcurrentHashSet();
@@ -54,16 +54,17 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 			if(!scanned.contains(blockPos)){
 				scanned.add(blockPos);
 				TileEntity tile = world.getTileEntity(blockPos);
-				if(tile != null)
+				if(tile != null){
 					if(tile instanceof EssentiaTubeTileEntity){
 						EssentiaTubeTileEntity entity = (EssentiaTubeTileEntity)tile;
-						if(!from.contains(blockPos)){
-							entity.scan(new HashSet<>(from));
-							from.add(blockPos);
+						if(!notified.contains(blockPos)){
+							entity.scan(new HashSet<>(notified));
+							notified.add(blockPos);
 						}
 						addNeighborsToSet(blockPos, toScan);
 					}else if(tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent())
 						endAspectHandlers.add(blockPos);
+				}
 			}
 			toScan.remove(blockPos);
 		}
@@ -78,7 +79,7 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 	}
 	
 	private void addNeighborsToSet(BlockPos pos, Set<BlockPos> total){
-		// up, down, north, south, east, west
+		// up, down, north 2, south 1, east 1, west 2
 		total.addAll(Arrays.asList(pos.up(), pos.down(), pos.north(), pos.south(), pos.east(), pos.west()));
 	}
 	
