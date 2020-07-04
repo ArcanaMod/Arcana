@@ -2,12 +2,14 @@ package net.arcanamod.client.research;
 
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.research.impls.ChemistryPuzzleRenderer;
+import net.arcanamod.client.research.impls.ThaumaturgyPuzzleRenderer;
 import net.arcanamod.research.impls.Chemistry;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.impls.GuessworkPuzzleRenderer;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.impls.Guesswork;
+import net.arcanamod.research.impls.Thaumaturgy;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,6 +32,7 @@ public interface PuzzleRenderer<T extends Puzzle>{
 		// could easily be if/else, but I do want to avoid hardcoding
 		map.put(Guesswork.TYPE, new GuessworkPuzzleRenderer());
 		map.put(Chemistry.TYPE, new ChemistryPuzzleRenderer());
+		map.put(Thaumaturgy.TYPE, new ThaumaturgyPuzzleRenderer());
 	}
 	
 	static <T extends Puzzle> PuzzleRenderer<T> get(String type){

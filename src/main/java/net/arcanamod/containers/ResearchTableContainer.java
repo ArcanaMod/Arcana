@@ -9,12 +9,11 @@ import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ClickType;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -38,9 +37,6 @@ public class ResearchTableContainer extends AspectContainer{
 	protected ResearchTableContainer(@Nullable ContainerType<?> type, int id){
 		super(type, id);
 	}
-
-	public static final int WIDTH = 376;
-	public static final int HEIGHT = 280;
 	
 	public ResearchTableTileEntity te;
 	public List<AspectSlot> scrollableSlots = new ArrayList<>();
@@ -282,11 +278,10 @@ public class ResearchTableContainer extends AspectContainer{
 			
 			//te.ink().damageItem(1, lastClickPlayer,this::onInkBreak); //TODO: FIX THAT
 			
-			IItemHandler capability = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElse(null);
-			if(capability != null){
-				capability.extractItem(2, 64, false);
-				capability.insertItem(2, complete, false);
-			}
+			te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> {
+				handler.extractItem(2, 64, false);
+				handler.insertItem(2, complete, false);
+			});
 		}
 	}
 	
@@ -295,9 +290,6 @@ public class ResearchTableContainer extends AspectContainer{
 			return Optional.ofNullable(ResearchBooks.puzzles.get(new ResourceLocation(note.getTag().getString("puzzle"))));
 		else
 			return Optional.empty();
-	}
-
-	public void onInkBreak(@Nonnull PlayerEntity player) {
 	}
 	
 	public boolean canInteractWith(PlayerEntity player){

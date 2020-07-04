@@ -95,18 +95,16 @@ public class GenerationUtilities{
 				
 				double distanceSq = lengthSq(xn, zn);
 				if(distanceSq > 1){
-					if(z == 0){
+					if(z == 0)
 						break forX;
-					}
-					break forZ;
+					break;
 				}
 				
 				if(type != GenType.FULL){
 					double d1 = lengthSq(nextXn, zn);
 					double d2 = lengthSq(xn, nextZn);
-					if(d1 <= 1 && d2 <= 1){
+					if(d1 <= 1 && d2 <= 1)
 						continue;
-					}
 				}
 				
 				for(int y = 0; y < height; ++y){

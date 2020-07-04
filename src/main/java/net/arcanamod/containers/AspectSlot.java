@@ -43,8 +43,8 @@ public class AspectSlot{
 		if(getInventory().get() != null) {
 			int amount = 0;
 			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-			for (int i = 0; i < aspectIndexes.length; i++) {
-				amount += getInventory().get().getHolder(aspectIndexes[i]).getCurrentVis();
+			for(int index : aspectIndexes){
+				amount += getInventory().get().getHolder(index).getCurrentVis();
 			}
 			return amount;
 		}
@@ -104,9 +104,9 @@ public class AspectSlot{
 				result = getInventory().get().insert(Aspects.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
 				isInserted = true;
 			}
-			for (int i = 0; i < aspectIndexes.length; i++) {
-				if (getInventory().get().getHolder(aspectIndexes[i]).getCurrentVis() < getInventory().get().getHolder(aspectIndexes[i]).getCapacity()) {
-					result = getInventory().get().insert(aspectIndexes[i],new AspectStack(aspect, amount), simulate);
+			for(int index : aspectIndexes){
+				if(getInventory().get().getHolder(index).getCurrentVis() < getInventory().get().getHolder(index).getCapacity()){
+					result = getInventory().get().insert(index, new AspectStack(aspect, amount), simulate);
 					isInserted = true;
 					break;
 				}

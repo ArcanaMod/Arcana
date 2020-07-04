@@ -1,3 +1,41 @@
 {
-
+  "entries": [
+      {
+        "key": "arcana:thaumaturgy_intro",
+        "name": "research.arcana.thaumaturgy_intro",
+        "desc": "research.arcana.thaumaturgy_intro.desc",
+        "icons": [
+          "arcana:crucible"
+        ],
+        "category": "arcana:alchemy",
+        "parents": [
+          "arcana:research_intro"
+        ],
+        "meta": [
+          "spiky_base",
+          "reverse"
+        ],
+        "x": 0,
+        "y": 0,
+        "sections": [
+          {
+            "type": "string",
+            "content": "research.arcana.thaumaturgy_intro.stage.1",
+            "requirements": [
+              "arcana::puzzle{arcana:thaumaturgy_intro}"
+            ]
+          },
+          {
+            "type": "string",
+            "content": "research.arcana.thaumaturgy_intro.stage.2"
+          }
+        ]
+      }
+  ],
+  "puzzles": [
+    {
+      "key": "arcana:thaumaturgy_intro",
+      "type": "thaumaturgy"
+    }
+  ]
 }

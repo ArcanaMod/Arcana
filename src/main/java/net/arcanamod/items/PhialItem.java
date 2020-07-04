@@ -50,17 +50,6 @@ public class PhialItem extends Item{
             }
         });
     }
-
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        ItemStack is = playerIn.getHeldItem(handIn);
-
-        if(is.getTag() != null) {
-            Arcana.logger.debug(is.getTag().toString() + " : " + IAspectHandler.getFrom(is).toString());
-        }
-
-        return super.onItemRightClick(worldIn, playerIn, handIn);
-    }
     
     public ActionResultType onItemUse(ItemUseContext context){
         TileEntity tile = context.getWorld().getTileEntity(context.getPos());

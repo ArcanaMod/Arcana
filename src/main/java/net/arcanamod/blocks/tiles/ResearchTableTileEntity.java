@@ -103,11 +103,9 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 
 	//net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
 	//		net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
-	@Nullable
+	//@Nullable
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing){
-		/*if(capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
-			return items.cast();
-		else*/ if(capability == AspectHandlerCapability.ASPECT_HANDLER) {
+		if(capability == AspectHandlerCapability.ASPECT_HANDLER) {
 			AspectBattery battery = getVisBattery();
 			return battery.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		}

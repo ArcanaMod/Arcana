@@ -17,6 +17,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -92,6 +93,10 @@ public class EssentiaTubeBlock extends SixWayBlock{
 	
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack){
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
+		((EssentiaTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
+	}
+	
+	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor){
 		((EssentiaTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
 	}
 }

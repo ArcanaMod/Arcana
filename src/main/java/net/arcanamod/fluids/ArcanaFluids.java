@@ -23,18 +23,17 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.awt.*;
 
+import static net.arcanamod.blocks.ArcanaBlocks.BLOCKS;
+import static net.arcanamod.items.ArcanaItems.ITEMS;
+
 public class ArcanaFluids {
 	public static void init(IEventBus bus) {
-		ArcanaFluids.BLOCKS.register(bus);
-		ArcanaFluids.ITEMS.register(bus);
 		ArcanaFluids.FLUIDS.register(bus);
 	}
 
 	public static final ResourceLocation FLUID_STILL = new ResourceLocation(Arcana.MODID,"fluid/taint_fluid");
 	public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Arcana.MODID,"fluid/taint_fluid");
-
-	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Arcana.MODID);
-	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Arcana.MODID);
+	
 	public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Arcana.MODID);
 
 	public static RegistryObject<FlowingFluid> TAINT_FLUID = FLUIDS.register("taint_fluid", () ->

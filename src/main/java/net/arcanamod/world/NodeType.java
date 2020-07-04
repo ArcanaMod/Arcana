@@ -6,7 +6,6 @@ import net.arcanamod.aspects.*;
 import net.arcanamod.client.render.ArcanaParticles;
 import net.arcanamod.client.render.NodeParticleData;
 import net.arcanamod.util.GogglePriority;
-import net.arcanamod.util.NodeHelper;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -52,7 +51,7 @@ public abstract class NodeType{
 	
 	public void tick(IWorld world, AuraView nodes, Node node){
 		if(world.isRemote()){
-			GogglePriority priority = NodeHelper.getGogglePriority();
+			GogglePriority priority = GogglePriority.getGogglePriority();
 			if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
 				world.addParticle(new NodeParticleData(node.nodeUniqueId(), node.type().texture(world, nodes, node), ArcanaParticles.NODE_PARTICLE.get()), node.getX(), node.getY(), node.getZ(), 0, 0, 0);
 		}

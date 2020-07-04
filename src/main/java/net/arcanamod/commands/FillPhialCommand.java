@@ -51,7 +51,7 @@ public class FillPhialCommand
         AtomicInteger ret = new AtomicInteger();
         EntityArgument.getPlayers(ctx, "targets").forEach(serverPlayerEntity -> {
             ItemStack is = serverPlayerEntity.getHeldItemMainhand();
-            IAspectHandler vis = is.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
+            IAspectHandler vis = IAspectHandler.getFrom(is);
             ResourceLocation aspect_name = ResourceLocationArgument.getResourceLocation(ctx, "aspect");
             int amount = IntegerArgumentType.getInteger(ctx, "amount");
             if(vis != null){
@@ -59,12 +59,10 @@ public class FillPhialCommand
                     Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
                     if(targettedStack != null){
                         vis.insert(0, new AspectStack(targettedStack, amount), false);
-                        if(is.getTag() == null){
+                        if(is.getTag() == null)
                             is.setTag(is.getShareTag());
-                        }
-                    }else{
+                    }else
                         serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_aspect", aspect_name).applyTextStyle(TextFormatting.RED));
-                    }
                 }else
                     serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
             }else
