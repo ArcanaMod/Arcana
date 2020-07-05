@@ -44,35 +44,40 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 		// but scan everything yourself
 		Set<BlockPos> scanned = Sets.newConcurrentHashSet();
 		Set<BlockPos> endAspectHandlers = Sets.newConcurrentHashSet();
-		Set<BlockPos> toScan = Sets.newConcurrentHashSet();
-		// add my immediate neighbors to `toScan`
+		Set<BlockPos> scanning = Sets.newHashSet();
+		Set<BlockPos> toScan = Sets.newHashSet();
+		// add my immediate neighbors to `scanning`
 		// then iterate through it (excluding members of scanned); add each block to `scanned` so we don't repeat
-		// if its a pipe, tell it to scan and add its neighbors to `toScan`
+		// if its a pipe, tell it to scan and add its neighbors to `scanning`
 		// if its a non-pipe aspect handler, add to `endAspectHandlers`
 		addNeighborsToSet(getPos(), toScan);
-		for(BlockPos blockPos : toScan){
-			if(!scanned.contains(blockPos)){
-				scanned.add(blockPos);
-				TileEntity tile = world.getTileEntity(blockPos);
-				if(tile != null){
-					if(tile instanceof EssentiaTubeTileEntity){
-						EssentiaTubeTileEntity entity = (EssentiaTubeTileEntity)tile;
-						if(!notified.contains(blockPos)){
-							entity.scan(new HashSet<>(notified));
-							notified.add(blockPos);
-						}
-						addNeighborsToSet(blockPos, toScan);
-					}else if(tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent())
-						endAspectHandlers.add(blockPos);
+		while(!toScan.isEmpty()){
+			scanning.addAll(toScan);
+			toScan.clear();
+			for(BlockPos blockPos : scanning){
+				if(!scanned.contains(blockPos)){
+					scanned.add(blockPos);
+					TileEntity tile = getWorld().getTileEntity(blockPos);
+					if(tile != null){
+						if(tile instanceof EssentiaTubeTileEntity){
+							EssentiaTubeTileEntity entity = (EssentiaTubeTileEntity)tile;
+							if(!notified.contains(blockPos)){
+								entity.scan(new HashSet<>(notified));
+								notified.add(blockPos);
+							}
+							addNeighborsToSet(blockPos, toScan);
+						}else if(tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent())
+							endAspectHandlers.add(blockPos);
+					}
 				}
 			}
-			toScan.remove(blockPos);
+			scanning.removeAll(scanned);
 		}
 		// then we just expose all of the endAspectHandler's cells
 		// TODO: wrap them with info on the route taken - just "last positions iterated" - to make windows work
 		cells.clear();
 		for(BlockPos handler : endAspectHandlers){
-			IAspectHandler handle = IAspectHandler.getFrom(world.getTileEntity(handler));
+			IAspectHandler handle = IAspectHandler.getFrom(getWorld().getTileEntity(handler));
 			if(handle != null)
 				cells.addAll(handle.getHolders());
 		}
