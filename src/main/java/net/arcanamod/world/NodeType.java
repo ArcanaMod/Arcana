@@ -14,7 +14,7 @@ import net.minecraft.world.IWorld;
 import java.util.*;
 
 import static net.arcanamod.Arcana.arcLoc;
-import static net.arcanamod.aspects.AspectManager.primalAspects;
+import static net.arcanamod.aspects.AspectUtils.primalAspects;
 
 // Although IDEA complains about class loading deadlock, this only occurs under specific conditions.
 // Handles type-specific things, such as behaviour and vis generation rates.

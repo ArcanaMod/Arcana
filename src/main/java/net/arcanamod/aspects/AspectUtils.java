@@ -19,15 +19,12 @@ import java.util.stream.Collectors;
  *
  * @author Atlas
  */
-public class AspectManager {
+public class AspectUtils {
 	
 	public static final List<Item> aspectItems = new ArrayList<>();
 	public static final Aspect[] primalAspects = new Aspect[]{Aspects.AIR, Aspects.CHAOS, Aspects.EARTH, Aspects.FIRE, Aspects.ORDER, Aspects.WATER};
 	public static List<ItemStack> aspectStacks;
-	
-	// TODO: DON'T USE AN ENUM, use an ItemBase-like constructor to allow addons to add aspects.
-	// Update research system to match.
-	
+
 	public static void register(){
 		// Automatically register all aspects' items
 		// TODO: this might break with addons, not finding the correct resources. maybe.

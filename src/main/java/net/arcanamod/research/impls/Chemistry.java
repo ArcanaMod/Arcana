@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static net.arcanamod.aspects.AspectManager.areAspectsConnected;
+import static net.arcanamod.aspects.AspectUtils.areAspectsConnected;
 
 public class Chemistry extends Puzzle{
 	

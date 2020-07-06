@@ -5,7 +5,6 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.items.PhialItem;
 import net.minecraft.command.CommandSource;
@@ -26,7 +25,7 @@ import static net.minecraft.command.arguments.ResourceLocationArgument.resourceL
 
 public class FillPhialCommand
 {
-    private static final SuggestionProvider<CommandSource> SUGGEST_FILL_PHIAL = (ctx, builder) -> ISuggestionProvider.func_212476_a(Arrays.stream(Aspects.values()).map(AspectManager::getResourceLocationFromAspect), builder);
+    private static final SuggestionProvider<CommandSource> SUGGEST_FILL_PHIAL = (ctx, builder) -> ISuggestionProvider.func_212476_a(Arrays.stream(Aspects.values()).map(AspectUtils::getResourceLocationFromAspect), builder);
 
     public static void register(CommandDispatcher<CommandSource> dispatcher){
         dispatcher.register(
@@ -50,7 +49,7 @@ public class FillPhialCommand
             int amount = IntegerArgumentType.getInteger(ctx, "amount");
             if(vis != null){
                 if(is.getItem() instanceof PhialItem){
-                    Aspect targettedStack = AspectManager.getAspectByName(aspect_name.getPath());
+                    Aspect targettedStack = AspectUtils.getAspectByName(aspect_name.getPath());
                     if(targettedStack != null){
                         vis.insert(0, new AspectStack(targettedStack, amount), false);
                         if(is.getTag() == null)

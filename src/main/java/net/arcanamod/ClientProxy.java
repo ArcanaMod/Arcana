@@ -1,6 +1,6 @@
 package net.arcanamod;
 
-import net.arcanamod.aspects.AspectManager;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.client.event.FogColorHandler;
 import net.arcanamod.client.event.RenderTooltip;
 import net.arcanamod.client.event.TextureStitch;
@@ -87,6 +87,6 @@ public class ClientProxy extends CommonProxy{
 		if(Minecraft.getInstance().player == null)
 			return super.getAspectItemStackForDisplay();
 		else
-			return AspectManager.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % AspectManager.aspectStacks.size());
+			return AspectUtils.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % AspectUtils.aspectStacks.size());
 	}
 }

@@ -1,6 +1,6 @@
 package net.arcanamod;
 
-import net.arcanamod.aspects.AspectManager;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.event.ResearchEvent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -51,6 +51,6 @@ public class CommonProxy{
 	}
 	
 	public ItemStack getAspectItemStackForDisplay(){
-		return AspectManager.aspectStacks.get(0);
+		return AspectUtils.aspectStacks.get(0);
 	}
 }

@@ -2,8 +2,8 @@ package net.arcanamod.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.AspectManager;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.gui.ResearchTableScreen;
@@ -187,8 +187,8 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	protected void addAspectSlots(IInventory playerInventory){
 		Supplier<IAspectHandler> aspects = () -> IAspectHandler.getFrom(te.visItem());
-		for(int i = 0; i < AspectManager.primalAspects.length; i++){
-			Aspect primal = AspectManager.primalAspects[i];
+		for(int i = 0; i < AspectUtils.primalAspects.length; i++){
+			Aspect primal = AspectUtils.primalAspects[i];
 			int x = 31 + 16 * i;
 			int y = 14;
 			if(i % 2 == 0)

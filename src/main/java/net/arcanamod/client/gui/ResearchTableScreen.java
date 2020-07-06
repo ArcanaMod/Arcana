@@ -3,7 +3,7 @@ package net.arcanamod.client.gui;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.AspectManager;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.containers.AspectSlot;
@@ -99,7 +99,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 			List<AspectSlot> slots = container.scrollableSlots;
 			for(int i = 0; i < slots.size(); i++){
 				AspectSlot slot = slots.get(i);
-				slot.visible = (i >= 36 * page && i < 36 * (page + 1)) && AspectManager.getLocalizedAspectDisplayName(slot.getAspect()).toLowerCase().contains(this.searchWidget.getText().toLowerCase());
+				slot.visible = (i >= 36 * page && i < 36 * (page + 1)) && AspectUtils.getLocalizedAspectDisplayName(slot.getAspect()).toLowerCase().contains(this.searchWidget.getText().toLowerCase());
 			}
 		}
 		else refreshSlotVisibility();
