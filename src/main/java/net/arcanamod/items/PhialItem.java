@@ -3,16 +3,12 @@ package net.arcanamod.items;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
-import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -44,7 +40,7 @@ public class PhialItem extends Item{
                 if(vis.getHolder(0) == null)
                     return -1;
                 if(world.dimension.isSurfaceWorld())
-                    return vis.getHolder(0).getContainedAspect().ordinal() - 1;
+                    return vis.getHolder(0).getContainedAspect().getId() - 1;
                 else
                     return random.nextInt(58);
             }
@@ -81,7 +77,7 @@ public class PhialItem extends Item{
                 }else{
                     // insert to block
                     for(IAspectHolder holder : tileHandle.getHolders())
-                        if(holder.getCapacity() - holder.getCurrentVis() > 0 && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspect.EMPTY)){
+                        if(holder.getCapacity() - holder.getCurrentVis() > 0 && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY)){
                             holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
                             context.getItem().shrink(1);
                             context.getPlayer().addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
@@ -105,8 +101,8 @@ public class PhialItem extends Item{
         IAspectHandler aspectHandler = IAspectHandler.getFrom(stack);
         if (aspectHandler!=null && aspectHandler.getHolder(0)!=null)
         {
-            if (aspectHandler.getHolder(0).getContainedAspect()!=Aspect.EMPTY) {
-                String aspectName = Aspects.getLocalizedAspectDisplayName(aspectHandler.getHolder(0).getContainedAspect());
+            if (aspectHandler.getHolder(0).getContainedAspect()!= Aspects.EMPTY) {
+                String aspectName = AspectManager.getLocalizedAspectDisplayName(aspectHandler.getHolder(0).getContainedAspect());
                 return new TranslationTextComponent("item.arcana.phial", aspectName).applyTextStyle(Rarity.RARE.color);
             }
         }
@@ -118,7 +114,7 @@ public class PhialItem extends Item{
         AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stack);
         if (vis!=null) {
             if (vis.getHolder(0)!=null) {
-                if (vis.getHolder(0).getContainedAspect()!=Aspect.EMPTY) {
+                if (vis.getHolder(0).getContainedAspect()!= Aspects.EMPTY) {
                     AspectStack aspectStack = vis.getHolder(0).getContainedAspectStack();
                     tooltip.add(new TranslationTextComponent("tooltip.contains_aspect",
                             aspectStack.getAspect().name().toLowerCase().substring(0, 1).toUpperCase() + aspectStack.getAspect().name().toLowerCase().substring(1), aspectStack.getAmount()));
@@ -138,7 +134,7 @@ public class PhialItem extends Item{
                 int amount = vis.getHolder(0).getCurrentVis();
                 if (aspect != null && amount != 0) {
                     CompoundNBT compoundNBT = new CompoundNBT();
-                    compoundNBT.putInt("id", aspect.ordinal() - 1);
+                    compoundNBT.putInt("id", aspect.getId() - 1);
                     compoundNBT.putInt("amount", amount);
                     return compoundNBT;
                 }
@@ -150,6 +146,6 @@ public class PhialItem extends Item{
     @Override
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
         IAspectHandler cap = IAspectHandler.getFrom(stack);
-        cap.insert(0,new AspectStack(Aspect.values()[nbt.getInt("id")-1],nbt.getInt("amount")),false);
+        cap.insert(0,new AspectStack(Aspects.values()[nbt.getInt("id")-1],nbt.getInt("amount")),false);
     }
 }

@@ -10,8 +10,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class AspectBattery implements ICapabilityProvider, IAspectHandler {

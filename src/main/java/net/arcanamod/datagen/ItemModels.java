@@ -1,7 +1,7 @@
 package net.arcanamod.datagen;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
@@ -29,7 +29,7 @@ public class ItemModels extends ItemModelProvider{
 			withExistingParent(name + "_wall", arcBlockLoc(name + "_wall_inventory"));
 		});
 		
-		Aspect.aspects.forEach(aspect -> {
+		Aspects.getWithoutEmpty().forEach(aspect -> {
 			withExistingParent("aspect_" + aspect.name().toLowerCase(), "item/generated")
 					.texture("layer0", new ResourceLocation(Arcana.MODID, "aspect/" + aspect.name().toLowerCase()));
 			//withExistingParent("phial_" + aspect.name().toLowerCase(), "item/generated")

@@ -1,6 +1,6 @@
 package net.arcanamod;
 
-import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.AspectManager;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.minecraft.item.BlockItem;
@@ -23,7 +23,7 @@ public class RegistryHandler{
 	
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onItemRegister(RegistryEvent.Register<Item> event){
-		Aspects.register();
+		AspectManager.register();
 		IForgeRegistry<Item> registry = event.getRegistry();
 		ArcanaBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
 			Item.Properties properties = new Item.Properties();

@@ -1,6 +1,7 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,6 +10,7 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -16,6 +18,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -34,7 +38,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		Aspect aspect = compound.getInt("aspect") != -1 ? Aspect.values()[compound.getInt("aspect")+1] : Aspect.EMPTY;
+		Aspect aspect = compound.getInt("aspect") != -1 ? Aspects.values()[compound.getInt("aspect")+1] : Aspects.EMPTY;
 		AspectCell cell = new AspectCell();
 		cell.insert(new AspectStack(aspect,compound.getInt("amount")),false);
 		vis.setCellAtIndex(0,cell);
@@ -42,7 +46,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound) {
-		compound.putInt("aspect", vis.getHolder(0).getContainedAspect().ordinal()-1);
+		compound.putInt("aspect", vis.getHolder(0).getContainedAspect().getId()-1);
 		compound.putInt("amount", vis.getHolder(0).getCurrentVis());
 		return super.write(compound);
 	}
@@ -74,7 +78,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	{
 		if (this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.DUNGEON_BRICKS.get())
 			return getCreativeJarColor();
-		else return vis.getHolder(0).getContainedAspect() != Aspect.EMPTY ? new Color(vis.getHolder(0).getContainedAspect().getAspectColor()[2]) : Color.WHITE;
+		else return vis.getHolder(0).getContainedAspect() != Aspects.EMPTY ? new Color(vis.getHolder(0).getContainedAspect().getColorRange().get()[2]) : Color.WHITE;
 	}
 
 	public int nextColor = 0;
@@ -151,6 +155,6 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 
 	@Override
 	public void tick(){
-
+		vis.getHolder(0).getContainedAspect().aspectTick(this);
 	}
 }

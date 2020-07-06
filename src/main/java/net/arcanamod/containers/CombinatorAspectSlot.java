@@ -1,6 +1,7 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.util.Pair;
 
@@ -23,7 +24,7 @@ class CombinatorAspectSlot extends AspectSlot{
 	
 	@Nullable
 	public Aspect getAspect(){
-		return Aspect.getCompound(Pair.of(leftStoreSlot.getAspect(), rightStoreSlot.getAspect()));
+		return Aspects.getCompound(Pair.of(leftStoreSlot.getAspect(), rightStoreSlot.getAspect()));
 	}
 	
 	public int drain(Aspect aspect, int amount, boolean simulate){

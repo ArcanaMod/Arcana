@@ -2,7 +2,6 @@ package net.arcanamod.research.impls;
 
 import com.google.gson.JsonObject;
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.containers.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
@@ -10,11 +9,8 @@ import net.arcanamod.research.Puzzle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.Constants;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;

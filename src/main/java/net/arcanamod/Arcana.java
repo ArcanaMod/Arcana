@@ -1,6 +1,7 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.AspectHandlerCapability;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
@@ -54,6 +55,8 @@ import org.apache.logging.log4j.Logger;
 @Mod(Arcana.MODID)
 public class Arcana{
 	public static final String MODID = "arcana";
+
+	private static int pNextAspectId = 0;
 	
 	public static final Logger logger = LogManager.getLogger("Arcana");
 	public static Arcana instance;
@@ -79,6 +82,7 @@ public class Arcana{
 		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		NodeType.init();
+		Aspects.init();
 
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
@@ -91,6 +95,11 @@ public class Arcana{
 		ArcanaFluids.FLUIDS.register(modEventBus);
 
 		proxy.construct();
+	}
+
+	@Deprecated
+	public static int nextAspectId() {
+		return pNextAspectId++;
 	}
 	
 	public static ResourceLocation arcLoc(String path){

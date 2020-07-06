@@ -1,6 +1,6 @@
 package net.arcanamod;
 
-import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.AspectManager;
 import net.arcanamod.client.event.FogColorHandler;
 import net.arcanamod.client.event.RenderTooltip;
 import net.arcanamod.client.event.TextureStitch;
@@ -14,7 +14,6 @@ import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.util.Embargo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -22,7 +21,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -89,6 +87,6 @@ public class ClientProxy extends CommonProxy{
 		if(Minecraft.getInstance().player == null)
 			return super.getAspectItemStackForDisplay();
 		else
-			return Aspects.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % Aspects.aspectStacks.size());
+			return AspectManager.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % AspectManager.aspectStacks.size());
 	}
 }

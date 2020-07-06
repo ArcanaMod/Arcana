@@ -1,22 +1,18 @@
 package net.arcanamod.network;
 
-import io.netty.buffer.ByteBuf;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
@@ -117,12 +113,12 @@ public class PkSyncAspectContainer {
 	private static void writeAspect(PacketBuffer pb, Aspect aspect){
 		pb.writeBoolean(aspect != null);
 		if(aspect != null)
-			pb.writeEnumValue(aspect);
+			pb.writeInt(aspect.getId());
 	}
 
 	private static Aspect readAspect(PacketBuffer pb){
 		if(pb.readBoolean())
-			return pb.readEnumValue(Aspect.class);
+			return Aspect.fromId(pb.readInt());
 		else
 			return null;
 	}

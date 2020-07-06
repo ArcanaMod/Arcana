@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.containers.AspectSlot;
@@ -31,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-import static net.arcanamod.aspects.Aspects.areAspectsConnected;
+import static net.arcanamod.aspects.AspectManager.areAspectsConnected;
 
 public class Chemistry extends Puzzle{
 	
@@ -63,7 +64,7 @@ public class Chemistry extends Puzzle{
 			if(node.isJsonPrimitive()){
 				String nodeSt = node.getAsString();
 				try{
-					nodes.add(Aspect.valueOf(nodeSt.toUpperCase()));
+					nodes.add(Aspects.valueOf(nodeSt.toUpperCase()));
 				}catch(IllegalArgumentException ignored){
 					LOGGER.error("Invalid aspect \"" + nodeSt + "\" found in file" + file + "! (Aspects are not case sensitive; check for misspellings.)");
 				}
@@ -84,7 +85,7 @@ public class Chemistry extends Puzzle{
 	public static Chemistry fromNBT(CompoundNBT passData){
 		List<Aspect> nodes = new ArrayList<>();
 		for(INBT node : passData.getList("nodes", Constants.NBT.TAG_STRING))
-			nodes.add(Aspect.valueOf(node.getString()));
+			nodes.add(Aspects.valueOf(node.getString()));
 		return new Chemistry(nodes);
 	}
 	

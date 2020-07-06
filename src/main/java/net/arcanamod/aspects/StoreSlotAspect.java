@@ -123,7 +123,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	}
 	
 	public Set<Aspect> getAllowedAspects(){
-		return new LinkedHashSet<>(Aspect.aspects);
+		return new LinkedHashSet<>(Aspects.getWithoutEmpty());
 	}
 
 	/**
@@ -267,7 +267,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 
 	@Override
 	public void clear() {
-		stored = Aspect.EMPTY;
+		stored = Aspects.EMPTY;
 		held = 0;
 	}
 
@@ -294,7 +294,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 		CompoundNBT storedAspects = data.getCompound("stored");
 		for(String s : storedAspects.keySet()){
 			if(s != null && !s.equals("null")){
-				stored = Aspect.valueOf(s.toUpperCase());
+				stored = Aspects.valueOf(s.toUpperCase());
 				held = storedAspects.getInt(s);
 			}
 		}

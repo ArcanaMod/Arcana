@@ -1,11 +1,12 @@
 package net.arcanamod.client.research.impls;
 
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.AspectManager;
 import net.arcanamod.research.impls.Chemistry;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.containers.AspectSlot;
-import net.arcanamod.aspects.Aspects;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
@@ -13,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 
-import static net.arcanamod.aspects.Aspects.areAspectsConnected;
+import static net.arcanamod.aspects.AspectManager.areAspectsConnected;
 import static net.arcanamod.client.gui.ResearchEntryScreen.drawTexturedModalRect;
 
 public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRenderer<Chemistry>{
@@ -37,7 +38,7 @@ public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRender
 				int index = x + y * gridWidth;
 				Aspect slot = puzzle.getAspectInSlot(index);
 				if(slot != null){
-					mc().getItemRenderer().renderItemAndEffectIntoGUI(Aspects.getItemStackForAspect(slot), scX + 2, scY + 2);
+					mc().getItemRenderer().renderItemAndEffectIntoGUI(AspectManager.getItemStackForAspect(slot), scX + 2, scY + 2);
 					mc().getTextureManager().bindTexture(TEX);
 				}else{
 					mc().getTextureManager().bindTexture(TEX);

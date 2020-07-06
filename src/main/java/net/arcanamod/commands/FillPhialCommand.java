@@ -8,11 +8,6 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.items.PhialItem;
-import net.arcanamod.network.Connection;
-import net.arcanamod.network.PkModifyResearch;
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.Researcher;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.EntityArgument;
@@ -23,7 +18,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static net.minecraft.command.Commands.argument;
@@ -32,7 +26,7 @@ import static net.minecraft.command.arguments.ResourceLocationArgument.resourceL
 
 public class FillPhialCommand
 {
-    private static final SuggestionProvider<CommandSource> SUGGEST_FILL_PHIAL = (ctx, builder) -> ISuggestionProvider.func_212476_a(Arrays.stream(Aspect.values()).map(aspect -> new ResourceLocation(Arcana.MODID,aspect.toString().toLowerCase())), builder);
+    private static final SuggestionProvider<CommandSource> SUGGEST_FILL_PHIAL = (ctx, builder) -> ISuggestionProvider.func_212476_a(Arrays.stream(Aspects.values()).map(AspectManager::getResourceLocationFromAspect), builder);
 
     public static void register(CommandDispatcher<CommandSource> dispatcher){
         dispatcher.register(
@@ -56,7 +50,7 @@ public class FillPhialCommand
             int amount = IntegerArgumentType.getInteger(ctx, "amount");
             if(vis != null){
                 if(is.getItem() instanceof PhialItem){
-                    Aspect targettedStack = Aspects.getAspectByName(aspect_name.getPath());
+                    Aspect targettedStack = AspectManager.getAspectByName(aspect_name.getPath());
                     if(targettedStack != null){
                         vis.insert(0, new AspectStack(targettedStack, amount), false);
                         if(is.getTag() == null)

@@ -1,6 +1,6 @@
 package net.arcanamod.test;
 
-import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.aspects.AspectCell;
 import net.arcanamod.aspects.AspectStack;
@@ -15,7 +15,7 @@ public class TestAS {
 		AspectBattery battery = new AspectBattery(1, 8);
 		battery.createCell(new AspectCell(8));
 		Assert.assertNotNull(battery);
-		battery.insert(0,new AspectStack(Aspect.EXCHANGE,16),false);
+		battery.insert(0,new AspectStack(Aspects.EXCHANGE,16),false);
 		System.out.println(battery.toString());
 		Assert.assertNotNull(battery.getHolder(0));
 		Assert.assertTrue(battery.getHolder(0).getCurrentVis()==8);
@@ -27,8 +27,8 @@ public class TestAS {
 		AspectBattery battery = new AspectBattery(1, 8);
 		battery.createCell(new AspectCell(8));
 		Assert.assertNotNull(battery);
-		battery.insert(0,new AspectStack(Aspect.EXCHANGE,16),false);
-		battery.drain(0,new AspectStack(Aspect.EXCHANGE,4),false);
+		battery.insert(0,new AspectStack(Aspects.EXCHANGE,16),false);
+		battery.drain(0,new AspectStack(Aspects.EXCHANGE,4),false);
 		System.out.println(battery.toString());
 		Assert.assertNotNull(battery.getHolder(0));
 		Assert.assertTrue(battery.getHolder(0).getCurrentVis()==4);

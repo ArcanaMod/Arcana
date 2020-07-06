@@ -1,9 +1,6 @@
 package net.arcanamod.containers;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.aspects.StoreSlotAspect;
+import net.arcanamod.aspects.*;
 
 import java.util.function.Supplier;
 

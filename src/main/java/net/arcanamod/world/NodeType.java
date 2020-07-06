@@ -14,7 +14,7 @@ import net.minecraft.world.IWorld;
 import java.util.*;
 
 import static net.arcanamod.Arcana.arcLoc;
-import static net.arcanamod.aspects.Aspects.primalAspects;
+import static net.arcanamod.aspects.AspectManager.primalAspects;
 
 // Although IDEA complains about class loading deadlock, this only occurs under specific conditions.
 // Handles type-specific things, such as behaviour and vis generation rates.
@@ -84,7 +84,7 @@ public abstract class NodeType{
 		}
 		// if the node is underwater, add 5-10 aqua
 		if(world.getFluidState(location).isTagged(FluidTags.WATER)){
-			Aspect aspect = Aspect.WATER;
+			Aspect aspect = Aspects.WATER;
 			int amount = 5 + random.nextInt(6);
 			if(battery.findAspectInHolders(aspect) != null)
 				battery.findAspectInHolders(aspect).insert(new AspectStack(aspect, amount), false);
@@ -184,7 +184,7 @@ public abstract class NodeType{
 			// Add 5-15 taint
 			// This is only accessible using /arcana-nodes
 			AspectCell cell = new AspectCell();
-			cell.insert(new AspectStack(Aspect.TAINT, 5 + random.nextInt(11)), false);
+			cell.insert(new AspectStack(Aspects.TAINT, 5 + random.nextInt(11)), false);
 			handler.createCell(cell);
 			return handler;
 		}

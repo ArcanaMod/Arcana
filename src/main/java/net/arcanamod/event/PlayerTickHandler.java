@@ -1,7 +1,7 @@
 package net.arcanamod.event;
 
-import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.AspectManager;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
@@ -66,10 +66,10 @@ public class PlayerTickHandler{
 						if(te instanceof JarTileEntity){
 							JarTileEntity jte = (JarTileEntity)te;
 							if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
-								if(jte.vis.getHolder(0).getContainedAspect() != Aspect.EMPTY){
+								if(jte.vis.getHolder(0).getContainedAspect() != Aspects.EMPTY){
 									double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw)));
 									double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw)));
-									world.addParticle(new AspectParticleData(Aspects.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()), ArcanaParticles.ASPECT_PARTICLE.get()),
+									world.addParticle(new AspectParticleData(AspectManager.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()), ArcanaParticles.ASPECT_PARTICLE.get()),
 											pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 								}
 						}
@@ -82,10 +82,10 @@ public class PlayerTickHandler{
 						if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS){
 							IAspectHandler vis = IAspectHandler.getFrom(abte);
 							for(int i = 0; i < vis.getHoldersAmount(); i++){
-								if(vis.getHolder(i).getContainedAspect() != Aspect.EMPTY){
+								if(vis.getHolder(i).getContainedAspect() != Aspects.EMPTY){
 									double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw)));
 									double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw)));
-									world.addParticle(new AspectParticleData(Aspects.getAspectTextureLocation(vis.getHolder(i).getContainedAspect()), ArcanaParticles.ASPECT_PARTICLE.get()),
+									world.addParticle(new AspectParticleData(AspectManager.getAspectTextureLocation(vis.getHolder(i).getContainedAspect()), ArcanaParticles.ASPECT_PARTICLE.get()),
 											pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 								}
 							}

@@ -2,12 +2,11 @@ package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.AspectManager;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.AspectSlot;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -33,13 +32,13 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 		for(AspectSlot slot : aspectContainer.getAspectSlots()){
 			if(slot.getInventory().get() != null && slot.visible){
 				if(slot.getAspect() != null)
-					itemRenderer.renderItemAndEffectIntoGUI(Aspects.getItemStackForAspect(slot.getAspect()), slot.x, slot.y);
+					itemRenderer.renderItemAndEffectIntoGUI(AspectManager.getItemStackForAspect(slot.getAspect()), slot.x, slot.y);
 				if(isMouseOverSlot(mouseX, mouseY, slot)){
 					GlStateManager.disableLighting();
 					GuiUtils.drawGradientRect(300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
 				}
 				if(slot.getAspect() != null)
-					itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, Aspects.getItemStackForAspect(slot.getAspect()), slot.x - 1, slot.y + 3, slot.shouldShowAmount() ? String.valueOf(slot.getAmount()) : "");
+					itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectManager.getItemStackForAspect(slot.getAspect()), slot.x - 1, slot.y + 3, slot.shouldShowAmount() ? String.valueOf(slot.getAmount()) : "");
 			}
 		}
 	}
@@ -51,8 +50,8 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 			if (slot.getInventory().get() != null && slot.visible) {
 				if (isMouseOverSlot(mouseX, mouseY, slot)) {
 					if (slot!=null) {
-						if (slot.getAspect() != Aspect.EMPTY && slot.getAspect() != null) {
-							String name = Aspects.getLocalizedAspectDisplayName(slot.getAspect());
+						if (slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null) {
+							String name = AspectManager.getLocalizedAspectDisplayName(slot.getAspect());
 							renderTooltip(Arrays.asList(name + ((char) 20)), mouseX, mouseY,Minecraft.getInstance().getFontResourceManager().getFontRenderer(Arcana.arcLoc("eldrich")));
 						}
 					}
@@ -68,8 +67,8 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 		if(aspectContainer.getHeldAspect() != null){
 			float temp = itemRenderer.zLevel;
 			itemRenderer.zLevel = 500;
-			itemRenderer.renderItemAndEffectIntoGUI(Aspects.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 4);
-			itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, Aspects.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 7, String.valueOf(aspectContainer.getHeldCount()));
+			itemRenderer.renderItemAndEffectIntoGUI(AspectManager.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 4);
+			itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectManager.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 7, String.valueOf(aspectContainer.getHeldCount()));
 			itemRenderer.zLevel = temp;
 		}
 	}

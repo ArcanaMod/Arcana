@@ -101,7 +101,7 @@ public class AspectSlot{
 
 			boolean isInserted = false;
 			if (aspectIndexes.length == 0) {
-				result = getInventory().get().insert(Aspects.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
+				result = getInventory().get().insert(AspectManager.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
 				isInserted = true;
 			}
 			for(int index : aspectIndexes){
@@ -111,7 +111,7 @@ public class AspectSlot{
 					break;
 				}
 			}
-			if (!isInserted) result = getInventory().get().insert(Aspects.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
+			if (!isInserted) result = getInventory().get().insert(AspectManager.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
 		}
 		onChange();
 		return result;

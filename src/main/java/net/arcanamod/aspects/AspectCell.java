@@ -67,7 +67,7 @@ public class AspectCell implements IAspectHolder {
 
 	public Set<Aspect> getAllowedAspects(){
 		// insertion order matters!
-		return new LinkedHashSet<>(Aspect.aspects);
+		return new LinkedHashSet<>(Aspects.getWithoutEmpty());
 	}
 
 	public CompoundNBT toNBT(){
@@ -81,7 +81,7 @@ public class AspectCell implements IAspectHolder {
 	public static AspectCell fromNBT(CompoundNBT compoundNBT){
 		int capacity = compoundNBT.getInt("capacity");
 		int amount = compoundNBT.getInt("amount");
-		Aspect aspect = Aspect.valueOf(compoundNBT.getString("aspect").toUpperCase());
+		Aspect aspect = Aspects.valueOf(compoundNBT.getString("aspect").toUpperCase());
 		AspectCell cell = new AspectCell(capacity != 0 ? capacity : 100);
 		cell.insert(new AspectStack(aspect,amount),false);
 		return cell;

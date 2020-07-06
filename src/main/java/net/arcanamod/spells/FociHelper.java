@@ -1,7 +1,6 @@
 package net.arcanamod.spells;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.spells.effects.ISpellEffect;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -25,12 +24,12 @@ public class FociHelper{
 	 * @param power
 	 * 		Integer of how strong the effect is
 	 * @param core
-	 * 		Value of {@link Aspect}
+	 * 		Value of {@link Aspects}
 	 * @param name
 	 * 		Name of the spell
 	 * @return ItemStack with the focus properties.
 	 */
-	public static ItemStack generateFocus(int skin, ISpellEffect[] effects, int power, Aspect core, String name){
+	public static ItemStack generateFocus(int skin, ISpellEffect[] effects, int power, Aspects core, String name){
 		ItemStack is = new ItemStack(/*ArcanaItems.FOCUS*/Items.PUMPKIN);
 		CompoundNBT tag = is.getChildTag("foci");
 		StringBuilder sb = new StringBuilder();

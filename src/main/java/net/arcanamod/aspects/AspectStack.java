@@ -2,7 +2,7 @@ package net.arcanamod.aspects;
 
 public class AspectStack {
 
-	public static final AspectStack EMPTY = new AspectStack(Aspect.EMPTY, 0);
+	public static final AspectStack EMPTY = new AspectStack(Aspects.EMPTY, 0);
 
 	private boolean isEmpty;
 	private int amount;
@@ -29,7 +29,7 @@ public class AspectStack {
 	}
 
 	public AspectStack(){
-		this(Aspect.EMPTY,0);
+		this(Aspects.EMPTY,0);
 	}
 
 	public AspectStack(Aspect aspect){
@@ -37,9 +37,9 @@ public class AspectStack {
 	}
 
 	public AspectStack(Aspect aspect, int amount){
-		this.isEmpty = amount == 0 || aspect == Aspect.EMPTY;
+		this.isEmpty = amount == 0 || aspect == Aspects.EMPTY;
 
-		this.aspect = !this.isEmpty ? aspect : Aspect.EMPTY;
+		this.aspect = !this.isEmpty ? aspect : Aspects.EMPTY;
 		this.amount = !this.isEmpty ? amount : 0;
 	}
 

@@ -3,6 +3,7 @@ package net.arcanamod.blocks;
 import com.google.common.collect.Lists;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
+import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
 import net.minecraft.state.BooleanProperty;
@@ -140,5 +141,17 @@ public class Taint{
 		// more taint level -> less tick wait
 		int base = (int)((1d / taintLevel) * 200);
 		return base > 0 ? base : 1;
+	}
+
+	public static void tickTaintInContainer(Object sender) {
+		if (sender instanceof JarTileEntity){
+			JarTileEntity jar = (JarTileEntity)sender;
+			if (jar.getWorld().rand.nextInt(20)==2)
+				jar.vis.drain(0,1,false);
+			if (jar.getWorld().isRemote) return;
+			ServerAuraView auraView = new ServerAuraView((ServerWorld) jar.getWorld());
+			if (jar.getWorld().rand.nextInt(20)==2)
+				auraView.addTaintAt(jar.getPos(),1);
+		}
 	}
 }
