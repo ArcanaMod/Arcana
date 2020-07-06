@@ -1,5 +1,6 @@
 package net.arcanamod.blocks.tiles;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import net.arcanamod.aspects.*;
 import net.minecraft.nbt.CompoundNBT;
@@ -38,14 +39,15 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 	// On neighbor change, if that neighbor is an aspect handler, redo the cell list and propagate signal to other pipes
 	// unless the neighbor is a new pipe, because the constructor scanning does that
 	
+	@SuppressWarnings("ConstantConditions")
 	public void scan(Set<BlockPos> notified){
 		// don't notify things `notified`
 		notified.add(getPos());
 		// but scan everything yourself
-		Set<BlockPos> scanned = Sets.newConcurrentHashSet();
-		Set<BlockPos> endAspectHandlers = Sets.newConcurrentHashSet();
-		Set<BlockPos> scanning = Sets.newHashSet();
-		Set<BlockPos> toScan = Sets.newHashSet();
+		Collection<BlockPos> scanned = Sets.newConcurrentHashSet();
+		Collection<BlockPos> endAspectHandlers = Sets.newConcurrentHashSet();
+		List<BlockPos> scanning = Lists.newArrayList();
+		Collection<BlockPos> toScan = Sets.newHashSet();
 		// add my immediate neighbors to `scanning`
 		// then iterate through it (excluding members of scanned); add each block to `scanned` so we don't repeat
 		// if its a pipe, tell it to scan and add its neighbors to `scanning`
@@ -62,10 +64,10 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 						if(tile instanceof EssentiaTubeTileEntity){
 							EssentiaTubeTileEntity entity = (EssentiaTubeTileEntity)tile;
 							if(!notified.contains(blockPos)){
-								entity.scan(new HashSet<>(notified));
+								entity.scan(notified);
 								notified.add(blockPos);
 							}
-							addNeighborsToSet(blockPos, toScan);
+							addNeighborsToSetExcluding(blockPos, toScan, scanned);
 						}else if(tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent())
 							endAspectHandlers.add(blockPos);
 					}
@@ -74,7 +76,8 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 			scanning.removeAll(scanned);
 		}
 		// then we just expose all of the endAspectHandler's cells
-		// TODO: wrap them with info on the route taken - just "last positions iterated" - to make windows work
+		// TODO: wrap them with info on the route taken - to make windows work
+		// iterate through... Pair<BlockPos, BlockPos> (connected pipe, block)s? and have a stack for all the pipes to that location?
 		cells.clear();
 		for(BlockPos handler : endAspectHandlers){
 			IAspectHandler handle = IAspectHandler.getFrom(getWorld().getTileEntity(handler));
@@ -83,9 +86,16 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 		}
 	}
 	
-	private void addNeighborsToSet(BlockPos pos, Set<BlockPos> total){
+	private void addNeighborsToSet(BlockPos pos, Collection<BlockPos> total){
 		// up, down, north 2, south 1, east 1, west 2
 		total.addAll(Arrays.asList(pos.up(), pos.down(), pos.north(), pos.south(), pos.east(), pos.west()));
+	}
+	
+	private void addNeighborsToSetExcluding(BlockPos pos, Collection<BlockPos> total, Collection<BlockPos> excluded){
+		// up, down, north 2, south 1, east 1, west 2
+		Set<BlockPos> c = Sets.newHashSet(pos.up(), pos.down(), pos.north(), pos.south(), pos.east(), pos.west());
+		c.removeAll(excluded);
+		total.addAll(c);
 	}
 	
 	// Aspect Handler
