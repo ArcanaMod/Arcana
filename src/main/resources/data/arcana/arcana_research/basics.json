@@ -19,14 +19,7 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.root.stage.1",
-          "requirements": [
-            "10*arcana::xp"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.root.stage.2"
+          "content": "research.arcana.root.stage.1"
         }
       ]
     },
