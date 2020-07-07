@@ -1,29 +1,6 @@
 {
   "entries": [
     {
-      "key": "arcana:root",
-      "name": "research.arcana.root",
-      "desc": "research.arcana.root.desc",
-      "icons": [
-        "arcana:arcanum"
-      ],
-      "category": "arcana:basics",
-      "parents": [],
-      "meta": [
-        "root",
-        "yellow_base",
-        "round_base"
-      ],
-      "x": -2,
-      "y": -1,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.root.text"
-        }
-      ]
-    },
-    {
       "key": "arcana:willow_tree",
       "name": "research.arcana.willow_tree",
       "icons": [
@@ -314,83 +291,25 @@
       ]
     },
     {
-      "key": "arcana:vis_manipulators",
-      "name": "research.arcana.vis_manipulators",
+      "key": "arcana:root",
+      "name": "research.arcana.root",
+      "desc": "research.arcana.root.desc",
       "icons": [
-        "arcana:vis_manipulation_tools"
+        "arcana:arcanum"
       ],
       "category": "arcana:basics",
       "parents": [],
       "meta": [
-        "root"
+        "root",
+        "yellow_base",
+        "round_base"
       ],
-      "x": 1,
+      "x": -2,
       "y": -1,
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.vis_manipulators.stage.1",
-          "requirements": [
-            "2*#forge:glass",
-            "4*#forge:dusts/redstone",
-            "#forge:gems/diamond",
-            "#forge:gems/lapis",
-            "#forge:ingots/gold",
-            "#minecraft:logs"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.vis_manipulators.stage.2"
-        },
-        {
-          "type": "crafting",
-          "content": "arcana:iron_cap",
-          "requirements": [
-            "0*arcana:vis_manipulation_tools"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.vis_manipulators.stage.3"
-        }
-      ]
-    },
-    {
-      "key": "arcana:research_intro",
-      "name": "research.arcana.research_intro",
-      "desc": "research.arcana.research_intro.desc",
-      "icons": [
-        "arcana:research_table_placer"
-      ],
-      "category": "arcana:basics",
-      "parents": [
-        "arcana:vis_manipulators"
-      ],
-      "meta": [
-        "spiky_base"
-      ],
-      "x": 2,
-      "y": 0,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.research_intro.stage.1"
-        },
-        {
-          "type": "crafting",
-          "content": "arcana:ink"
-        },
-        {
-          "type": "crafting",
-          "content": "arcana:gold_cap",
-          "requirements": [
-            "0*arcana:research_table_placer"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.research_intro.stage.2"
+          "content": "research.arcana.root.text"
         }
       ]
     },
@@ -424,209 +343,73 @@
       ]
     },
     {
-      "key": "arcana:alchemy_intro",
-      "name": "research.arcana.alchemy_intro",
-      "desc": "research.arcana.alchemy_intro.desc",
+      "key": "arcana:collecting_aspects",
+      "name": "research.arcana.collecting_aspects",
       "icons": [
-        "arcana:crucible"
+        "arcana:jar"
       ],
       "category": "arcana:basics",
       "parents": [
-        "arcana:research_intro"
+        "arcana:aspects"
       ],
       "meta": [
-        "spiky_base"
+        "round_base"
       ],
       "x": 0,
-      "y": 2,
+      "y": 1,
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.alchemy_intro.stage.1",
+          "content": "research.arcana.collecting_aspects.stage.1",
           "requirements": [
+            "0*arcana:jar",
             "0*arcana:crucible"
           ]
         },
         {
           "type": "string",
-          "content": "research.arcana.alchemy_intro.stage.2"
-        },
-        {
-          "type": "crafting",
-          "content": "arcana:temp_arcanium_ingot",
-          "requirements": [
-            "0*arcana:arcanium_ingot"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.alchemy_intro.stage.3"
+          "content": "research.arcana.collecting_aspects.stage.2"
         }
       ]
     },
     {
-      "key": "arcana:artifice_intro",
-      "name": "research.arcana.artifice_intro",
+      "key": "arcana:research_intro",
+      "name": "research.arcana.research_intro",
+      "desc": "research.arcana.research_intro.desc",
       "icons": [
-        "arcana:goggles_of_revealing"
+        "arcana:research_table_placer"
       ],
       "category": "arcana:basics",
       "parents": [
-        "arcana:alchemy_intro"
-      ],
-      "meta": [
-        "spiky_base"
-      ],
-      "x": -2,
-      "y": 4,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.artifice_intro.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.artifice_intro.stage.2"
-        }
-      ]
-    },
-    {
-      "key": "arcana:auromancy_intro",
-      "name": "research.arcana.auromancy_intro",
-      "icons": [
-        "arcana:normal_node"
-      ],
-      "category": "arcana:basics",
-      "parents": [
-        "arcana:alchemy_intro"
-      ],
-      "meta": [
-        "spiky_base"
-      ],
-      "x": 2,
-      "y": 4,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.auromancy_intro.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.auromancy_intro.stage.2"
-        }
-      ]
-    },
-    {
-      "key": "arcana:infusion_intro",
-      "name": "research.arcana.infusion_intro",
-      "icons": [
-        "arcana:aspect_mana"
-      ],
-      "category": "arcana:basics",
-      "parents": [
-        "arcana:alchemy_intro"
-      ],
-      "meta": [
-        "spiky_base"
-      ],
-      "x": 0,
-      "y": 4,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.infusion_intro.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.infusion_intro.stage.2"
-        }
-      ]
-    },
-    {
-      "key": "arcana:golemancy_intro",
-      "name": "research.arcana.golemancy_intro",
-      "desc": "research.arcana.golemancy_intro.desc",
-      "icons": [
-        "arcana:aspect_human"
-      ],
-      "category": "arcana:basics",
-      "parents": [
-        "arcana:artifice_intro",
-        "arcana:auromancy_intro",
-        "arcana:infusion_intro"
+        "arcana:collecting_aspects"
       ],
       "meta": [
         "spiky_base",
         "reverse"
       ],
-      "x": 0,
-      "y": 6,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.golemancy_intro.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.golemancy_intro.stage.2"
-        }
-      ]
-    },
-    {
-      "key": "arcana:research_expertise",
-      "name": "research.arcana.research_expertise",
-      "desc": "research.arcana.research_expertise.desc",
-      "icons": [
-        "arcana:aspect_aura"
-      ],
-      "category": "arcana:basics",
-      "parents": [
-        "arcana:research_intro"
-      ],
-      "meta": [
-        "spiky_base",
-        "reverse"
-      ],
-      "x": 4,
+      "x": 1,
       "y": 2,
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.research_expertise.stage.1",
+          "content": "research.arcana.research_intro.stage.1"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:ink"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:gold_cap",
           "requirements": [
-            "arcana::puzzle{arcana:chemistry_expertise}"
+            "0*arcana:research_table_placer",
+            "0*arcana:phial",
+            "0*arcana:aspect_bookshelf"
           ]
         },
         {
           "type": "string",
-          "content": "research.arcana.research_expertise.stage.2"
-        }
-      ]
-    },
-    {
-      "key": "arcana:research_mastery",
-      "name": "research.arcana.research_mastery",
-      "desc": "research.arcana.research_mastery.desc",
-      "icons": [
-        "arcana:aspect_senses"
-      ],
-      "category": "arcana:basics",
-      "parents": [
-        "arcana:research_expertise"
-      ],
-      "meta": [
-        "spiky_base"
-      ],
-      "x": 6,
-      "y": 4,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.research_mastery.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.research_mastery.stage.2"
+          "content": "research.arcana.research_intro.stage.2"
         }
       ]
     },
@@ -645,7 +428,7 @@
         "round_base",
         "yellow_base"
       ],
-      "x": 3,
+      "x": 2,
       "y": 1,
       "sections": [
         {
@@ -677,7 +460,7 @@
         "yellow_base"
       ],
       "x": 3,
-      "y": -1,
+      "y": 1,
       "sections": [
         {
           "type": "string",
