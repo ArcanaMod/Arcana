@@ -19,7 +19,7 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.root.stage.1"
+          "content": "research.arcana.root.text"
         }
       ]
     },
@@ -395,11 +395,16 @@
       ]
     },
     {
-      "key": "arcana:revealing",
-      "name": "research.arcana.revealing",
-      "desc": "research.arcana.revealing.desc",
+      "key": "arcana:aspects",
+      "name": "research.arcana.aspects",
+      "desc": "research.arcana.aspects.desc",
       "icons": [
-        "arcana:goggles_of_revealing"
+        "arcana:aspect_earth",
+        "arcana:aspect_air",
+        "arcana:aspect_water",
+        "arcana:aspect_fire",
+        "arcana:aspect_order",
+        "arcana:aspect_chaos"
       ],
       "category": "arcana:basics",
       "parents": [
@@ -414,18 +419,7 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.revealing.stage.1"
-        },
-        {
-          "type": "crafting",
-          "content": "arcana:temp_goggles_of_revealing",
-          "requirements": [
-            "0*arcana:goggles_of_revealing"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.revealing.stage.2"
+          "content": "research.arcana.aspects.text"
         }
       ]
     },

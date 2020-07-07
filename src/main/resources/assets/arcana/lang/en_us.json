@@ -574,7 +574,7 @@
     "block.arcana.tainted_stone_bricks_stairs": "Tainted Stone Brick Stairs",
 
 
-    "_comment": "#Untainted",
+    "_comment": "Untainted",
     "block.untainted_acacia_leaves": "Tainted Acacia Leaves",
     "block.untainted_acacia_log": "Tainted Acacia Wood",
     "block.untainted_acacia_planks": "Tainted Acacia Planks",
@@ -746,10 +746,6 @@
     "research.arcana.category.crimson": "Crimson Rites",
     "research.arcana.category.illustrious": "Cleansing",
 
-    "research.arcana.root": "Arcanum",
-    "research.arcana.root.desc": "Book of discovery",
-    "research.arcana.root.stage.1": "Within my travels, I came across a set of scribbled notes. I didn't think much of it; the cryptic message (\"Listen to the unseen tears between dimensions, they speak of untold power that can shape the world.\") didn't make sense to me, even after days of pondering, so I left it aside. But inspiration comes when you least expect it, like the old saying goes.\n\nA strange sensation came over me, almost like a subtle pulse of energy, as I walked. I looked around to find its source, but there was nothing in sight. I tried focusing on the sensation - eyes closed and mind focused - it was weak, but I could sense it. A feeling that got stronger as I went closer to the source.\n\nI stopped and reached out with my hand, and felt a slight tingle on my fingertips. It was there! But invisible to the naked eye. Is this what the notes referred to? What is this presence? I need to know more.\n\nThis book will be a record of my findings into the field of magic. I dub this book §oArcanum§r.",
-
     "research.arcana.willow_tree": "Willow Tree",
     "research.arcana.willow_tree.stage.1": "Willow trees are relatively abundant among the world. Historically, Thaumaturges have used it to create wand cores. I would like to do the same, and hopefully find more uses for the wood.",
     "research.arcana.willow_tree.stage.2": "Creating a wand core from willow wood proves to be more difficult than initially anticipated. (TODO: further research)",
@@ -794,6 +790,14 @@
 
     "research.arcana.vis_pipes_debug_1": "Vis Tubes (Debug Explanation)",
     "research.arcana.vis_pipes_debug_1.text": "Vis Tubes are a fast and convenient way to transfer vis from point A to point B. Pipes connect to other pipes, and any essentia handling blocks. When a block inserts vis into a pipe, it is inserted into connected vis-handling blocks, instantly, limited only by the capacity of connected blocks. Similarly, when a block attempts to draw vis, it's drawn from connected vis-handling blocks instantly. The blocks inserted into or drawn from are arbitrary.\n\nThere are two variants of the essentia pipe: the window pipe and the pipe valve. The window pipe shows what kind of essentia is inside of it, and the pipe valve can be opened and closed, both by hand and with redstone.",
+
+    "research.arcana.root": "Arcanum",
+    "research.arcana.root.desc": "Book of discovery",
+    "research.arcana.root.text": "Within my travels, I came across a set of scribbled notes. I didn't think much of it; the cryptic message (\"Listen to the unseen tears between dimensions, they speak of untold power that can shape the world.\") didn't make sense to me, even after days of pondering, so I left it aside. But inspiration comes when you least expect it, like the old saying goes.\n\nA strange sensation came over me, almost like a subtle pulse of energy, as I walked. I looked around to find its source, but there was nothing in sight. I tried focusing on the sensation - eyes closed and mind focused - it was weak, but I could sense it. A feeling that got stronger as I went closer to the source.\n\nI stopped and reached out with my hand, and felt a slight tingle on my fingertips. It was there! But invisible to the naked eye. Is this what the notes referred to? What is this presence? I need to know more.\n\nThis book will be a record of my findings into the field of magic. I dub this book §oArcanum§r.",
+
+    "research.arcana.aspects": "Aspects of Magic",
+    "research.arcana.aspects.desc": "Building Blocks",
+    "research.arcana.aspects.text": "After that strange experience with... whatever that thing was, I've had a lingering feeling that I couldn't shake off. Somehow, the world felt different, yet exactly the same as it always has been. Perhaps it was I who has changed? It's absurd that everything could change so much from a single event! ...That's what I would have said to myself, before I decided to delve into this mystery.\n\nEvery being, block, and item is made up of aspects. They are the building blocks of this world. Something simple, like a block of stone, might only be made up of one aspect, but more complex beings or blocks could be made up of many. Currently, I know of 54 aspects that make up this world, and the others.\n\nAspects come in two varieties: Primal and Compound. Primal aspects are the most basic building blocks from which all else is created. There are only six primal aspects: Air, Water, Fire, Earth, Order, and Chaos. Compound aspects are made up of two other aspects. Simple compound aspects might be made from two primals, while more complex ones can be made from two complex aspects, themselves made of several more.\n\nAspects can come in a number of forms. Normally, they're attached to objects, but can be persuaded to to separate into a liquid-like state known as essentia, or purified into a gas-like substance, called vis. The usage of essentia and vis will come in handy for making magical contraptions. (TODO: show aspect combos.)",
 
     "research.arcana.revealing": "Revealing the Arcane",
     "research.arcana.revealing.desc": "Now you see me, now you don't",
@@ -891,9 +895,9 @@
 
     "research.arcana.crimson_initiation": "initiation",
     "research.arcana.crimson_initiation.desc": "pacing yourself.",
-    "research.arcana.crimson_initiation.all": "some say there is a thin line between insanity and genius. some will proudly exclaim it having seen the eventual fate of their heroes or idols.\\n\\nthese people are nearly correct. but rather: genius and insanity feed into eachother.\\n\\nyou cannot have genius without first understanding insanity, and the knowledge you gain makes many incoherent to those not in the know. we know, though;\\n\\nand, soon, so will you.\\n\\nthese pages contain information that, while now difficult to fully understand, will soon become second nature to you; information that will widen your understanding of everything.\\n\\njust   o p e n   y o u r   e y e s   .",
+    "research.arcana.crimson_initiation.all": "some say there is a thin line between insanity and genius. some will proudly exclaim it having seen the eventual fate of their heroes or idols.\n\nthese people are nearly correct. but rather: genius and insanity feed into eachother.\n\nyou cannot have genius without first understanding insanity, and the knowledge you gain makes many incoherent to those not in the know. we know, though;\n\nand, soon, so will you.\n\nthese pages contain information that, while now difficult to fully understand, will soon become second nature to you; information that will widen your understanding of everything.\n\njust   o p e n   y o u r   e y e s   .",
 
     "research.arcana.tainted": "Tainted Exploration",
     "research.arcana.tainted.desc": "A Second Look at the Common Fiend",
-    "research.arcana.tainted.stage.1": "Taint, in its natural state, is unwieldy and unusable, corrupting all in its path and twisting them into husks of their former selves. Despite my best efforts to contain it, its spread seems inevitable at times, with only diligent cleanup and harsh work keeping it in check. Perhaps there's a better way -- perhaps I can instead tame the beast, and put it to my own uses.\\n\\nTo that end, I have created the §otainted codex§r: a safe store for my research, to contain whatever revelations or ramblings I create.\\n\\nThe first obvious usage of taint is in spellcasting; specifically, using it as part of a wand. I will need to test how a tainted component affects its spellcasting and vis storage capabilities."
+    "research.arcana.tainted.stage.1": "Taint, in its natural state, is unwieldy and unusable, corrupting all in its path and twisting them into husks of their former selves. Despite my best efforts to contain it, its spread seems inevitable at times, with only diligent cleanup and harsh work keeping it in check. Perhaps there's a better way -- perhaps I can instead tame the beast, and put it to my own uses.\n\nTo that end, I have created the §otainted codex§r: a safe store for my research, to contain whatever revelations or ramblings I create.\\n\\nThe first obvious usage of taint is in spellcasting; specifically, using it as part of a wand. I will need to test how a tainted component affects its spellcasting and vis storage capabilities."
 }

@@ -1,18 +1,29 @@
 package net.arcanamod.items;
 
+import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.research.ResearchBooks;
+import net.arcanamod.research.Researcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class ScribbledNotesCompleteItem extends Item {
-    public ScribbledNotesCompleteItem(Properties properties) {
+import javax.annotation.ParametersAreNonnullByDefault;
+
+import static net.arcanamod.Arcana.arcLoc;
+
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class ScribbledNotesCompleteItem extends Item{
+    
+    private static final ResourceLocation ROOT = arcLoc("root");
+    
+    public ScribbledNotesCompleteItem(Properties properties){
         super(properties);
-
-
     }
 
     @Override
@@ -20,18 +31,15 @@ public class ScribbledNotesCompleteItem extends Item {
         return true;
     }
 
-    //gives players the arcanium on right click
+    //gives players the arcanum on right click
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn){
-        if(handIn == Hand.MAIN_HAND){
-            playerIn.setItemStackToSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
-        }
-        else {
-            playerIn.setItemStackToSlot(EquipmentSlotType.OFFHAND, ItemStack.EMPTY);
-        }
-        playerIn.addItemStackToInventory(new ItemStack(ArcanaItems.ARCANUM.get()));
-
-        return super.onItemRightClick(worldIn, playerIn, handIn);
+    public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+        if(hand == Hand.MAIN_HAND)
+            player.setItemStackToSlot(EquipmentSlotType.MAINHAND, ItemStack.EMPTY);
+        else
+            player.setItemStackToSlot(EquipmentSlotType.OFFHAND, ItemStack.EMPTY);
+        player.addItemStackToInventory(new ItemStack(ArcanaItems.ARCANUM.get()));
+        Researcher.getFrom(player).completeEntry(ResearchBooks.getEntry(ROOT));
+        return super.onItemRightClick(world, player, hand);
     }
-
 }
