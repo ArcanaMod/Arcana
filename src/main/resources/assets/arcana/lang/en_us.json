@@ -115,6 +115,22 @@
     "item.arcana.scribing_tools": "Scribing Tools",
     "item.arcana.vis_manipulation_tools": "Vis Manipulation Tools",
 
+    "_comment":"Tainted Items",
+    "item.arcana.cooked_tainted_cod": "Cooked Tainted Cod",
+    "item.arcana.tainted_melon_slice": "Tainted Melon Slice",
+    "item.arcana.tainted_potato": "Tainted Potato",
+    "item.arcana.tainted_carrot": "Tainted Carrot",
+    "item.arcana.cooked_tainted_salmon": "Cooked Tainted Salmon",
+    "item.arcana.raw_tainted_cod": "Raw Tainted Cod",
+    "item.arcana.tainted_tropical_fish": "Tainted Tropical Fish",
+    "item.arcana.tainted_pufferfish": "Tainted Pufferfish",
+    "item.arcana.tainted_berries": "Tainted Berries",
+    "item.arcana.tainted_sugar_cane": "Tainted Sugar Cane",
+    "item.arcana.raw_tainted_salmon": "Raw Tainted Salmon",
+    "item.arcana.baked_tainted_potato": "Baked Tainted Potato",
+    "item.arcana.tainted_beetroot": "Tainted Beetroot",
+
+
     "_comment": "Arcana aspects",
     "aspect.air": "Aer",
     "aspect.air.desc": "Air",

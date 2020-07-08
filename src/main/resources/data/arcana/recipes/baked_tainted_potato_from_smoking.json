@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "arcana:tainted_potato"
+  },
+  "result": "arcana:baked_tainted_potato",
+  "experience": 0.7,
+  "cookingtime": 100
+}

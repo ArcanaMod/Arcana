@@ -86,8 +86,8 @@ public class Arcana{
 
 		ArcanaBlocks.BLOCKS.register(modEventBus);
 		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
-		ArcanaEffects.EFFECTS.register(modEventBus);
 		ArcanaItems.ITEMS.register(modEventBus);
+		ArcanaEffects.EFFECTS.register(modEventBus);
 		ArcanaRecipes.SERIALIZERS.register(modEventBus);
 		ArcanaTiles.TES.register(modEventBus);
 		ArcanaContainers.CON.register(modEventBus);

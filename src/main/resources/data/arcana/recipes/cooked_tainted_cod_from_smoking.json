@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "arcana:raw_tainted_cod"
+  },
+  "result": "arcana:cooked_tainted_cod",
+  "experience": 0.7,
+  "cookingtime": 100
+}
