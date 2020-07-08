@@ -1,20 +1,21 @@
 {
-  "parent": "block/block",
-  "textures": {
-    "all": "arcana:block/essentia_tube_centre"
-  },
-  "elements": [
-    {
-      "from": [ 5, 5, 5 ],
-      "to": [ 11, 11, 11 ],
-      "faces": {
-        "down":  { "uv": [0.3125, 0.3125, 0.6875, 0.6875], "texture": "#all", "cullface": "down" },
-        "up":    { "uv": [0.3125, 0.3125, 0.6875, 0.6875], "texture": "#all", "cullface": "up" },
-        "north": { "uv": [0.3125, 0.3125, 0.6875, 0.6875], "texture": "#all", "cullface": "north" },
-        "south": { "uv": [0.3125, 0.3125, 0.6875, 0.6875], "texture": "#all", "cullface": "south" },
-        "west":  { "uv": [0.3125, 0.3125, 0.6875, 0.6875], "texture": "#all", "cullface": "west" },
-        "east":  { "uv": [0.3125, 0.3125, 0.6875, 0.6875], "texture": "#all", "cullface": "east" }
-      }
-    }
-  ]
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "arcana:block/essentia_pipe",
+		"particle": "arcana:block/essentia_pipe"
+	},
+	"elements": [
+		{
+			"from": [5, 5, 5],
+			"to": [11, 11, 11],
+			"faces": {
+				"north": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#0"},
+				"east": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#0"},
+				"south": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#0"},
+				"west": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#0"},
+				"up": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#0"},
+				"down": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#0"}
+			}
+		}
+	]
 }
