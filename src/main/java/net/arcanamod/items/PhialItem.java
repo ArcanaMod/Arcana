@@ -9,6 +9,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -99,8 +100,7 @@ public class PhialItem extends Item{
     @Override
     public ITextComponent getDisplayName(ItemStack stack) {
         IAspectHandler aspectHandler = IAspectHandler.getFrom(stack);
-        if (aspectHandler!=null && aspectHandler.getHolder(0)!=null)
-        {
+        if (aspectHandler!=null && aspectHandler.getHolder(0)!=null){
             if (aspectHandler.getHolder(0).getContainedAspect()!= Aspects.EMPTY) {
                 String aspectName = AspectUtils.getLocalizedAspectDisplayName(aspectHandler.getHolder(0).getContainedAspect());
                 return new TranslationTextComponent("item.arcana.phial", aspectName).applyTextStyle(Rarity.RARE.color);
@@ -145,7 +145,24 @@ public class PhialItem extends Item{
 
     @Override
     public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+        if(nbt != null){
+            IAspectHandler cap = IAspectHandler.getFrom(stack);
+            cap.insert(0, new AspectStack(Aspects.getAll().get(nbt.getInt("id") - 1), nbt.getInt("amount")), false);
+        }
+    }
+    
+    public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items){
+        if(isInGroup(group)){
+            for(Aspect aspect : Aspects.getAll()){
+                items.add(withAspect(aspect));
+            }
+        }
+    }
+    
+    private ItemStack withAspect(Aspect aspect){
+        ItemStack stack = new ItemStack(this);
         IAspectHandler cap = IAspectHandler.getFrom(stack);
-        cap.insert(0,new AspectStack(Aspects.values()[nbt.getInt("id")-1],nbt.getInt("amount")),false);
+        cap.insert(0, new AspectStack(aspect, 8), false);
+        return stack;
     }
 }

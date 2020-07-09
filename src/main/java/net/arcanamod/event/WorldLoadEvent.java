@@ -61,7 +61,7 @@ public class WorldLoadEvent{
 	@SubscribeEvent
 	public static void serverStarting(FMLServerStartingEvent event){
 		ResearchCommand.register(event.getCommandDispatcher());
-		FillPhialCommand.register(event.getCommandDispatcher());
+		//FillPhialCommand.register(event.getCommandDispatcher());
 		NodeCommand.register(event.getCommandDispatcher());
 		TaintCommand.register(event.getCommandDispatcher());
 	}
