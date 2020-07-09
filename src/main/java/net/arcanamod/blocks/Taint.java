@@ -164,8 +164,8 @@ public class Taint{
 
 	@SuppressWarnings("deprecation")
 	public static EntityType taintedEntityOf(EntityType entity){
-		EntityType tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.CREATURE)
-				.size(0.6f, 0.6f).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		EntityType tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.MONSTER)
+				.size(0.9F, 1.4F).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
 		entityTaintMap.put(entity,tainted);
 		return tainted;
 	}

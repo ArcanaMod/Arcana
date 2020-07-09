@@ -7,6 +7,7 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
+import net.arcanamod.client.render.tainted.TaintedEntityRender;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
@@ -194,6 +195,7 @@ public class Arcana{
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));
 
 		//Entity Render
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_COW.get(), TaintedEntityRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 

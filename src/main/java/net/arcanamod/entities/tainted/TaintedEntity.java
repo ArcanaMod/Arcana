@@ -1,11 +1,10 @@
 package net.arcanamod.entities.tainted;
 
 import net.arcanamod.entities.DairSpiritEntity;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
@@ -17,10 +16,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-public class TaintedEntity extends AnimalEntity {
+public class TaintedEntity extends MonsterEntity implements IMob {
 	public EntityType parentEntity;
 
-	public TaintedEntity(EntityType<? extends AnimalEntity> type, World worldIn, EntityType entity) {
+	public TaintedEntity(EntityType<? extends MonsterEntity> type, World worldIn, EntityType entity) {
 		super(type,worldIn);
 		parentEntity = entity;
 	}
@@ -29,9 +28,25 @@ public class TaintedEntity extends AnimalEntity {
 		return parentEntity;
 	}
 
-	@Nullable
 	@Override
-	public AgeableEntity createChild(AgeableEntity ageable) {
-		return this;
+	protected void registerGoals() {
+		super.registerGoals();
+		this.goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		this.applyEntityAI();
+	}
+
+	protected void applyEntityAI() {
+		this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
+		this.goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1.0D));
+		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+	}
+
+	// TODO: Adjust values for every entity
+	protected void registerAttributes() {
+		super.registerAttributes();
+		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
+		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.25F);
+		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 	}
 }

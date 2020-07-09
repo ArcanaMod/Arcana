@@ -18,6 +18,7 @@ public class TaintedEffect extends Effect {
 
     @Override
     public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
+        // TODO: Check of entity isn't instanceof tainted
         entityLivingBaseIn.attackEntityFrom(DamageSource.MAGIC, 1.0F + amplifier);
         if (entityLivingBaseIn.getHealth() <= (entityLivingBaseIn.getMaxHealth() / 4f)) {
             ChangeEntityToTainted(entityLivingBaseIn);
@@ -26,7 +27,7 @@ public class TaintedEffect extends Effect {
 
     private void ChangeEntityToTainted(LivingEntity entityLiving) {
         if (!(entityLiving instanceof PlayerEntity) && Taint.getTaintedOfEntity(entityLiving.getType())!=null) {
-            LivingEntity l = ArcanaEntities.DAIR_SPIRIT.get().create(entityLiving.world);
+            LivingEntity l = (LivingEntity) Taint.getTaintedOfEntity(entityLiving.getType()).create(entityLiving.world);
             l.setPosition(entityLiving.getPosX(),entityLiving.getPosY(),entityLiving.getPosZ());
             if (!l.getEntityWorld().isRemote)
             ((ServerWorld)l.getEntityWorld()).summonEntity(l);
