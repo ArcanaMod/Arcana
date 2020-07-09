@@ -34,15 +34,17 @@ public class VisManipulatorsItem extends Item{
 		return ActionResultType.SUCCESS;
 	}
 
+	@SuppressWarnings("ConstantConditions")
 	@Override
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 		if (Arcana.debug)
-			if (context.getWorld().getTileEntity(context.getPos())!=null)
-				if (context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null)!=null)
+			if (context.getWorld().getTileEntity(context.getPos())!=null) {
+				if (context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) != null)
 					context.getPlayer().sendMessage(
-							new StringTextComponent(((AspectBattery)context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null)+"REMOTE: "+context.getWorld().isRemote).toString())
+							new StringTextComponent(((AspectBattery) context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) + "REMOTE: " + context.getWorld().isRemote).toString())
 									.applyTextStyle(context.getWorld().isRemote ? TextFormatting.RED : TextFormatting.BLUE)
 					);
+			}
 		return ActionResultType.SUCCESS;
 	}
 }

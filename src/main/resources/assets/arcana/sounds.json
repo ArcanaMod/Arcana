@@ -11,5 +11,42 @@
       "arcana:spell/spell_cast_7",
       "arcana:spell/spell_cast_8"
     ]
+  },
+  "jar_step": {
+    "subtitle": "arcana.sounds.jar_step",
+    "sounds": [
+      "arcana:jar/arcanajarstep1",
+      "arcana:jar/arcanajarstep2",
+      "arcana:jar/arcanajarstep3",
+      "arcana:jar/arcanajarstep4"
+    ]
+  },
+  "jar_break": {
+    "subtitle": "arcana.sounds.jar_break",
+    "sounds": [
+      "arcana:jar/arcanajarbreak1",
+      "arcana:jar/arcanajarbreak2",
+      "arcana:jar/arcanajarbreak3"
+    ]
+  },
+  "jar_place": {
+    "subtitle": "arcana.sounds.jar_place",
+    "sounds": [
+      "arcana:jar/arcanajarplace1",
+      "arcana:jar/arcanajarplace2",
+      "arcana:jar/arcanajarplace3"
+    ]
+  },
+  "phial_corkpop": {
+    "subtitle": "arcana.sounds.phial_corkpop",
+    "sounds": [
+      "arcana:phial_corkpop"
+    ]
+  },
+  "phialshelf_slide": {
+    "subtitle": "arcana.sounds.phialshelf_slide",
+    "sounds": [
+      "arcana:phialshelf_slide"
+    ]
   }
 }

@@ -6,6 +6,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
+import net.arcanamod.entities.tainted.TaintedBatEntity;
 import net.arcanamod.entities.tainted.TaintedEntity;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
@@ -165,8 +166,13 @@ public class Taint{
 
 	@SuppressWarnings({"rawtypes"})
 	public static EntityType taintedEntityOf(EntityType entity){
-		EntityType tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.MONSTER)
-				.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		EntityType tainted;
+		if (entity == EntityType.BAT)
+			tainted = EntityType.Builder.<TaintedBatEntity>create((p_create_1_, p_create_2_) -> new TaintedBatEntity(p_create_1_,p_create_2_), EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		else
+			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
 		entityTaintMap.put(entity,tainted);
 		return tainted;
 	}
