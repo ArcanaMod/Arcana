@@ -1,6 +1,7 @@
 package net.arcanamod.blocks;
 
 import com.google.common.collect.Lists;
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
@@ -159,17 +160,17 @@ public class Taint{
 				auraView.addTaintAt(jar.getPos(),1);
 		}
 	}
-
+	@SuppressWarnings({"rawtypes"})
 	private static final Map<EntityType, EntityType> entityTaintMap = new HashMap<>();
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({"rawtypes"})
 	public static EntityType taintedEntityOf(EntityType entity){
 		EntityType tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.MONSTER)
-				.size(0.9F, 1.4F).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+				.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
 		entityTaintMap.put(entity,tainted);
 		return tainted;
 	}
-
+	@SuppressWarnings({"rawtypes"})
 	public static EntityType getTaintedOfEntity(EntityType entity) {
 		return entityTaintMap.get(entity);
 	}
