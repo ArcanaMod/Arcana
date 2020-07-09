@@ -1,6 +1,9 @@
 package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.blocks.Taint;
+import net.arcanamod.entities.tainted.TaintedEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -24,4 +27,9 @@ public class ArcanaEntities{
 	public static final RegistryObject<EntityType<DairSpiritEntity>> DAIR_SPIRIT = ENTITY_TYPES
 			.register("dair_spirit_entity", () -> EntityType.Builder.<DairSpiritEntity>create(DairSpiritEntity::new, EntityClassification.CREATURE)
 					.size(0.6f, 0.6f).build(new ResourceLocation(Arcana.MODID, "dair_spirit_entity").toString()));
+
+	// Tainted
+
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_COW = ENTITY_TYPES
+			.register("tainted_cow", () -> Taint.taintedEntityOf(EntityType.COW));
 }

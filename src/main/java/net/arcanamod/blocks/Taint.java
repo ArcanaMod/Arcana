@@ -1,19 +1,24 @@
 package net.arcanamod.blocks;
 
 import com.google.common.collect.Lists;
+import net.arcanamod.Arcana;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
+import net.arcanamod.entities.tainted.TaintedEntity;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.state.BooleanProperty;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
-import org.apache.commons.lang3.ArrayUtils;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -153,5 +158,19 @@ public class Taint{
 			if (jar.getWorld().rand.nextInt(20)==2)
 				auraView.addTaintAt(jar.getPos(),1);
 		}
+	}
+
+	private static final Map<EntityType, EntityType> entityTaintMap = new HashMap<>();
+
+	@SuppressWarnings("deprecation")
+	public static EntityType taintedEntityOf(EntityType entity){
+		EntityType tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.CREATURE)
+				.size(0.6f, 0.6f).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		entityTaintMap.put(entity,tainted);
+		return tainted;
+	}
+
+	public static EntityType getTaintedOfEntity(EntityType entity) {
+		return entityTaintMap.get(entity);
 	}
 }
