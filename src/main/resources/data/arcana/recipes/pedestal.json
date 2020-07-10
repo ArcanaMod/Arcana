@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SAS",
+    " A ",
+    "SAS"
+  ],
+  "key": {
+    "A": {
+      "item": "arcana:arcane_stone"
+    },
+    "S": {
+      "item": "arcana:arcane_stone_slab"
+    }
+  },
+  "result": {
+    "item": "arcana:infusion_pedestal",
+    "count": 4
+  }
+}

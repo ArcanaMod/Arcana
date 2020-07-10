@@ -5,6 +5,7 @@ import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.PedestalTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.tileentity.TileEntity;
@@ -48,26 +49,33 @@ public class PedestalBlock extends WaterloggableBlock{
 	}
 	
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace){
-		//if(!world.isRemote()){
-			ItemStack itemstack = player.getHeldItem(hand);
-			PedestalTileEntity te = (PedestalTileEntity)world.getTileEntity(pos);
-			boolean playerEmpty = itemstack.isEmpty() || ItemStack.areItemStackTagsEqual(itemstack, te.getItem());
-			boolean blockEmpty = te.getItem().isEmpty();
-			if(playerEmpty != blockEmpty){
-				if(blockEmpty)
-					te.setItem(itemstack.split(1));
-				else{
-					ItemStack pedestalItem = te.getItem();
-					if(itemstack.isEmpty())
-						player.setHeldItem(hand, pedestalItem);
-					else if(!player.addItemStackToInventory(pedestalItem))
-						player.dropItem(pedestalItem, false);
-					te.setItem(ItemStack.EMPTY);
-				}
-				te.markDirty();
-				return ActionResultType.SUCCESS;
+		ItemStack itemstack = player.getHeldItem(hand);
+		PedestalTileEntity te = (PedestalTileEntity)world.getTileEntity(pos);
+		boolean playerEmpty = itemstack.isEmpty() || ItemStack.areItemStackTagsEqual(itemstack, te.getItem());
+		boolean blockEmpty = te.getItem().isEmpty();
+		if(playerEmpty != blockEmpty){
+			if(blockEmpty)
+				te.setItem(itemstack.split(1));
+			else{
+				ItemStack pedestalItem = te.getItem();
+				if(itemstack.isEmpty())
+					player.setHeldItem(hand, pedestalItem);
+				else if(!player.addItemStackToInventory(pedestalItem))
+					player.dropItem(pedestalItem, false);
+				te.setItem(ItemStack.EMPTY);
 			}
-		//}
+			te.markDirty();
+			return ActionResultType.SUCCESS;
+		}
 		return ActionResultType.CONSUME;
+	}
+	
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving){
+		if(state.getBlock() != newState.getBlock()){
+			TileEntity te = world.getTileEntity(pos);
+			if(te instanceof PedestalTileEntity)
+				InventoryHelper.spawnItemStack(world, te.getPos().getX(), te.getPos().getY(), te.getPos().getZ(), ((PedestalTileEntity)te).getItem());
+			super.onReplaced(state, world, pos, newState, isMoving);
+		}
 	}
 }
