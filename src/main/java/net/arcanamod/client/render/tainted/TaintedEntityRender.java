@@ -19,21 +19,21 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class TaintedEntityRender<T extends MobEntity, M extends EntityModel<T>> extends MobRenderer<TaintedEntity, EntityModel<TaintedEntity>> {
+public class TaintedEntityRender<T extends MobEntity, M extends EntityModel<T>> extends MobRenderer<T, EntityModel<T>> {
 
 	private float size;
 
 	public TaintedEntityRender(EntityRendererManager renderManagerIn, M model, float size) {
-		super(renderManagerIn, (EntityModel<TaintedEntity>) model, 0.5f);
+		super(renderManagerIn, (EntityModel<T>) model, 0.5f);
 		this.size = size;
 	}
 
 	public TaintedEntityRender(EntityRendererManager renderManagerIn, M model) {
-		super(renderManagerIn, (EntityModel<TaintedEntity>) model, 0.5f);
+		super(renderManagerIn, (EntityModel<T>) model, 0.5f);
 	}
 
 	@Override
-	public ResourceLocation getEntityTexture(TaintedEntity entity) {
+	public ResourceLocation getEntityTexture(T entity) {
 		return new ResourceLocation(Arcana.MODID,
 				"textures/entity/"+entity.getType().getRegistryName().getPath()+".png");
 	}
