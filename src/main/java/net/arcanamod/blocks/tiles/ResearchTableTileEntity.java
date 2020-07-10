@@ -55,7 +55,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 		return getVisShareablesAsBattery();
 	}
 
-	//TODO: FIX PERFORMANCE (-20 FPS) Caching or something.
+	//FIXME: PERFORMANCE (-20 FPS) by caching... or something.
 	private AspectBattery getVisShareablesAsBattery() {
 		battery.clear();
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {

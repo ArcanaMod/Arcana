@@ -1,7 +1,6 @@
 package net.arcanamod.blocks.tiles;
 
 import com.google.common.collect.Sets;
-import com.mojang.datafixers.types.Type;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.tileentity.TileEntityType;
@@ -26,4 +25,6 @@ public class ArcanaTiles{
 			TES.register("taint_scrubber", () -> new TileEntityType<>(TaintScrubberTileEntity::new, Sets.newHashSet(ArcanaBlocks.TAINT_SCRUBBER_MK1.get()), null));
 	public static final RegistryObject<TileEntityType<EssentiaTubeTileEntity>> ESSENTIA_TUBE_TE =
 			TES.register("essentia_tube", () -> new TileEntityType<>(EssentiaTubeTileEntity::new, Sets.newHashSet(ArcanaBlocks.ESSENTIA_TUBE.get()), null));
+	public static final RegistryObject<TileEntityType<PedestalTileEntity>> PEDESTAL_TE =
+			TES.register("pedestal", () -> new TileEntityType<>(PedestalTileEntity::new, Sets.newHashSet(ArcanaBlocks.PEDESTAL.get()), null));
 }

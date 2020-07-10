@@ -2,13 +2,21 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
+import net.arcanamod.blocks.tiles.PedestalTileEntity;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -23,11 +31,43 @@ public class PedestalBlock extends WaterloggableBlock{
 		super(properties);
 	}
 	
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
 		return SHAPE;
 	}
 	
 	public boolean allowsMovement(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type){
 		return false;
+	}
+	
+	public boolean hasTileEntity(BlockState state){
+		return true;
+	}
+	
+	public TileEntity createTileEntity(BlockState state, IBlockReader world){
+		return new PedestalTileEntity();
+	}
+	
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTrace){
+		//if(!world.isRemote()){
+			ItemStack itemstack = player.getHeldItem(hand);
+			PedestalTileEntity te = (PedestalTileEntity)world.getTileEntity(pos);
+			boolean playerEmpty = itemstack.isEmpty() || ItemStack.areItemStackTagsEqual(itemstack, te.getItem());
+			boolean blockEmpty = te.getItem().isEmpty();
+			if(playerEmpty != blockEmpty){
+				if(blockEmpty)
+					te.setItem(itemstack.split(1));
+				else{
+					ItemStack pedestalItem = te.getItem();
+					if(itemstack.isEmpty())
+						player.setHeldItem(hand, pedestalItem);
+					else if(!player.addItemStackToInventory(pedestalItem))
+						player.dropItem(pedestalItem, false);
+					te.setItem(ItemStack.EMPTY);
+				}
+				te.markDirty();
+				return ActionResultType.SUCCESS;
+			}
+		//}
+		return ActionResultType.CONSUME;
 	}
 }

@@ -83,7 +83,7 @@ public class LootTables extends LootTableProvider{
 		addStandardTable(CARVED_PRIDEFUL_GOLD_BLOCK);
 		addStandardTable(CHISELED_PRIDEFUL_GOLD_BLOCK);
 		
-		addStandardTable(INFUSION_PEDESTAL);
+		addStandardTable(PEDESTAL);
 		addStandardTable(ARCANE_CRAFTING_TABLE);
 		addStandardTable(SEE_NO_EVIL_STATUE);
 		addStandardTable(HEAR_NO_EVIL_STATUE);
