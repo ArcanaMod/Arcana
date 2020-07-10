@@ -58,8 +58,8 @@ public class AspectValveBlock extends AspectTubeBlock{
 	
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World world, BlockPos pos, Random rand){
-		/*TileEntity te = world.getTileEntity(pos);
-		if(te instanceof AspectValveTileEntity && ((AspectValveTileEntity)te).isSuppressedByRedstone() && rand.nextFloat() < 0.25F)*/
+		TileEntity te = world.getTileEntity(pos);
+		if(te instanceof AspectValveTileEntity && ((AspectValveTileEntity)te).isSuppressedByRedstone() && rand.nextFloat() < 0.25F)
 			addParticles(world, pos);
 	}
 	

@@ -44,21 +44,22 @@ public class AspectValveTileEntityRenderer extends TileEntityRenderer<AspectValv
 			gearModel = ItemLayerModel.getQuadsForSprite(0, gearSprite, TransformationMatrix.identity());
 		}
 		matrixStack.push();
-		// set base gear height, rotation, scale
-		matrixStack.translate(.5, 1.25, .5);
+		matrixStack.translate(.5, .5, .5);
 		// rotate to pick an empty side
 		BlockState state = te.getWorld().getBlockState(te.getPos());
 		if(state.get(UP))
 			if(!state.get(NORTH))
-				matrixStack.rotate(Vector3f.XP.rotationDegrees(90));
-			else if(!state.get(EAST))
-				matrixStack.rotate(Vector3f.ZP.rotationDegrees(90));
-			else if(!state.get(SOUTH))
 				matrixStack.rotate(Vector3f.XN.rotationDegrees(90));
-			else if(!state.get(WEST))
+			else if(!state.get(EAST))
 				matrixStack.rotate(Vector3f.ZN.rotationDegrees(90));
+			else if(!state.get(SOUTH))
+				matrixStack.rotate(Vector3f.XP.rotationDegrees(90));
+			else if(!state.get(WEST))
+				matrixStack.rotate(Vector3f.ZP.rotationDegrees(90));
 			else if(!state.get(DOWN))
 				matrixStack.rotate(Vector3f.XN.rotationDegrees(180));
+		// set base gear height
+		matrixStack.translate(0, .75, 0);
 		// modify height and rotation based on state
 		if(te.enabled()){
 			// display higher up
