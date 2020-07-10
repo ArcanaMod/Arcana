@@ -31,13 +31,10 @@ public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTileE
 		// translation above the pedestal + bobbing
 		float bob = MathHelper.sin(((float)tileEntity.getWorld().getGameTime() + partialTicks) / 10.0F) * 0.1F + 0.1F;
 		matrixStack.translate(.5f, 1.4f + bob / 2, .5f);
-		// make items a reasonable size
-		if(!(item.getItem() instanceof BlockItem))
-			matrixStack.scale(.5f, .5f, .5f);
 		// spin
 		float spin = (((float)tileEntity.getWorld().getGameTime() + partialTicks) / 20.0F);
 		matrixStack.rotate(Vector3f.YP.rotation(spin));
-		Minecraft.getInstance().getItemRenderer().renderItem(item, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrixStack, buffer);
+		Minecraft.getInstance().getItemRenderer().renderItem(item, ItemCameraTransforms.TransformType.GROUND, combinedLight, combinedOverlay, matrixStack, buffer);
 		
 		matrixStack.pop();
 	}

@@ -1,5 +1,6 @@
 package net.arcanamod.client.event;
 
+import net.arcanamod.client.render.AspectValveTileEntityRenderer;
 import net.arcanamod.client.render.JarTileEntityRender;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
@@ -17,6 +18,7 @@ public class TextureStitch{
 		if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)){
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);
+			event.addSprite(AspectValveTileEntityRenderer.GEAR_TEX);
 			
 			// add all of the wand related textures
 			for(Cap cap : Cap.CAPS.values())

@@ -3,7 +3,7 @@ package net.arcanamod.blocks;
 import com.google.common.collect.Sets;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.AspectHandlerCapability;
-import net.arcanamod.blocks.tiles.EssentiaTubeTileEntity;
+import net.arcanamod.blocks.tiles.AspectTubeTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
@@ -26,9 +26,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @SuppressWarnings("deprecation")
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class EssentiaTubeBlock extends SixWayBlock{
+public class AspectTubeBlock extends SixWayBlock{
 	
-	protected EssentiaTubeBlock(Properties properties){
+	protected AspectTubeBlock(Properties properties){
 		super(.2f, properties);
 		setDefaultState(this.stateContainer.getBaseState()
 				.with(NORTH, Boolean.FALSE)
@@ -42,7 +42,7 @@ public class EssentiaTubeBlock extends SixWayBlock{
 	private boolean isVisHolder(IBlockReader world, BlockPos pos){
 		Block block = world.getBlockState(pos).getBlock();
 		TileEntity tile = world.getTileEntity(pos);
-		return (tile != null && tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()) || block instanceof EssentiaTubeBlock;
+		return (tile != null && tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()) || block instanceof AspectTubeBlock;
 	}
 	
 	// Blockstate stuff
@@ -88,15 +88,15 @@ public class EssentiaTubeBlock extends SixWayBlock{
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
-		return new EssentiaTubeTileEntity();
+		return new AspectTubeTileEntity();
 	}
 	
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack){
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
-		((EssentiaTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
+		((AspectTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
 	}
 	
 	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor){
-		((EssentiaTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
+		((AspectTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
 	}
 }

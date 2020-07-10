@@ -5,6 +5,7 @@ import com.google.common.collect.Sets;
 import net.arcanamod.aspects.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
@@ -15,13 +16,17 @@ import org.apache.commons.lang3.ArrayUtils;
 import javax.annotation.Nonnull;
 import java.util.*;
 
-public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityProvider, IAspectHandler{
+public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvider, IAspectHandler{
 	
 	List<IAspectHolder> cells = new ArrayList<>();
+	boolean initScanned = false;
 	
-	public EssentiaTubeTileEntity(){
-		super(ArcanaTiles.ESSENTIA_TUBE_TE.get());
-		//scan(Sets.newHashSet(getPos()));
+	public AspectTubeTileEntity(){
+		this(ArcanaTiles.ASPECT_TUBE_TE.get());
+	}
+	
+	public AspectTubeTileEntity(TileEntityType<?> type){
+		super(type);
 	}
 	
 	@Nonnull
@@ -41,6 +46,7 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 	
 	@SuppressWarnings("ConstantConditions")
 	public void scan(Set<BlockPos> notified){
+		initScanned = true;
 		// don't notify things `notified`
 		notified.add(getPos());
 		// but scan everything yourself
@@ -61,13 +67,14 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 					scanned.add(blockPos);
 					TileEntity tile = getWorld().getTileEntity(blockPos);
 					if(tile != null){
-						if(tile instanceof EssentiaTubeTileEntity){
-							EssentiaTubeTileEntity entity = (EssentiaTubeTileEntity)tile;
+						if(tile instanceof AspectTubeTileEntity){
+							AspectTubeTileEntity entity = (AspectTubeTileEntity)tile;
 							if(!notified.contains(blockPos)){
 								entity.scan(notified);
 								notified.add(blockPos);
 							}
-							addNeighborsToSetExcluding(blockPos, toScan, scanned);
+							if(entity.enabled())
+								addNeighborsToSetExcluding(blockPos, toScan, scanned);
 						}else if(tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent())
 							endAspectHandlers.add(blockPos);
 					}
@@ -77,7 +84,7 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 		}
 		// then we just expose all of the endAspectHandler's cells
 		// TODO: wrap them with info on the route taken - to make windows work
-		// iterate through... Pair<BlockPos, BlockPos> (connected pipe, block)s? and have a stack for all the pipes to that location?
+		// iterate through... Pair<BlockPos, BlockPos> (connected pipe:block)s? and have a stack for all the pipes to that location?
 		cells.clear();
 		for(BlockPos handler : endAspectHandlers){
 			IAspectHandler handle = IAspectHandler.getFrom(getWorld().getTileEntity(handler));
@@ -98,21 +105,34 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 		total.addAll(c);
 	}
 	
+	boolean enabled(){
+		return true;
+	}
+	
 	// Aspect Handler
 	
+	private void checkScan(){
+		if(!initScanned)
+			scan(Sets.newHashSet(getPos()));
+	}
+	
 	public int getHoldersAmount(){
+		checkScan();
 		return cells.size();
 	}
 	
 	public List<IAspectHolder> getHolders(){
+		checkScan();
 		return new ArrayList<>(cells);
 	}
 	
 	public IAspectHolder getHolder(int index){
+		checkScan();
 		return cells.get(index);
 	}
 	
 	public boolean exist(int index){
+		checkScan();
 		return cells.size() > index;
 	}
 	
@@ -134,21 +154,25 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 	
 	public int insert(int holder, AspectStack resource, boolean simulate){
 		// if an exception occurs, it's your fault
+		checkScan();
 		return cells.get(holder).insert(resource, simulate);
 	}
 	
 	public int insert(int holder, int maxInsert, boolean simulate){
 		// if an exception occurs, it's your fault
+		checkScan();
 		return cells.get(holder).insert(new AspectStack(cells.get(holder).getContainedAspect(), maxInsert), simulate);
 	}
 	
 	public int drain(int holder, AspectStack resource, boolean simulate){
+		checkScan();
 		if(holder >= cells.size())
 			return 0;
 		return cells.get(holder).drain(resource, simulate);
 	}
 	
 	public int drain(int holder, int maxDrain, boolean simulate){
+		checkScan();
 		if(holder >= cells.size())
 			return 0;
 		return cells.get(holder).drain(new AspectStack(cells.get(holder).getContainedAspect(), maxDrain), simulate);
@@ -159,19 +183,19 @@ public class EssentiaTubeTileEntity extends TileEntity implements ICapabilityPro
 	}
 	
 	public IAspectHolder findAspectInHolders(Aspect aspect){
-		for(IAspectHolder cell : cells){
+		checkScan();
+		for(IAspectHolder cell : cells)
 			if(cell.getContainedAspect() == aspect)
 				return cell;
-		}
 		return null;
 	}
 	
 	public int[] findIndexesFromAspectInHolders(Aspect aspect){
+		checkScan();
 		List<Integer> indexes = new ArrayList<>();
-		for(IAspectHolder cell : cells){
+		for(IAspectHolder cell : cells)
 			if(cell.getContainedAspect() == aspect)
 				indexes.add(cells.indexOf(cell));
-		}
 		return ArrayUtils.toPrimitive(indexes.toArray(new Integer[0]));
 	}
 	
