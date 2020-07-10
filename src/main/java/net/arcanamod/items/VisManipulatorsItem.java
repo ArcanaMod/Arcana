@@ -4,21 +4,18 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.aspects.AspectHandlerCapability;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
+import net.arcanamod.blocks.Taint;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Collections;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -45,6 +42,18 @@ public class VisManipulatorsItem extends Item{
 									.applyTextStyle(context.getWorld().isRemote ? TextFormatting.RED : TextFormatting.BLUE)
 					);
 			}
+		if (context.getWorld().getBlockState(context.getPos()).getBlock() == Blocks.SPAWNER) {
+			AtomicInteger i = new AtomicInteger();
+			Taint.getTaintedEntities().forEach(entityType -> {
+				Entity e = entityType.create(context.getWorld());
+				e.setPosition(context.getPos().getX(),context.getPos().getY()+2,context.getPos().getZ()+ i.get());
+				//e.setNoGravity(true);
+				e.addTag("NoAI");
+				e.setMotion(0,0,0);
+				context.getWorld().addEntity(e);
+				i.addAndGet(4);
+			});
+		}
 		return ActionResultType.SUCCESS;
 	}
 }

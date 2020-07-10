@@ -7,6 +7,7 @@ import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.entities.tainted.TaintedBatEntity;
+import net.arcanamod.entities.tainted.TaintedCreeperEntity;
 import net.arcanamod.entities.tainted.TaintedEntity;
 import net.arcanamod.entities.tainted.TaintedIllagerEntity;
 import net.arcanamod.world.ServerAuraView;
@@ -25,9 +26,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static net.arcanamod.blocks.DelegatingBlock.switchBlock;
@@ -177,6 +176,9 @@ public class Taint{
 		else if (entity == EntityType.EVOKER || entity == EntityType.ILLUSIONER || entity == EntityType.VINDICATOR || entity == EntityType.PILLAGER)
 			tainted = EntityType.Builder.<TaintedIllagerEntity>create(TaintedIllagerEntity::new, EntityClassification.MONSTER)
 				.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.CREEPER)
+			tainted = EntityType.Builder.<TaintedCreeperEntity>create(TaintedCreeperEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
 		else
 			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
@@ -186,5 +188,9 @@ public class Taint{
 	@SuppressWarnings({"rawtypes"})
 	public static EntityType getTaintedOfEntity(EntityType entity) {
 		return entityTaintMap.get(entity);
+	}
+
+	public static Collection<EntityType> getTaintedEntities(){
+		return entityTaintMap.values();
 	}
 }

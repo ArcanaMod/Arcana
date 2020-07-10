@@ -32,7 +32,6 @@ public class TaintedEffect extends Effect {
             if (!l.getEntityWorld().isRemote)
             ((ServerWorld)l.getEntityWorld()).summonEntity(l);
             entityLiving.remove();
-            //Taint.getTaintedOfEntity(entityLiving).cre;
         }
     }
 
