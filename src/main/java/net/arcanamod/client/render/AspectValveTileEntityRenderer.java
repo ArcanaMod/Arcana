@@ -64,15 +64,15 @@ public class AspectValveTileEntityRenderer extends TileEntityRenderer<AspectValv
 		if(te.enabled()){
 			// display higher up
 			// if lastChangedTick is less than 20 different from the current tick, transition
-			float tickDiff = Math.min(15, (te.getWorld().getGameTime() + partialTicks) - te.getLastChangedTick());
-			float heightDiff = (tickDiff / 15) * .1f;
-			float rotationDiff = (tickDiff / 15) * 135;
+			float tickDiff = Math.min(10, (te.getWorld().getGameTime() + partialTicks) - te.getLastChangedTick());
+			float heightDiff = (tickDiff / 10) * .07f;
+			float rotationDiff = (tickDiff / 10) * 135;
 			matrixStack.translate(0, heightDiff, 0);
 			matrixStack.rotate(Vector3f.YN.rotationDegrees(rotationDiff + 45));
 		}else{
-			float tickDiff = Math.min(15, (te.getWorld().getGameTime() + partialTicks) - te.getLastChangedTick());
-			float heightDiff = (1 - (tickDiff / 15)) * .1f;
-			float rotationDiff = (1 - (tickDiff / 15)) * 135;
+			float tickDiff = Math.min(10, (te.getWorld().getGameTime() + partialTicks) - te.getLastChangedTick());
+			float heightDiff = (1 - (tickDiff / 10)) * .07f;
+			float rotationDiff = (1 - (tickDiff / 10)) * 135;
 			matrixStack.translate(0, heightDiff, 0);
 			matrixStack.rotate(Vector3f.YN.rotationDegrees(rotationDiff + 45));
 		}

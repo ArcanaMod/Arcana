@@ -17,6 +17,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -49,10 +50,14 @@ public class AspectValveBlock extends AspectTubeBlock{
 	
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving){
 		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
-		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof AspectValveTileEntity){
-			AspectValveTileEntity valve = (AspectValveTileEntity)te;
-			valve.setSuppressedByRedstone(world.isBlockPowered(pos));
+		if(!world.isRemote()){
+			TileEntity te = world.getTileEntity(pos);
+			if(te instanceof AspectValveTileEntity){
+				AspectValveTileEntity valve = (AspectValveTileEntity)te;
+				valve.setSuppressedByRedstone(world.isBlockPowered(pos));
+				valve.markDirty();
+				world.notifyBlockUpdate(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
+			}
 		}
 	}
 	

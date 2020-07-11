@@ -2,6 +2,11 @@ package net.arcanamod.blocks.tiles;
 
 import com.google.common.collect.Sets;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class AspectValveTileEntity extends AspectTubeTileEntity{
 	
@@ -30,9 +35,11 @@ public class AspectValveTileEntity extends AspectTubeTileEntity{
 		return suppressedByRedstone;
 	}
 	
-	public void setSuppressedByRedstone(boolean suppressedByRedstone){
-		this.suppressedByRedstone = suppressedByRedstone;
-		notifyChange();
+	public void setSuppressedByRedstone(boolean suppress){
+		if(suppressedByRedstone != suppress){
+			suppressedByRedstone = suppress;
+			notifyChange();
+		}
 	}
 	
 	@SuppressWarnings("ConstantConditions")
@@ -47,12 +54,35 @@ public class AspectValveTileEntity extends AspectTubeTileEntity{
 	
 	public void deserializeNBT(CompoundNBT nbt){
 		enabled = nbt.getBoolean("enabled");
+		suppressedByRedstone = nbt.getBoolean("suppressed");
 	}
 	
 	public CompoundNBT serializeNBT(){
 		// save if enabled
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putBoolean("enabled", enabled);
+		nbt.putBoolean("suppressed", isSuppressedByRedstone());
 		return nbt;
+	}
+	
+	@Nonnull
+	public CompoundNBT getUpdateTag(){
+		CompoundNBT nbt = super.getUpdateTag();
+		nbt.putBoolean("suppressed", isSuppressedByRedstone());
+		return nbt;
+	}
+	
+	public void handleUpdateTag(CompoundNBT tag){
+		super.handleUpdateTag(tag);
+		setSuppressedByRedstone(tag.getBoolean("suppressed"));
+	}
+	
+	@Nullable
+	public SUpdateTileEntityPacket getUpdatePacket(){
+		return new SUpdateTileEntityPacket(pos, -1, getUpdateTag());
+	}
+	
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+		handleUpdateTag(pkt.getNbtCompound());
 	}
 }
