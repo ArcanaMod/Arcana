@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "up=false": {
       "model": "arcana:block/jar"
+    },
+    "up=true": {
+      "model": "arcana:block/jar_connected"
     }
   }
 }

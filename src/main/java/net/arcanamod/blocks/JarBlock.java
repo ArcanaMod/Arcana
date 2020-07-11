@@ -4,11 +4,15 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -17,9 +21,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class JarBlock extends Block{
+	public static final BooleanProperty UP = BooleanProperty.create("up");
 	
 	public JarBlock(Properties properties){
 		super(properties);
+		setDefaultState(stateContainer.getBaseState().with(UP, Boolean.FALSE));
 	}
 	
 	public VoxelShape SHAPE = Block.makeCuboidShape(3, 0, 3, 13, 14, 13);
@@ -44,44 +50,30 @@ public class JarBlock extends Block{
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
 		return new JarTileEntity();
 	}
-	
-	/*@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_){
-		*//*ItemStack heldItem = player.getHeldItem(handIn);
-		if(heldItem.getItem() instanceof PhialItem){
-			if(worldIn.getTileEntity(pos) instanceof JarTileEntity){
-				JarTileEntity jarTileEntity = ((JarTileEntity)worldIn.getTileEntity(pos));
-				
-				IAspectHandler vis = IAspectHandler.getFrom(heldItem);
-				if(vis != null){
-					if(vis.getHolder(0).getCurrentVis() <= 0){
-						// drain
-						int amount = jarTileEntity.vis.getHolder(0).getCurrentVis();
-						Aspect jarAspect = jarTileEntity.vis.getHolder(0).getContainedAspect();
-						heldItem.shrink(1);
-						ItemStack capedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
-						IAspectHandler.getFrom(capedItemStack)
-								.insert(0, new AspectStack(jarAspect, Math.min(amount, 8)), false);
-						if(capedItemStack.getTag() == null)
-							capedItemStack.setTag(capedItemStack.getShareTag());
-						player.addItemStackToInventory(capedItemStack);
-						jarTileEntity.vis.drain(0, Math.min(amount, 8), false);
-					}else{
-						// fill
-						if(jarTileEntity.vis.getHolder(0).getCurrentVis() < 100){
-							Aspect target = vis.getHolder(0).getContainedAspect();
-							Aspect jarAspect = jarTileEntity.vis.getHolder(0).getContainedAspect();
-							if(target == jarAspect || jarAspect == Aspect.EMPTY){
-								heldItem.shrink(1);
-								player.addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
-								jarTileEntity.vis.insert(0, new AspectStack(target, vis.getHolder(0).getCurrentVis()), false);
-							}
-						}
-					}
-					return ActionResultType.SUCCESS;
-				}
-			}
-		}*//*
-		return super.onBlockActivated(state, worldIn, pos, player, handIn, p_225533_6_);
-	}*/
+
+	@Override
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+		super.fillStateContainer(builder);
+		builder.add(UP);
+	}
+
+	public BlockState getStateForPlacement(BlockItemUseContext context){
+		return super.getStateForPlacement(context).with(UP, false);
+	}
+
+	@Override
+	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+		if (worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
+			worldIn.setBlockState(pos,state.with(UP, true));
+		else
+			worldIn.setBlockState(pos,state.with(UP, false));
+	}
+
+	@Override
+	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
+		if (worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
+			worldIn.setBlockState(pos,state.with(UP, true));
+		else
+			worldIn.setBlockState(pos,state.with(UP, false));
+	}
 }
