@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " WA",
+    "G G",
+    " G "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    },
+    "A": {
+      "item": "arcana:amber"
+    }
+  },
+  "result": {
+    "item": "arcana:phial",
+    "count": 3
+  }
+}

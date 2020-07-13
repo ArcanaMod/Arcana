@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:ingots/gold"
+    },
+    {
+      "item": "arcana:essentia_tube"
+    }
+  ],
+  "result": {
+    "item": "arcana:essentia_valve"
+  }
+}

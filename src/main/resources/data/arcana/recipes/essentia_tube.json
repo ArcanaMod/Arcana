@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ISI",
+    "   ",
+    "IAI"
+  ],
+  "key": {
+    "I": {
+      "tag": "forge:ingots/iron"
+    },
+    "S": {
+      "tag": "forge:ingots/silver"
+    },
+    "A": {
+      "item": "arcana:amber"
+    }
+  },
+  "result": {
+    "item": "arcana:essentia_tube",
+    "count": 6
+  }
+}
