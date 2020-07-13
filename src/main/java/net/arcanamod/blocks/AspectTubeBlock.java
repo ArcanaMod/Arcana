@@ -29,7 +29,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class AspectTubeBlock extends SixWayBlock{
 	
 	protected AspectTubeBlock(Properties properties){
-		super(.2f, properties);
+		super(.1875f, properties);
 		setDefaultState(this.stateContainer.getBaseState()
 				.with(NORTH, Boolean.FALSE)
 				.with(EAST, Boolean.FALSE)
