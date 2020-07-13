@@ -27,6 +27,8 @@ public class ArcanaTiles{
 			TES.register("essentia_tube", () -> new TileEntityType<>(AspectTubeTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_TUBE.get()), null));
 	public static final RegistryObject<TileEntityType<AspectValveTileEntity>> ASPECT_VALVE_TE =
 			TES.register("essentia_valve", () -> new TileEntityType<>(AspectValveTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_VALVE.get()), null));
+	public static final RegistryObject<TileEntityType<AspectWindowTileEntity>> ASPECT_WINDOW_TE =
+			TES.register("essentia_window", () -> new TileEntityType<>(AspectWindowTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_WINDOW.get()), null));
 	public static final RegistryObject<TileEntityType<PedestalTileEntity>> PEDESTAL_TE =
 			TES.register("pedestal", () -> new TileEntityType<>(PedestalTileEntity::new, Sets.newHashSet(ArcanaBlocks.PEDESTAL.get()), null));
 }

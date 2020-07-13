@@ -50,28 +50,28 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		// don't notify things `notified`
 		notified.add(getPos());
 		// but scan everything yourself
-		Collection<BlockPos> scanned = Sets.newConcurrentHashSet();
-		Collection<BlockPos> endAspectHandlers = Sets.newConcurrentHashSet();
-		List<BlockPos> scanning = Lists.newArrayList();
-		Collection<BlockPos> toScan = Sets.newHashSet();
+		Collection<ScanStack> scanned = Sets.newConcurrentHashSet();
+		Collection<ScanStack> endAspectHandlers = Sets.newConcurrentHashSet();
+		List<ScanStack> scanning = Lists.newArrayList();
+		Collection<ScanStack> toScan = Sets.newHashSet();
 		// add my immediate neighbors to `scanning`
 		// then iterate through it (excluding members of scanned); add each block to `scanned` so we don't repeat
 		// if its a pipe, tell it to scan and add its neighbors to `scanning`
 		// if its a non-pipe aspect handler, add to `endAspectHandlers`
-		addNeighborsToSet(getPos(), toScan);
+		addNeighborsToSet(new ScanStack(getPos()), toScan);
 		while(!toScan.isEmpty()){
 			scanning.addAll(toScan);
 			toScan.clear();
-			for(BlockPos blockPos : scanning){
+			for(ScanStack blockPos : scanning){
 				if(!scanned.contains(blockPos)){
 					scanned.add(blockPos);
-					TileEntity tile = getWorld().getTileEntity(blockPos);
+					TileEntity tile = getWorld().getTileEntity(blockPos.pos);
 					if(tile != null){
 						if(tile instanceof AspectTubeTileEntity){
 							AspectTubeTileEntity entity = (AspectTubeTileEntity)tile;
-							if(!notified.contains(blockPos)){
+							if(!notified.contains(blockPos.pos)){
 								entity.scan(notified);
-								notified.add(blockPos);
+								notified.add(blockPos.pos);
 							}
 							if(entity.enabled())
 								addNeighborsToSetExcluding(blockPos, toScan, scanned);
@@ -83,24 +83,24 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 			scanning.removeAll(scanned);
 		}
 		// then we just expose all of the endAspectHandler's cells
-		// TODO: wrap them with info on the route taken - to make windows work
-		// iterate through... Pair<BlockPos, BlockPos> (connected pipe:block)s? and have a stack for all the pipes to that location?
 		cells.clear();
-		for(BlockPos handler : endAspectHandlers){
-			IAspectHandler handle = IAspectHandler.getFrom(getWorld().getTileEntity(handler));
+		for(ScanStack handler : endAspectHandlers){
+			IAspectHandler handle = IAspectHandler.getFrom(getWorld().getTileEntity(handler.pos));
 			if(handle != null)
-				cells.addAll(handle.getHolders());
+				//cells.addAll(handle.getHolders());
+				for(IAspectHolder holder : handle.getHolders())
+					cells.add(new NotifyingHolder(holder, handler.to));
 		}
 	}
 	
-	private void addNeighborsToSet(BlockPos pos, Collection<BlockPos> total){
+	private void addNeighborsToSet(ScanStack pos, Collection<ScanStack> total){
 		// up, down, north 2, south 1, east 1, west 2
 		total.addAll(Arrays.asList(pos.up(), pos.down(), pos.north(), pos.south(), pos.east(), pos.west()));
 	}
 	
-	private void addNeighborsToSetExcluding(BlockPos pos, Collection<BlockPos> total, Collection<BlockPos> excluded){
+	private void addNeighborsToSetExcluding(ScanStack pos, Collection<ScanStack> total, Collection<ScanStack> excluded){
 		// up, down, north 2, south 1, east 1, west 2
-		Set<BlockPos> c = Sets.newHashSet(pos.up(), pos.down(), pos.north(), pos.south(), pos.east(), pos.west());
+		Set<ScanStack> c = Sets.newHashSet(pos.up(), pos.down(), pos.north(), pos.south(), pos.east(), pos.west());
 		c.removeAll(excluded);
 		total.addAll(c);
 	}
@@ -108,6 +108,8 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 	boolean enabled(){
 		return true;
 	}
+	
+	void notifyAspect(Aspect aspect){}
 	
 	// Aspect Handler
 	
@@ -208,6 +210,133 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		// no-op
 		// we store nothing
 		return new CompoundNBT();
+	}
+	
+	private static class ScanStack{
+		BlockPos pos;
+		Collection<BlockPos> to;
+		
+		public ScanStack(BlockPos pos, Collection<BlockPos> to){
+			this.pos = pos;
+			this.to = to;
+		}
+		
+		public ScanStack(BlockPos pos){
+			this.pos = pos;
+			to = new ArrayList<>();
+			to.add(pos);
+		}
+		
+		public boolean equals(Object o){
+			if(this == o)
+				return true;
+			if(o == null || getClass() != o.getClass())
+				return false;
+			ScanStack stack = (ScanStack)o;
+			return pos.equals(stack.pos);
+		}
+		
+		public int hashCode(){
+			return Objects.hash(pos);
+		}
+		
+		ScanStack up(){
+			ArrayList<BlockPos> newStack = new ArrayList<>(to);
+			newStack.add(pos.up());
+			return new ScanStack(pos.up(), newStack);
+		}
+		ScanStack down(){
+			ArrayList<BlockPos> newStack = new ArrayList<>(to);
+			newStack.add(pos.down());
+			return new ScanStack(pos.down(), newStack);
+		}
+		ScanStack north(){
+			ArrayList<BlockPos> newStack = new ArrayList<>(to);
+			newStack.add(pos.north());
+			return new ScanStack(pos.north(), newStack);
+		}
+		ScanStack south(){
+			ArrayList<BlockPos> newStack = new ArrayList<>(to);
+			newStack.add(pos.south());
+			return new ScanStack(pos.south(), newStack);
+		}
+		ScanStack east(){
+			ArrayList<BlockPos> newStack = new ArrayList<>(to);
+			newStack.add(pos.east());
+			return new ScanStack(pos.east(), newStack);
+		}
+		ScanStack west(){
+			ArrayList<BlockPos> newStack = new ArrayList<>(to);
+			newStack.add(pos.west());
+			return new ScanStack(pos.west(), newStack);
+		}
+	}
+	
+	private class NotifyingHolder implements IAspectHolder{
+		
+		private IAspectHolder cell;
+		private Collection<BlockPos> notifying;
+		
+		public NotifyingHolder(IAspectHolder cell, Collection<BlockPos> notifying){
+			this.cell = cell;
+			this.notifying = notifying;
+		}
+		
+		public int insert(AspectStack stack, boolean simulate){
+			if(!stack.isEmpty() && !simulate)
+				notifying.forEach(pos -> {
+					TileEntity entity = getWorld().getTileEntity(pos);
+					if(entity instanceof AspectTubeTileEntity)
+						((AspectTubeTileEntity)entity).notifyAspect(stack.getAspect());
+				});
+			return cell.insert(stack, simulate);
+		}
+		
+		public int drain(AspectStack stack, boolean simulate){
+			if(!stack.isEmpty() && !simulate)
+				notifying.forEach(pos -> {
+					TileEntity entity = getWorld().getTileEntity(pos);
+					if(entity instanceof AspectTubeTileEntity)
+						((AspectTubeTileEntity)entity).notifyAspect(stack.getAspect());
+				});
+			return cell.drain(stack, simulate);
+		}
+		
+		public int getCurrentVis(){
+			return cell.getCurrentVis();
+		}
+		
+		public boolean canInsert(Aspect aspect){
+			return cell.canInsert(aspect);
+		}
+		
+		public boolean canStore(Aspect aspect){
+			return cell.canStore(aspect);
+		}
+		
+		public int getCapacity(Aspect aspect){
+			return cell.getCapacity(aspect);
+		}
+		
+		public int getCapacity(){
+			return cell.getCapacity();
+		}
+		
+		public Set<Aspect> getAllowedAspects(){
+			return cell.getAllowedAspects();
+		}
+		
+		public AspectStack getContainedAspectStack(){
+			return cell.getContainedAspectStack();
+		}
+		
+		public Aspect getContainedAspect(){
+			return cell.getContainedAspect();
+		}
+		
+		public void setCapacity(int defaultCellSize){
+			cell.setCapacity(defaultCellSize);
+		}
 	}
 
 	@Override

@@ -1,0 +1,34 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "arcana:block/essentia_tube_window_grayscale",
+		"1": "arcana:block/essentia_tube_window_gold",
+		"particle": "arcana:block/essentia_tube_window"
+	},
+	"elements": [
+		{
+			"from": [2, 2, 2],
+			"to": [13, 13, 13],
+			"faces": {
+				"north": {"uv": [2, 2, 14, 14], "texture": "#0", "tintindex": 0},
+				"east": {"uv": [2, 2, 14, 14], "texture": "#0", "tintindex": 0},
+				"south": {"uv": [2, 2, 14, 14], "texture": "#0", "tintindex": 0},
+				"west": {"uv": [2, 2, 14, 14], "texture": "#0", "tintindex": 0},
+				"up": {"uv": [2, 2, 14, 14], "texture": "#0", "tintindex": 0},
+				"down": {"uv": [2, 2, 14, 14], "texture": "#0", "tintindex": 0}
+			}
+		},
+		{
+			"from": [1.8, 1.8, 1.8],
+			"to": [13.2, 13.2, 13.2],
+			"faces": {
+				"north": {"uv": [1, 1, 15, 15], "texture": "#1"},
+				"east": {"uv": [1, 1, 15, 15], "texture": "#1"},
+				"south": {"uv": [1, 1, 15, 15], "texture": "#1"},
+				"west": {"uv": [1, 1, 15, 15], "texture": "#1"},
+				"up": {"uv": [1, 1, 15, 15], "texture": "#1"},
+				"down": {"uv": [1, 1, 15, 15], "texture": "#1"}
+			}
+		}
+	]
+}
