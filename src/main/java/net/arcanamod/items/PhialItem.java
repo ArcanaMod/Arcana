@@ -46,6 +46,7 @@ public class PhialItem extends Item{
     }
     
     public ActionResultType onItemUse(ItemUseContext context){
+        Arcana.logger.debug(getShareTag(context.getItem()));
         TileEntity tile = context.getWorld().getTileEntity(context.getPos());
         if(tile != null){
             LazyOptional<IAspectHandler> cap = tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER);
@@ -160,6 +161,7 @@ public class PhialItem extends Item{
         ItemStack stack = new ItemStack(this);
         IAspectHandler cap = IAspectHandler.getFrom(stack);
         cap.insert(0, new AspectStack(aspect, 8), false);
+        stack.setTag(stack.getShareTag());
         return stack;
     }
 }

@@ -2,6 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.client.event.FogColorHandler;
+import net.arcanamod.client.event.InitScreenHandler;
 import net.arcanamod.client.event.RenderTooltip;
 import net.arcanamod.client.event.TextureStitch;
 import net.arcanamod.client.gui.ScribbledNoteScreen;
@@ -21,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -41,8 +43,9 @@ public class ClientProxy extends CommonProxy{
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(RenderTooltip::onRenderToolTipColor);
 		modEventBus.addListener(FogColorHandler::setFog);
+		modEventBus.addListener(InitScreenHandler::onInitGuiEvent);
 
-		//MinecraftForge.EVENT_BUS.register(Embargo.class);
+		MinecraftForge.EVENT_BUS.register(InitScreenHandler.class);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
 	}

@@ -1,6 +1,7 @@
 package net.arcanamod.aspects;
 
 import net.arcanamod.Arcana;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.function.Consumer;
 
@@ -15,7 +16,7 @@ public class Aspect {
 
 	public Aspect(String name, AspectColorRange colors, Consumer<Object> aspectTickConsumer){
 		this.aspectName = name;
-		this.id = Arcana.nextAspectId();
+		this.id = AspectRegistry.nextAspectId();
 		this.colors = colors;
 		this.aspectTickConsumer = aspectTickConsumer;
 	}
@@ -46,8 +47,9 @@ public class Aspect {
 
 	public static Aspect create(String name, AspectColorRange colors, Consumer<Object> aspectTickConsumer) {
 		Aspect aspect = new Aspect(name, colors,aspectTickConsumer);
-		Aspects.ASPECTS.put(arcLoc(name),aspect);
-		Arcana.logger.info("Arcana: Added new aspect '"+name+"'");
+		Aspects.ASPECTS.put(!AspectRegistry.test ? arcLoc(name) : new ResourceLocation("arcana_test",name),aspect);
+		if (!AspectRegistry.test)
+			Arcana.logger.info("Arcana: Added new aspect '"+name+"'");
 		return aspect;
 	}
 

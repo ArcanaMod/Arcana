@@ -1,5 +1,7 @@
 package net.arcanamod.aspects;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.AspectItem;
@@ -12,6 +14,8 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -87,5 +91,12 @@ public class AspectUtils {
 
 	public static ResourceLocation getResourceLocationFromAspect(Aspect aspect) {
 		return Aspects.ASPECTS.inverse().get(aspect);
+	}
+
+	public static String aspectHandlerToJson(IAspectHandler handler) {
+		Gson gson = new GsonBuilder()
+				.setPrettyPrinting()
+				.create();
+		return gson.toJson(handler.getHolders());
 	}
 }

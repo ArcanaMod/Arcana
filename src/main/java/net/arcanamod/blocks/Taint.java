@@ -6,10 +6,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
-import net.arcanamod.entities.tainted.TaintedBatEntity;
-import net.arcanamod.entities.tainted.TaintedCreeperEntity;
-import net.arcanamod.entities.tainted.TaintedEntity;
-import net.arcanamod.entities.tainted.TaintedIllagerEntity;
+import net.arcanamod.entities.tainted.*;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
@@ -18,6 +15,8 @@ import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
+import net.minecraft.entity.monster.CaveSpiderEntity;
+import net.minecraft.entity.passive.SquidEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -178,6 +177,15 @@ public class Taint{
 				.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
 		else if (entity == EntityType.CREEPER)
 			tainted = EntityType.Builder.<TaintedCreeperEntity>create(TaintedCreeperEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.SQUID)
+			tainted = EntityType.Builder.<TaintedSquidEntity>create(TaintedSquidEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.GHAST)
+			tainted = EntityType.Builder.<TaintedGhastEntity>create(TaintedGhastEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.CAVE_SPIDER)
+			tainted = EntityType.Builder.<TaintedCaveSpiderEntity>create(TaintedCaveSpiderEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
 		else
 			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.MONSTER)

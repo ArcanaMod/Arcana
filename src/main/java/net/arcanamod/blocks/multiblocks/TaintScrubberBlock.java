@@ -105,7 +105,8 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 						if (((VisShareable)teinbox).isVisShareable()) {
 							AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
-								vis.drain(RANDOM.nextInt(vis.getHoldersAmount()),8,false);
+								if (vis.getHoldersAmount()!=0)
+									vis.drain(RANDOM.nextInt(vis.getHoldersAmount()),8,false);
 							}
 						}
 						break;

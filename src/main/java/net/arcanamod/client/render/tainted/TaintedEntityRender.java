@@ -21,13 +21,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class TaintedEntityRender<T extends MobEntity, M extends EntityModel<T>> extends MobRenderer<T, EntityModel<T>> {
 
-	private float size;
-
-	public TaintedEntityRender(EntityRendererManager renderManagerIn, M model, float size) {
-		super(renderManagerIn, (EntityModel<T>) model, 0.5f);
-		this.size = size;
-	}
-
 	public TaintedEntityRender(EntityRendererManager renderManagerIn, M model) {
 		super(renderManagerIn, (EntityModel<T>) model, 0.5f);
 	}

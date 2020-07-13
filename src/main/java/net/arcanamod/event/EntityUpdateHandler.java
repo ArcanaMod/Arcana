@@ -32,10 +32,10 @@ public class EntityUpdateHandler {
 			Block b1 = entity.getEntityWorld().getBlockState(pos).getBlock();
 			if (b.equals(ArcanaFluids.TAINT_FLUID_BLOCK.get()))
 			{
-				entity.setMotion(new Vec3d(entity.getMotion().x, 0.100000011620D, entity.getMotion().z));
+				entity.setMotion(new Vec3d(entity.getMotion().x, 0.000600011620D, entity.getMotion().z));
 			} else if (b1.equals(ArcanaFluids.TAINT_FLUID_BLOCK.get()))
 			{
-				entity.setMotion(new Vec3d(entity.getMotion().x, 0.100000011620D, entity.getMotion().z));
+				entity.setMotion(new Vec3d(entity.getMotion().x, 0.000600011620D, entity.getMotion().z));
 			}
 		}
 	}

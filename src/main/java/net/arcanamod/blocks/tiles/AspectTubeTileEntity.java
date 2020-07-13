@@ -19,7 +19,7 @@ import java.util.*;
 public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvider, IAspectHandler{
 	
 	List<IAspectHolder> cells = new ArrayList<>();
-	boolean initScanned = false;
+	transient boolean initScanned = false;
 	
 	public AspectTubeTileEntity(){
 		this(ArcanaTiles.ASPECT_TUBE_TE.get());
@@ -208,5 +208,13 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		// no-op
 		// we store nothing
 		return new CompoundNBT();
+	}
+
+	@Override
+	public String toString() {
+		return "AspectTubeTileEntity{" +
+				"cells=" + cells +
+				", pos=" + pos +
+				'}';
 	}
 }

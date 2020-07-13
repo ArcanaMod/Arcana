@@ -4,6 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -55,15 +56,16 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		float fullness = 12f;
 
 		long time = System.nanoTime();
-		int delta_time = (int) ((time - last_time) / 1000000);
+		int delta_time = (int) ((time - last_time) / 100000000f);
 		last_time = time;
 
+		int f = Minecraft.getInstance().frameTimer.getIndex();
 		if (vis.getHoldersAmount()!=0){
 			float visScaled = vis.getHolder(0).getCurrentVis()/8f;
 			if (Math.round(smoothAmountVisContentAnimation*10f)/10f<Math.round(visScaled*10f)/10f)
-				smoothAmountVisContentAnimation += 0.2f/delta_time;
+				smoothAmountVisContentAnimation += 0.2f*delta_time;
 			else if (Math.round(smoothAmountVisContentAnimation*10f)/10f>Math.round(visScaled*10f)/10f)
-				smoothAmountVisContentAnimation += -0.2f/delta_time;
+				smoothAmountVisContentAnimation += -0.2f*delta_time;
 			else if (smoothAmountVisContentAnimation != Math.round(smoothAmountVisContentAnimation*100f)/100f)
 				smoothAmountVisContentAnimation = Math.round(smoothAmountVisContentAnimation*100f)/100f;
 			if (visScaled==0)

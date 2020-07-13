@@ -58,8 +58,6 @@ import org.apache.logging.log4j.Logger;
 public class Arcana{
 	public static final String MODID = "arcana";
 
-	private static int pNextAspectId = 0;
-	
 	public static final Logger logger = LogManager.getLogger("Arcana");
 	public static Arcana instance;
 	public static ResearchLoader researchManager;
@@ -97,11 +95,6 @@ public class Arcana{
 		ArcanaFluids.FLUIDS.register(modEventBus);
 
 		proxy.construct();
-	}
-
-	@Deprecated
-	public static int nextAspectId() {
-		return pNextAspectId++;
 	}
 	
 	public static ResourceLocation arcLoc(String path){

@@ -1,11 +1,15 @@
 package net.arcanamod.test;
 
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.AspectCell;
-import net.arcanamod.aspects.AspectStack;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import net.arcanamod.aspects.*;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class TestAS {
 
@@ -32,5 +36,23 @@ public class TestAS {
 		System.out.println(battery.toString());
 		Assert.assertNotNull(battery.getHolder(0));
 		Assert.assertTrue(battery.getHolder(0).getCurrentVis()==4);
+	}
+
+	@Test
+	public void TestBatteryToString()
+	{
+		AspectBattery battery = new AspectBattery(3, 8);
+		AspectCell cell = new AspectCell();
+		cell.insert(new AspectStack(Aspects.ENDER,80),false);
+		battery.createCell(cell);
+		System.out.println(battery.toString());
+		System.out.print(this.aspectHandlerToJson(battery));
+	}
+
+	public String aspectHandlerToJson(IAspectHandler handler) {
+		Gson gson = new GsonBuilder()
+				.setPrettyPrinting()
+				.create();
+		return gson.toJson(handler);
 	}
 }
