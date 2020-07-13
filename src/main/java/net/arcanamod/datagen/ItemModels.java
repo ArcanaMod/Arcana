@@ -34,6 +34,8 @@ public class ItemModels extends ItemModelProvider{
 					.texture("layer0", new ResourceLocation(Arcana.MODID, "aspect/" + aspect.name().toLowerCase()));
 			//withExistingParent("phial_" + aspect.name().toLowerCase(), "item/generated")
 			//		.texture("layer0", new ResourceLocation(Arcana.MODID, "item/phial_" + aspect.name().toLowerCase()));
+			withExistingParent(aspect.name().toLowerCase() + "_crystal", "item/generated")
+					.texture("layer0", new ResourceLocation(Arcana.MODID, "item/crystals/" + aspect.name().toLowerCase() + "_crystal"));
 		});
 
 
