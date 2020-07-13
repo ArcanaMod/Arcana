@@ -59,9 +59,9 @@
     { "predicate": { "aspect": 50 }, "model": "arcana:item/tree_phial" },
     { "predicate": { "aspect": 51 }, "model": "arcana:item/undead_phial" },
     { "predicate": { "aspect": 52 }, "model": "arcana:item/vacuum_phial" },
-    { "predicate": { "aspect": 54 }, "model": "arcana:item/venom_phial" },
-    { "predicate": { "aspect": 55 }, "model": "arcana:item/weapon_phial" },
-    { "predicate": { "aspect": 56 }, "model": "arcana:item/wind_phial" },
-    { "predicate": { "aspect": 57 }, "model": "arcana:item/wrath_phial" }
+    { "predicate": { "aspect": 53 }, "model": "arcana:item/venom_phial" },
+    { "predicate": { "aspect": 54 }, "model": "arcana:item/weapon_phial" },
+    { "predicate": { "aspect": 55 }, "model": "arcana:item/wind_phial" },
+    { "predicate": { "aspect": 56 }, "model": "arcana:item/wrath_phial" }
 ]
 }

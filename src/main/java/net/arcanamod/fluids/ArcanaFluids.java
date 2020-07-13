@@ -31,8 +31,8 @@ public class ArcanaFluids {
 		ArcanaFluids.FLUIDS.register(bus);
 	}
 
-	public static final ResourceLocation FLUID_STILL = new ResourceLocation(Arcana.MODID,"fluid/taint_fluid");
-	public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Arcana.MODID,"fluid/taint_fluid");
+	public static final ResourceLocation FLUID_STILL = new ResourceLocation(Arcana.MODID,"fluid/tainted_goo");
+	public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Arcana.MODID,"fluid/tainted_goo_flowing");
 	
 	public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Arcana.MODID);
 

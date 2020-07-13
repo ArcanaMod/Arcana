@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 public class AspectUtils {
 	
 	public static final List<Item> aspectItems = new ArrayList<>();
+	public static final List<Item> aspectCrystalItems = new ArrayList<>();
 	public static final Aspect[] primalAspects = new Aspect[]{Aspects.AIR, Aspects.CHAOS, Aspects.EARTH, Aspects.FIRE, Aspects.ORDER, Aspects.WATER};
 	public static List<ItemStack> aspectStacks;
 
@@ -40,6 +41,12 @@ public class AspectUtils {
 				aspectItems.add(e);
 			}
 		aspectStacks = aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
+	}
+
+	public static Item createCrystal(Item.Properties properties) {
+		Item item = new Item(properties);
+		aspectCrystalItems.add(item);
+		return item;
 	}
 	
 	public static ItemStack getItemStackForAspect(Aspect aspect){
