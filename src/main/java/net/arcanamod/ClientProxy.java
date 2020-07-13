@@ -1,14 +1,16 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
 import net.arcanamod.client.event.FogColorHandler;
 import net.arcanamod.client.event.InitScreenHandler;
 import net.arcanamod.client.event.RenderTooltip;
 import net.arcanamod.client.event.TextureStitch;
-import net.arcanamod.client.gui.ScribbledNoteScreen;
-import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.gui.ResearchBookScreen;
 import net.arcanamod.client.gui.ResearchEntryScreen;
+import net.arcanamod.client.gui.ScribbledNoteScreen;
+import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.render.ArcanaParticles;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
@@ -57,6 +59,13 @@ public class ClientProxy extends CommonProxy{
 		RequirementRenderer.init();
 		PuzzleRenderer.init();
 		ModelLoaderRegistry.registerLoader(new ResourceLocation(MODID, "wand_loader"), new WandModelLoader());
+		
+		//
+		Minecraft.getInstance().getBlockColors().register((state, access, pos, index) -> {
+			if(access == null || pos == null || access.getTileEntity(pos) == null)
+				return 0xFF1F0D0B;
+			return ((AspectWindowTileEntity)access.getTileEntity(pos)).getColor();
+		}, ArcanaBlocks.ASPECT_WINDOW.get());
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){

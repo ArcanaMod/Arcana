@@ -16,17 +16,14 @@ public class FogColorHandler {
 
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
-	public static void setFog(EntityViewRenderEvent.FogColors fog)
-	{
+	public static void setFog(EntityViewRenderEvent.FogColors fog){
 		World w = fog.getInfo().getRenderViewEntity().getEntityWorld();
 		BlockPos pos = fog.getInfo().getBlockPos();
 		BlockState bs = w.getBlockState(pos);
 		Block b = bs.getBlock();
-		if(b.equals(ArcanaFluids.TAINT_FLUID_BLOCK.get()))
-		{
+		if(b.equals(ArcanaFluids.TAINT_FLUID_BLOCK.get())){
 			float red = 78/255F, green = 44/255F, blue = 92/255F;
 			fog.setRed(red); fog.setGreen(green); fog.setBlue(blue);
-
 		}
 	}
 }
