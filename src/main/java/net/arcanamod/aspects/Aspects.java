@@ -4,18 +4,13 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.util.Pair;
-import net.arcanamod.world.NodeType;
 import net.minecraft.util.ResourceLocation;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import static net.arcanamod.Arcana.arcLoc;
 import static net.arcanamod.util.Pair.of;
 
 public class Aspects {
@@ -27,7 +22,7 @@ public class Aspects {
 	 */
 	@Deprecated
 	public static Aspect[] values() {
-		return ASPECTS.values().toArray(new Aspect[ASPECTS.size()]);
+		return ASPECTS.values().toArray(new Aspect[0]);
 	}
 
 	protected static BiMap<ResourceLocation, Aspect> ASPECTS = HashBiMap.create();

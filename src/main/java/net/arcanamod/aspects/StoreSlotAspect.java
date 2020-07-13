@@ -1,11 +1,11 @@
 package net.arcanamod.aspects;
 
+import net.arcanamod.NotImplementedException;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -19,10 +19,7 @@ import java.util.Set;
  */
 public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabilityProvider{
 	
-	public boolean hasCapability(@Nonnull Capability<?> capability, @Nullable Direction facing){
-		return capability == AspectHandlerCapability.ASPECT_HANDLER;
-	}
-	
+	@SuppressWarnings("unchecked")
 	@Nonnull
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing){
 		return capability == AspectHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();
@@ -31,10 +28,6 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	public Aspect stored;
 	public int held;
 	int capacity;
-	
-	public StoreSlotAspect(){
-		this(100);
-	}
 	
 	public StoreSlotAspect(int capacity){
 		this.capacity = capacity;
@@ -174,7 +167,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	 */
 	@Override
 	public List<IAspectHolder> getHolders() {
-		return Collections.singletonList((IAspectHolder) this);
+		return Collections.singletonList(this);
 	}
 
 	/**
