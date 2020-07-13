@@ -69,6 +69,8 @@ public class AspectTubeBlock extends SixWayBlock{
 	 */
 	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos){
 		boolean flag = isVisHolder(world, facingPos);
+		if(flag)
+			((AspectTubeTileEntity)world.getTileEntity(currentPos)).scan(Sets.newHashSet(currentPos));
 		return state.with(FACING_TO_PROPERTY_MAP.get(facing), flag);
 	}
 	
