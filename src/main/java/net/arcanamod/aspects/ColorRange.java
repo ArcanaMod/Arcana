@@ -3,15 +3,15 @@ package net.arcanamod.aspects;
 /**
  * AspectColorRange is not necessary but the code is more neat.
  */
-public class AspectColorRange {
+public class ColorRange{
 	private final int[] colors;
 
-	private AspectColorRange(int[] colors) {
+	private ColorRange(int[] colors) {
 		this.colors = colors;
 	}
 
-	public static AspectColorRange create(int... colors) {
-		return new AspectColorRange(colors);
+	public static ColorRange create(int... colors) {
+		return new ColorRange(colors);
 	}
 
 	public int[] get() {

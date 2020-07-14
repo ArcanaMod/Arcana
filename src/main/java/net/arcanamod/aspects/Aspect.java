@@ -11,12 +11,12 @@ public class Aspect {
 
 	private final int id;
 	private final String aspectName;
-	private final AspectColorRange colors;
+	private final ColorRange colors;
 	private final Consumer<Object> aspectTickConsumer;
 
-	public Aspect(String name, AspectColorRange colors, Consumer<Object> aspectTickConsumer){
+	public Aspect(String name, ColorRange colors, Consumer<Object> aspectTickConsumer){
 		this.aspectName = name;
-		this.id = AspectRegistry.nextAspectId();
+		this.id = AspectTests.nextAspectId();
 		this.colors = colors;
 		this.aspectTickConsumer = aspectTickConsumer;
 	}
@@ -30,7 +30,7 @@ public class Aspect {
 		return id;
 	}
 
-	public AspectColorRange getColorRange() {
+	public ColorRange getColorRange() {
 		return colors;
 	}
 
@@ -45,10 +45,10 @@ public class Aspect {
 
 	// Static Methods
 
-	public static Aspect create(String name, AspectColorRange colors, Consumer<Object> aspectTickConsumer) {
+	public static Aspect create(String name, ColorRange colors, Consumer<Object> aspectTickConsumer) {
 		Aspect aspect = new Aspect(name, colors,aspectTickConsumer);
-		Aspects.ASPECTS.put(!AspectRegistry.test ? arcLoc(name) : new ResourceLocation("arcana_test",name),aspect);
-		if (!AspectRegistry.test)
+		Aspects.ASPECTS.put(!AspectTests.test ? arcLoc(name) : new ResourceLocation("arcana_test",name),aspect);
+		if (!AspectTests.test)
 			Arcana.logger.info("Arcana: Added new aspect '"+name+"'");
 		return aspect;
 	}

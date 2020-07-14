@@ -31,7 +31,6 @@ public class AspectUtils {
 
 	public static void register(){
 		// Automatically register all aspects' items
-		// TODO: this might break with addons, not finding the correct resources. maybe.
 		// Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
 		for(Aspect aspect : Aspects.values())
 			if(aspect != Aspects.EMPTY){

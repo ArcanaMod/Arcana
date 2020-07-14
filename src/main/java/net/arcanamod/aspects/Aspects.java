@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.arcanamod.aspects.AspectColorRange.create;
+import static net.arcanamod.aspects.ColorRange.create;
 import static net.arcanamod.util.Pair.of;
 
 public class Aspects {

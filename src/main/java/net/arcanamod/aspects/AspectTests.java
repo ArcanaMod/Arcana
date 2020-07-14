@@ -3,7 +3,7 @@ package net.arcanamod.aspects;
 /**
  * Avoids org.junit.Test Crashes
  */
-public class AspectRegistry {
+public class AspectTests{
 
 	/**
 	 * Enable this if you are using junit tests
