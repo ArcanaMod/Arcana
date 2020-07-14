@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import net.arcanamod.Arcana;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.AspectItem;
+import net.arcanamod.items.CrystalItem;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
@@ -14,8 +15,6 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -39,7 +38,7 @@ public class AspectUtils {
 				AspectItem item = new AspectItem("aspect_" + aspect.name().toLowerCase());
 				ArcanaItems.ITEMS.register("aspect_" + aspect.name().toLowerCase(), () -> item);
 				aspectItems.add(item);
-				Item crystal = new Item(new Item.Properties().group(Arcana.ITEMS));
+				Item crystal = new CrystalItem(new Item.Properties().group(Arcana.ITEMS));
 				ArcanaItems.ITEMS.register(aspect.name().toLowerCase() + "_crystal", () -> crystal);
 				aspectCrystalItems.add(crystal);
 			}
