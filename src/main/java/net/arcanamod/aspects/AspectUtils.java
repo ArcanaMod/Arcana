@@ -36,17 +36,14 @@ public class AspectUtils {
 		// Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
 		for(Aspect aspect : Aspects.values())
 			if(aspect != Aspects.EMPTY){
-				AspectItem e = new AspectItem("aspect_" + aspect.name().toLowerCase());
-				ArcanaItems.ITEMS.register("aspect_" + aspect.name().toLowerCase(), () -> e);
-				aspectItems.add(e);
+				AspectItem item = new AspectItem("aspect_" + aspect.name().toLowerCase());
+				ArcanaItems.ITEMS.register("aspect_" + aspect.name().toLowerCase(), () -> item);
+				aspectItems.add(item);
+				Item crystal = new Item(new Item.Properties().group(Arcana.ITEMS));
+				ArcanaItems.ITEMS.register(aspect.name().toLowerCase() + "_crystal", () -> crystal);
+				aspectCrystalItems.add(crystal);
 			}
 		aspectStacks = aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
-	}
-
-	public static Item createCrystal(Item.Properties properties) {
-		Item item = new Item(properties);
-		aspectCrystalItems.add(item);
-		return item;
 	}
 	
 	public static ItemStack getItemStackForAspect(Aspect aspect){
@@ -87,11 +84,7 @@ public class AspectUtils {
 	public static int getEmptyCell(IAspectHandler handler) {
 		return handler.findIndexesFromAspectInHolders(Aspects.EMPTY)[0];
 	}
-
-	public static String getLocalizedAspectName(Aspect aspect) {
-		return I18n.format("aspect."+aspect.name().toLowerCase()+".desc");
-	}
-
+	
 	public static String getLocalizedAspectDisplayName(Aspect aspect) {
 		return I18n.format("aspect."+aspect.name().toLowerCase());
 	}

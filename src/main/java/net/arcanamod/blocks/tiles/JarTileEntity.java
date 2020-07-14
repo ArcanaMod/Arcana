@@ -1,7 +1,6 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.client.Minecraft;
@@ -11,7 +10,6 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -19,14 +17,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class JarTileEntity extends TileEntity implements ITickableTileEntity, VisShareable{
 
-	public AspectBattery vis = new AspectBattery(1,100);
+	public AspectBattery vis = new AspectBattery(1, 100);
 
 	protected float smoothAmountVisContentAnimation = 0;
 
