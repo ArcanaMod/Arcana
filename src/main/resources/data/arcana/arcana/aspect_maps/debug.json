@@ -138,12 +138,12 @@
   ],
   "minecraft:snowball": [
     {
-      "aspect": "cold"
+      "aspect": "ice"
     }
   ],
   "minecraft:ice": [
     {
-      "aspect": "cold",
+      "aspect": "ice",
       "amount": 5
     }
   ],

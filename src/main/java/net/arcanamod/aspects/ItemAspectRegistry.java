@@ -199,6 +199,8 @@ public class ItemAspectRegistry extends JsonReloadListener{
 					Aspect aspect = AspectUtils.getAspectByName(aspectName);
 					if(aspect != null)
 						ret.add(new AspectStack(aspect, amount));
+					else
+						LOGGER.error("Invalid aspect " + aspectName + " referenced in file " + file);
 				}else
 					LOGGER.error("Invalid aspect stack found in " + file + " - not an object!");
 			}
