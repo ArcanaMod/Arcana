@@ -3,7 +3,6 @@ package net.arcanamod.event;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.ItemAspectRegistry;
-import net.arcanamod.commands.FillPhialCommand;
 import net.arcanamod.commands.NodeCommand;
 import net.arcanamod.commands.ResearchCommand;
 import net.arcanamod.commands.TaintCommand;

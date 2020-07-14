@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 /**
  * Associates items with aspects. Every item is associated with a set of aspect stacks, and item stack may be given extra
@@ -34,6 +35,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 	
 	private static final Logger LOGGER = LogManager.getLogger();
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+	private static boolean processing = false;
 	
 	private static Map<Item, List<AspectStack>> itemAssociations = new HashMap<>();
 	private static Map<Tag<Item>, List<AspectStack>> itemTagAssociations = new HashMap<>();
@@ -62,6 +64,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 	
 	protected void apply(@Nonnull Map<ResourceLocation, JsonObject> objects, @Nonnull IResourceManager resourceManager, @Nonnull IProfiler profiler){
 		// remove existing data
+		processing = true;
 		itemAssociations.clear();
 		itemTagAssociations.clear();
 		stackFunctions.clear();
@@ -80,14 +83,14 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		}));
 		// for every item tag, give them aspects
 		itemTagAssociations.forEach((key, value) -> {
-			for(Item item : key.getAllElements()){
+			for(Item item : key.getAllElements())
 				itemAspects.merge(item, value, (left, right) -> {
 					List<AspectStack> news = new ArrayList<>(left);
 					news.addAll(right);
 					return news;
 				});
-			}
 		});
+		// wait for recipes to load??? how???
 		// for every item not already given aspects in this way, give according to recipes
 		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes()){
 			Item item = recipe.getRecipeOutput().getItem();
@@ -97,7 +100,23 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			generating.clear();
 		}
 		
+		// squish lists: [{1x plant}, {1x plant}, {1x machine}] -> [{2x plant}, {1x machine}]
+		Collection<Item> itemMirror = new ArrayList<>(itemAspects.keySet());
+		for(Item item : itemMirror)
+			if(itemAspects.containsKey(item)){
+				List<AspectStack> unSquished = itemAspects.get(item);
+				List<AspectStack> squished = unSquished.stream()
+						// categorize stacks by aspect
+						.collect(Collectors.groupingBy(AspectStack::getAspect)).values().stream()
+						// merge all aspect stacks with the same aspect
+						.map(stacks -> stacks.stream().reduce((left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount())).orElse(AspectStack.EMPTY))
+						// collect
+						.collect(Collectors.toList());
+				itemAspects.put(item, squished);
+			}
+		
 		LOGGER.info("Assigned aspects to {} items", itemAspects.size());
+		processing = false;
 	}
 	
 	private List<AspectStack> getFromRecipes(Item item){
@@ -111,8 +130,12 @@ public class ItemAspectRegistry extends JsonReloadListener{
 				for(Ingredient ingredient : recipe.getIngredients()){
 					if(ingredient.getMatchingStacks().length > 0){
 						ItemStack first = ingredient.getMatchingStacks()[0];
-						if(!generating.contains(first.getItem()))
-							generated.addAll(getGenerating(first.getItem()));
+						if(!generating.contains(first.getItem())){
+							List<AspectStack> ingredients = getGenerating(first.getItem());
+							for(AspectStack stack : ingredients)
+								generated.add(new AspectStack(stack.getAspect(), Math.max(stack.getAmount() / recipe.getRecipeOutput().getCount(), 1)));
+							//generated.addAll(ingredients);
+						}
 					}
 				}
 				allGenerated.add(generated);
@@ -133,6 +156,10 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			return itemAspects.get(item);
 		else
 			return getFromRecipes(item);
+	}
+	
+	public static boolean isProcessing(){
+		return processing;
 	}
 	
 	private static void applyJson(ResourceLocation location, JsonObject object){
@@ -170,7 +197,8 @@ public class ItemAspectRegistry extends JsonReloadListener{
 					String aspectName = object.get("aspect").getAsString();
 					int amount = JSONUtils.getInt(object, "amount", 1);
 					Aspect aspect = AspectUtils.getAspectByName(aspectName);
-					ret.add(new AspectStack(aspect, amount));
+					if(aspect != null)
+						ret.add(new AspectStack(aspect, amount));
 				}else
 					LOGGER.error("Invalid aspect stack found in " + file + " - not an object!");
 			}

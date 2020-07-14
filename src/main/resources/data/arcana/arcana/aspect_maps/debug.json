@@ -41,10 +41,119 @@
       "aspect": "metal"
     }
   ],
-  "#minecraft:wooden_buttons": [
+  "#forge:stone": [
     {
-      "aspect": "plant"
+      "aspect": "earth",
+      "amount": 4
+    }
+  ],
+  "#forge:cobblestone": [
+    {
+      "aspect": "earth",
+      "amount": 3
     },
+    {
+      "aspect": "chaos"
+    }
+  ],
+  "#forge:sand": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "air",
+      "amount": 2
+    }
+  ],
+  "#forge:sand/red": [
+    {
+      "aspect": "fire"
+    }
+  ],
+  "#forge:ores/diamond": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "creation",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/emerald": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "pride",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/redstone": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "energy",
+      "amount": 3
+    },
+    {
+      "aspect": "machine",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/coal": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "energy",
+      "amount": 2
+    },
+    {
+      "aspect": "fire"
+    }
+  ],
+  "minecraft:clay_ball": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "water",
+      "amount": 3
+    }
+  ],
+  "minecraft:snowball": [
+    {
+      "aspect": "cold"
+    }
+  ],
+  "minecraft:ice": [
+    {
+      "aspect": "cold",
+      "amount": 5
+    }
+  ],
+  "minecraft:blue_ice": [
+    {
+      "aspect": "water",
+      "amount": 3
+    }
+  ],
+  "#minecraft:buttons": [
     {
       "aspect": "machine"
     }

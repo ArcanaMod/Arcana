@@ -1,5 +1,6 @@
 package net.arcanamod.client.event;
 
+import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.ItemAspectRegistry;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
@@ -10,6 +11,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
 import java.awt.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
 public class RenderTooltip{
@@ -26,6 +29,11 @@ public class RenderTooltip{
 	
 	@SubscribeEvent
 	public static void onRenderTooltip(@Nonnull ItemTooltipEvent event){
-		event.getToolTip().add(new StringTextComponent(ItemAspectRegistry.get(event.getItemStack()).toString()));
+		if(!ItemAspectRegistry.isProcessing()){
+			List<AspectStack> stacks = ItemAspectRegistry.get(event.getItemStack());
+			// TODO: replace with something better
+			if(stacks.size() > 0)
+				event.getToolTip().add(new StringTextComponent(stacks.stream().map(stack -> stack.getAmount() + "x " + stack.getAspect().name()).collect(Collectors.joining(", "))));
+		}
 	}
 }
