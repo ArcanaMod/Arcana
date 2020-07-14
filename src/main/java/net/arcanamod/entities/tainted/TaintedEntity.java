@@ -49,4 +49,14 @@ public class TaintedEntity extends MonsterEntity implements IMob {
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.25F);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
 	}
+
+	@OnlyIn(Dist.CLIENT)
+	public float getHeadRotationPointY(float p_70894_1_) {
+		return 0.0F;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public float getHeadRotationAngleX(float p_70890_1_) {
+		return this.rotationPitch * ((float) Math.PI / 180F);
+	}
 }

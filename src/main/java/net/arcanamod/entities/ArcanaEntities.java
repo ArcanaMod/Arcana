@@ -2,6 +2,7 @@ package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.Taint;
+import net.arcanamod.client.model.tainted.TaintedSheepModel;
 import net.arcanamod.client.model.tainted.TaintedSquidModel;
 import net.arcanamod.client.render.tainted.TaintedBatRender;
 import net.arcanamod.client.render.tainted.TaintedCaveSpiderRender;
@@ -62,8 +63,8 @@ public class ArcanaEntities{
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ZOMBIE_PIGMAN = ENTITY_TYPES.register("tainted_zombie_pigman", () -> Taint.taintedEntityOf(EntityType.ZOMBIE_PIGMAN));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_POLAR_BEAR = ENTITY_TYPES.register("tainted_polar_bear", () -> Taint.taintedEntityOf(EntityType.POLAR_BEAR));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_RABBIT = ENTITY_TYPES.register("tainted_rabbit", () -> Taint.taintedEntityOf(EntityType.RABBIT));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SHEEP = ENTITY_TYPES.register("tainted_sheep", () -> Taint.taintedEntityOf(EntityType.SHEEP));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SKELETON = ENTITY_TYPES.register("tainted_skeleton", () -> Taint.taintedEntityOf(EntityType.SKELETON));
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SHEEP = ENTITY_TYPES.register("tainted_sheep", () -> Taint.taintedEntityOf(EntityType.SHEEP));// TODO: Improve Sheep AI, Eat grass or something else.
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SKELETON = ENTITY_TYPES.register("tainted_skeleton", () -> Taint.taintedEntityOf(EntityType.SKELETON));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SLIME = ENTITY_TYPES.register("tainted_slime", () -> Taint.taintedEntityOf(EntityType.SLIME));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SNOW_GOLEM = ENTITY_TYPES.register("tainted_snow_golem", () -> Taint.taintedEntityOf(EntityType.SNOW_GOLEM));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_STRAY = ENTITY_TYPES.register("tainted_stray", () -> Taint.taintedEntityOf(EntityType.STRAY));
@@ -125,8 +126,8 @@ public class ArcanaEntities{
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ZOMBIE_PIGMAN.get(), manager -> new TaintedEntityRender(manager, new ZombieModel(0.0F, false))); // 1.16 -> ZombiefiedPiglin
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_POLAR_BEAR.get(), manager -> new TaintedEntityRender(manager, new PolarBearModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_RABBIT.get(), manager -> new TaintedEntityRender(manager, new RabbitModel()));
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SHEEP.get(), manager -> new TaintedEntityRender(manager, new SheepModel()));
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SKELETON.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SHEEP.get(), manager -> new TaintedEntityRender(manager, new TaintedSheepModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SKELETON.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SLIME.get(), manager -> new TaintedEntityRender(manager, new SlimeModel<TaintedEntity>()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SNOW_GOLEM.get(), manager -> new TaintedEntityRender(manager, new SnowManModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_STRAY.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));

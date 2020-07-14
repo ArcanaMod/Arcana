@@ -187,6 +187,9 @@ public class Taint{
 		else if (entity == EntityType.CAVE_SPIDER)
 			tainted = EntityType.Builder.<TaintedCaveSpiderEntity>create(TaintedCaveSpiderEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.SKELETON)
+			tainted = EntityType.Builder.<TaintedSkeletonEntity>create(TaintedSkeletonEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
 		else
 			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
