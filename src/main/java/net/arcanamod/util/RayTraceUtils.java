@@ -8,7 +8,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class RayTraceUtils {
+public final class RayTraceUtils {
 
 	public static BlockPos getTargetBlockPos(PlayerEntity player, World world, int maxdistance){
 		BlockRayTraceResult rayTraceResult = getTargetBlockResult(player,world, maxdistance);

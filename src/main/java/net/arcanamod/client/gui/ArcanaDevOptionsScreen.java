@@ -7,12 +7,12 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import static net.arcanamod.Arcana.MODID;
 
 public class ArcanaDevOptionsScreen extends Screen{
+	
 	public ArcanaDevOptionsScreen(){
 		super(new TranslationTextComponent("devtools.screen"));
 	}
@@ -21,17 +21,11 @@ public class ArcanaDevOptionsScreen extends Screen{
 	protected void init(){
 		super.init();
 		buttons.add(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20, I18n.format("devtools.arcana_book_editmode"), b -> Arcana.proxy.openResearchBookUI(new ResourceLocation(MODID, "arcanum"))));
-		buttons.add(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16 + 24 + 24, 204, 20, I18n.format("menu.reportBugs"), b -> this.minecraft.displayGuiScreen(new ConfirmOpenLinkScreen((p_213064_1_) -> {
-			if(p_213064_1_){
+		buttons.add(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16 + 24 + 24, 204, 20, I18n.format("menu.reportBugs"), b -> minecraft.displayGuiScreen(new ConfirmOpenLinkScreen((p_213064_1_) -> {
+			if(p_213064_1_)
 				Util.getOSType().openURI("https://aka.ms/snapshotbugs?ref=game");
-			}
 			minecraft.displayGuiScreen(this);
 		}, "https://aka.ms/snapshotbugs?ref=game", true))));
-	}
-	
-	@Override
-	public boolean handleComponentClicked(ITextComponent p_handleComponentClicked_1_){
-		return super.handleComponentClicked(p_handleComponentClicked_1_);
 	}
 	
 	public void tick(){
