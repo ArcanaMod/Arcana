@@ -39,7 +39,7 @@ public class ResearchLoader extends JsonReloadListener{
 	private static Map<ResourceLocation, JsonArray> puzzleQueue = new LinkedHashMap<>();
 	
 	public ResearchLoader(){
-		super(GSON, "arcana_research");
+		super(GSON, "arcana/research");
 	}
 	
 	private static void applyBooksArray(ResourceLocation rl, JsonArray books){
@@ -154,10 +154,6 @@ public class ResearchLoader extends JsonReloadListener{
 	}
 	
 	private static List<Item> idsToItems(JsonArray itemIds, ResourceLocation rl){
-		/*return StreamSupport.stream(itemIds.spliterator(), false)
-				.map(element -> ForgeRegistries.ITEMS.getValue(new ResourceLocation(element.getAsString())))
-				.filter(Objects::nonNull)
-				.collect(Collectors.toList());*/
 		List<Item> ret = new ArrayList<>();
 		for(JsonElement element : itemIds){
 			ResourceLocation id = new ResourceLocation(element.getAsString());
@@ -274,48 +270,4 @@ public class ResearchLoader extends JsonReloadListener{
 		entryQueue.forEach(ResearchLoader::applyEntriesArray);
 		puzzleQueue.forEach(ResearchLoader::applyPuzzlesArray);
 	}
-	
-	/*public static void load(){
-		bookQueue.clear();
-		categoryQueue.clear();
-		entryQueue.clear();
-		puzzleQueue.clear();
-		
-		for(ModContainer mod : Loader.instance().getActiveModList()){
-			CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + "/research", *//*pre-processing?*//* null, (root, file) -> {
-				String relative = root.relativize(file).toString();
-				if(!"json".equals(FilenameUtils.getExtension(file.toString())) || relative.startsWith("_"))
-					return true;
-				
-				String name = FilenameUtils.removeExtension(relative).replaceAll("\\\\", "/");
-				ResourceLocation key = new ResourceLocation(mod.getModId(), name);
-				
-				BufferedReader reader = null;
-				
-				try{
-					reader = Files.newBufferedReader(file);
-					String contents = IOUtils.toString(reader);
-					applyJson(contents, key);
-				}catch(JsonParseException jsonparseexception){
-					LOGGER.error("Parsing error loading research " + key, jsonparseexception);
-					return false;
-				}catch(IOException ioexception){
-					LOGGER.error("Couldn't read research " + key + " from " + file, ioexception);
-					return false;
-				}finally{
-					IOUtils.closeQuietly(reader);
-				}
-				
-				return false;
-			}, true, true);
-		}
-		
-		bookQueue.forEach(ResearchLoader::applyBooksArray);
-		categoryQueue.forEach(ResearchLoader::applyCategoriesArray);
-		entryQueue.forEach(ResearchLoader::applyEntriesArray);
-		puzzleQueue.forEach(ResearchLoader::applyPuzzlesArray);
-		
-		if(FMLCommonHandler.instance().getMinecraftServerInstance() != null)
-			Connection.network.sendToAll(new PktSyncBooksHandler.PktSyncBooks(ResearchBooks.books, ResearchBooks.puzzles));
-	}*/
 }

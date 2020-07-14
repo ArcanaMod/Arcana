@@ -2,6 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.ItemAspectRegistry;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
@@ -61,6 +62,7 @@ public class Arcana{
 	public static final Logger logger = LogManager.getLogger("Arcana");
 	public static Arcana instance;
 	public static ResearchLoader researchManager;
+	public static ItemAspectRegistry itemAspectRegistry;
 	
 	public static ItemGroup ITEMS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaBlocks.ARCANE_STONE.get()));
 	public static ItemGroup TAINT = new SupplierItemGroup("taint", () -> new ItemStack(ArcanaBlocks.TAINTED_GRASS_BLOCK.get()));

@@ -2,6 +2,7 @@ package net.arcanamod.event;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
+import net.arcanamod.aspects.ItemAspectRegistry;
 import net.arcanamod.commands.FillPhialCommand;
 import net.arcanamod.commands.NodeCommand;
 import net.arcanamod.commands.ResearchCommand;
@@ -15,6 +16,7 @@ import net.arcanamod.research.Researcher;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -55,7 +57,9 @@ public class WorldLoadEvent{
 	
 	@SubscribeEvent
 	public static void serverAboutToStart(FMLServerAboutToStartEvent event){
-		event.getServer().getResourceManager().addReloadListener(Arcana.researchManager = new ResearchLoader());
+		IReloadableResourceManager manager = event.getServer().getResourceManager();
+		manager.addReloadListener(Arcana.researchManager = new ResearchLoader());
+		manager.addReloadListener(Arcana.itemAspectRegistry = new ItemAspectRegistry(event.getServer()));
 	}
 	
 	@SubscribeEvent

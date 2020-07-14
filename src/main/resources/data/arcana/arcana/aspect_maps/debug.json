@@ -1,0 +1,52 @@
+{
+  "arcana:amber": [
+    {
+      "aspect": "imprison",
+      "amount": 5
+    }
+  ],
+  "minecraft:book": [
+    {
+      "aspect": "senses",
+      "amount": 5
+    },
+    {
+      "aspect": "mind",
+      "amount": 5
+    }
+  ],
+  "#minecraft:logs": [
+    {
+      "aspect": "plant",
+      "amount": 4
+    }
+  ],
+  "#minecraft:planks": [
+    {
+      "aspect": "plant"
+    }
+  ],
+  "#minecraft:leaves": [
+    {
+      "aspect": "plant"
+    }
+  ],
+  "#forge:rods/wooden": [
+    {
+      "aspect": "plant"
+    }
+  ],
+  "#forge:ingots/iron": [
+    {
+      "aspect": "metal"
+    }
+  ],
+  "#minecraft:wooden_buttons": [
+    {
+      "aspect": "plant"
+    },
+    {
+      "aspect": "machine"
+    }
+  ]
+}

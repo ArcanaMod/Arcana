@@ -1,0 +1,190 @@
+package net.arcanamod.aspects;
+
+import com.google.gson.*;
+import net.arcanamod.util.Pair;
+import net.minecraft.client.resources.JsonReloadListener;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.profiler.IProfiler;
+import net.minecraft.resources.IResourceManager;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.Tag;
+import net.minecraft.util.JSONUtils;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.ForgeRegistries;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nonnull;
+import java.util.*;
+import java.util.function.BiConsumer;
+
+/**
+ * Associates items with aspects. Every item is associated with a set of aspect stacks, and item stack may be given extra
+ * aspects.
+ * <br/>
+ * Items and item tags are associated with sets of aspects in JSON files. Additionally, stack functions, defined in code,
+ * can add or remove aspects to an item stack, based on NBT, damage levels, or anything else.
+ */
+public class ItemAspectRegistry extends JsonReloadListener{
+	
+	private static final Logger LOGGER = LogManager.getLogger();
+	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+	
+	private static Map<Item, List<AspectStack>> itemAssociations = new HashMap<>();
+	private static Map<Tag<Item>, List<AspectStack>> itemTagAssociations = new HashMap<>();
+	private static Collection<BiConsumer<ItemStack, List<AspectStack>>> stackFunctions = new ArrayList<>();
+	
+	private static Map<Item, List<AspectStack>> itemAspects = new HashMap<>();
+	
+	private MinecraftServer server;
+	private static Set<Item> generating = new HashSet<>();
+	
+	public ItemAspectRegistry(MinecraftServer server){
+		super(GSON, "arcana/aspect_maps");
+		this.server = server;
+	}
+	
+	public static List<AspectStack> get(Item item){
+		return itemAspects.get(item) != null ? new ArrayList<>(itemAspects.get(item)) : new ArrayList<>();
+	}
+	
+	public static List<AspectStack> get(ItemStack stack){
+		List<AspectStack> itemAspects = get(stack.getItem());
+		for(BiConsumer<ItemStack, List<AspectStack>> function : stackFunctions)
+			function.accept(stack, itemAspects);
+		return itemAspects;
+	}
+	
+	protected void apply(@Nonnull Map<ResourceLocation, JsonObject> objects, @Nonnull IResourceManager resourceManager, @Nonnull IProfiler profiler){
+		// remove existing data
+		itemAssociations.clear();
+		itemTagAssociations.clear();
+		stackFunctions.clear();
+		itemAspects.clear();
+		
+		// add new data
+		addStackFunctions();
+		objects.forEach(ItemAspectRegistry::applyJson);
+		
+		// compute aspect assignment
+		// for every item defined, give them aspects
+		itemAssociations.forEach((key, value) -> itemAspects.merge(key, value, (left, right) -> {
+			List<AspectStack> news = new ArrayList<>(left);
+			news.addAll(right);
+			return news;
+		}));
+		// for every item tag, give them aspects
+		itemTagAssociations.forEach((key, value) -> {
+			for(Item item : key.getAllElements()){
+				itemAspects.merge(item, value, (left, right) -> {
+					List<AspectStack> news = new ArrayList<>(left);
+					news.addAll(right);
+					return news;
+				});
+			}
+		});
+		// for every item not already given aspects in this way, give according to recipes
+		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes()){
+			Item item = recipe.getRecipeOutput().getItem();
+			if(!itemAspects.containsKey(item))
+				itemAspects.put(item, getGenerating(item));
+			// generating avoids getting stuck in recursive loops.
+			generating.clear();
+		}
+		
+		LOGGER.info("Assigned aspects to {} items", itemAspects.size());
+	}
+	
+	private List<AspectStack> getFromRecipes(Item item){
+		generating.add(item);
+		List<AspectStack> ret;
+		List<List<AspectStack>> allGenerated = new ArrayList<>();
+		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes()){
+			// consider every recipe that produces this item
+			if(recipe.getRecipeOutput().getItem() == item){
+				List<AspectStack> generated = new ArrayList<>();
+				for(Ingredient ingredient : recipe.getIngredients()){
+					if(ingredient.getMatchingStacks().length > 0){
+						ItemStack first = ingredient.getMatchingStacks()[0];
+						if(!generating.contains(first.getItem()))
+							generated.addAll(getGenerating(first.getItem()));
+					}
+				}
+				allGenerated.add(generated);
+			}
+		}
+		ret = allGenerated.stream()
+				// pair of aspects:total num of aspects
+				.map(stacks -> Pair.of(stacks, stacks.stream().mapToInt(AspectStack::getAmount).sum()))
+				// sort by least total aspects
+				.min(Comparator.comparingInt(Pair::getSecond))
+				// get aspects
+				.map(Pair::getFirst).orElse(new ArrayList<>());
+		return ret;
+	}
+	
+	private List<AspectStack> getGenerating(Item item){
+		if(itemAspects.containsKey(item))
+			return itemAspects.get(item);
+		else
+			return getFromRecipes(item);
+	}
+	
+	private static void applyJson(ResourceLocation location, JsonObject object){
+		// just go through the keys and map them to tags or items
+		// then put them in the relevant maps
+		// error if they don't map
+		for(Map.Entry<String, JsonElement> entry : object.entrySet()){
+			String key = entry.getKey();
+			JsonElement value = entry.getValue();
+			if(key.startsWith("#")){
+				ResourceLocation itemTagLoc = new ResourceLocation(key.substring(1));
+				Tag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
+				if(itemTag != null)
+					parseItemList(location, value).ifPresent(stacks -> itemTagAssociations.put(itemTag, stacks));
+				else
+					LOGGER.error("Invalid item tag \"" + key.substring(1) + "\" found in file " + location + "!");
+			}else{
+				ResourceLocation itemLoc = new ResourceLocation(key);
+				Item item = ForgeRegistries.ITEMS.getValue(itemLoc);
+				if(item != null)
+					parseItemList(location, value).ifPresent(stacks -> itemAssociations.put(item, stacks));
+				else
+					LOGGER.error("Invalid item tag \"" + key.substring(1) + "\" found in file " + location + "!");
+			}
+		}
+	}
+	
+	private static Optional<List<AspectStack>> parseItemList(ResourceLocation file, JsonElement listElement){
+		if(listElement.isJsonArray()){
+			JsonArray array = listElement.getAsJsonArray();
+			List<AspectStack> ret = new ArrayList<>();
+			for(JsonElement element : array){
+				if(element.isJsonObject()){
+					JsonObject object = element.getAsJsonObject();
+					String aspectName = object.get("aspect").getAsString();
+					int amount = JSONUtils.getInt(object, "amount", 1);
+					Aspect aspect = AspectUtils.getAspectByName(aspectName);
+					ret.add(new AspectStack(aspect, amount));
+				}else
+					LOGGER.error("Invalid aspect stack found in " + file + " - not an object!");
+			}
+			return Optional.of(ret);
+		}else
+			LOGGER.error("Invalid aspect stack list found in " + file + " - not a list!");
+		return Optional.empty();
+	}
+	
+	protected void addStackFunctions(){
+		stackFunctions.add((item, stacks) -> {
+			// Add 5x magic to enchanted items
+			if(EnchantmentHelper.getEnchantments(item).size() > 0)
+				stacks.add(new AspectStack(Aspects.MANA, 5));
+		});
+	}
+}
