@@ -80,7 +80,6 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void openScribbledNotesUI(){
 		Minecraft.getInstance().displayGuiScreen(new ScribbledNoteScreen(new StringTextComponent("")));
-
 	}
 	
 	public void onResearchChange(ResearchEvent event){

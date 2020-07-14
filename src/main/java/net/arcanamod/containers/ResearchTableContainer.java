@@ -43,7 +43,7 @@ public class ResearchTableContainer extends AspectContainer{
 	public List<AspectSlot> scrollableSlots = new ArrayList<>();
 	
 	// combination slots
-	protected AspectSlot leftStoreSlot, rightStoreSlot;
+	//protected AspectSlot leftStoreSlot, rightStoreSlot;
 	
 	private ItemStack note, ink;
 	public final List<AspectSlot> puzzleSlots = new ArrayList<>();
@@ -217,9 +217,9 @@ public class ResearchTableContainer extends AspectContainer{
 			scrollableSlots.add(slot);
 		}
 		// combinator slots
-		aspectSlots.add(leftStoreSlot = new AspectStoreSlot(table, 30, 179));
+		/*aspectSlots.add(leftStoreSlot = new AspectStoreSlot(table, 30, 179));
 		aspectSlots.add(rightStoreSlot = new AspectStoreSlot(table, 92, 179));
-		aspectSlots.add(new CombinatorAspectSlot(leftStoreSlot, rightStoreSlot, 61, 179));
+		aspectSlots.add(new CombinatorAspectSlot(leftStoreSlot, rightStoreSlot, 61, 179));*/
 		
 		refreshPuzzleSlots(playerInventory);
 	}
