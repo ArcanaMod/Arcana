@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "full=false": {
       "model": "arcana:block/crucible"
+    },
+    "full=true": {
+      "model": "arcana:block/crucible_full"
     }
   }
 }

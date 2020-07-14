@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -60,12 +61,16 @@ public class ClientProxy extends CommonProxy{
 		PuzzleRenderer.init();
 		ModelLoaderRegistry.registerLoader(new ResourceLocation(MODID, "wand_loader"), new WandModelLoader());
 		
-		//
 		Minecraft.getInstance().getBlockColors().register((state, access, pos, index) -> {
 			if(access == null || pos == null || access.getTileEntity(pos) == null)
 				return 0xFF1F0D0B;
 			return ((AspectWindowTileEntity)access.getTileEntity(pos)).getColor();
 		}, ArcanaBlocks.ASPECT_WINDOW.get());
+		
+		Minecraft.getInstance().getBlockColors().register((state, access, pos, index) ->
+				access != null && pos != null ? BiomeColors.getWaterColor(access, pos) : -1,
+				ArcanaBlocks.CRUCIBLE.get()
+		);
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){
