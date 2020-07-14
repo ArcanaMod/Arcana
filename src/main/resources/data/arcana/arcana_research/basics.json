@@ -363,7 +363,8 @@
           "content": "research.arcana.collecting_aspects.stage.1",
           "requirements": [
             "0*arcana:jar",
-            "0*arcana:crucible"
+            "0*arcana:crucible",
+            "0*arcana:alembic"
           ]
         },
         {

@@ -31,4 +31,6 @@ public class ArcanaTiles{
 			TES.register("essentia_window", () -> new TileEntityType<>(AspectWindowTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_WINDOW.get()), null));
 	public static final RegistryObject<TileEntityType<PedestalTileEntity>> PEDESTAL_TE =
 			TES.register("pedestal", () -> new TileEntityType<>(PedestalTileEntity::new, Sets.newHashSet(ArcanaBlocks.PEDESTAL.get()), null));
+	public static final RegistryObject<TileEntityType<AlembicTileEntity>> ALEMBIC_TE =
+			TES.register("alembic", () -> new TileEntityType<>(AlembicTileEntity::new, Sets.newHashSet(ArcanaBlocks.ALEMBIC.get()), null));
 }

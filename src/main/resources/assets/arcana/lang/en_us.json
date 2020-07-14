@@ -712,7 +712,7 @@
 
     "research.arcana.collecting_aspects": "Collecting Aspects",
     "research.arcana.collecting_aspects.stage.1": "Nobody knows everything; only learning can widen our minds. To study and use magic, I'll need to collect and concentrate it; every form of research starts with aspects.\n\nThey're useless when in the form of objects, so first I will need to separate them out into vis and essentia. First, I'll need some equipment: a crucible and alembic to distill the aspects, and a suitably warded jar to contain them.",
-    "research.arcana.collecting_aspects.stage.2": "First, I put down a crucible, fill it with water, and stoke a fire under it. Torches aren't enough; fire or lava is suitable. A crucible will melt items I drop in into a magic sludge, which is then distilled by an arcane alembic, placed above the crucible (with a single block gap). The alembic doesn't require fuel, and can store up to 50 of any type of aspect. Finally, I can place a jar inside the alembic. A jar can store up to 100 of any single aspect.",
+    "research.arcana.collecting_aspects.stage.2": "First, I put down a crucible, fill it with water, and stoke a fire under it. Torches aren't enough; fire or lava is suitable. A crucible will melt items I drop in into a magic sludge, which is then distilled by an arcane alembic, placed above the crucible (with a single block gap). The alembic doesn't require fuel, and has 5 cells storing 50 of any aspect. Finally, I can place a jar inside the alembic. A jar can store up to 100 of any single aspect.",
 
     "research.arcana.research_intro": "Introduction to Research",
     "research.arcana.research_intro.desc": "Learning about the world",
