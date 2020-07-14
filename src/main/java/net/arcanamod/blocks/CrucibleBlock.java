@@ -100,7 +100,7 @@ public class CrucibleBlock extends Block{
 		// if boiling, show bubbles
 		BlockState below = world.getBlockState(pos.down());
 		IFluidState fluidState = world.getFluidState(pos.down());
-		if(below.getBlock() == Blocks.FIRE || below.getBlock() == Blocks.MAGMA_BLOCK || fluidState.getFluid() == Fluids.FLOWING_LAVA || fluidState.getFluid() == Fluids.LAVA){
+		if(state.get(FULL) && (below.getBlock() == Blocks.FIRE || below.getBlock() == Blocks.MAGMA_BLOCK || fluidState.getFluid() == Fluids.FLOWING_LAVA || fluidState.getFluid() == Fluids.LAVA)){
 			// we boiling
 			double x = pos.getX();
 			double y = pos.getY();
