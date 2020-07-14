@@ -2,7 +2,8 @@
   "credit": "Made with Blockbench",
   "ambientocclusion": false,
   "textures": {
-    "0": "arcana:block/alembic"
+    "0": "arcana:block/alembic",
+    "particle": "arcana:block/alembic"
   },
   "elements": [
     {
