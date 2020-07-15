@@ -7,6 +7,7 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.gui.ResearchTableScreen;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;

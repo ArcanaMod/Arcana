@@ -2,8 +2,7 @@ package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.Taint;
-import net.arcanamod.client.model.tainted.TaintedSheepModel;
-import net.arcanamod.client.model.tainted.TaintedSquidModel;
+import net.arcanamod.client.model.tainted.*;
 import net.arcanamod.client.render.tainted.*;
 import net.arcanamod.entities.tainted.*;
 import net.minecraft.client.renderer.entity.model.*;
@@ -45,7 +44,7 @@ public class ArcanaEntities{
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_DROWNED = ENTITY_TYPES.register("tainted_drowned", () -> Taint.taintedEntityOf(EntityType.DROWNED));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ELDER_GUARDIAN = ENTITY_TYPES.register("tainted_elder_guardian", () -> Taint.taintedEntityOf(EntityType.ELDER_GUARDIAN));
 	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_EVOKER = ENTITY_TYPES.register("tainted_evoker", () -> Taint.taintedEntityOf(EntityType.EVOKER));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_FOX = ENTITY_TYPES.register("tainted_fox", () -> Taint.taintedEntityOf(EntityType.FOX));
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_FOX = ENTITY_TYPES.register("tainted_fox", () -> Taint.taintedEntityOf(EntityType.FOX));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_GIANT = ENTITY_TYPES.register("tainted_giant", () -> Taint.taintedEntityOf(EntityType.GIANT));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_GUARDIAN = ENTITY_TYPES.register("tainted_guardian", () -> Taint.taintedEntityOf(EntityType.GUARDIAN));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_HORSE = ENTITY_TYPES.register("tainted_horse", () -> Taint.taintedEntityOf(EntityType.HORSE));
@@ -73,8 +72,8 @@ public class ArcanaEntities{
 	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_PILLAGER = ENTITY_TYPES.register("tainted_pillager", () -> Taint.taintedEntityOf(EntityType.PILLAGER));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WITHER = ENTITY_TYPES.register("tainted_wither", () -> Taint.taintedEntityOf(EntityType.WITHER));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WITHER_SKELETON = ENTITY_TYPES.register("tainted_wither_skeleton", () -> Taint.taintedEntityOf(EntityType.WITHER_SKELETON));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WOLF = ENTITY_TYPES.register("tainted_wolf", () -> Taint.taintedEntityOf(EntityType.WOLF));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ZOMBIE = ENTITY_TYPES.register("tainted_zombie", () -> Taint.taintedEntityOf(EntityType.ZOMBIE));
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WOLF = ENTITY_TYPES.register("tainted_wolf", () -> Taint.taintedEntityOf(EntityType.WOLF));
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ZOMBIE = ENTITY_TYPES.register("tainted_zombie", () -> Taint.taintedEntityOf(EntityType.ZOMBIE));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_RAVAGER = ENTITY_TYPES.register("tainted_ravager", () -> Taint.taintedEntityOf(EntityType.RAVAGER));
 
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_COW = ENTITY_TYPES.register("tainted_cow", () -> Taint.taintedEntityOf(EntityType.COW));
@@ -108,7 +107,7 @@ public class ArcanaEntities{
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DROWNED.get(), manager -> new TaintedEntityRender(manager, new DrownedModel(0.5f, true)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ELDER_GUARDIAN.get(), manager -> new TaintedEntityRender(manager, new GuardianModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_EVOKER.get(), manager -> new TaintedEntityRender(manager, new IllagerModel(0.0F, 0.0F, 64, 64)));
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_FOX.get(), manager -> new TaintedEntityRender(manager, new FoxModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_FOX.get(), manager -> new TaintedEntityRender(manager, new TaintedFoxModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_GIANT.get(), manager -> new TaintedEntityRender(manager, new GiantModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_GUARDIAN.get(), manager -> new TaintedEntityRender(manager, new GuardianModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_HORSE.get(), manager -> new TaintedEntityRender(manager, new HorseModel(0.0F)));
@@ -136,8 +135,8 @@ public class ArcanaEntities{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PILLAGER.get(), manager -> new TaintedEntityRender(manager, new IllagerModel(0.0F, 0.0F, 64, 64)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WITHER.get(), manager -> new TaintedEntityRender(manager, new WitherModel(0.0F))); // Check this.
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WITHER_SKELETON.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WOLF.get(), manager -> new TaintedEntityRender(manager, new WolfModel()));
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ZOMBIE.get(), manager -> new TaintedEntityRender(manager, new ZombieModel(0.0F, false)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WOLF.get(), manager -> new TaintedEntityRender(manager, new TaintedWolfModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ZOMBIE.get(), manager -> new TaintedEntityRender(manager, new TaintedZombieModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_RAVAGER.get(), manager -> new TaintedEntityRender(manager, new RavagerModel()));
 
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_COW.get(), manager -> new TaintedEntityRender(manager, new CowModel<TaintedEntity>()));

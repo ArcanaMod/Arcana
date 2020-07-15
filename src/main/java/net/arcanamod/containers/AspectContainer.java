@@ -1,9 +1,10 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.client.gui.AspectContainerScreen;
+import net.arcanamod.containers.slots.AspectSlot;
+import net.arcanamod.containers.slots.AspectStoreSlot;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkAspectClick;
 import net.minecraft.client.gui.screen.Screen;

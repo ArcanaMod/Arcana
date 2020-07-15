@@ -1,8 +1,7 @@
 package net.arcanamod.network;
 
 import net.arcanamod.containers.AspectContainer;
-import net.arcanamod.containers.AspectSlot;
-import net.arcanamod.containers.ResearchTableContainer;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;

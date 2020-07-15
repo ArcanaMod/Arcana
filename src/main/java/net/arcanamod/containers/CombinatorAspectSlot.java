@@ -3,11 +3,12 @@ package net.arcanamod.containers;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.AspectBattery;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.util.Pair;
 
 import javax.annotation.Nullable;
 
-class CombinatorAspectSlot extends AspectSlot{
+class CombinatorAspectSlot extends AspectSlot {
 	
 	private AspectSlot leftStoreSlot;
 	private AspectSlot rightStoreSlot;

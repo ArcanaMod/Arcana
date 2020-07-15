@@ -6,7 +6,7 @@ import net.arcanamod.client.research.impls.ThaumaturgyPuzzleRenderer;
 import net.arcanamod.research.impls.Chemistry;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.impls.GuessworkPuzzleRenderer;
-import net.arcanamod.containers.AspectSlot;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.impls.Guesswork;
 import net.arcanamod.research.impls.Thaumaturgy;

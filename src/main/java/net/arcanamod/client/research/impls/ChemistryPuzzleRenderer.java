@@ -5,7 +5,7 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.research.impls.Chemistry;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.PuzzleRenderer;
-import net.arcanamod.containers.AspectSlot;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;

@@ -2,7 +2,7 @@ package net.arcanamod.blocks.tiles;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
-import net.arcanamod.blocks.BlockAspectBookshelf;
+import net.arcanamod.blocks.AspectBookshelfBlock;
 import net.arcanamod.util.Pair;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
@@ -35,9 +35,9 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 
 	@Override
 	public void tick() {
-		if (getBlockState().get(BlockAspectBookshelf.LEVEL_0_9)!=getNonEmptyItemsStoredCount()) {
+		if (getBlockState().get(AspectBookshelfBlock.LEVEL_0_9)!=getNonEmptyItemsStoredCount()) {
 			if (!world.isRemote)
-			world.setBlockState(pos,getBlockState().with(BlockAspectBookshelf.LEVEL_0_9,getNonEmptyItemsStoredCount()));
+			world.setBlockState(pos,getBlockState().with(AspectBookshelfBlock.LEVEL_0_9,getNonEmptyItemsStoredCount()));
 		}
 	}
 

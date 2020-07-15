@@ -3,7 +3,7 @@ package net.arcanamod.client.research.impls;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.PuzzleRenderer;
-import net.arcanamod.containers.AspectSlot;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.research.impls.Guesswork;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.RenderHelper;

@@ -5,7 +5,7 @@ import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.research.impls.Chemistry;
 import net.arcanamod.research.impls.Fieldwork;
 import net.arcanamod.research.impls.Guesswork;
-import net.arcanamod.containers.AspectSlot;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.research.impls.Thaumaturgy;
 import net.minecraft.entity.player.PlayerEntity;

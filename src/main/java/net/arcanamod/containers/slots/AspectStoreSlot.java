@@ -1,4 +1,4 @@
-package net.arcanamod.containers;
+package net.arcanamod.containers.slots;
 
 import net.arcanamod.aspects.*;
 

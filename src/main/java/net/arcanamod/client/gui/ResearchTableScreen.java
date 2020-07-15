@@ -6,7 +6,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.research.PuzzleRenderer;
-import net.arcanamod.containers.AspectSlot;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.Puzzle;

@@ -2,9 +2,8 @@ package net.arcanamod.network;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
-import net.arcanamod.containers.AspectSlot;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;

@@ -33,7 +33,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class BlockAspectBookshelf extends WaterloggableBlock{
+public class AspectBookshelfBlock extends WaterloggableBlock{
 	
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 	public static final IntegerProperty LEVEL_0_9 = IntegerProperty.create("level",0,9);
@@ -43,7 +43,7 @@ public class BlockAspectBookshelf extends WaterloggableBlock{
 	public VoxelShape SHAPE_EAST = Block.makeCuboidShape(0, 0, 0, 9, 16, 16);
 	public VoxelShape SHAPE_WEST = Block.makeCuboidShape(7, 0, 0, 16, 16, 16);
 
-	public BlockAspectBookshelf(Properties properties){
+	public AspectBookshelfBlock(Properties properties){
 		super(properties);
 		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(LEVEL_0_9, 0));
 	}

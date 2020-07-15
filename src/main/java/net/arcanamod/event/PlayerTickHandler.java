@@ -91,7 +91,8 @@ public class PlayerTickHandler{
 									int currVis = vis.getHolder(i).getCurrentVis();
 									int currVis_4th = Integer.parseInt((""+currVis).substring((""+currVis).length()-1));
 									world.addParticle(new NumberParticleData(currVis_4th, ArcanaParticles.NUMBER_PARTICLE.get()),
-											pos.getX() + 0.5D + ((-srx) / 2) + 0.05f, pos.getY() + 0.65D, pos.getZ() + 0.5D + ((-crx) / 2)+ 0.05f, 0, 0, 0);
+											pos.getX() + 0.5D + ((-srx) / 2) + 0.08f, pos.getY() + 0.71D, pos.getZ() + 0.5D + ((-crx) / 2)+ 0.05f, 0, 0, 0);
+									// TODO: Needs more tweak.
 								}
 							}
 						}
