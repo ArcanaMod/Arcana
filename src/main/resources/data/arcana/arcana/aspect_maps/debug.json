@@ -203,12 +203,6 @@
       "amount": 5
     }
   ],
-  "minecraft:blue_ice": [
-    {
-      "aspect": "water",
-      "amount": 3
-    }
-  ],
   "#minecraft:buttons": [
     {
       "aspect": "machine"

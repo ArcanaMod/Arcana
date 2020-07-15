@@ -5,6 +5,8 @@ import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -74,6 +76,16 @@ public class JarBlock extends Block{
 		if (worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
 			worldIn.setBlockState(pos,state.with(UP, true));
 		else
-			worldIn.setBlockState(pos,state.with(UP, false));
+			worldIn.setBlockState(pos, state.with(UP, false));
+	}
+	
+	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state){
+		ItemStack itemstack = super.getItem(worldIn, pos, state);
+		JarTileEntity jarTe = (JarTileEntity)worldIn.getTileEntity(pos);
+		CompoundNBT compoundnbt = jarTe.write(new CompoundNBT());
+		if(!compoundnbt.isEmpty())
+			itemstack.setTagInfo("BlockEntityTag", compoundnbt);
+		
+		return itemstack;
 	}
 }

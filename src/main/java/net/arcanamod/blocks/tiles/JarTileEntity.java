@@ -38,12 +38,12 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		Aspect aspect = compound.getInt("aspect") != -1 ? Aspects.values()[compound.getInt("aspect")+1] : Aspects.EMPTY;
 		AspectCell cell = new AspectCell();
 		cell.insert(new AspectStack(aspect,compound.getInt("amount")),false);
-		vis.setCellAtIndex(0,cell);
+		vis.replaceCell(0, cell);
 	}
 
 	@Override
-	public CompoundNBT write(CompoundNBT compound) {
-		compound.putInt("aspect", vis.getHolder(0).getContainedAspect().getId()-1);
+	public CompoundNBT write(CompoundNBT compound){
+		compound.putInt("aspect", vis.getHolder(0).getContainedAspect().getId() - 1);
 		compound.putInt("amount", vis.getHolder(0).getCurrentVis());
 		return super.write(compound);
 	}
@@ -54,8 +54,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		long time = System.nanoTime();
 		float delta_time = ((time - last_time) / 100000000f);
 		last_time = time;
-
-		int f = Minecraft.getInstance().frameTimer.getIndex();
+		
 		if (vis.getHoldersAmount()!=0){
 			float visScaled = vis.getHolder(0).getCurrentVis()/8f;
 			if (Math.round(smoothAmountVisContentAnimation*10f)/10f<Math.round(visScaled*10f)/10f)
@@ -72,8 +71,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		return -(smoothAmountVisContentAnimation-fullness);
 	}
 
-	public Color getAspectColor()
-	{
+	public Color getAspectColor(){
 		if (this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.DUNGEON_BRICKS.get())
 			return getCreativeJarColor();
 		else return vis.getHolder(0).getContainedAspect() != Aspects.EMPTY ? new Color(vis.getHolder(0).getContainedAspect().getColorRange().get()[2]) : Color.WHITE;
