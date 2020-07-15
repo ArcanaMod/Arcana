@@ -1,4 +1,4 @@
-package net.arcanamod.wand;
+package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.items.ArcanaItems;

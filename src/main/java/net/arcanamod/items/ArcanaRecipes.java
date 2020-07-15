@@ -1,6 +1,5 @@
 package net.arcanamod.items;
 
-import net.arcanamod.wand.RecipeWands;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
 import net.minecraftforge.fml.RegistryObject;

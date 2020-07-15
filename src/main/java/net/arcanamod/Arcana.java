@@ -8,11 +8,9 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
-import net.arcanamod.client.render.tainted.TaintedEntityRender;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
-import net.arcanamod.entities.tainted.TaintedEntity;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaRecipes;
@@ -22,7 +20,6 @@ import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchLoader;
 import net.arcanamod.research.impls.ResearcherCapability;
-import net.arcanamod.spells.SpellEffectHandler;
 import net.arcanamod.world.NodeType;
 import net.arcanamod.world.impl.AuraChunkCapability;
 import net.arcanamod.worldgen.ArcanaFeatures;
@@ -116,7 +113,6 @@ public class Arcana{
 		proxy.preInit(event);
 
 		Connection.init();
-		SpellEffectHandler.init();
 
 		FeatureGenerator.setupFeatureGeneration();
 	}
