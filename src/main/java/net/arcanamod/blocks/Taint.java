@@ -190,22 +190,25 @@ public class Taint{
 		else if(entity == EntityType.SKELETON)
 			tainted = EntityType.Builder.<TaintedSkeletonEntity>create(TaintedSkeletonEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.SLIME)
+			tainted = EntityType.Builder.<TaintedSlimeEntity>create(TaintedSlimeEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
 		else
 			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		entityTaintMap.put(entity, tainted);
 		return tainted;
 	}
-	
+
 	@SuppressWarnings({"rawtypes"})
 	public static EntityType getTaintedOfEntity(EntityType entity) {
 		return entityTaintMap.get(entity);
 	}
-	
+
 	public static boolean isTainted(EntityType<?> entity) {
 		return entityTaintMap.containsValue(entity);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public static Collection<EntityType> getTaintedEntities(){
 		return entityTaintMap.values();

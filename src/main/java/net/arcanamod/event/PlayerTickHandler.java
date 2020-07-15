@@ -7,6 +7,7 @@ import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.client.render.ArcanaParticles;
 import net.arcanamod.client.render.AspectParticleData;
+import net.arcanamod.client.render.NumberParticleData;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.util.RayTraceUtils;
@@ -87,6 +88,10 @@ public class PlayerTickHandler{
 									double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw)));
 									world.addParticle(new AspectParticleData(AspectUtils.getAspectTextureLocation(vis.getHolder(i).getContainedAspect()), ArcanaParticles.ASPECT_PARTICLE.get()),
 											pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
+									int currVis = vis.getHolder(i).getCurrentVis();
+									int currVis_4th = Integer.parseInt((""+currVis).substring((""+currVis).length()-1));
+									world.addParticle(new NumberParticleData(currVis_4th, ArcanaParticles.NUMBER_PARTICLE.get()),
+											pos.getX() + 0.5D + ((-srx) / 2) + 0.05f, pos.getY() + 0.65D, pos.getZ() + 0.5D + ((-crx) / 2)+ 0.05f, 0, 0, 0);
 								}
 							}
 						}
