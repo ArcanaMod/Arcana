@@ -38,7 +38,18 @@
   ],
   "#forge:ingots/iron": [
     {
-      "aspect": "metal"
+      "aspect": "metal",
+      "amount": 4
+    }
+  ],
+  "#forge:ingots/gold": [
+    {
+      "aspect": "metal",
+      "amount": 4
+    },
+    {
+      "aspect": "greed",
+      "amount": 2
     }
   ],
   "#forge:stone": [
@@ -69,6 +80,12 @@
   "#forge:sand/red": [
     {
       "aspect": "fire"
+    }
+  ],
+  "#forge:dyes": [
+    {
+      "aspect": "senses",
+      "amount": 5
     }
   ],
   "#forge:ores/diamond": [
@@ -118,6 +135,45 @@
       "aspect": "earth",
       "amount": 3
     },
+    {
+      "aspect": "energy",
+      "amount": 2
+    },
+    {
+      "aspect": "fire"
+    }
+  ],
+  "#forge:gems/diamond": [
+    {
+      "aspect": "crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "creation",
+      "amount": 2
+    }
+  ],
+  "#forge:gems/emerald": [
+    {
+      "aspect": "crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "pride",
+      "amount": 2
+    }
+  ],
+  "#forge:dusts/redstone": [
+    {
+      "aspect": "energy",
+      "amount": 3
+    },
+    {
+      "aspect": "machine",
+      "amount": 2
+    }
+  ],
+  "#minecraft:coals": [
     {
       "aspect": "energy",
       "amount": 2

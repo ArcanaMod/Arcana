@@ -45,7 +45,7 @@ public class ClientProxy extends CommonProxy{
 		
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(RenderTooltip::onRenderTooltipColor);
-		modEventBus.addListener(RenderTooltip::onRenderTooltip);
+		modEventBus.addListener(RenderTooltip::makeTooltip);
 		modEventBus.addListener(FogColorHandler::setFog);
 		modEventBus.addListener(InitScreenHandler::onInitGuiEvent);
 
