@@ -13,10 +13,7 @@ public class ArcanaEffects extends Effect {
         super(p_i50391_1_, p_i50391_2_);
     }
 
-
     public static final DeferredRegister<Effect> EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, Arcana.MODID);
 
-    public static final RegistryObject<Effect> TAINTED = EFFECTS.register("tainted", () -> new TaintedEffect());
-
-
+    public static final RegistryObject<Effect> TAINTED = EFFECTS.register("tainted", TaintedEffect::new);
 }

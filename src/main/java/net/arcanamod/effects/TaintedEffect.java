@@ -1,7 +1,6 @@
 package net.arcanamod.effects;
 
 import net.arcanamod.blocks.Taint;
-import net.arcanamod.entities.ArcanaEntities;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
@@ -11,22 +10,21 @@ import net.minecraft.world.server.ServerWorld;
 
 public class TaintedEffect extends Effect {
 
-
     public TaintedEffect() {
         super(EffectType.HARMFUL, 0xa200ff);
     }
 
     @Override
-    public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-        // TODO: Check of entity isn't instanceof tainted
-        entityLivingBaseIn.attackEntityFrom(DamageSource.MAGIC, 1.0F + amplifier);
-        if (entityLivingBaseIn.getHealth() <= (entityLivingBaseIn.getMaxHealth() / 4f)) {
-            ChangeEntityToTainted(entityLivingBaseIn);
+    public void performEffect(LivingEntity entity, int amplifier){
+        if(!Taint.isTainted(entity.getType())){
+            entity.attackEntityFrom(DamageSource.MAGIC, 1.0F + amplifier);
+            if(entity.getHealth() <= (entity.getMaxHealth() / 4f))
+                changeEntityToTainted(entity);
         }
     }
 
-    private void ChangeEntityToTainted(LivingEntity entityLiving) {
-        if (!(entityLiving instanceof PlayerEntity) && Taint.getTaintedOfEntity(entityLiving.getType())!=null) {
+    private void changeEntityToTainted(LivingEntity entityLiving){
+        if (!(entityLiving instanceof PlayerEntity) && Taint.getTaintedOfEntity(entityLiving.getType()) != null){
             LivingEntity l = (LivingEntity) Taint.getTaintedOfEntity(entityLiving.getType()).create(entityLiving.world);
             l.setPosition(entityLiving.getPosX(),entityLiving.getPosY(),entityLiving.getPosZ());
             if (!l.getEntityWorld().isRemote)

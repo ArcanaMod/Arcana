@@ -169,38 +169,44 @@ public class Taint{
 	@SuppressWarnings({"rawtypes"})
 	public static EntityType taintedEntityOf(EntityType entity){
 		EntityType tainted;
-		if (entity == EntityType.BAT)
+		if(entity == EntityType.BAT)
 			tainted = EntityType.Builder.<TaintedBatEntity>create(TaintedBatEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
-		else if (entity == EntityType.EVOKER || entity == EntityType.ILLUSIONER || entity == EntityType.VINDICATOR || entity == EntityType.PILLAGER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if(entity == EntityType.EVOKER || entity == EntityType.ILLUSIONER || entity == EntityType.VINDICATOR || entity == EntityType.PILLAGER)
 			tainted = EntityType.Builder.<TaintedIllagerEntity>create(TaintedIllagerEntity::new, EntityClassification.MONSTER)
-				.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
-		else if (entity == EntityType.CREEPER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if(entity == EntityType.CREEPER)
 			tainted = EntityType.Builder.<TaintedCreeperEntity>create(TaintedCreeperEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
-		else if (entity == EntityType.SQUID)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if(entity == EntityType.SQUID)
 			tainted = EntityType.Builder.<TaintedSquidEntity>create(TaintedSquidEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
-		else if (entity == EntityType.GHAST)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if(entity == EntityType.GHAST)
 			tainted = EntityType.Builder.<TaintedGhastEntity>create(TaintedGhastEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
-		else if (entity == EntityType.CAVE_SPIDER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if(entity == EntityType.CAVE_SPIDER)
 			tainted = EntityType.Builder.<TaintedCaveSpiderEntity>create(TaintedCaveSpiderEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
-		else if (entity == EntityType.SKELETON)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if(entity == EntityType.SKELETON)
 			tainted = EntityType.Builder.<TaintedSkeletonEntity>create(TaintedSkeletonEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else
-			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_,p_create_2_,entity), EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
-		entityTaintMap.put(entity,tainted);
+			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		entityTaintMap.put(entity, tainted);
 		return tainted;
 	}
+	
 	@SuppressWarnings({"rawtypes"})
 	public static EntityType getTaintedOfEntity(EntityType entity) {
 		return entityTaintMap.get(entity);
 	}
-
+	
+	public static boolean isTainted(EntityType<?> entity) {
+		return entityTaintMap.containsValue(entity);
+	}
+	
+	@SuppressWarnings("rawtypes")
 	public static Collection<EntityType> getTaintedEntities(){
 		return entityTaintMap.values();
 	}
