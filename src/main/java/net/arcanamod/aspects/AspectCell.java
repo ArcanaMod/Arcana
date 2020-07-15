@@ -7,6 +7,7 @@ import java.util.*;
 public class AspectCell implements IAspectHolder {
 
 	private AspectStack stored = AspectStack.EMPTY;
+	private Aspect optionalWhitelist = null;
 	private int capacity;
 
 	public AspectCell(){
@@ -16,8 +17,19 @@ public class AspectCell implements IAspectHolder {
 	public AspectCell(int capacity){
 		this.capacity = capacity;
 	}
+	
+	public AspectCell(Aspect optionalWhitelist){
+		this(100, optionalWhitelist);
+	}
+	
+	public AspectCell(int capacity, Aspect optionalWhitelist){
+		this.capacity = capacity;
+		this.optionalWhitelist = optionalWhitelist;
+	}
 
 	public int insert(AspectStack stack, boolean simulate){
+		if(optionalWhitelist != null && optionalWhitelist != stack.getAspect())
+			return stack.getAmount();
 		int capacityRemaining = getCapacity(stack.getAspect()) == -1 ? -1 : Math.max(getCapacity(stack.getAspect()) - getCurrentVis(), 0);
 		if(capacityRemaining == -1 || stack.getAmount() <= capacityRemaining){
 			if(!simulate)
@@ -31,6 +43,8 @@ public class AspectCell implements IAspectHolder {
 	}
 
 	public int drain(AspectStack stack, boolean simulate){
+		if(optionalWhitelist != null && optionalWhitelist != stack.getAspect())
+			return 0;
 		// if amount >= left, return left & left = 0
 		// if amount < left, return amount & left = left - amount
 		int vis = getCurrentVis();
@@ -50,15 +64,15 @@ public class AspectCell implements IAspectHolder {
 	}
 
 	public boolean canInsert(Aspect aspect){
-		return getCapacity(aspect) == -1 || getCurrentVis() < getCapacity(aspect);
+		return (getCapacity(aspect) == -1 || getCurrentVis() < getCapacity(aspect)) && (optionalWhitelist == null || optionalWhitelist == aspect);
 	}
 
 	public boolean canStore(Aspect aspect){
-		return true;
+		return optionalWhitelist == null || optionalWhitelist == aspect;
 	}
 
 	public int getCapacity(Aspect aspect){
-		return capacity;
+		return (optionalWhitelist != null && optionalWhitelist != aspect) ? 0 : capacity;
 	}
 
 	public int getCapacity(){
@@ -67,14 +81,15 @@ public class AspectCell implements IAspectHolder {
 
 	public Set<Aspect> getAllowedAspects(){
 		// insertion order matters!
-		return new LinkedHashSet<>(Aspects.getWithoutEmpty());
+		return optionalWhitelist == null ? new LinkedHashSet<>(Aspects.getWithoutEmpty()) : Collections.singleton(optionalWhitelist);
 	}
 
 	public CompoundNBT toNBT(){
 		CompoundNBT compoundNBT = new CompoundNBT();
-		compoundNBT.putInt("amount",stored.getAmount());
-		compoundNBT.putInt("capacity",getCapacity());
-		compoundNBT.putString("aspect",stored.getAspect().name().toLowerCase());
+		compoundNBT.putInt("amount", stored.getAmount());
+		compoundNBT.putInt("capacity", getCapacity());
+		compoundNBT.putString("aspect", stored.getAspect().name().toLowerCase());
+		compoundNBT.putString("whitelisted", optionalWhitelist != null ? optionalWhitelist.name().toLowerCase() : "null");
 		return compoundNBT;
 	}
 
@@ -82,8 +97,10 @@ public class AspectCell implements IAspectHolder {
 		int capacity = compoundNBT.getInt("capacity");
 		int amount = compoundNBT.getInt("amount");
 		Aspect aspect = Aspects.valueOf(compoundNBT.getString("aspect").toUpperCase());
-		AspectCell cell = new AspectCell(capacity != 0 ? capacity : 100);
-		cell.insert(new AspectStack(aspect,amount),false);
+		// valueOf is null when given a null whitelist
+		Aspect whitelist = Aspects.valueOf(compoundNBT.getString("whitelisted").toUpperCase());
+		AspectCell cell = new AspectCell(capacity != 0 ? capacity : 100, whitelist);
+		cell.insert(new AspectStack(aspect, amount), false);
 		return cell;
 	}
 
@@ -92,7 +109,7 @@ public class AspectCell implements IAspectHolder {
 	}
 
 	public Aspect getContainedAspect(){
-		return stored.getAspect();
+		return optionalWhitelist != null ? optionalWhitelist : stored.getAspect();
 	}
 
 	@Override
@@ -105,6 +122,7 @@ public class AspectCell implements IAspectHolder {
 		return "VisBattery{" +
 				"stored=" + stored +
 				", capacity=" + capacity +
+				", whitelisted=" + optionalWhitelist +
 				'}';
 	}
 }

@@ -1,6 +1,7 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.aspects.*;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
@@ -12,7 +13,9 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -36,6 +39,14 @@ public class WandItem extends Item{
 	public static Core getCore(ItemStack stack){
 		String core = stack.getOrCreateTag().getString("core");
 		return Core.getCoreOrError(new ResourceLocation(core));
+	}
+	
+	@Nullable
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
+		AspectBattery battery = new AspectBattery(6, 0);
+		for(Aspect aspect : AspectUtils.primalAspects)
+			battery.createCell(new AspectCell(getCore(stack).maxVis(), aspect));
+		return battery;
 	}
 	
 	public ITextComponent getDisplayName(ItemStack stack){

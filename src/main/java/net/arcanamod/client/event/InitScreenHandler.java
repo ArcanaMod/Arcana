@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Arcana.MODID)
 public class InitScreenHandler{
 	
-	public static final boolean DEBUG_MODE = true;
+	public static final boolean DEBUG_MODE = false;
 	
 	@SubscribeEvent
 	public static void onInitGuiEvent(final GuiScreenEvent.InitGuiEvent event){

@@ -18,7 +18,7 @@ public class ArcanaConfig{
 		COMMON_BUILDER.push("General");
 
 		SPAWN_WITH_NOTES = COMMON_BUILDER
-				.comment("If the player should spawn with the Scribbled notes item when first joining the world")
+				.comment("If the player should spawn with the Scribbled notes item when first joining the world.")
 				.define("SpawnWithNotes", true);
 		ORE_RETROGEN = COMMON_BUILDER
 				.comment("Enables Arcana ore generation in already-generated chunks.", "Chunks generated with Arcana will stay unaffected.")
@@ -65,6 +65,12 @@ public class ArcanaConfig{
 		BOOK_TEXT_SCALING = CLIENT_BUILDER
 				.comment("Text scaling for the research entry GUI.")
 				.define("ResearchBookTextScaling", 0.7);
+		WAND_HUD_LEFT = CLIENT_BUILDER
+				.comment("Whether the wand HUD should display on the left of the screen (true) or the right (false).", "True by default.")
+				.define("WandHudHorizontalSide", true);
+		WAND_HUD_TOP = CLIENT_BUILDER
+				.comment("Whether the wand HUD should display on the top of the screen (true) or the bottom (false).", "True by default.")
+				.define("WandHudVerticalSide", true);
 		CLIENT_BUILDER.pop();
 	}
 	
@@ -90,4 +96,6 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1
 	public static ConfigValue<Integer> CUSTOM_BOOK_HEIGHT; // -1
 	public static ConfigValue<Double> BOOK_TEXT_SCALING; // 0.8
+	public static ConfigValue<Boolean> WAND_HUD_LEFT; // true
+	public static ConfigValue<Boolean> WAND_HUD_TOP; // true
 }
