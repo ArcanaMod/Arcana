@@ -288,6 +288,7 @@
     "block.arcana.table": "Table",
     "block.arcana.jar": "Warded Jar",
     "block.arcana.void_jar": "Void Jar",
+    "block.arcana.secure_jar": "Secure Jar",
     "block.arcana.aspect_bookshelf": "Aspect Bookshelf",
     "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
     "block.arcana.crucible": "Crucible",
