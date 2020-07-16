@@ -247,9 +247,10 @@
     "aspect.wrath": "Ira",
     "aspect.wrath.desc": "Wrath",
 
-    "_comment": "Phials",
+    "_comment": "Aspect Items",
     "item.arcana.empty_phial": "Empty Phial",
     "item.arcana.phial": "Phial of %s",
+    "item.arcana.crystal": "%s Crystal",
 
     "_comment": "Arcana Blocks",
     "block.arcana.arcane_stone": "Arcane Stone",

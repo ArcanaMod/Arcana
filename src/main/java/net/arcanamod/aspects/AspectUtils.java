@@ -29,6 +29,7 @@ public class AspectUtils {
 	public static final Aspect[] primalAspects = new Aspect[]{Aspects.AIR, Aspects.CHAOS, Aspects.EARTH, Aspects.FIRE, Aspects.ORDER, Aspects.WATER};
 	public static List<ItemStack> aspectStacks;
 
+	@SuppressWarnings("deprecation")
 	public static void register(){
 		// Automatically register all aspects' items
 		// Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
@@ -37,7 +38,7 @@ public class AspectUtils {
 				AspectItem item = new AspectItem("aspect_" + aspect.name().toLowerCase());
 				ArcanaItems.ITEMS.register("aspect_" + aspect.name().toLowerCase(), () -> item);
 				aspectItems.add(item);
-				Item crystal = new CrystalItem(new Item.Properties().group(Arcana.ITEMS));
+				Item crystal = new CrystalItem(new Item.Properties().group(Arcana.ITEMS), aspect);
 				ArcanaItems.ITEMS.register(aspect.name().toLowerCase() + "_crystal", () -> crystal);
 				aspectCrystalItems.add(crystal);
 			}
@@ -45,7 +46,10 @@ public class AspectUtils {
 	}
 	
 	public static ItemStack getItemStackForAspect(Aspect aspect){
-		return aspectStacks.get(Aspects.getWithoutEmpty().indexOf(aspect));
+		int i = Aspects.getWithoutEmpty().indexOf(aspect);
+		if(i < 0 || i > aspectStacks.size())
+			return ItemStack.EMPTY;
+		return aspectStacks.get(i);
 	}
 	
 	/**
@@ -58,6 +62,7 @@ public class AspectUtils {
 	 * 		The name of the aspect.
 	 * @return The aspect with that name, or null.
 	 */
+	@SuppressWarnings("deprecation")
 	@Nullable
 	public static Aspect getAspectByName(@Nullable String name){
 		if(name == null)

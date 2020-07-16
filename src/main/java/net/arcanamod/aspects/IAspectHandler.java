@@ -3,11 +3,11 @@ package net.arcanamod.aspects;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Optional;
 
 public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 
@@ -86,8 +86,8 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 
 	void deserializeNBT(CompoundNBT data);
 
-	static Optional<IAspectHandler> getOptional(@Nonnull ICapabilityProvider holder){
-		return Optional.of(holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null).orElse(null));
+	static LazyOptional<IAspectHandler> getOptional(@Nonnull ICapabilityProvider holder){
+		return holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null);
 	}
 
 	@SuppressWarnings("ConstantConditions")

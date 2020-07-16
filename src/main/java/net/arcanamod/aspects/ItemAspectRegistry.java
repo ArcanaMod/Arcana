@@ -1,6 +1,7 @@
 package net.arcanamod.aspects;
 
 import com.google.gson.*;
+import net.arcanamod.items.CrystalItem;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -215,6 +216,24 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			// Add 5x magic to enchanted items
 			if(EnchantmentHelper.getEnchantments(item).size() > 0)
 				stacks.add(new AspectStack(Aspects.MANA, 5));
+		});
+		stackFunctions.add((item, stacks) -> {
+			// Assign crystals their aspects
+			// Could be done with data but I don't care
+			if(item.getItem() instanceof CrystalItem)
+				stacks.add(new AspectStack(((CrystalItem)item.getItem()).aspect, 1));
+		});
+		stackFunctions.add((item, stacks) -> {
+			// Give any aspect handler item their aspects
+			IAspectHandler.getOptional(item).ifPresent(handler -> {
+				List<AspectStack> list = new ArrayList<>();
+				for(IAspectHolder holder : handler.getHolders()){
+					AspectStack stack = holder.getContainedAspectStack();
+					if(!stack.isEmpty())
+						list.add(stack);
+				}
+				stacks.addAll(list);
+			});
 		});
 	}
 }
