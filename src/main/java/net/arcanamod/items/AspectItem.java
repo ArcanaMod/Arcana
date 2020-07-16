@@ -21,7 +21,7 @@ public class AspectItem extends Item{
 	private String aspectName;
 	
 	public AspectItem(String aspectName){
-		super(new Properties().group(Arcana.ASPECTS));
+		super(new Properties());
 		if(aspectName.startsWith("aspect_"))
 			aspectName = aspectName.substring(7);
 		this.aspectName = aspectName;

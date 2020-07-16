@@ -1,5 +1,6 @@
 package net.arcanamod.blocks.tiles;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.containers.ArcaneWorkbenchContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,7 +15,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ArcaneWorkbenchTileEntity extends LockableTileEntity {
 
 	protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
