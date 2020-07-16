@@ -3,6 +3,7 @@ package net.arcanamod.aspects;
 import com.google.gson.*;
 import net.arcanamod.items.CrystalItem;
 import net.arcanamod.util.Pair;
+import net.arcanamod.util.StreamUtils;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
@@ -23,7 +24,6 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.stream.Collectors;
 
 /**
  * Associates items with aspects. Every item is associated with a set of aspect stacks, and item stack may be given extra
@@ -105,14 +105,14 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		Collection<Item> itemMirror = new ArrayList<>(itemAspects.keySet());
 		for(Item item : itemMirror)
 			if(itemAspects.containsKey(item)){
-				List<AspectStack> unSquished = itemAspects.get(item);
-				List<AspectStack> squished = unSquished.stream()
+				List<AspectStack> squished = /*unSquished.stream()
 						// categorize stacks by aspect
 						.collect(Collectors.groupingBy(AspectStack::getAspect)).values().stream()
 						// merge all aspect stacks with the same aspect
 						.map(stacks -> stacks.stream().reduce((left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount())).orElse(AspectStack.EMPTY))
 						// collect
-						.collect(Collectors.toList());
+						.collect(Collectors.toList());*/
+						StreamUtils.partialReduce(itemAspects.get(item), AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
 				itemAspects.put(item, squished);
 			}
 		

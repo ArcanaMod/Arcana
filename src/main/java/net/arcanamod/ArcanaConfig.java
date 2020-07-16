@@ -71,6 +71,9 @@ public class ArcanaConfig{
 		WAND_HUD_TOP = CLIENT_BUILDER
 				.comment("Whether the wand HUD should display on the top of the screen (true) or the bottom (false).", "True by default.")
 				.define("WandHudVerticalSide", true);
+		BLOCK_HUDS_TOP = CLIENT_BUILDER
+				.comment("Whether block HUDS that display in the middle of the screen should display above the crosshair (true) or below (false).", "True by default.")
+				.define("BlockHudsTop", true);
 		CLIENT_BUILDER.pop();
 	}
 	
@@ -98,4 +101,5 @@ public class ArcanaConfig{
 	public static ConfigValue<Double> BOOK_TEXT_SCALING; // 0.8
 	public static ConfigValue<Boolean> WAND_HUD_LEFT; // true
 	public static ConfigValue<Boolean> WAND_HUD_TOP; // true
+	public static ConfigValue<Boolean> BLOCK_HUDS_TOP; // true
 }

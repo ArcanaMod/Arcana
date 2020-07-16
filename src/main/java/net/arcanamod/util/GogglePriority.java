@@ -10,7 +10,7 @@ public enum GogglePriority{
 	SHOW_NODE,
 	SHOW_ASPECTS;
 	
-	public static GogglePriority getGogglePriority(){
+	public static GogglePriority getClientGogglePriority(){
 		ClientPlayerEntity player = Minecraft.getInstance().player;
 		return !(player == null) && !player.getItemStackFromSlot(EquipmentSlotType.HEAD).isEmpty() && player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem() instanceof GoggleBase ? ((GoggleBase)player.getItemStackFromSlot(EquipmentSlotType.HEAD).getItem()).priority : SHOW_NONE;
 	}

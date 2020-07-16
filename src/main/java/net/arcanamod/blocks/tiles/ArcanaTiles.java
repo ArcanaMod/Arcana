@@ -33,6 +33,8 @@ public class ArcanaTiles{
 			TES.register("pedestal", () -> new TileEntityType<>(PedestalTileEntity::new, Sets.newHashSet(ArcanaBlocks.PEDESTAL.get()), null));
 	public static final RegistryObject<TileEntityType<AlembicTileEntity>> ALEMBIC_TE =
 			TES.register("alembic", () -> new TileEntityType<>(AlembicTileEntity::new, Sets.newHashSet(ArcanaBlocks.ALEMBIC.get()), null));
+	public static final RegistryObject<TileEntityType<CrucibleTileEntity>> CRUCIBLE_TE =
+			TES.register("crucible", () -> new TileEntityType<>(CrucibleTileEntity::new, Sets.newHashSet(ArcanaBlocks.CRUCIBLE.get()), null));
 	public static final RegistryObject<TileEntityType<ArcaneCraftingTableTileEntity>> ARCANE_WORKBENCH_TE =
 			TES.register("arcane_crafting_table", () -> new TileEntityType<>(ArcaneCraftingTableTileEntity::new, Sets.newHashSet(ArcanaBlocks.ARCANE_CRAFTING_TABLE.get()), null));
 }

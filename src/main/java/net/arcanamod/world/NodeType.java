@@ -51,7 +51,7 @@ public abstract class NodeType{
 	
 	public void tick(IWorld world, AuraView nodes, Node node){
 		if(world.isRemote()){
-			GogglePriority priority = GogglePriority.getGogglePriority();
+			GogglePriority priority = GogglePriority.getClientGogglePriority();
 			if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
 				world.addParticle(new NodeParticleData(node.nodeUniqueId(), node.type().texture(world, nodes, node), ArcanaParticles.NODE_PARTICLE.get()), node.getX(), node.getY(), node.getZ(), 0, 0, 0);
 		}

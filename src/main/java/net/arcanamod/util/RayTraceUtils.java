@@ -1,7 +1,6 @@
 package net.arcanamod.util;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceContext;
@@ -10,8 +9,8 @@ import net.minecraft.world.World;
 
 public final class RayTraceUtils {
 
-	public static BlockPos getTargetBlockPos(PlayerEntity player, World world, int maxdistance){
-		BlockRayTraceResult rayTraceResult = getTargetBlockResult(player,world, maxdistance);
+	public static BlockPos getTargetBlockPos(PlayerEntity player, World world, int maxDistance){
+		BlockRayTraceResult rayTraceResult = getTargetBlockResult(player,world, maxDistance);
 		return new BlockPos(rayTraceResult.getHitVec().getX(),rayTraceResult.getHitVec().getY(),rayTraceResult.getHitVec().getZ());
 	}
 
@@ -27,12 +26,12 @@ public final class RayTraceUtils {
 		double ym = rayTraceResult.getHitVec().getY();
 		double zm = rayTraceResult.getHitVec().getZ();
 		
-		if(rayTraceResult.getFace() == Direction.SOUTH)
+		/*if(rayTraceResult.getFace() == Direction.SOUTH)
 			zm--;
 		if(rayTraceResult.getFace() == Direction.EAST)
 			xm--;
 		if(rayTraceResult.getFace() == Direction.UP)
-			ym--;
+			ym--;*/
 		
 		return new BlockRayTraceResult(rayTraceResult.getHitVec(), rayTraceResult.getFace(), new BlockPos(xm,ym,zm), false);
 	}

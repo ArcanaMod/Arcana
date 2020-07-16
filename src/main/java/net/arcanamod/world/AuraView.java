@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 public interface AuraView{
 	
-	Function<World, AuraView> SIDED_FACTORY = DistExecutor.runForDist(() -> () -> (world) -> world instanceof ClientWorld ? new ClientAuraView((ClientWorld)world) : null, () -> () -> (world) -> world instanceof ServerWorld ? new ServerAuraView((ServerWorld)world) : null);
+	Function<World, AuraView> SIDED_FACTORY = (world) -> world instanceof ClientWorld ? new ClientAuraView((ClientWorld)world) :  world instanceof ServerWorld ? new ServerAuraView((ServerWorld)world) : null;
 	
 	Collection<Node> getAllNodes();
 	

@@ -1,12 +1,10 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -15,6 +13,7 @@ import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.stats.Stats;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
@@ -28,6 +27,7 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
@@ -36,7 +36,7 @@ import java.util.Random;
 @MethodsReturnNonnullByDefault
 public class CrucibleBlock extends Block{
 	
-	private static final VoxelShape INSIDE = makeCuboidShape(2.0D, 4.0D, 2.0D, 14.0D, 15.0D, 14.0D);
+	public static final VoxelShape INSIDE = makeCuboidShape(2.0D, 4.0D, 2.0D, 14.0D, 15.0D, 14.0D);
 	protected static final VoxelShape SHAPE = VoxelShapes.combineAndSimplify(makeCuboidShape(0, 0, 0, 16, 15, 16), VoxelShapes.or(makeCuboidShape(0.0D, 0.0D, 3.0D, 16.0D, 3.0D, 13.0D), makeCuboidShape(3.0D, 0.0D, 0.0D, 13.0D, 3.0D, 16.0D), makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 3.0D, 14.0D), INSIDE), IBooleanFunction.ONLY_FIRST);
 	
 	public static final BooleanProperty FULL = BooleanProperty.create("full");
@@ -64,9 +64,19 @@ public class CrucibleBlock extends Block{
 	
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rayTrace){
 		ItemStack itemstack = player.getHeldItem(handIn);
-		if(itemstack.isEmpty())
+		if(itemstack.isEmpty()){
+			if(player.isCrouching()){
+				if(state.get(FULL)){
+					if(!world.isRemote){
+						world.setBlockState(pos, state.with(FULL, false), 2);
+						world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+					}
+					((CrucibleTileEntity)world.getTileEntity(pos)).empty();
+				}
+				return ActionResultType.SUCCESS;
+			}
 			return ActionResultType.PASS;
-		else{
+		}else{
 			Item item = itemstack.getItem();
 			if(item == Items.WATER_BUCKET){
 				if(!state.get(FULL) && !world.isRemote){
@@ -78,7 +88,7 @@ public class CrucibleBlock extends Block{
 				}
 				return ActionResultType.SUCCESS;
 			}else if(item == Items.BUCKET){
-				if(state.get(FULL) && !world.isRemote){
+				if(state.get(FULL) && !world.isRemote && ((CrucibleTileEntity)world.getTileEntity(pos)).getAspectStacks().isEmpty()){
 					if(!player.abilities.isCreativeMode){
 						itemstack.shrink(1);
 						if(itemstack.isEmpty())
@@ -96,11 +106,16 @@ public class CrucibleBlock extends Block{
 		return super.onBlockActivated(state, world, pos, player, handIn, rayTrace);
 	}
 	
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving){
+		TileEntity entity = world.getTileEntity(pos);
+		if(entity instanceof CrucibleTileEntity)
+			((CrucibleTileEntity)entity).empty();
+		super.onReplaced(state, world, pos, newState, isMoving);
+	}
+	
 	public void animateTick(BlockState state, World world, BlockPos pos, Random rand){
 		// if boiling, show bubbles
-		BlockState below = world.getBlockState(pos.down());
-		IFluidState fluidState = world.getFluidState(pos.down());
-		if(state.get(FULL) && (below.getBlock() == Blocks.FIRE || below.getBlock() == Blocks.MAGMA_BLOCK || fluidState.getFluid() == Fluids.FLOWING_LAVA || fluidState.getFluid() == Fluids.LAVA)){
+		if(((CrucibleTileEntity)world.getTileEntity(pos)).isBoiling()){
 			// we boiling
 			double x = pos.getX();
 			double y = pos.getY();
@@ -120,5 +135,16 @@ public class CrucibleBlock extends Block{
 					world.setBlockState(pos, blockstate.with(FULL, true), 2);
 			}
 		}
+	}
+	
+	@Override
+	public boolean hasTileEntity(BlockState state){
+		return true;
+	}
+	
+	@Nullable
+	@Override
+	public TileEntity createTileEntity(BlockState state, IBlockReader world){
+		return new CrucibleTileEntity();
 	}
 }

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 
 public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, VisShareable
 {
-	AspectBattery aspectBattery = new AspectBattery(9,8);
+	AspectBattery aspectBattery = new AspectBattery(9, 8);
 
 	public AspectBookshelfTileEntity() {
 		super(ArcanaTiles.ASPECT_SHELF_TE.get());
@@ -65,7 +65,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 		return count;
 	}
 
-	public AspectBattery UpdateBatteryAndReturn()
+	public AspectBattery updateBatteryAndReturn()
 	{
 		for (int i = 0; i < items.size(); i++) {
 			if (!items.get(i).isEmpty()) {
@@ -85,7 +85,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
 		if (cap == AspectHandlerCapability.ASPECT_HANDLER)
-			return UpdateBatteryAndReturn().getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
+			return updateBatteryAndReturn().getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		else return null;
 	}
 
