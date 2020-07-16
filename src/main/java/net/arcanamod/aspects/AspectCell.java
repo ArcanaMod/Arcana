@@ -97,8 +97,8 @@ public class AspectCell implements IAspectHolder {
 		int capacity = compoundNBT.getInt("capacity");
 		int amount = compoundNBT.getInt("amount");
 		Aspect aspect = Aspects.valueOf(compoundNBT.getString("aspect").toUpperCase());
-		// valueOf is null when given a null whitelist
-		Aspect whitelist = Aspects.valueOf(compoundNBT.getString("whitelisted").toUpperCase());
+		String whitelisted = compoundNBT.getString("whitelisted");
+		Aspect whitelist = whitelisted.equals("null") ? null : Aspects.valueOf(whitelisted.toUpperCase());
 		AspectCell cell = new AspectCell(capacity != 0 ? capacity : 100, whitelist);
 		cell.insert(new AspectStack(aspect, amount), false);
 		return cell;

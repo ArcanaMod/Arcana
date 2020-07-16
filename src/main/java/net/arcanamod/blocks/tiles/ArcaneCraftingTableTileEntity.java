@@ -1,5 +1,6 @@
 package net.arcanamod.blocks.tiles;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.containers.ArcaneWorkbenchContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -14,13 +15,13 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ArcaneCraftingTableTileEntity extends LockableTileEntity {
 
-	protected NonNullList<ItemStack> items = NonNullList.withSize(15, ItemStack.EMPTY);
-	// C 123 C
-	// C 456 C
-	// C 789 C
+	protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
 
 	public ArcaneCraftingTableTileEntity() {
 		super(ArcanaTiles.ARCANE_WORKBENCH_TE.get());

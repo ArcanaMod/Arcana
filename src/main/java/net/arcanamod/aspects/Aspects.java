@@ -163,9 +163,8 @@ public class Aspects {
 	 */
 	public static List<Aspect> getWithoutEmpty()
 	{
-		Aspect[] modified_values = Arrays.copyOfRange(values(),1,values().length);
-		List<Aspect> aspects = Arrays.asList(modified_values);
-		return aspects;
+		Aspect[] modifiedValues = Arrays.copyOfRange(values(),1,values().length);
+		return Arrays.asList(modifiedValues);
 	}
 
 	/**

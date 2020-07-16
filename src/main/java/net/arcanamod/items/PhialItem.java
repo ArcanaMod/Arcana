@@ -125,8 +125,8 @@ public class PhialItem extends Item{
     @Override
     public CompoundNBT getShareTag(ItemStack stack) {
         IAspectHandler vis = IAspectHandler.getFrom(stack);
-        if (vis!=null) {
-            if (vis.getHolder(0)!=null) {
+        if(vis != null){
+            if(vis.getHolder(0) != null){
                 Aspect aspect = vis.getHolder(0).getContainedAspect();
                 int amount = vis.getHolder(0).getCurrentVis();
                 if (aspect != null && amount != 0) {
