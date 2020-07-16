@@ -1,6 +1,7 @@
 package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaSounds;
 import net.arcanamod.blocks.bases.*;
 import net.arcanamod.blocks.multiblocks.BoosterTaintScrubberExtensionBlock;
 import net.arcanamod.blocks.multiblocks.TaintScrubberBlock;
@@ -107,7 +108,9 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_SILVER_ORE = BLOCKS.register("tainted_silver_ore", () -> taintedOf(SILVER_ORE.get()));
 
 	// Functional Blocks
-	public static final RegistryObject<Block> JAR = BLOCKS.register("jar", () -> new JarBlock(create(GLASS)));
+	public static final RegistryObject<Block> JAR = BLOCKS.register("jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.25f), JarBlock.Type.BASIC));
+	public static final RegistryObject<Block> SECURE_JAR = BLOCKS.register("secure_jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.3f), JarBlock.Type.SECURED));
+	public static final RegistryObject<Block> VOID_JAR = BLOCKS.register("void_jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.3f), JarBlock.Type.VOID)); // TODO: implement void jar function
 	public static final RegistryObject<Block> ASPECT_BOOKSHELF = BLOCKS.register("aspect_bookshelf", () -> new AspectBookshelfBlock(create(WOOD).hardnessAndResistance(6)));
 	public static final RegistryObject<Block> RESEARCH_TABLE = BLOCKS.register("research_table", () -> new ResearchTableBlock(create(WOOD).hardnessAndResistance(3).notSolid()));
 	public static final RegistryObject<Block> ARCANE_CRAFTING_TABLE = BLOCKS.register("arcane_crafting_table", () -> new WaterloggableBlock(create(WOOD).hardnessAndResistance(2).notSolid()));

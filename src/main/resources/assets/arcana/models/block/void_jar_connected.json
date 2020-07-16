@@ -1,9 +1,11 @@
 {
-	"parent": "block/cube_all",
 	"credit": "Made with Blockbench",
+	"parent": "block/cube_all",
+	"ambientocclusion": false,
 	"textures": {
-		"0": "arcana:block/jar",
-		"particle": "arcana:block/jar_particle"
+		"0": "arcana:block/jar_void",
+		"particle": "arcana:block/jar_particle",
+		"1_0": "arcana:block/essentia_pipe"
 	},
 	"elements": [
 		{
@@ -30,6 +32,17 @@
 				"west": {"uv": [3, 15, 4.5, 16], "texture": "#0"},
 				"up": {"uv": [3, 15, 1.5, 12], "texture": "#0"},
 				"down": {"uv": [4.5, 12, 3, 15], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6, 14, 6],
+			"to": [10, 16, 10],
+			"faces": {
+				"north": {"uv": [7, 15, 9, 16], "rotation": 180, "texture": "#1_0"},
+				"east": {"uv": [15, 7, 16, 9], "rotation": 270, "texture": "#1_0"},
+				"south": {"uv": [7, 0, 9, 1], "texture": "#1_0"},
+				"west": {"uv": [0, 7, 1, 9], "rotation": 90, "texture": "#1_0"},
+				"up": {"uv": [7, 7, 9, 9], "rotation": 180, "texture": "#1_0", "cullface": "north"}
 			}
 		}
 	],
@@ -68,6 +81,5 @@
 			"name": "bone",
 			"origin": [0, 0, 0],
 			"children": [0, 1]
-		}
-	]
+		}, 2]
 }

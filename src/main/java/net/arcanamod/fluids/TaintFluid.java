@@ -33,7 +33,7 @@ public class TaintFluid extends FlowingFluidBlock{
 
 	@Override
 	public MaterialColor getMaterialColor(BlockState p_180659_1_, IBlockReader p_180659_2_, BlockPos p_180659_3_){
-		return MaterialColor.RED;
+		return MaterialColor.PURPLE;
 	}
 
 	@Override

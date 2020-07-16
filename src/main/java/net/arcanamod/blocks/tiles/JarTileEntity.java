@@ -3,6 +3,7 @@ package net.arcanamod.blocks.tiles;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.JarBlock;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -22,14 +23,21 @@ import java.awt.*;
 @MethodsReturnNonnullByDefault
 public class JarTileEntity extends TileEntity implements ITickableTileEntity, VisShareable{
 
+	private final JarBlock.Type jar_type;
 	public AspectBattery vis = new AspectBattery(1, 100);
 
 	protected float smoothAmountVisContentAnimation = 0;
 
 	long last_time = System.nanoTime();
 
+	public JarTileEntity(JarBlock.Type type){
+		super(ArcanaTiles.JAR_TE.get());
+		this.jar_type = type;
+	}
+
 	public JarTileEntity(){
 		super(ArcanaTiles.JAR_TE.get());
+		this.jar_type = JarBlock.Type.BASIC;
 	}
 
 	@Override
@@ -152,5 +160,9 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	@Override
 	public void tick(){
 		vis.getHolder(0).getContainedAspect().aspectTick(this);
+	}
+
+	public JarBlock.Type getJarType() {
+		return jar_type;
 	}
 }

@@ -4,7 +4,7 @@
 	"ambientocclusion": false,
 	"textures": {
 		"0": "arcana:block/jar",
-		"particle": "arcana:block/essentia_pipe",
+		"particle": "arcana:block/jar_particle",
 		"1_0": "arcana:block/essentia_pipe"
 	},
 	"elements": [

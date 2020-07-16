@@ -24,9 +24,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class JarBlock extends Block{
 	public static final BooleanProperty UP = BooleanProperty.create("up");
-	
-	public JarBlock(Properties properties){
+	private Type type;
+
+	public JarBlock(Properties properties, Type type){
 		super(properties);
+		this.type = type;
 		setDefaultState(stateContainer.getBaseState().with(UP, Boolean.FALSE));
 	}
 	
@@ -50,7 +52,7 @@ public class JarBlock extends Block{
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
-		return new JarTileEntity();
+		return new JarTileEntity(this.type);
 	}
 
 	@Override
@@ -87,5 +89,11 @@ public class JarBlock extends Block{
 			itemstack.setTagInfo("BlockEntityTag", compoundnbt);
 		
 		return itemstack;
+	}
+
+	public enum Type{
+		BASIC,
+		SECURED,
+		VOID
 	}
 }

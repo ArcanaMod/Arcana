@@ -14,7 +14,7 @@ public class ArcanaTiles{
 	public static final DeferredRegister<TileEntityType<?>> TES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Arcana.MODID);
 
 	public static final RegistryObject<TileEntityType<JarTileEntity>> JAR_TE =
-			TES.register("jar", () -> new TileEntityType<>(JarTileEntity::new, Sets.newHashSet(ArcanaBlocks.JAR.get()), null));
+			TES.register("jar", () -> new TileEntityType<>(JarTileEntity::new, Sets.newHashSet(ArcanaBlocks.JAR.get(),ArcanaBlocks.SECURE_JAR.get(),ArcanaBlocks.VOID_JAR.get()), null));
 	public static final RegistryObject<TileEntityType<AspectBookshelfTileEntity>> ASPECT_SHELF_TE =
 			TES.register("aspect_shelf", () -> new TileEntityType<>(AspectBookshelfTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_BOOKSHELF.get()), null));
 	public static final RegistryObject<TileEntityType<ResearchTableTileEntity>> RESEARCH_TABLE_TE =
@@ -33,6 +33,6 @@ public class ArcanaTiles{
 			TES.register("pedestal", () -> new TileEntityType<>(PedestalTileEntity::new, Sets.newHashSet(ArcanaBlocks.PEDESTAL.get()), null));
 	public static final RegistryObject<TileEntityType<AlembicTileEntity>> ALEMBIC_TE =
 			TES.register("alembic", () -> new TileEntityType<>(AlembicTileEntity::new, Sets.newHashSet(ArcanaBlocks.ALEMBIC.get()), null));
-	public static final RegistryObject<TileEntityType<ArcaneWorkbenchTileEntity>> ARCANE_WORKBENCH_TE =
-			TES.register("arcane_workbench", () -> new TileEntityType<>(ArcaneWorkbenchTileEntity::new, Sets.newHashSet(ArcanaBlocks.ARCANE_CRAFTING_TABLE.get()), null));
+	public static final RegistryObject<TileEntityType<ArcaneCraftingTableTileEntity>> ARCANE_WORKBENCH_TE =
+			TES.register("arcane_crafting_table", () -> new TileEntityType<>(ArcaneCraftingTableTileEntity::new, Sets.newHashSet(ArcanaBlocks.ARCANE_CRAFTING_TABLE.get()), null));
 }

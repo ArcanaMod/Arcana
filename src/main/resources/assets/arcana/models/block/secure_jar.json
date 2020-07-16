@@ -2,7 +2,7 @@
 	"parent": "block/cube_all",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "arcana:block/jar",
+		"0": "arcana:block/jar_secure",
 		"particle": "arcana:block/jar_particle"
 	},
 	"elements": [

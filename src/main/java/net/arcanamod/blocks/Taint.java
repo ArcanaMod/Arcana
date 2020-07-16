@@ -155,12 +155,14 @@ public class Taint{
 	public static void tickTaintInContainer(Object sender) {
 		if (sender instanceof JarTileEntity){
 			JarTileEntity jar = (JarTileEntity)sender;
-			if (jar.getWorld().rand.nextInt(20)==2)
-				jar.vis.drain(0,1,false);
-			if (jar.getWorld().isRemote) return;
-			ServerAuraView auraView = new ServerAuraView((ServerWorld) jar.getWorld());
-			if (jar.getWorld().rand.nextInt(20)==2)
-				auraView.addTaintAt(jar.getPos(),1);
+			if (jar.getJarType() != JarBlock.Type.SECURED) {
+				if (jar.getWorld().rand.nextInt(20) == 2)
+					jar.vis.drain(0, 1, false);
+				if (jar.getWorld().isRemote) return;
+				ServerAuraView auraView = new ServerAuraView((ServerWorld) jar.getWorld());
+				if (jar.getWorld().rand.nextInt(20) == 2)
+					auraView.addTaintAt(jar.getPos(), 1);
+			}
 		}
 	}
 	@SuppressWarnings({"rawtypes"})

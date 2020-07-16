@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "up=false": {
+      "model": "arcana:block/void_jar"
+    },
+    "up=true": {
+      "model": "arcana:block/void_jar_connected"
+    }
+  }
+}

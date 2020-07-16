@@ -1,6 +1,6 @@
 package net.arcanamod.containers;
 
-import net.arcanamod.blocks.tiles.ArcaneWorkbenchTileEntity;
+import net.arcanamod.blocks.tiles.ArcaneCraftingTableTileEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -11,14 +11,14 @@ import javax.annotation.Nullable;
 
 public class ArcaneWorkbenchContainer extends Container {
 
-	ArcaneWorkbenchTileEntity origin;
+	ArcaneCraftingTableTileEntity origin;
 
-	public ArcaneWorkbenchContainer(@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, ArcaneWorkbenchTileEntity origin) {
+	public ArcaneWorkbenchContainer(@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, ArcaneCraftingTableTileEntity origin) {
 		super(type, id);
 		this.origin = origin;
 	}
 
-	public ArcaneWorkbenchContainer(int id, PlayerInventory inventory, ArcaneWorkbenchTileEntity origin) {
+	public ArcaneWorkbenchContainer(int id, PlayerInventory inventory, ArcaneCraftingTableTileEntity origin) {
 		this(ArcanaContainers.ARCANE_WORKBENCH.get(), id, inventory, origin);
 	}
 
@@ -33,6 +33,6 @@ public class ArcaneWorkbenchContainer extends Container {
 	 */
 	@Override
 	public boolean canInteractWith(PlayerEntity playerIn) {
-		return this.origin.isUsableByPlayer(playerIn);
+		return this.origin == null || this.origin.isUsableByPlayer(playerIn);
 	}
 }

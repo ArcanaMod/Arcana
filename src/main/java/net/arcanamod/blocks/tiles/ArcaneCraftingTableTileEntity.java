@@ -15,11 +15,14 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import javax.annotation.Nullable;
 
-public class ArcaneWorkbenchTileEntity extends LockableTileEntity {
+public class ArcaneCraftingTableTileEntity extends LockableTileEntity {
 
-	protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
+	protected NonNullList<ItemStack> items = NonNullList.withSize(15, ItemStack.EMPTY);
+	// C 123 C
+	// C 456 C
+	// C 789 C
 
-	public ArcaneWorkbenchTileEntity() {
+	public ArcaneCraftingTableTileEntity() {
 		super(ArcanaTiles.ARCANE_WORKBENCH_TE.get());
 	}
 
@@ -81,8 +84,6 @@ public class ArcaneWorkbenchTileEntity extends LockableTileEntity {
 	 */
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		ItemStack itemstack = this.items.get(index);
-		boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
 		this.items.set(index, stack);
 		if (stack.getCount() > this.getInventoryStackLimit()) {
 			stack.setCount(this.getInventoryStackLimit());
