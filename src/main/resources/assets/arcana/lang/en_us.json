@@ -16,6 +16,7 @@
     "_comment": "Items",
     "item.arcana.scribbled_notes": "Scribbled Notes",
     "item.arcana.scribbled_notes_complete": "Complete Scribbled Notes",
+    "item.arcana.taint_fluid_bucket": "Tainted Goo Bucket",
 
     "_comment": "Wands",
     "item.arcana.error_wand": "%s Errorred Wand",
@@ -441,6 +442,10 @@
     "block.arcana.taint_scrubber_mk1": "Taint Scrubber",
     "block.arcana.taint_scrubber_mk2": "Taint Scrubber Base",
 
+    "_comment": "Dead",
+    "block.arcana.dead_grass": "Dead Grass",
+    "block.arcana.dead_grass_block": "Dead Grass Block",
+    "block.arcana.dead_flower": "Dead Flower",
 
     "_comment": "Tainted",
     "block.arcana.tainted_acacia_leaves": "Tainted Acacia Leaves",
@@ -593,6 +598,7 @@
     "block.arcana.tainted_stone_bricks": "Tainted Stone Bricks",
     "block.arcana.tainted_stone_bricks_slab": "Tainted Stone Brick Slab",
     "block.arcana.tainted_stone_bricks_stairs": "Tainted Stone Brick Stairs",
+    "block.arcana.tainted_mushroom": "Tainted Mushroom",
 
     "_comment": "Commands",
     "commands.arcana.research.invalid_entry": "Invalid entry \"%s\"!",
@@ -636,6 +642,9 @@
     "devtools.arcana_book_editmode": "Edit Arcanum",
     "devtools.arcana": "Arcana Tools",
     "devtools.mojang": "Mojang Tools",
+
+    "_comment": "Fluids",
+    "fluid.arcana.taint_fluid": "Tainted Goo",
 
     "_comment": "Research",
     "requirement.guesswork": "Guess the Recipe",
