@@ -158,6 +158,11 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	}
 
 	@Override
+	public boolean isSecure() {
+		return jar_type == JarBlock.Type.SECURED;
+	}
+
+	@Override
 	public void tick(){
 		vis.getHolder(0).getContainedAspect().aspectTick(this);
 	}

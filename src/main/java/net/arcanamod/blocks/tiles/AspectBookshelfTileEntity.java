@@ -203,4 +203,9 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	public boolean isVisShareable() {
 		return true;
 	}
+
+	@Override
+	public boolean isSecure() {
+		return false;
+	}
 }

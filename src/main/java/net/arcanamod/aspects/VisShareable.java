@@ -7,4 +7,6 @@ package net.arcanamod.aspects;
 public interface VisShareable{
 	
 	boolean isVisShareable();
+
+	boolean isSecure();
 }

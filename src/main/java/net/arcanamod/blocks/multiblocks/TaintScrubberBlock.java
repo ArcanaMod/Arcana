@@ -102,7 +102,8 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 				if (dead.hasTileEntity(world.getBlockState(taintingPos))){
 					TileEntity teinbox = world.getTileEntity(taintingPos);
 					if (teinbox instanceof VisShareable){
-						if (((VisShareable)teinbox).isVisShareable()) {
+						VisShareable shareable = ((VisShareable)teinbox);
+						if (shareable.isVisShareable() && !shareable.isSecure()) {
 							AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(teinbox);
 							if (vis != null) {
 								if (vis.getHoldersAmount()!=0)

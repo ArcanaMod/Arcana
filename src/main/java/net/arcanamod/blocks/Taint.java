@@ -3,6 +3,7 @@ package net.arcanamod.blocks;
 import com.google.common.collect.Lists;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.VisShareable;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
@@ -155,7 +156,7 @@ public class Taint{
 	public static void tickTaintInContainer(Object sender) {
 		if (sender instanceof JarTileEntity){
 			JarTileEntity jar = (JarTileEntity)sender;
-			if (jar.getJarType() != JarBlock.Type.SECURED) {
+			if (!((VisShareable)jar).isSecure()) {
 				if (jar.getWorld().rand.nextInt(20) == 2)
 					jar.vis.drain(0, 1, false);
 				if (jar.getWorld().isRemote) return;
