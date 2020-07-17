@@ -41,7 +41,8 @@ public class AspectCell implements IAspectHolder {
 			if(!simulate)
 				stored = new AspectStack(stack.getAspect(), getCapacity(stack.getAspect()));
 			this.onInsertWhenFull(stack);
-			return stack.getAmount() - capacityRemaining;
+			if (ignoreFullness) return 0;
+			else return stack.getAmount() - capacityRemaining;
 		}
 	}
 

@@ -78,7 +78,7 @@ public class PhialItem extends Item{
                     for (IAspectHolder holder : tileHandle.getHolders())
                         if ((holder.getCapacity() - holder.getCurrentVis() > 0 || holder.isIgnoringFullness()) && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY)) {
                             int inserted = holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
-                            if (inserted != 0 && !holder.isIgnoringFullness()) {
+                            if (inserted != 0) {
                                 ItemStack new_phial = new ItemStack(this, 1);
                                 IAspectHolder old_holder = IAspectHandler.getFrom(context.getItem()).getHolder(0);
                                 IAspectHolder new_holder = IAspectHandler.getFrom(new_phial).getHolder(0);
