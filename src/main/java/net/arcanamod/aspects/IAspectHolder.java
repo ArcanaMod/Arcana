@@ -94,4 +94,10 @@ public interface IAspectHolder {
 	Aspect getContainedAspect();
 
 	void setCapacity(int defaultCellSize);
+
+	void clear();
+
+	boolean isIgnoringFullness();
+
+	void setIgnoreFullness(boolean ignoreFullness);
 }

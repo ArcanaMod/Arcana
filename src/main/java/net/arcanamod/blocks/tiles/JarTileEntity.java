@@ -33,8 +33,13 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	public JarTileEntity(JarBlock.Type type){
 		super(ArcanaTiles.JAR_TE.get());
 		this.jar_type = type;
+		vis.getHolder(0).setIgnoreFullness(type == JarBlock.Type.VOID);
 	}
 
+	/**
+	 * @deprecated This is required when TileEntity is created. Please use JarTileEntity(JarBlock.Type).
+	 */
+	@Deprecated
 	public JarTileEntity(){
 		super(ArcanaTiles.JAR_TE.get());
 		this.jar_type = JarBlock.Type.BASIC;
@@ -46,6 +51,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		Aspect aspect = compound.getInt("aspect") != -1 ? Aspects.values()[compound.getInt("aspect")+1] : Aspects.EMPTY;
 		AspectCell cell = new AspectCell();
 		cell.insert(new AspectStack(aspect,compound.getInt("amount")),false);
+		cell.setIgnoreFullness(jar_type == JarBlock.Type.VOID);
 		vis.replaceCell(0, cell);
 	}
 
@@ -120,7 +126,6 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	//  it uses getUpdatePacket(), getUpdateTag(), onDataPacket(), and handleUpdateTag() to do this:
 	//  getUpdatePacket() and onDataPacket() are used for one-at-a-time TileEntity updates
 	//  getUpdateTag() and handleUpdateTag() are used by vanilla to collate together into a single chunk update packet
-	//  Not really required for this example since we only use the timer on the client, but included anyway for illustration
 	@Override
 	@Nullable
 	public SUpdateTileEntityPacket getUpdatePacket()

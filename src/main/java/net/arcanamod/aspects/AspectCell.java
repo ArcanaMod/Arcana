@@ -10,6 +10,8 @@ public class AspectCell implements IAspectHolder {
 	private Aspect optionalWhitelist = null;
 	private int capacity;
 
+	public boolean ignoreFullness = false;
+
 	public AspectCell(){
 		this(100);
 	}
@@ -38,6 +40,7 @@ public class AspectCell implements IAspectHolder {
 		}else{
 			if(!simulate)
 				stored = new AspectStack(stack.getAspect(), getCapacity(stack.getAspect()));
+			this.onInsertWhenFull(stack);
 			return stack.getAmount() - capacityRemaining;
 		}
 	}
@@ -115,6 +118,24 @@ public class AspectCell implements IAspectHolder {
 	@Override
 	public void setCapacity(int defaultCellSize) {
 		capacity = defaultCellSize;
+	}
+
+	public void onInsertWhenFull(AspectStack stack) {
+
+	}
+
+	@Override
+	public void clear() {
+		stored = AspectStack.EMPTY;
+	}
+
+	@Override
+	public boolean isIgnoringFullness() {
+		return ignoreFullness;
+	}
+
+	public void setIgnoreFullness(boolean ignoreFullness) {
+		this.ignoreFullness = ignoreFullness;
 	}
 
 	@Override

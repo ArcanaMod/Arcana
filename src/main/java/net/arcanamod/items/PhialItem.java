@@ -73,13 +73,22 @@ public class PhialItem extends Item{
                             holder.drain(new AspectStack(aspect, min), false);
                             return ActionResultType.SUCCESS;
                         }
-                }else{
+                }else {
                     // insert to block
-                    for(IAspectHolder holder : tileHandle.getHolders())
-                        if(holder.getCapacity() - holder.getCurrentVis() > 0 && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY)){
-                            holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
+                    for (IAspectHolder holder : tileHandle.getHolders())
+                        if ((holder.getCapacity() - holder.getCurrentVis() > 0 || holder.isIgnoringFullness()) && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY)) {
+                            int inserted = holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
+                            if (inserted != 0 && !holder.isIgnoringFullness()) {
+                                ItemStack new_phial = new ItemStack(this, 1);
+                                IAspectHolder old_holder = IAspectHandler.getFrom(context.getItem()).getHolder(0);
+                                IAspectHolder new_holder = IAspectHandler.getFrom(new_phial).getHolder(0);
+                                new_holder.insert(new AspectStack(old_holder.getContainedAspect(), inserted), false);
+                                new_phial.setTag(new_phial.getShareTag());
+                                context.getPlayer().addItemStackToInventory(new_phial);
+                            }
+                            else
+                                context.getPlayer().addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
                             context.getItem().shrink(1);
-                            context.getPlayer().addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
                             return ActionResultType.SUCCESS;
                         }
                 }

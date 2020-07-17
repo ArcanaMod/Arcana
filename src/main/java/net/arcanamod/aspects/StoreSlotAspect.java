@@ -265,6 +265,16 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	}
 
 	@Override
+	public boolean isIgnoringFullness() {
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public void setIgnoreFullness(boolean ignoreFullness) {
+		throw new NotImplementedException();
+	}
+
+	@Override
 	public IAspectHolder findAspectInHolders(Aspect aspect) {
 		return this;
 	}

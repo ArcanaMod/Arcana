@@ -337,6 +337,18 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		public void setCapacity(int defaultCellSize){
 			cell.setCapacity(defaultCellSize);
 		}
+
+		public void clear(){
+			cell.clear();
+		}
+
+		public boolean isIgnoringFullness(){
+			return cell.isIgnoringFullness();
+		}
+
+		public void setIgnoreFullness(boolean ignoreFullness){
+			cell.setIgnoreFullness(ignoreFullness);
+		}
 	}
 
 	@Override

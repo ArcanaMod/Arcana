@@ -63,7 +63,7 @@ public class ClientProxy extends CommonProxy{
 		ModelLoaderRegistry.registerLoader(new ResourceLocation(MODID, "wand_loader"), new WandModelLoader());
 		
 		Minecraft.getInstance().getBlockColors().register((state, access, pos, index) -> {
-			if(access == null || pos == null || access.getTileEntity(pos) == null)
+			if(access == null || pos == null || access.getTileEntity(pos) == null || !(access.getTileEntity(pos) instanceof AspectWindowTileEntity))
 				return 0xFF1F0D0B;
 			return ((AspectWindowTileEntity)access.getTileEntity(pos)).getColor();
 		}, ArcanaBlocks.ASPECT_WINDOW.get());
