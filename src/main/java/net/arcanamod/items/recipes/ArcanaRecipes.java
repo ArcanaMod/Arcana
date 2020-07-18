@@ -1,4 +1,4 @@
-package net.arcanamod.items;
+package net.arcanamod.items.recipes;
 
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.SpecialRecipeSerializer;
@@ -13,5 +13,6 @@ public class ArcanaRecipes{
 	
 	public static final DeferredRegister<IRecipeSerializer<?>> SERIALIZERS = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
 	
-	public static final RegistryObject<IRecipeSerializer<RecipeWands>> CRAFING_WANDS = SERIALIZERS.register("crafting_special_wands", () -> new SpecialRecipeSerializer<>(RecipeWands::new));
+	public static final RegistryObject<IRecipeSerializer<WandsRecipe>> CRAFTING_WANDS = SERIALIZERS.register("crafting_special_wands", () -> new SpecialRecipeSerializer<>(WandsRecipe::new));
+	public static final RegistryObject<IRecipeSerializer<AlchemyRecipe>> ALCHEMY = SERIALIZERS.register("alchemy", AlchemyRecipe.Serializer::new);
 }

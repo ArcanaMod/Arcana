@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:ingots/iron"
+  },
+  "out": {
+    "item": "arcana:arcanium_ingot"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 6
+    }
+  ]
+}

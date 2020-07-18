@@ -14,7 +14,7 @@ import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.ArcanaRecipes;
+import net.arcanamod.items.recipes.ArcanaRecipes;
 import net.arcanamod.network.Connection;
 import net.arcanamod.research.EntrySection;
 import net.arcanamod.research.Puzzle;

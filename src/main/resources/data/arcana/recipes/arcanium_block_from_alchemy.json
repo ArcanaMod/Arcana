@@ -1,0 +1,15 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:storage_blocks/iron"
+  },
+  "out": {
+    "item": "arcana:arcanium_block"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 54
+    }
+  ]
+}

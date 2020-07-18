@@ -1,8 +1,7 @@
-package net.arcanamod.items;
+package net.arcanamod.items.recipes;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.ArcanaRecipes;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.CapItem;
@@ -26,7 +25,7 @@ import java.util.function.Function;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class RecipeWands extends SpecialRecipe{
+public class WandsRecipe extends SpecialRecipe{
 	
 	// For items that aren't CapItems or CoreItems that are associated with a Cap or Core.
 	// The item is counted as a cap or core by isCap and isCore if the function returns nonnull.
@@ -38,7 +37,7 @@ public class RecipeWands extends SpecialRecipe{
 		EXTRA_CORES.put(Items.STICK, __ -> ArcanaItems.WOOD_WAND_CORE);
 	}
 	
-	public RecipeWands(ResourceLocation id){
+	public WandsRecipe(ResourceLocation id){
 		super(id);
 	}
 	
@@ -77,7 +76,7 @@ public class RecipeWands extends SpecialRecipe{
 	}
 	
 	public IRecipeSerializer<?> getSerializer(){
-		return ArcanaRecipes.CRAFING_WANDS.get();
+		return ArcanaRecipes.CRAFTING_WANDS.get();
 	}
 	
 	private static boolean isCore(@Nullable ItemStack stack){
