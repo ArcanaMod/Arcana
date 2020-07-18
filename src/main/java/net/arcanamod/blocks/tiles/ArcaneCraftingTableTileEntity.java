@@ -1,14 +1,14 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.containers.ArcaneWorkbenchContainer;
+import net.arcanamod.containers.ArcaneCraftingTableContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.LockableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -19,9 +19,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ArcaneCraftingTableTileEntity extends LockableTileEntity {
+public class ArcaneCraftingTableTileEntity extends LockableTileEntity implements ISidedInventory {
 
-	protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
+	protected NonNullList<ItemStack> items = NonNullList.withSize(16, ItemStack.EMPTY);
 
 	public ArcaneCraftingTableTileEntity() {
 		super(ArcanaTiles.ARCANE_WORKBENCH_TE.get());
@@ -34,7 +34,7 @@ public class ArcaneCraftingTableTileEntity extends LockableTileEntity {
 
 	@Override
 	protected Container createMenu(int id, PlayerInventory player) {
-		return new ArcaneWorkbenchContainer(id,player,this);
+		return new ArcaneCraftingTableContainer(id,player,this);
 	}
 
 	/**
@@ -104,5 +104,34 @@ public class ArcaneCraftingTableTileEntity extends LockableTileEntity {
 	@Override
 	public void clear() {
 
+	}
+
+	@Override
+	public int[] getSlotsForFace(Direction side) {
+		return new int[0];
+	}
+
+	/**
+	 * Returns true if automation can insert the given item in the given slot from the given side.
+	 *
+	 * @param index
+	 * @param itemStackIn
+	 * @param direction
+	 */
+	@Override
+	public boolean canInsertItem(int index, ItemStack itemStackIn, @Nullable Direction direction) {
+		return false;
+	}
+
+	/**
+	 * Returns true if automation can extract the given item in the given slot from the given side.
+	 *
+	 * @param index
+	 * @param stack
+	 * @param direction
+	 */
+	@Override
+	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
+		return false;
 	}
 }

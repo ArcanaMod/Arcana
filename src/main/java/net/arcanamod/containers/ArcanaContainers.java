@@ -11,5 +11,5 @@ public class ArcanaContainers{
 	public static final DeferredRegister<ContainerType<?>> CON = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Arcana.MODID);
 	
 	public static final RegistryObject<ContainerType<ResearchTableContainer>> REASERCH_TABLE = CON.register("research_table", () -> IForgeContainerType.create(ResearchTableContainer::new));
-	public static final RegistryObject<ContainerType<ArcaneWorkbenchContainer>> ARCANE_WORKBENCH = CON.register("arcane_workbench", () -> IForgeContainerType.create(ArcaneWorkbenchContainer::new));
+	public static final RegistryObject<ContainerType<ArcaneCraftingTableContainer>> ARCANE_CRAFTING_TABLE = CON.register("arcane_crafting_table", () -> IForgeContainerType.create(ArcaneCraftingTableContainer::new));
 }
