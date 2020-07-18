@@ -1,5 +1,5 @@
 {
-  "type": "minecraft:crafting_shaped",
+  "type": "arcana:arcane_crafting_shaped",
   "pattern": [
     "sss",
     "scs",

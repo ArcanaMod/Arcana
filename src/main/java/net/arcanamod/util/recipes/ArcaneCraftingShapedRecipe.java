@@ -18,19 +18,10 @@ import net.minecraft.world.World;
 import java.util.Map;
 import java.util.Set;
 
+// Don't touch, it is working.
 public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory> {
 	static int MAX_WIDTH = 3;
 	static int MAX_HEIGHT = 3;
-	/**
-	 * Expand the max width and height allowed in the deserializer.
-	 * This should be called by modders who add custom crafting tables that are larger than the vanilla 3x3.
-	 * @param width your max recipe width
-	 * @param height your max recipe height
-	 */
-	public static void setCraftingSize(int width, int height) {
-		if (MAX_WIDTH < width) MAX_WIDTH = width;
-		if (MAX_HEIGHT < height) MAX_HEIGHT = height;
-	}
 
 	private final int recipeWidth;
 	private final int recipeHeight;
@@ -53,7 +44,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, net.mi
 	}
 
 	public IRecipeSerializer<?> getSerializer() {
-		return IRecipeSerializer.CRAFTING_SHAPED;
+		return ArcanaRecipes.Serializers.ARCANE_CRAFTING_SHAPED.get();
 	}
 
 	/**
@@ -291,7 +282,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, net.mi
 	}
 
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<ArcaneCraftingShapedRecipe> {
-		private static final ResourceLocation NAME = new ResourceLocation("arcana:arcane_crafting");
+		private static final ResourceLocation NAME = new ResourceLocation("arcana:arcane_crafting_shaped");
 		public ArcaneCraftingShapedRecipe read(ResourceLocation recipeId, JsonObject json) {
 			String s = JSONUtils.getString(json, "group", "");
 			Map<String, Ingredient> map = ArcaneCraftingShapedRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));

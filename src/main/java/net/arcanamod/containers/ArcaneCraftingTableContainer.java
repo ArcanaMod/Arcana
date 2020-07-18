@@ -1,7 +1,5 @@
 package net.arcanamod.containers;
 
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.containers.slots.ArcaneCraftingTableOutputSlot;
 import net.arcanamod.containers.slots.WandSlot;
 import net.arcanamod.util.recipes.ArcanaRecipes;
 import net.arcanamod.util.recipes.IArcaneCraftingRecipe;
@@ -14,9 +12,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
@@ -25,20 +21,14 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-// I don't know what happens here, uhh. Do you like spaghetti?
 public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingInventory> {
 
 	public final IInventory inventory;
 	private final PlayerInventory playerInventory;
 	private final CraftingInventory craftMatrix = new CraftingInventory(this, 3, 3);
 	private final CraftResultInventory craftResult = new CraftResultInventory();
-	//    W        ->    0
-	//   ***       ->   234
-	//   ***    O  ->   567    1
-	//   ***       ->   89!
-	//             ->
 
-	public ArcaneCraftingTableContainer(@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, IInventory inventory) {
+	public ArcaneCraftingTableContainer(@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, IInventory inventory){
 		super(type, id);
 		this.inventory = inventory;
 		this.playerInventory = playerInventory;
@@ -52,15 +42,15 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 		addPlayerSlots(playerInventory);
 	}
 
-	public ArcaneCraftingTableContainer(int id, PlayerInventory playerInventory, IInventory inventory) {
+	public ArcaneCraftingTableContainer(int id, PlayerInventory playerInventory, IInventory inventory){
 		this(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), id, playerInventory, inventory);
 	}
 
-	public ArcaneCraftingTableContainer(int i, PlayerInventory playerInventory, PacketBuffer packetBuffer) {
-		this(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), i, playerInventory, new Inventory(11));
+	public ArcaneCraftingTableContainer(int i, PlayerInventory playerInventory, PacketBuffer packetBuffer){
+		this(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), i, playerInventory, new Inventory(2));
 	}
 
-	protected static void craft(int windowIdIn, World world, PlayerEntity playerEntity, CraftingInventory craftingInventory, CraftResultInventory resultInventory) {
+	protected static void craft(int windowIdIn, World world, PlayerEntity playerEntity, CraftingInventory craftingInventory, CraftResultInventory resultInventory){
 		if (!world.isRemote) {
 			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)playerEntity;
 			ItemStack itemstack = ItemStack.EMPTY;
@@ -80,7 +70,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 	/**
 	 * Callback for when the crafting matrix is changed.
 	 */
-	public void onCraftMatrixChanged(IInventory inventoryIn) {
+	public void onCraftMatrixChanged(IInventory inventoryIn){
 		craft(this.windowId, this.playerInventory.player.world, this.playerInventory.player, this.craftMatrix, this.craftResult);
 	}
 
@@ -90,7 +80,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 	 * @param playerIn
 	 */
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn) {
+	public boolean canInteractWith(PlayerEntity playerIn){
 		return this.inventory == null || this.inventory.isUsableByPlayer(playerIn);
 	}
 
@@ -107,37 +97,37 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 	}
 
 	@Override
-	public void fillStackedContents(RecipeItemHelper itemHelperIn) {
+	public void fillStackedContents(RecipeItemHelper itemHelperIn){
 		this.craftMatrix.fillStackedContents(itemHelperIn);
 	}
 
 	@Override
-	public void clear() {
+	public void clear(){
 		this.inventory.clear();
 	}
 
 	@Override
-	public boolean matches(IRecipe<? super CraftingInventory> recipeIn) {
+	public boolean matches(IRecipe<? super CraftingInventory> recipeIn){
 		return recipeIn.matches(this.craftMatrix, this.playerInventory.player.world);
 	}
 
 	@Override
-	public int getOutputSlot() {
+	public int getOutputSlot(){
 		return 0;
 	}
 
 	@Override
-	public int getWidth() {
+	public int getWidth(){
 		return 3;
 	}
 
 	@Override
-	public int getHeight() {
+	public int getHeight(){
 		return 3;
 	}
 
 	@Override
-	public int getSize() {
-		return this.inventory.getSizeInventory();
+	public int getSize(){
+		return craftMatrix.getSizeInventory();
 	}
 }
