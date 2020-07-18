@@ -13,6 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -29,9 +30,13 @@ public class VisManipulatorsItem extends Item{
 	}
 
 	@Override
-	public ActionResultType onItemUse(ItemUseContext context) {
-		onItemUseFirst(null,context);
-		return ActionResultType.SUCCESS;
+	public ActionResultType onItemUse(ItemUseContext context){
+		TileEntity entity = context.getWorld().getTileEntity(context.getPos());
+		if(entity != null && entity.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()){
+			onItemUseFirst(null, context);
+			return ActionResultType.SUCCESS;
+		}
+		return super.onItemUse(context);
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -39,7 +44,7 @@ public class VisManipulatorsItem extends Item{
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 		if (Arcana.debug)
 			if (context.getWorld().getTileEntity(context.getPos())!=null) {
-				if (context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) != null)
+				if (context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) != null){
 					if (context.getWorld().getTileEntity(context.getPos()) instanceof AspectTubeTileEntity){
 						AspectTubeTileEntity h = (AspectTubeTileEntity)context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
 						context.getPlayer().sendMessage(
@@ -49,9 +54,11 @@ public class VisManipulatorsItem extends Item{
 					}
 					else
 					context.getPlayer().sendMessage(
-							new StringTextComponent(((AspectBattery) context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) + "REMOTE: " + context.getWorld().isRemote).toString())
+							new StringTextComponent((context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) + "REMOTE: " + context.getWorld().isRemote).toString())
 									.applyTextStyle(context.getWorld().isRemote ? TextFormatting.RED : TextFormatting.BLUE)
 					);
+					return ActionResultType.SUCCESS;
+				}
 			}
 		if (context.getWorld().getBlockState(context.getPos()).getBlock() == Blocks.SPAWNER) {
 			AtomicInteger i = new AtomicInteger();
@@ -64,7 +71,8 @@ public class VisManipulatorsItem extends Item{
 				context.getWorld().addEntity(e);
 				i.addAndGet(2);
 			});
+			return ActionResultType.SUCCESS;
 		}
-		return ActionResultType.SUCCESS;
+		return super.onItemUseFirst(stack, context);
 	}
 }

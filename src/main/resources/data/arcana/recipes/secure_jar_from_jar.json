@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "arcana:secure_jar",
+  "ingredients": [
+    {
+      "item": "arcana:jar"
+    },
+    {
+      "item": "arcana:imprison_crystal"
+    }
+  ],
+  "result": {
+    "item": "arcana:secure_jar"
+  }
+}

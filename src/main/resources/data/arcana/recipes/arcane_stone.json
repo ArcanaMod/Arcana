@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "sss",
+    "scs",
+    "sss"
+  ],
+  "key": {
+    "s": {
+      "item": "minecraft:stone"
+    },
+    "c": {
+      "tag": "arcana:crystals"
+    }
+  },
+  "result": {
+    "item": "arcana:arcane_stone",
+    "count": 8
+  }
+}
