@@ -6,6 +6,7 @@ import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.ItemAspectRegistry;
 import net.arcanamod.blocks.CrucibleBlock;
+import net.arcanamod.client.render.AspectHelixParticleData;
 import net.arcanamod.util.StreamUtils;
 import net.arcanamod.world.AuraView;
 import net.minecraft.block.BlockState;
@@ -37,6 +38,7 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 	// Should decay or something - to avoid very large NBT, at least.
 	List<AspectStack> aspectStacks = new ArrayList<>();
 	boolean boiling = false;
+	public int alembicLevel = -1;
 	
 	public CrucibleTileEntity(){
 		super(ArcanaTiles.CRUCIBLE_TE.get());

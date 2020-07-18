@@ -4,7 +4,6 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -23,7 +22,7 @@ import java.awt.*;
 @MethodsReturnNonnullByDefault
 public class JarTileEntity extends TileEntity implements ITickableTileEntity, VisShareable{
 
-	private final JarBlock.Type jar_type;
+	private final JarBlock.Type jarType;
 	public AspectBattery vis = new AspectBattery(1, 100);
 
 	protected float smoothAmountVisContentAnimation = 0;
@@ -32,7 +31,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 
 	public JarTileEntity(JarBlock.Type type){
 		super(ArcanaTiles.JAR_TE.get());
-		this.jar_type = type;
+		this.jarType = type;
 		vis.getHolder(0).setIgnoreFullness(type == JarBlock.Type.VOID);
 	}
 
@@ -42,23 +41,25 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	@Deprecated
 	public JarTileEntity(){
 		super(ArcanaTiles.JAR_TE.get());
-		this.jar_type = JarBlock.Type.BASIC;
+		this.jarType = JarBlock.Type.BASIC;
 	}
 
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		Aspect aspect = compound.getInt("aspect") != -1 ? Aspects.values()[compound.getInt("aspect")+1] : Aspects.EMPTY;
+		/*Aspect aspect = compound.getInt("aspect") != -1 ? Aspects.values()[compound.getInt("aspect")+1] : Aspects.EMPTY;
 		AspectCell cell = new AspectCell();
 		cell.insert(new AspectStack(aspect,compound.getInt("amount")),false);
-		cell.setIgnoreFullness(jar_type == JarBlock.Type.VOID);
-		vis.replaceCell(0, cell);
+		vis.replaceCell(0, cell);*/
+		vis.deserializeNBT(compound.getCompound("aspects"));
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound){
-		compound.putInt("aspect", vis.getHolder(0).getContainedAspect().getId() - 1);
-		compound.putInt("amount", vis.getHolder(0).getCurrentVis());
+		//compound.putInt("aspect", vis.getHolder(0).getContainedAspect().getId() - 1);
+		//compound.putInt("amount", vis.getHolder(0).getCurrentVis());
+		CompoundNBT aspectsNbt = vis.serializeNBT();
+		compound.put("aspects", aspectsNbt);
 		return super.write(compound);
 	}
 
@@ -164,7 +165,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 
 	@Override
 	public boolean isSecure() {
-		return jar_type == JarBlock.Type.SECURED;
+		return jarType == JarBlock.Type.SECURED;
 	}
 
 	@Override
@@ -173,6 +174,6 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	}
 
 	public JarBlock.Type getJarType() {
-		return jar_type;
+		return jarType;
 	}
 }

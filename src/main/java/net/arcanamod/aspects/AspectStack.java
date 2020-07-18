@@ -37,10 +37,10 @@ public class AspectStack {
 	}
 
 	public AspectStack(Aspect aspect, int amount){
-		this.isEmpty = amount == 0 || aspect == Aspects.EMPTY;
+		this.isEmpty = amount <= 0 || aspect == Aspects.EMPTY;
 
-		this.aspect = !this.isEmpty ? aspect : Aspects.EMPTY;
-		this.amount = !this.isEmpty ? amount : 0;
+		this.aspect = isEmpty ? Aspects.EMPTY : aspect;
+		this.amount = isEmpty ? 0 : amount;
 	}
 
 	@Override

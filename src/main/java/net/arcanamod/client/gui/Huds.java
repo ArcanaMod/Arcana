@@ -2,10 +2,8 @@ package net.arcanamod.client.gui;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.*;
+import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
@@ -70,6 +68,25 @@ public final class Huds{
 							y += 8;
 						Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(stack.getAspect()), x, y);
 						Minecraft.getInstance().getItemRenderer().renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(stack.getAspect()), x, y + 3, String.valueOf(stack.getAmount()));
+					}
+				}
+			}
+			if(te instanceof AlembicTileEntity){
+				AlembicTileEntity alembic = (AlembicTileEntity)te;
+				GogglePriority priority = GogglePriority.getClientGogglePriority();
+				if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS){
+					AspectBattery stacks = alembic.aspects;
+					int size = 20;
+					int baseX = (event.getWindow().getScaledWidth() - stacks.getHoldersAmount() * size) / 2;
+					int baseY = (event.getWindow().getScaledHeight() - size) / 2 - (ArcanaConfig.BLOCK_HUDS_TOP.get() ? 10 : -10);
+					for(int i = 0, stacksSize = stacks.getHoldersAmount(); i < stacksSize; i++){
+						IAspectHolder stack = stacks.getHolder(i);
+						int x = baseX + i * size;
+						int y = baseY - 10;
+						if(i % 2 == 0)
+							y += 8;
+						Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(stack.getContainedAspect()), x, y);
+						Minecraft.getInstance().getItemRenderer().renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(stack.getContainedAspect()), x, y + 3, String.valueOf(stack.getContainedAspectStack().getAmount()));
 					}
 				}
 			}
