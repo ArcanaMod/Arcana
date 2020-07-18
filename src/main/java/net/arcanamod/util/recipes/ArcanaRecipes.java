@@ -20,14 +20,6 @@ public class ArcanaRecipes{
 		public static final RegistryObject<IRecipeSerializer<ArcaneCraftingRecipe>> ARCANE_SHAPED = SERIALIZERS.register("arcane_crafting_shaped", ArcaneCraftingRecipe.Serializer::new);
 	}
 	public static class Types{
-		public static final IRecipeType<ArcaneCraftingRecipe> ARCANE_CRAFTING = register("arcane_crafting");
-
-		static <T extends IRecipe<?>> IRecipeType<T> register(final String key) {
-			return Registry.register(Registry.RECIPE_TYPE, Arcana.arcLoc(key), new IRecipeType<T>() {
-				public String toString() {
-					return key;
-				}
-			});
-		}
+		public static final IRecipeType<ArcaneCraftingRecipe> ARCANE_CRAFTING = IRecipeType.register("arcana:arcane_crafting");
 	}
 }
