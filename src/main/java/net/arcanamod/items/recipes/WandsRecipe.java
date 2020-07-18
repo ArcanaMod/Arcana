@@ -77,7 +77,7 @@ public class WandsRecipe extends SpecialRecipe{
 	}
 	
 	public IRecipeSerializer<?> getSerializer(){
-		return ArcanaRecipes.Serializers.CRAFING_WANDS.get();
+		return ArcanaRecipes.Serializers.CRAFTING_WANDS.get();
 	}
 	
 	private static boolean isCore(@Nullable ItemStack stack){

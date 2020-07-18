@@ -9,6 +9,7 @@ import net.arcanamod.aspects.ItemAspectRegistry;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
+import net.arcanamod.util.recipes.ArcanaRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
 import net.minecraft.network.PacketBuffer;
@@ -88,7 +89,7 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>{
 	}
 	
 	public IRecipeSerializer<?> getSerializer(){
-		return ArcanaRecipes.ALCHEMY.get();
+		return ArcanaRecipes.Serializers.ALCHEMY.get();
 	}
 	
 	public IRecipeType<?> getType(){
