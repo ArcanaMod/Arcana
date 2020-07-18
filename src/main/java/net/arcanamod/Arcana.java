@@ -198,11 +198,6 @@ public class Arcana{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 
 		ArcanaEntities.render();
-
-		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.NODE_PARTICLE.get(), new NodeParticle.Factory());
-		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.ASPECT_PARTICLE.get(), new AspectParticle.Factory());
-		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.NUMBER_PARTICLE.get(), new NumberParticle.Factory());
-		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.ASPECT_HELIX_PARTICLE.get(), AspectHelixParticle.Factory::new);
 	}
 	
 	private void enqueueIMC(InterModEnqueueEvent event){

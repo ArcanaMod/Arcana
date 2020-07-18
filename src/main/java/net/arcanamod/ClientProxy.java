@@ -3,10 +3,7 @@ package net.arcanamod;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
-import net.arcanamod.client.event.FogColorHandler;
-import net.arcanamod.client.event.InitScreenHandler;
-import net.arcanamod.client.event.RenderTooltip;
-import net.arcanamod.client.event.TextureStitch;
+import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.ResearchBookScreen;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.gui.ScribbledNoteScreen;
@@ -48,8 +45,10 @@ public class ClientProxy extends CommonProxy{
 		modEventBus.addListener(RenderTooltip::makeTooltip);
 		modEventBus.addListener(FogColorHandler::setFog);
 		modEventBus.addListener(InitScreenHandler::onInitGuiEvent);
+		modEventBus.addListener(ParticleFactoryEvent::onParticleFactoryRegister);
 
 		MinecraftForge.EVENT_BUS.register(InitScreenHandler.class);
+		MinecraftForge.EVENT_BUS.register(ParticleFactoryEvent.class);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
 	}
