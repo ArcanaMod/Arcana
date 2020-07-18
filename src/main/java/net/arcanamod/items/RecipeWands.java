@@ -1,9 +1,7 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.ArcanaRecipes;
-import net.arcanamod.items.WandItem;
+import net.arcanamod.util.recipes.ArcanaRecipes;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.CapItem;
 import net.arcanamod.items.attachment.Core;

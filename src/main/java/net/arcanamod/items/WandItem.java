@@ -10,6 +10,7 @@ import net.arcanamod.items.attachment.Focus;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -56,7 +57,8 @@ public class WandItem extends Item{
 			battery.createCell(new AspectCell(getCore(stack).maxVis(), aspect));
 		return battery;
 	}
-	
+
+	// Click on block
 	public ActionResultType onItemUse(ItemUseContext context){
 		World world = context.getWorld();
 		BlockPos pos = context.getPos();
@@ -70,7 +72,14 @@ public class WandItem extends Item{
 		}
 		return super.onItemUse(context);
 	}
-	
+
+	// Click anywhere
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		// TODO: Get aspects from nodes.
+		return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+	}
+
 	public ITextComponent getDisplayName(ItemStack stack){
 		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey()));
 	}

@@ -3,6 +3,7 @@ package net.arcanamod.event;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.ItemAspectRegistry;
+import net.arcanamod.commands.FillAspectCommand;
 import net.arcanamod.commands.NodeCommand;
 import net.arcanamod.commands.ResearchCommand;
 import net.arcanamod.commands.TaintCommand;
@@ -64,7 +65,7 @@ public class WorldLoadEvent{
 	@SubscribeEvent
 	public static void serverStarting(FMLServerStartingEvent event){
 		ResearchCommand.register(event.getCommandDispatcher());
-		//FillPhialCommand.register(event.getCommandDispatcher());
+		FillAspectCommand.register(event.getCommandDispatcher());
 		NodeCommand.register(event.getCommandDispatcher());
 		TaintCommand.register(event.getCommandDispatcher());
 	}
