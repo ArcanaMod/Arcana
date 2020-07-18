@@ -4,15 +4,12 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.containers.ArcaneCraftingTableContainer;
 import net.arcanamod.util.recipes.ArcanaRecipes;
-import net.arcanamod.util.recipes.ArcaneCraftingRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.Direction;
@@ -27,7 +24,7 @@ import java.util.List;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ArcaneCraftingTableTileEntity extends LockableTileEntity implements ISidedInventory, ITickableTileEntity {
+public class ArcaneCraftingTableTileEntity extends LockableTileEntity implements ISidedInventory {
 
 	protected NonNullList<ItemStack> items = NonNullList.withSize(11, ItemStack.EMPTY);
 
@@ -141,13 +138,5 @@ public class ArcaneCraftingTableTileEntity extends LockableTileEntity implements
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
 		return false;
-	}
-
-	@Override
-	public void tick() {
-		if (world!=null){
-			List<ArcaneCraftingRecipe> recipes = world.getRecipeManager().getRecipes(ArcanaRecipes.Types.ARCANE_CRAFTING, this, world);
-			Arcana.logger.debug(new ArrayList<ArcaneCraftingRecipe>(recipes).toString());
-		}
 	}
 }

@@ -17,9 +17,9 @@ public class ArcanaRecipes{
 		public static final DeferredRegister<IRecipeSerializer<?>> SERIALIZERS = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
 
 		public static final RegistryObject<IRecipeSerializer<RecipeWands>> CRAFING_WANDS = SERIALIZERS.register("crafting_special_wands", () -> new SpecialRecipeSerializer<>(RecipeWands::new));
-		public static final RegistryObject<IRecipeSerializer<ArcaneCraftingRecipe>> ARCANE_SHAPED = SERIALIZERS.register("arcane_crafting_shaped", ArcaneCraftingRecipe.Serializer::new);
+		public static final RegistryObject<IRecipeSerializer<ArcaneCraftingShapedRecipe>> ARCANE_CRAFTING_SHAPED = SERIALIZERS.register("arcane_crafting_shaped", ArcaneCraftingShapedRecipe.Serializer::new);
 	}
 	public static class Types{
-		public static final IRecipeType<ArcaneCraftingRecipe> ARCANE_CRAFTING = IRecipeType.register("arcana:arcane_crafting");
+		public static final IRecipeType<IArcaneCraftingRecipe> ARCANE_CRAFTING_SHAPED = IRecipeType.register("arcana:arcane_crafting_shaped");
 	}
 }

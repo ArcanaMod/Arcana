@@ -4,8 +4,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
-import net.arcanamod.Arcana;
-import net.arcanamod.blocks.tiles.ArcaneCraftingTableTileEntity;
+import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
@@ -13,15 +12,25 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
-import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Map;
 import java.util.Set;
 
-public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEntity> {
+public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory> {
 	static int MAX_WIDTH = 3;
 	static int MAX_HEIGHT = 3;
+	/**
+	 * Expand the max width and height allowed in the deserializer.
+	 * This should be called by modders who add custom crafting tables that are larger than the vanilla 3x3.
+	 * @param width your max recipe width
+	 * @param height your max recipe height
+	 */
+	public static void setCraftingSize(int width, int height) {
+		if (MAX_WIDTH < width) MAX_WIDTH = width;
+		if (MAX_HEIGHT < height) MAX_HEIGHT = height;
+	}
 
 	private final int recipeWidth;
 	private final int recipeHeight;
@@ -30,7 +39,7 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 	private final ResourceLocation id;
 	private final String group;
 
-	public ArcaneCraftingRecipe(ResourceLocation idIn, String groupIn, int recipeWidthIn, int recipeHeightIn, NonNullList<Ingredient> recipeItemsIn, ItemStack recipeOutputIn) {
+	public ArcaneCraftingShapedRecipe(ResourceLocation idIn, String groupIn, int recipeWidthIn, int recipeHeightIn, NonNullList<Ingredient> recipeItemsIn, ItemStack recipeOutputIn) {
 		this.id = idIn;
 		this.group = groupIn;
 		this.recipeWidth = recipeWidthIn;
@@ -44,12 +53,7 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 	}
 
 	public IRecipeSerializer<?> getSerializer() {
-		return ArcanaRecipes.Serializers.ARCANE_SHAPED.get();
-	}
-
-	@Override
-	public IRecipeType<?> getType() {
-		return ArcanaRecipes.Types.ARCANE_CRAFTING;
+		return IRecipeSerializer.CRAFTING_SHAPED;
 	}
 
 	/**
@@ -81,9 +85,9 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 	/**
 	 * Used to check if a recipe matches current crafting inventory
 	 */
-	public boolean matches(ArcaneCraftingTableTileEntity inv, World worldIn) {
-		for(int i = 0; i <= 3 - this.recipeWidth; ++i) {
-			for(int j = 0; j <= 3 - this.recipeHeight; ++j) {
+	public boolean matches(CraftingInventory inv, World worldIn) {
+		for(int i = 0; i <= inv.getWidth() - this.recipeWidth; ++i) {
+			for(int j = 0; j <= inv.getHeight() - this.recipeHeight; ++j) {
 				if (this.checkMatch(inv, i, j, true)) {
 					return true;
 				}
@@ -100,9 +104,9 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 	/**
 	 * Checks if the region of a crafting inventory is match for the recipe.
 	 */
-	private boolean checkMatch(ArcaneCraftingTableTileEntity craftingInventory, int p_77573_2_, int p_77573_3_, boolean p_77573_4_) {
-		for(int i = 0; i < 3; ++i) {
-			for(int j = 0; j < 3; ++j) {
+	private boolean checkMatch(CraftingInventory craftingInventory, int p_77573_2_, int p_77573_3_, boolean p_77573_4_) {
+		for(int i = 0; i < craftingInventory.getWidth(); ++i) {
+			for(int j = 0; j < craftingInventory.getHeight(); ++j) {
 				int k = i - p_77573_2_;
 				int l = j - p_77573_3_;
 				Ingredient ingredient = Ingredient.EMPTY;
@@ -114,7 +118,7 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 					}
 				}
 
-				if (!ingredient.test(craftingInventory.getStackInSlot(i + j * 3))) {
+				if (!ingredient.test(craftingInventory.getStackInSlot(i + j * craftingInventory.getWidth()))) {
 					return false;
 				}
 			}
@@ -126,7 +130,7 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 	/**
 	 * Returns an Item that is the result of this recipe
 	 */
-	public ItemStack getCraftingResult(ArcaneCraftingTableTileEntity inv) {
+	public ItemStack getCraftingResult(CraftingInventory inv) {
 		return this.getRecipeOutput().copy();
 	}
 
@@ -134,8 +138,18 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 		return this.recipeWidth;
 	}
 
+	@Override
+	public int getRecipeWidth() {
+		return getWidth();
+	}
+
 	public int getHeight() {
 		return this.recipeHeight;
+	}
+
+	@Override
+	public int getRecipeHeight() {
+		return getHeight();
 	}
 
 	private static NonNullList<Ingredient> deserializeIngredients(String[] pattern, Map<String, Ingredient> keys, int patternWidth, int patternHeight) {
@@ -265,7 +279,9 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 
 	public static ItemStack deserializeItem(JsonObject p_199798_0_) {
 		String s = JSONUtils.getString(p_199798_0_, "item");
-		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
+		Item item = Registry.ITEM.getValue(new ResourceLocation(s)).orElseThrow(() -> {
+			return new JsonSyntaxException("Unknown item '" + s + "'");
+		});
 		if (p_199798_0_.has("data")) {
 			throw new JsonParseException("Disallowed data tag found");
 		} else {
@@ -274,20 +290,20 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 		}
 	}
 
-	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<ArcaneCraftingRecipe> {
-		private static final ResourceLocation NAME = Arcana.arcLoc("arcane_crafting_shaped");
-		public ArcaneCraftingRecipe read(ResourceLocation recipeId, JsonObject json) {
+	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<ArcaneCraftingShapedRecipe> {
+		private static final ResourceLocation NAME = new ResourceLocation("arcana:arcane_crafting_shaped");
+		public ArcaneCraftingShapedRecipe read(ResourceLocation recipeId, JsonObject json) {
 			String s = JSONUtils.getString(json, "group", "");
-			Map<String, Ingredient> map = ArcaneCraftingRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));
-			String[] astring = ArcaneCraftingRecipe.shrink(ArcaneCraftingRecipe.patternFromJson(JSONUtils.getJsonArray(json, "pattern")));
+			Map<String, Ingredient> map = ArcaneCraftingShapedRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));
+			String[] astring = ArcaneCraftingShapedRecipe.shrink(ArcaneCraftingShapedRecipe.patternFromJson(JSONUtils.getJsonArray(json, "pattern")));
 			int i = astring[0].length();
 			int j = astring.length;
-			NonNullList<Ingredient> nonnulllist = ArcaneCraftingRecipe.deserializeIngredients(astring, map, i, j);
-			ItemStack itemstack = ArcaneCraftingRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-			return new ArcaneCraftingRecipe(recipeId, s, i, j, nonnulllist, itemstack);
+			NonNullList<Ingredient> nonnulllist = ArcaneCraftingShapedRecipe.deserializeIngredients(astring, map, i, j);
+			ItemStack itemstack = ArcaneCraftingShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
+			return new ArcaneCraftingShapedRecipe(recipeId, s, i, j, nonnulllist, itemstack);
 		}
 
-		public ArcaneCraftingRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
+		public ArcaneCraftingShapedRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
 			int i = buffer.readVarInt();
 			int j = buffer.readVarInt();
 			String s = buffer.readString(32767);
@@ -298,10 +314,10 @@ public class ArcaneCraftingRecipe implements IRecipe<ArcaneCraftingTableTileEnti
 			}
 
 			ItemStack itemstack = buffer.readItemStack();
-			return new ArcaneCraftingRecipe(recipeId, s, i, j, nonnulllist, itemstack);
+			return new ArcaneCraftingShapedRecipe(recipeId, s, i, j, nonnulllist, itemstack);
 		}
 
-		public void write(PacketBuffer buffer, ArcaneCraftingRecipe recipe) {
+		public void write(PacketBuffer buffer, ArcaneCraftingShapedRecipe recipe) {
 			buffer.writeVarInt(recipe.recipeWidth);
 			buffer.writeVarInt(recipe.recipeHeight);
 			buffer.writeString(recipe.group);

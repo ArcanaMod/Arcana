@@ -3,6 +3,8 @@ package net.arcanamod.containers;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.slots.ArcaneCraftingTableOutputSlot;
 import net.arcanamod.containers.slots.WandSlot;
+import net.arcanamod.util.recipes.ArcanaRecipes;
+import net.arcanamod.util.recipes.IArcaneCraftingRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -23,6 +25,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
+// I don't know what happens here, uhh. Do you like spaghetti?
 public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingInventory> {
 
 	public final IInventory inventory;
@@ -39,8 +42,8 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 		super(type, id);
 		this.inventory = inventory;
 		this.playerInventory = playerInventory;
-		this.addSlot(new WandSlot(inventory, 0, 65, 14));
-		this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 1, 160, 64));
+		this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
+		this.addSlot(new WandSlot(inventory, 1, 65, 14));
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 3; ++j) {
 				this.addSlot(new Slot(craftMatrix,j + i * 3, 42 + j * 23, 41 + i * 23));
@@ -63,9 +66,9 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 			ItemStack itemstack = ItemStack.EMPTY;
 			Optional<ICraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftingInventory, world);
 			if (optional.isPresent()) {
-				ICraftingRecipe icraftingrecipe = optional.get();
-				if (resultInventory.canUseRecipe(world, serverplayerentity, icraftingrecipe)) {
-					itemstack = icraftingrecipe.getCraftingResult(craftingInventory);
+				ICraftingRecipe iarcanecraftingrecipe = optional.get();
+				if (resultInventory.canUseRecipe(world, serverplayerentity, iarcanecraftingrecipe)) {
+					itemstack = iarcanecraftingrecipe.getCraftingResult(craftingInventory);
 				}
 			}
 
@@ -120,7 +123,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 
 	@Override
 	public int getOutputSlot() {
-		return 1;
+		return 0;
 	}
 
 	@Override
