@@ -9,7 +9,6 @@ public class AspectCell implements IAspectHolder {
 	private AspectStack stored = AspectStack.EMPTY;
 	private Aspect optionalWhitelist = null;
 	private int capacity;
-
 	public boolean ignoreFullness = false;
 
 	public AspectCell(){
@@ -89,12 +88,13 @@ public class AspectCell implements IAspectHolder {
 	}
 
 	public CompoundNBT toNBT(){
-		CompoundNBT compoundNBT = new CompoundNBT();
-		compoundNBT.putInt("amount", stored.getAmount());
-		compoundNBT.putInt("capacity", getCapacity());
-		compoundNBT.putString("aspect", stored.getAspect().name().toLowerCase());
-		compoundNBT.putString("whitelisted", optionalWhitelist != null ? optionalWhitelist.name().toLowerCase() : "null");
-		return compoundNBT;
+		CompoundNBT nbt = new CompoundNBT();
+		nbt.putInt("amount", stored.getAmount());
+		nbt.putInt("capacity", getCapacity());
+		nbt.putString("aspect", stored.getAspect().name().toLowerCase());
+		nbt.putString("whitelisted", optionalWhitelist != null ? optionalWhitelist.name().toLowerCase() : "null");
+		nbt.putBoolean("ignoreFullness", ignoreFullness);
+		return nbt;
 	}
 
 	public static AspectCell fromNBT(CompoundNBT compoundNBT){
@@ -103,7 +103,9 @@ public class AspectCell implements IAspectHolder {
 		Aspect aspect = Aspects.valueOf(compoundNBT.getString("aspect").toUpperCase());
 		String whitelisted = compoundNBT.getString("whitelisted");
 		Aspect whitelist = whitelisted.equals("null") ? null : Aspects.valueOf(whitelisted.toUpperCase());
+		boolean ignoresFullness = compoundNBT.getBoolean("ignoreFullness");
 		AspectCell cell = new AspectCell(capacity != 0 ? capacity : 100, whitelist);
+		cell.ignoreFullness = ignoresFullness;
 		cell.insert(new AspectStack(aspect, amount), false);
 		return cell;
 	}

@@ -5,6 +5,9 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.IAspectHolder;
 
+import java.util.Comparator;
+import java.util.List;
+
 // TODO: this stuff should be fine in AspectHandler but that's currently a little messy so its here rn
 public final class VisUtils{
 	
@@ -22,7 +25,8 @@ public final class VisUtils{
 	 */
 	public static void moveAllAspects(IAspectHandler from, IAspectHandler to, int max){
 		int transferred = 0;
-		for(IAspectHolder holder : from.getHolders()){
+		List<IAspectHolder> toHolders = from.getHolders();
+		for(IAspectHolder holder : toHolders){
 			if(transferred >= max && max != -1)
 				break;
 			if(holder.getCurrentVis() > 0)
@@ -31,7 +35,9 @@ public final class VisUtils{
 						break;
 					if(toHolder.getContainedAspect() == holder.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
 						if(toHolder.getCapacity() > toHolder.getCurrentVis()){
-							int toInsert = Math.min(holder.getCurrentVis(), toHolder.getCapacity() - toHolder.getCurrentVis());
+							int toInsert = holder.getCurrentVis();
+							if(!toHolder.isIgnoringFullness())
+								toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getCurrentVis());
 							if(max != -1)
 								toInsert = Math.min(toInsert, max - transferred);
 							AspectStack stack = new AspectStack(holder.getContainedAspect(), toInsert);

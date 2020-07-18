@@ -47,17 +47,11 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	@Override
 	public void read(CompoundNBT compound) {
 		super.read(compound);
-		/*Aspect aspect = compound.getInt("aspect") != -1 ? Aspects.values()[compound.getInt("aspect")+1] : Aspects.EMPTY;
-		AspectCell cell = new AspectCell();
-		cell.insert(new AspectStack(aspect,compound.getInt("amount")),false);
-		vis.replaceCell(0, cell);*/
 		vis.deserializeNBT(compound.getCompound("aspects"));
 	}
 
 	@Override
 	public CompoundNBT write(CompoundNBT compound){
-		//compound.putInt("aspect", vis.getHolder(0).getContainedAspect().getId() - 1);
-		//compound.putInt("amount", vis.getHolder(0).getCurrentVis());
 		CompoundNBT aspectsNbt = vis.serializeNBT();
 		compound.put("aspects", aspectsNbt);
 		return super.write(compound);
@@ -94,8 +88,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 
 	public int nextColor = 0;
 
-	public Color getCreativeJarColor()
-	{
+	public Color getCreativeJarColor(){
 		nextColor++;
 		if (nextColor >= 800)
 			nextColor=0;
@@ -129,8 +122,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	//  getUpdateTag() and handleUpdateTag() are used by vanilla to collate together into a single chunk update packet
 	@Override
 	@Nullable
-	public SUpdateTileEntityPacket getUpdatePacket()
-	{
+	public SUpdateTileEntityPacket getUpdatePacket(){
 		CompoundNBT nbtTagCompound = new CompoundNBT();
 		write(nbtTagCompound);
 		int tileEntityType = ArcanaTiles.JAR_TE.hashCode();
