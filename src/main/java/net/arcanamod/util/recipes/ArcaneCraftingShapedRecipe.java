@@ -291,7 +291,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, net.mi
 	}
 
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<ArcaneCraftingShapedRecipe> {
-		private static final ResourceLocation NAME = new ResourceLocation("arcana:arcane_crafting_shaped");
+		private static final ResourceLocation NAME = new ResourceLocation("arcana:arcane_crafting");
 		public ArcaneCraftingShapedRecipe read(ResourceLocation recipeId, JsonObject json) {
 			String s = JSONUtils.getString(json, "group", "");
 			Map<String, Ingredient> map = ArcaneCraftingShapedRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));

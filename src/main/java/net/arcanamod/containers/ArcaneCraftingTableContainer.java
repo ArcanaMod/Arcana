@@ -64,9 +64,9 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 		if (!world.isRemote) {
 			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)playerEntity;
 			ItemStack itemstack = ItemStack.EMPTY;
-			Optional<ICraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftingInventory, world);
+			Optional<IArcaneCraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(ArcanaRecipes.Types.ARCANE_CRAFTING_SHAPED, craftingInventory, world);
 			if (optional.isPresent()) {
-				ICraftingRecipe iarcanecraftingrecipe = optional.get();
+				IArcaneCraftingRecipe iarcanecraftingrecipe = optional.get();
 				if (resultInventory.canUseRecipe(world, serverplayerentity, iarcanecraftingrecipe)) {
 					itemstack = iarcanecraftingrecipe.getCraftingResult(craftingInventory);
 				}
