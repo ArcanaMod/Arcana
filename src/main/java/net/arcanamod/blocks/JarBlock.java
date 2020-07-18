@@ -25,7 +25,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class JarBlock extends Block{
 	public static final BooleanProperty UP = BooleanProperty.create("up");
 	private Type type;
-
+	
 	public JarBlock(Properties properties, Type type){
 		super(properties);
 		this.type = type;
@@ -54,29 +54,29 @@ public class JarBlock extends Block{
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
 		return new JarTileEntity(this.type);
 	}
-
+	
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
 		super.fillStateContainer(builder);
 		builder.add(UP);
 	}
-
+	
 	public BlockState getStateForPlacement(BlockItemUseContext context){
 		return super.getStateForPlacement(context).with(UP, false);
 	}
-
+	
 	@Override
-	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
-		if (worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
-			worldIn.setBlockState(pos,state.with(UP, true));
+	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving){
+		if(worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
+			worldIn.setBlockState(pos, state.with(UP, true));
 		else
-			worldIn.setBlockState(pos,state.with(UP, false));
+			worldIn.setBlockState(pos, state.with(UP, false));
 	}
-
+	
 	@Override
-	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving) {
-		if (worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
-			worldIn.setBlockState(pos,state.with(UP, true));
+	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving){
+		if(worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
+			worldIn.setBlockState(pos, state.with(UP, true));
 		else
 			worldIn.setBlockState(pos, state.with(UP, false));
 	}
@@ -90,7 +90,20 @@ public class JarBlock extends Block{
 		
 		return itemstack;
 	}
-
+	
+	public boolean hasComparatorInputOverride(BlockState state){
+		return true;
+	}
+	
+	public int getComparatorInputOverride(BlockState block, World world, BlockPos pos){
+		TileEntity te = world.getTileEntity(pos);
+		if(te instanceof JarTileEntity){
+			JarTileEntity jar = (JarTileEntity)te;
+			return (int)Math.ceil((jar.vis.getHolder(0).getContainedAspectStack().getAmount() / 100f) * 15);
+		}
+		return 0;
+	}
+	
 	public enum Type{
 		BASIC,
 		SECURED,

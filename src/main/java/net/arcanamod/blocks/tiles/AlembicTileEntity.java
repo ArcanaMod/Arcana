@@ -27,6 +27,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	int crucibleLevel = -1;
 	boolean stacked = false;
 	
+	public boolean suppressedByRedstone = false;
+	
 	public static final int MAX_ASPECT_OUT = 3;
 	public static final int MAX_ASPECT_DISTILL = 2;
 	
@@ -124,17 +126,19 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	}
 	
 	public boolean isOn(){
-		return true;
+		return !suppressedByRedstone;
 	}
 	
 	public void read(CompoundNBT compound){
 		super.read(compound);
 		aspects.deserializeNBT(compound.getCompound("aspects"));
+		suppressedByRedstone = compound.getBoolean("suppressed");
 	}
 	
 	public CompoundNBT write(CompoundNBT compound){
 		CompoundNBT nbt = super.write(compound);
 		nbt.put("aspects", aspects.serializeNBT());
+		nbt.putBoolean("suppressed", suppressedByRedstone);
 		return nbt;
 	}
 	

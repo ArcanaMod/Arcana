@@ -24,6 +24,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 
 	private final JarBlock.Type jarType;
 	public AspectBattery vis = new AspectBattery(1, 100);
+	private int lastVis;
 
 	protected float smoothAmountVisContentAnimation = 0;
 
@@ -162,7 +163,11 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 
 	@Override
 	public void tick(){
-		vis.getHolder(0).getContainedAspect().aspectTick(this);
+		int newVis = vis.getHolder(0).getCurrentVis();
+		if(lastVis != newVis)
+			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
+		lastVis = newVis;
+		this.vis.getHolder(0).getContainedAspect().aspectTick(this);
 	}
 
 	public JarBlock.Type getJarType() {

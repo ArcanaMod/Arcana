@@ -2,7 +2,6 @@ package net.arcanamod.blocks.tiles;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -52,5 +51,9 @@ public class AspectWindowTileEntity extends AspectTubeTileEntity implements ITic
 			BlockState state = world.getBlockState(getPos());
 			world.notifyBlockUpdate(pos, state, state, Constants.BlockFlags.RERENDER_MAIN_THREAD);
 		}
+	}
+	
+	public int getLastTransferTime(){
+		return lastTransferTime;
 	}
 }
