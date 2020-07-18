@@ -134,4 +134,12 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 		}
 		return ActionResultType.PASS;
 	}
+	
+	public boolean hasComparatorInputOverride(BlockState state){
+		return true;
+	}
+	
+	public int getComparatorInputOverride(BlockState block, World world, BlockPos pos){
+		return block.get(LEVEL_0_9);
+	}
 }

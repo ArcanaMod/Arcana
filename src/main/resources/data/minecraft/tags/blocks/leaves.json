@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "arcana:dair_leaves",
-    "arcana:dead_leaves",
     "arcana:tainted_jungle_leaves",
     "arcana:tainted_oak_leaves",
     "arcana:tainted_spruce_leaves",
@@ -14,7 +13,6 @@
     "arcana:greatwood_leaves",
     "arcana:hawthorn_leaves",
     "arcana:silverwood_leaves",
-    "arcana:trypophobius_leaves",
     "arcana:willow_leaves",
     "arcana:tainted_dair_leaves",
     "arcana:willow_leaves",

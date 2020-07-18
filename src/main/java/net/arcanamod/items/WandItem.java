@@ -2,17 +2,25 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
+import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.CrucibleBlock;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.CauldronBlock;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.*;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
@@ -47,6 +55,20 @@ public class WandItem extends Item{
 		for(Aspect aspect : AspectUtils.primalAspects)
 			battery.createCell(new AspectCell(getCore(stack).maxVis(), aspect));
 		return battery;
+	}
+	
+	public ActionResultType onItemUse(ItemUseContext context){
+		World world = context.getWorld();
+		BlockPos pos = context.getPos();
+		BlockState state = world.getBlockState(pos);
+		if(state.getBlock() == Blocks.CAULDRON){
+			world.setBlockState(pos, ArcanaBlocks.CRUCIBLE.get().getDefaultState().with(CrucibleBlock.FULL, state.get(CauldronBlock.LEVEL) >= 2));
+			world.playSound(context.getPlayer(), pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
+			for(int i = 0; i < 20; i++)
+				world.addParticle(ParticleTypes.END_ROD, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), 0, 0, 0);
+			return ActionResultType.SUCCESS;
+		}
+		return super.onItemUse(context);
 	}
 	
 	public ITextComponent getDisplayName(ItemStack stack){
