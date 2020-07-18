@@ -20,6 +20,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Arcana.MODID)
@@ -56,7 +57,7 @@ public final class Huds{
 				CrucibleTileEntity crucible = (CrucibleTileEntity)te;
 				GogglePriority priority = GogglePriority.getClientGogglePriority();
 				if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS){
-					List<AspectStack> stacks = crucible.getAspectStacks();
+					List<AspectStack> stacks = new ArrayList<>(crucible.getAspectStackMap().values());
 					int size = 20;
 					int baseX = (event.getWindow().getScaledWidth() - stacks.size() * size) / 2;
 					int baseY = (event.getWindow().getScaledHeight() - size) / 2 - (ArcanaConfig.BLOCK_HUDS_TOP.get() ? 10 : -10);

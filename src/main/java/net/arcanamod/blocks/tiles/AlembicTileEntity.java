@@ -18,6 +18,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import static net.arcanamod.aspects.Aspects.EMPTY;
+
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class AlembicTileEntity extends TileEntity implements ITickableTileEntity{
@@ -80,34 +82,32 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 			if(crucibleLevel != -1){
 				BlockPos cruciblePos = new BlockPos(getPos().getX(), crucibleLevel, getPos().getZ());
 				CrucibleTileEntity te = (CrucibleTileEntity)world.getTileEntity(cruciblePos);
-				if(te.getAspectStacks().size() > 0){
-					int index = -1;
+				if(te.getAspectStackMap().size() > 0){
+					Aspect aspect = EMPTY;
 					// find an aspect stack we can actually pull
 					IAspectHolder adding = null;
 					for(IAspectHolder holder : aspects.getHolders()){
 						if(holder.getCapacity() - holder.getCurrentVis() > 0){
 							adding = holder;
-							int maybe = te.getAspectStacks().indexOf(te.getAspectStacks().stream().filter(stack1 -> stack1.getAspect() == holder.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY).findFirst().orElse(null));
-							if(maybe != -1){
-								index = maybe;
+							Aspect maybe = te.getAspectStackMap().values().stream().filter(stack1 -> stack1.getAspect() == holder.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY).findFirst().map(AspectStack::getAspect).orElse(EMPTY);
+							if(maybe != EMPTY){
+								aspect = maybe;
 								break;
 							}
 						}
 					}
 					
-					if(index != -1){
-						AspectStack aspectStack = te.getAspectStacks().get(index);
-						if(!stacked){
-							Aspect aspect = aspectStack.getAspect();
+					if(aspect != EMPTY){
+						AspectStack aspectStack = te.getAspectStackMap().get(aspect);
+						if(!stacked)
 							world.addParticle(new AspectHelixParticleData(aspect, 20 * airs + 15, world.rand.nextInt(180)), cruciblePos.getX() + .5 + world.rand.nextFloat() * .1, cruciblePos.getY() + .7, cruciblePos.getZ() + .5 + world.rand.nextFloat() * .1, 0, 0, 0);
-						}
 						// pick a random aspect, take from it, and store them in our actual aspect handler
 						int diff = Math.min(aspectStack.getAmount(), MAX_ASPECT_DISTILL);
 						AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - MAX_ASPECT_DISTILL);
 						if(!newStack.isEmpty())
-							te.getAspectStacks().set(index, newStack);
+							te.getAspectStackMap().put(aspect, newStack);
 						else
-							te.getAspectStacks().remove(index);
+							te.getAspectStackMap().remove(aspect);
 						adding.insert(new AspectStack(aspectStack.getAspect(), diff), false);
 					}
 				}

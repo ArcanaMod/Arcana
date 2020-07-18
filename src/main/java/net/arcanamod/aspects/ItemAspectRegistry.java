@@ -145,6 +145,8 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		ret = allGenerated.stream()
 				// pair of aspects:total num of aspects
 				.map(stacks -> Pair.of(stacks, stacks.stream().mapToInt(AspectStack::getAmount).sum()))
+				// filter combos with 0 aspects
+				.filter(pair -> pair.getSecond() > 0)
 				// sort by least total aspects
 				.min(Comparator.comparingInt(Pair::getSecond))
 				// get aspects
@@ -174,21 +176,21 @@ public class ItemAspectRegistry extends JsonReloadListener{
 				ResourceLocation itemTagLoc = new ResourceLocation(key.substring(1));
 				Tag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
 				if(itemTag != null)
-					parseItemList(location, value).ifPresent(stacks -> itemTagAssociations.put(itemTag, stacks));
+					parseAspectStackList(location, value).ifPresent(stacks -> itemTagAssociations.put(itemTag, stacks));
 				else
 					LOGGER.error("Invalid item tag \"" + key.substring(1) + "\" found in file " + location + "!");
 			}else{
 				ResourceLocation itemLoc = new ResourceLocation(key);
 				Item item = ForgeRegistries.ITEMS.getValue(itemLoc);
 				if(item != null)
-					parseItemList(location, value).ifPresent(stacks -> itemAssociations.put(item, stacks));
+					parseAspectStackList(location, value).ifPresent(stacks -> itemAssociations.put(item, stacks));
 				else
 					LOGGER.error("Invalid item tag \"" + key.substring(1) + "\" found in file " + location + "!");
 			}
 		}
 	}
 	
-	private static Optional<List<AspectStack>> parseItemList(ResourceLocation file, JsonElement listElement){
+	public static Optional<List<AspectStack>> parseAspectStackList(ResourceLocation file, JsonElement listElement){
 		if(listElement.isJsonArray()){
 			JsonArray array = listElement.getAsJsonArray();
 			List<AspectStack> ret = new ArrayList<>();

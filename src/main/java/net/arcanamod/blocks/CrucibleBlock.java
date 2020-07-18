@@ -88,7 +88,7 @@ public class CrucibleBlock extends Block{
 				}
 				return ActionResultType.SUCCESS;
 			}else if(item == Items.BUCKET){
-				if(state.get(FULL) && !world.isRemote && ((CrucibleTileEntity)world.getTileEntity(pos)).getAspectStacks().isEmpty()){
+				if(state.get(FULL) && !world.isRemote && ((CrucibleTileEntity)world.getTileEntity(pos)).getAspectStackMap().isEmpty()){
 					if(!player.abilities.isCreativeMode){
 						itemstack.shrink(1);
 						if(itemstack.isEmpty())
