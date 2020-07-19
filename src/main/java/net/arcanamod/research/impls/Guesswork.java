@@ -106,7 +106,7 @@ public class Guesswork extends Puzzle{
 				for(int x = 0; x < 3; x++){
 					int xx = x * 23;
 					int yy = y * 23;
-					int scX = xx + 141 + 15;
+					int scX = xx + 141 + 75;
 					int scY = yy + 35 + 54;
 					if(recipe.getIngredients().size() > (x + y * 3) && recipe.getIngredients().get(x + y * 3).getMatchingStacks().length > 0)
 						ret.add(new SlotInfo(scX, scY, 1, BG_NAME));

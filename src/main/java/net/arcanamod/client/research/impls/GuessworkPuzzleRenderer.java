@@ -1,5 +1,6 @@
 package net.arcanamod.client.research.impls;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.PuzzleRenderer;
@@ -12,6 +13,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,7 @@ public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRender
 		int rX = paperLeft(screenWidth) + 78;
 		int rY = paperTop(screenHeight) + 13;
 		drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
-		int ulX = paperLeft(screenWidth) + 10;
+		int ulX = paperLeft(screenWidth) + 70;
 		int ulY = paperTop(screenHeight) + 49;
 		drawTexturedModalRect(ulX, ulY, 145, 1, 72, 72);
 		RenderHelper.enableStandardItemLighting();
@@ -55,11 +57,19 @@ public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRender
 					}
 				}
 			
+			int hintY = ulY + 101;
+			int hintBaseX = ulX - 70;
+			String text = "Hints: ";
+			fr().drawStringWithShadow(text, hintBaseX, hintY, 0x8a8a8a);
+			for(int i = 0; i < indexHelper.size(); i++){
+				int hintX = hintBaseX + fr().getStringWidth(text) + i * 12;
+				fr().drawStringWithShadow(hintSymbols[i % hintSymbols.length], hintX, hintY, hintColours[i % hintColours.length]);
+			}
 			for(int i = 0; i < indexHelper.size(); i++){
 				Map.Entry<ResourceLocation, String> entry = indexHelper.get(i);
-				int hintX = ulX + 23 * 3 + 15;
-				int hintY = ulY + i * 12;
-				fr().drawString(hintSymbols[i % hintSymbols.length] + " = " + I18n.format(entry.getValue()), hintX, hintY, hintColours[i % hintColours.length]);
+				int hintX = hintBaseX + fr().getStringWidth(text) + i * 12;
+				if(mouseX >= hintX - 1 && mouseX < hintX + 11 && mouseY >= hintY - 1 && mouseY < hintY + 11)
+					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(entry.getValue())), mouseX, mouseY, screenWidth, screenHeight, -1, fr());
 			}
 		}
 	}
