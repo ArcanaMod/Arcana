@@ -1,14 +1,15 @@
 package net.arcanamod.items;
 
-import io.netty.channel.epoll.EpollServerChannelConfig;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
-import net.minecraft.block.BlockState;
+import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.NonNullList;
@@ -16,7 +17,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -50,7 +50,6 @@ public class PhialItem extends Item{
 	}
 	
 	public ActionResultType onItemUse(ItemUseContext context){
-		Arcana.logger.debug(getShareTag(context.getItem()));
 		BlockPos pos = context.getPos();
 		TileEntity tile = context.getWorld().getTileEntity(pos);
 		if(tile != null){
