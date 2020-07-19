@@ -13,12 +13,12 @@
       "tag": "arcana:crystals"
     }
   },
-  "aspects": {
-    "any": {
-      "aspect": "arcana:air",
-      "amount": 4
+  "aspects": [
+    {
+      "aspect": "arcana:any",
+      "amount": 2
     }
-  },
+  ],
   "requirements": [
     "arcana:research_intro"
   ],

@@ -5,6 +5,11 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.util.inventories.AspectCraftingInventory;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,19 +18,22 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.IShapedRecipe;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 // Don't touch, it is working.
 // No, I think I will touch.
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShapedRecipe<CraftingInventory> {
+public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShapedRecipe<AspectCraftingInventory> {
 	static int MAX_WIDTH = 3;
 	static int MAX_HEIGHT = 3;
 
@@ -36,13 +44,17 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	private final ResourceLocation id;
 	private final String group;
 
-	public ArcaneCraftingShapedRecipe(ResourceLocation idIn, String groupIn, int recipeWidthIn, int recipeHeightIn, NonNullList<Ingredient> recipeItemsIn, ItemStack recipeOutputIn) {
+	private final UndecidedAspectStack[] aspectStacks;
+
+	public ArcaneCraftingShapedRecipe(ResourceLocation idIn, String groupIn, int recipeWidthIn, int recipeHeightIn, NonNullList<Ingredient> recipeItemsIn, ItemStack recipeOutputIn, UndecidedAspectStack[] aspectStacks) {
 		this.id = idIn;
 		this.group = groupIn;
 		this.recipeWidth = recipeWidthIn;
 		this.recipeHeight = recipeHeightIn;
 		this.recipeItems = recipeItemsIn;
 		this.recipeOutput = recipeOutputIn;
+
+		this.aspectStacks = aspectStacks;
 	}
 
 	public ResourceLocation getId() {
@@ -51,6 +63,10 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 
 	public IRecipeSerializer<?> getSerializer() {
 		return ArcanaRecipes.Serializers.ARCANE_CRAFTING_SHAPED.get();
+	}
+
+	public UndecidedAspectStack[] getAspectStacks() {
+		return aspectStacks;
 	}
 
 	/**
@@ -82,7 +98,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	/**
 	 * Used to check if a recipe matches current crafting inventory
 	 */
-	public boolean matches(CraftingInventory inv, World worldIn) {
+	public boolean matches(AspectCraftingInventory inv, World worldIn) {
 		for(int i = 0; i <= inv.getWidth() - this.recipeWidth; ++i) {
 			for(int j = 0; j <= inv.getHeight() - this.recipeHeight; ++j) {
 				if (this.checkMatch(inv, i, j, true)) {
@@ -101,7 +117,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	/**
 	 * Checks if the region of a crafting inventory is match for the recipe.
 	 */
-	private boolean checkMatch(CraftingInventory craftingInventory, int p_77573_2_, int p_77573_3_, boolean p_77573_4_) {
+	private boolean checkMatch(AspectCraftingInventory craftingInventory, int p_77573_2_, int p_77573_3_, boolean p_77573_4_) {
 		for(int i = 0; i < craftingInventory.getWidth(); ++i) {
 			for(int j = 0; j < craftingInventory.getHeight(); ++j) {
 				int k = i - p_77573_2_;
@@ -127,7 +143,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	/**
 	 * Returns an Item that is the result of this recipe
 	 */
-	public ItemStack getCraftingResult(CraftingInventory inv) {
+	public ItemStack getCraftingResult(AspectCraftingInventory inv) {
 		return this.getRecipeOutput().copy();
 	}
 
@@ -270,9 +286,10 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 
 	public static ItemStack deserializeItem(JsonObject p_199798_0_) {
 		String s = JSONUtils.getString(p_199798_0_, "item");
-		Item item = Registry.ITEM.getValue(new ResourceLocation(s)).orElseThrow(() -> {
-			return new JsonSyntaxException("Unknown item '" + s + "'");
-		});
+		Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(s));
+		if (item == null) {
+			throw new JsonSyntaxException("Unknown item '" + s + "'");
+		}
 		if (p_199798_0_.has("data")) {
 			throw new JsonParseException("Disallowed data tag found");
 		} else {
@@ -281,17 +298,47 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 		}
 	}
 
+	private static UndecidedAspectStack[] deserializeAspects(JsonArray aspectsArray) {
+		ArrayList<UndecidedAspectStack> aspectStacks = new ArrayList<UndecidedAspectStack>();
+		aspectsArray.forEach(aspectsObject -> {
+			JsonObject object = aspectsObject.getAsJsonObject();
+			String saspect = JSONUtils.getString(object, "aspect");
+			Aspect aspect;
+			boolean any;
+			if (saspect.equalsIgnoreCase("any")||saspect.equalsIgnoreCase("arcana:any")){
+				aspect = Aspects.EMPTY;
+				any = true;
+			}else{
+				aspect = AspectUtils.getAspectByName(saspect);
+				any = false;
+			}
+			aspectStacks.add(new UndecidedAspectStack(new AspectStack(aspect,JSONUtils.getInt(object, "amount")),any));
+		});
+		return aspectStacks.toArray(new UndecidedAspectStack[aspectStacks.size()]);
+	}
+
+	public static class UndecidedAspectStack{
+		public AspectStack stack;
+		public boolean any;
+
+		public UndecidedAspectStack(AspectStack stack, boolean any){
+			this.stack = stack;
+			this.any = any;
+		}
+	}
+
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<ArcaneCraftingShapedRecipe> {
 		private static final ResourceLocation NAME = new ResourceLocation("arcana:arcane_crafting_shaped");
 		public ArcaneCraftingShapedRecipe read(ResourceLocation recipeId, JsonObject json) {
 			String s = JSONUtils.getString(json, "group", "");
 			Map<String, Ingredient> map = ArcaneCraftingShapedRecipe.deserializeKey(JSONUtils.getJsonObject(json, "key"));
-			String[] astring = ArcaneCraftingShapedRecipe.shrink(ArcaneCraftingShapedRecipe.patternFromJson(JSONUtils.getJsonArray(json, "pattern")));
-			int i = astring[0].length();
-			int j = astring.length;
-			NonNullList<Ingredient> nonnulllist = ArcaneCraftingShapedRecipe.deserializeIngredients(astring, map, i, j);
+			String[] pattern = ArcaneCraftingShapedRecipe.shrink(ArcaneCraftingShapedRecipe.patternFromJson(JSONUtils.getJsonArray(json, "pattern")));
+			UndecidedAspectStack[] aspectStack_list = ArcaneCraftingShapedRecipe.deserializeAspects(JSONUtils.getJsonArray(json, "aspects"));
+			int i = pattern[0].length();
+			int j = pattern.length;
+			NonNullList<Ingredient> nonnulllist = ArcaneCraftingShapedRecipe.deserializeIngredients(pattern, map, i, j);
 			ItemStack itemstack = ArcaneCraftingShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "result"));
-			return new ArcaneCraftingShapedRecipe(recipeId, s, i, j, nonnulllist, itemstack);
+			return new ArcaneCraftingShapedRecipe(recipeId, s, i, j, nonnulllist, itemstack, aspectStack_list);
 		}
 
 		public ArcaneCraftingShapedRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
@@ -305,7 +352,14 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 			}
 
 			ItemStack itemstack = buffer.readItemStack();
-			return new ArcaneCraftingShapedRecipe(recipeId, s, i, j, nonnulllist, itemstack);
+
+			ArrayList<UndecidedAspectStack> aspectStacksArray = new ArrayList<UndecidedAspectStack>();
+			int stackAmount = buffer.readInt();
+			for (int l = 0; l < stackAmount-1; l++) {
+				aspectStacksArray.add(readUndecidedAspectStack(buffer));
+			}
+
+			return new ArcaneCraftingShapedRecipe(recipeId, s, i, j, nonnulllist, itemstack,aspectStacksArray.toArray(new UndecidedAspectStack[aspectStacksArray.size()]));
 		}
 
 		public void write(PacketBuffer buffer, ArcaneCraftingShapedRecipe recipe) {
@@ -318,6 +372,23 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 			}
 
 			buffer.writeItemStack(recipe.recipeOutput);
+
+			buffer.writeInt(recipe.aspectStacks.length);
+			for (UndecidedAspectStack aspectStack : recipe.aspectStacks)
+				writeUndecidedAspectStack(buffer,aspectStack);
+		}
+
+		protected void writeUndecidedAspectStack(PacketBuffer buffer, UndecidedAspectStack stack){
+			buffer.writeBoolean(stack.any);
+			buffer.writeString(stack.stack.getAspect().name());
+			buffer.writeInt(stack.stack.getAmount());
+		}
+
+		protected UndecidedAspectStack readUndecidedAspectStack(PacketBuffer buffer){
+			boolean any = buffer.readBoolean();
+			String aspect_name = buffer.readString();
+			int amount = buffer.readInt();
+			return new UndecidedAspectStack(new AspectStack(AspectUtils.getAspectByName(aspect_name),amount),any);
 		}
 	}
 }
