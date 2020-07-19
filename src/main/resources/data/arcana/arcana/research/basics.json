@@ -360,20 +360,70 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.collecting_aspects.stage.1",
+          "content": "research.arcana.collecting_aspects.stage.1"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:jar"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:alembic"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_tube"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:iron_cap",
           "requirements": [
             "0*arcana:jar",
             "0*arcana:crucible",
-            "0*arcana:alembic"
+            "0*arcana:alembic",
+            "0*arcana:essentia_tube"
           ]
         },
         {
           "type": "string",
           "content": "research.arcana.collecting_aspects.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:aspect_tubes",
+      "name": "research.arcana.aspect_tubes",
+      "desc": "research.arcana.aspect_tubes.desc",
+      "icons": [
+        "arcana:essentia_tube",
+        "arcana:essentia_window",
+        "arcana:essentia_valve"
+      ],
+      "category": "arcana:basics",
+      "parents": [
+        "arcana:collecting_aspects"
+      ],
+      "meta": [
+        "round_base"
+      ],
+      "x": -1,
+      "y": 2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.aspect_tubes.text"
         },
         {
-          "type": "alchemy",
-          "content": "arcana:arcanium_ingot"
+          "type": "crafting",
+          "content": "arcana:essentia_tube"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_valve"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_window"
         }
       ]
     },
