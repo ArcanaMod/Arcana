@@ -61,7 +61,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
+	public void render(int mouseX, int mouseY, float partialTicks){
 		super.render(mouseX, mouseY, partialTicks);
 		renderHoveredToolTip(mouseX, mouseY);
 		if(aspectContainer.getHeldAspect() != null){

@@ -12,7 +12,9 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.RecipeItemHelper;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
@@ -54,6 +56,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 		if (!world.isRemote) {
 			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)playerEntity;
 			ItemStack itemstack = ItemStack.EMPTY;
+			// look for arcane crafting
 			Optional<IArcaneCraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(ArcanaRecipes.Types.ARCANE_CRAFTING_SHAPED, craftingInventory, world);
 			if (optional.isPresent()) {
 				IArcaneCraftingRecipe iarcanecraftingrecipe = optional.get();
@@ -61,7 +64,15 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 					itemstack = iarcanecraftingrecipe.getCraftingResult(craftingInventory);
 				}
 			}
-
+			// if arcane crafting is not possible, look for regular crafting
+			else{
+				Optional<ICraftingRecipe> craftingOptional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftingInventory, world);
+				if(craftingOptional.isPresent()){
+					ICraftingRecipe recipe = craftingOptional.get();
+					if(resultInventory.canUseRecipe(world, serverplayerentity, recipe))
+						itemstack = recipe.getCraftingResult(craftingInventory);
+				}
+			}
 			resultInventory.setInventorySlotContents(0, itemstack);
 			serverplayerentity.connection.sendPacket(new SSetSlotPacket(windowIdIn, 0, itemstack));
 		}

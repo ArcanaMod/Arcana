@@ -4,6 +4,7 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
+import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -14,12 +15,17 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraftforge.common.crafting.IShapedRecipe;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Map;
 import java.util.Set;
 
 // Don't touch, it is working.
-public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory> {
+// No, I think I will touch.
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShapedRecipe<CraftingInventory> {
 	static int MAX_WIDTH = 3;
 	static int MAX_HEIGHT = 3;
 
@@ -206,19 +212,13 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, net.mi
 
 	private static int firstNonSpace(String str) {
 		int i;
-		for(i = 0; i < str.length() && str.charAt(i) == ' '; ++i) {
-			;
-		}
-
+		for(i = 0; i < str.length() && str.charAt(i) == ' '; ++i){}
 		return i;
 	}
 
 	private static int lastNonSpace(String str) {
 		int i;
-		for(i = str.length() - 1; i >= 0 && str.charAt(i) == ' '; --i) {
-			;
-		}
-
+		for(i = str.length() - 1; i >= 0 && str.charAt(i) == ' '; --i){}
 		return i;
 	}
 
@@ -254,7 +254,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, net.mi
 
 		for(Map.Entry<String, JsonElement> entry : json.entrySet()) {
 			if (entry.getKey().length() != 1) {
-				throw new JsonSyntaxException("Invalid key entry: '" + (String)entry.getKey() + "' is an invalid symbol (must be 1 character only).");
+				throw new JsonSyntaxException("Invalid key entry: '" + entry.getKey() + "' is an invalid symbol (must be 1 character only).");
 			}
 
 			if (" ".equals(entry.getKey())) {

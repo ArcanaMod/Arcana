@@ -95,14 +95,14 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 
 	private void updateAspectSearch() {
 		if (!this.searchWidget.getText().equals("")) {
-			ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
+			ResearchTableContainer container = aspectContainer;
 			List<AspectSlot> slots = container.scrollableSlots;
 			for(int i = 0; i < slots.size(); i++){
 				AspectSlot slot = slots.get(i);
 				slot.visible = (i >= 36 * page && i < 36 * (page + 1)) && AspectUtils.getLocalizedAspectDisplayName(slot.getAspect()).toLowerCase().contains(this.searchWidget.getText().toLowerCase());
 			}
-		}
-		else refreshSlotVisibility();
+		}else
+			refreshSlotVisibility();
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	protected void actionPerformed(@Nonnull Button button) {
 		if(button == leftArrow && page > 0)
 			page--;
-		ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
+		ResearchTableContainer container = aspectContainer;
 		if(button == rightArrow && container.scrollableSlots.size() > 36 * (page + 1))
 			page++;
 
@@ -133,7 +133,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	}
 	
 	protected void refreshSlotVisibility(){
-		ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
+		ResearchTableContainer container = aspectContainer;
 		List<AspectSlot> slots = container.scrollableSlots;
 		for(int i = 0; i < slots.size(); i++){
 			AspectSlot slot = slots.get(i);
@@ -156,7 +156,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				//hovered = mouseX >= guiLeft + x && mouseY >= guiTop + y && mouseX < guiLeft + x + width && mouseY < guiTop + y + height;
 				int teX = right ? 120 : 135;
 				int teY = 307;
-				ResearchTableContainer container = (ResearchTableContainer)aspectContainer;
+				ResearchTableContainer container = aspectContainer;
 				// first check if there are multiple pages
 				if (container!=null)
 				if(container.scrollableSlots.size() > 36)

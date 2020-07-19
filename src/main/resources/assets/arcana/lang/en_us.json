@@ -642,6 +642,7 @@
     "devtools.arcana_book_editmode": "Edit Arcanum",
     "devtools.arcana": "Arcana Tools",
     "devtools.mojang": "Mojang Tools",
+    "container.arcane_workbench": "Arcane Crafting",
 
     "_comment": "Fluids",
     "fluid.arcana.taint_fluid": "Tainted Goo",

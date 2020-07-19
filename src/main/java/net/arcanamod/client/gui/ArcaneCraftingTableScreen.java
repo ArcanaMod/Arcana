@@ -15,8 +15,8 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 	public static final int WIDTH = 187;
 	public static final int HEIGHT = 233;
 
-	public ArcaneCraftingTableScreen(ArcaneCraftingTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
-		super(screenContainer, inv, titleIn);
+	public ArcaneCraftingTableScreen(ArcaneCraftingTableContainer screenContainer, PlayerInventory inv, ITextComponent title) {
+		super(screenContainer, inv, title);
 		xSize = WIDTH;
 		ySize = HEIGHT;
 	}
@@ -34,7 +34,16 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 		minecraft.getTextureManager().bindTexture(BG);
 		renderModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, xSize, ySize, 256, 256);
 	}
-
+	
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
+		font.drawString(title.getFormattedText(), 10, -5, 0xA0A0A0);
+	}
+	
+	public void render(int mouseX, int mouseY, float partialTicks){
+		super.render(mouseX, mouseY, partialTicks);
+		renderHoveredToolTip(mouseX, mouseY);
+	}
+	
 	public static void renderModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
 		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
 		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
