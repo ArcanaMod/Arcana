@@ -56,6 +56,8 @@ public abstract class EntrySection{
 		deserializers.put(CraftingSection.TYPE, nbt -> new CraftingSection(nbt.getString("recipe")));
 		factories.put(SmeltingSection.TYPE, SmeltingSection::new);
 		deserializers.put(SmeltingSection.TYPE, nbt -> new SmeltingSection(nbt.getString("recipe")));
+		factories.put(AlchemySection.TYPE, AlchemySection::new);
+		deserializers.put(AlchemySection.TYPE, nbt -> new AlchemySection(nbt.getString("recipe")));
 	}
 	
 	// instance stuff

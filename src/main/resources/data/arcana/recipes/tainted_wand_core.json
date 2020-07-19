@@ -1,0 +1,27 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "arcana:hawthorn_wand_core"
+  },
+  "out": {
+    "item": "arcana:tainted_wand_core"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 18
+    },
+    {
+      "aspect": "taint",
+      "amount": 24
+    },
+    {
+      "aspect": "aura",
+      "amount": 12
+    },
+    {
+      "aspect": "imprison",
+      "amount": 8
+    }
+  ]
+}

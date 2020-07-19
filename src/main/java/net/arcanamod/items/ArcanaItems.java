@@ -6,21 +6,21 @@ import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.armor.ArcanaArmourMaterials;
 import net.arcanamod.items.armor.AutoRepairArmorItem;
 import net.arcanamod.items.armor.GoggleBase;
-import net.arcanamod.items.attachment.*;
+import net.arcanamod.items.attachment.CapItem;
+import net.arcanamod.items.attachment.Core;
+import net.arcanamod.items.attachment.CoreItem;
+import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.items.tools.*;
 import net.arcanamod.util.GogglePriority;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Properties;
-import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.function.Supplier;
 
 import static net.arcanamod.Arcana.MODID;
 import static net.arcanamod.Arcana.arcLoc;

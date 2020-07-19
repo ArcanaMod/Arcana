@@ -65,7 +65,7 @@ public class RenderTooltip{
 		}
 	}
 	
-	private static int blendToWhite(int a){
+	public static int blendToWhite(int a){
 		int aR = (a & 0xff0000) >> 16;
 		int aG = (a & 0xff00) >> 8;
 		int aB = a & 0xff;

@@ -370,6 +370,10 @@
         {
           "type": "string",
           "content": "research.arcana.collecting_aspects.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:arcanium_ingot"
         }
       ]
     },

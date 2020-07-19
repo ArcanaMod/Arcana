@@ -21,8 +21,8 @@
           "content": "research.arcana.tainted.stage.1"
         },
         {
-          "type": "smelting",
-          "content": "minecraft:iron_nugget_from_smelting"
+          "type": "alchemy",
+          "content": "arcana:tainted_wand_core"
         },
         {
           "type": "smelting",
