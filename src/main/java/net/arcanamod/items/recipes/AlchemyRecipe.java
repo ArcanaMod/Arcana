@@ -3,6 +3,7 @@ package net.arcanamod.items.recipes;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.aspects.AspectInfluencingRecipe;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.ItemAspectRegistry;
@@ -24,12 +25,13 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static net.arcanamod.Arcana.arcLoc;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class AlchemyRecipe implements IRecipe<AlchemyInventory>{
+public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluencingRecipe{
 	
 	// vanilla registry
 	public static IRecipeType<AlchemyRecipe> ALCHEMY = Registry.register(Registry.RECIPE_TYPE, arcLoc("alchemy"), new IRecipeType<AlchemyRecipe>(){
@@ -94,6 +96,10 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>{
 	
 	public IRecipeType<?> getType(){
 		return ALCHEMY;
+	}
+	
+	public void influence(List<AspectStack> in){
+		in.addAll(aspectsIn.stream().map(stack -> new AspectStack(stack.getAspect(), (stack.getAmount() / 2))).collect(Collectors.toList()));
 	}
 	
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AlchemyRecipe>{

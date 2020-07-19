@@ -60,7 +60,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		List<AspectStack> itemAspects = get(stack.getItem());
 		for(BiConsumer<ItemStack, List<AspectStack>> function : stackFunctions)
 			function.accept(stack, itemAspects);
-		return itemAspects;
+		return squish(itemAspects);
 	}
 	
 	protected void apply(@Nonnull Map<ResourceLocation, JsonObject> objects, @Nonnull IResourceManager resourceManager, @Nonnull IProfiler profiler){
@@ -91,7 +91,6 @@ public class ItemAspectRegistry extends JsonReloadListener{
 					return news;
 				});
 		});
-		// wait for recipes to load??? how???
 		// for every item not already given aspects in this way, give according to recipes
 		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes()){
 			Item item = recipe.getRecipeOutput().getItem();
@@ -105,19 +104,16 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		Collection<Item> itemMirror = new ArrayList<>(itemAspects.keySet());
 		for(Item item : itemMirror)
 			if(itemAspects.containsKey(item)){
-				List<AspectStack> squished = /*unSquished.stream()
-						// categorize stacks by aspect
-						.collect(Collectors.groupingBy(AspectStack::getAspect)).values().stream()
-						// merge all aspect stacks with the same aspect
-						.map(stacks -> stacks.stream().reduce((left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount())).orElse(AspectStack.EMPTY))
-						// collect
-						.collect(Collectors.toList());*/
-						StreamUtils.partialReduce(itemAspects.get(item), AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
+				List<AspectStack> squished = squish(itemAspects.get(item));
 				itemAspects.put(item, squished);
 			}
 		
 		LOGGER.info("Assigned aspects to {} items", itemAspects.size());
 		processing = false;
+	}
+	
+	private static List<AspectStack> squish(List<AspectStack> unSquished){
+		return StreamUtils.partialReduce(unSquished, AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
 	}
 	
 	private List<AspectStack> getFromRecipes(Item item){
@@ -135,10 +131,11 @@ public class ItemAspectRegistry extends JsonReloadListener{
 							List<AspectStack> ingredients = getGenerating(first.getItem());
 							for(AspectStack stack : ingredients)
 								generated.add(new AspectStack(stack.getAspect(), Math.max(stack.getAmount() / recipe.getRecipeOutput().getCount(), 1)));
-							//generated.addAll(ingredients);
 						}
 					}
 				}
+				if(recipe instanceof AspectInfluencingRecipe)
+					((AspectInfluencingRecipe)recipe).influence(generated);
 				allGenerated.add(generated);
 			}
 		}
