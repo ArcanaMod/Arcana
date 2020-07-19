@@ -289,7 +289,7 @@
   ],
   "#minecraft:boats": [
     {
-      "aspect": "wood",
+      "aspect": "tree",
       "amount": 4
     },
     {
