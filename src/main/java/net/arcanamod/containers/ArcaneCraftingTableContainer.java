@@ -35,7 +35,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<CraftingIn
 		this.inventory = inventory;
 		this.playerInventory = playerInventory;
 		this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
-		this.addSlot(new WandSlot(inventory, 1, 65, 14));
+		this.addSlot(new WandSlot(inventory, 1, 160, 18));
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 3; ++j) {
 				this.addSlot(new Slot(craftMatrix,j + i * 3, 42 + j * 23, 41 + i * 23));
