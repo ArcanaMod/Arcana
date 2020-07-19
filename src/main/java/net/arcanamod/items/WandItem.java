@@ -57,29 +57,30 @@ public class WandItem extends Item{
 			battery.createCell(new AspectCell(getCore(stack).maxVis(), aspect));
 		return battery;
 	}
-
-	// Click on block
+	
 	public ActionResultType onItemUse(ItemUseContext context){
-		World world = context.getWorld();
-		BlockPos pos = context.getPos();
+		return convert(context.getWorld(), context.getPos(), context.getPlayer());
+	}
+
+	public static ActionResultType convert(World world, BlockPos pos, @Nullable PlayerEntity player){
 		BlockState state = world.getBlockState(pos);
 		if(state.getBlock() == Blocks.CAULDRON){
 			world.setBlockState(pos, ArcanaBlocks.CRUCIBLE.get().getDefaultState().with(CrucibleBlock.FULL, state.get(CauldronBlock.LEVEL) >= 2));
-			world.playSound(context.getPlayer(), pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
+			world.playSound(player, pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
 			for(int i = 0; i < 20; i++)
 				world.addParticle(ParticleTypes.END_ROD, pos.getX() + world.rand.nextDouble(), pos.getY() + world.rand.nextDouble(), pos.getZ() + world.rand.nextDouble(), 0, 0, 0);
 			return ActionResultType.SUCCESS;
 		}
 		if(state.getBlock() == Blocks.CRAFTING_TABLE){
 			world.setBlockState(pos, ArcanaBlocks.ARCANE_CRAFTING_TABLE.get().getDefaultState());
-			world.playSound(context.getPlayer(), pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
+			world.playSound(player, pos, SoundEvents.ENTITY_EVOKER_CAST_SPELL, SoundCategory.PLAYERS, 1, 1);
 			for(int i = 0; i < 20; i++)
 				world.addParticle(ParticleTypes.END_ROD, (pos.getX() - .1f) + world.rand.nextDouble() * 1.2f, (pos.getY() - .1f) + world.rand.nextDouble() * 1.2f, (pos.getZ() - .1f) + world.rand.nextDouble() * 1.2f, 0, 0, 0);
 			return ActionResultType.SUCCESS;
 		}
-		return super.onItemUse(context);
+		return ActionResultType.PASS;
 	}
-
+	
 	// Click anywhere
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
