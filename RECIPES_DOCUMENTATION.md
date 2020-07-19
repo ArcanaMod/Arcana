@@ -1,10 +1,11 @@
-``"type": "arcana:arcane_crafting_shaped"``<br>
-Contains basic crafting syntax with extra objects:<br>
-``aspects`` list of aspects that recipe uses, comprise:
-* ``"aspect"`` aspect ResourceLocation
-* ``"amount"`` amount of aspect (int)
+#### Arcane Crafting:
+Type: `"arcana:arcane_crafting_shaped"`  
+A shaped crafting recipe, with extra objects:  
+`aspects`: A list of json objects representing aspect stacks required by the recipe:
+* `"aspect"`: an aspect's name (as a resource location)
+* `"amount"`: an amount (int)
 
-``requirements`` list of required research<br>
+`requirements`: An optional (ignored??) list of resource locations representing required research.  
 
 Example:
 ```json
@@ -38,13 +39,15 @@ Example:
     }
   }
 ```
-``"type": "arcana:alchemy"``<br>
-Alchemy syntax:<br>
-``"in"`` input items<br>
-``"out"`` output items<br>
-``aspects`` list of aspects that recipe uses, comprise:
-* ``"aspect"`` aspect name
-* ``"amount"`` amount of aspect (int)
+
+#### Alchemy
+Type: `"type": "arcana:alchemy"`  
+`"in"`: The input ingredient.  
+`"out"`: The itemstack result.  
+`research`: An optional resource location representing a required research entry.  
+`aspects`: A list of json objects representing aspect stacks required by the recipe:
+* `"aspect"`: an aspect's name (as a resource location)
+* `"amount"`: an amount (int)
 
 Example:
 ```json
