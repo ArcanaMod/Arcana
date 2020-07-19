@@ -15,6 +15,7 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.util.Locale;
 
+@SuppressWarnings("ConstantConditions")
 public class ArcanaSounds {
 	public static SoundType JAR = new SoundType(0.6F, 1.0F,Impl.jar_break,Impl.jar_step,Impl.jar_place,Impl.jar_break,Impl.jar_step);
 

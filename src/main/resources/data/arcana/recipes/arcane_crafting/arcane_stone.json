@@ -13,6 +13,15 @@
       "tag": "arcana:crystals"
     }
   },
+  "aspects": {
+    "any": {
+      "aspect": "arcana:air",
+      "amount": 4
+    }
+  },
+  "requirements": [
+    "arcana:research_intro"
+  ],
   "result": {
     "item": "arcana:arcane_stone",
     "count": 8
