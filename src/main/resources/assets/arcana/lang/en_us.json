@@ -703,7 +703,7 @@
     "research.arcana.silver": "Silver",
     "research.arcana.silver.desc": "Kills 99.9%% of taint bugs",
     "research.arcana.silver.stage.1": "Silver is mundane. I say that partially because it doesn't have any intrinsic magical properties - I say that also because it deflects and repels magic. It's been historically quite useful for cleaning up magical mishaps and containing magic nicely - I will *absolutely* want some of that.",
-    "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. This also gives them... lacking durability, more on-par with gold than anything I would wear regularly.",
+    "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. Silver tools mine tainted blocks twice as fast as other tools, on top of having near-gold base mining speed. This also gives them... lacking durability, more on-par with stone than anything I would use regularly.",
 
     "research.arcana.flux": "Flux, Taint, Warp",
     "research.arcana.flux.desc": "No such thing as free lunch",
