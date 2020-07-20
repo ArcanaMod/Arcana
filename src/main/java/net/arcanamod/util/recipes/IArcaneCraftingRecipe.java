@@ -8,6 +8,4 @@ public interface IArcaneCraftingRecipe extends IRecipe<AspectCraftingInventory> 
 	default IRecipeType<?> getType() {
 		return ArcanaRecipes.Types.ARCANE_CRAFTING_SHAPED;
 	}
-
-	ArcaneCraftingShapedRecipe.UndecidedAspectStack[] getAspectStacks();
 }

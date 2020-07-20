@@ -338,7 +338,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 		return aspectStacks.toArray(new UndecidedAspectStack[aspectStacks.size()]);
 	}
 
-	public static class UndecidedAspectStack{
+	private static class UndecidedAspectStack{
 		public AspectStack stack;
 		public boolean any;
 

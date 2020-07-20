@@ -1,18 +1,13 @@
 package net.arcanamod.containers;
 
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.containers.slots.LockableCraftingResultSlot;
 import net.arcanamod.containers.slots.WandSlot;
 import net.arcanamod.util.inventories.AspectCraftingInventory;
 import net.arcanamod.util.recipes.ArcanaRecipes;
-import net.arcanamod.util.recipes.ArcaneCraftingShapedRecipe;
 import net.arcanamod.util.recipes.IArcaneCraftingRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.*;
@@ -26,8 +21,6 @@ import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.lang.ref.Reference;
-import java.lang.ref.WeakReference;
 import java.util.Optional;
 
 public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraftingInventory> {
@@ -43,7 +36,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 		this.playerInventory = playerInventory;
 		WandSlot wandSlot = new WandSlot(inventory, 1, 160, 18);
 		this.craftMatrix = new AspectCraftingInventory(this,wandSlot, 3, 3);
-		this.addSlot(new LockableCraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, wandSlot, 0, 160, 64));
+		this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
 		this.addSlot(wandSlot);
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 3; ++j) {
