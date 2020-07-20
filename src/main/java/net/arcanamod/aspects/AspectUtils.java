@@ -102,4 +102,8 @@ public class AspectUtils {
 				.create();
 		return gson.toJson(handler.getHolders());
 	}
+
+	public static Aspect getAspectByResourceLocation(ResourceLocation resourceLocation) {
+		return Aspects.ASPECTS.get(resourceLocation);
+	}
 }

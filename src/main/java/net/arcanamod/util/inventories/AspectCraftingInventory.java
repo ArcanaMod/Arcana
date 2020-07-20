@@ -1,18 +1,18 @@
 package net.arcanamod.util.inventories;
 
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.containers.slots.WandSlot;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.container.Container;
 
 public class AspectCraftingInventory extends CraftingInventory {
-	protected IAspectHandler handler;
+	private WandSlot wandSlot;
 
-	public AspectCraftingInventory(Container eventHandlerIn, IAspectHandler handler, int width, int height) {
+	public AspectCraftingInventory(Container eventHandlerIn, WandSlot wandSlot, int width, int height) {
 		super(eventHandlerIn, width, height);
-		this.handler = handler;
+		this.wandSlot = wandSlot;
 	}
 
-	public IAspectHandler getAspectHandler() {
-		return handler;
+	public WandSlot getWandSlot() {
+		return wandSlot;
 	}
 }

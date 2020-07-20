@@ -5,10 +5,8 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.*;
+import net.arcanamod.util.Pair;
 import net.arcanamod.util.inventories.AspectCraftingInventory;
 import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
@@ -22,6 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Map;
@@ -99,6 +98,13 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	 * Used to check if a recipe matches current crafting inventory
 	 */
 	public boolean matches(AspectCraftingInventory inv, World worldIn) {
+		if (aspectStacks.length!=0){
+			if (inv.getWandSlot()==null) return false;
+			if (inv.getWandSlot().getStack()==ItemStack.EMPTY) return false;
+			IAspectHandler handler = IAspectHandler.getFrom(inv.getWandSlot().getStack());
+			if (this.checkAspectMatch(inv,handler));
+				return false;
+		}
 		for(int i = 0; i <= inv.getWidth() - this.recipeWidth; ++i) {
 			for(int j = 0; j <= inv.getHeight() - this.recipeHeight; ++j) {
 				if (this.checkMatch(inv, i, j, true)) {
@@ -112,6 +118,21 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 		}
 
 		return false;
+	}
+
+	private boolean checkAspectMatch(AspectCraftingInventory inv, @Nullable IAspectHandler handler) {
+		if (handler==null) return false;
+		if (handler.getHoldersAmount()==0) return false;
+		for (IAspectHolder holder : handler.getHolders()){
+			for (UndecidedAspectStack stack : aspectStacks){
+				if (holder.getContainedAspect()==stack.stack.getAspect()){
+					if (holder.getCurrentVis() < stack.stack.getAmount())
+						return false;
+					// TODO: add "any" aspect support
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -309,7 +330,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 				aspect = Aspects.EMPTY;
 				any = true;
 			}else{
-				aspect = AspectUtils.getAspectByName(saspect);
+				aspect = AspectUtils.getAspectByResourceLocation(new ResourceLocation(saspect));
 				any = false;
 			}
 			aspectStacks.add(new UndecidedAspectStack(new AspectStack(aspect,JSONUtils.getInt(object, "amount")),any));

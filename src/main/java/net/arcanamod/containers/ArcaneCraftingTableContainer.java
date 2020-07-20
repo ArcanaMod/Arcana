@@ -26,6 +26,8 @@ import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.lang.ref.Reference;
+import java.lang.ref.WeakReference;
 import java.util.Optional;
 
 public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraftingInventory> {
@@ -34,15 +36,15 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	private final PlayerInventory playerInventory;
 	private final AspectCraftingInventory craftMatrix;
 	private final CraftResultInventory craftResult = new CraftResultInventory();
-	private final IAspectHandler linkedAspectHandler = getLinkedAspectHandler();
 
 	public ArcaneCraftingTableContainer(@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, IInventory inventory){
 		super(type, id);
 		this.inventory = inventory;
 		this.playerInventory = playerInventory;
-		this.craftMatrix = new AspectCraftingInventory(this,linkedAspectHandler, 3, 3);
-		this.addSlot(new LockableCraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
-		this.addSlot(new WandSlot(inventory, 1, 160, 18));
+		WandSlot wandSlot = new WandSlot(inventory, 1, 160, 18);
+		this.craftMatrix = new AspectCraftingInventory(this,wandSlot, 3, 3);
+		this.addSlot(new LockableCraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, wandSlot, 0, 160, 64));
+		this.addSlot(wandSlot);
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 3; ++j) {
 				this.addSlot(new Slot(craftMatrix,j + i * 3, 42 + j * 23, 41 + i * 23));
@@ -90,11 +92,6 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	 */
 	public void onCraftMatrixChanged(IInventory inventoryIn){
 		craft(this.windowId, this.playerInventory.player.world, this.playerInventory.player, this.craftMatrix, this.craftResult);
-	}
-
-	public IAspectHandler getLinkedAspectHandler() {
-		if (inventory==null) return null;
-		else return IAspectHandler.getFrom(inventory.getStackInSlot(1));
 	}
 
 	/**
