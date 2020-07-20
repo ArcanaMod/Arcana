@@ -8,6 +8,7 @@ import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.entities.tainted.*;
+import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
 import net.minecraft.client.Minecraft;
@@ -113,7 +114,7 @@ public class Taint{
 	}
 	
 	public static void tickTaintedBlock(BlockState state, ServerWorld world, BlockPos pos, Random random){
-		if(!state.get(UNTAINTED)){
+		if(state.getBlock() == ArcanaFluids.TAINT_FLUID_BLOCK.get() || !state.get(UNTAINTED)){
 			// and if flux level is greater than 5,
 			ServerAuraView auraView = new ServerAuraView(world);
 			int at = auraView.getTaintAt(pos);
