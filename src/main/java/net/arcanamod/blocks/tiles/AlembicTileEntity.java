@@ -1,6 +1,7 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.client.render.AspectHelixParticleData;
@@ -31,8 +32,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	
 	public boolean suppressedByRedstone = false;
 	
-	public static final int MAX_ASPECT_OUT = 3;
-	public static final int MAX_ASPECT_DISTILL = 2;
+	public static int maxAspectOut = ArcanaConfig.MAX_ALEMBIC_ASPECT_OUT.get();
+	public static int maxAspectDistill = ArcanaConfig.MAX_ALEMBIC_ASPECT_DISTILL.get();
 	
 	public AlembicTileEntity(){
 		super(ArcanaTiles.ALEMBIC_TE.get());
@@ -42,15 +43,16 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	}
 	
 	public void tick(){
-		if(isOn()){
+		if(isOn() && world != null){
 			// scan for boiling crucibles
-			// 1-4 blocks of air, +3 of other alembics
+			// 1-4 blocks of air, +3 of other alembics by default
+			int maxAirs = ArcanaConfig.MAX_ALEMBIC_AIR.get(), maxAlembics = ArcanaConfig.MAX_ALEMBIC_STACK.get();
 			// if alembics are present, don't show particles
 			crucibleLevel = -1;
 			boolean pocket = false;
 			int stack = 0;
 			int airs = -1;
-			for(int i = getPos().getY() - 1; i > getPos().getY() - 8; i--){
+			for(int i = getPos().getY() - 1; i > getPos().getY() - (maxAirs + maxAlembics + 1); i--){
 				int passes = (getPos().getY() - 1) - i;
 				BlockPos pos = new BlockPos(getPos().getX(), i, getPos().getZ());
 				BlockState state = world.getBlockState(pos);
@@ -62,11 +64,11 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 					stack++;
 				}
 				// only three alembics
-				if(stack > 3)
+				if(stack > maxAlembics)
 					break;
 				if(state.isAir(world, pos)){
 					// up to 3 alembics + 4 air blocks
-					if(airs > 4)
+					if(airs > maxAirs)
 						break;
 					pocket = true;
 				}
@@ -82,7 +84,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 			if(crucibleLevel != -1){
 				BlockPos cruciblePos = new BlockPos(getPos().getX(), crucibleLevel, getPos().getZ());
 				CrucibleTileEntity te = (CrucibleTileEntity)world.getTileEntity(cruciblePos);
-				if(te.getAspectStackMap().size() > 0){
+				if(te != null && te.getAspectStackMap().size() > 0){
 					Aspect aspect = EMPTY;
 					// find an aspect stack we can actually pull
 					IAspectHolder adding = null;
@@ -102,8 +104,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 						if(!stacked)
 							world.addParticle(new AspectHelixParticleData(aspect, 20 * airs + 15, world.rand.nextInt(180)), cruciblePos.getX() + .5 + world.rand.nextFloat() * .1, cruciblePos.getY() + .7, cruciblePos.getZ() + .5 + world.rand.nextFloat() * .1, 0, 0, 0);
 						// pick a random aspect, take from it, and store them in our actual aspect handler
-						int diff = Math.min(aspectStack.getAmount(), MAX_ASPECT_DISTILL);
-						AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - MAX_ASPECT_DISTILL);
+						int diff = Math.min(aspectStack.getAmount(), maxAspectDistill);
+						AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - maxAspectDistill);
 						if(!newStack.isEmpty())
 							te.getAspectStackMap().put(aspect, newStack);
 						else
@@ -116,7 +118,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 					TileEntity tubeTe = world.getTileEntity(pos.offset(directions));
 					if(tubeTe instanceof AspectTubeTileEntity){
 						AspectTubeTileEntity aspectTube = (AspectTubeTileEntity)tubeTe;
-						VisUtils.moveAllAspects(aspects, IAspectHandler.getFrom(aspectTube), MAX_ASPECT_OUT);
+						VisUtils.moveAllAspects(aspects, IAspectHandler.getFrom(aspectTube), maxAspectOut);
 						break;
 					}
 				}

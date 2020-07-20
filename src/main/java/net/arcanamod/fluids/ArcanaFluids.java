@@ -1,9 +1,6 @@
 package net.arcanamod.fluids;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.entities.ArcanaEntities;
-import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.Material;
@@ -11,7 +8,6 @@ import net.minecraft.fluid.FlowingFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -20,8 +16,6 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.awt.*;
 
 import static net.arcanamod.blocks.ArcanaBlocks.BLOCKS;
 import static net.arcanamod.items.ArcanaItems.ITEMS;

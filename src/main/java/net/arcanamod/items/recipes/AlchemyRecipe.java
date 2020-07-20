@@ -3,6 +3,7 @@ package net.arcanamod.items.recipes;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.AspectInfluencingRecipe;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
@@ -99,7 +100,7 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 	}
 	
 	public void influence(List<AspectStack> in){
-		in.addAll(aspectsIn.stream().map(stack -> new AspectStack(stack.getAspect(), (stack.getAmount() / 2))).collect(Collectors.toList()));
+		in.addAll(aspectsIn.stream().map(stack -> new AspectStack(stack.getAspect(), (int)(stack.getAmount() * ArcanaConfig.ALCHEMY_ASPECT_CARRY_FRACTION.get()))).collect(Collectors.toList()));
 	}
 	
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AlchemyRecipe>{
