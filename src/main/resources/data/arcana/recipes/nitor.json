@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "minecraft:coals"
+  },
+  "out": {
+    "item": "arcana:nitor"
+  },
+  "aspects": [
+    {
+      "aspect": "fire",
+      "amount": 4
+    },
+    {
+      "aspect": "light",
+      "amount": 4
+    }
+  ]
+}
