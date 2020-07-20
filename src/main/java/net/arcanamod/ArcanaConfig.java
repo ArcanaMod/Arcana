@@ -18,67 +18,67 @@ public class ArcanaConfig{
 		COMMON_BUILDER.push("General");
 
 		SPAWN_WITH_NOTES = COMMON_BUILDER
-				.comment("If the player should spawn with the Scribbled notes item when first joining the world.")
+				.comment("If the player should spawn with the Scribbled notes item when first joining the world.", "True by default.")
 				.define("SpawnWithNotes", true);
 		ORE_RETROGEN = COMMON_BUILDER
-				.comment("Enables Arcana ore generation in already-generated chunks.", "Chunks generated with Arcana will stay unaffected.")
+				.comment("Enables Arcana ore generation in already-generated chunks.", "Chunks generated with Arcana will stay unaffected.", "False by default.")
 				.define("OreRetrogen", false);
 		NODE_RETROGEN = COMMON_BUILDER
-				.comment("Enables node generation in already-generated chunks.", "Chunks generated with Arcana will stay unaffected.")
+				.comment("Enables node generation in already-generated chunks.", "Chunks generated with Arcana will stay unaffected.", "False by default.")
 				.define("NodeRetrogen", false);
 		VERBOSE = COMMON_BUILDER
-				.comment("Enables verbose logging during retrogen.", "For debug purposes.")
+				.comment("Enables verbose logging during retrogen.", "For debug purposes; false by default.")
 				.define("VerboseRetrogen", false);
 		GENERATE_OVERWORLD = COMMON_BUILDER
-				.comment("Enables ore generation in the overworld.", "If disabled, Arcana's ores will not generate.")
+				.comment("Enables ore generation in the overworld.", "If disabled, Arcana's ores will not generate.", "True by default.")
 				.define("OverworldGeneration", true);
 		AMBER_MIN_VEIN_SIZE = COMMON_BUILDER
-				.comment("The minimum size of amber ore veins.", "(Currently unused.)")
+				.comment("The minimum size of amber ore veins.", "(Currently unused. 4 by default.)")
 				.define("MinAmberSize", 4);
 		AMBER_MAX_VEIN_SIZE = COMMON_BUILDER
-				.comment("The maximum size of amber ore veins.")
+				.comment("The maximum size of amber ore veins.", "8 by default.")
 				.define("MaxAmberSize", 8);
 		AMBER_CHANCES_TO_SPAWN = COMMON_BUILDER
-				.comment("The maximum number of amber ore veins per chunk.")
+				.comment("The maximum number of amber ore veins per chunk.", "3 by default.")
 				.define("AmberSpawnChance", 3);
 		AMBER_MIN_Y = COMMON_BUILDER
-				.comment("The minimum Y level that amber ore will generate at.")
+				.comment("The minimum Y level that amber ore will generate at.", "2 by default")
 				.define("MinAmberY", 2);
 		AMBER_MAX_Y = COMMON_BUILDER
-				.comment("The maximum Y level that amber ore will generate at.")
+				.comment("The maximum Y level that amber ore will generate at.", "50 by default.")
 				.define("MaxAmberY", 50);
 		NODE_CHANCE = COMMON_BUILDER
-				.comment("The chance of an aura node generating in a chunk, out of 100.")
+				.comment("The chance of an aura node generating in a chunk, out of 100.", "1 by default.")
 				.define("NodeChance", 1);
 		SPECIAL_NODE_CHANCE = COMMON_BUILDER
-				.comment("The chance of an aura node being a special (hungry, eldritch, bright, or pale) node, out of 100.")
+				.comment("The chance of an aura node being a special (hungry, eldritch, bright, or pale) node, out of 100.", "15 by default.")
 				.define("SpecialNodeChance", 15);
 		MAX_ALEMBIC_ASPECT_DISTILL = COMMON_BUILDER
-				.comment("The maximum amount of aspects a single alembic can distill per tick.")
+				.comment("The maximum amount of aspects a single alembic can distill per tick.", "2 by default.")
 				.define("MaxAlembicAspectDistill", 2);
 		MAX_ALEMBIC_ASPECT_OUT = COMMON_BUILDER
-				.comment("The maximum amount of aspects a single alembic can output to pipes per tick.")
+				.comment("The maximum amount of aspects a single alembic can output to pipes per tick.", "3 by default.")
 				.define("MaxAlembicAspectOut", 3);
 		MAX_ALEMBIC_AIR = COMMON_BUILDER
-				.comment("The maximum amount of air blocks between an alembic and a crucible.")
+				.comment("The maximum amount of air blocks between an alembic and a crucible.", "4 by default.")
 				.define("MaxAlembicAir", 4);
 		MAX_ALEMBIC_STACK = COMMON_BUILDER
-				.comment("The maximum amount of alembics that can be stacked.")
+				.comment("The maximum amount of alembics that can be stacked.", "3 by default.")
 				.define("MaxAlembicStack", 3);
 		ALCHEMY_ASPECT_CARRY_FRACTION = COMMON_BUILDER
-				.comment("The fraction of aspects used in an alchemy recipe that should be assigned to the result through recipes.", "Setting this to 0.5 (the default), for example, will cause an item crafted with 10 aer in alchemy to be given 5 aer from that recipe.")
+				.comment("The fraction of aspects used in an alchemy recipe that should be assigned to the result through recipes.", "Setting this to 0.5, the default, for example, will cause an item crafted with 10 aer in alchemy to be given 5 aer from that recipe.")
 				.define("AlchemyAspectCarryFraction", .5);
 		COMMON_BUILDER.pop();
 		
 		CLIENT_BUILDER.push("Client");
 		CUSTOM_BOOK_WIDTH = CLIENT_BUILDER
-				.comment("The width that the research book GUI should use.", "Setting it to -1 makes the GUI adjust to screen width automatically.")
+				.comment("The width that the research book GUI should use.", "Setting it to -1, the default, makes the GUI adjust to screen width automatically.")
 				.define("ResearchBookWidth", -1);
 		CUSTOM_BOOK_HEIGHT = CLIENT_BUILDER
-				.comment("The height that the research book GUI should use.", "Setting it to -1 makes the GUI adjust to screen height automatically.")
+				.comment("The height that the research book GUI should use.", "Setting it to -1, the default, makes the GUI adjust to screen height automatically.")
 				.define("ResearchBookHeight", -1);
 		BOOK_TEXT_SCALING = CLIENT_BUILDER
-				.comment("Text scaling for the research entry GUI.")
+				.comment("Text scaling for the research entry GUI.", ".07 by default")
 				.define("ResearchBookTextScaling", 0.7);
 		WAND_HUD_LEFT = CLIENT_BUILDER
 				.comment("Whether the wand HUD should display on the left of the screen (true) or the right (false).", "True by default.")
@@ -89,6 +89,12 @@ public class ArcanaConfig{
 		BLOCK_HUDS_TOP = CLIENT_BUILDER
 				.comment("Whether block HUDS that display in the middle of the screen should display above the crosshair (true) or below (false).", "True by default.")
 				.define("BlockHudsTop", true);
+		JAR_ANIMATION_SPEED = CLIENT_BUILDER
+				.comment("The speed of the warded jar filling animation, in vis per tick.", "3 by default.")
+				.define("JarFillAnimationSpeed", 3);
+		NO_JAR_ANIMATION = CLIENT_BUILDER
+				.comment("Whether the warded jar's filling animation should be disabled.", "False by default.")
+				.define("NoJarAnimation", false);
 		CLIENT_BUILDER.pop();
 	}
 	
@@ -122,4 +128,6 @@ public class ArcanaConfig{
 	public static ConfigValue<Boolean> WAND_HUD_LEFT; // true
 	public static ConfigValue<Boolean> WAND_HUD_TOP; // true
 	public static ConfigValue<Boolean> BLOCK_HUDS_TOP; // true
+	public static ConfigValue<Integer> JAR_ANIMATION_SPEED; // 3
+	public static ConfigValue<Boolean> NO_JAR_ANIMATION; // false
 }
