@@ -211,6 +211,10 @@ public class Taint{
 	public static boolean isTainted(EntityType<?> entity) {
 		return entityTaintMap.containsValue(entity);
 	}
+	
+	public static boolean isTainted(Block block) {
+		return taintMap.containsValue(block);
+	}
 
 	@SuppressWarnings("rawtypes")
 	public static Collection<EntityType> getTaintedEntities(){

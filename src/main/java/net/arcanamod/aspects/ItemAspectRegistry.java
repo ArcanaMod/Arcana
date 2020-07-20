@@ -8,6 +8,7 @@ import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.profiler.IProfiler;
@@ -53,7 +54,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 	}
 	
 	public static List<AspectStack> get(Item item){
-		return itemAspects.get(item) != null ? new ArrayList<>(itemAspects.get(item)) : new ArrayList<>();
+		return item != Items.AIR && itemAspects.get(item) != null ? new ArrayList<>(itemAspects.get(item)) : new ArrayList<>();
 	}
 	
 	public static List<AspectStack> get(ItemStack stack){

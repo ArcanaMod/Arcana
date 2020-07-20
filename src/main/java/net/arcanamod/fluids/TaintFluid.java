@@ -1,18 +1,27 @@
 package net.arcanamod.fluids;
 
+import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.blocks.Taint;
+import net.arcanamod.effects.ArcanaEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.fluid.FlowingFluid;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.function.Supplier;
 
+@SuppressWarnings("deprecation")
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class TaintFluid extends FlowingFluidBlock{
 	
 	public TaintFluid(Supplier<? extends FlowingFluid> supplier, Properties properties)
@@ -21,9 +30,9 @@ public class TaintFluid extends FlowingFluidBlock{
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random){
-		//Add taint things on random Tick
-		super.randomTick(state, worldIn, pos, random);
+	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random){
+		super.randomTick(state, world, pos, random);
+		Taint.tickTaintedBlock(state, world, pos, random);
 	}
 
 	@Override
@@ -32,17 +41,13 @@ public class TaintFluid extends FlowingFluidBlock{
 	}
 
 	@Override
-	public MaterialColor getMaterialColor(BlockState p_180659_1_, IBlockReader p_180659_2_, BlockPos p_180659_3_){
+	public MaterialColor getMaterialColor(BlockState state, IBlockReader world, BlockPos pos){
 		return MaterialColor.PURPLE;
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
-		return false;
-	}
-
-	@Override
-	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn){
-		//Player touches fluid
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
+		if(entity instanceof LivingEntity)
+			((LivingEntity)entity).addPotionEffect(new EffectInstance(ArcanaEffects.TAINTED.get(), 5 * 20));
 	}
 }

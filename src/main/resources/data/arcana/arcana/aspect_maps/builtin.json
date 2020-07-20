@@ -1,0 +1,643 @@
+{
+  "arcana:amber": [
+    {
+      "aspect": "imprison",
+      "amount": 5
+    }
+  ],
+  "minecraft:book": [
+    {
+      "aspect": "senses",
+      "amount": 5
+    },
+    {
+      "aspect": "mind",
+      "amount": 5
+    }
+  ],
+  "minecraft:enchanted_book": [
+    {
+      "aspect": "senses",
+      "amount": 5
+    },
+    {
+      "aspect": "mind",
+      "amount": 5
+    }
+  ],
+  "arcana:arcanum": [
+    {
+      "aspect": "senses",
+      "amount": 5
+    },
+    {
+      "aspect": "mind",
+      "amount": 10
+    },
+    {
+      "aspect": "mana",
+      "amount": 3
+    }
+  ],
+  "#minecraft:logs": [
+    {
+      "aspect": "tree",
+      "amount": 4
+    }
+  ],
+  "#minecraft:planks": [
+    {
+      "aspect": "tree"
+    }
+  ],
+  "#minecraft:leaves": [
+    {
+      "aspect": "plant"
+    }
+  ],
+  "#forge:ingots/iron": [
+    {
+      "aspect": "metal",
+      "amount": 4
+    }
+  ],
+  "#forge:ingots/gold": [
+    {
+      "aspect": "metal",
+      "amount": 4
+    },
+    {
+      "aspect": "greed",
+      "amount": 2
+    }
+  ],
+  "#forge:stone": [
+    {
+      "aspect": "earth",
+      "amount": 4
+    }
+  ],
+  "#forge:gravel": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    }
+  ],
+  "#forge:cobblestone": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "chaos"
+    }
+  ],
+  "#forge:sand": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "air",
+      "amount": 2
+    }
+  ],
+  "#forge:sand/red": [
+    {
+      "aspect": "fire"
+    }
+  ],
+  "#forge:dyes": [
+    {
+      "aspect": "senses",
+      "amount": 5
+    }
+  ],
+  "#forge:ores/diamond": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "creation",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/emerald": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "pride",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/redstone": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "energy",
+      "amount": 3
+    },
+    {
+      "aspect": "machine",
+      "amount": 2
+    }
+  ],
+  "#forge:ores/coal": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "energy",
+      "amount": 2
+    },
+    {
+      "aspect": "fire"
+    }
+  ],
+  "#forge:ores/iron": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "metal",
+      "amount": 4
+    }
+  ],
+  "#forge:ores/gold": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "metal",
+      "amount": 4
+    },
+    {
+      "aspect": "greed",
+      "amount": 2
+    }
+  ],
+  "#forge:gems/diamond": [
+    {
+      "aspect": "crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "creation",
+      "amount": 2
+    }
+  ],
+  "#forge:gems/emerald": [
+    {
+      "aspect": "crystal",
+      "amount": 3
+    },
+    {
+      "aspect": "pride",
+      "amount": 2
+    }
+  ],
+  "#forge:dusts/redstone": [
+    {
+      "aspect": "energy",
+      "amount": 3
+    },
+    {
+      "aspect": "machine",
+      "amount": 2
+    }
+  ],
+  "#minecraft:coals": [
+    {
+      "aspect": "energy",
+      "amount": 2
+    },
+    {
+      "aspect": "fire"
+    }
+  ],
+  "minecraft:clay_ball": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "water",
+      "amount": 3
+    }
+  ],
+  "minecraft:snowball": [
+    {
+      "aspect": "ice"
+    }
+  ],
+  "minecraft:ice": [
+    {
+      "aspect": "ice",
+      "amount": 5
+    }
+  ],
+  "#minecraft:buttons": [
+    {
+      "aspect": "machine"
+    }
+  ],
+  "#minecraft:trapdoors": [
+    {
+      "aspect": "machine",
+      "amount": 2
+    },
+    {
+      "aspect": "movement"
+    },
+    {
+      "aspect": "imprison"
+    }
+  ],
+  "#minecraft:wooden_trapdoors": [
+    {
+      "aspect": "tree",
+      "amount": 2
+    }
+  ],
+  "#minecraft:saplings": [
+    {
+      "aspect": "plant",
+      "amount": 2
+    },
+    {
+      "aspect": "tree"
+    },
+    {
+      "aspect": "life"
+    }
+  ],
+  "#minecraft:boats": [
+    {
+      "aspect": "tree",
+      "amount": 4
+    },
+    {
+      "aspect": "water",
+      "amount": 2
+    },
+    {
+      "aspect": "journey"
+    }
+  ],
+  "minecraft:prismarine": [
+    {
+      "aspect": "crystal",
+      "amount": 4
+    },
+    {
+      "aspect": "water",
+      "amount": 3
+    },
+    {
+      "aspect": "mana"
+    }
+  ],
+  "minecraft:prismarine_bricks": [
+    {
+      "aspect": "crystal",
+      "amount": 5
+    },
+    {
+      "aspect": "water",
+      "amount": 4
+    },
+    {
+      "aspect": "mana",
+      "amount": 2
+    }
+  ],
+  "minecraft:dark_prismarine": [
+    {
+      "aspect": "crystal",
+      "amount": 4
+    },
+    {
+      "aspect": "water",
+      "amount": 3
+    },
+    {
+      "aspect": "darkness",
+      "amount": 2
+    },
+    {
+      "aspect": "mana"
+    }
+  ],
+  "minecraft:sea_lantern": [
+    {
+      "aspect": "crystal",
+      "amount": 5
+    },
+    {
+      "aspect": "water",
+      "amount": 4
+    },
+    {
+      "aspect": "light",
+      "amount": 3
+    },
+    {
+      "aspect": "mana",
+      "amount": 2
+    }
+  ],
+  "minecraft:purpur_block": [
+    {
+      "aspect": "ender",
+      "amount": 3
+    },
+    {
+      "aspect": "earth"
+    },
+    {
+      "aspect": "mana",
+      "amount": 2
+    }
+  ],
+  "minecraft:end_stone": [
+    {
+      "aspect": "ender",
+      "amount": 3
+    },
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "darkness",
+      "amount": 3
+    }
+  ],
+  "minecraft:netherrack": [
+    {
+      "aspect": "fire",
+      "amount": 2
+    },
+    {
+      "aspect": "earth"
+    },
+    {
+      "aspect": "nether"
+    }
+  ],
+  "minecraft:soul_sand": [
+    {
+      "aspect": "imprison"
+    },
+    {
+      "aspect": "spirit"
+    },
+    {
+      "aspect": "nether"
+    }
+  ],
+  "minecraft:magma_block": [
+    {
+      "aspect": "fire",
+      "amount": 3
+    },
+    {
+      "aspect": "overworld"
+    },
+    {
+      "aspect": "nether"
+    }
+  ],
+  "minecraft:obsidian": [
+    {
+      "aspect": "fire"
+    },
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "darkness",
+      "amount": 2
+    }
+  ],
+  "minecraft:glowstone": [
+    {
+      "aspect": "light",
+      "amount": 8
+    },
+    {
+      "aspect": "senses",
+      "amount": 4
+    },
+    {
+      "aspect": "nether"
+    }
+  ],
+  "minecraft:nether_quartz_ore": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "crystal"
+    },
+    {
+      "aspect": "nether"
+    }
+  ],
+  "minecraft:nether_quartz": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "crystal"
+    },
+    {
+      "aspect": "nether"
+    }
+  ],
+  "minecraft:white_wool": [
+    {
+      "aspect": "fabric",
+      "amount": 4
+    },
+    {
+      "aspect": "beast"
+    }
+  ],
+  "#arcana:shulker_boxes": [
+    {
+      "aspect": "vacuum",
+      "amount": 4
+    },
+    {
+      "aspect": "mana",
+      "amount": 2
+    },
+    {
+      "aspect": "ender"
+    }
+  ],
+  "#minecraft:beds": [
+    {
+      "aspect": "fabric",
+      "amount": 6
+    },
+    {
+      "aspect": "human",
+      "amount": 4
+    },
+    {
+      "aspect": "crafting",
+      "amount": 2
+    },
+    {
+      "aspect": "sloth"
+    }
+  ],
+  "#minecraft:banners": [
+    {
+      "aspect": "fabric",
+      "amount": 3
+    },
+    {
+      "aspect": "crafting",
+      "amount": 3
+    },
+    {
+      "aspect": "senses",
+      "amount": 2
+    },
+    {
+      "aspect": "pride"
+    }
+  ],
+  "minecraft:blaze_rod": [
+    {
+      "aspect": "aura"
+    },
+    {
+      "aspect": "light",
+      "amount": 2
+    },
+    {
+      "aspect": "fire",
+      "amount": 3
+    },
+    {
+      "aspect": "nether"
+    }
+  ],
+  "minecraft:dirt": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    }
+  ],
+  "minecraft:grass_block": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "plant"
+    }
+  ],
+  "minecraft:coarse_dirt": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "chaos"
+    }
+  ],
+  "minecraft:podzol": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "plant"
+    },
+    {
+      "aspect": "metal"
+    }
+  ],
+  "minecraft:farmland": [
+    {
+      "aspect": "earth",
+      "amount": 3
+    },
+    {
+      "aspect": "water",
+      "amount": 2
+    },
+    {
+      "aspect": "life"
+    }
+  ],
+  "minecraft:grass_path": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "journey"
+    }
+  ],
+  "minecraft:mycellum": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "plant",
+      "amount": 2
+    },
+    {
+      "aspect": "water"
+    },
+    {
+      "aspect": "exchange"
+    }
+  ],
+  "minecraft:bone": [
+    {
+      "aspect": "death",
+      "amount": 2
+    },
+    {
+      "aspect": "beast"
+    }
+  ],
+  "minecraft:bone_meal": [
+    {
+      "aspect": "death"
+    },
+    {
+      "aspect": "life"
+    },
+    {
+      "aspect": "exchange"
+    }
+  ]
+}

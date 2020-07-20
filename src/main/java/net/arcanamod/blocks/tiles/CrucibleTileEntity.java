@@ -5,6 +5,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.ItemAspectRegistry;
+import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
 import net.arcanamod.items.recipes.AlchemyInventory;
 import net.arcanamod.items.recipes.AlchemyRecipe;
@@ -55,7 +56,7 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 	public void tick(){
 		BlockState below = world.getBlockState(pos.down());
 		IFluidState fluidState = world.getFluidState(pos.down());
-		boiling = hasWater() && (below.getBlock() == Blocks.FIRE || below.getBlock() == Blocks.MAGMA_BLOCK || fluidState.getFluid() == Fluids.FLOWING_LAVA || fluidState.getFluid() == Fluids.LAVA);
+		boiling = hasWater() && (below.getBlock() == Blocks.FIRE || below.getBlock() == Blocks.MAGMA_BLOCK || below.getBlock() == ArcanaBlocks.NITOR.get() || fluidState.getFluid() == Fluids.FLOWING_LAVA || fluidState.getFluid() == Fluids.LAVA);
 		
 		// check for items
 		// if there are items that have aspects, boil them :)

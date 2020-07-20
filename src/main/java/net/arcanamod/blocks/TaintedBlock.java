@@ -17,6 +17,7 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
+import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.FarmlandWaterManager;
 import net.minecraftforge.common.IPlantable;
@@ -26,6 +27,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 
 import static net.minecraft.block.FarmlandBlock.MOISTURE;
+import static net.minecraft.block.SnowyDirtBlock.SNOWY;
 import static net.minecraftforge.common.ForgeHooks.onFarmlandTrample;
 
 @ParametersAreNonnullByDefault
@@ -72,9 +74,26 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 						continueTick = false;
 					}
 		}
+		// Tainted grass path decays into tainted soil
 		if(parentBlock == Blocks.GRASS_PATH){
-			if(!state.isValidPosition(world, pos)){
+			if(!state.isValidPosition(world, pos))
 				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
+			continueTick = false;
+		}
+		// And tainted grass decays into tainted soil, and spreads.
+		// Should also cover mycelium.
+		if(parentBlock instanceof SpreadableSnowyDirtBlock){
+			if(!isLocationUncovered(state, world, pos)){
+				if(!world.isAreaLoaded(pos, 3))
+					return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
+				world.setBlockState(pos, ArcanaBlocks.TAINTED_SOIL.get().getDefaultState());
+			}else if(world.getLight(pos.up()) >= 9){
+				BlockState blockstate = getDefaultState();
+				for(int i = 0; i < 4; ++i){
+					BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
+					if(world.getBlockState(blockpos).getBlock() == ArcanaBlocks.TAINTED_SOIL.get() && isLocationValidForGrass(blockstate, world, blockpos))
+						world.setBlockState(blockpos, blockstate.with(SNOWY, world.getBlockState(blockpos.up()).getBlock() == Blocks.SNOW));
+				}
 			}
 			continueTick = false;
 		}
@@ -124,5 +143,22 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 			if(worldIn.getFluidState(blockpos).isTagged(FluidTags.WATER))
 				return true;
 		return FarmlandWaterManager.hasBlockWaterTicket(worldIn, pos);
+	}
+	
+	// Private stuff in SpreadableSnowyDirtBlock
+	private static boolean isLocationUncovered(BlockState state, IWorldReader world, BlockPos pos){
+		BlockPos blockpos = pos.up();
+		BlockState blockstate = world.getBlockState(blockpos);
+		if(blockstate.getBlock() == Blocks.SNOW && blockstate.get(SnowBlock.LAYERS) == 1)
+			return true;
+		else{
+			int i = LightEngine.func_215613_a(world, state, pos, blockstate, blockpos, Direction.UP, blockstate.getOpacity(world, blockpos));
+			return i < world.getMaxLightLevel();
+		}
+	}
+	
+	private static boolean isLocationValidForGrass(BlockState state, IWorldReader world, BlockPos pos){
+		BlockPos blockpos = pos.up();
+		return isLocationUncovered(state, world, pos) && !world.getFluidState(blockpos).isTagged(FluidTags.WATER);
 	}
 }
