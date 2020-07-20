@@ -16,7 +16,7 @@
     "_comment": "Items",
     "item.arcana.scribbled_notes": "Scribbled Notes",
     "item.arcana.scribbled_notes_complete": "Complete Scribbled Notes",
-    "item.arcana.taint_fluid_bucket": "Tainted Goo Bucket",
+    "item.arcana.tainted_goo_bucket": "Tainted Goo Bucket",
 
     "_comment": "Wands",
     "item.arcana.error_wand": "%s Errorred Wand",
@@ -645,7 +645,7 @@
     "container.arcane_workbench": "Arcane Crafting",
 
     "_comment": "Fluids",
-    "fluid.arcana.taint_fluid": "Tainted Goo",
+    "fluid.arcana.tainted_goo": "Tainted Goo",
 
     "_comment": "Research",
     "requirement.guesswork": "Guess the Recipe",

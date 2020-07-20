@@ -30,21 +30,21 @@ public class ArcanaFluids {
 	
 	public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Arcana.MODID);
 
-	public static RegistryObject<FlowingFluid> TAINT_FLUID = FLUIDS.register("taint_fluid", () ->
+	public static RegistryObject<FlowingFluid> TAINT_FLUID = FLUIDS.register("tainted_goo", () ->
 			new ForgeFlowingFluid.Source(ArcanaFluids.taint_fluid_properties)
 	);
-	public static RegistryObject<FlowingFluid> TAINT_FLUID_FLOWING = FLUIDS.register("taint_fluid_flowing", () ->
+	public static RegistryObject<FlowingFluid> TAINT_FLUID_FLOWING = FLUIDS.register("tainted_goo_flowing", () ->
 			new ForgeFlowingFluid.Flowing(ArcanaFluids.taint_fluid_properties)
 	);
 
-	public static RegistryObject<FlowingFluidBlock> TAINT_FLUID_BLOCK = BLOCKS.register("taint_fluid_block", () ->
+	public static RegistryObject<FlowingFluidBlock> TAINT_FLUID_BLOCK = BLOCKS.register("tainted_goo", () ->
 			new TaintFluid(TAINT_FLUID, Block.Properties.create(Material.WATER).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops())
 	);
-	public static RegistryObject<Item> TAINT_FLUID_BUCKET = ITEMS.register("taint_fluid_bucket", () ->
+	public static RegistryObject<Item> TAINT_FLUID_BUCKET = ITEMS.register("tainted_goo_bucket", () ->
 			new BucketItem(TAINT_FLUID, new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(Arcana.TAINT))
 	);
 
 	public static final ForgeFlowingFluid.Properties taint_fluid_properties =
-			new ForgeFlowingFluid.Properties(TAINT_FLUID, TAINT_FLUID_FLOWING, FluidAttributes.builder(FLUID_STILL, FLUID_FLOWING).density(31028).temperature(316).viscosity(600))
+			new ForgeFlowingFluid.Properties(TAINT_FLUID, TAINT_FLUID_FLOWING, FluidAttributes.builder(FLUID_STILL, FLUID_FLOWING))
 					.bucket(TAINT_FLUID_BUCKET).block(TAINT_FLUID_BLOCK);
 }
