@@ -67,7 +67,7 @@ public class ArcanaConfig{
 				.define("MaxAlembicStack", 3);
 		ALCHEMY_ASPECT_CARRY_FRACTION = COMMON_BUILDER
 				.comment("The fraction of aspects used in an alchemy recipe that should be assigned to the result through recipes.", "Setting this to 0.5 (the default), for example, will cause an item crafted with 10 aer in alchemy to be given 5 aer from that recipe.")
-				.define("AlchemyAspectCarryFraction", .5f);
+				.define("AlchemyAspectCarryFraction", .5);
 		COMMON_BUILDER.pop();
 		
 		CLIENT_BUILDER.push("Client");
@@ -112,7 +112,7 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> MAX_ALEMBIC_ASPECT_OUT; // 3
 	public static ConfigValue<Integer> MAX_ALEMBIC_AIR; // 4
 	public static ConfigValue<Integer> MAX_ALEMBIC_STACK; // 3
-	public static ConfigValue<Float> ALCHEMY_ASPECT_CARRY_FRACTION; // .5
+	public static ConfigValue<Double> ALCHEMY_ASPECT_CARRY_FRACTION; // .5
 
 	
 	// Client
