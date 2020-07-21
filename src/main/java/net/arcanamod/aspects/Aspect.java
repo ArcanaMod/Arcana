@@ -14,9 +14,13 @@ public class Aspect {
 	private final ColorRange colors;
 	private final Consumer<Object> aspectTickConsumer;
 
-	public Aspect(String name, ColorRange colors, Consumer<Object> aspectTickConsumer){
+	private Aspect(String name, ColorRange colors, Consumer<Object> aspectTickConsumer){
+		this(name,AspectTests.nextAspectId(),colors,aspectTickConsumer);
+	}
+
+	private Aspect(String name, int id, ColorRange colors, Consumer<Object> aspectTickConsumer){
 		this.aspectName = name;
-		this.id = AspectTests.nextAspectId();
+		this.id = id;
 		this.colors = colors;
 		this.aspectTickConsumer = aspectTickConsumer;
 	}
@@ -57,5 +61,9 @@ public class Aspect {
 		return Aspects.ASPECTS.values().stream()
 				.filter(entry -> entry.getId() == readInt)
 				.findAny().orElse(Aspects.EMPTY);
+	}
+
+	public static Aspect createDummy() {
+		return new Aspect("dummy",((int)Short.MAX_VALUE)+1,ColorRange.create(0x0,0x0,0x0,0x0,0x0),null);
 	}
 }

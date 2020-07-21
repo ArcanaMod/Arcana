@@ -1,5 +1,6 @@
 package net.arcanamod.containers;
 
+import net.arcanamod.containers.slots.AspectCraftingResultSlot;
 import net.arcanamod.containers.slots.IWandSlotListener;
 import net.arcanamod.containers.slots.WandSlot;
 import net.arcanamod.util.inventories.AspectCraftingInventory;
@@ -37,7 +38,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 		this.playerInventory = playerInventory;
 		WandSlot wandSlot = new WandSlot(this,inventory, 1, 160, 18);
 		this.craftMatrix = new AspectCraftingInventory(this,wandSlot, 3, 3);
-		this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
+		this.addSlot(new AspectCraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
 		this.addSlot(wandSlot);
 		for(int i = 0; i < 3; ++i) {
 			for(int j = 0; j < 3; ++j) {

@@ -6,9 +6,7 @@ import com.google.common.collect.Sets;
 import com.google.gson.*;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
-import net.arcanamod.util.Pair;
 import net.arcanamod.util.inventories.AspectCraftingInventory;
-import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
@@ -25,8 +23,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
 
 // Don't touch, it is working.
 // No, I think I will touch.
@@ -324,28 +320,16 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 		aspectsArray.forEach(aspectsObject -> {
 			JsonObject object = aspectsObject.getAsJsonObject();
 			String saspect = JSONUtils.getString(object, "aspect");
-			Aspect aspect;
-			boolean any;
+			int amount = JSONUtils.getInt(object, "amount");
+			UndecidedAspectStack aspectStack;
 			if (saspect.equalsIgnoreCase("any")||saspect.equalsIgnoreCase("arcana:any")){
-				aspect = Aspects.EMPTY;
-				any = true;
+				aspectStack = UndecidedAspectStack.createAny(amount);
 			}else{
-				aspect = AspectUtils.getAspectByResourceLocation(new ResourceLocation(saspect));
-				any = false;
+				aspectStack = UndecidedAspectStack.create(AspectUtils.getAspectByResourceLocation(new ResourceLocation(saspect)),amount,false);
 			}
-			aspectStacks.add(new UndecidedAspectStack(new AspectStack(aspect,JSONUtils.getInt(object, "amount")),any));
+			aspectStacks.add(aspectStack);
 		});
 		return aspectStacks.toArray(new UndecidedAspectStack[aspectStacks.size()]);
-	}
-
-	private static class UndecidedAspectStack{
-		public AspectStack stack;
-		public boolean any;
-
-		public UndecidedAspectStack(AspectStack stack, boolean any){
-			this.stack = stack;
-			this.any = any;
-		}
 	}
 
 	public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>>  implements IRecipeSerializer<ArcaneCraftingShapedRecipe> {
@@ -409,7 +393,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 			boolean any = buffer.readBoolean();
 			String aspect_name = buffer.readString();
 			int amount = buffer.readInt();
-			return new UndecidedAspectStack(new AspectStack(AspectUtils.getAspectByName(aspect_name),amount),any);
+			return UndecidedAspectStack.create(AspectUtils.getAspectByName(aspect_name),amount,any);
 		}
 	}
 }
