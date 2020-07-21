@@ -1,11 +1,13 @@
 package net.arcanamod.aspects;
 
 import com.google.gson.*;
+import net.arcanamod.blocks.Taint;
 import net.arcanamod.items.CrystalItem;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.StreamUtils;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -129,7 +131,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 					if(ingredient.getMatchingStacks().length > 0){
 						ItemStack first = ingredient.getMatchingStacks()[0];
 						if(!generating.contains(first.getItem())){
-							List<AspectStack> ingredients = getGenerating(first.getItem());
+							List<AspectStack> ingredients = getGenerating(first);
 							for(AspectStack stack : ingredients)
 								generated.add(new AspectStack(stack.getAspect(), Math.max(stack.getAmount() / recipe.getRecipeOutput().getCount(), 1)));
 						}
@@ -157,6 +159,13 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			return itemAspects.get(item);
 		else
 			return getFromRecipes(item);
+	}
+	
+	private List<AspectStack> getGenerating(ItemStack stack){
+		if(itemAspects.containsKey(stack.getItem()))
+			return get(stack);
+		else
+			return getFromRecipes(stack.getItem());
 	}
 	
 	public static boolean isProcessing(){
@@ -222,6 +231,11 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			// Could be done with data but I don't care
 			if(item.getItem() instanceof CrystalItem)
 				stacks.add(new AspectStack(((CrystalItem)item.getItem()).aspect, 1));
+		});
+		stackFunctions.add((item, stacks) -> {
+			// Give tainted blocks taint
+			if(item.getItem() instanceof BlockItem && Taint.isTainted(((BlockItem)item.getItem()).getBlock()))
+				stacks.add(new AspectStack(Aspects.TAINT, 3));
 		});
 		stackFunctions.add((item, stacks) -> {
 			// Give any aspect handler item their aspects
