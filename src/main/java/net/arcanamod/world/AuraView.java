@@ -121,6 +121,12 @@ public interface AuraView{
 				.collect(Collectors.toList());
 	}
 	
+	default Optional<Node> getNodeByUuid(UUID id){
+		return getAllNodes().stream()
+				.filter(node -> node.nodeUniqueId.equals(id))
+				.findFirst();
+	}
+	
 	default Collection<Node> getNodesOfTypeWithinAABB(AxisAlignedBB bounds, NodeType type){
 		// get all related chunks
 		// that is, all chunks between minX and maxX, minZ and maxZ

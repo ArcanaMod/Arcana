@@ -30,11 +30,6 @@ public class NodeParticleData implements IParticleData{
 		}
 	};
 	
-	/*
-	 The node is *not* accessed by UUID. The UUID of the node is passed along to allow for
-	 different nodes to have different appearances (such as offsetting animations) without
-	 changing as other characteristics change (such as the node moving).
-	*/
 	UUID node;
 	ResourceLocation nodeTexture;
 	ParticleType<NodeParticleData> type;

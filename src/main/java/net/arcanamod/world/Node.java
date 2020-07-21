@@ -57,6 +57,10 @@ public class Node implements IPosition{
 		return nbt.hasUniqueId("nodeUniqueId") ? new Node(aspects, type, x, y, z, nbt.getUniqueId("nodeUniqueId")) : new Node(aspects, type, x, y, z);
 	}
 	
+	public IAspectHandler getAspects(){
+		return aspects;
+	}
+	
 	public double getX(){
 		return x;
 	}
