@@ -65,19 +65,19 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 		boolean continueTick = true;
 		if(parentBlock == Blocks.FARMLAND){
 			if(!state.isValidPosition(world, pos)){
-				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
+				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState().with(UNTAINTED, state.get(UNTAINTED)), world, pos));
 				continueTick = false;
 			}else if(!hasWater(world, pos) && !world.isRainingAt(pos.up()))
 				if(state.get(MOISTURE) == 0)
 					if(!hasCrops(world, pos)){
-						world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
+						world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState().with(UNTAINTED, state.get(UNTAINTED)), world, pos));
 						continueTick = false;
 					}
 		}
 		// Tainted grass path decays into tainted soil
 		if(parentBlock == Blocks.GRASS_PATH){
 			if(!state.isValidPosition(world, pos))
-				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState(), world, pos));
+				world.setBlockState(pos, nudgeEntitiesWithNewState(world.getBlockState(pos), ArcanaBlocks.TAINTED_SOIL.get().getDefaultState().with(UNTAINTED, state.get(UNTAINTED)), world, pos));
 			continueTick = false;
 		}
 		// And tainted grass decays into tainted soil, and spreads.
@@ -86,13 +86,13 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 			if(!isLocationUncovered(state, world, pos)){
 				if(!world.isAreaLoaded(pos, 3))
 					return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
-				world.setBlockState(pos, ArcanaBlocks.TAINTED_SOIL.get().getDefaultState());
+				world.setBlockState(pos, ArcanaBlocks.TAINTED_SOIL.get().getDefaultState().with(UNTAINTED, state.get(UNTAINTED)));
 			}else if(world.getLight(pos.up()) >= 9){
 				BlockState blockstate = getDefaultState();
 				for(int i = 0; i < 4; ++i){
 					BlockPos blockpos = pos.add(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
 					if(world.getBlockState(blockpos).getBlock() == ArcanaBlocks.TAINTED_SOIL.get() && isLocationValidForGrass(blockstate, world, blockpos))
-						world.setBlockState(blockpos, blockstate.with(SNOWY, world.getBlockState(blockpos.up()).getBlock() == Blocks.SNOW));
+						world.setBlockState(blockpos, blockstate.with(SNOWY, world.getBlockState(blockpos.up()).getBlock() == Blocks.SNOW).with(UNTAINTED, state.get(UNTAINTED)));
 				}
 			}
 			continueTick = false;

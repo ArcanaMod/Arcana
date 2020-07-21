@@ -39,7 +39,7 @@ public class TaintedSquidEntity extends WaterMobEntity {
 
 	public TaintedSquidEntity(EntityType<? extends TaintedSquidEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.rand.setSeed((long)this.getEntityId());
+		this.rand.setSeed(this.getEntityId());
 		this.rotationVelocity = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
 	}
 
