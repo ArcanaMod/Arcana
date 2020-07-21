@@ -78,29 +78,30 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 			// the wand is present
 			for(UndecidedAspectStack stack : recipe.getAspectStacks()){
 				int colour = 0xffffff;
+				int amount = stack.stack.getAmount();
 				if(!stack.any){
 					if(stack.stack.getAspect() == Aspects.AIR){
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.AIR), guiLeft + 65, guiTop + 14);
-						renderAspectOverlay(guiLeft + 65, guiTop + 14, Aspects.AIR, colour);
+						renderAspectOverlay(guiLeft + 65, guiTop + 14, Aspects.AIR, amount, colour);
 					}else if(stack.stack.getAspect() == Aspects.WATER){
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.WATER), guiLeft + 108, guiTop + 38);
-						renderAspectOverlay(guiLeft + 108, guiTop + 38, Aspects.WATER, colour);
+						renderAspectOverlay(guiLeft + 108, guiTop + 38, Aspects.WATER, amount, colour);
 					}else if(stack.stack.getAspect() == Aspects.FIRE){
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.FIRE), guiLeft + 22, guiTop + 38);
-						renderAspectOverlay(guiLeft + 22, guiTop + 38, Aspects.FIRE, colour);
+						renderAspectOverlay(guiLeft + 22, guiTop + 38, Aspects.FIRE, amount, colour);
 					}else if(stack.stack.getAspect() == Aspects.EARTH){
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EARTH), guiLeft + 22, guiTop + 88);
-						renderAspectOverlay(guiLeft + 22, guiTop + 88, Aspects.EARTH, colour);
+						renderAspectOverlay(guiLeft + 22, guiTop + 88, Aspects.EARTH, amount, colour);
 					}else if(stack.stack.getAspect() == Aspects.ORDER){
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.ORDER), guiLeft + 108, guiTop + 88);
-						renderAspectOverlay(guiLeft + 108, guiTop + 88, Aspects.ORDER, colour);
+						renderAspectOverlay(guiLeft + 108, guiTop + 88, Aspects.ORDER, amount, colour);
 					}else if(stack.stack.getAspect() == Aspects.CHAOS){
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.CHAOS), guiLeft + 65, guiTop + 112);
-						renderAspectOverlay(guiLeft + 65, guiTop + 116, Aspects.CHAOS, colour);
+						renderAspectOverlay(guiLeft + 65, guiTop + 116, Aspects.CHAOS, amount, colour);
 					}
 				}else{
 					getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EXCHANGE), guiLeft + 11, guiTop + 64);
-					renderAspectOverlay(guiLeft + 11, guiTop + 64, Aspects.EXCHANGE, colour);
+					renderAspectOverlay(guiLeft + 11, guiTop + 64, Aspects.EXCHANGE, amount, colour);
 				}
 			}
 		}else{
@@ -115,6 +116,7 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 				// in the future, make a util method to render an aspect's texture without going through the item renderer
 				for(UndecidedAspectStack stack : possible.getAspectStacks()){
 					int colour = 0xffffff;
+					int amount = stack.stack.getAmount();
 					IAspectHandler handler = IAspectHandler.getFrom(container.craftMatrix.getWandSlot().getStack());
 					if(handler == null || handler.getHoldersAmount() == 0)
 						colour = 0xff0000;
@@ -127,36 +129,36 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 					if(!stack.any){
 						if(stack.stack.getAspect() == Aspects.AIR){
 							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.AIR), guiLeft + 65, guiTop + 14);
-							renderAspectOverlay(guiLeft + 65, guiTop + 14, Aspects.AIR, colour);
+							renderAspectOverlay(guiLeft + 65, guiTop + 14, Aspects.AIR, amount, colour);
 						}else if(stack.stack.getAspect() == Aspects.WATER){
 							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.WATER), guiLeft + 108, guiTop + 38);
-							renderAspectOverlay(guiLeft + 108, guiTop + 38, Aspects.WATER, colour);
+							renderAspectOverlay(guiLeft + 108, guiTop + 38, Aspects.WATER, amount, colour);
 						}else if(stack.stack.getAspect() == Aspects.FIRE){
 							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.FIRE), guiLeft + 22, guiTop + 38);
-							renderAspectOverlay(guiLeft + 22, guiTop + 38, Aspects.FIRE, colour);
+							renderAspectOverlay(guiLeft + 22, guiTop + 38, Aspects.FIRE, amount, colour);
 						}else if(stack.stack.getAspect() == Aspects.EARTH){
 							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EARTH), guiLeft + 22, guiTop + 88);
-							renderAspectOverlay(guiLeft + 22, guiTop + 88, Aspects.EARTH, colour);
+							renderAspectOverlay(guiLeft + 22, guiTop + 88, Aspects.EARTH, amount, colour);
 						}else if(stack.stack.getAspect() == Aspects.ORDER){
 							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.ORDER), guiLeft + 108, guiTop + 88);
-							renderAspectOverlay(guiLeft + 108, guiTop + 88, Aspects.ORDER, colour);
+							renderAspectOverlay(guiLeft + 108, guiTop + 88, Aspects.ORDER, amount, colour);
 						}else if(stack.stack.getAspect() == Aspects.CHAOS){
 							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.CHAOS), guiLeft + 65, guiTop + 112);
-							renderAspectOverlay(guiLeft + 65, guiTop + 116, Aspects.CHAOS, colour);
+							renderAspectOverlay(guiLeft + 65, guiTop + 116, Aspects.CHAOS, amount, colour);
 						}
 					}else{
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EXCHANGE), guiLeft + 11, guiTop + 64);
-						renderAspectOverlay(guiLeft + 11, guiTop + 64, Aspects.EXCHANGE, colour);
+						renderAspectOverlay(guiLeft + 11, guiTop + 64, Aspects.EXCHANGE, amount, colour);
 					}
 				}
 			}
 		}
 	}
 	
-	protected void renderAspectOverlay(int x, int y, Aspect aspect, int colour){
+	protected void renderAspectOverlay(int x, int y, Aspect aspect, int amount, int colour){
 		ItemStack stack = AspectUtils.getItemStackForAspect(aspect);
 		MatrixStack matrixstack = new MatrixStack();
-		String s = String.valueOf(stack.getCount());
+		String s = String.valueOf(amount);
 		matrixstack.translate(0, 0, getMinecraft().getItemRenderer().zLevel + 200.0F);
 		IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
 		getMinecraft().fontRenderer.renderString(s, x - 1 - getMinecraft().fontRenderer.getStringWidth(s), y + 3, colour, true, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
