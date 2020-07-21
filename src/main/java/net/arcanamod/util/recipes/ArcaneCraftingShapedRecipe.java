@@ -102,7 +102,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 			if (inv.getWandSlot()==null) return false;
 			if (inv.getWandSlot().getStack()==ItemStack.EMPTY) return false;
 			IAspectHandler handler = IAspectHandler.getFrom(inv.getWandSlot().getStack());
-			if (this.checkAspectMatch(inv,handler));
+			if (!this.checkAspectMatch(inv,handler))
 				return false;
 		}
 		for(int i = 0; i <= inv.getWidth() - this.recipeWidth; ++i) {

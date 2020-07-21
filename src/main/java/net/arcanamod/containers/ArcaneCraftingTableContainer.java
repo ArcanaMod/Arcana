@@ -1,5 +1,6 @@
 package net.arcanamod.containers;
 
+import net.arcanamod.containers.slots.IWandSlotListener;
 import net.arcanamod.containers.slots.WandSlot;
 import net.arcanamod.util.inventories.AspectCraftingInventory;
 import net.arcanamod.util.recipes.ArcanaRecipes;
@@ -23,7 +24,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraftingInventory> {
+public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraftingInventory> implements IWandSlotListener {
 
 	public final IInventory inventory;
 	private final PlayerInventory playerInventory;
@@ -34,7 +35,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 		super(type, id);
 		this.inventory = inventory;
 		this.playerInventory = playerInventory;
-		WandSlot wandSlot = new WandSlot(inventory, 1, 160, 18);
+		WandSlot wandSlot = new WandSlot(this,inventory, 1, 160, 18);
 		this.craftMatrix = new AspectCraftingInventory(this,wandSlot, 3, 3);
 		this.addSlot(new CraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
 		this.addSlot(wandSlot);
@@ -193,5 +194,10 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 		}
 
 		return itemstack;
+	}
+
+	@Override
+	public void onWandSlotUpdate() {
+		craft(this.windowId, this.playerInventory.player.world, this.playerInventory.player, this.craftMatrix, this.craftResult);
 	}
 }
