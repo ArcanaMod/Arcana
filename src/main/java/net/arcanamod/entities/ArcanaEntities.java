@@ -149,12 +149,12 @@ public class ArcanaEntities{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DOLPHIN.get(), manager -> new TaintedEntityRender(manager, new DolphinModel<TaintedEntity>()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ENDERMAN.get(), manager -> new TaintedEntityRender(manager, new EndermanModel<TaintedEntity>(0F)));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ENDERMITE.get(), manager -> new TaintedEntityRender(manager, new EndermiteModel<TaintedEntity>()));
-		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_GHAST.get(), manager -> new TaintedGhastRender(manager));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_GHAST.get(), TaintedGhastRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_MOOSHROOM.get(), manager -> new TaintedEntityRender(manager, new CowModel<TaintedEntity>())); // No tainted_warts on top
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_OCELOT.get(), manager -> new TaintedEntityRender(manager, new OcelotModel<TaintedEntity>(0.0F)));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SALMON.get(), manager -> new TaintedEntityRender(manager, new SalmonModel<TaintedEntity>()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SILVERFISH.get(), manager -> new TaintedEntityRender(manager, new SilverfishModel<TaintedEntity>()));
-		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SQUID.get(), manager -> new TaintedEntityRender(manager, new TaintedSquidModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SQUID.get(), TaintedSquidRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_VILLAGER.get(), manager -> new TaintedEntityRender(manager, new VillagerModel<TaintedEntity>(0.0F)));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WANDERING_TRADER.get(), manager -> new TaintedEntityRender(manager, new VillagerModel<TaintedEntity>(0.0F)));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WITCH.get(), manager -> new TaintedEntityRender(manager, new WitchModel<TaintedEntity>(0.0F)));

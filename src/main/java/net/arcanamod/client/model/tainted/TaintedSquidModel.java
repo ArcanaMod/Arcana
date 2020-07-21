@@ -1,13 +1,14 @@
 package net.arcanamod.client.model.tainted;
 
 import com.google.common.collect.ImmutableList;
+import net.arcanamod.entities.tainted.TaintedSquidEntity;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 import java.util.Arrays;
 
-public class TaintedSquidModel<T extends Entity> extends SegmentedModel<T> {
+public class TaintedSquidModel<T extends TaintedSquidEntity> extends SegmentedModel<T> {
 	private final ModelRenderer body;
 	private final ModelRenderer[] legs = new ModelRenderer[8];
 	private final ImmutableList<ModelRenderer> field_228296_f_;
@@ -40,11 +41,9 @@ public class TaintedSquidModel<T extends Entity> extends SegmentedModel<T> {
 	/**
 	 * Sets this entity's model rotation angles
 	 */
-	public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		for(ModelRenderer modelrenderer : this.legs) {
-			modelrenderer.rotateAngleX = ageInTicks;
-		}
-
+	public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		for(ModelRenderer modelrenderer : legs)
+			modelrenderer.rotateAngleX = entity.tentacleAngle;
 	}
 
 	public Iterable<ModelRenderer> getParts() {

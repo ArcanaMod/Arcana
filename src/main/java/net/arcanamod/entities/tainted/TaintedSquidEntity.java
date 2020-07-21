@@ -44,14 +44,14 @@ public class TaintedSquidEntity extends WaterMobEntity {
 	}
 
 	protected void registerGoals() {
-		this.goalSelector.addGoal(0, new TaintedSquidEntity.MoveRandomGoal(this));
-		this.goalSelector.addGoal(1,new MeleeAttackGoal(this,1f,false));
-		//this.goalSelector.addGoal(1, new TaintedSquidEntity.FleeGoal());
+		goalSelector.addGoal(0, new MoveRandomGoal(this));
+		goalSelector.addGoal(1, new MeleeAttackGoal(this,1f,false));
+		//goalSelector.addGoal(1, new TaintedSquidEntity.FleeGoal());
 	}
 
 	protected void registerAttributes() {
 		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
+		getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10.0D);
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
@@ -275,7 +275,7 @@ public class TaintedSquidEntity extends WaterMobEntity {
 		}
 	}
 
-	class MoveRandomGoal extends Goal {
+	static class MoveRandomGoal extends Goal {
 		private final TaintedSquidEntity squid;
 
 		public MoveRandomGoal(TaintedSquidEntity p_i48823_2_) {
@@ -304,7 +304,6 @@ public class TaintedSquidEntity extends WaterMobEntity {
 				float f3 = MathHelper.sin(f) * 0.2F;
 				this.squid.setMovementVector(f1, f2, f3);
 			}
-
 		}
 	}
 }
