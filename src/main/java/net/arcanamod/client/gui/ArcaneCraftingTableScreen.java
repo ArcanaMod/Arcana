@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.containers.ArcaneCraftingTableContainer;
+import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.inventories.AspectCraftingInventory;
 import net.arcanamod.util.recipes.ArcanaRecipes;
 import net.arcanamod.util.recipes.IArcaneCraftingRecipe;
@@ -12,9 +13,13 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.recipebook.RecipeList;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.widget.button.ImageButton;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.ClickType;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Util;
@@ -26,6 +31,7 @@ import java.util.Optional;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
+import static net.arcanamod.Arcana.MODID;
 
 public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTableContainer>{
 	private static final ResourceLocation BG = new ResourceLocation(Arcana.MODID, "textures/gui/container/arcaneworkbench.png");
@@ -38,13 +44,31 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 		xSize = WIDTH;
 		ySize = HEIGHT;
 	}
-	
+
+	@Override
+	public boolean mouseClicked(double mouseX, double mouseY, int buttonId) {
+		// if player clicked "show Arcanum" button and open Arcanum gui. If player doesn't have in inventory ignore.
+		int arcanum_button_left = guiLeft+158, arcanum_button_top = guiTop+109;
+		if (isPlayerHavingArcanum())
+			if (mouseX >= arcanum_button_left && mouseX < arcanum_button_left+20 && mouseY >= arcanum_button_top && mouseY < arcanum_button_top+20)
+				Arcana.proxy.openResearchBookUI(new ResourceLocation(MODID, "arcanum"));
+		return super.mouseClicked(mouseX, mouseY, buttonId);
+	}
+
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
 		getMinecraft().getTextureManager().bindTexture(BG);
 		renderModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, xSize, ySize, 256, 256);
-		
+
+		// draw "show Arcanum" button if player it has in inventory
+		int arcanum_button_left = guiLeft+158, arcanum_button_top = guiTop+109;
+		if (isPlayerHavingArcanum()) {
+			renderModalRectWithCustomSizedTexture(arcanum_button_left, arcanum_button_top, 193, 17, 20, 20, 256, 256);
+			if (mouseX >= arcanum_button_left && mouseX < arcanum_button_left + 20 && mouseY >= arcanum_button_top && mouseY < arcanum_button_top + 20)
+				renderModalRectWithCustomSizedTexture(arcanum_button_left, arcanum_button_top, 193, 38, 20, 20, 256, 256);
+		}
+
 		// draw necessary aspects
 		ClientPlayerEntity player = getMinecraft().player;
 		Optional<IArcaneCraftingRecipe> optional = getRecipe(player.getRecipeBook().getRecipes(), container.craftMatrix, player.world);
@@ -59,20 +83,20 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.AIR), guiLeft + 65, guiTop + 14);
 						renderAspectOverlay(guiLeft + 65, guiTop + 14, Aspects.AIR, colour);
 					}else if(stack.stack.getAspect() == Aspects.WATER){
-						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.WATER), guiLeft + 109, guiTop + 39);
-						renderAspectOverlay(guiLeft + 109, guiTop + 39, Aspects.WATER, colour);
+						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.WATER), guiLeft + 108, guiTop + 38);
+						renderAspectOverlay(guiLeft + 108, guiTop + 38, Aspects.WATER, colour);
 					}else if(stack.stack.getAspect() == Aspects.FIRE){
-						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.FIRE), guiLeft + 21, guiTop + 39);
-						renderAspectOverlay(guiLeft + 21, guiTop + 39, Aspects.FIRE, colour);
+						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.FIRE), guiLeft + 22, guiTop + 38);
+						renderAspectOverlay(guiLeft + 22, guiTop + 38, Aspects.FIRE, colour);
 					}else if(stack.stack.getAspect() == Aspects.EARTH){
-						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EARTH), guiLeft + 21, guiTop + 89);
-						renderAspectOverlay(guiLeft + 21, guiTop + 89, Aspects.EARTH, colour);
+						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EARTH), guiLeft + 22, guiTop + 88);
+						renderAspectOverlay(guiLeft + 22, guiTop + 88, Aspects.EARTH, colour);
 					}else if(stack.stack.getAspect() == Aspects.ORDER){
-						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.ORDER), guiLeft + 109, guiTop + 89);
-						renderAspectOverlay(guiLeft + 109, guiTop + 89, Aspects.ORDER, colour);
+						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.ORDER), guiLeft + 108, guiTop + 88);
+						renderAspectOverlay(guiLeft + 108, guiTop + 88, Aspects.ORDER, colour);
 					}else if(stack.stack.getAspect() == Aspects.CHAOS){
-						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.CHAOS), guiLeft + 65, guiTop + 114);
-						renderAspectOverlay(guiLeft + 65, guiTop + 114, Aspects.CHAOS, colour);
+						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.CHAOS), guiLeft + 65, guiTop + 112);
+						renderAspectOverlay(guiLeft + 65, guiTop + 116, Aspects.CHAOS, colour);
 					}
 				}else{
 					getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EXCHANGE), guiLeft + 11, guiTop + 64);
@@ -105,20 +129,20 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.AIR), guiLeft + 65, guiTop + 14);
 							renderAspectOverlay(guiLeft + 65, guiTop + 14, Aspects.AIR, colour);
 						}else if(stack.stack.getAspect() == Aspects.WATER){
-							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.WATER), guiLeft + 109, guiTop + 39);
-							renderAspectOverlay(guiLeft + 109, guiTop + 39, Aspects.WATER, colour);
+							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.WATER), guiLeft + 108, guiTop + 38);
+							renderAspectOverlay(guiLeft + 108, guiTop + 38, Aspects.WATER, colour);
 						}else if(stack.stack.getAspect() == Aspects.FIRE){
-							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.FIRE), guiLeft + 21, guiTop + 39);
-							renderAspectOverlay(guiLeft + 21, guiTop + 39, Aspects.FIRE, colour);
+							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.FIRE), guiLeft + 22, guiTop + 38);
+							renderAspectOverlay(guiLeft + 22, guiTop + 38, Aspects.FIRE, colour);
 						}else if(stack.stack.getAspect() == Aspects.EARTH){
-							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EARTH), guiLeft + 21, guiTop + 89);
-							renderAspectOverlay(guiLeft + 21, guiTop + 89, Aspects.EARTH, colour);
+							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EARTH), guiLeft + 22, guiTop + 88);
+							renderAspectOverlay(guiLeft + 22, guiTop + 88, Aspects.EARTH, colour);
 						}else if(stack.stack.getAspect() == Aspects.ORDER){
-							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.ORDER), guiLeft + 109, guiTop + 89);
-							renderAspectOverlay(guiLeft + 109, guiTop + 89, Aspects.ORDER, colour);
+							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.ORDER), guiLeft + 108, guiTop + 88);
+							renderAspectOverlay(guiLeft + 108, guiTop + 88, Aspects.ORDER, colour);
 						}else if(stack.stack.getAspect() == Aspects.CHAOS){
-							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.CHAOS), guiLeft + 65, guiTop + 114);
-							renderAspectOverlay(guiLeft + 65, guiTop + 114, Aspects.CHAOS, colour);
+							getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.CHAOS), guiLeft + 65, guiTop + 112);
+							renderAspectOverlay(guiLeft + 65, guiTop + 116, Aspects.CHAOS, colour);
 						}
 					}else{
 						getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(Aspects.EXCHANGE), guiLeft + 11, guiTop + 64);
@@ -155,6 +179,9 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 				.map(IArcaneCraftingRecipe.class::cast)
 				.flatMap(recipe -> Util.streamOptional(recipe.matchesIgnoringAspects(inventory, world) ? of(recipe) : empty()))
 				.findFirst();
+	}
+	private boolean isPlayerHavingArcanum() {
+		return container.playerInventory.hasItemStack(new ItemStack(ArcanaItems.ARCANUM.get()));
 	}
 	
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){

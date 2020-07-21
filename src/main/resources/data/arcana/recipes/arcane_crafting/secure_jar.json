@@ -1,0 +1,52 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "group": "arcana:secure_jar",
+  "pattern": [
+    " WA",
+    "GCG",
+    " G "
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:planks"
+    },
+    "G": {
+      "tag": "forge:glass"
+    },
+    "A": {
+      "item": "arcana:amber"
+    },
+    "C": {
+      "item": "arcana:imprison_crystal"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:air",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:fire",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 2
+    }
+  ],
+  "result": {
+    "item": "arcana:secure_jar"
+  }
+}

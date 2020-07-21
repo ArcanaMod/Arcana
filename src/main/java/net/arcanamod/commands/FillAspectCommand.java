@@ -51,7 +51,9 @@ public class FillAspectCommand {
 				if(is.getItem() instanceof WandItem || is.getItem() instanceof PhialItem){
 					Aspect targettedStack = AspectUtils.getAspectByName(aspect_name.getPath());
 					if(targettedStack != null){
-						vis.insert(0, new AspectStack(targettedStack, amount), false);
+						for (int i = 0; i < 6; i++) {
+							vis.getHolder(i).insert(new AspectStack(targettedStack, amount), false);
+						}
 						if(is.getTag() == null)
 							is.setTag(is.getShareTag());
 					}else

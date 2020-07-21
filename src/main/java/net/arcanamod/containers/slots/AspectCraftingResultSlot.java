@@ -74,6 +74,7 @@ public class AspectCraftingResultSlot extends CraftingResultSlot {
 		if (handler.getHoldersAmount()==0) return false;
 		for (IAspectHolder holder : handler.getHolders()){
 			for (UndecidedAspectStack stack : aspectStacks){
+
 				if (holder.getContainedAspect()==stack.stack.getAspect()){
 					if (holder.getCurrentVis() >= stack.stack.getAmount())
 						holder.drain(stack.stack,false);
