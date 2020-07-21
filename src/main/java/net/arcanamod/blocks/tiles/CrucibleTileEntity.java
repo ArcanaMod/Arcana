@@ -103,7 +103,7 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 						markDirty();
 						world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 						for(AspectStack aspect : aspects)
-							aspectStackMap.put(aspect.getAspect(), new AspectStack(aspect.getAspect(), aspect.getAmount() + (aspectStackMap.containsKey(aspect.getAspect()) ? aspectStackMap.get(aspect.getAspect()).getAmount() : 0)));
+							aspectStackMap.put(aspect.getAspect(), new AspectStack(aspect.getAspect(), aspect.getAmount() * stack.getCount() + (aspectStackMap.containsKey(aspect.getAspect()) ? aspectStackMap.get(aspect.getAspect()).getAmount() : 0)));
 					}
 				}
 			}
