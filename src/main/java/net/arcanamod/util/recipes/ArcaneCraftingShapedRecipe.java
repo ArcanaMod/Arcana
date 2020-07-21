@@ -59,18 +59,18 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	public IRecipeSerializer<?> getSerializer() {
 		return ArcanaRecipes.Serializers.ARCANE_CRAFTING_SHAPED.get();
 	}
-
+	
 	public UndecidedAspectStack[] getAspectStacks() {
 		return aspectStacks;
 	}
-
+	
 	/**
 	 * Recipes with equal group are combined into one button in the recipe book
 	 */
 	public String getGroup() {
 		return this.group;
 	}
-
+	
 	/**
 	 * Get the result of this recipe, usually for display purposes (e.g. recipe book). If your recipe has more than one
 	 * possible result (e.g. it's dynamic and depends on its inputs), then return an empty stack.
@@ -78,50 +78,53 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	public ItemStack getRecipeOutput() {
 		return this.recipeOutput;
 	}
-
+	
 	public NonNullList<Ingredient> getIngredients() {
 		return this.recipeItems;
 	}
-
+	
 	/**
 	 * Used to determine if this recipe can fit in a grid of the given width/height
 	 */
 	public boolean canFit(int width, int height) {
 		return width >= this.recipeWidth && height >= this.recipeHeight;
 	}
-
-	/**
-	 * Used to check if a recipe matches current crafting inventory
-	 */
-	public boolean matches(AspectCraftingInventory inv, World worldIn) {
-		if (aspectStacks.length!=0){
-			if (inv.getWandSlot()==null) return false;
-			if (inv.getWandSlot().getStack()==ItemStack.EMPTY) return false;
+	
+	public boolean matches(AspectCraftingInventory inv, World world, boolean considerAspects){
+		if(considerAspects && aspectStacks.length != 0){
+			if(inv.getWandSlot() == null)
+				return false;
+			if(inv.getWandSlot().getStack() == ItemStack.EMPTY)
+				return false;
 			IAspectHandler handler = IAspectHandler.getFrom(inv.getWandSlot().getStack());
-			if (!this.checkAspectMatch(inv,handler))
+			if(!this.checkAspectMatch(inv, handler))
 				return false;
 		}
-		for(int i = 0; i <= inv.getWidth() - this.recipeWidth; ++i) {
-			for(int j = 0; j <= inv.getHeight() - this.recipeHeight; ++j) {
-				if (this.checkMatch(inv, i, j, true)) {
+		for(int i = 0; i <= inv.getWidth() - this.recipeWidth; ++i){
+			for(int j = 0; j <= inv.getHeight() - this.recipeHeight; ++j){
+				if(this.checkMatch(inv, i, j, true))
 					return true;
-				}
-
-				if (this.checkMatch(inv, i, j, false)) {
+				if(this.checkMatch(inv, i, j, false))
 					return true;
-				}
 			}
 		}
-
 		return false;
+	}
+	
+	public boolean matches(AspectCraftingInventory inv, World world) {
+		return matches(inv, world, true);
+	}
+	
+	public boolean matchesIgnoringAspects(AspectCraftingInventory inv, World world){
+		return matches(inv, world, false);
 	}
 
 	private boolean checkAspectMatch(AspectCraftingInventory inv, @Nullable IAspectHandler handler) {
-		if (handler==null) return false;
-		if (handler.getHoldersAmount()==0) return false;
+		if(handler == null || handler.getHoldersAmount() == 0)
+			return false;
 		for (IAspectHolder holder : handler.getHolders()){
 			for (UndecidedAspectStack stack : aspectStacks){
-				if (holder.getContainedAspect()==stack.stack.getAspect()){
+				if (holder.getContainedAspect() == stack.stack.getAspect()){
 					if (holder.getCurrentVis() < stack.stack.getAmount())
 						return false;
 					// TODO: add "any" aspect support

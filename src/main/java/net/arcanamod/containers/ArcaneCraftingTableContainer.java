@@ -28,9 +28,9 @@ import java.util.Optional;
 public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraftingInventory> implements IWandSlotListener {
 
 	public final IInventory inventory;
-	private final PlayerInventory playerInventory;
-	private final AspectCraftingInventory craftMatrix;
-	private final CraftResultInventory craftResult = new CraftResultInventory();
+	public final PlayerInventory playerInventory;
+	public final AspectCraftingInventory craftMatrix;
+	public final CraftResultInventory craftResult = new CraftResultInventory();
 
 	public ArcaneCraftingTableContainer(@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, IInventory inventory){
 		super(type, id);
