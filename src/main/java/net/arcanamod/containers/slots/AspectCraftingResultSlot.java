@@ -1,5 +1,6 @@
 package net.arcanamod.containers.slots;
 
+import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.IAspectHolder;
 import net.arcanamod.aspects.UndecidedAspectStack;
@@ -72,16 +73,26 @@ public class AspectCraftingResultSlot extends CraftingResultSlot {
 	private boolean takeAspects(AspectCraftingInventory craftMatrix, @Nullable IAspectHandler handler, UndecidedAspectStack[] aspectStacks) {
 		if (handler==null) return false;
 		if (handler.getHoldersAmount()==0) return false;
+
+		boolean satisfied = true;
+		boolean anySatisfied = false;
+		boolean hasAny = false;
 		for (IAspectHolder holder : handler.getHolders()){
 			for (UndecidedAspectStack stack : aspectStacks){
-
-				if (holder.getContainedAspect()==stack.stack.getAspect()){
-					if (holder.getCurrentVis() >= stack.stack.getAmount())
+				if (stack.any){
+					hasAny = true;
+					if (holder.getCurrentVis() >= stack.stack.getAmount()) {
+						anySatisfied = true;
+						holder.drain(new AspectStack(holder.getContainedAspect(),stack.stack.getAmount()),false);
+					}
+				}
+				else if (holder.getContainedAspect() == stack.stack.getAspect()){
+					if (holder.getCurrentVis() >= stack.stack.getAmount()){
 						holder.drain(stack.stack,false);
-					// TODO: add "any" aspect support
+					} else satisfied = false;
 				}
 			}
 		}
-		return true;
+		return satisfied && (!hasAny || anySatisfied);
 	}
 }

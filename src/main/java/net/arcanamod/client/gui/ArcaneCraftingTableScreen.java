@@ -101,19 +101,26 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 					// check which aspects are missing
 					for(UndecidedAspectStack stack : possible.getAspectStacks()){
 						boolean satisfied = true;
+						boolean anySatisfied = false;
+						boolean hasAny = false;
 						int amount = stack.stack.getAmount();
 						IAspectHandler handler = IAspectHandler.getFrom(container.craftMatrix.getWandSlot().getStack());
 						if(handler == null || handler.getHoldersAmount() == 0)
 							satisfied = false;
-						else
-							// TODO: add "any" aspect support
-							for(IAspectHolder holder : handler.getHolders())
-								if(holder.getContainedAspect() == stack.stack.getAspect())
-									if(holder.getCurrentVis() < stack.stack.getAmount())
-										satisfied = false;
-						int colour = satisfied ? 0xffffff : 0xff0000;
+						else for (IAspectHolder holder : handler.getHolders()){
+							if (stack.any){
+								hasAny = true;
+								if (holder.getCurrentVis() >= stack.stack.getAmount())
+									anySatisfied = true;
+							}
+							else if (holder.getContainedAspect() == stack.stack.getAspect()){
+								if (holder.getCurrentVis() < stack.stack.getAmount())
+									satisfied = false;
+							}
+						}
+						int colour = satisfied && (!hasAny || anySatisfied) ? 0xffffff : 0xff0000;
 						RenderSystem.pushMatrix();
-						if(!satisfied){
+						if(!(satisfied && (!hasAny || anySatisfied))){
 							float col = (float)(Math.abs(Math.sin((player.world.getGameTime() + partialTicks) / 4d)) * .5f + .5f);
 							RenderSystem.color4f(col, col, col, 1);
 						}

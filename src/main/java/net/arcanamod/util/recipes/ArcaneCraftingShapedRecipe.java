@@ -122,16 +122,24 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	private boolean checkAspectMatch(AspectCraftingInventory inv, @Nullable IAspectHandler handler) {
 		if(handler == null || handler.getHoldersAmount() == 0)
 			return false;
+
+		boolean satisfied = true;
+		boolean anySatisfied = false;
+		boolean hasAny = false;
 		for (IAspectHolder holder : handler.getHolders()){
 			for (UndecidedAspectStack stack : aspectStacks){
-				if (holder.getContainedAspect() == stack.stack.getAspect()){
+				if (stack.any){
+					hasAny = true;
+					if (holder.getCurrentVis() >= stack.stack.getAmount())
+						anySatisfied = true;
+				}
+				else if (holder.getContainedAspect() == stack.stack.getAspect()){
 					if (holder.getCurrentVis() < stack.stack.getAmount())
-						return false;
-					// TODO: add "any" aspect support
+						satisfied = false;
 				}
 			}
 		}
-		return true;
+		return satisfied && (!hasAny || anySatisfied);
 	}
 
 	/**
