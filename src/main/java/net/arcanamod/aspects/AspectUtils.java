@@ -106,4 +106,13 @@ public class AspectUtils {
 	public static Aspect getAspectByResourceLocation(ResourceLocation resourceLocation) {
 		return Aspects.ASPECTS.get(resourceLocation);
 	}
+
+	public static Aspect getAspectByDisplayName(String name) {
+		if(name == null)
+			return null;
+		for(Aspect aspect : Aspects.values())
+			if(I18n.format("aspect."+aspect.name()).equalsIgnoreCase(name))
+				return aspect;
+		return null;
+	}
 }

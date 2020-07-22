@@ -1,11 +1,11 @@
 package net.arcanamod.client.event;
 
+import com.google.common.collect.BiMap;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.ItemAspectRegistry;
+import net.arcanamod.aspects.*;
 import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -53,6 +53,32 @@ public class RenderTooltip{
 					x += 20;
 				}
 				RenderSystem.popMatrix();
+			} else {
+				for(String line : event.getLines()){
+					if(line.indexOf(((char)20)) != -1){
+						RenderSystem.pushMatrix();
+						RenderSystem.translatef(0, 0, 500);
+						RenderSystem.color3f(1F, 1F, 1F);
+						Minecraft mc = Minecraft.getInstance();
+						RenderSystem.translatef(0F, 0F, mc.getItemRenderer().zLevel);
+
+						int x = event.getX();
+						int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();//shiftTextByLines(event.getLines(), event.getY() + 13);
+						Aspect aspectFromDesc = AspectUtils.getAspectByDisplayName(line.replace(((char)20)+"",""));
+						if (aspectFromDesc!=null) {
+							Pair<Aspect, Aspect> combinationPairs = Aspects.combinations.inverse().get(aspectFromDesc);
+
+							if (combinationPairs != null) {
+								UiUtil.renderAspectStack(new AspectStack(combinationPairs.getFirst()), x, y);
+								x += 20;
+								UiUtil.renderAspectStack(new AspectStack(combinationPairs.getSecond()), x, y);
+								x += 20;
+							}
+						}
+
+						RenderSystem.popMatrix();
+					}
+				}
 			}
 		}
 	}

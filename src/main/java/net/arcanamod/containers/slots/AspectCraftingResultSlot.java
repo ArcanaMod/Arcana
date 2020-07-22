@@ -82,8 +82,9 @@ public class AspectCraftingResultSlot extends CraftingResultSlot {
 				if (stack.any){
 					hasAny = true;
 					if (holder.getCurrentVis() >= stack.stack.getAmount()) {
+						if (!anySatisfied)
+							holder.drain(new AspectStack(holder.getContainedAspect(),stack.stack.getAmount()),false);
 						anySatisfied = true;
-						holder.drain(new AspectStack(holder.getContainedAspect(),stack.stack.getAmount()),false);
 					}
 				}
 				else if (holder.getContainedAspect() == stack.stack.getAspect()){
