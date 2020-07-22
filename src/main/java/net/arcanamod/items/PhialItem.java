@@ -3,13 +3,10 @@ package net.arcanamod.items;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
-import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.NonNullList;
@@ -49,6 +46,7 @@ public class PhialItem extends Item{
 		});
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	public ActionResultType onItemUse(ItemUseContext context){
 		BlockPos pos = context.getPos();
 		TileEntity tile = context.getWorld().getTileEntity(pos);
@@ -156,7 +154,8 @@ public class PhialItem extends Item{
 	public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt){
 		if(nbt != null){
 			IAspectHandler cap = IAspectHandler.getFrom(stack);
-			cap.insert(0, new AspectStack(Aspects.getAll().get(nbt.getInt("id") - 1), nbt.getInt("amount")), false);
+			if(cap != null)
+				cap.insert(0, new AspectStack(Aspects.getAll().get(nbt.getInt("id") - 1), nbt.getInt("amount")), false);
 		}
 	}
 	
@@ -171,7 +170,8 @@ public class PhialItem extends Item{
 	private ItemStack withAspect(Aspect aspect){
 		ItemStack stack = new ItemStack(this);
 		IAspectHandler cap = IAspectHandler.getFrom(stack);
-		cap.insert(0, new AspectStack(aspect, 8), false);
+		if(cap != null)
+			cap.insert(0, new AspectStack(aspect, 8), false);
 		stack.setTag(stack.getShareTag());
 		return stack;
 	}

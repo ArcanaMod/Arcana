@@ -17,6 +17,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.resources.IReloadableResourceManager;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -44,13 +45,17 @@ public class WorldLoadEvent{
 		// If the player should get a one-time scribbled notes,
 		if(ArcanaConfig.SPAWN_WITH_NOTES.get()){
 			ServerPlayerEntity player = (ServerPlayerEntity)event.getPlayer();
-			Advancement hasNote = player.world.getServer().getAdvancementManager().getAdvancement(arcLoc("obtained_note"));
-			// and they haven't already got them this way,
-			if(!player.getAdvancements().getProgress(hasNote).isDone()){
-				// give them the notes,
-				player.addItemStackToInventory(new ItemStack(ArcanaItems.SCRIBBLED_NOTES.get()));
-				// and grant the advancement, so they never get it again.
-				player.getAdvancements().getProgress(hasNote).grantCriterion("impossible");
+			MinecraftServer server = player.world.getServer();
+			if(server != null){
+				Advancement hasNote = server.getAdvancementManager().getAdvancement(arcLoc("obtained_note"));
+				// and they haven't already got them this way,
+				if(hasNote != null)
+					if(!player.getAdvancements().getProgress(hasNote).isDone()){
+						// give them the notes,
+						player.addItemStackToInventory(new ItemStack(ArcanaItems.SCRIBBLED_NOTES.get()));
+						// and grant the advancement, so they never get it again.
+						player.getAdvancements().getProgress(hasNote).grantCriterion("impossible");
+					}
 			}
 		}
 	}

@@ -5,11 +5,11 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
 
-public class GoggleBase extends ArmorItem{
+public class GogglesItem extends ArmorItem{
 	
 	public GogglePriority priority;
 	
-	public GoggleBase(IArmorMaterial material, Properties properties, GogglePriority priority){
+	public GogglesItem(IArmorMaterial material, Properties properties, GogglePriority priority){
 		super(material, EquipmentSlotType.HEAD, properties);
 		this.priority = priority;
 	}

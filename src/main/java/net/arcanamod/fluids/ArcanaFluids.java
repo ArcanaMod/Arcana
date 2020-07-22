@@ -17,6 +17,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import static net.arcanamod.Arcana.arcLoc;
 import static net.arcanamod.blocks.ArcanaBlocks.BLOCKS;
 import static net.arcanamod.items.ArcanaItems.ITEMS;
 
@@ -25,8 +26,8 @@ public class ArcanaFluids {
 		ArcanaFluids.FLUIDS.register(bus);
 	}
 
-	public static final ResourceLocation FLUID_STILL = new ResourceLocation(Arcana.MODID,"fluid/tainted_goo");
-	public static final ResourceLocation FLUID_FLOWING = new ResourceLocation(Arcana.MODID,"fluid/tainted_goo_flowing");
+	public static final ResourceLocation FLUID_STILL = arcLoc("fluid/tainted_goo");
+	public static final ResourceLocation FLUID_FLOWING = arcLoc("fluid/tainted_goo_flowing");
 	
 	public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Arcana.MODID);
 

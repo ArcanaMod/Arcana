@@ -65,24 +65,26 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)playerEntity;
 			ItemStack itemstack = ItemStack.EMPTY;
 			// look for arcane crafting
-			Optional<IArcaneCraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(ArcanaRecipes.Types.ARCANE_CRAFTING_SHAPED, craftingInventory, world);
-			if (optional.isPresent()) {
-				IArcaneCraftingRecipe iarcanecraftingrecipe = optional.get();
-				if (resultInventory.canUseRecipe(world, serverplayerentity, iarcanecraftingrecipe)) {
-					itemstack = iarcanecraftingrecipe.getCraftingResult(craftingInventory);
+			if(world.getServer() != null){
+				Optional<IArcaneCraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(ArcanaRecipes.Types.ARCANE_CRAFTING_SHAPED, craftingInventory, world);
+				if(optional.isPresent()){
+					IArcaneCraftingRecipe iarcanecraftingrecipe = optional.get();
+					if(resultInventory.canUseRecipe(world, serverplayerentity, iarcanecraftingrecipe)){
+						itemstack = iarcanecraftingrecipe.getCraftingResult(craftingInventory);
+					}
 				}
-			}
-			// if arcane crafting is not possible, look for regular crafting
-			else{
-				Optional<ICraftingRecipe> craftingOptional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftingInventory, world);
-				if(craftingOptional.isPresent()){
-					ICraftingRecipe recipe = craftingOptional.get();
-					if(resultInventory.canUseRecipe(world, serverplayerentity, recipe))
-						itemstack = recipe.getCraftingResult(craftingInventory);
+				// if arcane crafting is not possible, look for regular crafting
+				else{
+					Optional<ICraftingRecipe> craftingOptional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, craftingInventory, world);
+					if(craftingOptional.isPresent()){
+						ICraftingRecipe recipe = craftingOptional.get();
+						if(resultInventory.canUseRecipe(world, serverplayerentity, recipe))
+							itemstack = recipe.getCraftingResult(craftingInventory);
+					}
 				}
+				resultInventory.setInventorySlotContents(0, itemstack);
+				serverplayerentity.connection.sendPacket(new SSetSlotPacket(windowId, 0, itemstack));
 			}
-			resultInventory.setInventorySlotContents(0, itemstack);
-			serverplayerentity.connection.sendPacket(new SSetSlotPacket(windowId, 0, itemstack));
 		}
 	}
 

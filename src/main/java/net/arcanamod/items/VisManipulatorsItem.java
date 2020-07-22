@@ -2,10 +2,8 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.blocks.AspectTubeBlock;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.AspectTubeTileEntity;
 import net.minecraft.block.Blocks;
@@ -48,13 +46,13 @@ public class VisManipulatorsItem extends Item{
 					if (context.getWorld().getTileEntity(context.getPos()) instanceof AspectTubeTileEntity){
 						AspectTubeTileEntity h = (AspectTubeTileEntity)context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
 						context.getPlayer().sendMessage(
-								new StringTextComponent((AspectUtils.aspectHandlerToJson(h) + "REMOTE: " + context.getWorld().isRemote).toString())
+								new StringTextComponent((AspectUtils.aspectHandlerToJson(h) + "REMOTE: " + context.getWorld().isRemote))
 										.applyTextStyle(context.getWorld().isRemote ? TextFormatting.RED : TextFormatting.BLUE)
 						);
 					}
 					else
 					context.getPlayer().sendMessage(
-							new StringTextComponent((context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) + "REMOTE: " + context.getWorld().isRemote).toString())
+							new StringTextComponent((context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) + "REMOTE: " + context.getWorld().isRemote))
 									.applyTextStyle(context.getWorld().isRemote ? TextFormatting.RED : TextFormatting.BLUE)
 					);
 					return ActionResultType.SUCCESS;

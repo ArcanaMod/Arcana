@@ -1,5 +1,6 @@
 package net.arcanamod.items;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -9,16 +10,19 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class ScribbledNoteItem extends Item {
+import javax.annotation.ParametersAreNonnullByDefault;
 
-    public ScribbledNoteItem(Properties properties) {
-        super(properties);
-    }
-
-
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-        Arcana.proxy.openScribbledNotesUI();
-        return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
-    }
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
+public class ScribbledNoteItem extends Item{
+	
+	public ScribbledNoteItem(Properties properties){
+		super(properties);
+	}
+	
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+		Arcana.proxy.openScribbledNotesUI();
+		return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
+	}
 }

@@ -43,9 +43,6 @@ public class ResearchTableContainer extends AspectContainer{
 	public ResearchTableTileEntity te;
 	public List<AspectSlot> scrollableSlots = new ArrayList<>();
 	
-	// combination slots
-	//protected AspectSlot leftStoreSlot, rightStoreSlot;
-	
 	private ItemStack note, ink;
 	public final List<AspectSlot> puzzleSlots = new ArrayList<>();
 	public final List<Slot> puzzleItemSlots = new ArrayList<>();
@@ -84,6 +81,7 @@ public class ResearchTableContainer extends AspectContainer{
 	}
 	
 	private void addOwnSlots(IInventory playerInventory){
+		@SuppressWarnings("ConstantConditions")
 		IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElse(null);
 		note = te.note();
 		ink = te.ink();

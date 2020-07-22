@@ -43,29 +43,29 @@ public enum ArcanaArmourMaterials implements IArmorMaterial{
 	}
 	
 	public int getDamageReductionAmount(EquipmentSlotType slotIn){
-		return this.damageReductionAmountArray[slotIn.getIndex()];
+		return damageReductionAmountArray[slotIn.getIndex()];
 	}
 	
 	public int getEnchantability(){
-		return this.enchantability;
+		return enchantability;
 	}
 	
 	@Nonnull
 	public SoundEvent getSoundEvent(){
-		return this.soundEvent;
+		return soundEvent;
 	}
 	
 	public Ingredient getRepairMaterial(){
-		return this.repairMaterial.getValue();
+		return repairMaterial.getValue();
 	}
 	
 	@Nonnull
 	@OnlyIn(Dist.CLIENT)
 	public String getName(){
-		return this.name;
+		return name;
 	}
 	
 	public float getToughness(){
-		return this.toughness;
+		return toughness;
 	}
 }

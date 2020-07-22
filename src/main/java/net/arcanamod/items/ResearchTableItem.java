@@ -27,28 +27,14 @@ public class ResearchTableItem extends Item{
 		super(properties);
 	}
 	
-	/*@Nullable
-	public CompoundNBT getNBTShareTag(ItemStack stack){
-		CompoundNBT tag = super.getNBTShareTag(stack);
-		if(tag != null && tag.hasKey("BlockEntityTag")){
-			CompoundNBT aspectNBT = stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).serializeNBT();
-			tag.getCompoundTag("BlockEntityTag").setTag("Aspects", aspectNBT);
-		}
-		return tag;
-	}
-	
-	public void readNBTShareTag(ItemStack stack, @Nullable CompoundNBT nbt){
-		super.readNBTShareTag(stack, nbt);
-		if(nbt != null)
-			stack.getCapability(VisHandlerCapability.ASPECT_HANDLER, null).deserializeNBT(nbt.getCompoundTag("BlockEntityTag").getCompoundTag("Aspects"));
-	}*/
-	
 	public ActionResultType onItemUse(ItemUseContext context){
 		World world = context.getWorld();
 		BlockPos pos = context.getPos();
 		PlayerEntity player = context.getPlayer();
 		if(world.isRemote)
 			return ActionResultType.SUCCESS;
+		if(player == null)
+			return ActionResultType.FAIL;
 		
 		BlockItemUseContext itemUseContext = new BlockItemUseContext(context);
 		if(!world.getBlockState(pos).isReplaceable(itemUseContext))
@@ -62,24 +48,21 @@ public class ResearchTableItem extends Item{
 			boolean canReplaceSecond = world.getBlockState(blockpos).isReplaceable(itemUseContext) || world.getBlockState(blockpos).getBlock().isAir(world.getBlockState(blockpos), world, blockpos);
 			if(canReplaceMain && canReplaceSecond){
 				BlockState state = ArcanaBlocks.RESEARCH_TABLE.get().getStateForPlacement(itemUseContext);
-				world.setBlockState(pos, state, 10);
-				world.setBlockState(blockpos, state.with(PART, RIGHT), 10);
-				
-				// play sound
-				SoundType soundtype = state.getBlock().getSoundType(state, world, pos, player);
-				world.playSound(null, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-				
-				// update world
-				// this should be updated to follow ItemBed, I don't think this will cause problems but still
-				//world.notifyNeighborsRespectDebug(pos, state.getBlock(), false);
-				//world.notifyNeighborsRespectDebug(blockpos, state.getBlock(), false);
-				
-				if(player instanceof ServerPlayerEntity)
-					CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity)player, pos, itemStack);
-				
-				BlockItem.setTileEntityNBT(world, player, pos, itemStack);
-				
-				itemStack.shrink(1);
+				if(state != null){
+					world.setBlockState(pos, state, 10);
+					world.setBlockState(blockpos, state.with(PART, RIGHT), 10);
+					
+					// play sound
+					SoundType soundtype = state.getBlock().getSoundType(state, world, pos, player);
+					world.playSound(null, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+					
+					if(player instanceof ServerPlayerEntity)
+						CriteriaTriggers.PLACED_BLOCK.trigger((ServerPlayerEntity)player, pos, itemStack);
+					
+					BlockItem.setTileEntityNBT(world, player, pos, itemStack);
+					
+					itemStack.shrink(1);
+				}
 				return ActionResultType.SUCCESS;
 			}
 		}

@@ -11,7 +11,6 @@ public enum ArcanaToolTiers implements IItemTier{
 	ARCANIUM(3, 1125, 7.0F, 2.5F, 17, () -> Ingredient.fromItems(ArcanaItems.ARCANIUM_INGOT.get())),
 	SILVER(1, 125, 10F, 1F, 5, () -> Ingredient.fromItems(ArcanaItems.ARCANIUM_INGOT.get())),
 	VOID_METAL(3, 300, 8.0F, 3.5F, 10, () -> Ingredient.fromItems(ArcanaItems.VOID_METAL_INGOT.get()));
-	//Silver has the correct HarvestLevel and MaxUses right now
 
 	private final int harvestLevel;
 	private final int maxUses;
@@ -30,26 +29,26 @@ public enum ArcanaToolTiers implements IItemTier{
 	}
 	
 	public int getMaxUses(){
-		return this.maxUses;
+		return maxUses;
 	}
 	
 	public float getEfficiency(){
-		return this.efficiency;
+		return efficiency;
 	}
 	
 	public float getAttackDamage(){
-		return this.attackDamage;
+		return attackDamage;
 	}
 	
 	public int getHarvestLevel(){
-		return this.harvestLevel;
+		return harvestLevel;
 	}
 	
 	public int getEnchantability(){
-		return this.enchantability;
+		return enchantability;
 	}
 	
 	public Ingredient getRepairMaterial(){
-		return this.repairMaterial.getValue();
+		return repairMaterial.getValue();
 	}
 }

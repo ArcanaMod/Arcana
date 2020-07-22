@@ -22,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class AutoRepair{
 	
-	private static final String TAG = "repair_timer";
+	private static final String TAG = "arcana:repair_timer";
 	private static final int FULL_TIMER = 70;
 	
 	public static boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged){
@@ -40,7 +40,7 @@ public class AutoRepair{
 		if(tag.getInt(TAG) > 0)
 			tag.putInt(TAG, tag.getInt(TAG) - 1);
 		else{
-			tag.putInt("repair_timer", FULL_TIMER);
+			tag.putInt(TAG, FULL_TIMER);
 			stack.damageItem(-1, (LivingEntity)entity, __ -> {
 			});
 		}

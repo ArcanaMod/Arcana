@@ -31,7 +31,7 @@ public class ScribbledNotesCompleteItem extends Item{
         return true;
     }
 
-    //gives players the arcanum on right click
+    // gives players the arcanum on right click
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
         if(hand == Hand.MAIN_HAND)

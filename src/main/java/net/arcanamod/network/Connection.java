@@ -1,6 +1,5 @@
 package net.arcanamod.network;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.research.Researcher;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -9,13 +8,15 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
+import static net.arcanamod.Arcana.arcLoc;
+
 public class Connection{
 	
 	private static int id = -100;
 	private static final String PROTOCOL_RELEASE = "Arcana1";
 	
 	public static SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder
-			.named(new ResourceLocation(Arcana.MODID, "main"))
+			.named(arcLoc("main"))
 			.clientAcceptedVersions(PROTOCOL_RELEASE::equals)
 			.serverAcceptedVersions(PROTOCOL_RELEASE::equals)
 			.networkProtocolVersion(() -> PROTOCOL_RELEASE)

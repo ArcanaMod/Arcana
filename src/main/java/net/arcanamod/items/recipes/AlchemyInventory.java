@@ -9,7 +9,6 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
 import java.util.Map;
 
 @MethodsReturnNonnullByDefault
@@ -73,7 +72,7 @@ public class AlchemyInventory implements IInventory{
 	
 	public void clear(){
 		stack = ItemStack.EMPTY;
-		// ewwww
+		// eww
 		crucible.getAspectStackMap().clear();
 	}
 }

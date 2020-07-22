@@ -2,19 +2,21 @@ package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.Taint;
-import net.arcanamod.client.model.tainted.*;
+import net.arcanamod.client.model.tainted.TaintedFoxModel;
+import net.arcanamod.client.model.tainted.TaintedSheepModel;
+import net.arcanamod.client.model.tainted.TaintedWolfModel;
+import net.arcanamod.client.model.tainted.TaintedZombieModel;
 import net.arcanamod.client.render.tainted.*;
 import net.arcanamod.entities.tainted.*;
 import net.minecraft.client.renderer.entity.model.*;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import static net.arcanamod.Arcana.arcLoc;
 
 /**
  * Initialize Entities here
@@ -27,12 +29,12 @@ public class ArcanaEntities{
 			Arcana.MODID);
 
 	public static final RegistryObject<EntityType<KoalaEntity>> KOALA_ENTITY = ENTITY_TYPES
-			.register("koala_entity", () -> EntityType.Builder.<KoalaEntity>create(KoalaEntity::new, EntityClassification.CREATURE)
-				.size(0.6f, 0.6f).build(new ResourceLocation(Arcana.MODID, "koala_entity").toString()));
+			.register("koala_entity", () -> EntityType.Builder.create(KoalaEntity::new, EntityClassification.CREATURE)
+				.size(0.6f, 0.6f).build(arcLoc("koala_entity").toString()));
 
 	public static final RegistryObject<EntityType<DairSpiritEntity>> DAIR_SPIRIT = ENTITY_TYPES
-			.register("dair_spirit_entity", () -> EntityType.Builder.<DairSpiritEntity>create(DairSpiritEntity::new, EntityClassification.CREATURE)
-					.size(0.6f, 0.6f).build(new ResourceLocation(Arcana.MODID, "dair_spirit_entity").toString()));
+			.register("dair_spirit_entity", () -> EntityType.Builder.create(DairSpiritEntity::new, EntityClassification.CREATURE)
+					.size(0.6f, 0.6f).build(arcLoc("dair_spirit_entity").toString()));
 
 	// Tainted
 
@@ -102,7 +104,7 @@ public class ArcanaEntities{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BAT.get(), TaintedBatRender::new);
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BEE.get(), manager -> new TaintedEntityRender(manager, new BeeModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAT.get(), manager -> new TaintedEntityRender(manager, new CatModel(0.0F)));
-		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAVE_SPIDER.get(), manager -> new TaintedCaveSpiderRender(manager));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAVE_SPIDER.get(), TaintedCaveSpiderRender::new);
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DONKEY.get(), manager -> new TaintedEntityRender(manager, new HorseModel(0.0F)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DROWNED.get(), manager -> new TaintedEntityRender(manager, new DrownedModel(0.5f, true)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ELDER_GUARDIAN.get(), manager -> new TaintedEntityRender(manager, new GuardianModel()));
@@ -124,7 +126,7 @@ public class ArcanaEntities{
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_RABBIT.get(), manager -> new TaintedEntityRender(manager, new RabbitModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SHEEP.get(), manager -> new TaintedEntityRender(manager, new TaintedSheepModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SKELETON.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
-		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SLIME.get(), manager -> new TaintedSlimeRender(manager));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SLIME.get(), TaintedSlimeRender::new);
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SNOW_GOLEM.get(), manager -> new TaintedEntityRender(manager, new SnowManModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_STRAY.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_TRADER_LLAMA.get(), manager -> new TaintedEntityRender(manager, new LlamaModel(0.0F)));
