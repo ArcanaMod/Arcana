@@ -63,7 +63,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		if(this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.DUNGEON_BRICKS.get())
 			return getCreativeJarColor();
 		else
-			return vis.getHolder(0).getContainedAspect() != Aspects.EMPTY ? new Color(vis.getHolder(0).getContainedAspect().getColorRange().get()[2]) : Color.WHITE;
+			return vis.getHolder(0).getContainedAspect() != Aspects.EMPTY ? new Color(vis.getHolder(0).getContainedAspect().getColorRange().get(2)) : Color.WHITE;
 	}
 	
 	public int nextColor = 0;

@@ -25,7 +25,7 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 		motionY = .05;
 		motionZ = 0;
 		if(data.getAspect() != null){
-			int colour = data.getAspect().getColorRange().get()[0];
+			int colour = data.getAspect().getColorRange().get(0);
 			int r = (colour & 0xff0000) >> 16;
 			int g = (colour & 0xff00) >> 8;
 			int b = colour & 0xff;

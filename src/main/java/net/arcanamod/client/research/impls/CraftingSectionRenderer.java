@@ -9,7 +9,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
-import static net.arcanamod.client.gui.ResearchEntryScreen.drawTexturedModalRect;
+import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public class CraftingSectionRenderer extends AbstractCraftingSectionRenderer<CraftingSection>{
 	

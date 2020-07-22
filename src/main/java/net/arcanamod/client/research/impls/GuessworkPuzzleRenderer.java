@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static net.arcanamod.client.gui.ResearchEntryScreen.drawTexturedModalRect;
+import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public class GuessworkPuzzleRenderer extends AbstractGui implements PuzzleRenderer<Guesswork>{
 	

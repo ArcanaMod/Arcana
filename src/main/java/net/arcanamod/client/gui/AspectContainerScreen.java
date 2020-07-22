@@ -12,7 +12,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 public abstract class AspectContainerScreen<T extends AspectContainer> extends ContainerScreen<T>{
 	
@@ -21,11 +21,6 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	public AspectContainerScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
 	}
-	
-	/*public GuiAspectContainer(AspectContainer inventorySlots){
-		super(inventorySlots);
-		aspectContainer = inventorySlots;
-	}*/
 	
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
@@ -49,11 +44,9 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 		for(AspectSlot slot : aspectContainer.getAspectSlots()) {
 			if (slot.getInventory().get() != null && slot.visible) {
 				if (isMouseOverSlot(mouseX, mouseY, slot)) {
-					if (slot!=null) {
-						if (slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null) {
-							String name = AspectUtils.getLocalizedAspectDisplayName(slot.getAspect());
-							renderTooltip(Arrays.asList(name + ((char) 20)), mouseX, mouseY,Minecraft.getInstance().getFontResourceManager().getFontRenderer(Arcana.arcLoc("eldrich")));
-						}
+					if (slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null) {
+						String name = AspectUtils.getLocalizedAspectDisplayName(slot.getAspect());
+						renderTooltip(Collections.singletonList(name + ((char)20)), mouseX, mouseY, Minecraft.getInstance().getFontResourceManager().getFontRenderer(Arcana.arcLoc("eldrich")));
 					}
 				}
 			}

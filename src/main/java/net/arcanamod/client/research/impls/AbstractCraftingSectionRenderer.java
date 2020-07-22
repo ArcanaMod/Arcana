@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
-import static net.arcanamod.client.gui.ResearchEntryScreen.drawTexturedModalRect;
+import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public abstract class AbstractCraftingSectionRenderer<T extends AbstractCraftingSection> implements EntrySectionRenderer<T>{
 	

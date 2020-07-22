@@ -38,10 +38,10 @@ public final class Huds{
 					int baseY = ArcanaConfig.WAND_HUD_TOP.get() ? 24 : event.getWindow().getScaledHeight() - 24 - 16 - 4;
 					for(int i = 0; i < length; i++){
 						Aspect primal = AspectUtils.primalAspects[i];
+						AspectStack stack = aspects.findAspectInHolders(primal).getContainedAspectStack();
 						int x = (int)(baseX + Math.sin((i / length * 2) * Math.PI) * 20);
 						int y = (int)(baseY + Math.cos((i / length * 2) * Math.PI) * 20);
-						Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(primal), x, y);
-						Minecraft.getInstance().getItemRenderer().renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(primal), x - 1, y + 3, String.valueOf(aspects.findAspectInHolders(primal) == null ? -1 : aspects.findAspectInHolders(primal).getCurrentVis()));
+						UiUtil.renderAspectStack(stack, x, y);
 					}
 					// if a focus is present
 					Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(new ItemStack(ArcanaItems.FOCUS_PARTS.get()), baseX, baseY);
@@ -67,8 +67,7 @@ public final class Huds{
 						int y = baseY - 10;
 						if(i % 2 == 0)
 							y += 8;
-						Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(stack.getAspect()), x, y);
-						Minecraft.getInstance().getItemRenderer().renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(stack.getAspect()), x, y + 3, String.valueOf(stack.getAmount()));
+						UiUtil.renderAspectStack(stack, x, y);
 					}
 				}
 			}
@@ -86,8 +85,7 @@ public final class Huds{
 						int y = baseY - 10;
 						if(i % 2 == 0)
 							y += 8;
-						Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(stack.getContainedAspect()), x, y);
-						Minecraft.getInstance().getItemRenderer().renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(stack.getContainedAspect()), x, y + 3, String.valueOf(stack.getContainedAspectStack().getAmount()));
+						UiUtil.renderAspectStack(stack.getContainedAspectStack(), x, y);
 					}
 				}
 			}

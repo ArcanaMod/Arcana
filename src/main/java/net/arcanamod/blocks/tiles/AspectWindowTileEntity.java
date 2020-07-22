@@ -21,7 +21,7 @@ public class AspectWindowTileEntity extends AspectTubeTileEntity implements ITic
 		if(elapsed > 12)
 			return 0xFFFFFF;
 		else
-			return lastTransferAspect.getColorRange().get()[elapsed / 3];
+			return lastTransferAspect.getColorRange().get(elapsed / 3);
 	}
 	
 	void notifyAspect(Aspect aspect){

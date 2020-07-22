@@ -21,6 +21,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import static net.arcanamod.client.gui.UiUtil.blend;
+
 @OnlyIn(Dist.CLIENT)
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -51,26 +53,12 @@ public class NodeParticle extends SpriteTexturedParticle{
 			// get progress between them
 			float progress = (((int)world.getGameTime() + partialTicks) / (float)time) % 1;
 			// set colour to blended
-			int blended = blend(0xffffff, blend(next.getColorRange().get()[3], current.getColorRange().get()[3], progress), .3f);
+			int blended = blend(0xffffff, blend(next.getColorRange().get(3), current.getColorRange().get(3), progress), .3f);
 			particleRed = ((blended & 0xff0000) >> 16) / 255f;
 			particleGreen = ((blended & 0xff00) >> 8) / 255f;
 			particleBlue = (blended & 0xff) / 255f;
 		}
 		super.renderParticle(buffer, renderInfo, partialTicks);
-	}
-	
-	public static int blend(int a, int b, float progress){
-		int aR = (a & 0xff0000) >> 16;
-		int aG = (a & 0xff00) >> 8;
-		int aB = a & 0xff;
-		int bR = (b & 0xff0000) >> 16;
-		int bG = (b & 0xff00) >> 8;
-		int bB = b & 0xff;
-		float inv = 1 - progress;
-		int finR = (int)(aR * progress + bR * inv);
-		int finG = (int)(aG * progress + bG * inv);
-		int finB = (int)(aB * progress + bB * inv);
-		return finR << 16 | finG << 8 | finB;
 	}
 	
 	@OnlyIn(Dist.CLIENT)

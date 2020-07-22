@@ -1,7 +1,6 @@
 package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
@@ -18,13 +17,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static net.arcanamod.client.gui.UiUtil.drawModalRectWithCustomSizedTexture;
+
 public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequirement>{
 	
 	public void render(int x, int y, PuzzleRequirement requirement, int ticks, float partialTicks, PlayerEntity player){
 		ResourceLocation icon = getFrom(requirement).getIcon();
 		Minecraft.getInstance().getTextureManager().bindTexture(icon != null ? icon : getFrom(requirement).getDefaultIcon());
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
-		ResearchEntryScreen.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+		drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 	}
 	
 	public List<ITextComponent> tooltip(PuzzleRequirement requirement, PlayerEntity player){

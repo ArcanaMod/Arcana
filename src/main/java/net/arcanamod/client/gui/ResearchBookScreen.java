@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.*;
+import static net.arcanamod.client.gui.UiUtil.drawModalRectWithCustomSizedTexture;
+import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 import static net.minecraft.util.math.MathHelper.clamp;
 import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
 
@@ -77,15 +79,6 @@ public class ResearchBookScreen extends Screen{
 	
 	public float getYOffset(){
 		return ((height / 2f) * (1 / zoom)) - (yPan / 2f);
-	}
-	
-	public static void drawModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
-		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
-		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
-	}
-	
-	public static void drawTexturedModalRect(int x, int y, float texX, float texY, int width, int height){
-		drawModalRectWithCustomSizedTexture(x, y, texX, texY, width, height, 256, 256);
 	}
 	
 	public void render(int mouseX, int mouseY, float partialTicks){

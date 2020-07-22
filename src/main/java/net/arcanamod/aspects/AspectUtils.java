@@ -81,7 +81,7 @@ public class AspectUtils {
 	}
 
 	public static ResourceLocation getAspectTextureLocation(Aspect aspect) {
-		return Arcana.arcLoc("aspect/"+aspect.name().toLowerCase());
+		return Arcana.arcLoc("textures/aspect/" + aspect.name().toLowerCase() + ".png");
 	}
 
 	public static int getEmptyCell(IAspectHandler handler) {
@@ -89,7 +89,7 @@ public class AspectUtils {
 	}
 	
 	public static String getLocalizedAspectDisplayName(Aspect aspect) {
-		return I18n.format("aspect."+aspect.name().toLowerCase());
+		return I18n.format("aspect." + aspect.name().toLowerCase());
 	}
 
 	public static ResourceLocation getResourceLocationFromAspect(Aspect aspect) {

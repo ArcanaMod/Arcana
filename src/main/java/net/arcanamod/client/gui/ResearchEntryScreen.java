@@ -10,7 +10,6 @@ import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchEntry;
 import net.arcanamod.research.Researcher;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.*;
@@ -28,6 +27,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public class ResearchEntryScreen extends Screen{
 	
@@ -55,15 +56,6 @@ public class ResearchEntryScreen extends Screen{
 		super(new StringTextComponent(""));
 		this.entry = entry;
 		bg = new ResourceLocation(entry.key().getNamespace(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
-	}
-	
-	public static void drawModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
-		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
-		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
-	}
-	
-	public static void drawTexturedModalRect(int x, int y, float texX, float texY, int width, int height){
-		drawModalRectWithCustomSizedTexture(x, y, texX, texY, width, height, 256, 256);
 	}
 	
 	public void render(int mouseX, int mouseY, float partialTicks){

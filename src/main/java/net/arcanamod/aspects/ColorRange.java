@@ -1,9 +1,10 @@
 package net.arcanamod.aspects;
 
 /**
- * AspectColorRange is not necessary but the code is more neat.
+ * Stores a set of colours.
  */
 public class ColorRange{
+	
 	private final int[] colors;
 
 	private ColorRange(int[] colors) {
@@ -13,8 +14,8 @@ public class ColorRange{
 	public static ColorRange create(int... colors) {
 		return new ColorRange(colors);
 	}
-
-	public int[] get() {
-		return colors;
+	
+	public int get(int colour){
+		return colors[colour];
 	}
 }

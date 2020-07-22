@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.ItemAspectRegistry;
+import net.arcanamod.client.gui.UiUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -48,7 +49,8 @@ public class RenderTooltip{
 				int x = event.getX();
 				int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();//shiftTextByLines(event.getLines(), event.getY() + 13);
 				for(AspectStack stack : stacks){
-					ItemStack aspect = AspectUtils.getItemStackForAspect(stack.getAspect());
+					UiUtil.renderAspectStack(stack, x, y);
+					/*ItemStack aspect = AspectUtils.getItemStackForAspect(stack.getAspect());
 					mc.getItemRenderer().renderItemAndEffectIntoGUI(aspect, x, y);
 					// render text
 					MatrixStack matrixstack = new MatrixStack();
@@ -56,8 +58,7 @@ public class RenderTooltip{
 					matrixstack.translate(0, 0, mc.getItemRenderer().zLevel + 200.0F);
 					IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
 					mc.fontRenderer.renderString(s, x + 19 - mc.fontRenderer.getStringWidth(s), y + 10, blendToWhite(stack.getAspect().getColorRange().get()[3]), true, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
-					impl.finish();
-					
+					impl.finish();*/
 					x += 20;
 				}
 				RenderSystem.popMatrix();

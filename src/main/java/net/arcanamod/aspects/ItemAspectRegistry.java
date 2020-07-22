@@ -163,7 +163,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 	
 	private List<AspectStack> getGenerating(ItemStack stack){
 		if(itemAspects.containsKey(stack.getItem()))
-			return get(stack);
+			return get(stack.getItem());
 		else
 			return getFromRecipes(stack.getItem());
 	}
