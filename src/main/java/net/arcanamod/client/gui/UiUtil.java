@@ -11,7 +11,8 @@ import net.minecraft.client.renderer.Tessellator;
 
 public final class UiUtil{
 	
-	private UiUtil(){}
+	private UiUtil(){
+	}
 	
 	public static int blend(int a, int b, float progress){
 		int aR = (a & 0xff0000) >> 16;
@@ -42,18 +43,24 @@ public final class UiUtil{
 	}
 	
 	public static void renderAspectStack(AspectStack stack, int x, int y, int colour){
+		renderAspectStack(stack.getAspect(), stack.getAmount(), x, y, colour);
+	}
+	
+	public static void renderAspectStack(Aspect aspect, int amount, int x, int y){
+		renderAspectStack(aspect, amount, x, y, blend(0xffffff, invert(aspect.getColorRange().get(1)), .5f));
+	}
+	
+	public static void renderAspectStack(Aspect aspect, int amount, int x, int y, int colour){
 		Minecraft mc = Minecraft.getInstance();
 		// render aspect
-		renderAspect(stack.getAspect(), x, y);
+		renderAspect(aspect, x, y);
 		// render amount
-		if(stack.getAmount() > 1){
-			MatrixStack matrixstack = new MatrixStack();
-			String s = String.valueOf(stack.getAmount());
-			matrixstack.translate(0, 0, mc.getItemRenderer().zLevel + 200.0F);
-			IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-			mc.fontRenderer.renderString(s, x + 19 - mc.fontRenderer.getStringWidth(s), y + 10, colour, true, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
-			impl.finish();
-		}
+		MatrixStack matrixstack = new MatrixStack();
+		String s = String.valueOf(amount);
+		matrixstack.translate(0, 0, mc.getItemRenderer().zLevel + 200.0F);
+		IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
+		mc.fontRenderer.renderString(s, x + 19 - mc.fontRenderer.getStringWidth(s), y + 10, colour, true, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
+		impl.finish();
 	}
 	
 	public static void renderAspect(Aspect aspect, int x, int y){

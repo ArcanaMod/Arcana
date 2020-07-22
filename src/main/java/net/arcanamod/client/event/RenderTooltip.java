@@ -50,30 +50,11 @@ public class RenderTooltip{
 				int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();//shiftTextByLines(event.getLines(), event.getY() + 13);
 				for(AspectStack stack : stacks){
 					UiUtil.renderAspectStack(stack, x, y);
-					/*ItemStack aspect = AspectUtils.getItemStackForAspect(stack.getAspect());
-					mc.getItemRenderer().renderItemAndEffectIntoGUI(aspect, x, y);
-					// render text
-					MatrixStack matrixstack = new MatrixStack();
-					String s = String.valueOf(stack.getAmount());
-					matrixstack.translate(0, 0, mc.getItemRenderer().zLevel + 200.0F);
-					IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-					mc.fontRenderer.renderString(s, x + 19 - mc.fontRenderer.getStringWidth(s), y + 10, blendToWhite(stack.getAspect().getColorRange().get()[3]), true, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
-					impl.finish();*/
 					x += 20;
 				}
 				RenderSystem.popMatrix();
 			}
 		}
-	}
-	
-	public static int blendToWhite(int a){
-		int aR = (a & 0xff0000) >> 16;
-		int aG = (a & 0xff00) >> 8;
-		int aB = a & 0xff;
-		int finR = (int)(aR * .5f + 127.5f);
-		int finG = (int)(aG * .5f + 127.5f);
-		int finB = (int)(aB * .5f + 127.5f);
-		return finR << 16 | finG << 8 | finB;
 	}
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
