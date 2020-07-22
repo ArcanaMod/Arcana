@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "arcana:arcane_stone"
+  },
+  "result": "arcana:arcane_stone_bricks",
+  "count": 1
+}
