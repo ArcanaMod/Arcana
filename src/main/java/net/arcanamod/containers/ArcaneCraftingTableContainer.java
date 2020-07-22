@@ -1,5 +1,6 @@
 package net.arcanamod.containers;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.containers.slots.AspectCraftingResultSlot;
 import net.arcanamod.containers.slots.IWandSlotListener;
 import net.arcanamod.containers.slots.WandSlot;
@@ -12,19 +13,22 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.CraftResultInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.*;
+import net.minecraft.inventory.container.ContainerType;
+import net.minecraft.inventory.container.RecipeBookContainer;
+import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.world.World;
 
-import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Optional;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraftingInventory> implements IWandSlotListener {
 
 	public final IInventory inventory;
@@ -32,7 +36,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	public final AspectCraftingInventory craftMatrix;
 	public final CraftResultInventory craftResult = new CraftResultInventory();
 
-	public ArcaneCraftingTableContainer(@Nullable ContainerType<?> type, int id, PlayerInventory playerInventory, IInventory inventory){
+	public ArcaneCraftingTableContainer(ContainerType<?> type, int id, PlayerInventory playerInventory, IInventory inventory){
 		super(type, id);
 		this.inventory = inventory;
 		this.playerInventory = playerInventory;
@@ -52,11 +56,11 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 		this(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), id, playerInventory, inventory);
 	}
 
-	public ArcaneCraftingTableContainer(int i, PlayerInventory playerInventory, PacketBuffer packetBuffer){
+	public ArcaneCraftingTableContainer(int i, PlayerInventory playerInventory){
 		this(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), i, playerInventory, new Inventory(2));
 	}
 
-	protected static void craft(int windowIdIn, World world, PlayerEntity playerEntity, AspectCraftingInventory craftingInventory, CraftResultInventory resultInventory){
+	protected static void craft(int windowId, World world, PlayerEntity playerEntity, AspectCraftingInventory craftingInventory, CraftResultInventory resultInventory){
 		if (!world.isRemote) {
 			ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)playerEntity;
 			ItemStack itemstack = ItemStack.EMPTY;
@@ -78,25 +82,23 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 				}
 			}
 			resultInventory.setInventorySlotContents(0, itemstack);
-			serverplayerentity.connection.sendPacket(new SSetSlotPacket(windowIdIn, 0, itemstack));
+			serverplayerentity.connection.sendPacket(new SSetSlotPacket(windowId, 0, itemstack));
 		}
 	}
 
 	/**
 	 * Callback for when the crafting matrix is changed.
 	 */
-	public void onCraftMatrixChanged(IInventory inventoryIn){
+	public void onCraftMatrixChanged(IInventory inventory){
 		craft(this.windowId, this.playerInventory.player.world, this.playerInventory.player, this.craftMatrix, this.craftResult);
 	}
 
 	/**
 	 * Determines whether supplied player can use this container
-	 *
-	 * @param playerIn
 	 */
 	@Override
-	public boolean canInteractWith(PlayerEntity playerIn){
-		return this.inventory == null || this.inventory.isUsableByPlayer(playerIn);
+	public boolean canInteractWith(PlayerEntity player){
+		return inventory == null || inventory.isUsableByPlayer(player);
 	}
 
 	private void addPlayerSlots(IInventory playerInventory){
@@ -112,8 +114,8 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	}
 
 	@Override
-	public void fillStackedContents(RecipeItemHelper itemHelperIn){
-		this.craftMatrix.fillStackedContents(itemHelperIn);
+	public void fillStackedContents(RecipeItemHelper itemHelper){
+		craftMatrix.fillStackedContents(itemHelper);
 	}
 
 	@Override
@@ -122,8 +124,8 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	}
 
 	@Override
-	public boolean matches(IRecipe<? super AspectCraftingInventory> recipeIn){
-		return recipeIn.matches(this.craftMatrix, this.playerInventory.player.world);
+	public boolean matches(IRecipe<? super AspectCraftingInventory> recipe){
+		return recipe.matches(craftMatrix, playerInventory.player.world);
 	}
 
 	@Override
@@ -151,30 +153,30 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	 * inventory and the other inventory(s).
 	 */
 	// TODO: Pls someone can fix that?????????
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = this.inventorySlots.get(index);
+		Slot slot = inventorySlots.get(index);
 		if (slot != null && slot.getHasStack()) {
 			ItemStack itemstack1 = slot.getStack();
 			itemstack = itemstack1.copy();
 			if (index == 0) {
-				itemstack1.getItem().onCreated(itemstack1, playerIn.world, playerIn);
-				if (!this.mergeItemStack(itemstack1, 10, 46, true)) {
+				itemstack1.getItem().onCreated(itemstack1, player.world, player);
+				if (!mergeItemStack(itemstack1, 10, 46, true)) {
 					return ItemStack.EMPTY;
 				}
 
 				slot.onSlotChange(itemstack1, itemstack);
 			} else if (index >= 10 && index < 46) {
-				if (!this.mergeItemStack(itemstack1, 1, 10, false)) {
+				if (!mergeItemStack(itemstack1, 1, 10, false)) {
 					if (index < 37) {
-						if (!this.mergeItemStack(itemstack1, 37, 46, false)) {
+						if (!mergeItemStack(itemstack1, 37, 46, false)) {
 							return ItemStack.EMPTY;
 						}
-					} else if (!this.mergeItemStack(itemstack1, 10, 37, false)) {
+					} else if (!mergeItemStack(itemstack1, 10, 37, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
-			} else if (!this.mergeItemStack(itemstack1, 10, 46, false)) {
+			} else if (!mergeItemStack(itemstack1, 10, 46, false)) {
 				return ItemStack.EMPTY;
 			}
 
@@ -188,9 +190,9 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 				return ItemStack.EMPTY;
 			}
 
-			ItemStack itemstack2 = slot.onTake(playerIn, itemstack1);
+			ItemStack itemstack2 = slot.onTake(player, itemstack1);
 			if (index == 0) {
-				playerIn.dropItem(itemstack2, false);
+				player.dropItem(itemstack2, false);
 			}
 		}
 
@@ -199,6 +201,11 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 
 	@Override
 	public void onWandSlotUpdate() {
-		craft(this.windowId, this.playerInventory.player.world, this.playerInventory.player, this.craftMatrix, this.craftResult);
+		craft(windowId, playerInventory.player.world, playerInventory.player, craftMatrix, craftResult);
+	}
+	
+	public void onContainerClosed(PlayerEntity player){
+		super.onContainerClosed(player);
+		clearContainer(player, player.world, craftMatrix);
 	}
 }

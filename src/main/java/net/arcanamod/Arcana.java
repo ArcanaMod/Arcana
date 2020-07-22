@@ -282,7 +282,7 @@ public class Arcana{
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_VALVE_TE.get(), AspectValveTileEntityRenderer::new);
 
 		//Screens
-		ScreenManager.registerFactory(ArcanaContainers.REASERCH_TABLE.get(), ResearchTableScreen::new);
+		ScreenManager.registerFactory(ArcanaContainers.RESEARCH_TABLE.get(), ResearchTableScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), ArcaneCraftingTableScreen::new);
 
 		//Special Render

@@ -62,7 +62,7 @@ public class ResearchTableContainer extends AspectContainer{
 
 	@SuppressWarnings("ConstantConditions")
 	public ResearchTableContainer(int i, PlayerInventory playerInventory, PacketBuffer packetBuffer) {
-		this(ArcanaContainers.REASERCH_TABLE.get(),i,playerInventory,(ResearchTableTileEntity) playerInventory.player.getEntityWorld().getTileEntity(packetBuffer.readBlockPos()));
+		this(ArcanaContainers.RESEARCH_TABLE.get(),i,playerInventory,(ResearchTableTileEntity) playerInventory.player.getEntityWorld().getTileEntity(packetBuffer.readBlockPos()));
 	}
 
 	private void addPlayerSlots(IInventory playerInventory){
