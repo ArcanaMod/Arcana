@@ -2,6 +2,8 @@ package net.arcanamod.datagen;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.util.annotations.GenLootTable;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -10,11 +12,13 @@ import net.minecraft.data.LootTableProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.SurvivesExplosion;
+import net.minecraftforge.fml.RegistryObject;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,134 +37,15 @@ public class LootTables extends LootTableProvider{
 		super(dataGenerator);
 		generator = dataGenerator;
 	}
-	
-	// TODO: check if there's a better way of doing this
+
+	// TODO: remove all addStandardTable() from act() and use addStandardTableFromDataGenerables()
 	
 	public void act(@Nonnull DirectoryCache cache){
-		addStandardTable(DAIR_FENCE_GATE);
-		addStandardTable(DEAD_FENCE_GATE);
-		addStandardTable(EUCALYPTUS_FENCE_GATE);
-		addStandardTable(HAWTHORN_FENCE_GATE);
-		addStandardTable(GREATWOOD_FENCE_GATE);
-		addStandardTable(SILVERWOOD_FENCE_GATE);
-		addStandardTable(TRYPOPHOBIUS_FENCE_GATE);
-		addStandardTable(WILLOW_FENCE_GATE);
-		
-		addStandardTable(DUNGEON_BRICKS);
-		addStandardTable(DUNGEON_BRICKS_SLAB);
-		addStandardTable(DUNGEON_BRICKS_STAIRS);
-		addStandardTable(DUNGEON_BRICKS_PRESSURE_PLATE);
-		addStandardTable(DUNGEON_BRICKS_WALL);
-		
-		addStandardTable(MOSSY_DUNGEON_BRICKS);
-		addStandardTable(MOSSY_DUNGEON_BRICKS_SLAB);
-		addStandardTable(MOSSY_DUNGEON_BRICKS_STAIRS);
-		addStandardTable(MOSSY_DUNGEON_BRICKS_PRESSURE_PLATE);
-		addStandardTable(MOSSY_DUNGEON_BRICKS_WALL);
-		
-		addStandardTable(CRACKED_DUNGEON_BRICKS);
-		addStandardTable(CRACKED_DUNGEON_BRICKS_SLAB);
-		addStandardTable(CRACKED_DUNGEON_BRICKS_STAIRS);
-		addStandardTable(CRACKED_DUNGEON_BRICKS_PRESSURE_PLATE);
-		addStandardTable(CRACKED_DUNGEON_BRICKS_WALL);
-
-		addStandardTable(PRIDEFUL_GOLD_PILLAR);
-		addStandardTable(PRIDESTONE);
-		addStandardTable(PRIDESTONE_BRICKS);
-		addStandardTable(PRIDESTONE_PILLAR);
-		addStandardTable(PRIDESTONE_PILLAR_COAL);
-		addStandardTable(PRIDESTONE_SMALL_BRICKS);
-		addStandardTable(PRIDESTONE_TILE);
-		addStandardTable(SMOOTH_PRIDESTONE);
-		addStandardTable(SMOOTH_PRIDESTONE_TILE);
-		addStandardTable(ROUGH_LIMESTONE);
-		addStandardTable(SMOOTH_LIMESTONE);
-		addStandardTable(LIMESTONE_TILE);
-		addStandardTable(PRIDECLAY);
-		addStandardTable(GILDED_PRIDECLAY);
-		addStandardTable(PRIDEFUL_GOLD_BLOCK);
-		addStandardTable(PRIDEFUL_GOLD_TILE);
-		addStandardTable(CARVED_PRIDEFUL_GOLD_BLOCK);
-		addStandardTable(CHISELED_PRIDEFUL_GOLD_BLOCK);
-		
-		addStandardTable(PEDESTAL);
-		addStandardTable(ARCANE_CRAFTING_TABLE);
-		addStandardTable(SEE_NO_EVIL_STATUE);
-		addStandardTable(HEAR_NO_EVIL_STATUE);
-		addStandardTable(SPEAK_NO_EVIL_STATUE);
-		addStandardTable(SILVER_BLOCK);
-		addStandardTable(SILVER_ORE);
-		addStandardTable(VOID_METAL_BLOCK);
-
-		addStandardTable(TAINTED_OAK_LOG);
-		addStandardTable(TAINTED_OAK_PLANKS);
-		addStandardTable(TAINTED_OAK_SAPLING);
-		addStandardTable(TAINTED_OAK_SLAB);
-		addStandardTable(TAINTED_OAK_STAIRS);
-
-		addStandardTable(TAINTED_SPRUCE_LOG);
-		addStandardTable(TAINTED_SPRUCE_PLANKS);
-		addStandardTable(TAINTED_SPRUCE_SAPLING);
-		addStandardTable(TAINTED_SPRUCE_SLAB);
-		addStandardTable(TAINTED_SPRUCE_STAIRS);
-
-		addStandardTable(TAINTED_JUNGLE_LOG);
-		addStandardTable(TAINTED_JUNGLE_PLANKS);
-		addStandardTable(TAINTED_JUNGLE_SAPLING);
-		addStandardTable(TAINTED_JUNGLE_SLAB);
-		addStandardTable(TAINTED_JUNGLE_STAIRS);
-
-		addStandardTable(TAINTED_WILLOW_LOG);
-		addStandardTable(TAINTED_WILLOW_PLANKS);
-		addStandardTable(TAINTED_WILLOW_SAPLING);
-		addStandardTable(TAINTED_WILLOW_SLAB);
-		addStandardTable(TAINTED_WILLOW_STAIRS);
-
-		addStandardTable(TAINTED_HAWTHORN_LOG);
-		addStandardTable(TAINTED_HAWTHORN_PLANKS);
-		addStandardTable(TAINTED_HAWTHORN_SAPLING);
-		addStandardTable(TAINTED_HAWTHORN_SLAB);
-		addStandardTable(TAINTED_HAWTHORN_STAIRS);
-
-		addStandardTable(TAINTED_GREATWOOD_LOG);
-		addStandardTable(TAINTED_GREATWOOD_PLANKS);
-		addStandardTable(TAINTED_GREATWOOD_SAPLING);
-		addStandardTable(TAINTED_GREATWOOD_SLAB);
-		addStandardTable(TAINTED_GREATWOOD_STAIRS);
-
-		addStandardTable(TAINTED_DARKOAK_LOG);
-		addStandardTable(TAINTED_DARKOAK_PLANKS);
-		addStandardTable(TAINTED_DARKOAK_SAPLING);
-		addStandardTable(TAINTED_DARKOAK_SLAB);
-		addStandardTable(TAINTED_DARKOAK_STAIRS);
-
-		addStandardTable(TAINTED_BIRCH_LOG);
-		addStandardTable(TAINTED_BIRCH_PLANKS);
-		addStandardTable(TAINTED_BIRCH_SAPLING);
-		addStandardTable(TAINTED_BIRCH_SLAB);
-		addStandardTable(TAINTED_BIRCH_STAIRS);
-
-		addStandardTable(TAINTED_ACACIA_LOG);
-		addStandardTable(TAINTED_ACACIA_PLANKS);
-		addStandardTable(TAINTED_ACACIA_SAPLING);
-		addStandardTable(TAINTED_ACACIA_SLAB);
-		addStandardTable(TAINTED_ACACIA_STAIRS);
-
-		addStandardTable(TAINTED_DAIR_LOG);
-		addStandardTable(TAINTED_DAIR_PLANKS);
-		addStandardTable(TAINTED_DAIR_SAPLING);
-		addStandardTable(TAINTED_DAIR_SLAB);
-		addStandardTable(TAINTED_DAIR_STAIRS);
-
-		addStandardTable(TAINTED_COAL_BLOCK);
-		addStandardTable(TAINTED_IRON_BLOCK);
-		addStandardTable(TAINTED_THAUMIUM_BLOCK);
-		addStandardTable(TAINTED_LAPIS_BLOCK);
-		addStandardTable(TAINTED_REDSTONE_BLOCK);
-		addStandardTable(TAINTED_GOLD_BLOCK);
-		addStandardTable(TAINTED_DIAMOND_BLOCK);
-		addStandardTable(TAINTED_EMERALD_BLOCK);
-		addStandardTable(TAINTED_ARCANIUM_BLOCK);
+		try {
+			addStandardTableFromDataGenerables();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 
 		addStandardTable(TAINTED_GRAVEL);
 		addStandardTable(TAINTED_PUMPKIN);
@@ -212,5 +97,23 @@ public class LootTables extends LootTableProvider{
 	@Nonnull
 	public String getName(){
 		return "Arcana Loot Tables";
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void addStandardTableFromDataGenerables() throws IllegalAccessException {
+		Class<ArcanaBlocks> clazz = ArcanaBlocks.class;
+		Field[] fields = clazz.getFields();
+		for (Field field : fields){
+			// if field has DataGenerating annotation and l "@LootTable" value is true
+			if (field.isAnnotationPresent(GenLootTable.class)){
+					LOGGER.debug("Found field in ArcanaBlocks.class: name:" + field.getName() + " type:" + field.getType());
+					if (field.get(field.getType()) instanceof RegistryObject) {
+						// get RegistryObject from field and add standard table
+						RegistryObject<Block> reg = (RegistryObject<Block>) field.get(field.getType());
+						LOGGER.debug("RegistryObject: " + reg.get().toString());
+						addStandardTable(reg);
+					}
+				}
+		}
 	}
 }
