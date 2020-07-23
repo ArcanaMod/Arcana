@@ -13,8 +13,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
 import net.minecraft.world.storage.loot.conditions.SurvivesExplosion;
 import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.opengl.GL;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -96,9 +98,26 @@ public class LootTables extends LootTableProvider{
 					// get RegistryObject from field and add standard table
 					RegistryObject<Block> reg = (RegistryObject<Block>) field.get(field.getType());
 					LOGGER.debug("RegistryObject: " + reg.get().toString());
-					addStandardTable(reg);
+					GLT annotation = field.getAnnotation(GLT.class);
+					if (!annotation.replacement().equals(""))
+						addCustomDropTable(reg.get(),annotation.replacement());
+					else addStandardTable(reg);
 				}
 			}
 		}
+	}
+
+	private void addCustomDropTable(Block block, String replacement) {
+		lootTables.put(block, createCustomDropTable(block,replacement));
+	}
+
+	@SuppressWarnings("ConstantConditions")
+	@Nonnull
+	protected LootTable.Builder createCustomDropTable(Block block,String replacement){
+		LootPool.Builder builder = LootPool.builder()
+				.rolls(ConstantRange.of(1))
+				.addEntry(ItemLootEntry.builder(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(replacement))))
+				.acceptCondition(SurvivesExplosion.builder());
+		return LootTable.builder().addLootPool(builder);
 	}
 }
