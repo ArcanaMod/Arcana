@@ -18,7 +18,7 @@ public class ArcanaConfig{
 		COMMON_BUILDER.push("General");
 
 		SPAWN_WITH_NOTES = COMMON_BUILDER
-				.comment("If the player should spawn with the Scribbled notes item when first joining the world.", "True by default.")
+				.comment("If the player should spawn with scribbled notes when first joining the world.", "True by default.")
 				.define("SpawnWithNotes", true);
 		ORE_RETROGEN = COMMON_BUILDER
 				.comment("Enables Arcana ore generation in already-generated chunks.", "Chunks generated with Arcana will stay unaffected.", "False by default.")
