@@ -10,7 +10,7 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.ItemAspectRegistry;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.util.recipes.ArcanaRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;

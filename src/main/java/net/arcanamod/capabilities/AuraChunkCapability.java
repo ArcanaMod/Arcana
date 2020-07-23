@@ -1,6 +1,5 @@
-package net.arcanamod.research.impls;
+package net.arcanamod.capabilities;
 
-import net.arcanamod.research.Researcher;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
@@ -16,25 +15,25 @@ import javax.annotation.Nullable;
 
 import static net.arcanamod.Arcana.arcLoc;
 
-public class ResearcherCapability{
+public class AuraChunkCapability{
 	
-	@CapabilityInject(Researcher.class)
-	public static Capability<Researcher> RESEARCHER_CAPABILITY = null;
+	@CapabilityInject(AuraChunk.class)
+	public static Capability<AuraChunk> NODE_CHUNK_CAPABILITY = null;
 	
-	public static final ResourceLocation KEY = arcLoc("researcher_capability");
+	public static final ResourceLocation KEY = arcLoc("node_chunk_capability");
 	
 	public static void init(){
-		CapabilityManager.INSTANCE.register(Researcher.class, new Storage(), ResearcherImpl::new);
+		CapabilityManager.INSTANCE.register(AuraChunk.class, new Storage(), AuraChunkImpl::new);
 	}
 	
-	private static class Storage implements Capability.IStorage<Researcher>{
+	private static class Storage implements Capability.IStorage<AuraChunk>{
 		
 		@Nullable
-		public INBT writeNBT(Capability<Researcher> capability, Researcher instance, Direction side){
+		public INBT writeNBT(Capability<AuraChunk> capability, AuraChunk instance, Direction side){
 			return instance.serializeNBT();
 		}
 		
-		public void readNBT(Capability<Researcher> capability, Researcher instance, Direction side, INBT nbt){
+		public void readNBT(Capability<AuraChunk> capability, AuraChunk instance, Direction side, INBT nbt){
 			if(nbt instanceof CompoundNBT)
 				instance.deserializeNBT((CompoundNBT)nbt);
 		}
@@ -42,7 +41,7 @@ public class ResearcherCapability{
 	
 	public static class Provider implements ICapabilitySerializable<CompoundNBT>{
 		
-		private final Researcher cap = new ResearcherImpl();
+		private final AuraChunk cap = new AuraChunkImpl();
 		
 		public CompoundNBT serializeNBT(){
 			return cap.serializeNBT();
@@ -54,8 +53,7 @@ public class ResearcherCapability{
 		
 		@Nonnull
 		public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction side){
-			// if Capability<T> == Capability<Researcher>, then T is Researcher, so this won't cause issues.
-			return capability == RESEARCHER_CAPABILITY ? LazyOptional.of(() -> (T)cap) : LazyOptional.empty();
+			return capability == NODE_CHUNK_CAPABILITY ? LazyOptional.of(() -> (T)cap) : LazyOptional.empty();
 		}
 	}
 }

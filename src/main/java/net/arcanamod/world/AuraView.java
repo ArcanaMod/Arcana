@@ -1,5 +1,6 @@
 package net.arcanamod.world;
 
+import net.arcanamod.capabilities.AuraChunk;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -9,7 +10,6 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
 import net.minecraft.world.chunk.IChunk;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.DistExecutor;
 
 import java.util.*;
 import java.util.function.Function;

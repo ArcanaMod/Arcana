@@ -1,7 +1,9 @@
-package net.arcanamod.research;
+package net.arcanamod.capabilities;
 
 import net.arcanamod.event.ResearchEvent;
-import net.arcanamod.research.impls.ResearcherCapability;
+import net.arcanamod.research.Puzzle;
+import net.arcanamod.research.ResearchBooks;
+import net.arcanamod.research.ResearchEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -9,9 +11,9 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.common.util.INBTSerializable;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -143,6 +145,8 @@ public interface Researcher{
 	 * 		The player to get a capability from.
 	 * @return The player's researcher capability.
 	 */
+	@SuppressWarnings("ConstantConditions")
+	@Nullable
 	static Researcher getFrom(@Nonnull PlayerEntity p){
 		return p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null).orElse(null);
 	}

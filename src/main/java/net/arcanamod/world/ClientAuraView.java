@@ -1,5 +1,6 @@
 package net.arcanamod.world;
 
+import net.arcanamod.capabilities.AuraChunk;
 import net.arcanamod.client.ClientNodeHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.ChunkPos;

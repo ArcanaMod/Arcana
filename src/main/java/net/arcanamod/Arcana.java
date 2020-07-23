@@ -4,6 +4,7 @@ import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
+import net.arcanamod.capabilities.TaintTrackableCapability;
 import net.arcanamod.client.gui.ArcaneCraftingTableScreen;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
@@ -18,10 +19,10 @@ import net.arcanamod.research.EntrySection;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchLoader;
-import net.arcanamod.research.impls.ResearcherCapability;
+import net.arcanamod.capabilities.ResearcherCapability;
 import net.arcanamod.util.recipes.ArcanaRecipes;
 import net.arcanamod.world.NodeType;
-import net.arcanamod.world.impl.AuraChunkCapability;
+import net.arcanamod.capabilities.AuraChunkCapability;
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.block.BlockState;
@@ -121,6 +122,7 @@ public class Arcana{
 		ResearcherCapability.init();
 		AspectHandlerCapability.init();
 		AuraChunkCapability.init();
+		TaintTrackableCapability.init();
 		Puzzle.init();
 		Taint.init();
 		

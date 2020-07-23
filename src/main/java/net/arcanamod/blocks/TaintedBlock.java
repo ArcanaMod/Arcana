@@ -3,8 +3,10 @@ package net.arcanamod.blocks;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.bases.GroupedBlock;
+import net.arcanamod.capabilities.TaintTrackable;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.BooleanProperty;
@@ -129,6 +131,26 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 	@Override
 	public ItemGroup getGroup(){
 		return Arcana.TAINT;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
+		super.onEntityCollision(state, world, pos, entity);
+		startTracking(entity);
+	}
+	
+	public void onEntityWalk(World world, BlockPos pos, Entity entity){
+		super.onEntityWalk(world, pos, entity);
+		startTracking(entity);
+	}
+	
+	private void startTracking(Entity entity){
+		if(entity instanceof LivingEntity){
+			// Start tracking taint biome for entity
+			TaintTrackable trackable = TaintTrackable.getFrom((LivingEntity)entity);
+			if(trackable != null)
+				trackable.setTracking(true);
+		}
 	}
 	
 	// Private stuff in FarmlandBlock

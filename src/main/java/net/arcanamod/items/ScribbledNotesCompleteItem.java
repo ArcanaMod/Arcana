@@ -2,7 +2,7 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;

@@ -1,6 +1,7 @@
-package net.arcanamod.world;
+package net.arcanamod.capabilities;
 
-import net.arcanamod.world.impl.AuraChunkCapability;
+import net.arcanamod.world.Node;
+import net.arcanamod.world.NodeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;

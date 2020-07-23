@@ -1,7 +1,7 @@
-package net.arcanamod.world.impl;
+package net.arcanamod.capabilities;
 
 import net.arcanamod.world.Node;
-import net.arcanamod.world.AuraChunk;
+import net.arcanamod.capabilities.AuraChunk;
 import net.arcanamod.world.NodeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;

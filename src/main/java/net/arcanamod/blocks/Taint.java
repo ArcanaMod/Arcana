@@ -1,7 +1,6 @@
 package net.arcanamod.blocks;
 
 import com.google.common.collect.Lists;
-import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.VisShareable;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
@@ -11,14 +10,8 @@ import net.arcanamod.entities.tainted.*;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.monster.AbstractIllagerEntity;
-import net.minecraft.entity.monster.CaveSpiderEntity;
-import net.minecraft.entity.passive.SquidEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -27,7 +20,10 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static net.arcanamod.blocks.DelegatingBlock.switchBlock;
@@ -167,36 +163,57 @@ public class Taint{
 			}
 		}
 	}
+	
+	public static boolean isAreaInTaintBiome(BlockPos pos, World world){
+		// check if they're in a taint biome
+		// 7x13x7 cube, centred on the entity
+		// at least 20 tainted blocks
+		BlockPos.Mutable mutable = new BlockPos.Mutable();
+		int counter = 0;
+		for(int x = -3; x < 7; x++)
+			for(int y = -6; y < 13; y++)
+				for(int z = -3; z < 7; z++){
+					mutable.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+					if(isTainted(world.getBlockState(mutable).getBlock()))
+						counter++;
+					if(counter >= 20)
+						return true;
+				}
+		return false;
+	}
+	
 	@SuppressWarnings({"rawtypes"})
 	private static final Map<EntityType, EntityType> entityTaintMap = new HashMap<>();
 
 	@SuppressWarnings({"rawtypes"})
 	public static EntityType taintedEntityOf(EntityType entity){
+		if(entity.getRegistryName() == null)
+			return null;
 		EntityType tainted;
 		if(entity == EntityType.BAT)
-			tainted = EntityType.Builder.<TaintedBatEntity>create(TaintedBatEntity::new, EntityClassification.MONSTER)
+			tainted = EntityType.Builder.create(TaintedBatEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if(entity == EntityType.EVOKER || entity == EntityType.ILLUSIONER || entity == EntityType.VINDICATOR || entity == EntityType.PILLAGER)
-			tainted = EntityType.Builder.<TaintedIllagerEntity>create(TaintedIllagerEntity::new, EntityClassification.MONSTER)
+			tainted = EntityType.Builder.create(TaintedIllagerEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if(entity == EntityType.CREEPER)
-			tainted = EntityType.Builder.<TaintedCreeperEntity>create(TaintedCreeperEntity::new, EntityClassification.MONSTER)
+			tainted = EntityType.Builder.create(TaintedCreeperEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if(entity == EntityType.SQUID)
-			tainted = EntityType.Builder.<TaintedSquidEntity>create(TaintedSquidEntity::new, EntityClassification.MONSTER)
+			tainted = EntityType.Builder.create(TaintedSquidEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if(entity == EntityType.GHAST)
-			tainted = EntityType.Builder.<TaintedGhastEntity>create(TaintedGhastEntity::new, EntityClassification.MONSTER)
+			tainted = EntityType.Builder.create(TaintedGhastEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if(entity == EntityType.CAVE_SPIDER)
-			tainted = EntityType.Builder.<TaintedCaveSpiderEntity>create(TaintedCaveSpiderEntity::new, EntityClassification.MONSTER)
+			tainted = EntityType.Builder.create(TaintedCaveSpiderEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if(entity == EntityType.SKELETON)
-			tainted = EntityType.Builder.<TaintedSkeletonEntity>create(TaintedSkeletonEntity::new, EntityClassification.MONSTER)
+			tainted = EntityType.Builder.create(TaintedSkeletonEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if (entity == EntityType.SLIME)
-			tainted = EntityType.Builder.<TaintedSlimeEntity>create(TaintedSlimeEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_"+entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedSlimeEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else
 			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());

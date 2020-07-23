@@ -1,13 +1,17 @@
 package net.arcanamod.event;
 
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
+import net.arcanamod.capabilities.TaintTrackable;
 import net.arcanamod.client.render.ArcanaParticles;
 import net.arcanamod.client.render.AspectParticleData;
 import net.arcanamod.client.render.NumberParticleData;
+import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.util.RayTraceUtils;
@@ -15,9 +19,11 @@ import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -25,6 +31,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
@@ -33,10 +40,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Mod.EventBusSubscriber
-public class PlayerTickHandler{
+public class EntityTickHandler{
 
 	@SubscribeEvent
-	public static void tick(TickEvent.PlayerTickEvent event){
+	public static void tickPlayer(TickEvent.PlayerTickEvent event){
 		PlayerEntity player = event.player;
 		
 		if(player instanceof ServerPlayerEntity && event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END){
@@ -95,6 +102,24 @@ public class PlayerTickHandler{
 							}
 					}
 				}
+			}
+		}
+	}
+	
+	@SubscribeEvent
+	public static void tickEntities(LivingEvent.LivingUpdateEvent event){
+		LivingEntity living = event.getEntityLiving();
+		TaintTrackable trackable = TaintTrackable.getFrom(living);
+		if(trackable != null && trackable.isTracking()){
+			if(Taint.isAreaInTaintBiome(living.getPosition(), living.world)){
+				trackable.setInTaintBiome(true);
+				trackable.addTimeInTaintBiome(1);
+				if(!Taint.isTainted(living.getType()) && trackable.getTimeInTaintBiome() > ArcanaConfig.TAINT_EFFECT_TIME.get())
+					living.addPotionEffect(new EffectInstance(ArcanaEffects.TAINTED.get(), 5 * 20));
+			}else{
+				trackable.setInTaintBiome(false);
+				trackable.setTimeInTaintBiome(0);
+				trackable.setTracking(false);
 			}
 		}
 	}

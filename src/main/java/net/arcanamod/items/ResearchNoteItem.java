@@ -3,7 +3,7 @@ package net.arcanamod.items;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;

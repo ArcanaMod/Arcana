@@ -1,7 +1,7 @@
 package net.arcanamod.network;
 
 import net.arcanamod.containers.AspectContainer;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;

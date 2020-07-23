@@ -5,7 +5,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.world.Node;
-import net.arcanamod.world.AuraChunk;
+import net.arcanamod.capabilities.AuraChunk;
 import net.arcanamod.world.NodeType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;

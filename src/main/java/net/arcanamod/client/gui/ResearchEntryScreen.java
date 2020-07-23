@@ -8,7 +8,7 @@ import net.arcanamod.network.Connection;
 import net.arcanamod.research.EntrySection;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;

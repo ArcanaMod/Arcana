@@ -1,7 +1,7 @@
 package net.arcanamod.event;
 
 import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;

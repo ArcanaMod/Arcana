@@ -3,7 +3,7 @@ package net.arcanamod.network;
 import net.arcanamod.Arcana;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;

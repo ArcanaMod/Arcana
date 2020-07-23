@@ -68,6 +68,15 @@ public class ArcanaConfig{
 		ALCHEMY_ASPECT_CARRY_FRACTION = COMMON_BUILDER
 				.comment("The fraction of aspects used in an alchemy recipe that should be assigned to the result through recipes.", "Setting this to 0.5, the default, for example, will cause an item crafted with 10 aer in alchemy to be given 5 aer from that recipe.")
 				.define("AlchemyAspectCarryFraction", .5);
+		TAINT_SPAWN_THRESHOLD = COMMON_BUILDER
+				.comment("The amount of flux in a chunk that is required to spawn a taint block. Does not affect taint spreading.", "60 by default.")
+				.define("TaintSpawnThreshold", 60);
+		TAINT_SPAWN_COST = COMMON_BUILDER
+				.comment("The amount of flux consumed spawning an initial taint block. Does not affect taint spreading.", "40 by default.")
+				.define("TaintSpawnCost", 40);
+		TAINT_EFFECT_TIME = COMMON_BUILDER
+				.comment("The time, in ticks, an entity needs to spend in a tainted area to get the tainted status effect.", "80 by default.")
+				.define("TaintEffectTime", 80);
 		COMMON_BUILDER.pop();
 		
 		CLIENT_BUILDER.push("Client");
@@ -119,6 +128,9 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> MAX_ALEMBIC_AIR; // 4
 	public static ConfigValue<Integer> MAX_ALEMBIC_STACK; // 3
 	public static ConfigValue<Double> ALCHEMY_ASPECT_CARRY_FRACTION; // .5
+	public static ConfigValue<Integer> TAINT_SPAWN_THRESHOLD; // 60
+	public static ConfigValue<Integer> TAINT_SPAWN_COST; // 40
+	public static ConfigValue<Integer> TAINT_EFFECT_TIME; // 80
 
 	
 	// Client

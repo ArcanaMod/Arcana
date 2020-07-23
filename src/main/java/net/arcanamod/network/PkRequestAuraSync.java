@@ -1,6 +1,6 @@
 package net.arcanamod.network;
 
-import net.arcanamod.world.AuraChunk;
+import net.arcanamod.capabilities.AuraChunk;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.chunk.Chunk;

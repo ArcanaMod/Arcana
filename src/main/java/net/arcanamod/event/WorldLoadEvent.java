@@ -12,7 +12,7 @@ import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkSyncResearch;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchLoader;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;

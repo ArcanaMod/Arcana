@@ -10,7 +10,7 @@ import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkModifyResearch;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.EntityArgument;

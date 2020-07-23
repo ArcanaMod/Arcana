@@ -1,8 +1,7 @@
 package net.arcanamod.network;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.Researcher;
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
