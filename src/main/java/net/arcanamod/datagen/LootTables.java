@@ -3,7 +3,7 @@ package net.arcanamod.datagen;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.util.annotations.GenLootTable;
+import net.arcanamod.util.annotations.GLT;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -23,8 +23,6 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
-
-import static net.arcanamod.blocks.ArcanaBlocks.*;
 
 public class LootTables extends LootTableProvider{
 	
@@ -46,19 +44,6 @@ public class LootTables extends LootTableProvider{
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-
-		addStandardTable(TAINTED_GRAVEL);
-		addStandardTable(TAINTED_PUMPKIN);
-		addStandardTable(TAINTED_CARVED_PUMPKIN);
-		addStandardTable(TAINTED_JACK_OLANTERN);
-		addStandardTable(TAINTED_SAND);
-		addStandardTable(TAINTED_SOIL);
-		addStandardTable(TAINTED_ROCK);
-		addStandardTable(TAINTED_ROCK_SLAB);
-		addStandardTable(TAINTED_CRUST);
-		addStandardTable(TAINTED_CRUST_SLAB);
-
-		addStandardTable(TAINTED_FLOWER);
 
 		Map<ResourceLocation, LootTable> tables = new HashMap<>();
 		for(Map.Entry<Block, LootTable.Builder> entry : lootTables.entrySet())
@@ -104,16 +89,16 @@ public class LootTables extends LootTableProvider{
 		Class<ArcanaBlocks> clazz = ArcanaBlocks.class;
 		Field[] fields = clazz.getFields();
 		for (Field field : fields){
-			// if field has DataGenerating annotation and l "@LootTable" value is true
-			if (field.isAnnotationPresent(GenLootTable.class)){
-					LOGGER.debug("Found field in ArcanaBlocks.class: name:" + field.getName() + " type:" + field.getType());
-					if (field.get(field.getType()) instanceof RegistryObject) {
-						// get RegistryObject from field and add standard table
-						RegistryObject<Block> reg = (RegistryObject<Block>) field.get(field.getType());
-						LOGGER.debug("RegistryObject: " + reg.get().toString());
-						addStandardTable(reg);
-					}
+			// if field has GLT annotation
+			if (field.isAnnotationPresent(GLT.class)){
+				LOGGER.debug("Found field in ArcanaBlocks.class: name:" + field.getName() + " type:" + field.getType());
+				if (field.get(field.getType()) instanceof RegistryObject) {
+					// get RegistryObject from field and add standard table
+					RegistryObject<Block> reg = (RegistryObject<Block>) field.get(field.getType());
+					LOGGER.debug("RegistryObject: " + reg.get().toString());
+					addStandardTable(reg);
 				}
+			}
 		}
 	}
 }

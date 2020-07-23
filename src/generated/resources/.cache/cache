@@ -312,6 +312,7 @@ e2699f2a7de6c7be9d17c94b12b8c364bbe610db assets\arcana\models\item\ice_crystal.j
 16fbcfe17dea10e29896122e339c26b2742ba2b0 assets\arcana\models\item\journey_crystal.json
 dae78e07d848ff75ec27730c9fbc5b1656ad9566 assets\arcana\models\item\life_crystal.json
 932d92f61ebdad9437c21bf9a0255bf81b9655f2 assets\arcana\models\item\light_crystal.json
+f3263ad4576b3890780777086fdb30e3444d32d7 assets\arcana\models\item\limestone_tile.json
 848f2361649bb65bb7cc3388bfe518986e3fcb30 assets\arcana\models\item\lust_crystal.json
 f870e28291810b722a7b9d470b1803cce7e04f3e assets\arcana\models\item\machine_crystal.json
 a989bd2ebdb1d19535aa00fc2d216c8518ba5006 assets\arcana\models\item\mana_crystal.json
@@ -334,6 +335,7 @@ af3db3a93fe33b48857bfd4b6cb5b867d93f3db3 assets\arcana\models\item\prideful_gold
 69e511a23922f3d2d3b08a5f88bc341d3b45208c assets\arcana\models\item\pridestone.json
 dec1300c2f680cb6a620048fd21d73e71592acaf assets\arcana\models\item\pridestone_bricks.json
 fce7da25548352f9494e8b0c59d18aa8312a078d assets\arcana\models\item\pridestone_small_bricks.json
+eb5579d768a6d4e14095115bd95daf8211b39ec7 assets\arcana\models\item\pridestone_tile.json
 31a3a577d62aa2097fef655ec3ab7b4830ad6aba assets\arcana\models\item\pride_crystal.json
 05b5210ab3aa6bcdf59d46d3141c62a371ed3894 assets\arcana\models\item\rough_limestone.json
 2f905d276daaf5dd1906d5e1e981a4f8812975db assets\arcana\models\item\seeds_crystal.json
@@ -347,6 +349,7 @@ e61a812e95a4be51598cf9389718bb2a2eba7df8 assets\arcana\models\item\slime_crystal
 441220f89e6981397d0d6e6d089fba59fb329984 assets\arcana\models\item\sloth_crystal.json
 4616fe61f6464e74da86ac19c7c92e70b0e488dc assets\arcana\models\item\smooth_limestone.json
 ec5235de0f0777d3c21041195dbe7a5709c2c90a assets\arcana\models\item\smooth_pridestone.json
+cbd9b2d43ad5f7f5e64e30d6e5df55971c59d996 assets\arcana\models\item\smooth_pridestone_tile.json
 c2bd0f53a4c9099385a63c8b0fb582338ed44ae4 assets\arcana\models\item\spirit_crystal.json
 481e458d3c055c2b20a25937b882c0d988fd5baf assets\arcana\models\item\strength_crystal.json
 31a3b08bf65e069d62bccef43569f35b88366214 assets\arcana\models\item\tainted_andesite.json

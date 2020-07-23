@@ -1,0 +1,23 @@
+package net.arcanamod.util.annotations;
+
+import java.lang.annotation.*;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+/**
+ * \@GenItemModel
+ */
+public @interface GIM {
+	Type type();
+
+	/**
+	 * source() as ResourceLocation.toString()
+	 */
+	String source() default "";
+
+	enum Type{
+		ITEM,
+		BLOCK_REF
+	}
+}
