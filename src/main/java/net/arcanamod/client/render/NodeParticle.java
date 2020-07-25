@@ -2,6 +2,7 @@ package net.arcanamod.client.render;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.world.ClientAuraView;
 import net.arcanamod.world.Node;
@@ -48,15 +49,20 @@ public class NodeParticle extends SpriteTexturedParticle{
 	public void renderParticle(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks){
 		if(node != null){
 			// get current and next aspect
-			Aspect current = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time) % node.getAspects().getHoldersAmount()).getContainedAspect();
-			Aspect next = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time + 1) % node.getAspects().getHoldersAmount()).getContainedAspect();
-			// get progress between them
-			float progress = (((int)world.getGameTime() + partialTicks) / (float)time) % 1;
-			// set colour to blended
-			int blended = blend(0xffffff, blend(next.getColorRange().get(3), current.getColorRange().get(3), progress), .3f);
-			particleRed = ((blended & 0xff0000) >> 16) / 255f;
-			particleGreen = ((blended & 0xff00) >> 8) / 255f;
-			particleBlue = (blended & 0xff) / 255f;
+			try{
+				Aspect current = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time) % node.getAspects().getHoldersAmount()).getContainedAspect();
+				Aspect next = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time + 1) % node.getAspects().getHoldersAmount()).getContainedAspect();
+				// get progress between them
+				float progress = (((int)world.getGameTime() + partialTicks) / (float)time) % 1;
+				// set colour to blended
+				int blended = blend(0xffffff, blend(next.getColorRange().get(3), current.getColorRange().get(3), progress), .3f);
+				particleRed = ((blended & 0xff0000) >> 16) / 255f;
+				particleGreen = ((blended & 0xff00) >> 8) / 255f;
+				particleBlue = (blended & 0xff) / 255f;
+			}
+			catch (ArithmeticException arithmeticException) {
+				Arcana.logger.error(arithmeticException + " at: ["+ posX+"@"+posY+"@"+posZ+"]");
+			}
 		}
 		super.renderParticle(buffer, renderInfo, partialTicks);
 	}
