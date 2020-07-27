@@ -126,6 +126,11 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	public boolean isVisShareable(){
 		return true;
 	}
+
+	@Override
+	public boolean isSharingWithResearchTable(){
+		return false;
+	}
 	
 	@Override
 	public boolean isSecure(){

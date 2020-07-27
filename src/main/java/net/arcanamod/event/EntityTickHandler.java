@@ -25,6 +25,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -75,7 +76,7 @@ public class EntityTickHandler{
 						if(jte.vis.getHolder(0).getContainedAspect() != Aspects.EMPTY){
 							double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw)));
 							double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw)));
-							world.addParticle(new AspectParticleData(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()), ArcanaParticles.ASPECT_PARTICLE.get()),
+							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 									pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 						}
 				}
@@ -89,15 +90,14 @@ public class EntityTickHandler{
 						if(vis != null)
 							for(int i = 0; i < vis.getHoldersAmount(); i++){
 								if(vis.getHolder(i).getContainedAspect() != Aspects.EMPTY){
-									double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw)));
-									double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw)));
-									world.addParticle(new AspectParticleData(AspectUtils.getAspectTextureLocation(vis.getHolder(i).getContainedAspect()), ArcanaParticles.ASPECT_PARTICLE.get()),
+									double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw+(i*16)-72)));
+									double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw+(i*16)-72)));
+									world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(vis.getHolder(i).getContainedAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 											pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 									int currVis = vis.getHolder(i).getCurrentVis();
 									int currVis_4th = Integer.parseInt(("" + currVis).substring(("" + currVis).length() - 1));
 									world.addParticle(new NumberParticleData(currVis_4th, ArcanaParticles.NUMBER_PARTICLE.get()),
 											pos.getX() + 0.5D + ((-srx) / 2) + 0.08f, pos.getY() + 0.71D, pos.getZ() + 0.5D + ((-crx) / 2) + 0.05f, 0, 0, 0);
-									// TODO: Needs more tweak.
 								}
 							}
 					}

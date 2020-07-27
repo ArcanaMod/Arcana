@@ -205,6 +205,11 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	}
 
 	@Override
+	public boolean isSharingWithResearchTable() {
+		return true;
+	}
+
+	@Override
 	public boolean isSecure() {
 		return false;
 	}
