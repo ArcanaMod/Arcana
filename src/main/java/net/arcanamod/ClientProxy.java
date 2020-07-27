@@ -19,6 +19,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
@@ -26,6 +28,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import java.util.ArrayList;
 
 import static net.arcanamod.Arcana.MODID;
 
@@ -74,7 +78,10 @@ public class ClientProxy extends CommonProxy{
 	}
 	
 	public void openResearchBookUI(ResourceLocation book){
-		Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book)));
+		if (!ResearchBooks.disabled.contains(book))
+			Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book)));
+		else
+			Minecraft.getInstance().player.sendMessage(new TranslationTextComponent("message.arcana.disabled").applyTextStyle(TextFormatting.RED));
 	}
 
 	@Override

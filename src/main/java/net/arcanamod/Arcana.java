@@ -129,8 +129,6 @@ public class Arcana{
 		proxy.preInit(event);
 
 		Connection.init();
-
-		FeatureGenerator.setupFeatureGeneration();
 		
 		// dispenser behaviour for wand conversion
 		DispenserBlock.registerDispenseBehavior(ArcanaItems.WAND.get(), new OptionalDispenseBehavior(){
@@ -214,6 +212,8 @@ public class Arcana{
 				return super.dispenseStack(source, stack);
 			}
 		});
+
+		FeatureGenerator.setupFeatureGeneration();
 	}
 	
 	private void setupClient(FMLClientSetupEvent event){
@@ -277,6 +277,8 @@ public class Arcana{
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_OAK_LEAVES.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_SPRUCE_LEAVES.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_WILLOW_LEAVES.get(), RenderType.getCutout());
+
+		RenderTypeLookup.setRenderLayer(ArcanaFluids.TAINT_FLUID_BLOCK.get(), RenderType.getTranslucent());
 
 		//Tile Entity Special Render
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);

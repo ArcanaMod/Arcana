@@ -2,6 +2,7 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
@@ -29,6 +30,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import static net.arcanamod.ArcanaSounds.playPhialshelfSlideSound;
 
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
@@ -95,29 +98,15 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_)
 	{
-		//if (worldIn.isRemote) return ActionResultType.SUCCESS;
-
 		TileEntity te = worldIn.getTileEntity(pos);
 		if(te instanceof AspectBookshelfTileEntity)
 		{
-			// TODO: Remove this d_remove«» segment if everything is done
-			/*d_remove«*/if (player.getHeldItem(handIn).getItem() == ArcanaItems.SCRIBING_TOOLS.get() && Arcana.debug)
-			{
-				if (!worldIn.isRemote)
-					player.sendMessage(new StringTextComponent("You write something on a bookshelf. Look at your logs.").applyTextStyles(TextFormatting.ITALIC, TextFormatting.LIGHT_PURPLE));
-				Arcana.logger.debug(((AspectBookshelfTileEntity)te).getItems().toString() + ", remote = "+worldIn.isRemote);
-				Arcana.logger.debug("[");
-				for (ItemStack stack : ((AspectBookshelfTileEntity)te).getItems()){
-					Arcana.logger.debug("(item: "+stack.getItem()+", count: "+stack.getCount()+", cap: "+ IAspectHandler.getFrom(stack)+"),");
-				}
-				Arcana.logger.debug("]" + ", remote = "+worldIn.isRemote);
-				return ActionResultType.SUCCESS;
-			}/*»;*/
-			else if (player.getHeldItem(handIn).getItem() instanceof PhialItem)
+			if (player.getHeldItem(handIn).getItem() instanceof PhialItem)
 			{
 				boolean isSuccess = ((AspectBookshelfTileEntity) te).addPhial(player.getHeldItem(handIn));
 				if (isSuccess)
 					player.getHeldItem(handIn).shrink(1);
+				playPhialshelfSlideSound(player);
 				return ActionResultType.SUCCESS;
 			}
 			else
@@ -127,7 +116,8 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 					ItemStack returned = ((AspectBookshelfTileEntity) te).removePhial();
 
 					if (returned!=ItemStack.EMPTY)
-						player.addItemStackToInventory(returned);
+						player.inventory.addItemStackToInventory(returned); //player.addItemStackToInventory gives sound and player.inventory.addItemStackToInventory not.
+					playPhialshelfSlideSound(player);
 					return ActionResultType.SUCCESS;
 				}
 			}

@@ -3,6 +3,7 @@ package net.arcanamod.blocks;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -38,8 +39,8 @@ public class DelegatingBlock extends Block{
 	protected final Block parentBlock;
 	private static final Method fillStateContainer = ObfuscationReflectionHelper.findMethod(Block.class, "func_206840_a", StateContainer.Builder.class);
 	
-	public DelegatingBlock(Block blockIn){
-		super(Properties.from(blockIn));
+	public DelegatingBlock(Block blockIn, @Nullable SoundType sound){
+		super(propertiesWithSound(Properties.from(blockIn),sound));
 		this.parentBlock = blockIn;
 		
 		// Refill the state container - Block does this too early
@@ -47,6 +48,10 @@ public class DelegatingBlock extends Block{
 		fillStateContainer(builder);
 		stateContainer = builder.create((__, properties) -> new BlockState(this, properties));
 		setDefaultState(stateContainer.getBaseState());
+	}
+
+	public DelegatingBlock(Block blockIn){
+		this(blockIn,null);
 	}
 	
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
@@ -334,5 +339,9 @@ public class DelegatingBlock extends Block{
 	
 	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos){
 		return parentBlock.getLightValue(state, world, pos);
+	}
+
+	private static Properties propertiesWithSound(Properties properties, @Nullable SoundType soundType){
+		if (soundType==null) return properties; else return properties.sound(soundType);
 	}
 }

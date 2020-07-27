@@ -32,6 +32,7 @@ public class ArcanaConfig{
 		GENERATE_OVERWORLD = COMMON_BUILDER
 				.comment("Enables ore generation in the overworld.", "If disabled, Arcana's ores will not generate.", "True by default.")
 				.define("OverworldGeneration", true);
+
 		AMBER_MIN_VEIN_SIZE = COMMON_BUILDER
 				.comment("The minimum size of amber ore veins.", "(Currently unused. 4 by default.)")
 				.define("MinAmberSize", 4);
@@ -47,6 +48,39 @@ public class ArcanaConfig{
 		AMBER_MAX_Y = COMMON_BUILDER
 				.comment("The maximum Y level that amber ore will generate at.", "50 by default.")
 				.define("MaxAmberY", 50);
+
+		SILVER_MIN_VEIN_SIZE = COMMON_BUILDER
+				.comment("The minimum size of amber ore veins.", "(Currently unused. 3 by default.)")
+				.define("MinAmberSize", 3);
+		SILVER_MAX_VEIN_SIZE = COMMON_BUILDER
+				.comment("The maximum size of amber ore veins.", "6 by default.")
+				.define("MaxAmberSize", 6);
+		SILVER_CHANCES_TO_SPAWN = COMMON_BUILDER
+				.comment("The maximum number of amber ore veins per chunk.", "3 by default.")
+				.define("AmberSpawnChance", 3);
+		SILVER_MIN_Y = COMMON_BUILDER
+				.comment("The minimum Y level that amber ore will generate at.", "1 by default")
+				.define("MinAmberY", 1);
+		SILVER_MAX_Y = COMMON_BUILDER
+				.comment("The maximum Y level that amber ore will generate at.", "30 by default.")
+				.define("MaxAmberY", 30);
+
+		CINNABAR_MIN_VEIN_SIZE = COMMON_BUILDER
+				.comment("The minimum size of amber ore veins.", "(Currently unused. 1 by default.)")
+				.define("MinAmberSize", 1);
+		CINNABAR_MAX_VEIN_SIZE = COMMON_BUILDER
+				.comment("The maximum size of amber ore veins.", "3 by default.")
+				.define("MaxAmberSize", 3);
+		CINNABAR_CHANCES_TO_SPAWN = COMMON_BUILDER
+				.comment("The maximum number of amber ore veins per chunk.", "4 by default.")
+				.define("AmberSpawnChance", 4);
+		CINNABAR_MIN_Y = COMMON_BUILDER
+				.comment("The minimum Y level that amber ore will generate at.", "40 by default")
+				.define("MinAmberY", 40);
+		CINNABAR_MAX_Y = COMMON_BUILDER
+				.comment("The maximum Y level that amber ore will generate at.", "80 by default.")
+				.define("MaxAmberY", 80);
+
 		NODE_CHANCE = COMMON_BUILDER
 				.comment("The chance of an aura node generating in a chunk, out of 100.", "1 by default.")
 				.define("NodeChance", 1);
@@ -116,11 +150,25 @@ public class ArcanaConfig{
 	public static ConfigValue<Boolean> NODE_RETROGEN; // false
 	public static ConfigValue<Boolean> VERBOSE; // false
 	public static ConfigValue<Boolean> GENERATE_OVERWORLD; // true
+
 	public static ConfigValue<Integer> AMBER_MIN_VEIN_SIZE; // 4
 	public static ConfigValue<Integer> AMBER_MAX_VEIN_SIZE; // 8
 	public static ConfigValue<Integer> AMBER_CHANCES_TO_SPAWN; // 3
 	public static ConfigValue<Integer> AMBER_MIN_Y; // 2
 	public static ConfigValue<Integer> AMBER_MAX_Y; // 50
+
+	public static ConfigValue<Integer> SILVER_MIN_VEIN_SIZE; // 3
+	public static ConfigValue<Integer> SILVER_MAX_VEIN_SIZE; // 6
+	public static ConfigValue<Integer> SILVER_CHANCES_TO_SPAWN; // 3
+	public static ConfigValue<Integer> SILVER_MIN_Y; // 1
+	public static ConfigValue<Integer> SILVER_MAX_Y; // 30
+
+	public static ConfigValue<Integer> CINNABAR_MIN_VEIN_SIZE; // 1
+	public static ConfigValue<Integer> CINNABAR_MAX_VEIN_SIZE; // 3
+	public static ConfigValue<Integer> CINNABAR_CHANCES_TO_SPAWN; // 4
+	public static ConfigValue<Integer> CINNABAR_MIN_Y; // 40
+	public static ConfigValue<Integer> CINNABAR_MAX_Y; // 80
+
 	public static ConfigValue<Integer> NODE_CHANCE; // 1
 	public static ConfigValue<Integer> SPECIAL_NODE_CHANCE; // 15
 	public static ConfigValue<Integer> MAX_ALEMBIC_ASPECT_DISTILL; // 2

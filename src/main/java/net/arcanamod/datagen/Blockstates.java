@@ -88,6 +88,7 @@ public class Blockstates extends BlockStateProvider{
 		simpleBlock(SILVER_BLOCK.get());
 		simpleBlock(SILVER_ORE.get());
 		simpleBlock(VOID_METAL_BLOCK.get());
+		//simpleBlock(CINNABAR_ORE.get());
 	}
 	
 	@Nonnull

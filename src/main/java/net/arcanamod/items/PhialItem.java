@@ -2,15 +2,19 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -23,6 +27,8 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+
+import static net.arcanamod.ArcanaSounds.playPhialCorkpopSound;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -63,6 +69,7 @@ public class PhialItem extends Item{
 					for(IAspectHolder holder : tileHandle.getHolders())
 						if(holder.getCurrentVis() > 0){
 							int min = Math.min(holder.getCurrentVis(), 8);
+							playPhialCorkpopSound(context.getPlayer());
 							Aspect aspect = holder.getContainedAspect();
 							// create a filled phial
 							ItemStack capedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
@@ -71,7 +78,7 @@ public class PhialItem extends Item{
 								capedItemStack.setTag(capedItemStack.getShareTag());
 							// take an empty phial and give the filled one
 							context.getItem().shrink(1);
-							context.getPlayer().addItemStackToInventory(capedItemStack);
+							context.getPlayer().inventory.addItemStackToInventory(capedItemStack); //player.addItemStackToInventory gives sound and player.inventory.addItemStackToInventory not.
 							holder.drain(new AspectStack(aspect, min), false);
 							return ActionResultType.SUCCESS;
 						}
@@ -80,6 +87,7 @@ public class PhialItem extends Item{
 					for(IAspectHolder holder : tileHandle.getHolders())
 						if((holder.getCapacity() - holder.getCurrentVis() > 0 || holder.isIgnoringFullness()) && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY)){
 							int inserted = holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
+							playPhialCorkpopSound(context.getPlayer());
 							if(inserted != 0){
 								ItemStack new_phial = new ItemStack(this, 1);
 								IAspectHolder old_holder = IAspectHandler.getFrom(context.getItem()).getHolder(0);
@@ -88,7 +96,7 @@ public class PhialItem extends Item{
 								new_phial.setTag(new_phial.getShareTag());
 								context.getPlayer().addItemStackToInventory(new_phial);
 							}else
-								context.getPlayer().addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get()));
+								context.getPlayer().inventory.addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get())); //player.addItemStackToInventory gives sound and player.inventory.addItemStackToInventory not.
 							context.getItem().shrink(1);
 							return ActionResultType.SUCCESS;
 						}
