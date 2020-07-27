@@ -32,9 +32,13 @@ public class ArcanaEntities{
 			.register("koala_entity", () -> EntityType.Builder.create(KoalaEntity::new, EntityClassification.CREATURE)
 				.size(0.6f, 0.6f).build(arcLoc("koala_entity").toString()));
 
-	public static final RegistryObject<EntityType<DairSpiritEntity>> DAIR_SPIRIT = ENTITY_TYPES
-			.register("dair_spirit_entity", () -> EntityType.Builder.create(DairSpiritEntity::new, EntityClassification.CREATURE)
+	public static final RegistryObject<EntityType<SpiritEntity>> DAIR_SPIRIT = ENTITY_TYPES
+			.register("dair_spirit_entity", () -> EntityType.Builder.create(SpiritEntity::new, EntityClassification.CREATURE)
 					.size(0.6f, 0.6f).build(arcLoc("dair_spirit_entity").toString()));
+
+	public static final RegistryObject<EntityType<SpiritEntity>> WILLOW_SPIRIT = ENTITY_TYPES
+			.register("willow_spirit_entity", () -> EntityType.Builder.create(SpiritEntity::new, EntityClassification.CREATURE)
+					.size(0.6f, 0.6f).build(arcLoc("willow_spirit_entity").toString()));
 
 	// Tainted
 
