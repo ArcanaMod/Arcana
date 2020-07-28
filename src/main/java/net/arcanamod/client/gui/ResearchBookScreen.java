@@ -195,83 +195,93 @@ public class ResearchBookScreen extends Screen{
 								else
 									arrows.drawRightArrow(entry.x() - 1, entry.y());
 							}
-						else if(xdiff < 2 || ydiff < 2){
-							// from entry's POV
-							if(!entry.meta().contains("reverse")){
-								arrows.drawVerticalLine(entry.x(), parent.y(), entry.y());
-								arrows.drawHorizontalLine(parent.y(), parent.x(), entry.x());
-								if(entry.x() > parent.x()){
-									if(entry.y() > parent.y()){
-										arrows.drawLdCurve(entry.x(), parent.y());
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+						else{
+							boolean unreversed = !entry.meta().contains("reverse");
+							if(xdiff < 2 || ydiff < 2){
+								// from entry's POV
+								if(unreversed){
+									arrows.drawVerticalLine(entry.x(), parent.y(), entry.y());
+									arrows.drawHorizontalLine(parent.y(), parent.x(), entry.x());
+									if(entry.x() > parent.x()){
+										if(entry.y() > parent.y()){
+											arrows.drawLdCurve(entry.x(), parent.y());
+											arrows.drawDownArrow(entry.x(), entry.y() - 1);
+										}else{
+											arrows.drawLuCurve(entry.x(), parent.y());
+											arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										}
 									}else{
-										arrows.drawLuCurve(entry.x(), parent.y());
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										if(entry.y() > parent.y()){
+											arrows.drawRdCurve(entry.x(), parent.y());
+											arrows.drawDownArrow(entry.x(), entry.y() - 1);
+										}else{
+											arrows.drawRuCurve(entry.x(), parent.y());
+											arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										}
 									}
+									// RDs and RUs are called at the same time (when LDs and LUs should)
 								}else{
-									if(entry.y() > parent.y()){
-										arrows.drawRdCurve(entry.x(), parent.y());
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+									arrows.drawHorizontalLine(entry.y(), entry.x(), parent.x());
+									arrows.drawVerticalLine(parent.x(), parent.y(), entry.y());
+									if(entry.x() > parent.x()){
+										if(entry.y() > parent.y()){
+											// ld
+											arrows.drawRuCurve(entry.x() - 1, parent.y() + 1);
+											arrows.drawRightArrow(entry.x() - 1, entry.y());
+										}else{
+											// lu
+											arrows.drawRdCurve(entry.x() - 1, parent.y() - 1);
+											arrows.drawRightArrow(entry.x() - 1, entry.y());
+										}
 									}else{
-										arrows.drawRuCurve(entry.x(), parent.y());
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										if(entry.y() > parent.y()){
+											// rd
+											arrows.drawLuCurve(entry.x() + 1, parent.y() + 1);
+											arrows.drawLeftArrow(entry.x() + 1, entry.y());
+										}else{
+											// ru
+											arrows.drawLdCurve(entry.x() + 1, parent.y() - 1);
+											arrows.drawLeftArrow(entry.x() + 1, entry.y());
+										}
 									}
 								}
 							}else{
-								arrows.drawHorizontalLine(entry.y(), entry.x(), parent.x());
-								arrows.drawVerticalLine(parent.x(), parent.y(), entry.y());
-								if(entry.x() > parent.x()){
-									if(entry.y() > parent.y())
-										arrows.drawRuCurve(parent.x(), entry.y());
-									else
-										arrows.drawRdCurve(parent.x(), entry.y());
-									arrows.drawRightArrow(entry.x() - 1, entry.y());
-								}else{
-									if(entry.y() > parent.y()){
-										arrows.drawRdCurve(entry.x(), parent.y());
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								if(unreversed){
+									arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
+									arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
+									if(entry.x() > parent.x()){
+										if(entry.y() > parent.y()){
+											arrows.drawLargeLdCurve(entry.x() - 1, parent.y());
+											arrows.drawDownArrow(entry.x(), entry.y() - 1);
+										}else{
+											arrows.drawLargeLuCurve(entry.x() - 1, parent.y() - 1);
+											arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										}
 									}else{
-										arrows.drawRuCurve(entry.x(), parent.y());
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
-									}
-								}
-							}
-						}else{
-							if(!entry.meta().contains("reverse")){
-								arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
-								arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
-								if(entry.x() > parent.x()){
-									if(entry.y() > parent.y()){
-										arrows.drawLargeLdCurve(entry.x() - 1, parent.y());
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
-									}else{
-										arrows.drawLargeLuCurve(entry.x() - 1, parent.y() - 1);
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										if(entry.y() > parent.y()){
+											arrows.drawLargeRdCurve(entry.x(), parent.y());
+											arrows.drawDownArrow(entry.x(), entry.y() - 1);
+										}else{
+											arrows.drawLargeRuCurve(entry.x(), parent.y() - 1);
+											arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										}
 									}
 								}else{
-									if(entry.y() > parent.y()){
-										arrows.drawLargeRdCurve(entry.x(), parent.y());
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+									arrows.drawHorizontalLineMinus1(entry.y(), entry.x(), parent.x());
+									arrows.drawVerticalLineMinus1(parent.x(), parent.y(), entry.y());
+									if(entry.x() > parent.x()){
+										if(entry.y() > parent.y())
+											arrows.drawLargeRuCurve(parent.x(), entry.y() - 1);
+										else
+											arrows.drawLargeRdCurve(parent.x(), entry.y() - 1);
+										arrows.drawRightArrow(entry.x() - 1, entry.y());
 									}else{
-										arrows.drawLargeRuCurve(entry.x(), parent.y() - 1);
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										if(entry.y() > parent.y())
+											arrows.drawLargeLuCurve(entry.x() + 1, entry.y() - 1);
+										else
+											arrows.drawLargeLdCurve(entry.x() + 1, entry.y());
+										arrows.drawLeftArrow(entry.x() + 1, entry.y());
 									}
-								}
-							}else{
-								arrows.drawHorizontalLineMinus1(entry.y(), entry.x(), parent.x());
-								arrows.drawVerticalLineMinus1(parent.x(), parent.y(), entry.y());
-								if(entry.x() > parent.x()){
-									if(entry.y() > parent.y())
-										arrows.drawLargeRuCurve(parent.x(), entry.y() - 1);
-									else
-										arrows.drawLargeRdCurve(parent.x(), entry.y() - 1);
-									arrows.drawRightArrow(entry.x() - 1, entry.y());
-								}else{
-									if(entry.y() > parent.y())
-										arrows.drawLargeLuCurve(entry.x() + 1, entry.y() - 1);
-									else
-										arrows.drawLargeLdCurve(entry.x() + 1, entry.y());
-									arrows.drawLeftArrow(entry.x() + 1, entry.y());
 								}
 							}
 						}

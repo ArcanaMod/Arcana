@@ -26,6 +26,13 @@
       "bg": "arcana:research/research_bg1_b.png"
     },
     {
+      "key": "arcana:fundamentals",
+      "in": "arcana:arcanum",
+      "icon": "arcana:research/haha_funny_debug_texture_go_missing_image.png",
+      "name": "research.arcana.category.fundamentals",
+      "bg": "arcana:research/research_bg1_b.png"
+    },
+    {
       "key": "arcana:alchemy",
       "in": "arcana:arcanum",
       "icon": "arcana:item/crucible_item.png",

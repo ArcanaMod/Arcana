@@ -258,39 +258,6 @@
       ]
     },
     {
-      "key": "arcana:flux",
-      "name": "research.arcana.flux",
-      "desc": "research.arcana.flux.desc",
-      "icons": [
-        "arcana:aspect_taint"
-      ],
-      "category": "arcana:basics",
-      "parents": [],
-      "meta": [
-        "root",
-        "yellow_base"
-      ],
-      "x": -7,
-      "y": 1,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.flux.flux_info",
-          "requirements": [
-            "arcana:tainted_flower"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.flux.taint_info"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.flux.warp_info"
-        }
-      ]
-    },
-    {
       "key": "arcana:root",
       "name": "research.arcana.root",
       "desc": "research.arcana.root.desc",

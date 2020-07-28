@@ -659,7 +659,8 @@
     "requirement.puzzle.get_note.2": "Requires scribing tools and paper",
     "requirement.tag.accepts_any": "Any %s",
 
-    "research.arcana.category.basics": "Fundamentals",
+    "research.arcana.category.basics": "Basics",
+    "research.arcana.category.fundamentals": "FUNdamentals",
     "research.arcana.category.artifice": "Artifice",
     "research.arcana.category.alchemy": "Alchemy",
     "research.arcana.category.infusion": "Infusion",

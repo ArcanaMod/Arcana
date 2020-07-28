@@ -94,6 +94,7 @@ Meta tags are case sensitive.
  - base colours; `"purple_base"`, `"yellow_base"`: changes the colour used for this
   entry's base. This is white by default, and there isn't a corresponding meta tag for
   white.
+ - `"reverse"`: display arrows leading into this entry on the other side.
 
 ##### Sections
 
