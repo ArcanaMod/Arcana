@@ -133,6 +133,7 @@
 
 
     "_comment": "Arcana aspects",
+    "aspect.any": "Any",
     "aspect.air": "Aer",
     "aspect.air.desc": "Air",
     "aspect.armour": "Tutamen",

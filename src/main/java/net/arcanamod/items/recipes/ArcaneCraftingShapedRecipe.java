@@ -1,4 +1,4 @@
-package net.arcanamod.util.recipes;
+package net.arcanamod.items.recipes;
 
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.Maps;
@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import com.google.gson.*;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
-import net.arcanamod.util.inventories.AspectCraftingInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;

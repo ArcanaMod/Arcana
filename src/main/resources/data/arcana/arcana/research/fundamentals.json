@@ -281,7 +281,8 @@
         "arcana:research_expertise"
       ],
       "meta": [
-        "round_base"
+        "round_base",
+        "research"
       ],
       "x": -1,
       "y": 2,
@@ -308,7 +309,8 @@
       ],
       "meta": [
         "hexagon_base",
-        "purple_base"
+        "purple_base",
+        "research"
       ],
       "x": 0,
       "y": 3,

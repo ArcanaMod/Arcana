@@ -354,6 +354,10 @@
         {
           "type": "string",
           "content": "research.arcana.collecting_aspects.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/secure_jar"
         }
       ]
     },

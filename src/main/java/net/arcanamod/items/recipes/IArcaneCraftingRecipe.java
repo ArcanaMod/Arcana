@@ -1,9 +1,8 @@
-package net.arcanamod.util.recipes;
+package net.arcanamod.items.recipes;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.UndecidedAspectStack;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.util.inventories.AspectCraftingInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeType;

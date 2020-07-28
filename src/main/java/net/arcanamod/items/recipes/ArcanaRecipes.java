@@ -1,7 +1,5 @@
-package net.arcanamod.util.recipes;
+package net.arcanamod.items.recipes;
 
-import net.arcanamod.items.recipes.AlchemyRecipe;
-import net.arcanamod.items.recipes.WandsRecipe;
 import net.minecraft.item.crafting.*;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;

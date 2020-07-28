@@ -20,7 +20,7 @@ import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.Requirement;
 import net.arcanamod.research.ResearchLoader;
 import net.arcanamod.capabilities.ResearcherCapability;
-import net.arcanamod.util.recipes.ArcanaRecipes;
+import net.arcanamod.items.recipes.ArcanaRecipes;
 import net.arcanamod.world.NodeType;
 import net.arcanamod.capabilities.AuraChunkCapability;
 import net.arcanamod.worldgen.ArcanaFeatures;

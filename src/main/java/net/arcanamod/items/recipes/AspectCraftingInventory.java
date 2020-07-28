@@ -1,4 +1,4 @@
-package net.arcanamod.util.inventories;
+package net.arcanamod.items.recipes;
 
 import net.arcanamod.containers.slots.WandSlot;
 import net.minecraft.inventory.CraftingInventory;

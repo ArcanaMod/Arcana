@@ -54,14 +54,14 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 			CompoundNBT compound = te.note().getTag();
 			if(compound != null){
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
-				if (puzzle!=null) {
-					PuzzleRenderer.get(puzzle).render(puzzle, ((ResearchTableContainer) aspectContainer).puzzleSlots, ((ResearchTableContainer) aspectContainer).puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
+				if (puzzle != null){
+					PuzzleRenderer.get(puzzle).render(puzzle, aspectContainer.puzzleSlots, aspectContainer.puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
 					if (te.ink().isEmpty()) {
 						// tell them "no u cant do research without a pen"
-						this.minecraft.getTextureManager().bindTexture(this.NO_INK);
+						minecraft.getTextureManager().bindTexture(NO_INK);
 						renderModalRectWithCustomSizedTexture(guiLeft + 137, guiTop + 31, 0, 0, 223, 143, 223, 143);
 						String noInk = I18n.format("researchTable.ink_needed");
-						font.drawString(noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2, -1);
+						font.drawString(noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2f, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2f, -1);
 					}
 				}
 			}
