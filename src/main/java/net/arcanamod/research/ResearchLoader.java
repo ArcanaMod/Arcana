@@ -1,6 +1,7 @@
 package net.arcanamod.research;
 
 import com.google.gson.*;
+import net.arcanamod.research.ResearchEntry.Icon;
 import net.arcanamod.research.impls.ItemRequirement;
 import net.arcanamod.research.impls.ItemTagRequirement;
 import net.minecraft.client.resources.JsonReloadListener;
@@ -90,7 +91,7 @@ public class ResearchLoader extends JsonReloadListener{
 				ResourceLocation key = new ResourceLocation(entry.get("key").getAsString());
 				String name = entry.get("name").getAsString();
 				String desc = entry.has("desc") ? entry.get("desc").getAsString() : "";
-				List<Item> icons = idsToItems(entry.getAsJsonArray("icons"), rl);
+				List<Icon> icons = idsToIcons(entry.getAsJsonArray("icons"), rl);
 				ResearchCategory category = ResearchBooks.getCategory(new ResourceLocation(entry.get("category").getAsString()));
 				int x = entry.get("x").getAsInt();
 				int y = entry.get("y").getAsInt();
@@ -153,18 +154,13 @@ public class ResearchLoader extends JsonReloadListener{
 		}
 	}
 	
-	private static List<Item> idsToItems(JsonArray itemIds, ResourceLocation rl){
-		List<Item> ret = new ArrayList<>();
+	private static List<Icon> idsToIcons(JsonArray itemIds, ResourceLocation rl){
+		List<Icon> ret = new ArrayList<>();
 		for(JsonElement element : itemIds){
-			ResourceLocation id = new ResourceLocation(element.getAsString());
-			Item icon = ForgeRegistries.ITEMS.getValue(id);
-			if(icon == null)
-				LOGGER.error("Invalid item \"" + id + "\" found in " + rl + "!");
-			else
-				ret.add(icon);
+			ret.add(Icon.fromString(element.getAsString()));
 		}
 		if(ret.isEmpty())
-			LOGGER.error("An entry has 0 valid icons in " + rl + "! Trying to open its category will crash the game!");
+			LOGGER.error("An entry has 0 icons in " + rl + "!");
 		return ret;
 	}
 	

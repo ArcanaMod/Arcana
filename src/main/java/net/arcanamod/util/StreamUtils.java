@@ -10,7 +10,6 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 public final class StreamUtils{
 	
@@ -18,9 +17,9 @@ public final class StreamUtils{
 		return list.stream().filter(filterType::isInstance).map(filterType::cast).map(applicator);
 	}
 	
-	public static <X, Z> List<X> partialReduce(List<X> in, Function<? super X, ? extends Z> categoriser, BinaryOperator<X> merger){
+	public static <X, Z> List<X> partialReduce(List<X> in, Function<? super X, ? extends Z> categorizer, BinaryOperator<X> merger){
 		return in.stream()
-				.collect(Collectors.groupingBy(categoriser)).values().stream()
+				.collect(Collectors.groupingBy(categorizer)).values().stream()
 				.map(elements -> elements.stream().reduce(merger))
 				.filter(Optional::isPresent)
 				.map(Optional::get)

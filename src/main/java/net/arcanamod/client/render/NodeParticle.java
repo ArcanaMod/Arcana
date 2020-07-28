@@ -47,7 +47,7 @@ public class NodeParticle extends SpriteTexturedParticle{
 	}
 	
 	public void renderParticle(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks){
-		if(node != null){
+		if(node != null && time > 0 && node.getAspects().getHoldersAmount() > 0){
 			// get current and next aspect
 			try{
 				Aspect current = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time) % node.getAspects().getHoldersAmount()).getContainedAspect();

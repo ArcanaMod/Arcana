@@ -7,7 +7,10 @@ import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.network.Connection;
-import net.arcanamod.research.*;
+import net.arcanamod.research.ResearchBook;
+import net.arcanamod.research.ResearchBooks;
+import net.arcanamod.research.ResearchCategory;
+import net.arcanamod.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -18,7 +21,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -48,7 +50,7 @@ public class ResearchBookScreen extends Screen{
 	public static final ResourceLocation ARROWS_AND_BASES = new ResourceLocation(Arcana.MODID, "textures/gui/research/research_bases.png");
 	
 	private static final int MAX_PAN = 512;
-	private static final int ZOOM_MULT = 2;
+	private static final int ZOOM_MULTIPLIER = 2;
 	
 	// drawing helper
 	private final Arrows arrows = new Arrows();
@@ -56,7 +58,7 @@ public class ResearchBookScreen extends Screen{
 	static float xPan = 0;
 	static float yPan = 0;
 	static float zoom = 0.7f;
-	static boolean show_zoom = false;
+	static boolean showZoom = false;
 	
 	public ResearchBookScreen(ResearchBook book){
 		super(new StringTextComponent(""));
@@ -64,11 +66,14 @@ public class ResearchBookScreen extends Screen{
 		texture = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + SUFFIX_RESIZABLE);
 		PlayerEntity player = Minecraft.getInstance().player;
 		categories = book.getCategories().stream().filter(category -> {
+			// has no requirement
 			if(category.requirement() == null)
 				return true;
+			// has an invalid requirement
 			ResearchEntry entry = ResearchBooks.getEntry(category.requirement());
 			if(entry == null)
 				return false;
+			// has a valid requirement - check if unlocked
 			return Researcher.getFrom(player).entryStage(entry) >= entry.sections().size();
 		}).collect(Collectors.toList());
 	}
@@ -87,7 +92,7 @@ public class ResearchBookScreen extends Screen{
 		
 		// draw stuff
 		// 224x196 viewing area
-		int scale = (int)getMinecraft().getMainWindow().getGuiScaleFactor();//new ScaledResolution(mc).getScaleFactor();
+		int scale = (int)getMinecraft().getMainWindow().getGuiScaleFactor();
 		int x = (width - getFrameWidth()) / 2 + 16, y = (height - getFrameHeight()) / 2 + 17;
 		int visibleWidth = getFrameWidth() - 32, visibleHeight = getFrameHeight() - 34;
 		GL11.glScissor(x * scale, y * scale, visibleWidth * scale, visibleHeight * scale);
@@ -144,14 +149,27 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.color4f(mult, mult, mult, 1f);
 				//noinspection IntegerDivisionInFloatingPointContext
 				drawTexturedModalRect((int)((entry.x() * 30 + getXOffset() + 2)), (int)((entry.y() * 30 + getYOffset() + 2)), base % 4 * 26, base / 4 * 26, 26, 26);
-				// render item
-				itemRenderer.zLevel = 50;
-				RenderSystem.enableDepthTest();
-				RenderHelper.enableStandardItemLighting();
-				RenderSystem.disableLighting();
-				itemRenderer.renderItemAndEffectIntoGUI(new ItemStack(entry.icons().get((getMinecraft().player.ticksExisted / 30) % entry.icons().size())), (int)(entry.x() * 30 + getXOffset() + 7), (int)(entry.y() * 30 + getYOffset() + 7));
-				RenderSystem.disableLighting();
-				RenderSystem.enableRescaleNormal();
+				// render texture
+				if(entry.icons().size() > 0){
+					ResearchEntry.Icon icon = entry.icons().get((getMinecraft().player.ticksExisted / 30) % entry.icons().size());
+					// first, check if its an item
+					int x = (int)(entry.x() * 30 + getXOffset() + 7);
+					int y = (int)(entry.y() * 30 + getYOffset() + 7);
+					if(icon.getStack() != null && !icon.getStack().isEmpty()){
+						itemRenderer.zLevel = 50;
+						RenderSystem.enableDepthTest();
+						RenderHelper.enableStandardItemLighting();
+						RenderSystem.disableLighting();
+						itemRenderer.renderItemAndEffectIntoGUI(icon.getStack(), x, y);
+						RenderSystem.disableLighting();
+						RenderSystem.enableRescaleNormal();
+					}else{
+						// otherwise, check for a texture
+						getMinecraft().getTextureManager().bindTexture(icon.getResourceLocation());
+						RenderSystem.enableDepthTest();
+						drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+					}
+				}
 				
 				// for every visible parent
 				// draw an arrow & arrowhead
@@ -351,7 +369,7 @@ public class ResearchBookScreen extends Screen{
 		drawTexturedModalRect(x, (y + (height / 2)) - 35, 140, 35, 17, 70);
 		// draw right
 		drawTexturedModalRect(x + width - 17, (y + (height / 2)) - 35, 157, 35, 17, 70);
-		if(show_zoom){
+		if(showZoom){
 			MatrixStack textStack = new MatrixStack();
 			textStack.translate(0.0D, 0.0D, 299);
 			Matrix4f textLocation = textStack.getLast().getMatrix();
@@ -379,8 +397,8 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY){
-		xPan += (deltaX * ZOOM_MULT) / zoom;
-		yPan -= (deltaY * ZOOM_MULT) / zoom;
+		xPan += (deltaX * ZOOM_MULTIPLIER) / zoom;
+		yPan -= (deltaY * ZOOM_MULTIPLIER) / zoom;
 		xPan = clamp(xPan, -MAX_PAN, MAX_PAN);
 		yPan = clamp(yPan, -MAX_PAN, MAX_PAN);
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
@@ -427,7 +445,7 @@ public class ResearchBookScreen extends Screen{
 			}
 			if(keyCode == 292){
 				// F3 pressed
-				show_zoom = !show_zoom;
+				showZoom = !showZoom;
 			}
 			return false;
 		}
