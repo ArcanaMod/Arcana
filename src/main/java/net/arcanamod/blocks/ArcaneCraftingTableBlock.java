@@ -1,8 +1,8 @@
 package net.arcanamod.blocks;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.ArcaneCraftingTableTileEntity;
-import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -17,9 +17,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 
-import static net.arcanamod.blocks.ResearchTableBlock.EnumSide.RIGHT;
-
+@SuppressWarnings("deprecation")
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ArcaneCraftingTableBlock extends WaterloggableBlock {
 	public ArcaneCraftingTableBlock(Properties properties) {
 		super(properties);
@@ -39,10 +41,9 @@ public class ArcaneCraftingTableBlock extends WaterloggableBlock {
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rayTraceResult) {
 		if(world.isRemote)
-			return ActionResultType.PASS;
+			return ActionResultType.SUCCESS;
 		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof ArcaneCraftingTableTileEntity)
-		{
+		if(te instanceof ArcaneCraftingTableTileEntity){
 			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, buf -> buf.writeBlockPos(pos));
 			return ActionResultType.SUCCESS;
 		}
