@@ -9,12 +9,14 @@ import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.util.GogglePriority;
+import net.arcanamod.world.AuraView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -98,6 +100,24 @@ public final class Huds{
 							UiUtil.renderAspectStack(stack1, x, y);
 					}
 				}
+			}
+			GogglePriority priority = GogglePriority.getClientGogglePriority();
+			if(priority == GogglePriority.SHOW_ASPECTS){
+				AuraView view = AuraView.SIDED_FACTORY.apply(Minecraft.getInstance().world);
+				Vec3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
+				view.raycast(position, reach, player).ifPresent(node -> {
+					List<IAspectHolder> holders = node.getAspects().getHolders();
+					int baseX = event.getWindow().getScaledWidth() / 2 - 8;
+					int baseY = event.getWindow().getScaledHeight() / 2 - 8;
+					for(int i = 0, size = holders.size(); i < size; i++){
+						IAspectHolder holder = holders.get(i);
+						AspectStack stack = holder.getContainedAspectStack();
+						int x = (int)(baseX + Math.sin((i / (float)size * 2) * Math.PI) * (30 + 1 / MathHelper.fastInvSqrt(size)));
+						int y = (int)(baseY + Math.cos((i / (float)size * 2) * Math.PI) * (30 + 1 / MathHelper.fastInvSqrt(size)));
+						if(!stack.isEmpty())
+							UiUtil.renderAspectStack(stack, x, y);
+					}
+				});
 			}
 		}
 	}

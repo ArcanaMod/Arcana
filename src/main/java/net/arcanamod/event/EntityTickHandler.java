@@ -66,7 +66,8 @@ public class EntityTickHandler{
 		if(player instanceof ClientPlayerEntity && event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END){
 			ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity)player;
 			World world = clientPlayerEntity.world;
-			BlockPos pos = RayTraceUtils.getTargetBlockPos(clientPlayerEntity, world, 6);
+			double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
+			BlockPos pos = RayTraceUtils.getTargetBlockPos(clientPlayerEntity, world, (int)reach);
 			TileEntity te = world.getTileEntity(pos);
 			if(te instanceof JarTileEntity){
 				if(world.isRemote()){
