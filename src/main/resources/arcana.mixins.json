@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "net.arcanamod.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "arcana.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}
