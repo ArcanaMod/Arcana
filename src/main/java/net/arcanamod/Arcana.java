@@ -11,6 +11,7 @@ import net.arcanamod.client.render.*;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.event.LootTableEvent;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
