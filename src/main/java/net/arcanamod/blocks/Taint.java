@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
@@ -164,21 +165,25 @@ public class Taint{
 		}
 	}
 	
-	public static boolean isAreaInTaintBiome(BlockPos pos, World world){
+	public static boolean isAreaInTaintBiome(BlockPos pos, IBlockReader world){
 		// check if they're in a taint biome
 		// 7x13x7 cube, centred on the entity
 		// at least 20 tainted blocks
 		BlockPos.Mutable mutable = new BlockPos.Mutable();
 		int counter = 0;
-		for(int x = -3; x < 7; x++)
-			for(int y = -6; y < 13; y++)
-				for(int z = -3; z < 7; z++){
-					mutable.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
-					if(isTainted(world.getBlockState(mutable).getBlock()))
-						counter++;
-					if(counter >= 20)
-						return true;
-				}
+			for(int x = -3; x < 7; x++)
+				for(int y = -6; y < 13; y++)
+					for(int z = -3; z < 7; z++){
+						mutable.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
+						try{
+							if(isTainted(world.getBlockState(mutable).getBlock()))
+								counter++;
+						}catch(ArrayIndexOutOfBoundsException ignored){
+							// ChunkRenderCache throws this when you try to check somewhere "out-of-bounds".
+						}
+						if(counter >= 20)
+							return true;
+					}
 		return false;
 	}
 	
