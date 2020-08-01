@@ -79,6 +79,7 @@ public abstract class NodeType{
 				AspectCell cell = new AspectCell();
 				cell.setCapacity(-1);
 				cell.insert(new AspectStack(aspect, amount), false);
+				cell.setWhitelist(aspect);
 				battery.createCell(cell);
 			}
 		}
@@ -92,6 +93,7 @@ public abstract class NodeType{
 				AspectCell cell = new AspectCell();
 				cell.insert(new AspectStack(aspect, amount), false);
 				cell.setCapacity(-1);
+				cell.setWhitelist(aspect);
 				battery.createCell(cell);
 			}
 		}
@@ -184,7 +186,9 @@ public abstract class NodeType{
 			// Add 5-15 taint
 			// This is only accessible using /arcana-nodes
 			AspectCell cell = new AspectCell();
-			cell.insert(new AspectStack(Aspects.TAINT, 5 + random.nextInt(11)), false);
+			Aspect aspect = Aspects.TAINT;
+			cell.insert(new AspectStack(aspect, 5 + random.nextInt(11)), false);
+			cell.setWhitelist(aspect);
 			handler.createCell(cell);
 			return handler;
 		}

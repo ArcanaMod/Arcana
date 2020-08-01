@@ -140,7 +140,11 @@ public class AspectCell implements IAspectHolder {
 	public void setIgnoreFullness(boolean ignoreFullness) {
 		this.ignoreFullness = ignoreFullness;
 	}
-
+	
+	public void setWhitelist(Aspect whitelist){
+		this.optionalWhitelist = whitelist;
+	}
+	
 	@Override
 	public String toString() {
 		return "VisBattery{" +

@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "BiomeColorMixin"
+    "BiomeColorMixin",
+    "BipedModelMixin"
   ],
   "injectors": {
     "defaultRequire": 1

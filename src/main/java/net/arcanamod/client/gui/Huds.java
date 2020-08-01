@@ -116,6 +116,9 @@ public final class Huds{
 						int y = (int)(baseY + Math.cos((i / (float)size * 2) * Math.PI) * (30 + 1 / MathHelper.fastInvSqrt(size)));
 						if(!stack.isEmpty())
 							UiUtil.renderAspectStack(stack, x, y);
+						else
+							// the holder is empty, so instead defer to the whitelisted aspect
+							UiUtil.renderAspectStack(holder.getContainedAspect(), 0, x, y);
 					}
 				});
 			}
