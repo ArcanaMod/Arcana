@@ -57,14 +57,23 @@ public final class VisUtils{
 	 * @param to
 	 * 		The aspect handler to insert into.
 	 */
-	public static void moveAspects(IAspectHolder from, IAspectHandler to){
+	public static void moveAspects(IAspectHolder from, IAspectHandler to, int max){
+		int transferred = 0;
 		if(from.getCurrentVis() > 0)
-			for(IAspectHolder toHolder : to.getHolders())
+			for(IAspectHolder toHolder : to.getHolders()){
+				if(transferred >= max && max != -1)
+					break;
 				if(toHolder.getContainedAspect() == from.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
 					if(toHolder.getCapacity() > toHolder.getCurrentVis()){
-						int toInsert = Math.min(from.getCurrentVis(), toHolder.getCapacity() - toHolder.getCurrentVis());
-						from.drain(new AspectStack(from.getContainedAspect(), toInsert), false);
-						toHolder.insert(new AspectStack(from.getContainedAspect(), toInsert), false);
+						int toInsert = from.getCurrentVis();
+						if(!toHolder.isIgnoringFullness())
+							toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getCurrentVis());
+						if(max != -1)
+							toInsert = Math.min(toInsert, max - transferred);
+						AspectStack stack = new AspectStack(from.getContainedAspect(), toInsert);
+						transferred += from.drain(stack, false);
+						toHolder.insert(stack, false);
 					}
+			}
 	}
 }

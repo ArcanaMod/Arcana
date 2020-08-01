@@ -7,9 +7,13 @@ import net.arcanamod.blocks.CrucibleBlock;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
+import net.arcanamod.util.VisUtils;
+import net.arcanamod.world.AuraView;
+import net.arcanamod.world.Node;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -26,6 +30,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -81,13 +87,43 @@ public class WandItem extends Item{
 		return ActionResultType.PASS;
 	}
 	
-	// Click anywhere
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		// TODO: Get aspects from nodes.
-		return ActionResult.resultPass(playerIn.getHeldItem(handIn));
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+		AuraView view = AuraView.SIDED_FACTORY.apply(world);
+		ItemStack itemstack = player.getHeldItem(hand);
+		AtomicReference<ActionResult<ItemStack>> ret = new AtomicReference<>(ActionResult.resultConsume(itemstack));
+		view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player).ifPresent(node -> {
+			player.setActiveHand(hand);
+			ret.set(ActionResult.resultConsume(itemstack));
+		});
+		return ret.get();
 	}
-
+	
+	public int getUseDuration(ItemStack stack) {
+		return 72000;
+	}
+	
+	public void onUsingTick(ItemStack stack, LivingEntity player, int count){
+		World world = player.world;
+		AuraView view = AuraView.SIDED_FACTORY.apply(world);
+		Optional<Node> node = view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player);
+		if(node.isPresent()){
+			final int ASPECT_DRAIN_AMOUNT = 2;
+			final int ASPECT_DRAIN_WAIT = 3;
+			// drain
+			IAspectHandler wandHolder = IAspectHandler.getFrom(stack);
+			// TODO: non-destructive node draining?
+			// with research, of course
+			if(wandHolder != null)
+				if(world.getGameTime() % (ASPECT_DRAIN_WAIT + 1 + world.rand.nextInt(3)) == 0){
+					IAspectHandler aspects = node.get().getAspects();
+					IAspectHolder holder = aspects.getHolder(world.rand.nextInt(aspects.getHoldersAmount()));
+					VisUtils.moveAspects(holder, wandHolder, ASPECT_DRAIN_AMOUNT + world.rand.nextInt(1));
+				}
+		}else
+			player.stopActiveHand();
+	}
+	
 	public ITextComponent getDisplayName(ItemStack stack){
 		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey()));
 	}
