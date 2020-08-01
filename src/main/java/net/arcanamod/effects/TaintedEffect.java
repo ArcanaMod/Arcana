@@ -18,7 +18,7 @@ public class TaintedEffect extends Effect{
 	@Override
 	public void performEffect(LivingEntity entity, int amplifier){
 		if(!Taint.isTainted(entity.getType())){
-			entity.attackEntityFrom(DamageSource.MAGIC, 1.0F + amplifier);
+			entity.attackEntityFrom(TaintDamageSource.TAINT, 1.0F + amplifier);
 			if(entity.getHealth() <= (entity.getMaxHealth() / 4f) && entity.world.getDifficulty() != Difficulty.PEACEFUL)
 				changeEntityToTainted(entity);
 		}
