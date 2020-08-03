@@ -8,6 +8,7 @@ import net.arcanamod.aspects.AspectUtils;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
@@ -24,22 +25,34 @@ public class AspectHelixParticleData implements IParticleData{
 			int life = reader.readInt();
 			reader.expect(' ');
 			float time = reader.readFloat();
-			return new AspectHelixParticleData(aspect, life, time);
+			reader.expect(' ');
+			reader.expect('[');
+			double x = reader.readDouble();
+			reader.expect(',');
+			reader.skipWhitespace();
+			double y = reader.readDouble();
+			reader.expect(',');
+			reader.skipWhitespace();
+			double z = reader.readDouble();
+			reader.expect(']');
+			return new AspectHelixParticleData(aspect, life, time, new Vec3d(x, y, z));
 		}
 		
 		public AspectHelixParticleData read(ParticleType<AspectHelixParticleData> particleType, PacketBuffer buffer){
-			return new AspectHelixParticleData(AspectUtils.getAspectByName(buffer.readString()), buffer.readInt(), buffer.readFloat());
+			return new AspectHelixParticleData(AspectUtils.getAspectByName(buffer.readString()), buffer.readInt(), buffer.readFloat(), new Vec3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble()));
 		}
 	};
 	
 	private final Aspect aspect;
 	private final int life;
 	private final float time;
+	private final Vec3d direction;
 	
-	public AspectHelixParticleData(@Nullable Aspect aspect, int life, float time){
+	public AspectHelixParticleData(@Nullable Aspect aspect, int life, float time, Vec3d direction){
 		this.aspect = aspect;
 		this.life = life;
 		this.time = time;
+		this.direction = direction;
 	}
 	
 	@Nullable
@@ -55,6 +68,10 @@ public class AspectHelixParticleData implements IParticleData{
 		return time;
 	}
 	
+	public Vec3d getDirection(){
+		return direction;
+	}
+	
 	public ParticleType<?> getType(){
 		return ArcanaParticles.ASPECT_HELIX_PARTICLE.get();
 	}
@@ -63,6 +80,9 @@ public class AspectHelixParticleData implements IParticleData{
 		buffer.writeString(aspect != null ? aspect.name() : "null");
 		buffer.writeInt(life);
 		buffer.writeFloat(time);
+		buffer.writeDouble(direction.x);
+		buffer.writeDouble(direction.y);
+		buffer.writeDouble(direction.z);
 	}
 	
 	public String getParameters(){
