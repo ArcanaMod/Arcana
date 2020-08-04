@@ -4,6 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
+import net.arcanamod.client.render.AspectHelixParticleData;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
@@ -23,6 +24,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -97,6 +99,8 @@ public class WandItem extends Item{
 			ret.set(ActionResult.resultConsume(itemstack));
 		});
 		return ret.get();
+		//player.setActiveHand(hand);
+		//return ActionResult.resultConsume(player.getHeldItem(hand));
 	}
 	
 	public int getUseDuration(ItemStack stack) {
@@ -106,8 +110,8 @@ public class WandItem extends Item{
 	public void onUsingTick(ItemStack stack, LivingEntity player, int count){
 		World world = player.world;
 		AuraView view = AuraView.SIDED_FACTORY.apply(world);
-		Optional<Node> node = view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player);
-		if(node.isPresent()){
+		Optional<Node> nodeOptional = view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player);
+		if(nodeOptional.isPresent()){
 			final int ASPECT_DRAIN_AMOUNT = 2;
 			final int ASPECT_DRAIN_WAIT = 3;
 			// drain
@@ -116,12 +120,25 @@ public class WandItem extends Item{
 			// with research, of course
 			if(wandHolder != null)
 				if(world.getGameTime() % (ASPECT_DRAIN_WAIT + 1 + world.rand.nextInt(3)) == 0){
-					IAspectHandler aspects = node.get().getAspects();
+					Node node = nodeOptional.get();
+					IAspectHandler aspects = node.getAspects();
 					IAspectHolder holder = aspects.getHolder(world.rand.nextInt(aspects.getHoldersAmount()));
+					Aspect aspect = holder.getContainedAspect();
+					boolean moved = holder.getCurrentVis() > 0;
 					VisUtils.moveAspects(holder, wandHolder, ASPECT_DRAIN_AMOUNT + world.rand.nextInt(1));
+					if(moved){
+						// spawn aspect helix particles
+						Vec3d nodePos = new Vec3d(node.getX(), node.getY(), node.getZ());
+						Vec3d playerPos = player.getEyePosition(1);
+						Vec3d diff = nodePos.subtract(playerPos);
+						Vec3d direction = diff.normalize().mul(-1, -1, -1);
+						int life = (int)Math.ceil(diff.length() / .05f);
+						world.addParticle(new AspectHelixParticleData(aspect, life, world.rand.nextInt(180), direction), nodePos.x, nodePos.y, nodePos.z, 0, 0, 0);
+					}
 				}
 		}else
 			player.stopActiveHand();
+		//world.addParticle(new AspectHelixParticleData(Aspects.EXCHANGE, 450, world.rand.nextInt(180), player.getLookVec()), player.getPosX(), player.getPosYEye(), player.getPosZ(), 0, 0, 0);
 	}
 	
 	public ITextComponent getDisplayName(ItemStack stack){

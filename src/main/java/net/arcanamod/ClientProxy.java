@@ -29,8 +29,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
-import java.util.ArrayList;
-
 import static net.arcanamod.Arcana.MODID;
 
 /**
@@ -47,7 +45,9 @@ public class ClientProxy extends CommonProxy{
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(RenderTooltip::onRenderTooltipColor);
 		modEventBus.addListener(RenderTooltip::makeTooltip);
-		modEventBus.addListener(FogColorHandler::setFog);
+		modEventBus.addListener(FogHandler::setFogColour);
+		modEventBus.addListener(FogHandler::setFogDensity);
+		modEventBus.addListener(FogHandler::setFogMode);
 		modEventBus.addListener(InitScreenHandler::onInitGuiEvent);
 		modEventBus.addListener(ParticleFactoryEvent::onParticleFactoryRegister);
 

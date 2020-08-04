@@ -4,9 +4,12 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.bases.GroupedBlock;
+import net.arcanamod.capabilities.TaintTrackable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FallingBlock;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.BooleanProperty;
@@ -15,6 +18,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
@@ -62,5 +66,25 @@ public class TaintedFallingBlock extends FallingBlock implements GroupedBlock{
 	@Override
 	public ItemGroup getGroup(){
 		return Arcana.TAINT;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
+		super.onEntityCollision(state, world, pos, entity);
+		startTracking(entity);
+	}
+	
+	public void onEntityWalk(World world, BlockPos pos, Entity entity){
+		super.onEntityWalk(world, pos, entity);
+		startTracking(entity);
+	}
+	
+	private void startTracking(Entity entity){
+		if(entity instanceof LivingEntity){
+			// Start tracking taint biome for entity
+			TaintTrackable trackable = TaintTrackable.getFrom((LivingEntity)entity);
+			if(trackable != null)
+				trackable.setTracking(true);
+		}
 	}
 }

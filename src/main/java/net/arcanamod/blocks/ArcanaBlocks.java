@@ -20,6 +20,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.arcanamod.blocks.Taint.taintedOf;
 import static net.arcanamod.blocks.Taint.deadOf;
+import static net.arcanamod.util.annotations.GIM.Type.BLOCK_REF;
 import static net.minecraft.block.Block.Properties.create;
 import static net.minecraft.block.Block.Properties.from;
 import static net.minecraft.block.material.Material.*;
@@ -74,34 +75,34 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<WallBlock> MOSSY_DUNGEON_BRICKS_WALL = BLOCKS.register("mossy_dungeon_bricks_wall", () -> new WallBlock(from(MOSSY_DUNGEON_BRICKS.get())));
 
 	//Pridestone
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_BRICKS = BLOCKS.register("pridestone_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_SMALL_BRICKS = BLOCKS.register("pridestone_small_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_BRICKS = BLOCKS.register("pridestone_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_SMALL_BRICKS = BLOCKS.register("pridestone_small_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	@GLT public static final RegistryObject<Block> PRIDESTONE_PILLAR = BLOCKS.register("pridestone_pillar", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	@GLT public static final RegistryObject<Block> PRIDESTONE_PILLAR_COAL = BLOCKS.register("pridestone_pillar_coal", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE = BLOCKS.register("pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> SMOOTH_PRIDESTONE = BLOCKS.register("smooth_pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_TILE = BLOCKS.register("pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> SMOOTH_PRIDESTONE_TILE = BLOCKS.register("smooth_pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> WET_PRIDESTONE = BLOCKS.register("wet_pridestone", () -> new Block(create(ROCK).sound(SoundType.WET_GRASS).hardnessAndResistance(0.4F, 2.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> WET_SMOOTH_PRIDESTONE = BLOCKS.register("wet_smooth_pridestone", () -> new Block(create(ROCK).sound(SoundType.WET_GRASS).hardnessAndResistance(0.4F, 2.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE = BLOCKS.register("pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> SMOOTH_PRIDESTONE = BLOCKS.register("smooth_pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_TILE = BLOCKS.register("pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> SMOOTH_PRIDESTONE_TILE = BLOCKS.register("smooth_pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> WET_PRIDESTONE = BLOCKS.register("wet_pridestone", () -> new Block(create(ROCK).sound(SoundType.WET_GRASS).hardnessAndResistance(0.4F, 2.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> WET_SMOOTH_PRIDESTONE = BLOCKS.register("wet_smooth_pridestone", () -> new Block(create(ROCK).sound(SoundType.WET_GRASS).hardnessAndResistance(0.4F, 2.0F)));
 
 	//Prideful Things
 	@GLT public static final RegistryObject<Block> PRIDEFUL_GOLD_PILLAR = BLOCKS.register("prideful_gold_pillar", () -> new PillarBlock(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> PRIDECLAY = BLOCKS.register("prideclay", () -> new Block(create(CLAY).sound(SoundType.SAND).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> GILDED_PRIDECLAY = BLOCKS.register("gilded_prideclay", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> CARVED_PRIDEFUL_GOLD_BLOCK = BLOCKS.register("carved_prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> CHISELED_PRIDEFUL_GOLD_BLOCK = BLOCKS.register("chiseled_prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> PRIDEFUL_GOLD_BLOCK = BLOCKS.register("prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> PRIDEFUL_GOLD_TILE = BLOCKS.register("prideful_gold_tile", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> PRIDECLAY = BLOCKS.register("prideclay", () -> new Block(create(CLAY).sound(SoundType.SAND).hardnessAndResistance(4.0F, 8.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> GILDED_PRIDECLAY = BLOCKS.register("gilded_prideclay", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> CARVED_PRIDEFUL_GOLD_BLOCK = BLOCKS.register("carved_prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> CHISELED_PRIDEFUL_GOLD_BLOCK = BLOCKS.register("chiseled_prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> PRIDEFUL_GOLD_BLOCK = BLOCKS.register("prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> PRIDEFUL_GOLD_TILE = BLOCKS.register("prideful_gold_tile", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
 
 	//Limestone
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> LIMESTONE_TILE = BLOCKS.register("limestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> ROUGH_LIMESTONE = BLOCKS.register("rough_limestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> SMOOTH_LIMESTONE = BLOCKS.register("smooth_limestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> LIMESTONE_TILE = BLOCKS.register("limestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> ROUGH_LIMESTONE = BLOCKS.register("rough_limestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> SMOOTH_LIMESTONE = BLOCKS.register("smooth_limestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 
 	// Functional
 	public static final RegistryObject<Block> AMBER_ORE = BLOCKS.register("amber_ore", () -> new Block(create(ROCK).harvestLevel(1).hardnessAndResistance(3.0F, 3.0F)));
-	@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> SILVER_ORE = BLOCKS.register("silver_ore", () -> new Block(create(ROCK).hardnessAndResistance(3.0F, 3.0F)));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> SILVER_ORE = BLOCKS.register("silver_ore", () -> new Block(create(ROCK).hardnessAndResistance(3.0F, 3.0F)));
 	//@GLT @GIM(type = GIM.Type.BLOCK_REF) public static final RegistryObject<Block> CINNABAR_ORE = BLOCKS.register("cinnabar_ore", () -> new Block(create(ROCK).hardnessAndResistance(3.0F, 3.0F)));
 	@GLT public static final RegistryObject<Block> INFUSION_ARCANE_STONE = BLOCKS.register("infusion_arcane_stone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> MAGICAL_GRASS = BLOCKS.register("magical_grass", () -> new Block(from(Blocks.GRASS_BLOCK)));
@@ -125,6 +126,7 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<Block> ASPECT_TUBE = BLOCKS.register("essentia_tube", () -> new AspectTubeBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> ASPECT_VALVE = BLOCKS.register("essentia_valve", () -> new AspectValveBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> ASPECT_WINDOW = BLOCKS.register("essentia_window", () -> new AspectWindowBlock(create(IRON).sound(SoundType.GLASS).hardnessAndResistance(3).notSolid()));
+	@GLT @GIM(type = BLOCK_REF) public static final RegistryObject<Block> ASPECT_CRYSTALLIZER = BLOCKS.register("aspect_crystallizer", () -> new AspectCrystallizerBlock(create(IRON).hardnessAndResistance(3)));
 	
 	// Taint Scrubber //What is proper material for taint scrubber?
 	@GLT public static final RegistryObject<Block> TAINT_SCRUBBER_MK1 = BLOCKS.register("taint_scrubber_mk1", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid()));

@@ -12,6 +12,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -102,7 +103,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 					if(aspect != EMPTY){
 						AspectStack aspectStack = te.getAspectStackMap().get(aspect);
 						if(!stacked)
-							world.addParticle(new AspectHelixParticleData(aspect, 20 * airs + 15, world.rand.nextInt(180)), cruciblePos.getX() + .5 + world.rand.nextFloat() * .1, cruciblePos.getY() + .7, cruciblePos.getZ() + .5 + world.rand.nextFloat() * .1, 0, 0, 0);
+							world.addParticle(new AspectHelixParticleData(aspect, 20 * airs + 15, world.rand.nextInt(180), new Vec3d(0, 1, 0)), cruciblePos.getX() + .5 + world.rand.nextFloat() * .1, cruciblePos.getY() + .7, cruciblePos.getZ() + .5 + world.rand.nextFloat() * .1, 0, 0, 0);
 						// pick a random aspect, take from it, and store them in our actual aspect handler
 						int diff = Math.min(aspectStack.getAmount(), maxAspectDistill);
 						AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - maxAspectDistill);

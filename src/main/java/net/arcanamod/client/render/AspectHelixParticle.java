@@ -3,6 +3,7 @@ package net.arcanamod.client.render;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -13,6 +14,7 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 	
 	private float time;
 	private final IAnimatedSprite spriteSheet;
+	private final Vec3d direction;
 	
 	protected AspectHelixParticle(World world, double x, double y, double z, IAnimatedSprite spriteSheet, AspectHelixParticleData data){
 		super(world, x, y, z);
@@ -20,10 +22,11 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 		selectSpriteWithAge(spriteSheet);
 		maxAge = data.getLife();
 		time = data.getTime();
+		direction = data.getDirection();
 		canCollide = false;
-		motionX = 0;
-		motionY = .05;
-		motionZ = 0;
+		motionX = direction.x * .05;
+		motionY = direction.y * .05;
+		motionZ = direction.z * .05;
 		if(data.getAspect() != null){
 			int colour = data.getAspect().getColorRange().get(0);
 			int r = (colour & 0xff0000) >> 16;
@@ -46,10 +49,24 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 			setExpired();
 		else{
 			float f = .6f;
-			motionX += f * MathHelper.cos(time);
-			motionZ += f * MathHelper.sin(time);
-			motionX *= .07;
-			motionZ *= .07;
+			float x1 = f * MathHelper.cos(time);
+			float z1 = f * MathHelper.sin(time);
+			
+			// There are certain directions that appear mostly straight due to this.
+			// I can't figure this out.
+			Vec3d cross1 = new Vec3d(-1, -1, -1).normalize();
+			Vec3d cross2 = new Vec3d(1, -1, -1).normalize();
+			Vec3d cross = cross1.dotProduct(direction) < cross2.dotProduct(direction) ? cross1 : cross2;
+			
+			Vec3d y = direction.mul(.05, .05, .05);
+			Vec3d z = cross.crossProduct(direction);
+			Vec3d x = z.crossProduct(direction);
+			z = z.mul(z1, z1, z1).mul(.07, .07, .07);
+			x = x.mul(x1, x1, x1).mul(.07, .07, .07);
+			
+			motionX = x.x + y.x + z.x;
+			motionY = x.y + y.y + z.y;
+			motionZ = x.z + y.z + z.z;
 			move(motionX, motionY, motionZ);
 			
 			time += .2f;
