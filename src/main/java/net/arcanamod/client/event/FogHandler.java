@@ -1,5 +1,7 @@
 package net.arcanamod.client.event;
 
+import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.capabilities.TaintTrackable;
 import net.arcanamod.client.gui.UiUtil;
@@ -54,6 +56,22 @@ public class FogHandler{
 			LivingEntity living = (LivingEntity)entity;
 			float progress = Math.min(20, TaintTrackable.getFrom(living).getTimeInTaintBiome()) / 20f;
 			fog.setDensity(fog.getDensity() + progress * .3f);
+		}
+	}
+	
+	@SubscribeEvent
+	@OnlyIn(Dist.CLIENT)
+	public static void setFogMode(EntityViewRenderEvent.RenderFogEvent fog){
+		Entity entity = fog.getInfo().getRenderViewEntity();
+		World w = entity.getEntityWorld();
+		BlockPos pos = fog.getInfo().getBlockPos();
+		if(entity instanceof LivingEntity && Taint.isAreaInTaintBiome(pos, w)){
+			LivingEntity living = (LivingEntity)entity;
+			TaintTrackable from = TaintTrackable.getFrom(living);
+			float progress = Math.min(20, from.getTimeInTaintBiome()) / 30f;
+			if(from.isInTaintBiome() && progress >= .5)
+				RenderSystem.fogStart(0);
+			RenderSystem.fogEnd(fog.getFarPlaneDistance() * (1 - .7f * progress));
 		}
 	}
 }

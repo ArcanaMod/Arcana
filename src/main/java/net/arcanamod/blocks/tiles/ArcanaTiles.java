@@ -37,4 +37,6 @@ public class ArcanaTiles{
 			TES.register("crucible", () -> new TileEntityType<>(CrucibleTileEntity::new, Sets.newHashSet(ArcanaBlocks.CRUCIBLE.get()), null));
 	public static final RegistryObject<TileEntityType<ArcaneCraftingTableTileEntity>> ARCANE_WORKBENCH_TE =
 			TES.register("arcane_crafting_table", () -> new TileEntityType<>(ArcaneCraftingTableTileEntity::new, Sets.newHashSet(ArcanaBlocks.ARCANE_CRAFTING_TABLE.get()), null));
+	public static final RegistryObject<TileEntityType<AspectCrystallizerTileEntity>> ASPECT_CRYSTALLIZER_TE =
+			TES.register("aspect_crystallizer", () -> new TileEntityType<>(AspectCrystallizerTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_CRYSTALLIZER.get()), null));
 }
