@@ -2,17 +2,27 @@ package net.arcanamod.datagen;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.util.annotations.GBS;
+import net.arcanamod.util.annotations.GLT;
+import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.fml.RegistryObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
+
+import java.lang.reflect.Field;
 
 import static net.arcanamod.blocks.ArcanaBlocks.*;
 import static net.arcanamod.datagen.ArcanaDataGenerators.*;
 
 public class Blockstates extends BlockStateProvider{
-	
+
+	private static final Logger LOGGER = LogManager.getLogger();
+
 	ExistingFileHelper efh;
 	
 	public Blockstates(DataGenerator gen, ExistingFileHelper exFileHelper){
@@ -21,6 +31,12 @@ public class Blockstates extends BlockStateProvider{
 	}
 	
 	protected void registerStatesAndModels(){
+		try {
+			simpleBlockFromAnnotations();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+
 		fenceBlock(DAIR_FENCE.get(), DAIR);
 		fenceBlock(DEAD_FENCE.get(), DEAD);
 		fenceBlock(EUCALYPTUS_FENCE.get(), EUCALYPTUS);
@@ -89,6 +105,24 @@ public class Blockstates extends BlockStateProvider{
 		simpleBlock(SILVER_ORE.get());
 		simpleBlock(VOID_METAL_BLOCK.get());
 		//simpleBlock(CINNABAR_ORE.get());
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void simpleBlockFromAnnotations() throws IllegalAccessException {
+		Class<ArcanaBlocks> clazz = ArcanaBlocks.class;
+		Field[] fields = clazz.getFields();
+		for (Field field : fields){
+			// if field has GLT annotation
+			if (field.isAnnotationPresent(GBS.class)){
+				LOGGER.debug("Found field in ArcanaBlocks.class: name:" + field.getName() + " type:" + field.getType());
+				if (field.get(field.getType()) instanceof RegistryObject) {
+					// get RegistryObject from field and add standard table
+					RegistryObject<Block> reg = (RegistryObject<Block>) field.get(field.getType());
+					LOGGER.debug("RegistryObject: " + reg.get().toString());
+					simpleBlock(reg.get());
+				}
+			}
+		}
 	}
 	
 	@Nonnull

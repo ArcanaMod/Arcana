@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arcana:block/phosphorescent_stone_block"
+  }
+}

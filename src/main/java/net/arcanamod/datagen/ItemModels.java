@@ -12,13 +12,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.fml.RegistryObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
 public class ItemModels extends ItemModelProvider{
-	
+
+	private static final Logger LOGGER = LogManager.getLogger();
+
 	public ItemModels(DataGenerator generator, ExistingFileHelper existingFileHelper){
 		super(generator, Arcana.MODID, existingFileHelper);
 	}
@@ -86,11 +90,11 @@ public class ItemModels extends ItemModelProvider{
 			for (Field field : fields) {
 				// if field has GIM annotation
 				if (field.isAnnotationPresent(GIM.class)) {
-					Arcana.logger.debug("Found field in "+clazz.getName()+".class: name:" + field.getName() + " type:" + field.getType());
+					LOGGER.debug("Found field in "+clazz.getName()+".class: name:" + field.getName() + " type:" + field.getType());
 					if (field.get(field.getType()) instanceof RegistryObject) {
 						// get RegistryObject from field
 						RegistryObject<Block> reg = (RegistryObject<Block>) field.get(field.getType());
-						Arcana.logger.debug("RegistryObject: " + reg.getId().toString());
+						LOGGER.debug("RegistryObject: " + reg.getId().toString());
 						String path = reg.getId().getPath();
 						// if annotation type is ITEM generate item model, if BLOCK_REF is generated withExistingParent
 						GIM annotation = field.getAnnotation(GIM.class);

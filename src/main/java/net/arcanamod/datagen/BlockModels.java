@@ -1,20 +1,36 @@
 package net.arcanamod.datagen;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.util.annotations.GBM;
+import net.arcanamod.util.annotations.GLT;
+import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.fml.RegistryObject;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
+import java.lang.reflect.Field;
 
 public class BlockModels extends BlockModelProvider{
-	
+
+	private static final Logger LOGGER = LogManager.getLogger();
+
 	public BlockModels(DataGenerator generator, ExistingFileHelper existingFileHelper){
 		super(generator, Arcana.MODID, existingFileHelper);
 	}
 	
 	protected void registerModels(){
+		try {
+			cubeAllFromAnnotations();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+
 		ArcanaDataGenerators.WOODS.forEach((name, texture) -> {
 			fenceInventory(name + "_fence_inventory", texture);
 			fencePost(name + "_fence", texture);
@@ -75,6 +91,27 @@ public class BlockModels extends BlockModelProvider{
 	public void pressurePlateDown(String name, ResourceLocation texture){
 		withExistingParent(name + "_pressure_plate_down", "pressure_plate_down")
 				.texture("texture", texture);
+	}
+
+	@SuppressWarnings("unchecked")
+	protected void cubeAllFromAnnotations() throws IllegalAccessException {
+		Class<ArcanaBlocks> clazz = ArcanaBlocks.class;
+		Field[] fields = clazz.getFields();
+		for (Field field : fields){
+			// if field has GLT annotation
+			if (field.isAnnotationPresent(GBM.class)){
+				LOGGER.debug("Found field in ArcanaBlocks.class: name:" + field.getName() + " type:" + field.getType());
+				if (field.get(field.getType()) instanceof RegistryObject) {
+					// get RegistryObject from field and add standard table
+					RegistryObject<Block> reg = (RegistryObject<Block>) field.get(field.getType());
+					LOGGER.debug("RegistryObject: " + reg.get().toString());
+					GBM annotation = field.getAnnotation(GBM.class);
+					if (!annotation.source().equals(""))
+						cubeAll(reg.getId().getPath(),new ResourceLocation(Arcana.MODID, "block/"+annotation.source()));
+					else cubeAll(reg.getId().getPath(),new ResourceLocation(Arcana.MODID, "block/"+reg.getId().getPath()));
+				}
+			}
+		}
 	}
 	
 	@Nonnull
