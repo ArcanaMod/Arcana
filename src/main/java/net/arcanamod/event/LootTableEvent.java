@@ -9,6 +9,7 @@ import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 @Mod.EventBusSubscriber
@@ -28,9 +29,13 @@ public class LootTableEvent {
 
 	public static boolean itemIsLootableInCertainChest(ResourceLocation location, ArtifactItem item){
 		for (LootTableGroups group : LootTableGroups.values()){
-			for (ResourceLocation lootTable : group.lootTables){
-				if (lootTable == location)
-					return item.isChestLootable(group);
+			for (@Nullable ResourceLocation lootTable : group.lootTables){
+				if (lootTable!=null) {
+					if (item.getChestLootable().contains(LootTableGroups.EVERYWHERE))
+						return true;
+					if (lootTable == location)
+						return item.isChestLootable(group);
+				}
 			}
 		}
 		return false;

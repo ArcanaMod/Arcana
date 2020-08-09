@@ -6,6 +6,7 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.capabilities.TaintTrackableCapability;
 import net.arcanamod.client.gui.ArcaneCraftingTableScreen;
+import net.arcanamod.client.gui.QuaesitumScreen;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
 import net.arcanamod.containers.ArcanaContainers;
@@ -287,6 +288,7 @@ public class Arcana{
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_VALVE_TE.get(), AspectValveTileEntityRenderer::new);
 
 		//Screens
+		ScreenManager.registerFactory(ArcanaContainers.QUAESITUM_CONTAINER.get(), QuaesitumScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.RESEARCH_TABLE.get(), ResearchTableScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), ArcaneCraftingTableScreen::new);
 

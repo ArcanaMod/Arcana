@@ -1,6 +1,13 @@
 {
     "_comment": "Test",
     "block.arcana.aspect_tester": "Advanced New Aspect Handler Tester Block For No Reason (ANAHTBFNR)",
+    "block.arcana.bloodstained_rock_block": "Bloodstained Stone Block",
+    "block.arcana.onyx_ore": "Strange Onyx Ore",
+    "block.arcana.phosphorescent_stone_block": "Phosphorescent Stone Block",
+    "block.arcana.pyrocoal_ore": "Pyrocoal Ore",
+    "block.arcana.thinking_rock_block": "Thinking Stone Block",
+    "block.arcana.weathered_stone_block": "Weathered Stone Block",
+    "container.quaesitum": "Quaesitum",
 
     "_comment": "Creative Tabs",
     "itemGroup.arcana": "Arcana",

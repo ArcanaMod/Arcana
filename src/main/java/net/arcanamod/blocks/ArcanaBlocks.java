@@ -436,7 +436,7 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<FenceBlock> TRYPOPHOBIUS_FENCE = BLOCKS.register("trypophobius_fence", () -> new FenceBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<FenceGateBlock> TRYPOPHOBIUS_FENCE_GATE = BLOCKS.register("trypophobius_fence_gate", () -> new FenceGateBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 
-	@GLT public static final RegistryObject<Block> ARCHEOLOGY_TABLE = BLOCKS.register("archeology_table", () -> new ArcheologyTableBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
+	@GLT public static final RegistryObject<Block> ARCHEOLOGY_TABLE = BLOCKS.register("archeology_table", () -> new QuaesitumBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 
 	@GLT @GIM(type = GIM.Type.BLOCK_REF) @GBM @GBS public static final RegistryObject<Block> BLOODSTAINED_ROCK_BLOCK = BLOCKS.register("bloodstained_rock_block", () -> new Block(create(ROCK).hardnessAndResistance(8).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.STONE)));
 	@GLT @GIM(type = GIM.Type.BLOCK_REF) @GBM @GBS public static final RegistryObject<Block> ONYX_ORE = BLOCKS.register("onyx_ore", () -> new Block(create(ROCK).hardnessAndResistance(8).harvestTool(ToolType.PICKAXE).harvestLevel(2).sound(SoundType.STONE)));

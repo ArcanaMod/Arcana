@@ -17,14 +17,16 @@ import java.util.List;
 
 public class ArtifactItem extends Item {
 	private final List<LootTableGroups> chestLootable;
+	private final ItemStack researchNote;
 
-	protected ArtifactItem(List<LootTableGroups> chestLootable) {
+	protected ArtifactItem(ItemStack researchNote, List<LootTableGroups> chestLootable) {
 		super(new Item.Properties().group(Arcana.ITEMS).rarity(Rarity.UNCOMMON));
 		this.chestLootable = chestLootable;
+		this.researchNote = researchNote;
 	}
 
-	public static ArtifactItem create(LootTableGroups... lootTables){
-		ArtifactItem artifact = new ArtifactItem(Arrays.asList(lootTables));
+	public static ArtifactItem create(ItemStack researchNote, LootTableGroups... lootTables){
+		ArtifactItem artifact = new ArtifactItem(researchNote, Arrays.asList(lootTables));
 		ArcanaItems._ARTIFACTS.add(artifact);
 		return artifact;
 	}
@@ -39,5 +41,13 @@ public class ArtifactItem extends Item {
 
 	public boolean isChestLootable(LootTableGroups lootTable){
 		return chestLootable.contains(lootTable)||chestLootable.contains(LootTableGroups.EVERYWHERE);
+	}
+
+	public List<LootTableGroups> getChestLootable() {
+		return chestLootable;
+	}
+
+	public ItemStack getResearchNote(){
+		return researchNote;
 	}
 }
