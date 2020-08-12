@@ -646,6 +646,7 @@
     "devtools.arcana": "Arcana Tools",
     "devtools.mojang": "Mojang Tools",
     "container.arcane_workbench": "Arcane Crafting",
+    "container.aspect_crystallizer": "Aspect Crystallizer",
 
     "_comment": "Fluids",
     "fluid.arcana.tainted_goo": "Tainted Goo",

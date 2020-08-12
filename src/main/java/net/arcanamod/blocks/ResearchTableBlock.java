@@ -56,18 +56,6 @@ public class ResearchTableBlock extends WaterloggableBlock implements GroupedBlo
 	}
 	
 	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player){
-		/*TileEntity te;
-		if(state.get(PART).equals(LEFT))
-			te = world.getTileEntity(pos);
-		else
-			te = world.getTileEntity(pos.offset(state.get(FACING).rotateYCCW()));*/
-		
-		/*if(te instanceof ResearchTableTileEntity){
-			ResearchTableTileEntity researchTable = (ResearchTableTileEntity)te;
-			researchTable.setShouldDrop(!player.capabilities.isCreativeMode);
-			researchTable.markDirty();
-		}*/
-		
 		if(state.get(PART) == RIGHT){
 			BlockPos blockpos = pos.offset(state.get(FACING).rotateYCCW());
 			if(world.getBlockState(blockpos).getBlock() == this)

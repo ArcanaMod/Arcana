@@ -19,6 +19,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+// FIXME: why implement ISidedInventory if this cannot interact with hoppers?
 public class ArcaneCraftingTableTileEntity extends LockableTileEntity implements ISidedInventory {
 
 	protected NonNullList<ItemStack> items = NonNullList.withSize(11, ItemStack.EMPTY);
@@ -110,26 +111,12 @@ public class ArcaneCraftingTableTileEntity extends LockableTileEntity implements
 	public int[] getSlotsForFace(Direction side) {
 		return new int[0];
 	}
-
-	/**
-	 * Returns true if automation can insert the given item in the given slot from the given side.
-	 *
-	 * @param index
-	 * @param itemStackIn
-	 * @param direction
-	 */
+	
 	@Override
 	public boolean canInsertItem(int index, ItemStack itemStackIn, @Nullable Direction direction) {
 		return false;
 	}
-
-	/**
-	 * Returns true if automation can extract the given item in the given slot from the given side.
-	 *
-	 * @param index
-	 * @param stack
-	 * @param direction
-	 */
+	
 	@Override
 	public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
 		return false;

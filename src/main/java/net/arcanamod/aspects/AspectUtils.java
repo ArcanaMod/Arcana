@@ -14,7 +14,9 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
 public class AspectUtils {
 	
 	public static final List<Item> aspectItems = new ArrayList<>();
-	public static final List<Item> aspectCrystalItems = new ArrayList<>();
+	public static final Map<Aspect, Item> aspectCrystalItems = new HashMap<>();
 	public static final Aspect[] primalAspects = new Aspect[]{Aspects.AIR, Aspects.CHAOS, Aspects.EARTH, Aspects.FIRE, Aspects.ORDER, Aspects.WATER};
 	public static List<ItemStack> aspectStacks;
 
@@ -40,7 +42,7 @@ public class AspectUtils {
 				aspectItems.add(item);
 				Item crystal = new CrystalItem(new Item.Properties().group(Arcana.ITEMS), aspect);
 				ArcanaItems.ITEMS.register(aspect.name().toLowerCase() + "_crystal", () -> crystal);
-				aspectCrystalItems.add(crystal);
+				aspectCrystalItems.put(aspect, crystal);
 			}
 		aspectStacks = aspectItems.stream().map(ItemStack::new).collect(Collectors.toList());
 	}

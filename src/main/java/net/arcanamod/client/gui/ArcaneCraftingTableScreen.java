@@ -27,10 +27,10 @@ import java.util.Optional;
 import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static net.arcanamod.Arcana.arcLoc;
-import static net.arcanamod.client.gui.ResearchTableScreen.renderModalRectWithCustomSizedTexture;
 
 public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTableContainer>{
-	private static final ResourceLocation BG = new ResourceLocation(Arcana.MODID, "textures/gui/container/arcaneworkbench.png");
+	
+	private static final ResourceLocation BG = arcLoc("textures/gui/container/arcaneworkbench.png");
 	
 	public static final int WIDTH = 187;
 	public static final int HEIGHT = 233;
@@ -55,14 +55,14 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
 		getMinecraft().getTextureManager().bindTexture(BG);
-		renderModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, xSize, ySize, 256, 256);
+		UiUtil.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
 		// draw "show Arcanum" button if player it has in inventory
 		int arcanumButtonLeft = guiLeft + 158, arcanumButtonTop = guiTop + 109;
 		if (isPlayerHavingArcanum()) {
-			renderModalRectWithCustomSizedTexture(arcanumButtonLeft, arcanumButtonTop, 213, 17, 20, 20, 256, 256);
+			UiUtil.drawTexturedModalRect(arcanumButtonLeft, arcanumButtonTop, 213, 17, 20, 20);
 			if (mouseX >= arcanumButtonLeft && mouseX < arcanumButtonLeft + 20 && mouseY >= arcanumButtonTop && mouseY < arcanumButtonTop + 20)
-				renderModalRectWithCustomSizedTexture(arcanumButtonLeft, arcanumButtonTop, 213, 38, 20, 20, 256, 256);
+				UiUtil.drawTexturedModalRect(arcanumButtonLeft, arcanumButtonTop, 213, 38, 20, 20);
 		}
 
 		// draw necessary aspects

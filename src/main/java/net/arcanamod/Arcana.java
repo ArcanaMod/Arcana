@@ -6,6 +6,7 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.capabilities.TaintTrackableCapability;
 import net.arcanamod.client.gui.ArcaneCraftingTableScreen;
+import net.arcanamod.client.gui.AspectCrystallizerScreen;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.render.*;
 import net.arcanamod.containers.ArcanaContainers;
@@ -288,6 +289,7 @@ public class Arcana{
 		//Screens
 		ScreenManager.registerFactory(ArcanaContainers.RESEARCH_TABLE.get(), ResearchTableScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), ArcaneCraftingTableScreen::new);
+		ScreenManager.registerFactory(ArcanaContainers.ASPECT_CRYSTALLIZER.get(), AspectCrystallizerScreen::new);
 
 		//Special Render
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));

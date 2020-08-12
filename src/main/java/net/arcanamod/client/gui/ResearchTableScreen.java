@@ -49,7 +49,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
 		minecraft.getTextureManager().bindTexture(BG);
-		renderModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
+		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
 			CompoundNBT compound = te.note().getTag();
 			if(compound != null){
@@ -59,7 +59,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 					if (te.ink().isEmpty()) {
 						// tell them "no u cant do research without a pen"
 						minecraft.getTextureManager().bindTexture(NO_INK);
-						renderModalRectWithCustomSizedTexture(guiLeft + 137, guiTop + 31, 0, 0, 223, 143, 223, 143);
+						UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + 137, guiTop + 31, 0, 0, 223, 143, 223, 143);
 						String noInk = I18n.format("researchTable.ink_needed");
 						font.drawString(noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2f, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2f, -1);
 					}
@@ -67,11 +67,6 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 			}
 		}
 		searchWidget.render(mouseX, mouseY, partialTicks);
-	}
-
-	public static void renderModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
-		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
-		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
 	}
 
 	@Override
@@ -179,7 +174,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				minecraft.getTextureManager().bindTexture(BG);
 				GlStateManager.disableLighting();
 				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				renderModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
+				UiUtil.drawModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
 			}
 			//super.render(p_render_1_,p_render_2_,p_render_3_); //Don't render default button! //TODO: Hover dosn't work
 		}
