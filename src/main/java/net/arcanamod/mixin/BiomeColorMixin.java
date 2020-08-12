@@ -3,22 +3,17 @@ package net.arcanamod.mixin;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.client.gui.UiUtil;
-import net.arcanamod.util.MixinUtil;
 import net.minecraft.block.Blocks;
-import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ILightReader;
 import net.minecraft.world.biome.BiomeColors;
-import net.minecraft.world.level.ColorResolver;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.awt.*;
 import java.util.Iterator;
 
 import static net.minecraft.world.biome.BiomeColors.WATER_COLOR;
@@ -38,7 +33,7 @@ public class BiomeColorMixin {
 				try {
 					BlockPos b = im1.next();
 					if (Taint.isTainted(worldIn.getBlockState(b).getBlock())) {
-						callbackInfoReturnable.setReturnValue(UiUtil.blend(0x6e298e, MixinUtil.func_228359_a_(worldIn, blockPosIn, WATER_COLOR), 0.25f));
+						callbackInfoReturnable.setReturnValue(UiUtil.blend(0x6e298e, worldIn.getBlockColor(blockPosIn, WATER_COLOR), 0.25f));
 						break;
 					}
 				} catch (ArrayIndexOutOfBoundsException ignore) {
@@ -50,7 +45,7 @@ public class BiomeColorMixin {
 					BlockPos b = i0.next();
 					if (Taint.isTainted(worldIn.getBlockState(b).getBlock())) {
 						if (worldIn.getBlockState(b).getBlock() != ArcanaBlocks.TAINTED_GRAVEL.get()) {
-							callbackInfoReturnable.setReturnValue(UiUtil.blend(0x6e298e, MixinUtil.func_228359_a_(worldIn, blockPosIn, WATER_COLOR), 0.50f));
+							callbackInfoReturnable.setReturnValue(UiUtil.blend(0x6e298e, worldIn.getBlockColor(blockPosIn, WATER_COLOR), 0.50f));
 							break;
 						}
 					}
@@ -61,7 +56,7 @@ public class BiomeColorMixin {
 			while (i1.hasNext()) {
 				try {
 					if (Taint.isTainted(worldIn.getBlockState(i1.next()).getBlock())) {
-						callbackInfoReturnable.setReturnValue(UiUtil.blend(0x6e298e, MixinUtil.func_228359_a_(worldIn, blockPosIn, WATER_COLOR), 0.75f));
+						callbackInfoReturnable.setReturnValue(UiUtil.blend(0x6e298e, worldIn.getBlockColor(blockPosIn, WATER_COLOR), 0.75f));
 						break;
 					}
 				} catch (ArrayIndexOutOfBoundsException ignore) {
@@ -72,7 +67,7 @@ public class BiomeColorMixin {
 				while (i2.hasNext()) {
 					try {
 						if (Taint.isTainted(worldIn.getBlockState(i2.next()).getBlock())) {
-							callbackInfoReturnable.setReturnValue(UiUtil.blend(0x6e298e,MixinUtil.func_228359_a_(worldIn, blockPosIn, WATER_COLOR),/*Minecraft.getInstance().gameSettings.biomeBlendRadius/((float)100)*i)*/1f));
+							callbackInfoReturnable.setReturnValue(UiUtil.blend(0x6e298e, worldIn.getBlockColor(blockPosIn, WATER_COLOR),/*Minecraft.getInstance().gameSettings.biomeBlendRadius/((float)100)*i)*/1f));
 							break;
 						}
 					} catch (ArrayIndexOutOfBoundsException ignore) {
