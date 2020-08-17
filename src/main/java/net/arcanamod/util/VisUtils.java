@@ -5,7 +5,6 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.IAspectHolder;
 
-import java.util.Comparator;
 import java.util.List;
 
 // TODO: this stuff should be fine in AspectHandler but that's currently a little messy so its here rn

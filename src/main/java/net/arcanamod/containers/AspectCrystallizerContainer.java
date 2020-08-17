@@ -23,8 +23,8 @@ public class AspectCrystallizerContainer extends Container{
 		super(ArcanaContainers.ASPECT_CRYSTALLIZER.get(), id);
 		this.inventory = inventory;
 		this.playerInventory = playerInventory;
-		addPlayerSlots(playerInventory);
 		addOwnSlots(inventory);
+		addPlayerSlots(playerInventory);
 		if(inventory instanceof AspectCrystallizerTileEntity)
 			te = (AspectCrystallizerTileEntity)inventory;
 	}
@@ -43,15 +43,34 @@ public class AspectCrystallizerContainer extends Container{
 	}
 	
 	private void addOwnSlots(IInventory slots){
-		// Full aspect container @ 17,17
-		addSlot(new Slot(slots, 0, 17, 17));
-		// Empty aspect container @ 17,53
-		addSlot(new Slot(slots, 1, 17, 53));
-		// Crystal @ 122,35
-		addSlot(new Slot(slots, 2, 122, 35){
+		// Crystal @ 108,35
+		addSlot(new Slot(slots, 0, 108, 35){
 			public boolean isItemValid(ItemStack stack){
 				return false;
 			}
 		});
+	}
+	
+	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = inventorySlots.get(index);
+		if(slot != null && slot.getHasStack()){
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+			if(index < 9){
+				if(!mergeItemStack(itemstack1, 1, 37, true))
+					return ItemStack.EMPTY;
+			}else if(!mergeItemStack(itemstack1, 0, 1, false))
+				return ItemStack.EMPTY;
+			if(itemstack1.isEmpty())
+				slot.putStack(ItemStack.EMPTY);
+			else
+				slot.onSlotChanged();
+			if(itemstack1.getCount() == itemstack.getCount())
+				return ItemStack.EMPTY;
+			slot.onTake(playerIn, itemstack1);
+		}
+		
+		return itemstack;
 	}
 }

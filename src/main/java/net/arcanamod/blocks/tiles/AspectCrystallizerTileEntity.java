@@ -11,6 +11,8 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.Direction;
@@ -28,10 +30,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class AspectCrystallizerTileEntity extends LockableTileEntity implements ITickableTileEntity, ISidedInventory{
 	
-	protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
-	private static final int[] SLOT_OTHER = new int[]{0};
-	// Down can also extract empty aspect handlers
-	private static final int[] SLOTS_DOWN = new int[]{2, 1};
+	protected NonNullList<ItemStack> items = NonNullList.withSize(1, ItemStack.EMPTY);
+	private static final int[] SLOT_OTHER = new int[]{};
+	private static final int[] SLOTS_DOWN = new int[]{0};
 	
 	public static final int MAX_PROGRESS = 80;
 	
@@ -45,14 +46,14 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 	public void tick(){
 		IAspectHolder holder = vis.getHolder(0);
 		if(holder.getCurrentVis() > 0
-				&& ((getStackInSlot(2).getItem() instanceof CrystalItem && ((CrystalItem)getStackInSlot(2).getItem()).aspect == holder.getContainedAspect() && getStackInSlot(2).getCount() < 64)
-				 || ((getStackInSlot(2).isEmpty())))){
+				&& ((getStackInSlot(0).getItem() instanceof CrystalItem && ((CrystalItem)getStackInSlot(0).getItem()).aspect == holder.getContainedAspect() && getStackInSlot(0).getCount() < 64)
+				 || ((getStackInSlot(0).isEmpty())))){
 			if(progress >= MAX_PROGRESS){
 				progress = 0;
-				if(getStackInSlot(2).isEmpty())
-					setInventorySlotContents(2, new ItemStack(AspectUtils.aspectCrystalItems.get(holder.getContainedAspect())));
+				if(getStackInSlot(0).isEmpty())
+					setInventorySlotContents(0, new ItemStack(AspectUtils.aspectCrystalItems.get(holder.getContainedAspect())));
 				else
-					getStackInSlot(2).grow(1);
+					getStackInSlot(0).grow(1);
 				holder.drain(new AspectStack(holder.getContainedAspect(), 1), false);
 			}
 			progress++;
@@ -140,6 +141,31 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 	}
 	
 	public boolean canExtractItem(int index, ItemStack stack, Direction direction){
-		return index == 1;
+		return index == 0;
+	}
+	
+	@Override
+	@Nullable
+	public SUpdateTileEntityPacket getUpdatePacket(){
+		CompoundNBT nbtTagCompound = new CompoundNBT();
+		write(nbtTagCompound);
+		return new SUpdateTileEntityPacket(pos, -1, nbtTagCompound);
+	}
+	
+	@Override
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+		read(pkt.getNbtCompound());
+	}
+	
+	@Override
+	public CompoundNBT getUpdateTag(){
+		CompoundNBT nbtTagCompound = new CompoundNBT();
+		write(nbtTagCompound);
+		return nbtTagCompound;
+	}
+	
+	@Override
+	public void handleUpdateTag(CompoundNBT tag){
+		this.read(tag);
 	}
 }

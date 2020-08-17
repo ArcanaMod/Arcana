@@ -35,10 +35,10 @@ public class AspectCrystallizerScreen extends ContainerScreen<AspectCrystallizer
 		}
 		int colour = aspect.getColorRange().get(1);
 		RenderSystem.color3f(((colour & 0xff0000) >> 16) / 255f, ((colour & 0xff00) >> 8) / 255f, (colour & 0xff) / 255f);
-		drawTexturedModalRect(guiLeft + 62, guiTop + 69 - pixHeight, 176, 64, 16, pixHeight);
+		drawTexturedModalRect(guiLeft + 48, guiTop + 69 - pixHeight, 176, 64, 16, pixHeight);
 		
 		RenderSystem.color3f(1, 1, 1);
-		drawTexturedModalRect(guiLeft + 86, guiTop + 35, 176, 0, pixProgress, 16);
+		drawTexturedModalRect(guiLeft + 72, guiTop + 35, 176, 0, pixProgress, 16);
 	}
 	
 	public void render(int mouseX, int mouseY, float partialTicks){
