@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:dyes"
+    },
+    {
+      "item": "arcana:scribing_tools"
+    }
+  ],
+  "result": {
+    "item": "arcana:scribing_tools"
+  }
+}
