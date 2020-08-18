@@ -147,21 +147,21 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 	@Override
 	@Nullable
 	public SUpdateTileEntityPacket getUpdatePacket(){
-		CompoundNBT nbtTagCompound = new CompoundNBT();
-		write(nbtTagCompound);
-		return new SUpdateTileEntityPacket(pos, -1, nbtTagCompound);
+		CompoundNBT compound = new CompoundNBT();
+		compound.put("aspects", vis.serializeNBT());
+		return new SUpdateTileEntityPacket(pos, -1, compound);
 	}
 	
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-		read(pkt.getNbtCompound());
+		vis.deserializeNBT(pkt.getNbtCompound().getCompound("aspects"));
 	}
 	
 	@Override
 	public CompoundNBT getUpdateTag(){
-		CompoundNBT nbtTagCompound = new CompoundNBT();
-		write(nbtTagCompound);
-		return nbtTagCompound;
+		CompoundNBT compound = super.getUpdateTag();
+		compound.put("aspects", vis.serializeNBT());
+		return compound;
 	}
 	
 	@Override
