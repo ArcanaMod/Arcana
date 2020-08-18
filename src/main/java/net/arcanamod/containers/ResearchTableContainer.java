@@ -128,7 +128,7 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	private void refreshPuzzleSlots(IInventory playerInventory){
 		PlayerEntity playerEntity = lastClickPlayer;
-		if (playerEntity==null)
+		if(playerEntity == null)
 			playerEntity = ((PlayerInventory)playerInventory).player;
 		aspectSlots.removeAll(puzzleSlots);
 		puzzleSlots.forEach(AspectSlot::onClose);
@@ -138,16 +138,13 @@ public class ResearchTableContainer extends AspectContainer{
 			if(!playerEntity.world.isRemote)
 				clearContainer(playerEntity, playerEntity.world, puzzleInventorySlots);
 		
-		for(int i = puzzleItemSlots.size() - 1; i >= 0; i--){
-			Slot slot = puzzleItemSlots.get(i);
-			//inventoryItemStacks.remove(slot.slotNumber);
-			inventorySlots.remove(slot);
-		}
+		for(int i = puzzleItemSlots.size() - 1; i >= 0; i--)
+			inventorySlots.remove(puzzleItemSlots.get(i));
 		puzzleItemSlots.clear();
 
 		PlayerEntity finalPlayerEntity = playerEntity;
 		getFromNote().ifPresent(puzzle -> {
-			if(!ink.isEmpty())
+			if(!ink.isEmpty() && ink.getDamage() < ink.getMaxDamage() - 1)
 				if(note.getItem() == ArcanaItems.RESEARCH_NOTE.get()){
 					for(AspectSlot slot : puzzle.getAspectSlots(() -> IAspectHandler.getFrom(te))){
 						puzzleSlots.add(slot);
@@ -215,10 +212,6 @@ public class ResearchTableContainer extends AspectContainer{
 			getAspectSlots().add(slot);
 			scrollableSlots.add(slot);
 		}
-		// combinator slots
-		/*aspectSlots.add(leftStoreSlot = new AspectStoreSlot(table, 30, 179));
-		aspectSlots.add(rightStoreSlot = new AspectStoreSlot(table, 92, 179));
-		aspectSlots.add(new CombinatorAspectSlot(leftStoreSlot, rightStoreSlot, 61, 179));*/
 		
 		refreshPuzzleSlots(playerInventory);
 	}
@@ -270,13 +263,15 @@ public class ResearchTableContainer extends AspectContainer{
 			
 			for(int i = puzzleItemSlots.size() - 1; i >= 0; i--){
 				Slot slot = puzzleItemSlots.get(i);
-				//getInventory().remove(slot.slotNumber);
 				inventorySlots.remove(slot);
 			}
 			puzzleItemSlots.clear();
 			puzzleInventorySlots = null;
 			
-			//te.ink().damageItem(1, lastClickPlayer,this::onInkBreak); //TODO: FIX THAT
+			// lastClickPlayer can be null
+			// so we can't go through this normal means
+			int amount = te.ink().getItem().damageItem(te.ink(), 1, null, __ -> {});
+			te.ink().attemptDamageItem(amount, new Random(), null);
 			
 			te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> {
 				handler.extractItem(2, 64, false);

@@ -143,71 +143,42 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	public boolean isEmpty() {
 		return false;
 	}
-
-	/**
-	 * Returns the stack in the given slot.
-	 *
-	 * @param index
-	 */
+	
 	@Override
 	public ItemStack getStackInSlot(int index) {
 		return this.items.getStackInSlot(index);
 	}
-
-	/**
-	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-	 *
-	 * @param index
-	 * @param count
-	 */
+	
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		ItemStack stack0 = this.items.getStackInSlot(index);
-		ItemStack stack1 = this.items.getStackInSlot(index).copy();
+		ItemStack stack0 = items.getStackInSlot(index);
+		ItemStack stack1 = items.getStackInSlot(index).copy();
 		stack0.shrink(count);
 		stack1.setCount(count);
 		return stack1; //TODO: Check of works fine (custom impl)
 	}
-
-	/**
-	 * Removes a stack from the given slot and returns it.
-	 *
-	 * @param index
-	 */
+	
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
 		ItemStack stack = this.items.getStackInSlot(index).copy();
-		this.items.getStackInSlot(index).setCount(0);
+		items.getStackInSlot(index).setCount(0);
 		return stack;
 	}
-
-	/**
-	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-	 *
-	 * @param index
-	 * @param stack
-	 */
+	
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-		ItemStack itemstack = this.items.getStackInSlot(index);
-		boolean flag = !stack.isEmpty() && stack.isItemEqual(itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack);
-		this.items.setStackInSlot(index, stack);
-		if (stack.getCount() > this.getInventoryStackLimit()) {
-			stack.setCount(this.getInventoryStackLimit());
+		items.setStackInSlot(index, stack);
+		if (stack.getCount() > getInventoryStackLimit()) {
+			stack.setCount(getInventoryStackLimit());
 		}
 	}
-
-	/**
-	 * Don't rename this method to canInteractWith due to conflicts with Container
-	 *
-	 * @param player
-	 */
+	
 	@Override
 	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (this.world.getTileEntity(this.pos) != this) {
+		if (world.getTileEntity(pos) != this) {
 			return false;
 		} else {
-			return player.getDistanceSq((double)this.pos.getX() + 0.5D, (double)this.pos.getY() + 0.5D, (double)this.pos.getZ() + 0.5D) <= 64.0D;
+			return player.getDistanceSq(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5) <= 64;
 		}
 	}
 
