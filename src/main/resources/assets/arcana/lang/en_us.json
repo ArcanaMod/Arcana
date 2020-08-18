@@ -835,5 +835,8 @@
     "research.arcana.tainted.stage.1": "Taint, in its natural state, is unwieldy and unusable, corrupting all in its path and twisting them into husks of their former selves. Despite my best efforts to contain it, its spread seems inevitable at times, with only diligent cleanup and harsh work keeping it in check. Perhaps there's a better way -- perhaps I can instead tame the beast, and put it to my own uses.\n\nTo that end, I have created the §otainted codex§r: a safe store for my research, to contain whatever revelations or ramblings I create.\\n\\nThe first obvious usage of taint is in spellcasting; specifically, using it as part of a wand. I will need to test how a tainted component affects its spellcasting and vis storage capabilities.",
 
     "_comment": "Messages",
-    "message.arcana.disabled": "This book is currently disabled."
+    "message.arcana.disabled": "This book is currently disabled.",
+
+    "_comment": "Toasts",
+    "puzzle.toast.title": "Puzzle Complete!"
 }

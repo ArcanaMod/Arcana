@@ -1,9 +1,11 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.Arcana;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.research.ResearchEntry;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -31,7 +33,6 @@ public class ResearchNoteItem extends Item{
 	public ResearchNoteItem(Properties properties, boolean complete){
 		super(properties);
 		isComplete = complete;
-		//setMaxStackSize(1);
 	}
 	
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
@@ -46,6 +47,19 @@ public class ResearchNoteItem extends Item{
 				from.completePuzzle(puzzle);
 				if(!player.abilities.isCreativeMode)
 					stack.shrink(1);
+				// If this note is associated with a research entry,
+				if(compound.contains("research")){
+					ResourceLocation research = new ResourceLocation(compound.getString("research"));
+					ResearchEntry entry = ResearchBooks.getEntry(research);
+					// and that entry only has one requirement,
+					if(entry.sections().get(from.entryStage(entry)).getRequirements().size() == 1)
+						// continue straight away.
+						from.advanceEntry(entry);
+					// display a toast
+					if(world.isRemote())
+						Arcana.proxy.displayPuzzleToast(entry);
+				}else if(world.isRemote())
+					Arcana.proxy.displayPuzzleToast(null);
 				return new ActionResult<>(ActionResultType.SUCCESS, stack);
 			}
 		}
@@ -56,7 +70,6 @@ public class ResearchNoteItem extends Item{
 		CompoundNBT compound = stack.getTag();
 		if(compound != null && compound.contains("research")){
 			ResourceLocation research = new ResourceLocation(compound.getString("research"));
-			//tooltip.add(TextFormatting.AQUA + I18n.format(ResearchBooks.getEntry(research).name()));
 			tooltip.add(new TranslationTextComponent(ResearchBooks.getEntry(research).name()).applyTextStyle(TextFormatting.AQUA));
 		}
 	}

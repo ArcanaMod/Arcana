@@ -4,6 +4,7 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
 import net.arcanamod.client.event.*;
+import net.arcanamod.client.gui.CompletePuzzleToast;
 import net.arcanamod.client.gui.ResearchBookScreen;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.gui.ScribbledNoteScreen;
@@ -14,6 +15,7 @@ import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.research.ResearchBooks;
+import net.arcanamod.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -28,6 +30,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
+import javax.annotation.Nullable;
 
 import static net.arcanamod.Arcana.MODID;
 
@@ -111,5 +115,9 @@ public class ClientProxy extends CommonProxy{
 			return super.getAspectItemStackForDisplay();
 		else
 			return AspectUtils.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % AspectUtils.aspectStacks.size());
+	}
+	
+	public void displayPuzzleToast(@Nullable ResearchEntry entry){
+		Minecraft.getInstance().getToastGui().add(new CompletePuzzleToast(entry));
 	}
 }

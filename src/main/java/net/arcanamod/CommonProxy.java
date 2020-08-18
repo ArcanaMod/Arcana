@@ -2,6 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.event.ResearchEvent;
+import net.arcanamod.research.ResearchEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -9,6 +10,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+
+import javax.annotation.Nullable;
 
 /**
  * Common Proxy
@@ -26,7 +29,7 @@ public class CommonProxy{
 	
 	public void openResearchBookUI(ResourceLocation book){
 	}
-
+	
 	public void openScribbledNotesUI(){
 	}
 	
@@ -52,5 +55,8 @@ public class CommonProxy{
 	
 	public ItemStack getAspectItemStackForDisplay(){
 		return AspectUtils.aspectStacks.get(0);
+	}
+	
+	public void displayPuzzleToast(@Nullable ResearchEntry entry){
 	}
 }
