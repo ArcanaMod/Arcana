@@ -51,7 +51,7 @@ public class ClientProxy extends CommonProxy{
 		modEventBus.addListener(RenderTooltip::makeTooltip);
 		modEventBus.addListener(FogHandler::setFogColour);
 		modEventBus.addListener(FogHandler::setFogDensity);
-		modEventBus.addListener(FogHandler::setFogMode);
+		modEventBus.addListener(FogHandler::setFogLength);
 		modEventBus.addListener(InitScreenHandler::onInitGuiEvent);
 		modEventBus.addListener(ParticleFactoryEvent::onParticleFactoryRegister);
 

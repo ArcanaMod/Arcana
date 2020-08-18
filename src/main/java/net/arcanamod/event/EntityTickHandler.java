@@ -116,7 +116,7 @@ public class EntityTickHandler{
 				trackable.setInTaintBiome(true);
 				trackable.addTimeInTaintBiome(1);
 				if(!Taint.isTainted(living.getType()) && trackable.getTimeInTaintBiome() > ArcanaConfig.TAINT_EFFECT_TIME.get())
-					living.addPotionEffect(new EffectInstance(ArcanaEffects.TAINTED.get(), 5 * 20));
+					living.addPotionEffect(new EffectInstance(ArcanaEffects.TAINTED.get(), 5 * 20, 0, true, true));
 			}else{
 				trackable.setInTaintBiome(false);
 				trackable.setTimeInTaintBiome(0);
