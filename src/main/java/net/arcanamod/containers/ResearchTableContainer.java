@@ -9,6 +9,7 @@ import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.ArcanaTags;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -89,7 +90,7 @@ public class ResearchTableContainer extends AspectContainer{
 		addSlot(new SlotItemHandler(itemHandler, 1, 137, 11){
 			public boolean isItemValid(@Nonnull ItemStack stack){
 				// only ink
-				return super.isItemValid(stack) && stack.getItem() == ArcanaItems.SCRIBING_TOOLS.get();
+				return super.isItemValid(stack) && stack.getItem().isIn(ArcanaTags.SCRIBING_TOOLS);
 			}
 			
 			public void onSlotChanged(){
