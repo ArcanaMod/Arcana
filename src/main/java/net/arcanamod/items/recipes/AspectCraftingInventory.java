@@ -1,18 +1,87 @@
 package net.arcanamod.items.recipes;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.containers.slots.WandSlot;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
-public class AspectCraftingInventory extends CraftingInventory {
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Set;
+
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class AspectCraftingInventory extends CraftingInventory{
+	
 	private WandSlot wandSlot;
-
-	public AspectCraftingInventory(Container eventHandlerIn, WandSlot wandSlot, int width, int height) {
-		super(eventHandlerIn, width, height);
+	private IInventory deferred;
+	
+	public AspectCraftingInventory(Container eventHandler, WandSlot wandSlot, int width, int height, IInventory deferred){
+		super(eventHandler, width, height);
 		this.wandSlot = wandSlot;
+		this.deferred = deferred;
 	}
 
 	public WandSlot getWandSlot() {
 		return wandSlot;
+	}
+	
+	public int getSizeInventory(){
+		return deferred.getSizeInventory();
+	}
+	
+	public ItemStack removeStackFromSlot(int index){
+		return deferred.removeStackFromSlot(index);
+	}
+	
+	public ItemStack decrStackSize(int index, int count){
+		return deferred.decrStackSize(index, count);
+	}
+	
+	public void setInventorySlotContents(int index, ItemStack stack){
+		deferred.setInventorySlotContents(index, stack);
+	}
+	
+	public void markDirty(){
+		deferred.markDirty();
+	}
+	
+	public void clear(){
+		deferred.clear();
+	}
+	
+	public int getInventoryStackLimit(){
+		return deferred.getInventoryStackLimit();
+	}
+	
+	public void openInventory(PlayerEntity player){}
+	
+	public void closeInventory(PlayerEntity player){}
+	
+	public boolean isItemValidForSlot(int index, ItemStack stack){
+		return deferred.isItemValidForSlot(index, stack);
+	}
+	
+	public int count(Item item){
+		return deferred.count(item);
+	}
+	
+	public boolean hasAny(Set<Item> set){
+		return deferred.hasAny(set);
+	}
+	
+	public boolean isEmpty(){
+		return deferred.isEmpty();
+	}
+	
+	public boolean isUsableByPlayer(PlayerEntity player){
+		return deferred.isUsableByPlayer(player);
+	}
+	
+	public ItemStack getStackInSlot(int index){
+		return deferred.getStackInSlot(index);
 	}
 }

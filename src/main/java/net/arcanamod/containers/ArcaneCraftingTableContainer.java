@@ -40,8 +40,8 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 		super(type, id);
 		this.inventory = inventory;
 		this.playerInventory = playerInventory;
-		WandSlot wandSlot = new WandSlot(this,inventory, 1, 160, 18);
-		this.craftMatrix = new AspectCraftingInventory(this,wandSlot, 3, 3);
+		WandSlot wandSlot = new WandSlot(this, inventory, 1, 160, 18);
+		this.craftMatrix = new AspectCraftingInventory(this, wandSlot, 3, 3, inventory);
 		this.addSlot(new AspectCraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
 		this.addSlot(wandSlot);
 		for(int i = 0; i < 3; ++i) {
@@ -57,7 +57,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	}
 
 	public ArcaneCraftingTableContainer(int i, PlayerInventory playerInventory){
-		this(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), i, playerInventory, new Inventory(2));
+		this(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), i, playerInventory, new Inventory(10));
 	}
 
 	protected static void craft(int windowId, World world, PlayerEntity playerEntity, AspectCraftingInventory craftingInventory, CraftResultInventory resultInventory){
@@ -208,6 +208,5 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	
 	public void onContainerClosed(PlayerEntity player){
 		super.onContainerClosed(player);
-		clearContainer(player, player.world, craftMatrix);
 	}
 }
