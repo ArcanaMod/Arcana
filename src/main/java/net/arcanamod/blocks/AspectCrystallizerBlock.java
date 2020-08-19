@@ -6,7 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -47,5 +50,17 @@ public class AspectCrystallizerBlock extends Block{
 			return ActionResultType.SUCCESS;
 		}
 		return super.onBlockActivated(state, world, pos, player, hand, rayTraceResult);
+	}
+	
+	public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moving){
+		if(state.getBlock() != newState.getBlock()){
+			TileEntity tileentity = world.getTileEntity(pos);
+			if(tileentity instanceof IInventory){
+				InventoryHelper.dropInventoryItems(world, pos, (IInventory)tileentity);
+				world.updateComparatorOutputLevel(pos, this);
+			}
+			
+			super.onReplaced(state, world, pos, newState, moving);
+		}
 	}
 }
