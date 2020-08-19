@@ -45,11 +45,11 @@
 
     "item.arcana.error_cap.prefix": "Invalid Capped",
     "item.arcana.iron_cap.prefix": "Iron Capped",
-    "item.arcana.gold_cap.prefix": "Gold Topped",
+    "item.arcana.gold_cap.prefix": "Gold Capped",
     "item.arcana.thaumium_cap.prefix": "Thaumium Capped",
     "item.arcana.void_cap.prefix": "Void Capped",
     "item.arcana.copper_cap.prefix": "Copper Capped",
-    "item.arcana.silver_cap.prefix": "Silver Topped",
+    "item.arcana.silver_cap.prefix": "Silver Capped",
     "item.arcana.manasteel_cap.prefix": "Manasteel Capped",
     "item.arcana.elementium_cap.prefix": "Elementium Capped",
     "item.arcana.terrasteel_cap.prefix": "Terrasteel Capped",
