@@ -6,13 +6,11 @@ import net.arcanamod.Arcana;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.research.PuzzleRenderer;
-import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.research.Puzzle;
 import net.arcanamod.research.ResearchBooks;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
@@ -89,7 +87,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	}
 
 	private void updateAspectSearch() {
-		if (!this.searchWidget.getText().equals("")) {
+		if (!searchWidget.getText().equals("")) {
 			ResearchTableContainer container = aspectContainer;
 			List<AspectSlot> slots = container.scrollableSlots;
 			for(int i = 0; i < slots.size(); i++){
@@ -146,37 +144,36 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		}
 
 		@Override
-		public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
+		public void render(int mouseX, int mouseY, float partialTicks) {
 			if(visible){
-				//hovered = mouseX >= guiLeft + x && mouseY >= guiTop + y && mouseX < guiLeft + x + width && mouseY < guiTop + y + height;
+				isHovered = mouseX >= x && mouseY >= + y && mouseX < guiLeft + x + width && mouseY < guiTop + y + height;
 				int teX = right ? 120 : 135;
 				int teY = 307;
 				ResearchTableContainer container = aspectContainer;
 				// first check if there are multiple pages
-				if (container!=null)
-				if(container.scrollableSlots.size() > 36)
-					if(right){
-						// if I am not on the last page
-						if(container.scrollableSlots.size() > 36 * (page + 1)){
-							teY -= 11;
-							if(isHovered)
+				if(container != null)
+					if(container.scrollableSlots.size() > 36)
+						if(right){
+							// if I am not on the last page
+							if(container.scrollableSlots.size() > 36 * (page + 1)){
 								teY -= 11;
-						}
-					}else{
-						// if I am not on the first page
-						if(page > 0){
-							teY -= 11;
-							if(isHovered)
+								if(isHovered)
+									teY -= 11;
+							}
+						}else{
+							// if I am not on the first page
+							if(page > 0){
 								teY -= 11;
+								if(isHovered)
+									teY -= 11;
+							}
 						}
-					}
 				// then just draw
 				minecraft.getTextureManager().bindTexture(BG);
 				GlStateManager.disableLighting();
-				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+				RenderSystem.color4f(1, 1, 1, 1);
 				UiUtil.drawModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
 			}
-			//super.render(p_render_1_,p_render_2_,p_render_3_); //Don't render default button! //TODO: Hover dosn't work
 		}
 	}
 }

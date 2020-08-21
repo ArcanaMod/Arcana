@@ -78,7 +78,7 @@ public class AspectUtils {
 	public static boolean areAspectsConnected(Aspect a, Aspect b){
 		if(a != null)
 			if(b != null)
-				return Aspects.combinations.inverse().getOrDefault(a, Pair.of(null, null)).contains(b) || Aspects.combinations.inverse().getOrDefault(b, Pair.of(null, null)).contains(a);
+				return Aspects.COMBINATIONS.inverse().getOrDefault(a, Pair.of(null, null)).contains(b) || Aspects.COMBINATIONS.inverse().getOrDefault(b, Pair.of(null, null)).contains(a);
 		return false;
 	}
 

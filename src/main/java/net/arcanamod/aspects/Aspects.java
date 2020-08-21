@@ -90,71 +90,71 @@ public class Aspects {
 			WIND = Aspect.create("wind", create(0x5d5f71, 0x888599, 0x9ea0bd, 0xccd0df, 0xfffde8),null),
 			WRATH = Aspect.create("wrath", create(0x5a0b3d, 0x8e0f3e, 0xc61626, 0xed1507, 0xffbe8d),null);
 	
-	public static final BiMap<Pair<Aspect, Aspect>, Aspect> combinations = HashBiMap.create(Aspects.values().length);
+	public static final BiMap<Pair<Aspect, Aspect>, Aspect> COMBINATIONS = HashBiMap.create(Aspects.values().length);
 	
 	static{
-		combinations.put(of(FIRE, CHAOS), ICE);
-		combinations.put(of(FIRE, AIR), LIGHT);
-		combinations.put(of(ORDER, AIR), MOVEMENT);
-		combinations.put(of(ORDER, CHAOS), EXCHANGE);
-		combinations.put(of(FIRE, ORDER), STRENGTH);
-		combinations.put(of(AIR, WATER), WIND);
-		combinations.put(of(AIR, CHAOS), VACUUM);
-		combinations.put(of(WATER, CHAOS), VENOM);
-		combinations.put(of(WATER, EARTH), LIFE);
-		combinations.put(of(ORDER, EARTH), CRYSTAL);
+		COMBINATIONS.put(of(FIRE, CHAOS), ICE);
+		COMBINATIONS.put(of(FIRE, AIR), LIGHT);
+		COMBINATIONS.put(of(ORDER, AIR), MOVEMENT);
+		COMBINATIONS.put(of(ORDER, CHAOS), EXCHANGE);
+		COMBINATIONS.put(of(FIRE, ORDER), STRENGTH);
+		COMBINATIONS.put(of(AIR, WATER), WIND);
+		COMBINATIONS.put(of(AIR, CHAOS), VACUUM);
+		COMBINATIONS.put(of(WATER, CHAOS), VENOM);
+		COMBINATIONS.put(of(WATER, EARTH), LIFE);
+		COMBINATIONS.put(of(ORDER, EARTH), CRYSTAL);
 		
-		combinations.put(of(LIGHT, LIFE), OVERWORLD);
-		combinations.put(of(MOVEMENT, LIFE), BEAST);
-		combinations.put(of(EARTH, LIFE), PLANT);
-		combinations.put(of(EARTH, MOVEMENT), JOURNEY);
-		combinations.put(of(WATER, LIFE), SLIME);
-		combinations.put(of(EARTH, CRYSTAL), METAL);
-		combinations.put(of(LIFE, CHAOS), DEATH);
-		combinations.put(of(STRENGTH, VACUUM), MANA);
-		combinations.put(of(LIGHT, VACUUM), DARKNESS);
-		combinations.put(of(MOVEMENT, CHAOS), IMPRISON);
-		combinations.put(of(AIR, MOVEMENT), FLIGHT);
+		COMBINATIONS.put(of(LIGHT, LIFE), OVERWORLD);
+		COMBINATIONS.put(of(MOVEMENT, LIFE), BEAST);
+		COMBINATIONS.put(of(EARTH, LIFE), PLANT);
+		COMBINATIONS.put(of(EARTH, MOVEMENT), JOURNEY);
+		COMBINATIONS.put(of(WATER, LIFE), SLIME);
+		COMBINATIONS.put(of(EARTH, CRYSTAL), METAL);
+		COMBINATIONS.put(of(LIFE, CHAOS), DEATH);
+		COMBINATIONS.put(of(STRENGTH, VACUUM), MANA);
+		COMBINATIONS.put(of(LIGHT, VACUUM), DARKNESS);
+		COMBINATIONS.put(of(MOVEMENT, CHAOS), IMPRISON);
+		COMBINATIONS.put(of(AIR, MOVEMENT), FLIGHT);
 		
-		combinations.put(of(VACUUM, DARKNESS), ENDER);
-		combinations.put(of(AIR, PLANT), TREE);
-		combinations.put(of(AIR, MANA), AURA);
-		combinations.put(of(BEAST, DEATH), FLESH);
-		combinations.put(of(MOVEMENT, DEATH), UNDEAD);
-		combinations.put(of(LIFE, DEATH), SPIRIT);
+		COMBINATIONS.put(of(VACUUM, DARKNESS), ENDER);
+		COMBINATIONS.put(of(AIR, PLANT), TREE);
+		COMBINATIONS.put(of(AIR, MANA), AURA);
+		COMBINATIONS.put(of(BEAST, DEATH), FLESH);
+		COMBINATIONS.put(of(MOVEMENT, DEATH), UNDEAD);
+		COMBINATIONS.put(of(LIFE, DEATH), SPIRIT);
 		
-		combinations.put(of(AIR, SPIRIT), SENSES);
-		combinations.put(of(ORDER, SPIRIT), MIND);
-		combinations.put(of(FIRE, SPIRIT), NETHER);
+		COMBINATIONS.put(of(AIR, SPIRIT), SENSES);
+		COMBINATIONS.put(of(ORDER, SPIRIT), MIND);
+		COMBINATIONS.put(of(FIRE, SPIRIT), NETHER);
 		
-		combinations.put(of(MIND, CHAOS), ELDRITCH);
-		combinations.put(of(MANA, CHAOS), TAINT);
-		combinations.put(of(MIND, SENSES), CREATION);
+		COMBINATIONS.put(of(MIND, CHAOS), ELDRITCH);
+		COMBINATIONS.put(of(MANA, CHAOS), TAINT);
+		COMBINATIONS.put(of(MIND, SENSES), CREATION);
 		
-		combinations.put(of(CREATION, ORDER), TOOL);
-		combinations.put(of(CREATION, PLANT), SEEDS);
-		combinations.put(of(CREATION, EARTH), MINING);
+		COMBINATIONS.put(of(CREATION, ORDER), TOOL);
+		COMBINATIONS.put(of(CREATION, PLANT), SEEDS);
+		COMBINATIONS.put(of(CREATION, EARTH), MINING);
 		
-		combinations.put(of(CREATION, TOOL), CRAFTING);
-		combinations.put(of(MOVEMENT, TOOL), MACHINE);
-		combinations.put(of(SEEDS, TOOL), HARVEST);
-		combinations.put(of(BEAST, TOOL), FABRIC);
-		combinations.put(of(FIRE, TOOL), WEAPON);
-		combinations.put(of(CREATION, TOOL), ARMOUR);
-		combinations.put(of(CREATION, MIND), HUMAN);
+		COMBINATIONS.put(of(CREATION, TOOL), CRAFTING);
+		COMBINATIONS.put(of(MOVEMENT, TOOL), MACHINE);
+		COMBINATIONS.put(of(SEEDS, TOOL), HARVEST);
+		COMBINATIONS.put(of(BEAST, TOOL), FABRIC);
+		COMBINATIONS.put(of(FIRE, TOOL), WEAPON);
+		COMBINATIONS.put(of(CREATION, TOOL), ARMOUR);
+		COMBINATIONS.put(of(CREATION, MIND), HUMAN);
 		
-		combinations.put(of(HUMAN, FLESH), LUST);
-		combinations.put(of(HUMAN, IMPRISON), SLOTH);
-		combinations.put(of(HUMAN, VACUUM), GLUTTONY);
-		combinations.put(of(HUMAN, WEAPON), WRATH);
-		combinations.put(of(HUMAN, CREATION), ENVY);
-		combinations.put(of(HUMAN, FABRIC), PRIDE);
-		combinations.put(of(HUMAN, METAL), GREED);
+		COMBINATIONS.put(of(HUMAN, FLESH), LUST);
+		COMBINATIONS.put(of(HUMAN, IMPRISON), SLOTH);
+		COMBINATIONS.put(of(HUMAN, VACUUM), GLUTTONY);
+		COMBINATIONS.put(of(HUMAN, WEAPON), WRATH);
+		COMBINATIONS.put(of(HUMAN, CREATION), ENVY);
+		COMBINATIONS.put(of(HUMAN, FABRIC), PRIDE);
+		COMBINATIONS.put(of(HUMAN, METAL), GREED);
 	}
 
 	@Nullable
 	public static Aspect getCompound(Pair<Aspect, Aspect> components){
-		return Aspects.combinations.containsKey(components) ? Aspects.combinations.get(components) : Aspects.combinations.getOrDefault(components.flip(), null);
+		return Aspects.COMBINATIONS.containsKey(components) ? Aspects.COMBINATIONS.get(components) : Aspects.COMBINATIONS.getOrDefault(components.flip(), null);
 	}
 
 	/**

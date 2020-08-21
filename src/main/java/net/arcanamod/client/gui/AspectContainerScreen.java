@@ -26,14 +26,15 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		for(AspectSlot slot : aspectContainer.getAspectSlots()){
 			if(slot.getInventory().get() != null && slot.visible){
-				if(slot.getAspect() != null)
+				if(slot.getAspect() != null){
 					itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(slot.getAspect()), slot.x, slot.y);
+					itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(slot.getAspect()), slot.x - 1, slot.y + 3, slot.shouldShowAmount() ? String.valueOf(slot.getAmount()) : "");
+				}
 				if(isMouseOverSlot(mouseX, mouseY, slot)){
 					GlStateManager.disableLighting();
+					GlStateManager.enableBlend();
 					GuiUtils.drawGradientRect(300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
 				}
-				if(slot.getAspect() != null)
-					itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(slot.getAspect()), slot.x - 1, slot.y + 3, slot.shouldShowAmount() ? String.valueOf(slot.getAmount()) : "");
 			}
 		}
 	}

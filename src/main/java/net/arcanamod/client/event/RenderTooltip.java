@@ -1,21 +1,17 @@
 package net.arcanamod.client.event;
 
-import com.google.common.collect.BiMap;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.*;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
@@ -47,35 +43,34 @@ public class RenderTooltip{
 				RenderSystem.translatef(0F, 0F, mc.getItemRenderer().zLevel);
 				
 				int x = event.getX();
-				int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();//shiftTextByLines(event.getLines(), event.getY() + 13);
+				int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();
 				for(AspectStack stack : stacks){
 					UiUtil.renderAspectStack(stack, x, y);
 					x += 20;
 				}
 				RenderSystem.popMatrix();
-			} else {
+			}else{
 				for(String line : event.getLines()){
 					if(line.indexOf(((char)20)) != -1){
 						RenderSystem.pushMatrix();
 						RenderSystem.translatef(0, 0, 500);
 						RenderSystem.color3f(1F, 1F, 1F);
 						Minecraft mc = Minecraft.getInstance();
-						RenderSystem.translatef(0F, 0F, mc.getItemRenderer().zLevel);
-
-						int x = event.getX();
-						int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();//shiftTextByLines(event.getLines(), event.getY() + 13);
-						Aspect aspectFromDesc = AspectUtils.getAspectByDisplayName(line.replace(((char)20)+"",""));
-						if (aspectFromDesc!=null) {
-							Pair<Aspect, Aspect> combinationPairs = Aspects.combinations.inverse().get(aspectFromDesc);
-
-							if (combinationPairs != null) {
+						RenderSystem.translatef(0, 0, mc.getItemRenderer().zLevel);
+						
+						int x = event.getX() - 3;
+						int y = 10 * (event.getLines().size()) + event.getY() + 4;
+						Aspect aspectFromDesc = AspectUtils.getAspectByDisplayName(line.replace(((char)20) + "", ""));
+						if(aspectFromDesc != null){
+							Pair<Aspect, Aspect> combinationPairs = Aspects.COMBINATIONS.inverse().get(aspectFromDesc);
+							if(combinationPairs != null){
+								int color = 0xa0222222;
+								GuiUtils.drawGradientRect(300, x, y - 2, x + 39, y + 19, color, color);
 								UiUtil.renderAspectStack(new AspectStack(combinationPairs.getFirst()), x, y);
 								x += 20;
 								UiUtil.renderAspectStack(new AspectStack(combinationPairs.getSecond()), x, y);
-								x += 20;
 							}
 						}
-
 						RenderSystem.popMatrix();
 					}
 				}
