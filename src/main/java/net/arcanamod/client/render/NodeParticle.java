@@ -22,7 +22,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import static net.arcanamod.client.gui.UiUtil.blend;
+import static net.arcanamod.client.gui.UiUtil.*;
 
 @OnlyIn(Dist.CLIENT)
 @ParametersAreNonnullByDefault
@@ -56,9 +56,9 @@ public class NodeParticle extends SpriteTexturedParticle{
 				float progress = (((int)world.getGameTime() + partialTicks) / (float)time) % 1;
 				// set colour to blended
 				int blended = blend(0xffffff, blend(next.getColorRange().get(3), current.getColorRange().get(3), progress), .3f);
-				particleRed = ((blended & 0xff0000) >> 16) / 255f;
-				particleGreen = ((blended & 0xff00) >> 8) / 255f;
-				particleBlue = (blended & 0xff) / 255f;
+				particleRed = red(blended) / 255f;
+				particleGreen = green(blended) / 255f;
+				particleBlue = blue(blended) / 255f;
 			}
 			catch (ArithmeticException arithmeticException) {
 				Arcana.logger.error(arithmeticException + " at: ["+ posX+"@"+posY+"@"+posZ+"]");
