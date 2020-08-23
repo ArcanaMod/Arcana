@@ -63,7 +63,9 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		List<AspectStack> itemAspects =
 				stack.getItem() instanceof IOverrideAspects
 				? !((IOverrideAspects) stack.getItem()).getAspectStacks(stack).get(0).getAspect().name().equals("dummy")
-					? ((IOverrideAspects)stack.getItem()).getAspectStacks(stack)
+					? ((IOverrideAspects) stack.getItem()).getAspectStacks(stack).get(0).getAspect()!=Aspects.EMPTY
+						? ((IOverrideAspects)stack.getItem()).getAspectStacks(stack)
+						: new ArrayList<>()
 					: get(stack.getItem())
 				: get(stack.getItem());
 		for(BiConsumer<ItemStack, List<AspectStack>> function : stackFunctions)

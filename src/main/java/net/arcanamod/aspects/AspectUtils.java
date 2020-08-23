@@ -116,21 +116,6 @@ public class AspectUtils {
 		return null;
 	}
 
-	public static ArrayList<AspectStack> reduceAspectStacks(ArrayList<AspectStack> stacksI){
-		HashMap<Aspect,Integer> map = new HashMap<>();
-		for (AspectStack stack : stacksI){
-			if (!map.containsKey(stack.getAspect()))
-				map.put(stack.getAspect(),stack.getAmount());
-			else
-				map.replace(stack.getAspect(),map.get(stack.getAspect())+stack.getAmount());
-		}
-		ArrayList<AspectStack> stacksO = new ArrayList<>();
-		for (Aspect set : map.keySet()){
-			stacksO.add(new AspectStack(set,map.get(set)));
-		}
-		return stacksO;
-	}
-
 	public static List<AspectStack> squish(List<AspectStack> unSquished){
 		return StreamUtils.partialReduce(unSquished, AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
 	}

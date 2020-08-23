@@ -185,6 +185,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 	public List<AspectStack> getAspectStacks(ItemStack stack) {
 		IAspectHolder myHolder = IAspectHandler.getFrom(stack).getHolder(0);
 		if (myHolder==null) return IOverrideAspects.setSpecialOverrideType(SpecialOverrideType.DEFAULT);
+ 		if (myHolder.getContainedAspect()==Aspects.EMPTY) return IOverrideAspects.setSpecialOverrideType(SpecialOverrideType.NONE);
 		return Collections.singletonList(myHolder.getContainedAspectStack());
 	}
 }
