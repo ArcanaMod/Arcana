@@ -7,6 +7,7 @@ import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.AspectItem;
 import net.arcanamod.items.CrystalItem;
 import net.arcanamod.util.Pair;
+import net.arcanamod.util.StreamUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -128,5 +129,9 @@ public class AspectUtils {
 			stacksO.add(new AspectStack(set,map.get(set)));
 		}
 		return stacksO;
+	}
+
+	public static List<AspectStack> squish(List<AspectStack> unSquished){
+		return StreamUtils.partialReduce(unSquished, AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
 	}
 }

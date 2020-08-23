@@ -22,13 +22,14 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
 import java.util.List;
 
 import static net.arcanamod.ArcanaSounds.playPhialCorkpopSound;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class PhialItem extends Item{
+public class PhialItem extends Item implements IOverrideAspects {
 	
 	public PhialItem(){
 		super(new Properties().group(Arcana.ITEMS));
@@ -178,5 +179,12 @@ public class PhialItem extends Item{
 			cap.insert(0, new AspectStack(aspect, 8), false);
 		stack.setTag(stack.getShareTag());
 		return stack;
+	}
+
+	@Override
+	public List<AspectStack> getAspectStacks(ItemStack stack) {
+		IAspectHolder myHolder = IAspectHandler.getFrom(stack).getHolder(0);
+		if (myHolder==null) return IOverrideAspects.setSpecialOverrideType(SpecialOverrideType.DEFAULT);
+		return Collections.singletonList(myHolder.getContainedAspectStack());
 	}
 }

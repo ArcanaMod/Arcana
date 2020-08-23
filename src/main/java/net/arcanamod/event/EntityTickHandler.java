@@ -41,6 +41,7 @@ import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Mod.EventBusSubscriber
@@ -87,7 +88,7 @@ public class EntityTickHandler{
 							int currVis = jte.vis.getHolder(0).getCurrentVis();
 							int currVis_4th = Integer.parseInt(("" + currVis).substring(("" + currVis).length() - 1));
 							world.addParticle(new NumberParticleData(currVis_4th, ArcanaParticles.NUMBER_PARTICLE.get()), // If you change Y, particle is no more good aligned with particle
-									pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
+									pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2), 0, 0, 0);
 						}
 				}
 			}
@@ -104,16 +105,16 @@ public class EntityTickHandler{
 									stacks.add(vis.getHolder(i).getContainedAspectStack());
 								}
 							}
-							ArrayList<AspectStack> reducedStacks = AspectUtils.reduceAspectStacks(stacks);
+							List<AspectStack> reducedStacks = AspectUtils.squish(stacks);
 							for (int i = 0; i < reducedStacks.size(); i++){
 								double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw+(i*16)-72)));
 								double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw+(i*16)-72)));
-								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(vis.getHolder(i).getContainedAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
+								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(reducedStacks.get(i).getAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 										pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
-								int currVis = vis.getHolder(i).getCurrentVis();
+								int currVis = reducedStacks.get(i).getAmount();
 								int currVis_4th = Integer.parseInt(("" + currVis).substring(("" + currVis).length() - 1));
 								world.addParticle(new NumberParticleData(currVis_4th, ArcanaParticles.NUMBER_PARTICLE.get()), // If you change Y, particle is no more good aligned with particle
-										pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
+										pos.getX() + 0.5D + (((-srx*1.01) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx*1.01) / 2)), 0, 0, 0);
 							}
 						}
 					}
