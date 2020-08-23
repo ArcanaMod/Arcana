@@ -10,11 +10,13 @@ import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.world.AuraView;
+import net.arcanamod.world.ClientAuraView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
@@ -26,8 +28,13 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.ArrayList;
 import java.util.List;
 
+import static net.arcanamod.Arcana.arcLoc;
+
 @Mod.EventBusSubscriber(modid = Arcana.MODID)
 public final class Huds{
+	
+	public static final ResourceLocation FLUX_METER_FRAME = arcLoc("textures/gui/hud/flux_meter_frame.png");
+	public static final ResourceLocation FLUX_METER_FILLING = arcLoc("textures/gui/hud/flux_chaos.png");
 	
 	@SubscribeEvent
 	public static void onRenderGameOverlay(RenderGameOverlayEvent.Post event){
@@ -56,6 +63,20 @@ public final class Huds{
 					// if a focus is present
 					Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(new ItemStack(ArcanaItems.FOCUS_PARTS.get()), baseX, baseY);
 				}
+			}else if(player.getHeldItemMainhand().getItem().equals(ArcanaItems.FLUX_METER.get())){
+				// display filling at 8,8
+				// 10 frames, 32x100
+				int frame = (int)((player.ticksExisted + event.getPartialTicks()) % 10);
+				int flux = new ClientAuraView(Minecraft.getInstance().world).getTaintAt(player.getPosition());
+				int pixHeight = Math.min(flux, 100);
+				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FILLING);
+				UiUtil.drawModalRectWithCustomSizedTexture(8, 8 + (100 - pixHeight), 0, 100 * frame, 32, pixHeight, 1024, 1024);
+				// display the frame at top-left
+				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FRAME);
+				UiUtil.drawTexturedModalRect(0, 0, 0, 0, 48, 116);
+				// if the player is sneaking, display the amount of flux exactly
+				if(player.isShiftKeyDown())
+					Minecraft.getInstance().fontRenderer.drawStringWithShadow(String.valueOf(flux), 47, 8 + (97 - pixHeight), -1);
 			}
 			double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
 			Vec3d start = player.getEyePosition(1);

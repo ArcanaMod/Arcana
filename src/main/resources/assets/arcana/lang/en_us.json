@@ -116,7 +116,7 @@
     "item.arcana.scribing_tools": "Scribing Tools",
     "item.arcana.vis_manipulation_tools": "Vis Manipulation Tools",
 
-    "_comment":"Tainted Items",
+    "_comment": "Tainted Items",
     "item.arcana.cooked_tainted_cod": "Cooked Tainted Cod",
     "item.arcana.tainted_melon_slice": "Tainted Melon Slice",
     "item.arcana.tainted_potato": "Tainted Potato",
@@ -131,6 +131,8 @@
     "item.arcana.baked_tainted_potato": "Baked Tainted Potato",
     "item.arcana.tainted_beetroot": "Tainted Beetroot",
 
+    "_comment": "Creative Only",
+    "item.arcana.flux_meter": "Flux Meter",
 
     "_comment": "Arcana aspects",
     "aspect.any": "Any",
