@@ -13,10 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -116,5 +113,20 @@ public class AspectUtils {
 			if(I18n.format("aspect."+aspect.name()).equalsIgnoreCase(name))
 				return aspect;
 		return null;
+	}
+
+	public static ArrayList<AspectStack> reduceAspectStacks(ArrayList<AspectStack> stacksI){
+		HashMap<Aspect,Integer> map = new HashMap<>();
+		for (AspectStack stack : stacksI){
+			if (!map.containsKey(stack.getAspect()))
+				map.put(stack.getAspect(),stack.getAmount());
+			else
+				map.replace(stack.getAspect(),map.get(stack.getAspect())+stack.getAmount());
+		}
+		ArrayList<AspectStack> stacksO = new ArrayList<>();
+		for (Aspect set : map.keySet()){
+			stacksO.add(new AspectStack(set,map.get(set)));
+		}
+		return stacksO;
 	}
 }
