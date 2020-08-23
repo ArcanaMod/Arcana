@@ -1,9 +1,12 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,11 +16,15 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
@@ -103,7 +110,18 @@ public class JarBlock extends Block{
 		}
 		return 0;
 	}
-	
+
+	@Override
+	public void addInformation(ItemStack stack, @Nullable IBlockReader worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+		if (stack.getTag() != null)
+			if(!stack.getTag().isEmpty()) {
+				CompoundNBT cell = stack.getTag().getCompound("BlockEntityTag").getCompound("aspects").getCompound("cells").getCompound("cell_0");
+				tooltip.add(new StringTextComponent(AspectUtils.getLocalizedAspectDisplayName(AspectUtils.getAspectByName(cell.getString("aspect")))+": " +
+						cell.getInt("amount")).applyTextStyle(TextFormatting.AQUA));
+			}
+	}
+
 	public enum Type{
 		BASIC,
 		SECURED,

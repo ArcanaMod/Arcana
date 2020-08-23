@@ -21,7 +21,7 @@ public class NumberParticle extends SpriteTexturedParticle {
 		super(world, x, y, z);
 		particleGravity = 0;
 		maxAge = 0;
-		particleScale = .1f;
+		particleScale = .04f;
 		canCollide = false;
 		setSprite(sprite);
 	}
