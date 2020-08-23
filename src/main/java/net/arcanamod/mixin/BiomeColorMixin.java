@@ -25,8 +25,6 @@ public class BiomeColorMixin {
 	// TODO: I think that is better way to do this. Currently chunk loading is slower than normal
 	@Inject(method = "getWaterColor(Lnet/minecraft/world/ILightReader;Lnet/minecraft/util/math/BlockPos;)I", at = @At("HEAD"), remap = false, cancellable = true)
 	private static void getWaterColor(ILightReader worldIn, BlockPos blockPosIn, CallbackInfoReturnable<Integer> callbackInfoReturnable) {
-		if (blockPosIn.getX()==191&&blockPosIn.getY()==62&&blockPosIn.getZ()==-103)
-			System.out.println("E");
 		if (worldIn.getBlockState(blockPosIn.up()).getBlock() != Blocks.WATER) {
 			Iterator<BlockPos> im1 = BlockPos.getAllInBoxMutable(blockPosIn.add(4, 2, 4), blockPosIn.add(-4, -2, -4)).iterator();
 			while (im1.hasNext()) {
