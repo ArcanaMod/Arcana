@@ -1,6 +1,7 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.minecraft.block.Block;
@@ -119,6 +120,9 @@ public class JarBlock extends Block{
 				CompoundNBT cell = stack.getTag().getCompound("BlockEntityTag").getCompound("aspects").getCompound("cells").getCompound("cell_0");
 				tooltip.add(new StringTextComponent(AspectUtils.getLocalizedAspectDisplayName(AspectUtils.getAspectByName(cell.getString("aspect")))+": " +
 						cell.getInt("amount")).applyTextStyle(TextFormatting.AQUA));
+				if (ArcanaConfig.JAR_ANIMATION_SPEED.get()>=299792458D){ // Small easter egg ;)
+					tooltip.add(new StringTextComponent("\"being faster than light leaves you in the darkness\" -jar").applyTextStyle(TextFormatting.GRAY));
+				}
 			}
 	}
 
