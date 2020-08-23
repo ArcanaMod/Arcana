@@ -133,8 +133,8 @@ public class ArcanaConfig{
 				.comment("Whether block HUDS that display in the middle of the screen should display above the crosshair (true) or below (false).", "True by default.")
 				.define("BlockHudsTop", true);
 		JAR_ANIMATION_SPEED = CLIENT_BUILDER
-				.comment("The speed of the warded jar filling animation, in vis per tick.", "3 by default.")
-				.define("JarFillAnimationSpeed", 3);
+				.comment("The speed of the warded jar filling animation, in vis per tick.", "1.0 by default.")
+				.define("JarFillAnimationSpeed", 1.0);
 		NO_JAR_ANIMATION = CLIENT_BUILDER
 				.comment("Whether the warded jar's filling animation should be disabled.", "False by default.")
 				.define("NoJarAnimation", false);
@@ -188,6 +188,6 @@ public class ArcanaConfig{
 	public static ConfigValue<Boolean> WAND_HUD_LEFT; // true
 	public static ConfigValue<Boolean> WAND_HUD_TOP; // true
 	public static ConfigValue<Boolean> BLOCK_HUDS_TOP; // true
-	public static ConfigValue<Integer> JAR_ANIMATION_SPEED; // 3
+	public static ConfigValue<Double> JAR_ANIMATION_SPEED; // 1
 	public static ConfigValue<Boolean> NO_JAR_ANIMATION; // false
 }

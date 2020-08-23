@@ -25,10 +25,10 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	
 	private final JarBlock.Type jarType;
 	public AspectBattery vis = new AspectBattery(1, 100);
-	private int lastVis;
+	private double lastVis;
 	
-	private int clientVis;
-	private int visAnimationSpeed = ArcanaConfig.JAR_ANIMATION_SPEED.get();
+	private double clientVis;
+	private double visAnimationSpeed = ArcanaConfig.JAR_ANIMATION_SPEED.get();
 	
 	public JarTileEntity(JarBlock.Type type){
 		super(ArcanaTiles.JAR_TE.get());
@@ -139,7 +139,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	
 	@Override
 	public void tick(){
-		int newVis = vis.getHolder(0).getCurrentVis();
+		double newVis = vis.getHolder(0).getCurrentVis();
 		if(lastVis != newVis && world != null)
 			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
 		lastVis = newVis;
@@ -151,7 +151,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 			clientVis = Math.min(clientVis + visAnimationSpeed, newVis);
 	}
 	
-	public float getClientVis(float partialTicks){
+	public double getClientVis(float partialTicks){
 		int newVis = vis.getHolder(0).getCurrentVis();
 		if(clientVis > newVis)
 			return Math.max(clientVis - (visAnimationSpeed * partialTicks), newVis);
