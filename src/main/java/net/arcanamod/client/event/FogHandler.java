@@ -39,9 +39,9 @@ public class FogHandler{
 			float progress = Math.min(20, TaintTrackable.getFrom(living).getTimeInTaintBiome()) / 20f;
 			int blended = UiUtil.blend(colour, ((int)(fog.getRed() * 255) << 16) | ((int)(fog.getGreen() * 255) << 8) | ((int)(fog.getBlue() * 255)), progress);
 			
-			fog.setRed(((blended & 0xff0000) >> 16) / 255f);
-			fog.setGreen(((blended & 0xff00) >> 8) / 255f);
-			fog.setBlue((blended & 0xff) / 255f);
+			fog.setRed(UiUtil.red(blended) / 255f);
+			fog.setGreen(UiUtil.green(blended) / 255f);
+			fog.setBlue(UiUtil.blue(blended) / 255f);
 		}
 	}
 	
