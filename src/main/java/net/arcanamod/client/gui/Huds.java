@@ -23,6 +23,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
@@ -74,6 +75,12 @@ public final class Huds{
 				// display the frame at top-left
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FRAME);
 				UiUtil.drawTexturedModalRect(0, 0, 0, 0, 48, 116);
+				// if flux is over max, flash white
+				if(flux > 100){
+					int amount = (int)(Math.abs(((MathHelper.sin((player.ticksExisted + event.getPartialTicks()) / 3f)) / 3f)) * 255);
+					int colour = 0x00ffffff | (amount << 24);
+					GuiUtils.drawGradientRect(1, 8, 8, 40, 108, colour, colour);
+				}
 				// if the player is sneaking, display the amount of flux exactly
 				if(player.isShiftKeyDown())
 					Minecraft.getInstance().fontRenderer.drawStringWithShadow(String.valueOf(flux), 47, 8 + (97 - pixHeight), -1);
