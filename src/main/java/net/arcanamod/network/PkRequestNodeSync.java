@@ -37,7 +37,7 @@ public class PkRequestNodeSync{
 				AuraChunk nc = AuraChunk.getFrom(chunk);
 				// Send a PkSyncChunkNodes
 				if(nc != null)
-					Connection.sendTo(new PkSyncNodeAura(msg.chunk, nc.getNodes()), supplier.get().getSender());
+					Connection.sendTo(new PkSyncChunkNodes(msg.chunk, nc.getNodes()), supplier.get().getSender());
 			}
 		});
 		supplier.get().setPacketHandled(true);

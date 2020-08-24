@@ -6,11 +6,11 @@ import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
+import net.arcanamod.client.ClientAuraHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.world.AuraView;
-import net.arcanamod.world.ClientAuraView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -67,7 +67,7 @@ public final class Huds{
 				// display filling at 8,8
 				// 10 frames, 32x100
 				int frame = (int)((player.ticksExisted + event.getPartialTicks()) % 10);
-				int flux = new ClientAuraView(Minecraft.getInstance().world).getTaintAt(player.getPosition());
+				int flux = ClientAuraHandler.currentFlux;
 				int pixHeight = Math.min(flux, 100);
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FILLING);
 				UiUtil.drawModalRectWithCustomSizedTexture(8, 8 + (100 - pixHeight), 0, 100 * frame, 32, pixHeight, 1024, 1024);

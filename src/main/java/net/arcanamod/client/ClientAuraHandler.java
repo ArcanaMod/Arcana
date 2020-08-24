@@ -29,6 +29,8 @@ public class ClientAuraHandler{
 	// Keep track of loaded chunks on client using events.
 	// Don't keep track of aura at arbitrary positions - the server will update us on the aura at our position.
 	
+	public static int currentFlux = 0;
+	
 	@SubscribeEvent
 	public static void chunkLoadOnClient(ChunkEvent.Load event){
 		// on client

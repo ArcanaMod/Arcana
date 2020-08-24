@@ -18,19 +18,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Supplier;
 
-public class PkSyncNodeAura{
+public class PkSyncChunkNodes{
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
 	ChunkPos chunk;
 	Collection<Node> nodes;
 	
-	public PkSyncNodeAura(ChunkPos chunk, Collection<Node> nodes){
+	public PkSyncChunkNodes(ChunkPos chunk, Collection<Node> nodes){
 		this.chunk = chunk;
 		this.nodes = nodes;
 	}
 	
-	public static void encode(PkSyncNodeAura msg, PacketBuffer buffer){
+	public static void encode(PkSyncChunkNodes msg, PacketBuffer buffer){
 		CompoundNBT compound = new CompoundNBT();
 		ListNBT data = new ListNBT();
 		for(Node node : msg.nodes)
@@ -41,7 +41,7 @@ public class PkSyncNodeAura{
 		buffer.writeInt(msg.chunk.z);
 	}
 	
-	public static PkSyncNodeAura decode(PacketBuffer buffer){
+	public static PkSyncChunkNodes decode(PacketBuffer buffer){
 		ListNBT list = buffer.readCompoundTag().getList("nodes", Constants.NBT.TAG_COMPOUND);
 		Collection<Node> nodeSet = new ArrayList<>(list.size());
 		for(INBT nodeNBT : list)
@@ -49,10 +49,10 @@ public class PkSyncNodeAura{
 				nodeSet.add(Node.fromNBT((CompoundNBT)nodeNBT));
 		int x = buffer.readInt();
 		int z = buffer.readInt();
-		return new PkSyncNodeAura(new ChunkPos(x, z), nodeSet);
+		return new PkSyncChunkNodes(new ChunkPos(x, z), nodeSet);
 	}
 	
-	public static void handle(PkSyncNodeAura msg, Supplier<NetworkEvent.Context> supplier){
+	public static void handle(PkSyncChunkNodes msg, Supplier<NetworkEvent.Context> supplier){
 		supplier.get().enqueueWork(() -> {
 			// I'm on client
 			Chunk chunk = Arcana.proxy.getWorldOnClient().getChunk(msg.chunk.x, msg.chunk.z);

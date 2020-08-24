@@ -6,10 +6,12 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.TaintedBlock;
 import net.arcanamod.capabilities.AuraChunk;
 import net.arcanamod.network.Connection;
-import net.arcanamod.network.PkSyncNodeAura;
+import net.arcanamod.network.PkSyncChunkNodes;
+import net.arcanamod.network.PkSyncPlayerFlux;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.dispenser.IPosition;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -56,7 +58,7 @@ public class ServerAuraView implements AuraView{
 	}
 	
 	public void sendChunkToClients(ChunkPos pos){
-		Connection.INSTANCE.send(PacketDistributor.ALL.noArg(), new PkSyncNodeAura(pos, getNodesWithinChunk(pos)));
+		Connection.INSTANCE.send(PacketDistributor.ALL.noArg(), new PkSyncChunkNodes(pos, getNodesWithinChunk(pos)));
 	}
 	
 	public void sendAllChunksToClients(Collection<? extends IPosition> pos){
@@ -103,7 +105,10 @@ public class ServerAuraView implements AuraView{
 					}
 				}
 		});
-		// send an update packet
+		// send an update packet to every player
+		// so flux meters are accurate
+		for(ServerPlayerEntity player : world.getPlayers())
+			Connection.sendTo(new PkSyncPlayerFlux(getTaintAt(player.getPosition())), player);
 	}
 	
 	private List<ChunkPos> neighbors(ChunkPos pos){
