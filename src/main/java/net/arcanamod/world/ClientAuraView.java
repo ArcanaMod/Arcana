@@ -1,7 +1,7 @@
 package net.arcanamod.world;
 
 import net.arcanamod.capabilities.AuraChunk;
-import net.arcanamod.client.ClientNodeHandler;
+import net.arcanamod.client.ClientAuraHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -25,7 +25,7 @@ public class ClientAuraView implements AuraView{
 	
 	public Collection<Node> getAllNodes(){
 		Collection<Node> allNodes = new ArrayList<>();
-		for(ChunkPos chunkPos : ClientNodeHandler.clientLoadedChunks){
+		for(ChunkPos chunkPos : ClientAuraHandler.CLIENT_LOADED_CHUNKS){
 			IChunk chunk = world.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, false);
 			if(chunk instanceof Chunk){ // also a nonnull check
 				AuraChunk nc = AuraChunk.getFrom((Chunk)chunk);

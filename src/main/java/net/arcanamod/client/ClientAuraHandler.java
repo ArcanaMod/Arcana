@@ -1,7 +1,7 @@
 package net.arcanamod.client;
 
 import net.arcanamod.network.Connection;
-import net.arcanamod.network.PkRequestAuraSync;
+import net.arcanamod.network.PkRequestNodeSync;
 import net.arcanamod.world.ClientAuraView;
 import net.arcanamod.world.AuraView;
 import net.minecraft.client.Minecraft;
@@ -21,24 +21,25 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Mod.EventBusSubscriber({Dist.CLIENT})
-public class ClientNodeHandler{
+public class ClientAuraHandler{
 	
-	public static final Collection<ChunkPos> clientLoadedChunks = new ConcurrentSkipListSet<>(Comparator.<ChunkPos>comparingInt(value -> value.x).thenComparingInt(value -> value.z));
-	public static final Collection<Runnable> untilPlayerJoin = new CopyOnWriteArrayList<>();
+	public static final Collection<ChunkPos> CLIENT_LOADED_CHUNKS = new ConcurrentSkipListSet<>(Comparator.<ChunkPos>comparingInt(value -> value.x).thenComparingInt(value -> value.z));
+	public static final Collection<Runnable> UNTIL_PLAYER_JOIN = new CopyOnWriteArrayList<>();
 	
 	// Keep track of loaded chunks on client using events.
+	// Don't keep track of aura at arbitrary positions - the server will update us on the aura at our position.
 	
 	@SubscribeEvent
 	public static void chunkLoadOnClient(ChunkEvent.Load event){
 		// on client
 		// send PkRequestClientSync
-		untilPlayerJoin.add(() -> Connection.sendToServer(new PkRequestAuraSync(event.getChunk().getPos())));
-		clientLoadedChunks.add(event.getChunk().getPos());
+		UNTIL_PLAYER_JOIN.add(() -> Connection.sendToServer(new PkRequestNodeSync(event.getChunk().getPos())));
+		CLIENT_LOADED_CHUNKS.add(event.getChunk().getPos());
 	}
 	
 	@SubscribeEvent
 	public static void chunkUnloadOnClient(ChunkEvent.Unload event){
-		clientLoadedChunks.remove(event.getChunk().getPos());
+		CLIENT_LOADED_CHUNKS.remove(event.getChunk().getPos());
 	}
 	
 	// And tick nodes.
@@ -53,10 +54,10 @@ public class ClientNodeHandler{
 				view.getAllNodes().forEach(node -> node.type().tick(world, view, node));
 			}
 			
-			if(!untilPlayerJoin.isEmpty() && Minecraft.getInstance().player != null){
-				List<Runnable> temp = new ArrayList<>(ClientNodeHandler.untilPlayerJoin);
+			if(!UNTIL_PLAYER_JOIN.isEmpty() && Minecraft.getInstance().player != null){
+				List<Runnable> temp = new ArrayList<>(ClientAuraHandler.UNTIL_PLAYER_JOIN);
 				temp.forEach(Runnable::run);
-				ClientNodeHandler.untilPlayerJoin.removeAll(temp);
+				ClientAuraHandler.UNTIL_PLAYER_JOIN.removeAll(temp);
 			}
 		}
 	}

@@ -30,8 +30,8 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkAspectClick.class, PkAspectClick::encode, PkAspectClick::decode, PkAspectClick::handle);
 		INSTANCE.registerMessage(id++, PkSyncAspectContainer.class, PkSyncAspectContainer::encode, PkSyncAspectContainer::decode, PkSyncAspectContainer::handle);
 		INSTANCE.registerMessage(id++, PkGetNote.class, PkGetNote::encode, PkGetNote::decode, PkGetNote::handle);
-		INSTANCE.registerMessage(id++, PkSyncChunkAura.class, PkSyncChunkAura::encode, PkSyncChunkAura::decode, PkSyncChunkAura::handle);
-		INSTANCE.registerMessage(id++, PkRequestAuraSync.class, PkRequestAuraSync::encode, PkRequestAuraSync::decode, PkRequestAuraSync::handle);
+		INSTANCE.registerMessage(id++, PkSyncNodeAura.class, PkSyncNodeAura::encode, PkSyncNodeAura::decode, PkSyncNodeAura::handle);
+		INSTANCE.registerMessage(id++, PkRequestNodeSync.class, PkRequestNodeSync::encode, PkRequestNodeSync::decode, PkRequestNodeSync::handle);
 		INSTANCE.registerMessage(id++, PkClientSlotDrain.class, PkClientSlotDrain::encode, PkClientSlotDrain::decode, PkClientSlotDrain::handle);
 	}
 	

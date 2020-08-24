@@ -18,21 +18,19 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Supplier;
 
-public class PkSyncChunkAura{
+public class PkSyncNodeAura{
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
 	ChunkPos chunk;
 	Collection<Node> nodes;
-	int taint;
 	
-	public PkSyncChunkAura(ChunkPos chunk, Collection<Node> nodes, int taint){
+	public PkSyncNodeAura(ChunkPos chunk, Collection<Node> nodes){
 		this.chunk = chunk;
 		this.nodes = nodes;
-		this.taint = taint;
 	}
 	
-	public static void encode(PkSyncChunkAura msg, PacketBuffer buffer){
+	public static void encode(PkSyncNodeAura msg, PacketBuffer buffer){
 		CompoundNBT compound = new CompoundNBT();
 		ListNBT data = new ListNBT();
 		for(Node node : msg.nodes)
@@ -41,10 +39,9 @@ public class PkSyncChunkAura{
 		buffer.writeCompoundTag(compound);
 		buffer.writeInt(msg.chunk.x);
 		buffer.writeInt(msg.chunk.z);
-		buffer.writeInt(msg.taint);
 	}
 	
-	public static PkSyncChunkAura decode(PacketBuffer buffer){
+	public static PkSyncNodeAura decode(PacketBuffer buffer){
 		ListNBT list = buffer.readCompoundTag().getList("nodes", Constants.NBT.TAG_COMPOUND);
 		Collection<Node> nodeSet = new ArrayList<>(list.size());
 		for(INBT nodeNBT : list)
@@ -52,19 +49,16 @@ public class PkSyncChunkAura{
 				nodeSet.add(Node.fromNBT((CompoundNBT)nodeNBT));
 		int x = buffer.readInt();
 		int z = buffer.readInt();
-		int taint = buffer.readInt();
-		return new PkSyncChunkAura(new ChunkPos(x, z), nodeSet, taint);
+		return new PkSyncNodeAura(new ChunkPos(x, z), nodeSet);
 	}
 	
-	public static void handle(PkSyncChunkAura msg, Supplier<NetworkEvent.Context> supplier){
+	public static void handle(PkSyncNodeAura msg, Supplier<NetworkEvent.Context> supplier){
 		supplier.get().enqueueWork(() -> {
 			// I'm on client
 			Chunk chunk = Arcana.proxy.getWorldOnClient().getChunk(msg.chunk.x, msg.chunk.z);
 			AuraChunk nc = AuraChunk.getFrom(chunk);
-			if(nc != null){
+			if(nc != null)
 				nc.setNodes(new ArrayList<>(msg.nodes));
-				nc.setTaint(msg.taint);
-			}
 		});
 		supplier.get().setPacketHandled(true);
 	}

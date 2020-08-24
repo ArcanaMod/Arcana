@@ -6,7 +6,7 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.TaintedBlock;
 import net.arcanamod.capabilities.AuraChunk;
 import net.arcanamod.network.Connection;
-import net.arcanamod.network.PkSyncChunkAura;
+import net.arcanamod.network.PkSyncNodeAura;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.dispenser.IPosition;
@@ -56,7 +56,7 @@ public class ServerAuraView implements AuraView{
 	}
 	
 	public void sendChunkToClients(ChunkPos pos){
-		Connection.INSTANCE.send(PacketDistributor.ALL.noArg(), new PkSyncChunkAura(pos, getNodesWithinChunk(pos), getTaintWithinChunk(pos)));
+		Connection.INSTANCE.send(PacketDistributor.ALL.noArg(), new PkSyncNodeAura(pos, getNodesWithinChunk(pos)));
 	}
 	
 	public void sendAllChunksToClients(Collection<? extends IPosition> pos){
