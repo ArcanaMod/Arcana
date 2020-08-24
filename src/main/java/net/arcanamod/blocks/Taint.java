@@ -2,6 +2,7 @@ package net.arcanamod.blocks;
 
 import com.google.common.collect.Lists;
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.VisShareable;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
@@ -115,15 +116,17 @@ public class Taint{
 			// and if flux level is greater than 5,
 			ServerAuraView auraView = new ServerAuraView(world);
 			int at = auraView.getTaintAt(pos);
-			if(at > 5){
+			if(at > ArcanaConfig.TAINT_SPREAD_MIN_FLUX.get()){
 				// pick a block within a 4x6x4 area
 				// If this block is air, stop. If this block doesn't have a tainted form, re-roll.
 				// Do this up to 5 times.
 				Block tainted = null;
 				BlockPos taintingPos = pos;
 				int iter = 0;
-				while(tainted == null && iter < 5){
-					taintingPos = pos.north(random.nextInt(9) - 4).west(random.nextInt(9) - 4).up(random.nextInt(13) - 6);
+				while(tainted == null && iter < ArcanaConfig.TAINT_SPREAD_TRIES.get()){
+					int xzSpread = ArcanaConfig.TAINT_SPREAD_XZ.get();
+					int ySpread = ArcanaConfig.TAINT_SPREAD_Y.get();
+					taintingPos = pos.north(random.nextInt(xzSpread * 2 + 1) - xzSpread).west(random.nextInt(xzSpread * 2 + 1) - xzSpread).up(random.nextInt(ySpread * 2 + 1) - ySpread);
 					tainted = world.getBlockState(taintingPos).getBlock();
 					if(tainted.isAir(world.getBlockState(taintingPos), world, taintingPos)){
 						tainted = null;
@@ -137,7 +140,7 @@ public class Taint{
 					BlockState taintedState = switchBlock(world.getBlockState(taintingPos), tainted).with(UNTAINTED, false);
 					world.setBlockState(taintingPos, taintedState);
 					// Reduce flux level
-					auraView.addTaintAt(pos, -1);
+					auraView.addTaintAt(pos, -ArcanaConfig.TAINT_SPREAD_FLUX_COST.get());
 					// Schedule a tick
 					world.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), taintTickWait(at));
 				}
