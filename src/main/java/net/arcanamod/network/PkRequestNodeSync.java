@@ -9,26 +9,26 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class PkRequestAuraSync{
+public class PkRequestNodeSync{
 	
 	ChunkPos chunk;
 	
-	public PkRequestAuraSync(ChunkPos chunk){
+	public PkRequestNodeSync(ChunkPos chunk){
 		this.chunk = chunk;
 	}
 	
-	public static void encode(PkRequestAuraSync msg, PacketBuffer buffer){
+	public static void encode(PkRequestNodeSync msg, PacketBuffer buffer){
 		buffer.writeInt(msg.chunk.x);
 		buffer.writeInt(msg.chunk.z);
 	}
 	
-	public static PkRequestAuraSync decode(PacketBuffer buffer){
+	public static PkRequestNodeSync decode(PacketBuffer buffer){
 		int x = buffer.readInt();
 		int z = buffer.readInt();
-		return new PkRequestAuraSync(new ChunkPos(x, z));
+		return new PkRequestNodeSync(new ChunkPos(x, z));
 	}
 	
-	public static void handle(PkRequestAuraSync msg, Supplier<NetworkEvent.Context> supplier){
+	public static void handle(PkRequestNodeSync msg, Supplier<NetworkEvent.Context> supplier){
 		supplier.get().enqueueWork(() -> {
 			// I'm on server
 			// Get nodes at chunk
@@ -37,7 +37,7 @@ public class PkRequestAuraSync{
 				AuraChunk nc = AuraChunk.getFrom(chunk);
 				// Send a PkSyncChunkNodes
 				if(nc != null)
-					Connection.sendTo(new PkSyncChunkAura(msg.chunk, nc.getNodes(), nc.getTaintLevel()), supplier.get().getSender());
+					Connection.sendTo(new PkSyncChunkNodes(msg.chunk, nc.getNodes()), supplier.get().getSender());
 			}
 		});
 		supplier.get().setPacketHandled(true);

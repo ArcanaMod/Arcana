@@ -16,7 +16,7 @@ public class ArcanaConfig{
 	
 	static{
 		COMMON_BUILDER.push("General");
-
+		
 		SPAWN_WITH_NOTES = COMMON_BUILDER
 				.comment("If the player should spawn with scribbled notes when first joining the world.", "True by default.")
 				.define("SpawnWithNotes", true);
@@ -32,7 +32,7 @@ public class ArcanaConfig{
 		GENERATE_OVERWORLD = COMMON_BUILDER
 				.comment("Enables ore generation in the overworld.", "If disabled, Arcana's ores will not generate.", "True by default.")
 				.define("OverworldGeneration", true);
-
+		
 		AMBER_MIN_VEIN_SIZE = COMMON_BUILDER
 				.comment("The minimum size of amber ore veins.", "(Currently unused. 4 by default.)")
 				.define("MinAmberSize", 4);
@@ -48,7 +48,7 @@ public class ArcanaConfig{
 		AMBER_MAX_Y = COMMON_BUILDER
 				.comment("The maximum Y level that amber ore will generate at.", "50 by default.")
 				.define("MaxAmberY", 50);
-
+		
 		SILVER_MIN_VEIN_SIZE = COMMON_BUILDER
 				.comment("The minimum size of amber ore veins.", "(Currently unused. 3 by default.)")
 				.define("MinAmberSize", 3);
@@ -64,7 +64,7 @@ public class ArcanaConfig{
 		SILVER_MAX_Y = COMMON_BUILDER
 				.comment("The maximum Y level that amber ore will generate at.", "30 by default.")
 				.define("MaxAmberY", 30);
-
+		
 		CINNABAR_MIN_VEIN_SIZE = COMMON_BUILDER
 				.comment("The minimum size of amber ore veins.", "(Currently unused. 1 by default.)")
 				.define("MinAmberSize", 1);
@@ -80,7 +80,7 @@ public class ArcanaConfig{
 		CINNABAR_MAX_Y = COMMON_BUILDER
 				.comment("The maximum Y level that amber ore will generate at.", "80 by default.")
 				.define("MaxAmberY", 80);
-
+		
 		NODE_CHANCE = COMMON_BUILDER
 				.comment("The chance of an aura node generating in a chunk, out of 100.", "1 by default.")
 				.define("NodeChance", 1);
@@ -111,7 +111,24 @@ public class ArcanaConfig{
 		TAINT_EFFECT_TIME = COMMON_BUILDER
 				.comment("The time, in ticks, an entity needs to spend in a tainted area to get the tainted status effect.", "80 by default.")
 				.define("TaintEffectTime", 80);
+		TAINT_SPREAD_XZ = COMMON_BUILDER
+				.comment("The distance that a tainted block can spread taint to horizontally.", "4 by default.")
+				.define("TaintSpreadXZ", 4);
+		TAINT_SPREAD_Y = COMMON_BUILDER
+				.comment("The distance that a tainted block can spread taint to. vertically", "6 by default.")
+				.define("TaintSpreadY", 6);
+		TAINT_SPREAD_MIN_FLUX = COMMON_BUILDER
+				.comment("The minimum flux required for a tainted block to spread taint.", "5 by default.")
+				.define("TaintSpreadMinFlux", 5);
+		TAINT_SPREAD_FLUX_COST = COMMON_BUILDER
+				.comment("The amount of flux consumed by a tainted block when it spreads taint.", "1 by default.")
+				.define("TaintSpreadFluxCost", 1);
+		TAINT_SPREAD_TRIES = COMMON_BUILDER
+				.comment("The number of times that a tainted block will attempt to spread taint on a random tick.", "5 by default.")
+				.define("TaintSpreadTries", 5);
 		COMMON_BUILDER.pop();
+		
+		
 		
 		CLIENT_BUILDER.push("Client");
 		CUSTOM_BOOK_WIDTH = CLIENT_BUILDER
@@ -150,25 +167,25 @@ public class ArcanaConfig{
 	public static ConfigValue<Boolean> NODE_RETROGEN; // false
 	public static ConfigValue<Boolean> VERBOSE; // false
 	public static ConfigValue<Boolean> GENERATE_OVERWORLD; // true
-
+	
 	public static ConfigValue<Integer> AMBER_MIN_VEIN_SIZE; // 4
 	public static ConfigValue<Integer> AMBER_MAX_VEIN_SIZE; // 8
 	public static ConfigValue<Integer> AMBER_CHANCES_TO_SPAWN; // 3
 	public static ConfigValue<Integer> AMBER_MIN_Y; // 2
 	public static ConfigValue<Integer> AMBER_MAX_Y; // 50
-
+	
 	public static ConfigValue<Integer> SILVER_MIN_VEIN_SIZE; // 3
 	public static ConfigValue<Integer> SILVER_MAX_VEIN_SIZE; // 6
 	public static ConfigValue<Integer> SILVER_CHANCES_TO_SPAWN; // 3
 	public static ConfigValue<Integer> SILVER_MIN_Y; // 1
 	public static ConfigValue<Integer> SILVER_MAX_Y; // 30
-
+	
 	public static ConfigValue<Integer> CINNABAR_MIN_VEIN_SIZE; // 1
 	public static ConfigValue<Integer> CINNABAR_MAX_VEIN_SIZE; // 3
 	public static ConfigValue<Integer> CINNABAR_CHANCES_TO_SPAWN; // 4
 	public static ConfigValue<Integer> CINNABAR_MIN_Y; // 40
 	public static ConfigValue<Integer> CINNABAR_MAX_Y; // 80
-
+	
 	public static ConfigValue<Integer> NODE_CHANCE; // 1
 	public static ConfigValue<Integer> SPECIAL_NODE_CHANCE; // 15
 	public static ConfigValue<Integer> MAX_ALEMBIC_ASPECT_DISTILL; // 2
@@ -176,10 +193,17 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> MAX_ALEMBIC_AIR; // 4
 	public static ConfigValue<Integer> MAX_ALEMBIC_STACK; // 3
 	public static ConfigValue<Double> ALCHEMY_ASPECT_CARRY_FRACTION; // .5
+	
 	public static ConfigValue<Integer> TAINT_SPAWN_THRESHOLD; // 60
 	public static ConfigValue<Integer> TAINT_SPAWN_COST; // 40
 	public static ConfigValue<Integer> TAINT_EFFECT_TIME; // 80
-
+	
+	public static ConfigValue<Integer> TAINT_SPREAD_XZ; // 4
+	public static ConfigValue<Integer> TAINT_SPREAD_Y; // 6
+	public static ConfigValue<Integer> TAINT_SPREAD_MIN_FLUX; // 5
+	public static ConfigValue<Integer> TAINT_SPREAD_FLUX_COST; // 1
+	public static ConfigValue<Integer> TAINT_SPREAD_TRIES; // 5
+	
 	
 	// Client
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1

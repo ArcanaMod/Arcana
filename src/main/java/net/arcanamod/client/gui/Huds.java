@@ -6,11 +6,11 @@ import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
+import net.arcanamod.client.ClientAuraHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.world.AuraView;
-import net.arcanamod.world.ClientAuraView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -23,6 +23,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
@@ -67,13 +68,19 @@ public final class Huds{
 				// display filling at 8,8
 				// 10 frames, 32x100
 				int frame = (int)((player.ticksExisted + event.getPartialTicks()) % 10);
-				int flux = new ClientAuraView(Minecraft.getInstance().world).getTaintAt(player.getPosition());
+				int flux = ClientAuraHandler.currentFlux;
 				int pixHeight = Math.min(flux, 100);
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FILLING);
 				UiUtil.drawModalRectWithCustomSizedTexture(8, 8 + (100 - pixHeight), 0, 100 * frame, 32, pixHeight, 1024, 1024);
 				// display the frame at top-left
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FRAME);
 				UiUtil.drawTexturedModalRect(0, 0, 0, 0, 48, 116);
+				// if flux is over max, flash white
+				if(flux > 100){
+					int amount = (int)(Math.abs(((MathHelper.sin((player.ticksExisted + event.getPartialTicks()) / 3f)) / 3f)) * 255);
+					int colour = 0x00ffffff | (amount << 24);
+					GuiUtils.drawGradientRect(1, 8, 8, 40, 108, colour, colour);
+				}
 				// if the player is sneaking, display the amount of flux exactly
 				if(player.isShiftKeyDown())
 					Minecraft.getInstance().fontRenderer.drawStringWithShadow(String.valueOf(flux), 47, 8 + (97 - pixHeight), -1);
