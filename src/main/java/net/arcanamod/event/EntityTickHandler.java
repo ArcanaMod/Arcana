@@ -81,14 +81,11 @@ public class EntityTickHandler{
 						if(jte.vis.getHolder(0).getContainedAspect() != Aspects.EMPTY){
 							double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw)));
 							double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw)));
-							double y_srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationPitch)));
-							double y_crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationPitch)));
 							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 									pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 							int currVis = jte.vis.getHolder(0).getCurrentVis();
-							int currVis_4th = Integer.parseInt(("" + currVis).substring(("" + currVis).length() - 1));
-							world.addParticle(new NumberParticleData(currVis_4th, ArcanaParticles.NUMBER_PARTICLE.get()), // If you change Y, particle is no more good aligned with particle
-									pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2), 0, 0, 0);
+							// If you change Y, particle is no more good aligned with particle
+							renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,world);
 						}
 				}
 			}
@@ -112,9 +109,8 @@ public class EntityTickHandler{
 								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(reducedStacks.get(i).getAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 										pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
 								int currVis = reducedStacks.get(i).getAmount();
-								int currVis_4th = Integer.parseInt(("" + currVis).substring(("" + currVis).length() - 1));
-								world.addParticle(new NumberParticleData(currVis_4th, ArcanaParticles.NUMBER_PARTICLE.get()), // If you change Y, particle is no more good aligned with particle
-										pos.getX() + 0.5D + (((-srx*1.01) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx*1.01) / 2)), 0, 0, 0);
+								// If you change Y, particle is no more good aligned with particle
+								renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,world);
 							}
 						}
 					}
@@ -148,11 +144,13 @@ public class EntityTickHandler{
 		double rotOffsetX = -Math.cos(Math.toRadians(rotation));
 		double rotOffsetZ = -Math.sin(Math.toRadians(rotation));
 		double size = .1;
-		double x = baseX - array.length * rotOffsetX * size;
-		double z = baseZ - array.length * rotOffsetZ * size;
+		double padding = .8;
+		double center = .25;
+		double x = baseX - array.length * rotOffsetX * size * center;
+		double z = baseZ - array.length * rotOffsetZ * size * center;
 		for(int i = 0, length = array.length; i < length; i++){
 			char c = array[i];
-			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size, baseY, z + rotOffsetZ * i * size, 0, 0, 0);
+			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY, z + rotOffsetZ * i * size * padding, 0, 0, 0);
 		}
 	}
 }
