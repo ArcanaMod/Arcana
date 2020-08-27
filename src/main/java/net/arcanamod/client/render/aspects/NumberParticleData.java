@@ -15,20 +15,23 @@ public class NumberParticleData implements IParticleData {
 		public NumberParticleData deserialize(ParticleType<NumberParticleData> particleType, StringReader reader) throws CommandSyntaxException {
 			reader.expect(' ');
 			String iloc = reader.getRemaining();
-			return new NumberParticleData(Integer.parseInt(iloc), particleType);
+			String cloc = reader.getRemaining();
+			return new NumberParticleData(Integer.parseInt(iloc),Integer.parseInt(cloc), particleType);
 		}
 
 		public NumberParticleData read(ParticleType<NumberParticleData> particleType, PacketBuffer buffer) {
-			return new NumberParticleData(buffer.readInt(), particleType);
+			return new NumberParticleData(buffer.readInt(),buffer.readInt(), particleType);
 		}
 	};
 
+	int color;
 	int count;
 	ParticleType<NumberParticleData> type;
 
-	public NumberParticleData(int count, ParticleType<NumberParticleData> type){
+	public NumberParticleData(int count, int color, ParticleType<NumberParticleData> type){
 		this.type = type;
 		this.count = count;
+		this.color = color;
 	}
 
 	public ParticleType<?> getType(){
@@ -36,7 +39,7 @@ public class NumberParticleData implements IParticleData {
 	}
 
 	public void write(PacketBuffer buffer){
-		buffer.writeInt(count);
+		buffer.writeInt(count); buffer.writeInt(color);
 	}
 
 	public String getParameters(){

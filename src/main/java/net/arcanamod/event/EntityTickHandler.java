@@ -6,6 +6,7 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.capabilities.TaintTrackable;
+import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.client.render.aspects.ArcanaParticles;
 import net.arcanamod.client.render.aspects.AspectParticleData;
 import net.arcanamod.client.render.aspects.NumberParticleData;
@@ -102,9 +103,10 @@ public class EntityTickHandler{
 							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 									pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 							int currVis = jte.vis.getHolder(0).getCurrentVis();
+							int color = UiUtil.invert(jte.vis.getHolder(0).getContainedAspect().getColorRange().get(2));
 							// Add Number Particles
 							// If you change Y, particle is no more good aligned with particle
-							renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,world);
+							renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,color,world);
 						}
 				}
 			}
@@ -144,9 +146,10 @@ public class EntityTickHandler{
 			world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(aspectStacks.get(i).getAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 					pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
 			int currVis = aspectStacks.get(i).getAmount();
+			int color = aspectStacks.get(i).getAspect().getColorRange().get(2);
 			// Add Number Particles
 			// If you change Y, particle is no more good aligned with particle
-			renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,world);
+			renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,color,world);
 		}
 	}
 	
@@ -169,7 +172,7 @@ public class EntityTickHandler{
 	}
 	
 	@SuppressWarnings("unused")
-	private static void renderNumberParticles(double baseX, double baseY, double baseZ, float rotation, int number, World world){
+	private static void renderNumberParticles(double baseX, double baseY, double baseZ, float rotation, int number, int color, World world){
 		String numberStr = String.valueOf(number);
 		char[] array = numberStr.toCharArray();
 		double rotOffsetX = -Math.cos(Math.toRadians(rotation));
@@ -181,7 +184,7 @@ public class EntityTickHandler{
 		double z = baseZ - array.length * rotOffsetZ * size * center;
 		for(int i = 0, length = array.length; i < length; i++){
 			char c = array[i];
-			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY, z + rotOffsetZ * i * size * padding, 0, 0, 0);
+			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)),color, ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY, z + rotOffsetZ * i * size * padding, 0, 0, 0);
 		}
 	}
 
