@@ -103,9 +103,11 @@ public class EntityTickHandler{
 								}
 							}
 							List<AspectStack> reducedStacks = AspectUtils.squish(stacks);
+							float[] v = spreadVertices(reducedStacks.size(),24);
 							for (int i = 0; i < reducedStacks.size(); i++){
-								double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw+(i*16)-72)));
-								double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw+(i*16)-72)));
+								double centerSpread = v[i];//i-(reducedStacks.size()/2f);
+								double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw+centerSpread+10)));
+								double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw+centerSpread+10)));
 								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(reducedStacks.get(i).getAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 										pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
 								int currVis = reducedStacks.get(i).getAmount();
@@ -152,5 +154,14 @@ public class EntityTickHandler{
 			char c = array[i];
 			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY, z + rotOffsetZ * i * size * padding, 0, 0, 0);
 		}
+	}
+
+	private static float[] spreadVertices(float amount, float padding){
+		float[] r = new float[(int)amount];
+		for (int i = 0; i < amount; i++){
+			r[i] = i-(amount/2);
+			r[i] *= padding;
+		}
+		return r;
 	}
 }

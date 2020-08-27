@@ -14,6 +14,20 @@ import java.util.regex.Pattern;
 public class TestAS {
 
 	@Test
+	public void vertexTest(){
+		int[] v = spreadVertices(6);
+		System.out.println(v);
+	}
+
+	private int[] spreadVertices(int amount){
+		int[] r = new int[amount];
+		for (int i = 0; i < amount; i++){
+			r[i] = i-(amount/2);
+		}
+		return r;
+	}
+
+	@Test
 	public void TestInsertedBattery()
 	{
 		AspectBattery battery = new AspectBattery(1, 8);
