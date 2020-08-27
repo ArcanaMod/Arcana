@@ -129,7 +129,8 @@ public final class Huds{
 					}
 				}
 			}
-			GogglePriority priority = GogglePriority.getClientGogglePriority();
+			// Replaced with Aspect Particle
+			/*GogglePriority priority = GogglePriority.getClientGogglePriority();
 			if(priority == GogglePriority.SHOW_ASPECTS){
 				AuraView view = AuraView.SIDED_FACTORY.apply(Minecraft.getInstance().world);
 				Vec3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
@@ -149,7 +150,7 @@ public final class Huds{
 							UiUtil.renderAspectStack(holder.getContainedAspect(), 0, x, y);
 					}
 				});
-			}
+			}*/
 		}
 	}
 }

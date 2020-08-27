@@ -64,8 +64,6 @@ import javax.annotation.Nonnull;
 
 /**
  * Base Arcana Class
- *
- * @author Atlas
  */
 @Mod(Arcana.MODID)
 public class Arcana{

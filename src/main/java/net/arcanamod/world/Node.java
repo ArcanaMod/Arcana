@@ -6,6 +6,7 @@ import net.minecraft.dispenser.IPosition;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.UUID;
 
@@ -56,6 +57,8 @@ public class Node implements IPosition{
 		double x = nbt.getDouble("x"), y = nbt.getDouble("y"), z = nbt.getDouble("z");
 		return nbt.hasUniqueId("nodeUniqueId") ? new Node(aspects, type, x, y, z, nbt.getUniqueId("nodeUniqueId")) : new Node(aspects, type, x, y, z);
 	}
+
+	public Vec3d getPosition(){return new Vec3d(x,y,z);}
 	
 	public IAspectHandler getAspects(){
 		return aspects;

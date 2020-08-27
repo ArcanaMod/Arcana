@@ -1,10 +1,7 @@
 package net.arcanamod.event;
 
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
@@ -19,6 +16,7 @@ import net.arcanamod.util.RayTraceUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
 import net.arcanamod.world.ServerAuraView;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +26,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -50,7 +49,8 @@ public class EntityTickHandler{
 	@SubscribeEvent
 	public static void tickPlayer(TickEvent.PlayerTickEvent event){
 		PlayerEntity player = event.player;
-		
+
+		// Give completed scribbled note when player is near node
 		if(player instanceof ServerPlayerEntity && event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END){
 			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)player;
 			// If the player is near a node,
@@ -66,58 +66,89 @@ public class EntityTickHandler{
 				serverPlayerEntity.sendStatusMessage(status, false);
 			}
 		}
-		
+
+		// Render aspect particles
 		if(player instanceof ClientPlayerEntity && event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END){
 			ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity)player;
 			World world = clientPlayerEntity.world;
 			double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
 			BlockPos pos = RayTraceUtils.getTargetBlockPos(clientPlayerEntity, world, (int)reach);
 			TileEntity te = world.getTileEntity(pos);
+			GogglePriority priority = GogglePriority.getClientGogglePriority();
+
+			// Render aspect particle around Node
+			if(priority == GogglePriority.SHOW_ASPECTS){
+				AuraView view = AuraView.SIDED_FACTORY.apply(player.world);
+				Vec3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
+				view.raycast(position, reach, player).ifPresent(node -> {
+					List<IAspectHolder> holders = node.getAspects().getHolders();
+					ArrayList<AspectStack> stacks = new ArrayList<AspectStack>();
+					for(int i = 0, size = holders.size(); i < size; i++){
+						IAspectHolder holder = holders.get(i);
+						stacks.add(holder.getContainedAspectStack());
+					}
+					renderAspectAndNumberParticlesInCircle(world,node.getPosition(),clientPlayerEntity,stacks);
+				});
+			}
+			// Render aspect particle around Jar
 			if(te instanceof JarTileEntity){
 				if(world.isRemote()){
-					GogglePriority priority = GogglePriority.getClientGogglePriority();
 					JarTileEntity jte = (JarTileEntity)te;
-					if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
+					// If player has googles show particle
+					if(priority == GogglePriority.SHOW_ASPECTS)
 						if(jte.vis.getHolder(0).getContainedAspect() != Aspects.EMPTY){
+							// track player head rotation
 							double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw)));
 							double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw)));
+							// Add Aspect Particle
 							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
 									pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 							int currVis = jte.vis.getHolder(0).getCurrentVis();
+							// Add Number Particles
 							// If you change Y, particle is no more good aligned with particle
 							renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,world);
 						}
 				}
 			}
+			// Render aspect particle around Phialshelf
 			if(te instanceof AspectBookshelfTileEntity){
 				if(world.isRemote()){
-					GogglePriority priority = GogglePriority.getClientGogglePriority();
 					AspectBookshelfTileEntity abte = (AspectBookshelfTileEntity)te;
-					if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS){
+					// If player has googles show particle
+					if(priority == GogglePriority.SHOW_ASPECTS){
 						IAspectHandler vis = IAspectHandler.getFrom(abte);
 						if(vis != null) {
+							// Get all stacks from phialshelf
 							ArrayList<AspectStack> stacks = new ArrayList<AspectStack>();
 							for (int i = 0; i < vis.getHoldersAmount(); i++) {
 								if (vis.getHolder(i).getContainedAspect() != Aspects.EMPTY) {
 									stacks.add(vis.getHolder(i).getContainedAspectStack());
 								}
 							}
+							// Squish aspect stacks in to reducedStacks
 							List<AspectStack> reducedStacks = AspectUtils.squish(stacks);
-							float[] v = spreadVertices(reducedStacks.size(),24);
-							for (int i = 0; i < reducedStacks.size(); i++){
-								double centerSpread = v[i];//i-(reducedStacks.size()/2f);
-								double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw+centerSpread+10)));
-								double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw+centerSpread+10)));
-								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(reducedStacks.get(i).getAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
-										pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
-								int currVis = reducedStacks.get(i).getAmount();
-								// If you change Y, particle is no more good aligned with particle
-								renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,world);
-							}
+							renderAspectAndNumberParticlesInCircle(world,new Vec3d(pos),clientPlayerEntity,reducedStacks);
 						}
 					}
 				}
 			}
+		}
+	}
+
+	protected static void renderAspectAndNumberParticlesInCircle(World world, Vec3d pos, ClientPlayerEntity clientPlayerEntity, List<AspectStack> aspectStacks){
+		float[] v = spreadVertices(aspectStacks.size(),24);
+		for (int i = 0; i < aspectStacks.size(); i++){
+			double centerSpread = v[i];
+			// track player head rotation
+			double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw+centerSpread+10)));
+			double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw+centerSpread+10)));
+			// Add Aspect Particle
+			world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(aspectStacks.get(i).getAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
+					pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
+			int currVis = aspectStacks.get(i).getAmount();
+			// Add Number Particles
+			// If you change Y, particle is no more good aligned with particle
+			renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,world);
 		}
 	}
 	
@@ -137,6 +168,23 @@ public class EntityTickHandler{
 				trackable.setTracking(false);
 			}
 		}
+		// lets not levitate in taint please :)
+		/*LivingEntity entity = event.getEntityLiving();
+		boolean disabled = false;
+		if(entity instanceof PlayerEntity)
+			if(entity.isSpectator())
+				disabled = true;
+		if(!disabled){
+			//Change this to what ever you want (swimming in taint :O, Taint pushes up (This code), etc.)
+			BlockPos pos = entity.getPosition();
+			Block b = entity.getEntityWorld().getBlockState(pos.offset(Direction.UP)).getBlock();
+			Block b1 = entity.getEntityWorld().getBlockState(pos).getBlock();
+			if(b.equals(ArcanaFluids.TAINT_FLUID_BLOCK.get())){
+				entity.setMotion(new Vec3d(entity.getMotion().x, 0.072600011620D + entity.getMotion().y, entity.getMotion().z));
+			}else if(b1.equals(ArcanaFluids.TAINT_FLUID_BLOCK.get())){
+				entity.setMotion(new Vec3d(entity.getMotion().x, 0.072600011620D + entity.getMotion().y, entity.getMotion().z));
+			}
+		}*/
 	}
 	
 	@SuppressWarnings("unused")
