@@ -1,4 +1,4 @@
-package net.arcanamod.client.render;
+package net.arcanamod.client.render.aspects;
 
 import net.arcanamod.Arcana;
 import net.minecraft.particles.ParticleType;

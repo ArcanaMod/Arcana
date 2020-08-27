@@ -1,7 +1,7 @@
 package net.arcanamod.client.event;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.client.render.*;
+import net.arcanamod.client.render.aspects.*;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

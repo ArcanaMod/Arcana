@@ -129,28 +129,6 @@ public final class Huds{
 					}
 				}
 			}
-			// Replaced with Aspect Particle
-			/*GogglePriority priority = GogglePriority.getClientGogglePriority();
-			if(priority == GogglePriority.SHOW_ASPECTS){
-				AuraView view = AuraView.SIDED_FACTORY.apply(Minecraft.getInstance().world);
-				Vec3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
-				view.raycast(position, reach, player).ifPresent(node -> {
-					List<IAspectHolder> holders = node.getAspects().getHolders();
-					int baseX = event.getWindow().getScaledWidth() / 2 - 8;
-					int baseY = event.getWindow().getScaledHeight() / 2 - 8;
-					for(int i = 0, size = holders.size(); i < size; i++){
-						IAspectHolder holder = holders.get(i);
-						AspectStack stack = holder.getContainedAspectStack();
-						int x = (int)(baseX + Math.sin((i / (float)size * 2) * Math.PI) * (30 + 1 / MathHelper.fastInvSqrt(size)));
-						int y = (int)(baseY + Math.cos((i / (float)size * 2) * Math.PI) * (30 + 1 / MathHelper.fastInvSqrt(size)));
-						if(!stack.isEmpty())
-							UiUtil.renderAspectStack(stack, x, y);
-						else
-							// the holder is empty, so instead defer to the whitelisted aspect
-							UiUtil.renderAspectStack(holder.getContainedAspect(), 0, x, y);
-					}
-				});
-			}*/
 		}
 	}
 }

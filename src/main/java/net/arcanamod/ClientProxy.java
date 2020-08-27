@@ -2,21 +2,29 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
 import net.arcanamod.client.event.*;
-import net.arcanamod.client.gui.CompletePuzzleToast;
-import net.arcanamod.client.gui.ResearchBookScreen;
-import net.arcanamod.client.gui.ResearchEntryScreen;
-import net.arcanamod.client.gui.ScribbledNoteScreen;
+import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
-import net.arcanamod.client.render.ArcanaParticles;
+import net.arcanamod.client.render.*;
+import net.arcanamod.client.render.aspects.ArcanaParticles;
+import net.arcanamod.client.render.tiles.AspectValveTileEntityRenderer;
+import net.arcanamod.client.render.tiles.JarTileEntityRender;
+import net.arcanamod.client.render.tiles.PedestalTileEntityRenderer;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
+import net.arcanamod.containers.ArcanaContainers;
+import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.event.ResearchEvent;
+import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -25,9 +33,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -64,6 +75,9 @@ public class ClientProxy extends CommonProxy{
 	@Override
 	public void preInit(FMLCommonSetupEvent event){
 		super.preInit(event);
+		setRenderLayers();
+		registerScreens();
+		registerRenders();
 		EntrySectionRenderer.init();
 		RequirementRenderer.init();
 		PuzzleRenderer.init();
@@ -80,7 +94,7 @@ public class ClientProxy extends CommonProxy{
 				ArcanaBlocks.CRUCIBLE.get()
 		);
 	}
-	
+
 	public void openResearchBookUI(ResourceLocation book){
 		if (!ResearchBooks.disabled.contains(book))
 			Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book)));
@@ -119,5 +133,92 @@ public class ClientProxy extends CommonProxy{
 	
 	public void displayPuzzleToast(@Nullable ResearchEntry entry){
 		Minecraft.getInstance().getToastGui().add(new CompletePuzzleToast(entry));
+	}
+
+	protected void registerRenders() {
+		//Tile Entity Special Render
+		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);
+		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.PEDESTAL_TE.get(), PedestalTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_VALVE_TE.get(), AspectValveTileEntityRenderer::new);
+
+		//Special Render
+		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));
+
+		//Entity Render
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.WILLOW_SPIRIT.get(), WillowSpiritRenderer::new);
+
+		ArcanaEntities.render();
+	}
+
+	protected void registerScreens() {
+		//Screens
+		ScreenManager.registerFactory(ArcanaContainers.RESEARCH_TABLE.get(), ResearchTableScreen::new);
+		ScreenManager.registerFactory(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), ArcaneCraftingTableScreen::new);
+		ScreenManager.registerFactory(ArcanaContainers.ASPECT_CRYSTALLIZER.get(), AspectCrystallizerScreen::new);
+	}
+
+	protected void setRenderLayers(){
+		//Render Layers for Blocks
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.JAR.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SECURE_JAR.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.VOID_JAR.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.RESEARCH_TABLE.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.ASPECT_WINDOW.get(), RenderType.getTranslucent());
+
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DEAD_FLOWER.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DEAD_GRASS.get(), RenderType.getCutout());
+
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_GRASS.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_FLOWER.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_MUSHROOM.get(), RenderType.getCutout());
+
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SILVERWOOD_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DAIR_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.EUCALYPTUS_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.GREATWOOD_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.HAWTHORN_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WILLOW_SAPLING.get(), RenderType.getCutout());
+
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_DAIR_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_ACACIA_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_BIRCH_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_DARKOAK_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_EUCALYPTUS_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_GREATWOOD_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_HAWTHORN_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_JUNGLE_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_OAK_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_SPRUCE_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_WILLOW_SAPLING.get(), RenderType.getCutout());
+
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DAIR_DOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.EUCALYPTUS_DOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.GREATWOOD_DOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SILVERWOOD_DOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.HAWTHORN_DOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WILLOW_DOOR.get(), RenderType.getCutout());
+
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DAIR_TRAPDOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SILVERWOOD_TRAPDOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.EUCALYPTUS_TRAPDOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.GREATWOOD_TRAPDOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.HAWTHORN_TRAPDOOR.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WILLOW_TRAPDOOR.get(), RenderType.getCutout());
+
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_DAIR_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_ACACIA_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_BIRCH_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_DARKOAK_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_EUCALYPTUS_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_GREATWOOD_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_HAWTHORN_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_JUNGLE_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_OAK_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_SPRUCE_LEAVES.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_WILLOW_LEAVES.get(), RenderType.getCutout());
+
+		RenderTypeLookup.setRenderLayer(ArcanaFluids.TAINT_FLUID_BLOCK.get(), RenderType.getTranslucent());
 	}
 }

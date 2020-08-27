@@ -1,4 +1,4 @@
-package net.arcanamod.client.render;
+package net.arcanamod.client.render.aspects;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.client.Minecraft;

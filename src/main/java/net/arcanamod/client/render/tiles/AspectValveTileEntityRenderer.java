@@ -1,4 +1,4 @@
-package net.arcanamod.client.render;
+package net.arcanamod.client.render.tiles;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;

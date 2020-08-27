@@ -6,9 +6,9 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.capabilities.TaintTrackable;
-import net.arcanamod.client.render.ArcanaParticles;
-import net.arcanamod.client.render.AspectParticleData;
-import net.arcanamod.client.render.NumberParticleData;
+import net.arcanamod.client.render.aspects.ArcanaParticles;
+import net.arcanamod.client.render.aspects.AspectParticleData;
+import net.arcanamod.client.render.aspects.NumberParticleData;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.GogglePriority;
@@ -36,12 +36,10 @@ import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.Mod;
-import org.apache.logging.log4j.LogManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Mod.EventBusSubscriber
 public class EntityTickHandler{
@@ -168,23 +166,6 @@ public class EntityTickHandler{
 				trackable.setTracking(false);
 			}
 		}
-		// lets not levitate in taint please :)
-		/*LivingEntity entity = event.getEntityLiving();
-		boolean disabled = false;
-		if(entity instanceof PlayerEntity)
-			if(entity.isSpectator())
-				disabled = true;
-		if(!disabled){
-			//Change this to what ever you want (swimming in taint :O, Taint pushes up (This code), etc.)
-			BlockPos pos = entity.getPosition();
-			Block b = entity.getEntityWorld().getBlockState(pos.offset(Direction.UP)).getBlock();
-			Block b1 = entity.getEntityWorld().getBlockState(pos).getBlock();
-			if(b.equals(ArcanaFluids.TAINT_FLUID_BLOCK.get())){
-				entity.setMotion(new Vec3d(entity.getMotion().x, 0.072600011620D + entity.getMotion().y, entity.getMotion().z));
-			}else if(b1.equals(ArcanaFluids.TAINT_FLUID_BLOCK.get())){
-				entity.setMotion(new Vec3d(entity.getMotion().x, 0.072600011620D + entity.getMotion().y, entity.getMotion().z));
-			}
-		}*/
 	}
 	
 	@SuppressWarnings("unused")

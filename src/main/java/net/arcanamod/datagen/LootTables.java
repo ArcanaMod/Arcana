@@ -38,8 +38,6 @@ public class LootTables extends LootTableProvider{
 		generator = dataGenerator;
 	}
 
-	// TODO: remove all addStandardTable() from act() and use addStandardTableFromDataGenerables()
-	
 	public void act(@Nonnull DirectoryCache cache){
 		try {
 			addStandardTableFromDataGenerables();

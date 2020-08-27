@@ -1,14 +1,13 @@
 package net.arcanamod.client.event;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.client.render.AspectValveTileEntityRenderer;
-import net.arcanamod.client.render.JarTileEntityRender;
+import net.arcanamod.client.render.tiles.AspectValveTileEntityRenderer;
+import net.arcanamod.client.render.tiles.JarTileEntityRender;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.world.NodeType;
 import net.minecraft.client.renderer.texture.AtlasTexture;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
 
 import javax.annotation.Nonnull;

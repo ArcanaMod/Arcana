@@ -4,7 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
-import net.arcanamod.client.render.AspectHelixParticleData;
+import net.arcanamod.client.render.aspects.AspectHelixParticleData;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;

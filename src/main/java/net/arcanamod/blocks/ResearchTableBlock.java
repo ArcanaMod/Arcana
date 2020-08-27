@@ -29,8 +29,8 @@ import static net.arcanamod.blocks.ResearchTableBlock.EnumSide.RIGHT;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-// TODO: This has a problem with being broken. I don't think this can be solved without a TESR.
-// Thankfully, I'll probably switch this over to a TESR anyways to show ink, wands, and research notes. yay.
+// TODO: This has a problem with being broken. I don't think this can be solved without a TER.
+// Thankfully, I'll probably switch this over to a TER anyways to show ink, wands, and research notes. yay.
 public class ResearchTableBlock extends WaterloggableBlock implements GroupedBlock{
 	
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
