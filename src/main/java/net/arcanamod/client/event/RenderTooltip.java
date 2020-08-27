@@ -22,16 +22,6 @@ import java.util.List;
 public class RenderTooltip{
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void onRenderTooltipColor(@Nonnull RenderTooltipEvent.Color event){
-		for(String line : event.getLines()){
-			if(line.indexOf(((char)20)) != -1){
-				event.setBorderStart(new Color(0, 80, 95).getRGB());
-				event.setBorderEnd(new Color(0, 40, 47).getRGB());
-			}
-		}
-	}
-	
-	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onRenderTooltipPost(@Nonnull RenderTooltipEvent.PostText event){
 		if(Screen.hasShiftDown() && !ItemAspectRegistry.isProcessing()){
 			List<AspectStack> stacks = ItemAspectRegistry.get(event.getStack());
@@ -49,7 +39,7 @@ public class RenderTooltip{
 					x += 20;
 				}
 				RenderSystem.popMatrix();
-			}else{
+			}/*else{
 				for(String line : event.getLines()){
 					if(line.indexOf(((char)20)) != -1){
 						RenderSystem.pushMatrix();
@@ -74,7 +64,7 @@ public class RenderTooltip{
 						RenderSystem.popMatrix();
 					}
 				}
-			}
+			}*/
 		}
 	}
 	

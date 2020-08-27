@@ -130,7 +130,7 @@ public class SpiritEntity extends FlyingEntity implements IFlyingAnimal {
             for(int i = 1; i < size; ++i){
                 boundingBox = boundingBox.offset(pos);
                 // Check collision
-                if(!parentEntity.world.func_226665_a__(this.parentEntity, boundingBox))
+                if(!parentEntity.world.hasNoCollisions(this.parentEntity, boundingBox))
                     return false;
             }
             return true;

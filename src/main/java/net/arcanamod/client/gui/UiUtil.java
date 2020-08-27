@@ -1,13 +1,21 @@
 package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraftforge.fml.client.gui.GuiUtils;
+
+import java.util.Collections;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -187,5 +195,53 @@ public final class UiUtil{
 	
 	public static void drawTexturedModalRect(int x, int y, float texX, float texY, int width, int height){
 		drawModalRectWithCustomSizedTexture(x, y, texX, texY, width, height, 256, 256);
+	}
+	
+	public static boolean shouldShowAspectIngredients(){
+		// TODO: research gating?
+		return true;
+	}
+	
+	public static void drawAspectTooltip(Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight){
+		String name = AspectUtils.getLocalizedAspectDisplayName(aspect);
+		drawAspectStyleTooltip(name, mouseX, mouseY, screenWidth, screenHeight);
+		
+		if(shouldShowAspectIngredients() && Screen.hasShiftDown()){
+			RenderSystem.pushMatrix();
+			RenderSystem.translatef(0, 0, 500);
+			RenderSystem.color3f(1, 1, 1);
+			Minecraft mc = Minecraft.getInstance();
+			RenderSystem.translatef(0, 0, mc.getItemRenderer().zLevel);
+			
+			// copied from GuiUtils#drawHoveringText but without text wrapping
+			FontRenderer fontRenderer = Minecraft.getInstance().fontRenderer;
+			int tooltipTextWidth = fontRenderer.getStringWidth(name);
+			int tooltipX = mouseX + 12;
+			if(tooltipX + tooltipTextWidth + 4 > screenWidth)
+				tooltipX = mouseX - 16 - tooltipTextWidth;
+			int tooltipY = mouseY - 12;
+			if (tooltipY < 4)
+				tooltipY = 4;
+			else if (tooltipY + 12 > screenHeight)
+				tooltipY = screenHeight - 12;
+			
+			int x = tooltipX - 4;
+			int y = 10 + tooltipY + 5;
+			Pair<Aspect, Aspect> combinationPairs = Aspects.COMBINATIONS.inverse().get(aspect);
+			if(combinationPairs != null){
+				int color = 0xa0222222;
+				// 2px padding horizontally, 2px padding vertically
+				GuiUtils.drawGradientRect(0, x, y - 2, x + 40, y + 18, color, color);
+				x += 2;
+				UiUtil.renderAspect(combinationPairs.getFirst(), x, y);
+				x += 20;
+				UiUtil.renderAspect(combinationPairs.getSecond(), x, y);
+			}
+			RenderSystem.popMatrix();
+		}
+	}
+	
+	public static void drawAspectStyleTooltip(String text, int mouseX, int mouseY, int screenWidth, int screenHeight){
+		GuiUtils.drawHoveringText(Collections.singletonList(text), mouseX, mouseY, screenWidth, screenHeight, -1, GuiUtils.DEFAULT_BACKGROUND_COLOR, 0xFF00505F, 0xFF00282F, Minecraft.getInstance().fontRenderer);
 	}
 }

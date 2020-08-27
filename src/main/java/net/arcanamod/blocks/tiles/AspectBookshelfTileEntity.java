@@ -19,6 +19,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("deprecation")
 public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, VisShareable
 {
 	AspectBattery aspectBattery = new AspectBattery(9, 8);
@@ -127,8 +128,8 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	 */
 	public ItemStack removePhial()
 	{
-		Pair<ItemStack,Integer> id_stack = new Pair<>(ItemStack.EMPTY, 0);
-		ItemStack empty_phial = ItemStack.EMPTY;
+		Pair<ItemStack,Integer> idStack = new Pair<>(ItemStack.EMPTY, 0);
+		ItemStack emptyPhial;
 		int i = -1;
 		if (getNonEmptyItemsStoredCount() > 0)
 		{
@@ -137,29 +138,28 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 				i++;
 				if (!stack.isEmpty())
 				{
-					id_stack.setFirst(stack.copy());
-					id_stack.setSecond(i);
+					idStack.setFirst(stack.copy());
+					idStack.setSecond(i);
 					AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stack);
 					//Remove empty phials
 					if (vis.getHolder(0)!=null)
 					{
 						if (vis.getHolder(0).getCurrentVis()==0) {
 							items.set(i, ItemStack.EMPTY);
-							empty_phial = stack.copy();
+							emptyPhial = stack.copy();
 							aspectBattery.setCellAtIndex(i,new AspectCell(8));
-							empty_phial.setTag(empty_phial.getShareTag());
-							return empty_phial;
+							emptyPhial.setTag(emptyPhial.getShareTag());
+							return emptyPhial;
 						}
 					}
 				}
 			}
 		}
-		if (id_stack.getSecond() != -1)
-		{
-			items.set(id_stack.getSecond(),ItemStack.EMPTY);
-			aspectBattery.setCellAtIndex(id_stack.getSecond(),new AspectCell(8));
+		if (idStack.getSecond() != -1){
+			items.set(idStack.getSecond(),ItemStack.EMPTY);
+			aspectBattery.setCellAtIndex(idStack.getSecond(),new AspectCell(8));
 		}
-		return id_stack.getFirst();
+		return idStack.getFirst();
 	}
 
 	//  When the world loads from disk, the server needs to send the TileEntity information to the client
@@ -169,8 +169,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	//  Not really required for this example since we only use the timer on the client, but included anyway for illustration
 	@Override
 	@Nullable
-	public SUpdateTileEntityPacket getUpdatePacket()
-	{
+	public SUpdateTileEntityPacket getUpdatePacket(){
 		CompoundNBT nbtTagCompound = new CompoundNBT();
 		write(nbtTagCompound);
 		int tileEntityType = ArcanaTiles.ASPECT_SHELF_TE.hashCode();
@@ -184,8 +183,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 
 	/* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client */
 	@Override
-	public CompoundNBT getUpdateTag()
-	{
+	public CompoundNBT getUpdateTag(){
 		CompoundNBT nbtTagCompound = new CompoundNBT();
 		write(nbtTagCompound);
 		return nbtTagCompound;
@@ -197,8 +195,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	{
 		this.read(tag);
 	}
-
-
+	
 	@Override
 	public boolean isVisShareable() {
 		return true;
