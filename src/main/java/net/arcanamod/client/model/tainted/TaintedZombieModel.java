@@ -14,8 +14,8 @@ public class TaintedZombieModel<T extends TaintedEntity> extends AbstractZombieM
 	protected TaintedZombieModel(float p_i48914_1_, float p_i48914_2_, int p_i48914_3_, int p_i48914_4_) {
 		super(p_i48914_1_, p_i48914_2_, p_i48914_3_, p_i48914_4_);
 	}
-
-	public boolean func_212850_a_(T p_212850_1_) {
-		return p_212850_1_.isAggressive();
+	
+	public boolean isAggressive(T entity){
+		return entity.isAggressive();
 	}
 }

@@ -82,7 +82,7 @@ public final class Huds{
 					GuiUtils.drawGradientRect(1, 8, 8, 40, 108, colour, colour);
 				}
 				// if the player is sneaking, display the amount of flux exactly
-				if(player.isShiftKeyDown())
+				if(player.isSneaking())
 					Minecraft.getInstance().fontRenderer.drawStringWithShadow(String.valueOf(flux), 47, 8 + (97 - pixHeight), -1);
 			}
 			double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();

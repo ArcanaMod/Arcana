@@ -40,18 +40,15 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	}
 
 	@Override
-	protected void renderHoveredToolTip(int mouseX, int mouseY) {
+	protected void renderHoveredToolTip(int mouseX, int mouseY){
 		super.renderHoveredToolTip(mouseX, mouseY);
-		for(AspectSlot slot : aspectContainer.getAspectSlots()) {
-			if (slot.getInventory().get() != null && slot.visible) {
-				if (isMouseOverSlot(mouseX, mouseY, slot)) {
-					if (slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null) {
-						String name = AspectUtils.getLocalizedAspectDisplayName(slot.getAspect());
-						renderTooltip(Collections.singletonList(name + ((char)20)), mouseX, mouseY, Minecraft.getInstance().getFontResourceManager().getFontRenderer(Arcana.arcLoc("eldrich")));
-					}
-				}
-			}
-		}
+		for(AspectSlot slot : aspectContainer.getAspectSlots())
+			if(slot.getInventory().get() != null && slot.visible)
+				if(isMouseOverSlot(mouseX, mouseY, slot))
+					if(slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null)
+						/*String name = AspectUtils.getLocalizedAspectDisplayName(slot.getAspect());
+						renderTooltip(Collections.singletonList(name + ((char)20)), mouseX, mouseY, Minecraft.getInstance().getFontResourceManager().getFontRenderer(Arcana.arcLoc("eldrich")));*/
+						UiUtil.drawAspectTooltip(slot.getAspect(), mouseX, mouseY, width, height);
 	}
 
 	@Override

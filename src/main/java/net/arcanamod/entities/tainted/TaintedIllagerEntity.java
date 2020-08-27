@@ -166,7 +166,7 @@ public class TaintedIllagerEntity extends AbstractIllagerEntity {
 			i = 2;
 		}
 
-		boolean flag = this.rand.nextFloat() <= raid.func_221308_w();
+		boolean flag = this.rand.nextFloat() <= raid.getEnchantOdds();
 		if (flag) {
 			Map<Enchantment, Integer> map = Maps.newHashMap();
 			map.put(Enchantments.SHARPNESS, i);

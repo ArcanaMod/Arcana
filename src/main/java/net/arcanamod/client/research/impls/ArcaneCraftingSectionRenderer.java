@@ -96,8 +96,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 				String displayed = stack.any ? I18n.format("aspect.any") : I18n.format("aspect." + stack.stack.getAspect().name().toLowerCase());
 				int areaX = aspectX + i * 18;
 				if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= aspectY && mouseY < aspectY + 16)
-					// TODO: why
-					GuiUtils.drawHoveringText(Collections.singletonList(displayed + ((char)20)), mouseX, mouseY, screenWidth, screenHeight, -1, mc().getFontResourceManager().getFontRenderer(Arcana.arcLoc("eldrich")));
+					UiUtil.drawAspectStyleTooltip(displayed, mouseX, mouseY, screenWidth, screenHeight);
 			}
 		}
 	}

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.client.gui.ResearchEntryScreen;
+import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.items.recipes.AlchemyRecipe;
 import net.arcanamod.research.impls.AlchemySection;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -40,15 +41,7 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 				AspectStack aspect = aspects.get(i);
 				int xx = aspectStartX + (i % aspectsWidth) * 19;
 				int yy = aspectStartY + (i / aspectsWidth) * 19;
-				ItemStack stack1 = new ItemStack(AspectUtils.getItemStackForAspect(aspect.getAspect()).getItem(), aspect.getAmount());
-				item(stack1, xx, yy);
-				MatrixStack matrixstack = new MatrixStack();
-				String s = String.valueOf(aspect.getAmount());
-				matrixstack.translate(0, 0, mc().getItemRenderer().zLevel + 200.0F);
-				IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-				mc().fontRenderer.renderString(s, xx + 19 - mc().fontRenderer.getStringWidth(s), yy + 10, 0, false, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
-				mc().fontRenderer.renderString(s, xx + 20 - mc().fontRenderer.getStringWidth(s), yy + 11, 0x999999, false, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
-				impl.finish();
+				UiUtil.renderAspectStack(aspect, xx, yy);
 			}
 		}else
 			error();
@@ -66,11 +59,10 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 			int aspectsWidth = Math.min(3, aspects.size());
 			int aspectStartX = ulX + 12 - (8 * (aspectsWidth - 3)), aspectStartY = ulY + 29;
 			for(int i = 0, size = aspects.size(); i < size; i++){
-				AspectStack aspect = aspects.get(i);
+				AspectStack stack = aspects.get(i);
 				int xx = aspectStartX + (i % aspectsWidth) * 17;
 				int yy = aspectStartY + (i / aspectsWidth) * 17;
-				ItemStack stack1 = AspectUtils.getItemStackForAspect(aspect.getAspect());
-				tooltipArea(stack1, mouseX, mouseY, screenWidth, screenHeight, xx, yy);
+				aspectTooltipArea(stack.getAspect(), mouseX, mouseY, screenWidth, screenHeight, xx, yy);
 			}
 		}
 	}
