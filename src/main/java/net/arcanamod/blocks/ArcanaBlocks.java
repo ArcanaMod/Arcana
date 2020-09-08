@@ -107,6 +107,7 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<Block> INFUSION_ARCANE_STONE = BLOCKS.register("infusion_arcane_stone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> MAGICAL_GRASS = BLOCKS.register("magical_grass", () -> new Block(from(Blocks.GRASS_BLOCK)));
 	@GLT public static final RegistryObject<Block> TABLE = BLOCKS.register("table", () -> new WaterloggableBlock(create(WOOD).hardnessAndResistance(2).notSolid()));
+	@GLT public static final RegistryObject<Block> FOCI_FORGE = BLOCKS.register("foci_forge", () -> new FociForgeBlock(create(WOOD).hardnessAndResistance(2).notSolid()));
 	@GLT public static final RegistryObject<Block> NITOR = BLOCKS.register("nitor", () -> new NitorBlock(create(MISCELLANEOUS).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(15)));
 	
 	public static final RegistryObject<Block> TAINTED_AMBER_ORE = BLOCKS.register("tainted_amber_ore", () -> taintedOf(AMBER_ORE.get()));
