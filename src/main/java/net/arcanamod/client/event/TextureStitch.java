@@ -8,6 +8,7 @@ import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.world.NodeType;
 import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.TextureStitchEvent;
 
 import javax.annotation.Nonnull;
@@ -36,7 +37,8 @@ public class TextureStitch{
 			for(Core core : Core.CORES.values())
 				event.addSprite(core.getTextureLocation());
 			for(Focus focus : Focus.FOCI)
-				event.addSprite(focus.getModelLocation());
+				for(ResourceLocation location : focus.getAllModelLocations())
+					event.addSprite(location);
 
 			for(NodeType value : NodeType.TYPES.values()){
 				event.addSprite(value.texture(null, null, null));

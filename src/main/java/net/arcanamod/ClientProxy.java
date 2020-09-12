@@ -7,7 +7,9 @@ import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
 import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
-import net.arcanamod.client.render.*;
+import net.arcanamod.client.render.DairSpiritRenderer;
+import net.arcanamod.client.render.KoalaEntityRender;
+import net.arcanamod.client.render.WillowSpiritRenderer;
 import net.arcanamod.client.render.aspects.ArcanaParticles;
 import net.arcanamod.client.render.tiles.AspectValveTileEntityRenderer;
 import net.arcanamod.client.render.tiles.JarTileEntityRender;
@@ -19,6 +21,8 @@ import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.fluids.ArcanaFluids;
+import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.research.ResearchBooks;
 import net.arcanamod.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
@@ -45,6 +49,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import javax.annotation.Nullable;
 
 import static net.arcanamod.Arcana.MODID;
+import static net.arcanamod.Arcana.arcLoc;
 
 /**
  * Client Proxy
@@ -80,17 +85,27 @@ public class ClientProxy extends CommonProxy{
 		EntrySectionRenderer.init();
 		RequirementRenderer.init();
 		PuzzleRenderer.init();
-		ModelLoaderRegistry.registerLoader(new ResourceLocation(MODID, "wand_loader"), new WandModelLoader());
+		ModelLoaderRegistry.registerLoader(arcLoc("wand_loader"), new WandModelLoader());
 		
-		Minecraft.getInstance().getBlockColors().register((state, access, pos, index) -> {
-			if(access == null || pos == null || access.getTileEntity(pos) == null || !(access.getTileEntity(pos) instanceof AspectWindowTileEntity))
-				return 0xFF1F0D0B;
-			return ((AspectWindowTileEntity)access.getTileEntity(pos)).getColor();
-		}, ArcanaBlocks.ASPECT_WINDOW.get());
+		// there's an event for this, but putting it here seems to affect literally nothing. huh.
+		// I'm not at all surprised.
 		
-		Minecraft.getInstance().getBlockColors().register((state, access, pos, index) ->
+		Minecraft inst = Minecraft.getInstance();
+		inst.getBlockColors().register((state, access, pos, index) -> {
+				if(access == null || pos == null || access.getTileEntity(pos) == null || !(access.getTileEntity(pos) instanceof AspectWindowTileEntity))
+					return 0xFF1F0D0B;
+				return ((AspectWindowTileEntity)access.getTileEntity(pos)).getColor();
+			}, ArcanaBlocks.ASPECT_WINDOW.get()
+		);
+		
+		inst.getBlockColors().register((state, access, pos, index) ->
 				access != null && pos != null ? BiomeColors.getWaterColor(access, pos) : -1,
 				ArcanaBlocks.CRUCIBLE.get()
+		);
+		
+		inst.getItemColors().register((stack, layer) ->
+				layer == 1 ? FocusItem.getColourAspect(stack).getColorRange().get(3) : 0xffffffff,
+				ArcanaItems.DEFAULT_FOCUS::get
 		);
 	}
 

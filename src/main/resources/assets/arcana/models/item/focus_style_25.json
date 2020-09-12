@@ -1,5 +1,5 @@
 {
-  "parent": "item/handheld",
+  "parent": "item/generated",
   "textures": {
     "layer0": "arcana:foci/focus_style_25",
     "layer1": "arcana:foci/focus_overlay_style_25"

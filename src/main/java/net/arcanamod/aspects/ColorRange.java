@@ -16,6 +16,6 @@ public class ColorRange{
 	}
 	
 	public int get(int colour){
-		return colors[colour];
+		return colors[Math.min(colour, colors.length - 1)];
 	}
 }

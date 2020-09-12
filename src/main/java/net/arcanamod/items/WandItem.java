@@ -58,6 +58,10 @@ public class WandItem extends Item{
 		return Core.getCoreOrError(new ResourceLocation(core));
 	}
 	
+	public static CompoundNBT getFocusData(ItemStack stack){
+		return stack.getOrCreateChildTag("focusData");
+	}
+	
 	@Nullable
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
 		AspectBattery battery = new AspectBattery(6, 0);

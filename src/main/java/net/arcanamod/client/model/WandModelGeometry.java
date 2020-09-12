@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.client.model.IModelConfiguration;
@@ -70,7 +71,7 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 		ResourceLocation capLoc = arcLoc("item/wands/caps/wand");
 		IUnbakedModel capModel = bakery.getUnbakedModel(capLoc);
 		
-		// they *should* be, but jusst checking.
+		// they *should* be, but might as well check.
 		if(coreModel instanceof BlockModel)
 			((BlockModel)coreModel).textures.put("core", Either.left(coreTex));
 		else
@@ -113,10 +114,12 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 			// get material
 			Core core = WandItem.getCore(stack);
 			// get variant (staff/scepter/wand)
-			// always "wand" currently
+				// always "wand" currently
 			// get focus
+			// nbt context comes from the focusData tag
 			Focus focus = WandItem.getFocus(stack);
-			return new WandModelGeometry(cap.getTextureLocation(), core.getTextureLocation(), arcLoc("wand"), focus.getModelLocation()).bake(((WandBakedModel)originalModel).owner, bakery, ModelLoader.defaultTextureGetter(), ((WandBakedModel)originalModel).modelTransform, originalModel.getOverrides(), new ResourceLocation("arcana:does_this_do_anything_lol"));
+			CompoundNBT focusData = WandItem.getFocusData(stack);
+			return new WandModelGeometry(cap.getTextureLocation(), core.getTextureLocation(), arcLoc("wand"), focus.getModelLocation(focusData)).bake(((WandBakedModel)originalModel).owner, bakery, ModelLoader.defaultTextureGetter(), ((WandBakedModel)originalModel).modelTransform, originalModel.getOverrides(), new ResourceLocation("arcana:does_this_do_anything_lol"));
 		}
 	}
 }

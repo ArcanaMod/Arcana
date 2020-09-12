@@ -39,32 +39,7 @@ public class RenderTooltip{
 					x += 20;
 				}
 				RenderSystem.popMatrix();
-			}/*else{
-				for(String line : event.getLines()){
-					if(line.indexOf(((char)20)) != -1){
-						RenderSystem.pushMatrix();
-						RenderSystem.translatef(0, 0, 500);
-						RenderSystem.color3f(1F, 1F, 1F);
-						Minecraft mc = Minecraft.getInstance();
-						RenderSystem.translatef(0, 0, mc.getItemRenderer().zLevel);
-						
-						int x = event.getX() - 3;
-						int y = 10 * (event.getLines().size()) + event.getY() + 4;
-						Aspect aspectFromDesc = AspectUtils.getAspectByDisplayName(line.replace(((char)20) + "", ""));
-						if(aspectFromDesc != null){
-							Pair<Aspect, Aspect> combinationPairs = Aspects.COMBINATIONS.inverse().get(aspectFromDesc);
-							if(combinationPairs != null){
-								int color = 0xa0222222;
-								GuiUtils.drawGradientRect(300, x, y - 2, x + 39, y + 19, color, color);
-								UiUtil.renderAspectStack(new AspectStack(combinationPairs.getFirst()), x, y);
-								x += 20;
-								UiUtil.renderAspectStack(new AspectStack(combinationPairs.getSecond()), x, y);
-							}
-						}
-						RenderSystem.popMatrix();
-					}
-				}
-			}*/
+			}
 		}
 	}
 	

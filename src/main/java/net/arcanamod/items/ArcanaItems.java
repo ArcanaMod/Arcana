@@ -107,7 +107,8 @@ public class ArcanaItems{
 	public static final RegistryObject<CapItem> VOID_CAP = ITEMS.register("void_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 8, 4, 3, arcLoc("void_cap")));
 	
 	// Foci
-	public static RegistryObject<FocusItem> DEFAULT_FOCUS = ITEMS.register("wand_focus", () -> new FocusItem(new Properties(), 36, arcLoc("wand_focus")));
+	public static RegistryObject<FocusItem> DEFAULT_FOCUS = ITEMS.register("focus", () -> new FocusItem(new Properties(), 36, arcLoc("wand_focus")));
+	
 	public static final RegistryObject<Item> FOCUS_PARTS = ITEMS.register("focus_parts", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
 	// Cores
