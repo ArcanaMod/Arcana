@@ -17,18 +17,39 @@ public class ResearchEvent extends Event{
 	private ResearchEntry entry;
 	private Type type;
 	
+	/**
+	 * Returns the player associated with the Researcher who's research is being modified.
+	 *
+	 * @return The player.
+	 */
 	public PlayerEntity getPlayer(){
 		return player;
 	}
 	
+	/**
+	 * Returns the Researcher who's research is being modified.
+	 *
+	 * @return The Researcher.
+	 */
 	public Researcher getResearcher(){
 		return researcher;
 	}
 	
+	/**
+	 * Returns the entry who's stage is being modified.
+	 *
+	 * @return The entry.
+	 */
 	public ResearchEntry getEntry(){
 		return entry;
 	}
 	
+	/**
+	 * Returns how the entry is being modified - whether it is being reset to 0 progress, advanced to the next section with requirements,
+	 * or being set to full progress.
+	 *
+	 * @return How the entry is being modified.
+	 */
 	public Type getType(){
 		return type;
 	}
@@ -40,6 +61,9 @@ public class ResearchEvent extends Event{
 		this.type = type;
 	}
 	
+	/**
+	 * Represents a way that a research entry's progress can be changed.
+	 */
 	public enum Type{
 		ADVANCE,
 		RESET,
