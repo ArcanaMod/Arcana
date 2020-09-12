@@ -36,7 +36,7 @@ import static net.minecraft.block.material.MaterialColor.SAND;
 @SuppressWarnings("unused")
 public class ArcanaBlocks{
 	
-	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Arcana.MODID);
+	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Arcana.MODID);
 	
 	// General
 	// Arcane Stone
