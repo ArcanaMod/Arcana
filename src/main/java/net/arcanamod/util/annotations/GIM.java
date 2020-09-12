@@ -5,11 +5,9 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
-/**
- * \@GenItemModel
- */
 public @interface GIM {
-	Type type();
+	
+	Type value();
 
 	/**
 	 * source() as ResourceLocation.toString()

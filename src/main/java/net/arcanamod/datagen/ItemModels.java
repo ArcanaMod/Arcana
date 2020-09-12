@@ -73,9 +73,9 @@ public class ItemModels extends ItemModelProvider{
 						String path = reg.getId().getPath();
 						// if annotation type is ITEM generate item model, if BLOCK_REF is generated withExistingParent
 						GIM annotation = field.getAnnotation(GIM.class);
-						if (annotation.type().equals(GIM.Type.BLOCK_REF)){
+						if (annotation.value().equals(GIM.Type.BLOCK_REF)){
 							withExistingParent(path,arcBlockLoc(path));
-						} else if (annotation.type().equals(GIM.Type.ITEM)){
+						} else if (annotation.value().equals(GIM.Type.ITEM)){
 							// if source is not empty generate item model with other texture
 							if (!annotation.source().equals("")){
 								generated(path,annotation.source());
