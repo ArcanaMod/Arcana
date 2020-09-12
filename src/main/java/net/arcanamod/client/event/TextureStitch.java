@@ -15,6 +15,7 @@ import javax.annotation.Nonnull;
 
 public class TextureStitch{
 	
+	@SuppressWarnings("deprecation")
 	public static void onTextureStitch(@Nonnull TextureStitchEvent.Pre event){
 		if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)){
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
@@ -38,7 +39,7 @@ public class TextureStitch{
 				event.addSprite(core.getTextureLocation());
 			for(Focus focus : Focus.FOCI)
 				for(ResourceLocation location : focus.getAllModelLocations())
-					event.addSprite(location);
+					event.addSprite(new ResourceLocation(location.getNamespace(), "models/wands/foci/" + location.getPath()));
 
 			for(NodeType value : NodeType.TYPES.values()){
 				event.addSprite(value.texture(null, null, null));
