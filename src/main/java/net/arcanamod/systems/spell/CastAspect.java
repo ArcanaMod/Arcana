@@ -18,4 +18,8 @@ public class CastAspect {
 	public CastAspect(Aspect primaryAspect){
 		this(primaryAspect, Aspects.EMPTY);
 	}
+
+	public static CastAspect getEmpty(){
+		return new CastAspect(Aspects.EMPTY,Aspects.EMPTY);
+	}
 }

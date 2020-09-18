@@ -5,6 +5,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.AspectTubeTileEntity;
 import net.arcanamod.systems.spell.CastAspect;
@@ -76,7 +77,10 @@ public class VisManipulatorsItem extends Item{
 			});
 			return ActionResultType.SUCCESS;
 		}*/
-		Spells.MINING_SPELL.build(new Aspect[0],new CastAspect[0],new SpellExtraData()).use(context.getPlayer(), ISpell.Action.USE);
+		Spells.MINING_SPELL.build(
+				new Aspect[]{Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY},
+				new CastAspect[]{CastAspect.getEmpty(),CastAspect.getEmpty(),CastAspect.getEmpty()},
+				new SpellExtraData()).use(context.getPlayer(), ISpell.Action.USE);
 		return super.onItemUseFirst(stack, context);
 	}
 }

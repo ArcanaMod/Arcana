@@ -1,12 +1,16 @@
 package net.arcanamod.systems.spell;
 
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 
+import java.util.HashMap;
+
 public class SpellValues {
-	public static final BiMap<Aspect, Integer> modifierValues = HashBiMap.create();
+	public static final HashMap<Aspect, Integer> modifierValues = new HashMap<>();
+
+	public static int getOrDefault(Aspect aspect, int defaultValue){
+		return modifierValues.getOrDefault(aspect, defaultValue);
+	}
 
 	static{
 		modifierValues.put(Aspects.AIR,       1);
