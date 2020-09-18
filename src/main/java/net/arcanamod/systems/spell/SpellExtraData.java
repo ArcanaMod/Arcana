@@ -2,6 +2,7 @@ package net.arcanamod.systems.spell;
 
 import java.util.HashMap;
 
+// I know that CompoundNBT exist but I don't like a lot of spaghetti in code
 public class SpellExtraData {
 	private final HashMap<String, Integer> data = new HashMap<>();
 

@@ -4,6 +4,9 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.minecraft.entity.player.PlayerEntity;
 
+/**
+ * The ISpell Class
+ */
 public interface ISpell {
 
 	ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data);

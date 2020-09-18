@@ -9,6 +9,9 @@ import net.arcanamod.systems.spell.SpellRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
+/**
+ * ISpell class but it self registers.
+ */
 public abstract class DefaultSpell implements ISpell {
 	public DefaultSpell(){
 		SpellRegistry.addSpell(getId(),this);
