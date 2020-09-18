@@ -1,4 +1,4 @@
-package net.arcanamod.research;
+package net.arcanamod.systems.research;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.item.Item;

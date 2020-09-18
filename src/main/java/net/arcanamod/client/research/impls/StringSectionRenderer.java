@@ -3,7 +3,7 @@ package net.arcanamod.client.research.impls;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.EntrySectionRenderer;
-import net.arcanamod.research.impls.StringSection;
+import net.arcanamod.systems.research.impls.StringSection;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 

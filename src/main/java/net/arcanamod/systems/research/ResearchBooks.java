@@ -1,4 +1,4 @@
-package net.arcanamod.research;
+package net.arcanamod.systems.research;
 
 import net.arcanamod.Arcana;
 import net.minecraft.util.ResourceLocation;

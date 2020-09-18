@@ -1,4 +1,4 @@
-package net.arcanamod.research;
+package net.arcanamod.systems.research;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * Represents a research tab. Contains a number of research entries, stored by key.

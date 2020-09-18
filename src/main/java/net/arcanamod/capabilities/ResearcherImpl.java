@@ -1,9 +1,8 @@
 package net.arcanamod.capabilities;
 
-import net.arcanamod.research.Puzzle;
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.ResearchEntry;
-import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.systems.research.Puzzle;
+import net.arcanamod.systems.research.ResearchBooks;
+import net.arcanamod.systems.research.ResearchEntry;
 import net.arcanamod.event.ResearchEvent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;

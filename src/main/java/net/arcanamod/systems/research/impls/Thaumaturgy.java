@@ -1,11 +1,11 @@
-package net.arcanamod.research.impls;
+package net.arcanamod.systems.research.impls;
 
 import com.google.gson.JsonObject;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
-import net.arcanamod.research.Puzzle;
+import net.arcanamod.systems.research.Puzzle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.nbt.CompoundNBT;

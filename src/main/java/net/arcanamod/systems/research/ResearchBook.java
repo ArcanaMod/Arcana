@@ -1,4 +1,4 @@
-package net.arcanamod.research;
+package net.arcanamod.systems.research;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;

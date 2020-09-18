@@ -1,4 +1,4 @@
-package net.arcanamod.research.impls;
+package net.arcanamod.systems.research.impls;
 
 import com.google.common.graph.GraphBuilder;
 import com.google.common.graph.MutableGraph;
@@ -12,7 +12,7 @@ import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.slots.AspectStoreSlot;
 import net.arcanamod.containers.ResearchTableContainer;
-import net.arcanamod.research.Puzzle;
+import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.util.GraphTraverser;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;

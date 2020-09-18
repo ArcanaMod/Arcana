@@ -1,6 +1,6 @@
-package net.arcanamod.research;
+package net.arcanamod.systems.research;
 
-import net.arcanamod.research.impls.*;
+import net.arcanamod.systems.research.impls.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;

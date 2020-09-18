@@ -1,13 +1,13 @@
-package net.arcanamod.research;
+package net.arcanamod.systems.research;
 
 import com.google.gson.JsonObject;
 import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.research.impls.Chemistry;
-import net.arcanamod.research.impls.Fieldwork;
-import net.arcanamod.research.impls.Guesswork;
+import net.arcanamod.systems.research.impls.Chemistry;
+import net.arcanamod.systems.research.impls.Fieldwork;
+import net.arcanamod.systems.research.impls.Guesswork;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.ResearchTableContainer;
-import net.arcanamod.research.impls.Thaumaturgy;
+import net.arcanamod.systems.research.impls.Thaumaturgy;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.nbt.CompoundNBT;

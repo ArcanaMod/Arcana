@@ -1,10 +1,10 @@
-package net.arcanamod.research.impls;
+package net.arcanamod.systems.research.impls;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.network.Connection;
-import net.arcanamod.research.Requirement;
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.ResearchEntry;
+import net.arcanamod.systems.research.Requirement;
+import net.arcanamod.systems.research.ResearchBooks;
+import net.arcanamod.systems.research.ResearchEntry;
 import net.arcanamod.capabilities.Researcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;

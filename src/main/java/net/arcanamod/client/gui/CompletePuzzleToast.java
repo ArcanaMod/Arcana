@@ -3,7 +3,7 @@ package net.arcanamod.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.research.ResearchEntry;
+import net.arcanamod.systems.research.ResearchEntry;
 import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.client.resources.I18n;

@@ -1,7 +1,7 @@
 package net.arcanamod.client.research.impls;
 
 import net.arcanamod.client.research.EntrySectionRenderer;
-import net.arcanamod.research.impls.GuessworkSection;
+import net.arcanamod.systems.research.impls.GuessworkSection;
 import net.minecraft.entity.player.PlayerEntity;
 
 public class GuessworkSectionRenderer implements EntrySectionRenderer<GuessworkSection>{

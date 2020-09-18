@@ -2,7 +2,7 @@ package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.research.RequirementRenderer;
-import net.arcanamod.research.impls.XpRequirement;
+import net.arcanamod.systems.research.impls.XpRequirement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.entity.player.PlayerEntity;

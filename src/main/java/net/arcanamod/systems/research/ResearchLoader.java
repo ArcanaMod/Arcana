@@ -1,9 +1,9 @@
-package net.arcanamod.research;
+package net.arcanamod.systems.research;
 
 import com.google.gson.*;
-import net.arcanamod.research.ResearchEntry.Icon;
-import net.arcanamod.research.impls.ItemRequirement;
-import net.arcanamod.research.impls.ItemTagRequirement;
+import net.arcanamod.systems.research.ResearchEntry.Icon;
+import net.arcanamod.systems.research.impls.ItemRequirement;
+import net.arcanamod.systems.research.impls.ItemTagRequirement;
 import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.item.Item;
 import net.minecraft.profiler.IProfiler;

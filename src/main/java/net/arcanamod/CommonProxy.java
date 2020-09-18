@@ -2,7 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.event.ResearchEvent;
-import net.arcanamod.research.ResearchEntry;
+import net.arcanamod.systems.research.ResearchEntry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;

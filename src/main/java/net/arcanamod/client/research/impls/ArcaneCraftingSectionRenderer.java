@@ -1,23 +1,17 @@
 package net.arcanamod.client.research.impls;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.UndecidedAspectStack;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.items.recipes.IArcaneCraftingRecipe;
-import net.arcanamod.research.impls.ArcaneCraftingSection;
-import net.minecraft.client.Minecraft;
+import net.arcanamod.systems.research.impls.ArcaneCraftingSection;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
-import net.minecraftforge.fml.client.gui.GuiUtils;
-
-import java.util.Collections;
 
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
 import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;

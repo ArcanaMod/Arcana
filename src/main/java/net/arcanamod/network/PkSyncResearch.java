@@ -1,8 +1,8 @@
 package net.arcanamod.network;
 
-import net.arcanamod.research.Puzzle;
-import net.arcanamod.research.ResearchBook;
-import net.arcanamod.research.ResearchBooks;
+import net.arcanamod.systems.research.Puzzle;
+import net.arcanamod.systems.research.ResearchBook;
+import net.arcanamod.systems.research.ResearchBooks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;

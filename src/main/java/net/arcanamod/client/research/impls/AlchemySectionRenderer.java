@@ -1,14 +1,10 @@
 package net.arcanamod.client.research.impls;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.items.recipes.AlchemyRecipe;
-import net.arcanamod.research.impls.AlchemySection;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.Tessellator;
+import net.arcanamod.systems.research.impls.AlchemySection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

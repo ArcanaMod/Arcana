@@ -1,7 +1,7 @@
 package net.arcanamod.client.research.impls;
 
 import net.arcanamod.client.gui.ResearchEntryScreen;
-import net.arcanamod.research.impls.CraftingSection;
+import net.arcanamod.systems.research.impls.CraftingSection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;

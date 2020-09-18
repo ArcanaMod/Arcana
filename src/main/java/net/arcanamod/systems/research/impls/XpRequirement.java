@@ -1,7 +1,7 @@
-package net.arcanamod.research.impls;
+package net.arcanamod.systems.research.impls;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.research.Requirement;
+import net.arcanamod.systems.research.Requirement;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;

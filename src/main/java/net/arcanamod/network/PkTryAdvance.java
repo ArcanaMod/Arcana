@@ -1,7 +1,7 @@
 package net.arcanamod.network;
 
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.ResearchEntry;
+import net.arcanamod.systems.research.ResearchBooks;
+import net.arcanamod.systems.research.ResearchEntry;
 import net.arcanamod.capabilities.Researcher;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;

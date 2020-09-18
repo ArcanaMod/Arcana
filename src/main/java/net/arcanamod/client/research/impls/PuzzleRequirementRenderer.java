@@ -2,10 +2,10 @@ package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.research.RequirementRenderer;
-import net.arcanamod.research.Puzzle;
-import net.arcanamod.research.ResearchBooks;
-import net.arcanamod.research.impls.Fieldwork;
-import net.arcanamod.research.impls.PuzzleRequirement;
+import net.arcanamod.systems.research.Puzzle;
+import net.arcanamod.systems.research.ResearchBooks;
+import net.arcanamod.systems.research.impls.Fieldwork;
+import net.arcanamod.systems.research.impls.PuzzleRequirement;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;

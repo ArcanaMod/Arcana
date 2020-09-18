@@ -1,9 +1,9 @@
-package net.arcanamod.research;
+package net.arcanamod.systems.research;
 
-import net.arcanamod.research.impls.ItemRequirement;
-import net.arcanamod.research.impls.ItemTagRequirement;
-import net.arcanamod.research.impls.PuzzleRequirement;
-import net.arcanamod.research.impls.XpRequirement;
+import net.arcanamod.systems.research.impls.ItemRequirement;
+import net.arcanamod.systems.research.impls.ItemTagRequirement;
+import net.arcanamod.systems.research.impls.PuzzleRequirement;
+import net.arcanamod.systems.research.impls.XpRequirement;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ItemTags;

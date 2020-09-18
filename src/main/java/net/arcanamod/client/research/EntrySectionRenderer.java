@@ -1,8 +1,8 @@
 package net.arcanamod.client.research;
 
 import net.arcanamod.client.research.impls.*;
-import net.arcanamod.research.EntrySection;
-import net.arcanamod.research.impls.*;
+import net.arcanamod.systems.research.EntrySection;
+import net.arcanamod.systems.research.impls.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.PlayerEntity;

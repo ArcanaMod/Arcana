@@ -1,14 +1,8 @@
 package net.arcanamod.blocks;
 
-import net.arcanamod.blocks.tiles.AspectCrystallizerTileEntity;
-import net.arcanamod.client.gui.FociForgeScreen;
-import net.arcanamod.client.gui.ResearchBookScreen;
-import net.arcanamod.research.ResearchBooks;
+import net.arcanamod.blocks.tiles.FociForgeTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
@@ -27,7 +21,13 @@ public class FociForgeBlock extends Block {
 
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult){
-		Minecraft.getInstance().displayGuiScreen(new FociForgeScreen());
+		if(world.isRemote)
+			return ActionResultType.SUCCESS;
+		TileEntity te = world.getTileEntity(pos);
+		if(te instanceof FociForgeTileEntity){
+			NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, buf -> buf.writeBlockPos(pos));
+			return ActionResultType.SUCCESS;
+		}
 		return super.onBlockActivated(state, world, pos, player, hand, rayTraceResult);
 	}
 }
