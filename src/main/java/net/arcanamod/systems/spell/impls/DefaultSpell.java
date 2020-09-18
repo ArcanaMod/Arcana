@@ -4,15 +4,17 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.SpellExtraData;
 import net.arcanamod.systems.spell.SpellRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class DefaultSpell implements ISpell {
-
 	public DefaultSpell(){
 		SpellRegistry.addSpell(getId(),this);
 	}
+
+	public abstract ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data);
 
 	public abstract ResourceLocation getId();
 

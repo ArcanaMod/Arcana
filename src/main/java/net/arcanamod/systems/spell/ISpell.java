@@ -6,6 +6,8 @@ import net.minecraft.entity.player.PlayerEntity;
 
 public interface ISpell {
 
+	ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data);
+
 	Aspect getSpellAspect();
 	Aspect[] getModAspects(); // Mod 1, Mod 2, Sin Mod
 	CastAspect[] getCastAspects(); // Cast, Cast+

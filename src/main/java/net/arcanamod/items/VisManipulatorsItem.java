@@ -2,10 +2,15 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.AspectTubeTileEntity;
+import net.arcanamod.systems.spell.CastAspect;
+import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.SpellExtraData;
+import net.arcanamod.systems.spell.Spells;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -40,7 +45,7 @@ public class VisManipulatorsItem extends Item{
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-		if (Arcana.debug)
+		/*if (Arcana.debug)
 			if (context.getWorld().getTileEntity(context.getPos())!=null) {
 				if (context.getWorld().getTileEntity(context.getPos()).getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null) != null){
 					if (context.getWorld().getTileEntity(context.getPos()) instanceof AspectTubeTileEntity){
@@ -70,7 +75,8 @@ public class VisManipulatorsItem extends Item{
 				i.addAndGet(2);
 			});
 			return ActionResultType.SUCCESS;
-		}
+		}*/
+		Spells.MINING_SPELL.build(new Aspect[0],new CastAspect[0],new SpellExtraData()).use(context.getPlayer(), ISpell.Action.USE);
 		return super.onItemUseFirst(stack, context);
 	}
 }
