@@ -14,6 +14,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+import java.util.List;
+
 public class MiningSpell extends DefaultSpell {
 
 	private Aspect[] modAspects;
@@ -107,24 +110,38 @@ public class MiningSpell extends DefaultSpell {
 	}
 
 	@Override
-	public void onAirCast(World world, BlockPos pos, int area, int duration) {
-
+	public void onAirCast(PlayerEntity caster, World world, BlockPos pos, int area, int duration) {
+		caster.sendMessage(new TranslationTextComponent("message.cantusethatspell"));
 	}
 
 	@Override
-	public void onWaterCast(Entity[] entityTargets) {
-
+	public void onWaterCast(PlayerEntity caster, List<Entity> entityTargets) {
+		caster.sendMessage(new TranslationTextComponent("message.cantusethatspell"));
 	}
 
 
 	@Override
-	public void onFireCast(Entity entityTarget, BlockPos blockTarget) {
-
+	public void onFireCast(PlayerEntity caster, @Nullable Entity entityTarget, BlockPos blockTarget) {
+		try {
+			if (caster.world.isRemote) return;
+				BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
+				if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
+					caster.world.destroyBlock(blockTarget.down(), true, caster); // TODO: Add fortune and explosion power
+		} catch (SpellNotBuiltError spellNotBuiltError) {
+			spellNotBuiltError.printStackTrace();
+		}
 	}
 
 	@Override
-	public void onEarthCast(BlockPos blockTarget) {
-
+	public void onEarthCast(PlayerEntity caster, BlockPos blockTarget) {
+		try {
+			if (caster.world.isRemote) return;
+			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
+			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
+				caster.world.destroyBlock(blockTarget.down(), true, caster); // TODO: Add fortune and explosion power
+		} catch (SpellNotBuiltError spellNotBuiltError) {
+			spellNotBuiltError.printStackTrace();
+		}
 	}
 
 	@Override
@@ -133,7 +150,14 @@ public class MiningSpell extends DefaultSpell {
 	}
 
 	@Override
-	public void onChaosCast(Entity entityTarget, BlockPos blockTarget) {
-
+	public void onChaosCast(PlayerEntity caster, Entity entityTarget, BlockPos blockTarget) {
+		try {
+			if (caster.world.isRemote) return;
+			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
+			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
+				caster.world.destroyBlock(blockTarget.down(), true, caster); // TODO: Add fortune and explosion power
+		} catch (SpellNotBuiltError spellNotBuiltError) {
+			spellNotBuiltError.printStackTrace();
+		}
 	}
 }
