@@ -114,8 +114,8 @@ public class ResearchBookScreen extends Screen{
 		RenderSystem.enableBlend();
 	}
 	
-	public void init(@Nonnull Minecraft mc, int p_init_2_, int p_init_3_){
-		super.init(mc, p_init_2_, p_init_3_);
+	public void init(@Nonnull Minecraft mc, int mouseX, int mouseY){
+		super.init(mc, mouseX, mouseY);
 		
 		// add buttons
 		for(int i = 0, size = categories.size(); i < size; i++){

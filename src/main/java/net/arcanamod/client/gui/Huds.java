@@ -10,7 +10,6 @@ import net.arcanamod.client.ClientAuraHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.util.GogglePriority;
-import net.arcanamod.world.AuraView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -41,19 +40,20 @@ public final class Huds{
 	public static void onRenderGameOverlay(RenderGameOverlayEvent.Post event){
 		ClientPlayerEntity player = Minecraft.getInstance().player;
 		if(player != null && event.getType().equals(RenderGameOverlayEvent.ElementType.ALL)){
-			if(player.getHeldItemMainhand().getItem() instanceof WandItem){
-				IAspectHandler aspects = IAspectHandler.getFrom(player.getHeldItemMainhand());
+			ItemStack stack = player.getHeldItemMainhand();
+			if(stack.getItem() instanceof WandItem){
+				IAspectHandler aspects = IAspectHandler.getFrom(stack);
 				if(aspects != null){
 					float length = AspectUtils.primalAspects.length;
 					int baseX = ArcanaConfig.WAND_HUD_LEFT.get() ? 24 : event.getWindow().getScaledWidth() - 24 - 16;
 					int baseY = ArcanaConfig.WAND_HUD_TOP.get() ? 24 : event.getWindow().getScaledHeight() - 24 - 16 - 4;
 					for(int i = 0; i < length; i++){
 						Aspect primal = AspectUtils.primalAspects[i];
-						AspectStack stack = aspects.findAspectInHolders(primal).getContainedAspectStack();
+						AspectStack aspStack = aspects.findAspectInHolders(primal).getContainedAspectStack();
 						int x = (int)(baseX + Math.sin((i / length * 2) * Math.PI) * 20);
 						int y = (int)(baseY + Math.cos((i / length * 2) * Math.PI) * 20);
-						if(!stack.isEmpty())
-							UiUtil.renderAspectStack(stack, x, y);
+						if(!aspStack.isEmpty())
+							UiUtil.renderAspectStack(aspStack, x, y);
 						else{
 							RenderSystem.pushMatrix();
 							RenderSystem.color4f(.5f, .5f, .5f, 1);
@@ -61,10 +61,9 @@ public final class Huds{
 							RenderSystem.popMatrix();
 						}
 					}
-					// if a focus is present
-					Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(new ItemStack(ArcanaItems.FOCUS_PARTS.get()), baseX, baseY);
+					WandItem.getFocusStack(stack).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX, baseY));
 				}
-			}else if(player.getHeldItemMainhand().getItem().equals(ArcanaItems.FLUX_METER.get())){
+			}else if(stack.getItem().equals(ArcanaItems.FLUX_METER.get())){
 				// display filling at 8,8
 				// 10 frames, 32x100
 				int frame = (int)((player.ticksExisted + event.getPartialTicks()) % 10);
@@ -100,12 +99,12 @@ public final class Huds{
 					int baseX = (event.getWindow().getScaledWidth() - stacks.size() * size) / 2;
 					int baseY = (event.getWindow().getScaledHeight() - size) / 2 - (ArcanaConfig.BLOCK_HUDS_TOP.get() ? 10 : -10);
 					for(int i = 0, stacksSize = stacks.size(); i < stacksSize; i++){
-						AspectStack stack = stacks.get(i);
+						AspectStack aspStack = stacks.get(i);
 						int x = baseX + i * size;
 						int y = baseY - 10;
 						if(i % 2 == 0)
 							y += 8;
-						UiUtil.renderAspectStack(stack, x, y);
+						UiUtil.renderAspectStack(aspStack, x, y);
 					}
 				}
 			}
@@ -118,12 +117,12 @@ public final class Huds{
 					int baseX = (event.getWindow().getScaledWidth() - stacks.getHoldersAmount() * size) / 2;
 					int baseY = (event.getWindow().getScaledHeight() - size) / 2 - (ArcanaConfig.BLOCK_HUDS_TOP.get() ? 10 : -10);
 					for(int i = 0, stacksSize = stacks.getHoldersAmount(); i < stacksSize; i++){
-						IAspectHolder stack = stacks.getHolder(i);
+						IAspectHolder aspStack = stacks.getHolder(i);
 						int x = baseX + i * size;
 						int y = baseY - 10;
 						if(i % 2 == 0)
 							y += 8;
-						AspectStack stack1 = stack.getContainedAspectStack();
+						AspectStack stack1 = aspStack.getContainedAspectStack();
 						if(!stack1.isEmpty())
 							UiUtil.renderAspectStack(stack1, x, y);
 					}

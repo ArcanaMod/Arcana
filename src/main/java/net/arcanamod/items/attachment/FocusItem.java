@@ -37,6 +37,10 @@ public class FocusItem extends Item implements Focus{
 		return numStyles;
 	}
 	
+	public Optional<Item> getAssociatedItem(){
+		return Optional.of(this);
+	}
+	
 	public static Aspect getColourAspect(ItemStack stack){
 		ResourceLocation aspectId = new ResourceLocation(stack.getOrCreateTag().getString("colourAspect"));
 		return Optional.ofNullable(AspectUtils.getAspectByResourceLocation(aspectId)).orElse(Aspects.EMPTY);

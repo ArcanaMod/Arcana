@@ -1,6 +1,7 @@
 package net.arcanamod.items.attachment;
 
 import net.arcanamod.Arcana;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
@@ -64,6 +65,14 @@ public interface Focus{
 	 */
 	int numStyles();
 	
+	/**
+	 * Optionally returns the item associated with this focus. Used in the wand HUD, and given to a player when they remove this focus.
+	 * The item stack's tag is set to the wand's focusData tag.
+	 *
+	 * @return The item associated with this focus.
+	 */
+	Optional<Item> getAssociatedItem();
+	
 	class Impl implements Focus{
 		
 		List<ResourceLocation> modelLocations;
@@ -91,6 +100,11 @@ public interface Focus{
 		// Doesn't have an item and cannot be used in foci forge.
 		public int numStyles(){
 			return 0;
+		}
+		
+		// Still has no item.
+		public Optional<Item> getAssociatedItem(){
+			return Optional.empty();
 		}
 	}
 }

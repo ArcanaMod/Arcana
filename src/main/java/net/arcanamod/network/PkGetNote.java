@@ -30,8 +30,7 @@ public class PkGetNote{
 		return new PkGetNote(buffer.readResourceLocation(),buffer.readString());
 	}
 
-	public static void handle(PkGetNote msg, Supplier<NetworkEvent.Context> supplier)
-	{
+	public static void handle(PkGetNote msg, Supplier<NetworkEvent.Context> supplier){
 		supplier.get().enqueueWork(() -> {
 			ServerPlayerEntity epm = supplier.get().getSender();
 			if(epm.inventory.count(ArcanaItems.SCRIBING_TOOLS.get()) > 0 && epm.inventory.count(Items.PAPER) > 0){
@@ -58,5 +57,6 @@ public class PkGetNote{
 				// tell client?
 			}
 		});
+		supplier.get().setPacketHandled(true);
 	}
 }
