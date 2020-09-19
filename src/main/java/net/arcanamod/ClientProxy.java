@@ -29,6 +29,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -45,6 +46,7 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import org.lwjgl.glfw.GLFW;
 
 import javax.annotation.Nullable;
 
@@ -52,12 +54,12 @@ import static net.arcanamod.Arcana.MODID;
 import static net.arcanamod.Arcana.arcLoc;
 
 /**
- * Client Proxy
- *
- * @author Atlas, Luna
+ * Handles client-side only things (that would otherwise crash dedicated servers).
  */
 public class ClientProxy extends CommonProxy{
-
+	
+	public static KeyBinding SWAP_FOCUS_BINDING = new KeyBinding("key.arcana.swap_focus", GLFW.GLFW_KEY_G, "key.categories.mod.arcana");
+	
 	public void construct(){
 		super.construct();
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
@@ -107,6 +109,10 @@ public class ClientProxy extends CommonProxy{
 				layer == 1 ? FocusItem.getColourAspect(stack).getColorRange().get(3) : 0xffffffff,
 				ArcanaItems.DEFAULT_FOCUS::get
 		);
+		
+		// this should go to client init but again it works here
+		
+		ClientRegistry.registerKeyBinding(SWAP_FOCUS_BINDING);
 	}
 
 	public void openResearchBookUI(ResourceLocation book){

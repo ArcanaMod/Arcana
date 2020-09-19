@@ -649,6 +649,8 @@
     "devtools.mojang": "Mojang Tools",
     "container.arcane_workbench": "Arcane Crafting",
     "container.aspect_crystallizer": "Aspect Crystallizer",
+    "key.categories.mod.arcana": "Arcana",
+    "key.arcana.swap_focus": "Swap Wand Focus",
 
     "_comment": "Fluids",
     "fluid.arcana.tainted_goo": "Tainted Goo",

@@ -8,6 +8,7 @@ import net.arcanamod.client.render.aspects.AspectHelixParticleData;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
+import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.util.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
@@ -62,6 +63,23 @@ public class WandItem extends Item{
 		return stack.getOrCreateChildTag("focusData");
 	}
 	
+	public static Optional<ItemStack> getFocusStack(ItemStack stack){
+		return getFocus(stack).getAssociatedItem().map(ItemStack::new).map(stack1 -> {
+			stack1.setTag(getFocusData(stack));
+			return stack1;
+		});
+	}
+	
+	public static void setFocusFromStack(ItemStack wand, ItemStack focus){
+		if(focus.getItem() instanceof FocusItem){
+			wand.getOrCreateTag().put("focusData", focus.getOrCreateTag());
+			wand.getOrCreateTag().putInt("focus", Focus.FOCI.indexOf(focus.getItem()));
+		}else{
+			wand.getOrCreateTag().put("focusData", new CompoundNBT());
+			wand.getOrCreateTag().putInt("focus", 0);
+		}
+	}
+	
 	@Nullable
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
 		AspectBattery battery = new AspectBattery(6, 0);
@@ -73,7 +91,7 @@ public class WandItem extends Item{
 	public ActionResultType onItemUse(ItemUseContext context){
 		return convert(context.getWorld(), context.getPos(), context.getPlayer());
 	}
-
+	
 	public static ActionResultType convert(World world, BlockPos pos, @Nullable PlayerEntity player){
 		BlockState state = world.getBlockState(pos);
 		if(state.getBlock() == Blocks.CAULDRON){
@@ -107,7 +125,7 @@ public class WandItem extends Item{
 		//return ActionResult.resultConsume(player.getHeldItem(hand));
 	}
 	
-	public int getUseDuration(ItemStack stack) {
+	public int getUseDuration(ItemStack stack){
 		return 72000;
 	}
 	
@@ -149,6 +167,10 @@ public class WandItem extends Item{
 		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey()));
 	}
 	
+	public boolean canSwapFocus(){
+		return true;
+	}
+	
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items){
 		if(isInGroup(group)){
 			// iron/wooden, silver/dair, gold/greatwood, thaumium/silverwood, void/arcanium
@@ -167,7 +189,7 @@ public class WandItem extends Item{
 		stack.setTag(nbt);
 		return stack;
 	}
-
+	
 	public static ItemStack withCapAndCore(String cap, String core){
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putString("cap", cap);
@@ -176,11 +198,11 @@ public class WandItem extends Item{
 		stack.setTag(nbt);
 		return stack;
 	}
-
+	
 	public static ItemStack withCapAndCore(ResourceLocation cap, ResourceLocation core){
 		return withCapAndCore(cap.toString(), core.toString());
 	}
-
+	
 	public static ItemStack withCapAndCore(Cap cap, Core core){
 		return withCapAndCore(cap.getId(), core.getId());
 	}
