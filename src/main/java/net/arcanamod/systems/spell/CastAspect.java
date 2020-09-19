@@ -22,4 +22,8 @@ public class CastAspect {
 	public static CastAspect getEmpty(){
 		return new CastAspect(Aspects.EMPTY,Aspects.EMPTY);
 	}
+
+	public boolean isEmpty() {
+		return primaryAspect == Aspects.EMPTY && comboAspect == Aspects.EMPTY;
+	}
 }

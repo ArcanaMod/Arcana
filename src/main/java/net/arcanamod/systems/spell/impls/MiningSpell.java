@@ -6,12 +6,13 @@ import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.RayTraceUtils;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import org.apache.logging.log4j.LogManager;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
 
 public class MiningSpell extends DefaultSpell {
 
@@ -67,6 +68,11 @@ public class MiningSpell extends DefaultSpell {
 		return temp != 0 ? -1 : temp;
 	}
 
+	@Override
+	public int getSpellDuration() {
+		return 1;
+	}
+
 	public int getMiningLevel() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
 		return SpellValues.getOrDefault(modAspects[0], 2);
@@ -85,13 +91,49 @@ public class MiningSpell extends DefaultSpell {
 	@Override
 	public void use(PlayerEntity player, Action action) {
 		try {
-			if (player.world.isRemote) return;
-			BlockPos pos = RayTraceUtils.getTargetBlockPos(player,player.world,distance);
-			BlockState blockToDestroy = player.world.getBlockState(pos);
-			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy,player.world,pos,player) && blockToDestroy.getHarvestLevel()<=getMiningLevel())
-				player.world.destroyBlock(pos.down(),true,player);
+			if (!castAspects[0].isEmpty() && !castAspects[1].isEmpty() && !castAspects[2].isEmpty()) {
+				// Default spell
+				if (player.world.isRemote) return;
+				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
+				BlockState blockToDestroy = player.world.getBlockState(pos);
+				if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
+					player.world.destroyBlock(pos.down(), true, player); // TODO: Add fortune and explosion power
+			} else {
+				DefaultSpell.useCasts(this, player, castAspects);
+			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
 		}
+	}
+
+	@Override
+	public void onAirCast(World world, BlockPos pos, int area, int duration) {
+
+	}
+
+	@Override
+	public void onWaterCast(Entity[] entityTargets) {
+
+	}
+
+
+	@Override
+	public void onFireCast(Entity entityTarget, BlockPos blockTarget) {
+
+	}
+
+	@Override
+	public void onEarthCast(BlockPos blockTarget) {
+
+	}
+
+	@Override
+	public void onOrderCast(PlayerEntity playerTarget) {
+		playerTarget.sendMessage(new TranslationTextComponent("message.cantusethatspell"));
+	}
+
+	@Override
+	public void onChaosCast(Entity entityTarget, BlockPos blockTarget) {
+
 	}
 }

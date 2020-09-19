@@ -49,7 +49,7 @@ public interface ISpell {
 	 */
 	int getComplexity();
 
-	// TODO: ADD COOLDOWN FUNCTION FOR "HOLD BUTTON" SPELLS
+	int getSpellDuration();
 
 	/**
 	 * Use of that spell.
