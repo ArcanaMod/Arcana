@@ -105,8 +105,10 @@ public class ExchangeSpell extends Spell {
 							.withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
 						player.addItemStackToInventory(stack);
 					}
-					player.world.setBlockState(pos, Block.getBlockFromItem(player.getHeldItem(Hand.OFF_HAND).getItem()).getDefaultState());
-					player.getHeldItem(Hand.OFF_HAND).shrink(1);
+					ItemStack held = player.getHeldItem(Hand.OFF_HAND);
+						if (held!=ItemStack.EMPTY)
+					player.world.setBlockState(pos, Block.getBlockFromItem(held.getItem()).getDefaultState());
+					held.shrink(1);
 				}
 			} else {
 				Spell.useCasts(this, player, castAspects);
@@ -136,8 +138,10 @@ public class ExchangeSpell extends Spell {
 						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
 					caster.addItemStackToInventory(stack);
 				}
-				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(caster.getHeldItem(Hand.OFF_HAND).getItem()).getDefaultState());
-				caster.getHeldItem(Hand.OFF_HAND).shrink(1);
+				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
+				if (held!=ItemStack.EMPTY)
+					caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
+				held.shrink(1);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
@@ -154,8 +158,10 @@ public class ExchangeSpell extends Spell {
 						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
 					caster.addItemStackToInventory(stack);
 				}
-				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(caster.getHeldItem(Hand.OFF_HAND).getItem()).getDefaultState());
-				caster.getHeldItem(Hand.OFF_HAND).shrink(1);
+				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
+				if (held!=ItemStack.EMPTY)
+					caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
+				held.shrink(1);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
@@ -177,8 +183,10 @@ public class ExchangeSpell extends Spell {
 						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
 					caster.addItemStackToInventory(stack);
 				}
-				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(caster.getHeldItem(Hand.OFF_HAND).getItem()).getDefaultState());
-				caster.getHeldItem(Hand.OFF_HAND).shrink(1);
+				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
+				if (held!=ItemStack.EMPTY)
+					caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
+				held.shrink(1);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
