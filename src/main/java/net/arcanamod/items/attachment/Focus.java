@@ -8,6 +8,7 @@ import net.arcanamod.systems.spell.ISpell;
 import net.arcanamod.systems.spell.SpellExtraData;
 import net.arcanamod.systems.spell.Spells;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
@@ -79,6 +80,8 @@ public interface Focus{
 	 */
 	Optional<Item> getAssociatedItem();
 	
+	ISpell getSpell(ItemStack stack);
+	
 	class Impl implements Focus{
 		
 		List<ResourceLocation> modelLocations;
@@ -111,6 +114,10 @@ public interface Focus{
 		// Still has no item.
 		public Optional<Item> getAssociatedItem(){
 			return Optional.empty();
+		}
+		
+		public ISpell getSpell(ItemStack stack){
+			return null;
 		}
 	}
 }
