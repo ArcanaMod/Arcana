@@ -636,6 +636,7 @@
     "_comment": "Tooltips and statuses",
     "tooltip.contains_aspect": "%s x%s",
     "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration. Maybe you should look at those notes again.",
+    "status.null_spell": "Null or invalid spell!",
 
     "_comment": "GUIs",
     "researchEntry.continue": "Continue",

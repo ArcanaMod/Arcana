@@ -9,10 +9,7 @@ import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.items.attachment.FocusItem;
-import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
-import net.arcanamod.systems.spell.SpellExtraData;
-import net.arcanamod.systems.spell.Spells;
 import net.arcanamod.util.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
@@ -93,7 +90,11 @@ public class WandItem extends Item{
 	}
 	
 	public ActionResultType onItemUse(ItemUseContext context){
-		((FocusItem)getFocus(context.getItem())).getSpell(context.getItem()).use(context.getPlayer(), ISpell.Action.USE);
+		ISpell spell = ((FocusItem)getFocus(context.getItem())).getSpell(context.getItem());
+		if(spell != null)
+			spell.use(context.getPlayer(), ISpell.Action.USE);
+		else if(context.getPlayer() != null)
+			context.getPlayer().sendStatusMessage(new TranslationTextComponent("status.null_spell"), true);
 		return convert(context.getWorld(), context.getPos(), context.getPlayer());
 	}
 	
