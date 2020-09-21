@@ -1,6 +1,12 @@
 package net.arcanamod.items.attachment;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.systems.spell.CastAspect;
+import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.SpellExtraData;
+import net.arcanamod.systems.spell.Spells;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;

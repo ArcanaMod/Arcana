@@ -7,6 +7,7 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -17,7 +18,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class MiningSpell extends DefaultSpell {
+public class MiningSpell extends Spell {
 
 	private Aspect[] modAspects;
 	private CastAspect[] castAspects;
@@ -94,15 +95,18 @@ public class MiningSpell extends DefaultSpell {
 	@Override
 	public void use(PlayerEntity player, Action action) {
 		try {
-			if (!castAspects[0].isEmpty() && !castAspects[1].isEmpty() && !castAspects[2].isEmpty()) {
+			if (castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty()) {
 				// Default spell
 				if (player.world.isRemote) return;
 				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
 				BlockState blockToDestroy = player.world.getBlockState(pos);
-				if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
-					player.world.destroyBlock(pos.down(), true, player); // TODO: Add fortune and explosion power
+				if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+					player.sendMessage(player.world.getBlockState(pos).getBlock().getNameTextComponent());
+					player.world.setBlockState(pos, Blocks.GRASS_BLOCK.getDefaultState());
+				}
+					//player.world.destroyBlock(pos, true, player); // TODO: Add fortune and explosion power
 			} else {
-				DefaultSpell.useCasts(this, player, castAspects);
+				Spell.useCasts(this, player, castAspects);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
@@ -126,7 +130,7 @@ public class MiningSpell extends DefaultSpell {
 			if (caster.world.isRemote) return;
 				BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 				if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
-					caster.world.destroyBlock(blockTarget.down(), true, caster); // TODO: Add fortune and explosion power
+					caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
 		}
@@ -138,7 +142,7 @@ public class MiningSpell extends DefaultSpell {
 			if (caster.world.isRemote) return;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
-				caster.world.destroyBlock(blockTarget.down(), true, caster); // TODO: Add fortune and explosion power
+				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
 		}
@@ -155,7 +159,7 @@ public class MiningSpell extends DefaultSpell {
 			if (caster.world.isRemote) return;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
-				caster.world.destroyBlock(blockTarget.down(), true, caster); // TODO: Add fortune and explosion power
+				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
 		}

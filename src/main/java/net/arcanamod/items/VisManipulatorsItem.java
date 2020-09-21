@@ -8,15 +8,18 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.tiles.AspectTubeTileEntity;
+import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
 import net.arcanamod.systems.spell.SpellExtraData;
 import net.arcanamod.systems.spell.Spells;
+import net.arcanamod.systems.spell.impls.Spell;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.StringTextComponent;
@@ -46,7 +49,13 @@ public class VisManipulatorsItem extends Item{
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
-		getSpell().use(context.getPlayer(), ISpell.Action.USE);
+		ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(),1);
+		toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.MINING_SPELL.build(
+				new Aspect[]{Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY},
+				new CastAspect[]{CastAspect.getEmpty(),CastAspect.getEmpty(),CastAspect.getEmpty()},
+				new SpellExtraData())));
+		context.getPlayer().addItemStackToInventory(toSet);
+		//getSpell().use(context.getPlayer(), ISpell.Action.USE);
 		return super.onItemUseFirst(stack, context);
 	}
 

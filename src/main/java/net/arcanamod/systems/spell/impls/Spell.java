@@ -1,13 +1,14 @@
 package net.arcanamod.systems.spell.impls;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.systems.spell.CastAspect;
-import net.arcanamod.systems.spell.ISpell;
-import net.arcanamod.systems.spell.SpellExtraData;
-import net.arcanamod.systems.spell.SpellRegistry;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -15,18 +16,19 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Optional;
 
 import static net.arcanamod.aspects.Aspects.*;
 
 /**
  * ISpell class but it self registers.
  */
-public abstract class DefaultSpell implements ISpell {
-	public DefaultSpell(){
+public abstract class Spell implements ISpell {
+	public Spell(){
 		SpellRegistry.addSpell(getId(),this);
 	}
 
-	protected static void useCasts(DefaultSpell spell, PlayerEntity player, CastAspect[] aspects) {
+	protected static void useCasts(Spell spell, PlayerEntity player, CastAspect[] aspects) {
 		int distance = 10;
 		int max_distance = 16;
 
@@ -57,6 +59,45 @@ public abstract class DefaultSpell implements ISpell {
 				} else spell.onChaosCast(player, null, pos);
 			}
 		}
+	}
+
+	public static ISpell deserializeNBT(CompoundNBT compound){
+		if (compound.contains("Spell")) {
+			Aspect[] modifiers = new Aspect[compound.getInt("ModifierAspectsLength")];
+			for (int i = 0; i < compound.getInt("ModifierAspectsLength"); i++) {
+				modifiers[i] = Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("Modifier" + i)))).orElse(Aspects.EMPTY);
+			}
+			CastAspect[] casts = new CastAspect[compound.getInt("CastAspectsLength")];
+			for (int i = 0; i < compound.getInt("CastAspectsLength"); i++) {
+				casts[i] = new CastAspect(
+					Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("Cast" + i + "Primary")))).orElse(Aspects.EMPTY),
+					Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("Cast" + i + "Combo")))).orElse(Aspects.EMPTY)
+				);
+			}
+			return Spells.spellMap.get(new ResourceLocation(compound.getString("Spell"))).build(modifiers, casts, new SpellExtraData());
+		} else return null;
+	}
+
+	public static CompoundNBT serializeNBT(ISpell spell){
+		CompoundNBT compound = new CompoundNBT();
+		compound.putString("Spell",((Spell)spell).getId().toString()); // <-- Hardcoded here, fixes needed.
+		/*compound.putInt("CostLength",spell.getAspectCosts().length);
+		for (int i = 0; i < spell.getAspectCosts().length; i++) {
+			compound.putString("Cost"+spell.getAspectCosts()[i], AspectUtils.getResourceLocationFromAspect(spell.getAspectCosts()[i].getAspect()).toString());
+			compound.putInt("Cost"+spell.getAspectCosts()[i]+"C", spell.getAspectCosts()[i].getAmount());
+		}*/
+		compound.putInt("ModifierAspectsLength",spell.getModAspects().length);
+		for (int i = 0; i < spell.getModAspects().length; i++) {
+			compound.putString("Modifier"+i, AspectUtils.getResourceLocationFromAspect(spell.getModAspects()[i]).toString());
+		}
+		compound.putInt("CastAspectsLength",spell.getCastAspects().length);
+		for (int i = 0; i < spell.getCastAspects().length; i++) {
+			compound.putString("Cast"+i+"Primary", AspectUtils.getResourceLocationFromAspect(spell.getCastAspects()[i].primaryAspect).toString());
+			compound.putString("Cast"+i+"Combo", AspectUtils.getResourceLocationFromAspect(spell.getCastAspects()[i].comboAspect).toString());
+		}
+		//compound.putInt("Complexity",spell.getComplexity());
+		//compound.putInt("Duration",spell.getSpellDuration());
+		return compound;
 	}
 
 	public abstract ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data);

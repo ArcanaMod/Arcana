@@ -3,6 +3,7 @@ package net.arcanamod.systems.spell;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 
 /**
  * The ISpell Class
