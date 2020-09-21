@@ -33,7 +33,7 @@ public interface ISpell {
 
 	/**
 	 * Return CastAspects that are "neat" modifiers and are used in combos.
-	 * "neat" is mod by Vazkii. Why I'm writing that in documentation???
+	 *
 	 * @return returns CastAspect array.
 	 */
 	CastAspect[] getCastAspects(); // Cast, Cast+

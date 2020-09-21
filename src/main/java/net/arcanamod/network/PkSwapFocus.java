@@ -36,16 +36,18 @@ public class PkSwapFocus{
 			ServerPlayerEntity spe = supplier.get().getSender();
 			ItemStack wandStack = spe.getHeldItem(msg.wandHand);
 			// Give player the old focus
-			WandItem.getFocusStack(wandStack).ifPresent(spe.inventory::addItemStackToInventory);
 			if(msg.newFocusIndex >= 0){
 				// Set the wand focus of the wand
 				List<ItemStack> foci = getAllFociStacks(spe);
+				WandItem.getFocusStack(wandStack).ifPresent(spe.inventory::addItemStackToInventory);
 				ItemStack focus = foci.get(msg.newFocusIndex);
 				WandItem.setFocusFromStack(wandStack, focus);
 				// Remove the stack from the inventory
 				spe.inventory.clearMatchingItems(stack -> stack == focus, 1);
-			}else
+			}else{
+				WandItem.getFocusStack(wandStack).ifPresent(spe.inventory::addItemStackToInventory);
 				WandItem.setFocusFromStack(wandStack, ItemStack.EMPTY);
+			}
 		});
 		supplier.get().setPacketHandled(true);
 	}
