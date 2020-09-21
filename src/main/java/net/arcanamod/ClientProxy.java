@@ -18,6 +18,7 @@ import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.containers.ArcanaContainers;
+import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.fluids.ArcanaFluids;
@@ -174,6 +175,7 @@ public class ClientProxy extends CommonProxy{
 
 	protected void registerScreens() {
 		//Screens
+		ScreenManager.registerFactory(ArcanaContainers.FOCI_FORGE.get(), FociForgeScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.RESEARCH_TABLE.get(), ResearchTableScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), ArcaneCraftingTableScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ASPECT_CRYSTALLIZER.get(), AspectCrystallizerScreen::new);

@@ -7,11 +7,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class FociForgeTileEntity extends LockableTileEntity {
 	protected FociForgeTileEntity(TileEntityType<?> typeIn) {
 		super(typeIn);
 	}
+
+	protected ItemStackHandler items = new ItemStackHandler(2){
+		protected void onContentsChanged(int slot){
+			super.onContentsChanged(slot);
+			markDirty();
+		}
+	};
 
 	@Override
 	protected ITextComponent getDefaultName() {
@@ -28,7 +36,7 @@ public class FociForgeTileEntity extends LockableTileEntity {
 	 */
 	@Override
 	public int getSizeInventory() {
-		return 0;
+		return items.getSlots();
 	}
 
 	@Override
@@ -36,60 +44,48 @@ public class FociForgeTileEntity extends LockableTileEntity {
 		return false;
 	}
 
-	/**
-	 * Returns the stack in the given slot.
-	 *
-	 * @param index
-	 */
 	@Override
 	public ItemStack getStackInSlot(int index) {
-		return null;
+		return this.items.getStackInSlot(index);
 	}
 
-	/**
-	 * Removes up to a specified number of items from an inventory slot and returns them in a new stack.
-	 *
-	 * @param index
-	 * @param count
-	 */
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
-		return null;
+		ItemStack stack0 = items.getStackInSlot(index);
+		ItemStack stack1 = items.getStackInSlot(index).copy();
+		stack0.shrink(count);
+		stack1.setCount(count);
+		return stack1; //TODO: Check of works fine (custom impl)
 	}
 
-	/**
-	 * Removes a stack from the given slot and returns it.
-	 *
-	 * @param index
-	 */
 	@Override
 	public ItemStack removeStackFromSlot(int index) {
-		return null;
+		ItemStack stack = this.items.getStackInSlot(index).copy();
+		items.getStackInSlot(index).setCount(0);
+		return stack;
 	}
 
-	/**
-	 * Sets the given item stack to the specified slot in the inventory (can be crafting or armor sections).
-	 *
-	 * @param index
-	 * @param stack
-	 */
 	@Override
 	public void setInventorySlotContents(int index, ItemStack stack) {
-
+		items.setStackInSlot(index, stack);
+		if (stack.getCount() > getInventoryStackLimit()) {
+			stack.setCount(getInventoryStackLimit());
+		}
 	}
 
-	/**
-	 * Don't rename this method to canInteractWith due to conflicts with Container
-	 *
-	 * @param player
-	 */
 	@Override
 	public boolean isUsableByPlayer(PlayerEntity player) {
-		return true;
+		if (world.getTileEntity(pos) != this) {
+			return false;
+		} else {
+			return player.getDistanceSq(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5) <= 64;
+		}
 	}
 
 	@Override
 	public void clear() {
-
+		for (int i = 0; i < items.getSlots()-1; i++) {
+			items.getStackInSlot(i).setCount(0);
+		}
 	}
 }
