@@ -49,7 +49,7 @@ public class FocusItem extends Item implements Focus{
 	}
 
 	public ISpell getSpell(ItemStack stack) {
-		return Spell.deserializeNBT(stack.getOrCreateTag().getCompound("Spell"));
+		return Spell.deserializeNBT(stack.getOrCreateTag().getCompound("focusData").getCompound("Spell"));
 	}
 
 	public static Aspect getColourAspect(ItemStack stack) {

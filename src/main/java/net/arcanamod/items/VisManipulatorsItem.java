@@ -26,6 +26,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ParametersAreNonnullByDefault
@@ -38,22 +39,31 @@ public class VisManipulatorsItem extends Item{
 
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context){
-		TileEntity entity = context.getWorld().getTileEntity(context.getPos());
-		if(entity != null && entity.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()){
+		/*TileEntity entity = context.getWorld().getTileEntity(context.getPos());
+		if(entity != null && entity.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()){*/
 			onItemUseFirst(null, context);
 			return ActionResultType.SUCCESS;
-		}
-		return super.onItemUse(context);
+		//}
+		//return super.onItemUse(context);
 	}
 
 	@SuppressWarnings("ConstantConditions")
 	@Override
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 		ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(),1);
-		toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.MINING_SPELL.build(
-				new Aspect[]{Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY},
-				new CastAspect[]{CastAspect.getEmpty(),CastAspect.getEmpty(),CastAspect.getEmpty()},
-				new SpellExtraData())));
+		if (random.nextInt(4)==0){
+			toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.MINING_SPELL.build(
+					new Aspect[]{Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY},
+					new CastAspect[]{CastAspect.getEmpty(), CastAspect.getEmpty(), CastAspect.getEmpty()},
+					new SpellExtraData())));
+		} else {
+			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.EXCHANGE_SPELL.build(
+					new Aspect[]{Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY},
+					new CastAspect[]{CastAspect.getEmpty(),CastAspect.getEmpty(),CastAspect.getEmpty()},
+					new SpellExtraData())));
+
+		}
+		toSet.getOrCreateTag().putInt("style",random.nextInt(14));
 		context.getPlayer().addItemStackToInventory(toSet);
 		//getSpell().use(context.getPlayer(), ISpell.Action.USE);
 		return super.onItemUseFirst(stack, context);
