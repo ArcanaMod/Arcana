@@ -81,11 +81,6 @@ public abstract class Spell implements ISpell {
 	public static CompoundNBT serializeNBT(ISpell spell){
 		CompoundNBT compound = new CompoundNBT();
 		compound.putString("Spell",((Spell)spell).getId().toString()); // <-- Hardcoded here, fixes needed.
-		/*compound.putInt("CostLength",spell.getAspectCosts().length);
-		for (int i = 0; i < spell.getAspectCosts().length; i++) {
-			compound.putString("Cost"+spell.getAspectCosts()[i], AspectUtils.getResourceLocationFromAspect(spell.getAspectCosts()[i].getAspect()).toString());
-			compound.putInt("Cost"+spell.getAspectCosts()[i]+"C", spell.getAspectCosts()[i].getAmount());
-		}*/
 		compound.putInt("ModifierAspectsLength",spell.getModAspects().length);
 		for (int i = 0; i < spell.getModAspects().length; i++) {
 			compound.putString("Modifier"+i, AspectUtils.getResourceLocationFromAspect(spell.getModAspects()[i]).toString());
@@ -95,8 +90,6 @@ public abstract class Spell implements ISpell {
 			compound.putString("Cast"+i+"Primary", AspectUtils.getResourceLocationFromAspect(spell.getCastAspects()[i].primaryAspect).toString());
 			compound.putString("Cast"+i+"Combo", AspectUtils.getResourceLocationFromAspect(spell.getCastAspects()[i].comboAspect).toString());
 		}
-		//compound.putInt("Complexity",spell.getComplexity());
-		//compound.putInt("Duration",spell.getSpellDuration());
 		return compound;
 	}
 
