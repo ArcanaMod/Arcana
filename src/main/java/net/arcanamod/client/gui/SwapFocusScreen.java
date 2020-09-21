@@ -38,13 +38,14 @@ public class SwapFocusScreen extends Screen{
 			List<ItemStack> foci = getAllFociStacks();
 			int size = foci.size();
 			int distance = size * 5 + 28;
-			int particleCount = size * 6 + 8;
+			int particleCount = size * 12 + 16;
 			for(int i = 0; i < particleCount; i++){
 				random.setSeed(i);
-				double v = Math.toRadians((i + (getMinecraft().world.getGameTime() + partialTicks) / 5f) * (360f / (particleCount)));
-				int colour = UiUtil.combine(random.nextInt(128) + 127, random.nextInt(128) + 127, random.nextInt(128) + 127) | 0x9F000000;
-				int x = (int)(MathHelper.cos((float)v) * (distance + 4)) - 4 + width / 2;
-				int y = (int)(MathHelper.sin((float)v) * (distance + 4)) - 4 + height / 2;
+				double v = Math.toRadians((i + (getMinecraft().world.getGameTime() + partialTicks) / (5f + random.nextInt(5) - 2)) * (360f / (particleCount)));
+				int colour = UiUtil.combine(random.nextInt(128) + 127, random.nextInt(128) + 127, random.nextInt(128) + 127) | 0x6F000000;
+				int distance1 = distance + random.nextInt(21) - 10;
+				int x = (int)(MathHelper.cos((float)v) * (distance1 + 4)) - 4 + width / 2;
+				int y = (int)(MathHelper.sin((float)v) * (distance1 + 4)) - 4 + height / 2;
 				GuiUtils.drawGradientRect(0, x, y, x + 8, y + 8, colour, colour);
 			}
 			for(int i = 0; i < size; i++){
