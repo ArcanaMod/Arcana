@@ -96,22 +96,23 @@ public class ExchangeSpell extends Spell {
 	public void use(PlayerEntity player, ISpell.Action action) {
 		try {
 			if (player.world.isRemote) return;
-			if (castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty()) {
-				// Default spell
-				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
-				BlockState blockToDestroy = player.world.getBlockState(pos);
-				if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-					for (ItemStack stack : player.world.getBlockState(pos).getDrops(new LootContext.Builder((ServerWorld) player.world)
-							.withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
-						player.addItemStackToInventory(stack);
+			ItemStack held = player.getHeldItem(Hand.OFF_HAND);
+			if (held!=ItemStack.EMPTY) {
+				if (castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty()) {
+					// Default spell
+					BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
+					BlockState blockToDestroy = player.world.getBlockState(pos);
+					if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+						for (ItemStack stack : player.world.getBlockState(pos).getDrops(new LootContext.Builder((ServerWorld) player.world)
+								.withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.TOOL, ItemStack.EMPTY))) {
+							player.addItemStackToInventory(stack);
+						}
+						player.world.setBlockState(pos, Block.getBlockFromItem(held.getItem()).getDefaultState());
+						held.shrink(1);
 					}
-					ItemStack held = player.getHeldItem(Hand.OFF_HAND);
-						if (held!=ItemStack.EMPTY)
-					player.world.setBlockState(pos, Block.getBlockFromItem(held.getItem()).getDefaultState());
-					held.shrink(1);
+				} else {
+					Spell.useCasts(this, player, castAspects);
 				}
-			} else {
-				Spell.useCasts(this, player, castAspects);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
