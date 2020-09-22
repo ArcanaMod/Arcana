@@ -11,6 +11,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -97,7 +98,7 @@ public class ExchangeSpell extends Spell {
 		try {
 			if (player.world.isRemote) return;
 			ItemStack held = player.getHeldItem(Hand.OFF_HAND);
-			if (held!=ItemStack.EMPTY) {
+			if (held!=ItemStack.EMPTY&&held.getItem() != Items.AIR) {
 				if (castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty()) {
 					// Default spell
 					BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);

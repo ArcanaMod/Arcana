@@ -90,14 +90,6 @@ public class WandItem extends Item{
 	}
 	
 	public ActionResultType onItemUse(ItemUseContext context){
-		Focus focus = getFocus(context.getItem());
-		if(focus != Focus.NO_FOCUS){
-			ISpell spell = focus.getSpell(context.getItem());
-			if(spell != null)
-				spell.use(context.getPlayer(), ISpell.Action.USE);
-			else if(context.getPlayer() != null)
-				context.getPlayer().sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
-		}
 		return convert(context.getWorld(), context.getPos(), context.getPlayer());
 	}
 	
@@ -122,6 +114,15 @@ public class WandItem extends Item{
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+		Focus focus = getFocus(player.getHeldItem(hand));
+		if(focus != Focus.NO_FOCUS){
+			ISpell spell = focus.getSpell(player.getHeldItem(hand));
+			if(spell != null)
+				spell.use(player, ISpell.Action.USE);
+			else if(player != null)
+				player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
+		}
+
 		AuraView view = AuraView.SIDED_FACTORY.apply(world);
 		ItemStack itemstack = player.getHeldItem(hand);
 		AtomicReference<ActionResult<ItemStack>> ret = new AtomicReference<>(ActionResult.resultConsume(itemstack));
