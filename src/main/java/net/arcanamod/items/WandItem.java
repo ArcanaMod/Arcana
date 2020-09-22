@@ -16,6 +16,7 @@ import net.arcanamod.world.Node;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,6 +32,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
@@ -38,6 +41,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -224,5 +228,20 @@ public class WandItem extends Item{
 	
 	public static ItemStack withCapAndCore(Cap cap, Core core){
 		return withCapAndCore(cap.getId(), core.getId());
+	}
+	
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
+		super.addInformation(stack, world, tooltip, flag);
+		// Add focus info
+		ISpell spell = getFocus(stack).getSpell(stack);
+		if(spell != null){
+			Optional<ITextComponent> name = spell.getName(getFocusData(stack).getCompound("Spell"));
+			name.ifPresent(e -> tooltip.add(new TranslationTextComponent("tooltip.arcana.spell", e,
+					spell.getAspectCosts().stream()
+						.map(AspectStack::getAspect)
+						.map(aspect -> I18n.format("aspect." + aspect.name()))
+						.collect(Collectors.joining(", ")))));
+		}
 	}
 }

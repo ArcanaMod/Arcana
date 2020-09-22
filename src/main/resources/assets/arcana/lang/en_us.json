@@ -635,6 +635,7 @@
 
     "_comment": "Tooltips and statuses",
     "tooltip.contains_aspect": "%s x%s",
+    "tooltip.arcana.spell": "Spell: %s§r (%s)",
     "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration. Maybe you should look at those notes again.",
     "status.arcana.null_spell": "Null or invalid spell!",
 
@@ -843,5 +844,10 @@
     "message.arcana.disabled": "This book is currently disabled.",
 
     "_comment": "Toasts",
-    "puzzle.toast.title": "Puzzle Complete!"
+    "puzzle.toast.title": "Puzzle Complete!",
+
+    "_comment": "Spells",
+    "spell.arcana.mining": "§2Mining",
+    "spell.arcana.fabric": "§eVicious Mockery",
+    "spell.arcana.exchange": "§aEquivalent Exchange"
 }

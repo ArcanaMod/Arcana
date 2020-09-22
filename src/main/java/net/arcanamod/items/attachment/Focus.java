@@ -80,6 +80,7 @@ public interface Focus{
 	 */
 	Optional<Item> getAssociatedItem();
 	
+	// TODO: switch to CompoundNBT
 	ISpell getSpell(ItemStack stack);
 	
 	class Impl implements Focus{

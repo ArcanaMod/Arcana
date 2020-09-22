@@ -3,14 +3,19 @@ package net.arcanamod.systems.spell;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.text.ITextComponent;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The ISpell Class
  */
 public interface ISpell {
-
+	
+	// TODO: improve docs, remove arrays, use CompoundNBT instead of SpellExtraData
+	
 	/**
 	 * Defines all variables. DON'T USE THAT IN REGISTRY!!!
 	 * @param modAspects Modifier Aspects
@@ -59,7 +64,11 @@ public interface ISpell {
 	 * @param action Click Action
 	 */
 	void use(PlayerEntity player, Action action);
-
+	
+	default Optional<ITextComponent> getName(CompoundNBT nbt){
+		return Optional.empty();
+	}
+	
 	/**
 	 * Click action
 	 */

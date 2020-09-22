@@ -16,6 +16,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -103,7 +105,11 @@ public abstract class Spell implements ISpell {
 	public abstract ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data);
 
 	public abstract ResourceLocation getId();
-
+	
+	public Optional<ITextComponent> getName(CompoundNBT nbt){
+		return Optional.of(new TranslationTextComponent("spell." + getId().getNamespace() + "." + getId().getPath()));
+	}
+	
 	@Override
 	public abstract void use(PlayerEntity player, Action action);
 
