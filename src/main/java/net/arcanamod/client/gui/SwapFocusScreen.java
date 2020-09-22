@@ -6,6 +6,7 @@ import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkSwapFocus;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.MouseHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
@@ -58,28 +59,7 @@ public class SwapFocusScreen extends Screen{
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int button){
-		// find the clicked focus
-		// if you click the middle, you remove your focus
-		if(mouseX >= -8 + (width / 2f) && mouseX < 8 + (width / 2f) && mouseY >= -8 + (height / 2f) && mouseY < 8 + (height / 2f)){
-			// send swap focus packet
-			// hand & focus index
-			Connection.sendToServer(new PkSwapFocus(hand, -1));
-			return true;
-		}
-		List<ItemStack> foci = getAllFociStacks();
-		int size = foci.size();
-		int distance = size * 5 + 28;
-		for(int i = 0; i < size; i++){
-			int x = (int)(MathHelper.cos((float)Math.toRadians(i * (360f / size))) * distance) - 8 + width / 2;
-			int y = (int)(MathHelper.sin((float)Math.toRadians(i * (360f / size))) * distance) - 8 + height / 2;
-			if(mouseX >= x && mouseX < x + 16 && mouseY >= y && mouseY < y + 16){
-				// send swap focus packet
-				// hand & focus index
-				Connection.sendToServer(new PkSwapFocus(hand, i));
-				return true;
-			}
-		}
-		return false;
+		return select(mouseX, mouseY, true);
 	}
 	
 	private List<ItemStack> getAllFociStacks(){
@@ -94,9 +74,40 @@ public class SwapFocusScreen extends Screen{
 		return foci;
 	}
 	
+	public boolean select(double mouseX, double mouseY, boolean clicked){
+		// find the nearest focus
+		// if you click the middle, you remove your focus
+		if(mouseX >= -8 + (width / 2f) && mouseX < 8 + (width / 2f) && mouseY >= -8 + (height / 2f) && mouseY < 8 + (height / 2f)){
+			// if you didn't click, and the mouse is in the middle, do nothing
+			if(!clicked)
+				return true;
+			// send swap focus packet
+			// index = -1 AKA remove focus
+			Connection.sendToServer(new PkSwapFocus(hand, -1));
+			return true;
+		}
+		List<ItemStack> foci = getAllFociStacks();
+		int size = foci.size();
+		//int distance = size * 5 + 28;
+		// get nearest focus
+		// find what slice the mouse falls in
+		if(size > 0){
+			double angle = Math.toDegrees(Math.atan2(mouseY - height / 2d, mouseX - width / 2d)) + (180d / size);
+			angle = angle % 360;
+			angle = angle < 0 ? 360 + angle : angle;
+			int item = (int)(angle / (360d / size));
+			Connection.sendToServer(new PkSwapFocus(hand, item));
+			return true;
+		}
+		return false;
+	}
+	
 	public boolean keyReleased(int keyCode, int scanCode, int modifiers){
 		// if SWAP_FOCUS_BINDING is released, close screen
 		if(!ClientProxy.SWAP_FOCUS_BINDING.isPressed()){
+			double mX = getMinecraft().mouseHelper.getMouseX() * (double)getMinecraft().getMainWindow().getScaledWidth() / (double)getMinecraft().getMainWindow().getWidth();
+			double mY = getMinecraft().mouseHelper.getMouseY() * (double)getMinecraft().getMainWindow().getScaledHeight() / (double)getMinecraft().getMainWindow().getHeight();
+			select(mX, mY, false);
 			Minecraft.getInstance().displayGuiScreen(null);
 			return true;
 		}

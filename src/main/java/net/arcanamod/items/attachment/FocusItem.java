@@ -1,18 +1,13 @@
 package net.arcanamod.items.attachment;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
-import net.arcanamod.systems.spell.SpellExtraData;
-import net.arcanamod.systems.spell.Spells;
 import net.arcanamod.systems.spell.impls.Spell;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;

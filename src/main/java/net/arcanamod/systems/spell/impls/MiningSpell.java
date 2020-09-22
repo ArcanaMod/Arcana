@@ -79,27 +79,27 @@ public class MiningSpell extends Spell {
 
 	public int getMiningLevel() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return SpellValues.getOrDefault(modAspects[0], 2);
+		return modAspects.length >= 1 ? SpellValues.getOrDefault(modAspects[0], 2) : 2;
 	}
 
 	public int getExplosivePower() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return SpellValues.getOrDefault(modAspects[1], 0);
+		return modAspects.length >= 2 ? SpellValues.getOrDefault(modAspects[1], 0) : 0;
 	}
 
 	public int getFortune() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return SpellValues.getOrDefault(modAspects[2], 0);
+		return modAspects.length >= 3 ? SpellValues.getOrDefault(modAspects[2], 0) : 0;
 	}
 
 	@Override
-	public void use(PlayerEntity player, Action action) {
-			if (player.world.isRemote) return;
-			if (castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty()) {
-				defaultUse(player);
-			} else {
-				Spell.useCasts(this, player, castAspects);
-			}
+	public void use(PlayerEntity player, Action action){
+		if(player.world.isRemote)
+			return;
+		if(castAspects.length < 3 || castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty())
+			defaultUse(player);
+		else
+			Spell.useCasts(this, player, castAspects);
 	}
 
 	@Override
