@@ -22,6 +22,8 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class ExchangeSpell extends Spell {
@@ -63,9 +65,9 @@ public class ExchangeSpell extends Spell {
 	}
 
 	@Override
-	public AspectStack[] getAspectCosts() {
+	public List<AspectStack> getAspectCosts() {
 		// Currently EVERYTHING uses ORDER aspect.
-		return new AspectStack[] {new AspectStack(Aspects.ORDER,1)};
+		return Collections.singletonList(new AspectStack(Aspects.ORDER, 1));
 	}
 
 	@Override

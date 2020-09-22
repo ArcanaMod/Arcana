@@ -16,6 +16,7 @@ import net.arcanamod.world.Node;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -34,6 +35,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -117,12 +119,19 @@ public class WandItem extends Item{
 		Focus focus = getFocus(player.getHeldItem(hand));
 		if(focus != Focus.NO_FOCUS){
 			ISpell spell = focus.getSpell(player.getHeldItem(hand));
-			if(spell != null)
-				spell.use(player, ISpell.Action.USE);
-			else if(player != null)
+			if(spell != null){
+				IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
+				// oh my god this code is terrible
+				// time for more VisUtils I guess
+				if(spell.getAspectCosts().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
+					spell.use(player, ISpell.Action.USE);
+					// remove aspects from wand
+					for(AspectStack cost : spell.getAspectCosts())
+						handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
+				}
+			}else
 				player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
 		}
-
 		AuraView view = AuraView.SIDED_FACTORY.apply(world);
 		ItemStack itemstack = player.getHeldItem(hand);
 		AtomicReference<ActionResult<ItemStack>> ret = new AtomicReference<>(ActionResult.resultConsume(itemstack));

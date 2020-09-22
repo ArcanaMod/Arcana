@@ -13,10 +13,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
 public class FabricSpell extends Spell {
@@ -63,8 +63,8 @@ public class FabricSpell extends Spell {
 	 * @return returns cost of spell.
 	 */
 	@Override
-	public AspectStack[] getAspectCosts() {
-		return new AspectStack[0];
+	public List<AspectStack> getAspectCosts() {
+		return Collections.singletonList(new AspectStack(Aspects.WATER, 1));
 	}
 
 	/**

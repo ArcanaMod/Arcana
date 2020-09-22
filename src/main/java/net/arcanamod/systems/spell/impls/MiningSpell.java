@@ -7,7 +7,6 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -16,6 +15,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 
 public class MiningSpell extends Spell {
@@ -57,9 +57,8 @@ public class MiningSpell extends Spell {
 	}
 
 	@Override
-	public AspectStack[] getAspectCosts() {
-		// Currently EVERYTHING uses ORDER aspect.
-		return new AspectStack[] {new AspectStack(Aspects.ORDER,1)};
+	public List<AspectStack> getAspectCosts() {
+		return Collections.singletonList(new AspectStack(Aspects.EARTH, 1));
 	}
 
 	@Override

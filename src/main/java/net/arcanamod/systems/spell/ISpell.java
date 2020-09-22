@@ -3,7 +3,8 @@ package net.arcanamod.systems.spell;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+
+import java.util.List;
 
 /**
  * The ISpell Class
@@ -42,7 +43,7 @@ public interface ISpell {
 	 * Cost of spell in AspectStacks.
 	 * @return returns cost of spell.
 	 */
-	AspectStack[] getAspectCosts();
+	List<AspectStack> getAspectCosts();
 
 	/**
 	 * How spell is complex to use / create
