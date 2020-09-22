@@ -7,11 +7,14 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.effect.LightningBoltEntity;
+import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
@@ -53,10 +56,13 @@ public abstract class Spell implements ISpell {
 				spell.onOrderCast(player);
 			} else if (aspect.primaryAspect == CHAOS){
 				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
-				List<Entity> target = player.world.getEntitiesWithinAABB(Entity.class,new AxisAlignedBB(pos).expand(0,1,0));
-				if (target.size()>=1){
+				LightningBoltEntity lbe = new LightningBoltEntity(player.world,pos.getX(),pos.getY(),pos.getZ(),true);
+				player.world.addEntity(lbe);
+				List<Entity> e = Temp_SpellUtil.rayTraceEntities(player.world,new Vec3d(pos.getX(),pos.getY(),pos.getZ()),player.getLookVec(),Optional.empty(), Entity.class);
+				//List<Entity> target = player.world.getEntitiesWithinAABB(Entity.class,new AxisAlignedBB(pos).expand(0,1,0));
+				/*if (target.size()>=1){
 					spell.onChaosCast(player, target.get(0), pos);
-				} else spell.onChaosCast(player, null, pos);
+				} else*/ spell.onChaosCast(player, null, pos);
 			}
 		}
 	}

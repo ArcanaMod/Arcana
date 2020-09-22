@@ -94,32 +94,22 @@ public class MiningSpell extends Spell {
 
 	@Override
 	public void use(PlayerEntity player, Action action) {
-		try {
+			if (player.world.isRemote) return;
 			if (castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty()) {
-				// Default spell
-				if (player.world.isRemote) return;
-				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
-				BlockState blockToDestroy = player.world.getBlockState(pos);
-				if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-					player.world.destroyBlock(pos, true, player);
-				}
-					//player.world.destroyBlock(pos, true, player); // TODO: Add fortune and explosion power
+				defaultUse(player);
 			} else {
 				Spell.useCasts(this, player, castAspects);
 			}
-		} catch (SpellNotBuiltError spellNotBuiltError) {
-			spellNotBuiltError.printStackTrace();
-		}
 	}
 
 	@Override
 	public void onAirCast(PlayerEntity caster, World world, BlockPos pos, int area, int duration) {
-		caster.sendMessage(new TranslationTextComponent("message.cantusethatspell"));
+		caster.sendMessage(new TranslationTextComponent("status.invalidspell"));
 	}
 
 	@Override
 	public void onWaterCast(PlayerEntity caster, List<Entity> entityTargets) {
-		caster.sendMessage(new TranslationTextComponent("message.cantusethatspell"));
+		caster.sendMessage(new TranslationTextComponent("status.invalidspell"));
 	}
 
 
@@ -128,8 +118,10 @@ public class MiningSpell extends Spell {
 		try {
 			if (caster.world.isRemote) return;
 				BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-				if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
-					caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
+			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
+				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
+			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
 		}
@@ -140,8 +132,10 @@ public class MiningSpell extends Spell {
 		try {
 			if (caster.world.isRemote) return;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
+			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
+				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
+			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
 		}
@@ -149,7 +143,7 @@ public class MiningSpell extends Spell {
 
 	@Override
 	public void onOrderCast(PlayerEntity playerTarget) {
-		playerTarget.sendMessage(new TranslationTextComponent("message.cantusethatspell"));
+		playerTarget.sendMessage(new TranslationTextComponent("status.invalidspell"));
 	}
 
 	@Override
@@ -157,8 +151,23 @@ public class MiningSpell extends Spell {
 		try {
 			if (caster.world.isRemote) return;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel())
+			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
+				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
+			}
+		} catch (SpellNotBuiltError spellNotBuiltError) {
+			spellNotBuiltError.printStackTrace();
+		}
+	}
+
+	protected void defaultUse(PlayerEntity caster) {
+		try {
+			BlockPos pos = RayTraceUtils.getTargetBlockPos(caster, caster.world, distance);
+			BlockState blockToDestroy = caster.world.getBlockState(pos);
+			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, pos, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+				caster.world.destroyBlock(pos, true, caster); // TODO: Add fortune and explosion power
+				blockToDestroy.updateNeighbors(caster.world,pos,3);
+			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
 		}

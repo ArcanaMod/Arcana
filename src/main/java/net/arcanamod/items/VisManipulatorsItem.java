@@ -55,7 +55,7 @@ public class VisManipulatorsItem extends Item{
 		if (r==0){
 			toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.MINING_SPELL.build(
 					new Aspect[]{Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY},
-					new CastAspect[]{CastAspect.getEmpty(), CastAspect.getEmpty(), CastAspect.getEmpty()},
+					new CastAspect[]{new CastAspect(Aspects.CHAOS,Aspects.GREED), CastAspect.getEmpty(), CastAspect.getEmpty()},
 					new SpellExtraData())));
 		} else if (r==1) {
 			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.EXCHANGE_SPELL.build(
