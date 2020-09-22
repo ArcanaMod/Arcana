@@ -716,11 +716,6 @@
     "research.arcana.silver.stage.1": "Silver is mundane. I say that partially because it doesn't have any intrinsic magical properties - I say that also because it deflects and repels magic. It's been historically quite useful for cleaning up magical mishaps and containing magic nicely - I will *absolutely* want some of that.",
     "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. Silver tools mine tainted blocks twice as fast as other tools, on top of having near-gold base mining speed. This also gives them... lacking durability, more on-par with stone than anything I would use regularly.",
 
-    "research.arcana.flux": "Flux, Taint, Warp",
-    "research.arcana.flux.desc": "No such thing as free lunch",
-    "research.arcana.flux.flux_info": "Flux forms when magical devices are overloaded, or from aspects being improperly handled or overly exploited. The more aspects are tampered with, the more flux is created, and the more it spreads. When enough flux is concentrated in one place, taint begins to spread.",
-    "research.arcana.flux.taint_info": "Taint warps the environment and its inhabitants into grotesque creatures, and poisoned land, spreading underground and polluting the earth. A small amount of taint can be neutralised, but enough of it will spread at an alarming rate. Taint can be found hidden within mundane objects, rarely, throughout the world, but is normally prompted through an overflow of flux. Taint spread does require and consume flux - eventually, an area of taint will be unable to spread further without continuous flux creation. The true origin of taint is currently unknown.",
-    "research.arcana.flux.warp_info": "Where flux and taint are physical, warp is a psychological price for improper magic. Warp can be considered a kind of insanity, prompting illusions and mental effects... and some magical.",
 
     "research.arcana.aspect_tubes": "Aspect Tubes",
     "research.arcana.aspect_tubes.desc": "Moving aspects with no blockages",
@@ -729,10 +724,6 @@
     "research.arcana.root": "Arcanum",
     "research.arcana.root.desc": "Book of discovery",
     "research.arcana.root.text": "Within my travels, I came across a set of scribbled notes. I didn't think much of it; the cryptic message (\"Listen to the unseen tears between dimensions, they speak of untold power that can shape the world.\") didn't make sense to me, even after days of pondering, so I left it aside. But inspiration comes when you least expect it, like the old saying goes.\n\nA strange sensation came over me, almost like a subtle pulse of energy, as I walked. I looked around to find its source, but there was nothing in sight. I tried focusing on the sensation - eyes closed and mind focused - it was weak, but I could sense it. A feeling that got stronger as I went closer to the source.\n\nI stopped and reached out with my hand, and felt a slight tingle on my fingertips. It was there! But invisible to the naked eye. Is this what the notes referred to? What is this presence? I need to know more.\n\nThis book will be a record of my findings into the field of magic. I dub this book §oArcanum§r.",
-
-    "research.arcana.aspects": "Aspects of Magic",
-    "research.arcana.aspects.desc": "Building Blocks",
-    "research.arcana.aspects.text": "After that strange experience with... whatever that thing was, I've had a lingering feeling that I couldn't shake off. Somehow, the world felt different, yet exactly the same as it always has been. Perhaps it was I who has changed? It's absurd that everything could change so much from a single event! ...That's what I would have said to myself, before I decided to delve into this mystery.\n\nEvery being, block, and item is made up of aspects. They are the building blocks of this world. Something simple, like a block of stone, might only be made up of one aspect, but more complex beings or blocks could be made up of many. Currently, I know of 54 aspects that make up this world, and the others.\n\nAspects come in two varieties: Primal and Compound. Primal aspects are the most basic building blocks from which all else is created. There are only six primal aspects: Air, Water, Fire, Earth, Order, and Chaos. Compound aspects are made up of two other aspects. Simple compound aspects might be made from two primals, while more complex ones can be made from two complex aspects, themselves made of several more.\n\nAspects can come in a number of forms. Normally, they're attached to objects, but can be persuaded to to separate into a liquid-like state known as essentia, or purified into a gas-like substance, called vis. The usage of essentia and vis will come in handy for making magical contraptions. (TODO: show aspect combos.)",
 
     "research.arcana.collecting_aspects": "Collecting Aspects",
     "research.arcana.collecting_aspects.stage.1": "Nobody knows everything; only learning can widen our minds. To study and use magic, I'll need to collect and concentrate it; every form of research starts with aspects.\n\nThey're useless when in the form of objects, so first I will need to separate them out into vis and essentia. First, I'll need some equipment: a crucible and alembic to distill the aspects, a suitably warded jar to contain them, and a tube to transport them.\n\nA crucible can be made by right-clicking a cauldron with a wand, which can be made with a stick and two wand caps, placed diagonally. Wands will come in useful later too.",
@@ -799,10 +790,6 @@
     "research.arcana.golemancy_intro.stage.1": "Work in progress...",
     "research.arcana.golemancy_intro.stage.2": "Work in progress...",
 
-    "research.arcana.research_expertise": "Research Expertise",
-    "research.arcana.research_expertise.desc": "Improving my improvements",
-    "research.arcana.research_expertise.stage.1": "Work in progress...",
-
     "research.arcana.study": "Study",
     "research.arcana.study.desc": "Breaking things down",
     "research.arcana.study.stage.1": "Work in progress...",
@@ -813,20 +800,10 @@
     "research.arcana.inspiration.stage.1": "Work in progress...",
     "research.arcana.inspiration.stage.2": "Work in progress...",
 
-    "research.arcana.research_mastery": "Research Mastery",
-    "research.arcana.research_mastery.desc": "I'm getting good at this",
-    "research.arcana.research_mastery.stage.1": "Work in progress...",
-    "research.arcana.research_mastery.stage.2": "Work in progress...",
-
     "research.arcana.cartography": "Cartography",
     "research.arcana.cartography.desc": "Mapping my way to new discoveries",
     "research.arcana.cartography.stage.1": "Work in progress...",
     "research.arcana.cartography.stage.2": "Work in progress...",
-
-    "research.arcana.archaeology": "Archaeology",
-    "research.arcana.archaeology.desc": "Unveiling what once was",
-    "research.arcana.archaeology.stage.1": "Work in progress...",
-    "research.arcana.archaeology.stage.2": "Work in progress...",
 
     "research.arcana.crimson": "introduction",
     "research.arcana.crimson.desc": "welcome to the crimson.",
@@ -839,6 +816,37 @@
     "research.arcana.tainted": "Tainted Exploration",
     "research.arcana.tainted.desc": "A Second Look at the Common Fiend",
     "research.arcana.tainted.stage.1": "Taint, in its natural state, is unwieldy and unusable, corrupting all in its path and twisting them into husks of their former selves. Despite my best efforts to contain it, its spread seems inevitable at times, with only diligent cleanup and harsh work keeping it in check. Perhaps there's a better way -- perhaps I can instead tame the beast, and put it to my own uses.\n\nTo that end, I have created the §otainted codex§r: a safe store for my research, to contain whatever revelations or ramblings I create.\\n\\nThe first obvious usage of taint is in spellcasting; specifically, using it as part of a wand. I will need to test how a tainted component affects its spellcasting and vis storage capabilities.",
+
+    "_comment": "New Research",
+    "research.arcana.flux": "Flux, Taint, Warp",
+    "research.arcana.flux.desc": "No such thing as free lunch",
+    "research.arcana.flux.flux_info": "Flux forms when magical devices are overloaded, or from aspects being improperly handled or overly exploited. The more aspects are tampered with, the more flux is created, and the more it spreads. When enough flux is concentrated in one place, taint begins to spread.",
+    "research.arcana.flux.taint_info": "Taint warps the environment and its inhabitants into grotesque creatures, and poisoned land, spreading underground and polluting the earth. A small amount of taint can be neutralised, but enough of it will spread at an alarming rate. Taint can be found hidden within mundane objects, rarely, throughout the world, but is normally prompted through an overflow of flux. Taint spread does require and consume flux - eventually, an area of taint will be unable to spread further without continuous flux creation. The true origin of taint is currently unknown.",
+    "research.arcana.flux.warp_info": "Where flux and taint are physical, warp is a psychological price for improper magic. Warp can be considered a kind of insanity, prompting illusions and mental effects... and some magical.",
+
+    "research.arcana.aspects": "Aspects of Magic",
+    "research.arcana.aspects.desc": "The Building Blocks",
+    "research.arcana.aspects.text": "Everything is created from some combination and structure of aspects. Six aspects are considered primal, and are the fundamental building blocks of reality. A further 52 aspects are made up of other aspects; these are known as compound aspects.",
+
+    "research.arcana.wandcraft": "Wandcraft",
+    "research.arcana.arcane_crafting": "Arcane Crafting",
+    "research.arcana.arcane_crafting.desc": "Not your regular crafting table",
+    "research.arcana.alchemy": "Alchemy",
+    "research.arcana.alchemy.desc": "A controlled unity of elements",
+    "research.arcana.aspect_collection": "Aspect Collection",
+    "research.arcana.aspect_crystallization": "Aspect Crystallization",
+    "research.arcana.aspect_crystallization.desc": "Solidify the immaterial",
+    "research.arcana.research": "Research",
+    "research.arcana.research.desc": "Knowledge is power",
+    "research.arcana.fieldwork": "Fieldwork",
+    "research.arcana.research_expertise": "Research Expertise",
+    "research.arcana.research_expertise.desc": "Improving my improvements",
+    "research.arcana.research_mastery": "Research Mastery",
+    "research.arcana.research_mastery.desc": "§5You can never know all the facts. Only I can.§5",
+    "research.arcana.archaeology": "Archaeology",
+    "research.arcana.archaeology.desc": "Unveiling what once was",
+    "research.arcana.foci": "Arcane Foci",
+    "research.arcana.foci.desc": "Power with purpose",
 
     "_comment": "Messages",
     "message.arcana.disabled": "This book is currently disabled.",

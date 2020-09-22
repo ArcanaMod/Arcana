@@ -1,8 +1,8 @@
 {
   "entries": [
     {
-      "key": "arcana:the_aspects",
-      "name": "research.arcana.the_aspects",
+      "key": "arcana:aspects",
+      "name": "research.arcana.aspects",
       "icons": [
         "arcana:aspect_water"
       ],
@@ -18,11 +18,7 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.the_aspects.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.the_aspects.stage.2"
+          "content": "research.arcana.aspects.text"
         }
       ]
     },
@@ -34,7 +30,7 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:the_aspects"
+        "arcana:aspects"
       ],
       "meta": [
         "round_base",
@@ -56,6 +52,7 @@
     {
       "key": "arcana:arcane_crafting",
       "name": "research.arcana.arcane_crafting",
+      "desc": "research.arcana.arcane_crafting.desc",
       "icons": [
         "arcana:arcane_crafting_table"
       ],
@@ -82,6 +79,7 @@
     {
       "key": "arcana:alchemy",
       "name": "research.arcana.alchemy",
+      "desc": "research.arcana.alchemy.desc",
       "icons": [
         "arcana:crucible"
       ],
@@ -165,6 +163,7 @@
     {
       "key": "arcana:aspect_crystallization",
       "name": "research.arcana.aspect_crystallization",
+      "desc": "research.arcana.aspect_crystallization.desc",
       "icons": [
         "arcana:item/ice_phial.png"
       ],
@@ -193,6 +192,7 @@
     {
       "key": "arcana:research",
       "name": "research.arcana.research",
+      "desc": "research.arcana.research.desc",
       "icons": [
         "arcana:scribing_tools"
       ],
@@ -247,6 +247,7 @@
     {
       "key": "arcana:research_expertise",
       "name": "research.arcana.research_expertise",
+      "desc": "research.arcana.research_expertise.desc",
       "icons": [
         "arcana:research/research_expertise.png"
       ],
@@ -273,6 +274,7 @@
     {
       "key": "arcana:research_mastery",
       "name": "research.arcana.research_mastery",
+      "desc": "research.arcana.research_mastery.desc",
       "icons": [
         "arcana:research/research_mastery.png"
       ],
@@ -300,6 +302,7 @@
     {
       "key": "arcana:archaeology",
       "name": "research.arcana.archaeology",
+      "desc": "research.arcana.archaeology.desc",
       "icons": [
         "arcana:research/journal.png"
       ],
