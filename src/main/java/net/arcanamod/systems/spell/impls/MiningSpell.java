@@ -9,6 +9,7 @@ import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -27,11 +28,11 @@ public class MiningSpell extends Spell {
 	public boolean isBuilt = false;
 
 	@Override
-	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data) {
+	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT data) {
 		this.modAspects = modAspects;
 		this.castAspects = castAspects;
 		if (data.contains("distance"))
-			this.distance = data.read("distance");
+			this.distance = data.getInt("distance");
 		isBuilt = true;
 		return this;
 	}
