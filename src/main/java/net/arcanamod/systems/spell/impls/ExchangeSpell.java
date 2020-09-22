@@ -8,10 +8,12 @@ import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -35,11 +37,11 @@ public class ExchangeSpell extends Spell {
 	public boolean isBuilt = false;
 
 	@Override
-	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data) {
+	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT compound) {
 		this.modAspects = modAspects;
 		this.castAspects = castAspects;
-		if (data.contains("distance"))
-			this.distance = data.read("distance");
+		if (compound.contains("distance"))
+			this.distance = compound.getInt("distance");
 		isBuilt = true;
 		return this;
 	}
@@ -100,18 +102,19 @@ public class ExchangeSpell extends Spell {
 		try {
 			if (player.world.isRemote) return;
 			ItemStack held = player.getHeldItem(Hand.OFF_HAND);
-			if (held!=ItemStack.EMPTY&&held.getItem() != Items.AIR) {
+			if (held!=ItemStack.EMPTY && held.getItem() != Items.AIR && Block.getBlockFromItem(held.getItem()) != Blocks.AIR) {
 				if (castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty()) {
 					// Default spell
 					BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
 					BlockState blockToDestroy = player.world.getBlockState(pos);
 					if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+						player.world.setBlockState(pos, Block.getBlockFromItem(held.getItem()).getDefaultState());
+						held.shrink(1);
 						for (ItemStack stack : player.world.getBlockState(pos).getDrops(new LootContext.Builder((ServerWorld) player.world)
 								.withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.TOOL, ItemStack.EMPTY))) {
 							player.addItemStackToInventory(stack);
 						}
-						player.world.setBlockState(pos, Block.getBlockFromItem(held.getItem()).getDefaultState());
-						held.shrink(1);
+						blockToDestroy.updateNeighbors(player.world,pos,3);
 					}
 				} else {
 					Spell.useCasts(this, player, castAspects);
@@ -138,14 +141,14 @@ public class ExchangeSpell extends Spell {
 			if (caster.world.isRemote) return;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
+				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
+				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
 						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
 					caster.addItemStackToInventory(stack);
 				}
-				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
-				if (held!=ItemStack.EMPTY)
-					caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
-				held.shrink(1);
+				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
@@ -158,14 +161,14 @@ public class ExchangeSpell extends Spell {
 			if (caster.world.isRemote) return;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
+				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
+				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
 						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
 					caster.addItemStackToInventory(stack);
 				}
-				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
-				if (held!=ItemStack.EMPTY)
-					caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
-				held.shrink(1);
+				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
@@ -183,14 +186,14 @@ public class ExchangeSpell extends Spell {
 			if (caster.world.isRemote) return;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
+				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
+				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
 						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
 					caster.addItemStackToInventory(stack);
 				}
-				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
-				if (held!=ItemStack.EMPTY)
-					caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
-				held.shrink(1);
+				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();

@@ -83,7 +83,7 @@ public abstract class Spell implements ISpell {
 					Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("Cast" + i + "Combo")))).orElse(Aspects.EMPTY)
 				);
 			}
-			return Spells.spellMap.get(new ResourceLocation(compound.getString("Spell"))).build(modifiers, casts, new SpellExtraData());
+			return Spells.spellMap.get(new ResourceLocation(compound.getString("Spell"))).build(modifiers, casts, new CompoundNBT());
 		} else return null;
 	}
 
@@ -102,7 +102,7 @@ public abstract class Spell implements ISpell {
 		return compound;
 	}
 
-	public abstract ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data);
+	public abstract ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT compound);
 
 	public abstract ResourceLocation getId();
 	

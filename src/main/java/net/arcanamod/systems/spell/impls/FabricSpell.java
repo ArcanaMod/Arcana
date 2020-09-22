@@ -7,9 +7,9 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
-import net.arcanamod.systems.spell.SpellExtraData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
@@ -28,11 +28,11 @@ public class FabricSpell extends Spell {
 	public boolean isBuilt = false;
 
 	@Override
-	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data) {
+	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT compound) {
 		this.modAspects = modAspects;
 		this.castAspects = castAspects;
-		if (data.contains("distance"))
-			this.distance = data.read("distance");
+		if (compound.contains("distance"))
+			this.distance = compound.getInt("distance");
 		isBuilt = true;
 		return this;
 	}

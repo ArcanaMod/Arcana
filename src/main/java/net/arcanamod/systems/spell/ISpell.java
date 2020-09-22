@@ -14,16 +14,16 @@ import java.util.Optional;
  */
 public interface ISpell {
 	
-	// TODO: improve docs, remove arrays, use CompoundNBT instead of SpellExtraData
+	// TODO: improve docs, remove arrays
 	
 	/**
 	 * Defines all variables. DON'T USE THAT IN REGISTRY!!!
 	 * @param modAspects Modifier Aspects
 	 * @param castAspects Cast Aspects
-	 * @param data extra data
+	 * @param compound extra data
 	 * @return this but with defined variables.
 	 */
-	ISpell build(Aspect[] modAspects, CastAspect[] castAspects, SpellExtraData data);
+	ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT compound);
 
 	/**
 	 * Core aspect in spell.
@@ -38,7 +38,7 @@ public interface ISpell {
 	Aspect[] getModAspects();
 
 	/**
-	 * Return CastAspects that are "neat" modifiers and are used in combos.
+	 * Return CastAspects that are neat modifiers and are used in combos.
 	 *
 	 * @return returns CastAspect array.
 	 */
