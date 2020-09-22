@@ -12,7 +12,9 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 // This class is temporary, It will be removed soon!
+@Deprecated
 public class Temp_SpellUtil {
+    @Deprecated
     public static <T extends Entity>List<T> rayTraceEntities(World w, Vec3d pos, Vec3d ray, Optional<Predicate<T>> entityFilter, Class<T> entityClazz)
     {
         Vec3d end = pos.add(new Vec3d(1, 1, 1));
