@@ -64,7 +64,7 @@ public abstract class Spell implements ISpell {
 				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
 				LightningBoltEntity lbe = new LightningBoltEntity(player.world,pos.getX(),pos.getY(),pos.getZ(),true);
 				player.world.addEntity(lbe);
-				List<Entity> e = Temp_SpellUtil.rayTraceEntities(player.world,new Vec3d(pos.getX(),pos.getY(),pos.getZ()),player.getLookVec(),Optional.empty(), Entity.class);
+				List<Entity> e = RayTraceUtils.rayTraceEntities(player.world,new Vec3d(pos.getX(),pos.getY(),pos.getZ()),player.getLookVec(),Optional.empty(), Entity.class);
 				spell.onChaosCast(player, null, pos);
 			}
 		}

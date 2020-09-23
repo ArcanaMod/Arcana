@@ -13,7 +13,7 @@ public class Aspect {
 	private final Consumer<Object> aspectTickConsumer;
 
 	private Aspect(String name, ColorRange colors, Consumer<Object> aspectTickConsumer){
-		this(name,AspectTests.nextAspectId(),colors,aspectTickConsumer);
+		this(name,ArcanaVariables.nextAspectId(),colors,aspectTickConsumer);
 	}
 
 	private Aspect(String name, int id, ColorRange colors, Consumer<Object> aspectTickConsumer){
@@ -50,7 +50,7 @@ public class Aspect {
 	public static Aspect create(String name, ColorRange colors, Consumer<Object> aspectTickConsumer) {
 		Aspect aspect = new Aspect(name, colors,aspectTickConsumer);
 		Aspects.ASPECTS.put(ArcanaVariables.arcLoc(name),aspect);
-		if (!AspectTests.test)
+		if (!ArcanaVariables.test)
 			Arcana.logger.info("Arcana: Added new aspect '"+name+"'");
 		return aspect;
 	}
