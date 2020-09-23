@@ -25,7 +25,7 @@ import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
-import static net.arcanamod.Arcana.arcLoc;
+import static net.arcanamod.ArcanaVariables.arcLoc;
 
 /**
  * Class for handling any events that occur upon world load

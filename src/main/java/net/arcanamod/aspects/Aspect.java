@@ -1,11 +1,9 @@
 package net.arcanamod.aspects;
 
 import net.arcanamod.Arcana;
-import net.minecraft.util.ResourceLocation;
+import net.arcanamod.ArcanaVariables;
 
 import java.util.function.Consumer;
-
-import static net.arcanamod.Arcana.arcLoc;
 
 public class Aspect {
 
@@ -51,7 +49,7 @@ public class Aspect {
 
 	public static Aspect create(String name, ColorRange colors, Consumer<Object> aspectTickConsumer) {
 		Aspect aspect = new Aspect(name, colors,aspectTickConsumer);
-		Aspects.ASPECTS.put(!AspectTests.test ? arcLoc(name) : new ResourceLocation("arcana_test",name),aspect);
+		Aspects.ASPECTS.put(ArcanaVariables.arcLoc(name),aspect);
 		if (!AspectTests.test)
 			Arcana.logger.info("Arcana: Added new aspect '"+name+"'");
 		return aspect;

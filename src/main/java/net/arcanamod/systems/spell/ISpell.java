@@ -23,7 +23,7 @@ public interface ISpell {
 	 * @param compound extra data
 	 * @return this but with defined variables.
 	 */
-	ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT compound);
+	ISpell build(List<Aspect> modAspects, List<CastAspect> castAspects, CompoundNBT compound);
 
 	/**
 	 * Core aspect in spell.
@@ -35,14 +35,14 @@ public interface ISpell {
 	 * Returns spell modifiers.
 	 * @return Mod 1, Mod 2, Sin Mod
 	 */
-	Aspect[] getModAspects();
+	List<Aspect> getModAspects();
 
 	/**
 	 * Return CastAspects that are neat modifiers and are used in combos.
-	 *
+	 * Cast, Cast+
 	 * @return returns CastAspect array.
 	 */
-	CastAspect[] getCastAspects(); // Cast, Cast+
+	List<CastAspect> getCastAspects();
 
 	/**
 	 * Cost of spell in AspectStacks.

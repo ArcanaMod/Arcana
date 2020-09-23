@@ -1,6 +1,7 @@
 package net.arcanamod.client.event;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaVariables;
 import net.arcanamod.client.render.tiles.AspectValveTileEntityRenderer;
 import net.arcanamod.client.render.tiles.JarTileEntityRender;
 import net.arcanamod.items.attachment.Cap;
@@ -20,16 +21,16 @@ public class TextureStitch{
 		if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)){
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);
-			event.addSprite(Arcana.arcLoc("font/number_0"));
-			event.addSprite(Arcana.arcLoc("font/number_1"));
-			event.addSprite(Arcana.arcLoc("font/number_2"));
-			event.addSprite(Arcana.arcLoc("font/number_3"));
-			event.addSprite(Arcana.arcLoc("font/number_4"));
-			event.addSprite(Arcana.arcLoc("font/number_5"));
-			event.addSprite(Arcana.arcLoc("font/number_6"));
-			event.addSprite(Arcana.arcLoc("font/number_7"));
-			event.addSprite(Arcana.arcLoc("font/number_8"));
-			event.addSprite(Arcana.arcLoc("font/number_9"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_0"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_1"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_2"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_3"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_4"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_5"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_6"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_7"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_8"));
+			event.addSprite(ArcanaVariables.arcLoc("font/number_9"));
 			event.addSprite(AspectValveTileEntityRenderer.GEAR_TEX);
 			
 			// add all of the wand related textures

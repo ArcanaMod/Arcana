@@ -17,7 +17,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import static net.arcanamod.Arcana.arcLoc;
+import static net.arcanamod.ArcanaVariables.arcLoc;
 import static net.arcanamod.blocks.ArcanaBlocks.BLOCKS;
 import static net.arcanamod.items.ArcanaItems.ITEMS;
 

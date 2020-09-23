@@ -1,6 +1,6 @@
 package net.arcanamod.systems.spell.impls;
 
-import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
@@ -21,14 +21,14 @@ import java.util.List;
 
 public class FabricSpell extends Spell {
 
-	private Aspect[] modAspects;
-	private CastAspect[] castAspects;
+	private List<Aspect> modAspects;
+	private List<CastAspect> castAspects;
 	private int distance = 10;
 
 	public boolean isBuilt = false;
 
 	@Override
-	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT compound) {
+	public ISpell build(List<Aspect> modAspects, List<CastAspect> castAspects, CompoundNBT compound) {
 		this.modAspects = modAspects;
 		this.castAspects = castAspects;
 		if (compound.contains("distance"))
@@ -39,7 +39,7 @@ public class FabricSpell extends Spell {
 
 	@Override
 	public ResourceLocation getId() {
-		return Arcana.arcLoc("fabric");
+		return ArcanaVariables.arcLoc("fabric");
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public class FabricSpell extends Spell {
 	}
 
 	@Override
-	public Aspect[] getModAspects() {
+	public List<Aspect> getModAspects() {
 		return modAspects;
 	}
 
 	@Override
-	public CastAspect[] getCastAspects() {
+	public List<CastAspect> getCastAspects() {
 		return castAspects;
 	}
 

@@ -1,6 +1,6 @@
 package net.arcanamod.systems.spell.impls;
 
-import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
@@ -24,20 +24,19 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class ExchangeSpell extends Spell {
 
-	private Aspect[] modAspects;
-	private CastAspect[] castAspects;
+	private List<Aspect> modAspects;
+	private List<CastAspect> castAspects;
 	private int distance = 10;
 
 	public boolean isBuilt = false;
 
 	@Override
-	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT compound) {
+	public ISpell build(List<Aspect> modAspects, List<CastAspect> castAspects, CompoundNBT compound) {
 		this.modAspects = modAspects;
 		this.castAspects = castAspects;
 		if (compound.contains("distance"))
@@ -48,7 +47,7 @@ public class ExchangeSpell extends Spell {
 
 	@Override
 	public ResourceLocation getId() {
-		return Arcana.arcLoc("exchange");
+		return ArcanaVariables.arcLoc("exchange");
 	}
 
 	@Override
@@ -57,12 +56,12 @@ public class ExchangeSpell extends Spell {
 	}
 
 	@Override
-	public Aspect[] getModAspects() {
+	public List<Aspect> getModAspects() {
 		return modAspects;
 	}
 
 	@Override
-	public CastAspect[] getCastAspects() {
+	public List<CastAspect> getCastAspects() {
 		return castAspects;
 	}
 
@@ -89,12 +88,12 @@ public class ExchangeSpell extends Spell {
 
 	public int getMiningLevel() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return SpellValues.getOrDefault(modAspects[0], 2);
+		return SpellValues.getOrDefault(modAspects.get(0), 2);
 	}
 
 	public int getSize() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return SpellValues.getOrDefault(modAspects[1], 0);
+		return SpellValues.getOrDefault(modAspects.get(1), 0);
 	}
 
 	@Override
@@ -103,7 +102,7 @@ public class ExchangeSpell extends Spell {
 			if (player.world.isRemote) return;
 			ItemStack held = player.getHeldItem(Hand.OFF_HAND);
 			if (held!=ItemStack.EMPTY && held.getItem() != Items.AIR && Block.getBlockFromItem(held.getItem()) != Blocks.AIR) {
-				if (castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty()) {
+				if (castAspects.get(0).isEmpty() && castAspects.get(1).isEmpty() && castAspects.get(2).isEmpty()) {
 					// Default spell
 					BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
 					BlockState blockToDestroy = player.world.getBlockState(pos);

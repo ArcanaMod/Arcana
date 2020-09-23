@@ -3,6 +3,7 @@ package net.arcanamod.aspects;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaVariables;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.AspectItem;
 import net.arcanamod.items.CrystalItem;
@@ -81,7 +82,7 @@ public class AspectUtils {
 	}
 
 	public static ResourceLocation getAspectTextureLocation(Aspect aspect) {
-		return Arcana.arcLoc("textures/aspect/" + aspect.name().toLowerCase() + ".png");
+		return ArcanaVariables.arcLoc("textures/aspect/" + aspect.name().toLowerCase() + ".png");
 	}
 
 	public static int getEmptyCell(IAspectHandler handler) {

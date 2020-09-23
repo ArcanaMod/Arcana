@@ -11,6 +11,7 @@ import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -21,7 +22,9 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static net.arcanamod.aspects.Aspects.*;
@@ -34,7 +37,7 @@ public abstract class Spell implements ISpell {
 		SpellRegistry.addSpell(getId(),this);
 	}
 
-	protected static void useCasts(Spell spell, PlayerEntity player, CastAspect[] aspects) {
+	protected static void useCasts(Spell spell, PlayerEntity player, List<CastAspect> aspects) {
 		int distance = 10;
 		int max_distance = 16;
 
@@ -62,26 +65,23 @@ public abstract class Spell implements ISpell {
 				LightningBoltEntity lbe = new LightningBoltEntity(player.world,pos.getX(),pos.getY(),pos.getZ(),true);
 				player.world.addEntity(lbe);
 				List<Entity> e = Temp_SpellUtil.rayTraceEntities(player.world,new Vec3d(pos.getX(),pos.getY(),pos.getZ()),player.getLookVec(),Optional.empty(), Entity.class);
-				//List<Entity> target = player.world.getEntitiesWithinAABB(Entity.class,new AxisAlignedBB(pos).expand(0,1,0));
-				/*if (target.size()>=1){
-					spell.onChaosCast(player, target.get(0), pos);
-				} else*/ spell.onChaosCast(player, null, pos);
+				spell.onChaosCast(player, null, pos);
 			}
 		}
 	}
 
 	public static ISpell deserializeNBT(CompoundNBT compound){
 		if (compound.contains("Spell")) {
-			Aspect[] modifiers = new Aspect[compound.getInt("ModifierAspectsLength")];
-			for (int i = 0; i < compound.getInt("ModifierAspectsLength"); i++) {
-				modifiers[i] = Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("Modifier" + i)))).orElse(Aspects.EMPTY);
+			List<Aspect> modifiers = new ArrayList<>();
+			for (INBT nbt : ((ListNBT) Objects.requireNonNull(compound.get("modifiers")))) {
+				modifiers.add(Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(((CompoundNBT)nbt).getString("Modifier")))).orElse(Aspects.EMPTY));
 			}
-			CastAspect[] casts = new CastAspect[compound.getInt("CastAspectsLength")];
-			for (int i = 0; i < compound.getInt("CastAspectsLength"); i++) {
-				casts[i] = new CastAspect(
-					Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("Cast" + i + "Primary")))).orElse(Aspects.EMPTY),
-					Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("Cast" + i + "Combo")))).orElse(Aspects.EMPTY)
-				);
+			List<CastAspect> casts = new ArrayList<>();
+			for (INBT nbt : ((ListNBT) Objects.requireNonNull(compound.get("casts")))) {
+				casts.add(new CastAspect(
+					Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(((CompoundNBT)nbt).getString("Primary")))).orElse(Aspects.EMPTY),
+					Optional.ofNullable(AspectUtils.getAspectByResourceLocation(new ResourceLocation(((CompoundNBT)nbt).getString("Combo")))).orElse(Aspects.EMPTY)
+				));
 			}
 			return Spells.spellMap.get(new ResourceLocation(compound.getString("Spell"))).build(modifiers, casts, new CompoundNBT());
 		} else return null;
@@ -90,19 +90,27 @@ public abstract class Spell implements ISpell {
 	public static CompoundNBT serializeNBT(ISpell spell){
 		CompoundNBT compound = new CompoundNBT();
 		compound.putString("Spell",((Spell)spell).getId().toString()); // <-- Hardcoded here, fixes needed.
-		compound.putInt("ModifierAspectsLength",spell.getModAspects().length);
-		for (int i = 0; i < spell.getModAspects().length; i++) {
-			compound.putString("Modifier"+i, AspectUtils.getResourceLocationFromAspect(spell.getModAspects()[i]).toString());
+		ListNBT modifierList = new ListNBT();
+		for (int i = 0; i < spell.getModAspects().size(); i++) {
+			CompoundNBT c = new CompoundNBT();
+			c.putString("Modifier", AspectUtils.getResourceLocationFromAspect(spell.getModAspects().get(i)).toString());
+			modifierList.add(c);
 		}
-		compound.putInt("CastAspectsLength",spell.getCastAspects().length);
-		for (int i = 0; i < spell.getCastAspects().length; i++) {
-			compound.putString("Cast"+i+"Primary", AspectUtils.getResourceLocationFromAspect(spell.getCastAspects()[i].primaryAspect).toString());
-			compound.putString("Cast"+i+"Combo", AspectUtils.getResourceLocationFromAspect(spell.getCastAspects()[i].comboAspect).toString());
+
+		ListNBT castList = new ListNBT();
+		for (int i = 0; i < spell.getCastAspects().size(); i++) {
+			CompoundNBT c = new CompoundNBT();
+			c.putString("Primary",AspectUtils.getResourceLocationFromAspect(spell.getCastAspects().get(i).primaryAspect).toString());
+			c.putString("Combo",AspectUtils.getResourceLocationFromAspect(spell.getCastAspects().get(i).comboAspect).toString());
+			castList.add(c);
 		}
+		compound.put("modifiers",modifierList);
+		compound.put("casts",castList);
+
 		return compound;
 	}
 
-	public abstract ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT compound);
+	public abstract ISpell build(List<Aspect> modAspects, List<CastAspect> castAspects, CompoundNBT compound);
 
 	public abstract ResourceLocation getId();
 	

@@ -14,6 +14,8 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
+import java.util.Collections;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -25,12 +27,8 @@ public class VisManipulatorsItem extends Item{
 
 	@Override
 	public ActionResultType onItemUse(ItemUseContext context){
-		/*TileEntity entity = context.getWorld().getTileEntity(context.getPos());
-		if(entity != null && entity.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()){*/
 			onItemUseFirst(null, context);
 			return ActionResultType.SUCCESS;
-		//}
-		//return super.onItemUse(context);
 	}
 
 	@SuppressWarnings("ConstantConditions")
@@ -40,19 +38,19 @@ public class VisManipulatorsItem extends Item{
 		int r = random.nextInt(4);
 		if (r==0){
 			toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.MINING_SPELL.build(
-					new Aspect[]{Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY},
-					new CastAspect[]{new CastAspect(Aspects.CHAOS,Aspects.GREED), CastAspect.getEmpty(), CastAspect.getEmpty()},
+					Collections.emptyList(),
+					Collections.singletonList(new CastAspect(Aspects.CHAOS,Aspects.GREED)),
 					new CompoundNBT())));
 		} else if (r==1) {
 			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.EXCHANGE_SPELL.build(
-					new Aspect[]{Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY},
-					new CastAspect[]{CastAspect.getEmpty(),CastAspect.getEmpty(),CastAspect.getEmpty()},
+					Collections.emptyList(),
+					Collections.emptyList(),
 					new CompoundNBT())));
 
 		} else {
 			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.FABRIC_SPELL.build(
-					new Aspect[]{Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY},
-					new CastAspect[]{new CastAspect(Aspects.EARTH,Aspects.EMPTY),CastAspect.getEmpty(),CastAspect.getEmpty()},
+					Collections.emptyList(),
+					Collections.singletonList(new CastAspect(Aspects.EARTH,Aspects.EMPTY)),
 					new CompoundNBT())));
 		}
 		toSet.getOrCreateTag().putInt("style",random.nextInt(14));
@@ -61,10 +59,7 @@ public class VisManipulatorsItem extends Item{
 	}
 
 	public ISpell getSpell(){
-		return Spells.MINING_SPELL.build(
-			new Aspect[]{Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY},
-			new CastAspect[]{CastAspect.getEmpty(),CastAspect.getEmpty(),CastAspect.getEmpty()},
-			new CompoundNBT());
+		return Spells.MINING_SPELL.build(Collections.emptyList(), Collections.emptyList(), new CompoundNBT());
 	}
 
 	@Override

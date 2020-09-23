@@ -1,6 +1,6 @@
 package net.arcanamod.systems.spell.impls;
 
-import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
@@ -21,25 +21,25 @@ import java.util.List;
 
 public class MiningSpell extends Spell {
 
-	private Aspect[] modAspects;
-	private CastAspect[] castAspects;
+	private List<Aspect> modAspects;
+	private List<CastAspect> castAspects;
 	private int distance = 10;
 
 	public boolean isBuilt = false;
 
 	@Override
-	public ISpell build(Aspect[] modAspects, CastAspect[] castAspects, CompoundNBT data) {
+	public ISpell build(List<Aspect> modAspects, List<CastAspect> castAspects, CompoundNBT compound) {
 		this.modAspects = modAspects;
 		this.castAspects = castAspects;
-		if (data.contains("distance"))
-			this.distance = data.getInt("distance");
+		if (compound.contains("distance"))
+			this.distance = compound.getInt("distance");
 		isBuilt = true;
 		return this;
 	}
 
 	@Override
 	public ResourceLocation getId() {
-		return Arcana.arcLoc("mining");
+		return ArcanaVariables.arcLoc("mining");
 	}
 
 	@Override
@@ -48,12 +48,12 @@ public class MiningSpell extends Spell {
 	}
 
 	@Override
-	public Aspect[] getModAspects() {
+	public List<Aspect> getModAspects() {
 		return modAspects;
 	}
 
 	@Override
-	public CastAspect[] getCastAspects() {
+	public List<CastAspect> getCastAspects() {
 		return castAspects;
 	}
 
@@ -79,24 +79,24 @@ public class MiningSpell extends Spell {
 
 	public int getMiningLevel() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return modAspects.length >= 1 ? SpellValues.getOrDefault(modAspects[0], 2) : 2;
+		return modAspects.size() >= 1 ? SpellValues.getOrDefault(modAspects.get(0), 2) : 2;
 	}
 
 	public int getExplosivePower() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return modAspects.length >= 2 ? SpellValues.getOrDefault(modAspects[1], 0) : 0;
+		return modAspects.size() >= 2 ? SpellValues.getOrDefault(modAspects.get(1), 0) : 0;
 	}
 
 	public int getFortune() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return modAspects.length >= 3 ? SpellValues.getOrDefault(modAspects[2], 0) : 0;
+		return modAspects.size() >= 3 ? SpellValues.getOrDefault(modAspects.get(2), 0) : 0;
 	}
 
 	@Override
 	public void use(PlayerEntity player, Action action){
 		if(player.world.isRemote)
 			return;
-		if(castAspects.length < 3 || castAspects[0].isEmpty() && castAspects[1].isEmpty() && castAspects[2].isEmpty())
+		if(castAspects.size() < 3 || castAspects.get(0).isEmpty() && castAspects.get(1).isEmpty() && castAspects.get(2).isEmpty())
 			defaultUse(player);
 		else
 			Spell.useCasts(this, player, castAspects);

@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.arcanamod.Arcana.arcLoc;
+import static net.arcanamod.ArcanaVariables.arcLoc;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
