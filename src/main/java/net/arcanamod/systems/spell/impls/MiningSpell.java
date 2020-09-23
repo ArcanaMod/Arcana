@@ -96,7 +96,7 @@ public class MiningSpell extends Spell {
 	public void use(PlayerEntity player, Action action){
 		if(player.world.isRemote)
 			return;
-		if(castAspects.size() < 3 || castAspects.get(0).isEmpty() && castAspects.get(1).isEmpty() && castAspects.get(2).isEmpty())
+		if(castAspects.size() <= 0)
 			defaultUse(player);
 		else
 			Spell.useCasts(this, player, castAspects);

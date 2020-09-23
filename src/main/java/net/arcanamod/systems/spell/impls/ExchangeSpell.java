@@ -88,12 +88,12 @@ public class ExchangeSpell extends Spell {
 
 	public int getMiningLevel() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return SpellValues.getOrDefault(modAspects.get(0), 2);
+		return modAspects.size() >= 1 ? SpellValues.getOrDefault(modAspects.get(0), 2) : 2;
 	}
 
 	public int getSize() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return SpellValues.getOrDefault(modAspects.get(1), 0);
+		return modAspects.size() >= 2 ? SpellValues.getOrDefault(modAspects.get(1), 0) : 0;
 	}
 
 	@Override
@@ -102,17 +102,17 @@ public class ExchangeSpell extends Spell {
 			if (player.world.isRemote) return;
 			ItemStack held = player.getHeldItem(Hand.OFF_HAND);
 			if (held!=ItemStack.EMPTY && held.getItem() != Items.AIR && Block.getBlockFromItem(held.getItem()) != Blocks.AIR) {
-				if (castAspects.get(0).isEmpty() && castAspects.get(1).isEmpty() && castAspects.get(2).isEmpty()) {
+				if(castAspects.size() <= 0){
 					// Default spell
 					BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
 					BlockState blockToDestroy = player.world.getBlockState(pos);
 					if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-						player.world.setBlockState(pos, Block.getBlockFromItem(held.getItem()).getDefaultState());
 						held.shrink(1);
 						for (ItemStack stack : player.world.getBlockState(pos).getDrops(new LootContext.Builder((ServerWorld) player.world)
-								.withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.TOOL, ItemStack.EMPTY))) {
+								.withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.TOOL, new ItemStack(Items.DIAMOND_PICKAXE)))) {
 							player.addItemStackToInventory(stack);
 						}
+						player.world.setBlockState(pos, Block.getBlockFromItem(held.getItem()).getDefaultState());
 						blockToDestroy.updateNeighbors(player.world,pos,3);
 					}
 				} else {
@@ -141,12 +141,12 @@ public class ExchangeSpell extends Spell {
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
-				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
 				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
+						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(Items.DIAMOND_PICKAXE)))){
 					caster.addItemStackToInventory(stack);
 				}
+				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
 				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
@@ -161,12 +161,12 @@ public class ExchangeSpell extends Spell {
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
-				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
 				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
+						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(Items.DIAMOND_PICKAXE)))){
 					caster.addItemStackToInventory(stack);
 				}
+				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
 				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
@@ -186,12 +186,12 @@ public class ExchangeSpell extends Spell {
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
-				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
 				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, ItemStack.EMPTY))){
+						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(Items.DIAMOND_PICKAXE)))){
 					caster.addItemStackToInventory(stack);
 				}
+				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
 				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
