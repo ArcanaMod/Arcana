@@ -102,14 +102,14 @@ public class ExchangeSpell extends Spell {
 			if (player.world.isRemote) return;
 			ItemStack held = player.getHeldItem(Hand.OFF_HAND);
 			if (held!=ItemStack.EMPTY && held.getItem() != Items.AIR && Block.getBlockFromItem(held.getItem()) != Blocks.AIR) {
-				if(castAspects.size() <= 0){
+				if (castAspects.size() <= 0) {
 					// Default spell
 					BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, distance);
 					BlockState blockToDestroy = player.world.getBlockState(pos);
 					if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, player.world, pos, player) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 						held.shrink(1);
 						for (ItemStack stack : player.world.getBlockState(pos).getDrops(new LootContext.Builder((ServerWorld) player.world)
-								.withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.TOOL, new ItemStack(Items.DIAMOND_PICKAXE)))) {
+								.withParameter(LootParameters.POSITION, pos).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel()>=3?Items.DIAMOND_PICKAXE:Items.IRON_PICKAXE)))) {
 							player.addItemStackToInventory(stack);
 						}
 						player.world.setBlockState(pos, Block.getBlockFromItem(held.getItem()).getDefaultState());
@@ -143,7 +143,7 @@ public class ExchangeSpell extends Spell {
 				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
 				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(Items.DIAMOND_PICKAXE)))){
+						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel()>=3?Items.DIAMOND_PICKAXE:Items.IRON_PICKAXE)))) {
 					caster.addItemStackToInventory(stack);
 				}
 				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
@@ -163,7 +163,7 @@ public class ExchangeSpell extends Spell {
 				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
 				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(Items.DIAMOND_PICKAXE)))){
+						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel()>=3?Items.DIAMOND_PICKAXE:Items.IRON_PICKAXE)))) {
 					caster.addItemStackToInventory(stack);
 				}
 				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
@@ -188,7 +188,7 @@ public class ExchangeSpell extends Spell {
 				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
 				held.shrink(1);
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(Items.DIAMOND_PICKAXE)))){
+						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel()>=3?Items.DIAMOND_PICKAXE:Items.IRON_PICKAXE)))) {
 					caster.addItemStackToInventory(stack);
 				}
 				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
