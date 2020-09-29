@@ -2,22 +2,17 @@ package net.arcanamod.systems.spell.impls;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
-import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
 public class MiningSpell extends Spell {
 
@@ -87,18 +82,20 @@ public class MiningSpell extends Spell {
 	}
 
 	@Override
-	public void useOnPlayer(PlayerEntity playerTarget) {
-		playerTarget.sendMessage(new TranslationTextComponent("status.invalidspell"));
+	public ActionResultType useOnPlayer(PlayerEntity playerTarget) {
+		playerTarget.sendStatusMessage(new TranslationTextComponent("status.arcana.invalid_spell"), true);
+		return ActionResultType.FAIL;
 	}
 
 	@Override
-	public void useOnEntity(PlayerEntity caster, Entity entityTarget) {
-		caster.sendMessage(new TranslationTextComponent("status.invalidspell"));
+	public ActionResultType useOnEntity(PlayerEntity caster, Entity entityTarget) {
+		caster.sendStatusMessage(new TranslationTextComponent("status.arcana.invalid_spell"), true);
+		return ActionResultType.FAIL;
 	}
 
-	public void useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
+	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		try {
-			if(caster.world.isRemote) return;
+			if(caster.world.isRemote) return ActionResultType.SUCCESS;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
@@ -106,6 +103,8 @@ public class MiningSpell extends Spell {
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
+			return ActionResultType.FAIL;
 		}
+		return ActionResultType.SUCCESS;
 	}
 }

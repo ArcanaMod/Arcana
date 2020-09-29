@@ -1,12 +1,11 @@
 package net.arcanamod.systems.spell;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.text.ITextComponent;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -53,9 +52,11 @@ public interface ISpell {
 	/**
 	 * Use of that spell.
 	 * @param player Player
+	 * @param sender Sender
 	 * @param action Click Action
+	 * @return
 	 */
-	void use(PlayerEntity player, Action action);
+	ActionResultType use(PlayerEntity player, Object sender, Action action);
 	
 	default Optional<ITextComponent> getName(CompoundNBT nbt){
 		return Optional.empty();

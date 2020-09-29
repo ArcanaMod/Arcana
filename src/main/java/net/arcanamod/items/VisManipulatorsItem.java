@@ -37,10 +37,10 @@ public class VisManipulatorsItem extends Item{
 	@Override
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 		ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(),1);
-		int r = random.nextInt(3);
+		int r = random.nextInt(4);
 		if (r==0){
 			toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.MINING_SPELL.build(
-					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.GLUTTONY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
+					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.LUST), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 					new CompoundNBT())));
 		} else if (r==1) {
 			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.EXCHANGE_SPELL.build(
@@ -56,7 +56,7 @@ public class VisManipulatorsItem extends Item{
 					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.EMPTY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 					new CompoundNBT())));
 		}
-		toSet.getOrCreateTag().putInt("style",random.nextInt(14));
+		toSet.getOrCreateTag().putInt("style",random.nextInt(36));
 		context.getPlayer().addItemStackToInventory(toSet);
 		return super.onItemUseFirst(stack, context);
 	}

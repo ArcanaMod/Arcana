@@ -2,24 +2,19 @@ package net.arcanamod.systems.spell.impls;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
-import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
 import net.arcanamod.systems.spell.SpellCosts;
 import net.arcanamod.systems.spell.SpellData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
 public class FabricSpell extends Spell {
 
@@ -73,21 +68,24 @@ public class FabricSpell extends Spell {
 	}
 
 	@Override
-	public void useOnEntity(PlayerEntity caster, Entity target) {
+	public ActionResultType useOnEntity(PlayerEntity caster, Entity target) {
 		target.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"));
 		target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"));
 		target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"));
+		return ActionResultType.SUCCESS;
 	}
 
 	@Override
-	public void useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
+	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		caster.world.setTileEntity(blockTarget,new ResearchTableTileEntity());
+		return ActionResultType.SUCCESS;
 	}
 
 	@Override
-	public void useOnPlayer(PlayerEntity playerTarget) {
+	public ActionResultType useOnPlayer(PlayerEntity playerTarget) {
 		playerTarget.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"));
 		playerTarget.sendMessage(new StringTextComponent(playerTarget.getName().getString()+" gets gold award on r/minecraft"));
 		playerTarget.sendMessage(new StringTextComponent(playerTarget.getName().getString()+" gets gold award on r/minecraft"));
+		return ActionResultType.SUCCESS;
 	}
 }

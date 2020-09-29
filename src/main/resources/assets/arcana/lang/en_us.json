@@ -638,6 +638,8 @@
     "tooltip.arcana.spell": "Spell: %s§r (%s)",
     "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration. Maybe you should look at those notes again.",
     "status.arcana.null_spell": "Null or invalid spell!",
+    "status.arcana.invalid_spell": "Invalid spell!",
+    "status.arcana.selection_mode": "Selection Mode",
 
     "_comment": "GUIs",
     "researchEntry.continue": "Continue",

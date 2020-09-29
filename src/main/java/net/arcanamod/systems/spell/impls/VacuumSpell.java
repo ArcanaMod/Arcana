@@ -2,22 +2,15 @@ package net.arcanamod.systems.spell.impls;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
-import net.arcanamod.util.RayTraceUtils;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
 public class VacuumSpell extends Spell {
 
@@ -99,17 +92,17 @@ public class VacuumSpell extends Spell {
     }
 
     @Override
-    public void useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-
+    public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
+        return ActionResultType.SUCCESS;
     }
 
     @Override
-    public void useOnPlayer(PlayerEntity playerTarget) {
-
+    public ActionResultType useOnPlayer(PlayerEntity playerTarget) {
+        return ActionResultType.SUCCESS;
     }
 
     @Override
-    public void useOnEntity(PlayerEntity caster, Entity entityTarget) {
-
+    public ActionResultType useOnEntity(PlayerEntity caster, Entity entityTarget) {
+        return ActionResultType.SUCCESS;
     }
 }

@@ -32,11 +32,17 @@ public class SpellCosts {
 
     public List<AspectStack> toList(){
         List<AspectStack> list = new ArrayList<>();
+        if (air.getAmount() != 0)
         list.add(air);
+        if (water.getAmount() != 0)
         list.add(water);
+        if (fire.getAmount() != 0)
         list.add(fire);
+        if (earth.getAmount() != 0)
         list.add(earth);
+        if (order.getAmount() != 0)
         list.add(order);
+        if (chaos.getAmount() != 0)
         list.add(chaos);
         return list;
     }

@@ -2,18 +2,16 @@ package net.arcanamod.systems.spell.impls;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
-import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -22,10 +20,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
-
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
 
 public class ExchangeSpell extends Spell {
 
@@ -90,14 +84,15 @@ public class ExchangeSpell extends Spell {
 	}
 
 	@Override
-	public void useOnEntity(PlayerEntity caster, Entity targetEntity) {
-		caster.sendMessage(new TranslationTextComponent("message.cantusethatspell"));
+	public ActionResultType useOnEntity(PlayerEntity caster, Entity targetEntity) {
+		caster.sendStatusMessage(new TranslationTextComponent("status.arcana.invalid_spell"), true);
+		return ActionResultType.FAIL;
 	}
 
 	@Override
-	public void useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
+	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		try {
-			if (caster.world.isRemote) return;
+			if (caster.world.isRemote) return ActionResultType.SUCCESS;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
@@ -111,11 +106,14 @@ public class ExchangeSpell extends Spell {
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
+			return ActionResultType.FAIL;
 		}
+		return ActionResultType.SUCCESS;
 	}
 
 	@Override
-	public void useOnPlayer(PlayerEntity playerTarget) {
-		playerTarget.sendMessage(new TranslationTextComponent("message.cantusethatspell"));
+	public ActionResultType useOnPlayer(PlayerEntity playerTarget) {
+		playerTarget.sendStatusMessage(new TranslationTextComponent("status.arcana.invalid_spell"), true);
+		return ActionResultType.FAIL;
 	}
 }

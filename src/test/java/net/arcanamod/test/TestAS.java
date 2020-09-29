@@ -35,11 +35,7 @@ public class TestAS {
 
 	@Test
 	public void SerializeAndDeserialize(){
-		ISpell spell = Spell.deserializeNBT(Spell.serializeNBT(Spells.MINING_SPELL.build(
-				Collections.emptyList(),
-				Collections.singletonList(new CastAspect(Aspects.CHAOS,Aspects.GREED)),
-				new CompoundNBT())));
-		System.out.print(spell.getModAspects());
+
 	}
 
 	@Test
