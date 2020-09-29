@@ -125,12 +125,12 @@ public class WandItem extends Item{
 			ISpell spell = focus.getSpell(player.getHeldItem(hand));
 			if(spell != null){
 				IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
-				// oh my god this code is terrible
+				// oh my god this code is terrible // YES, I know Xd.
 				// time for more VisUtils I guess
-				if(spell.getAspectCosts().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
+				if(spell.getSpellCosts().toList().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
 					spell.use(player, ISpell.Action.USE);
 					// remove aspects from wand
-					for(AspectStack cost : spell.getAspectCosts())
+					for(AspectStack cost : spell.getSpellCosts().toList())
 						handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
 				}
 			}else
@@ -238,7 +238,7 @@ public class WandItem extends Item{
 		if(spell != null){
 			Optional<ITextComponent> name = spell.getName(getFocusData(stack).getCompound("Spell"));
 			name.ifPresent(e -> tooltip.add(new TranslationTextComponent("tooltip.arcana.spell", e,
-					spell.getAspectCosts().stream()
+					spell.getSpellCosts().toList().stream()
 						.map(AspectStack::getAspect)
 						.map(aspect -> I18n.format("aspect." + aspect.name()))
 						.collect(Collectors.joining(", ")))));

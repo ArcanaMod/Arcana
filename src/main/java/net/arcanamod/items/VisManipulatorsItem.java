@@ -5,8 +5,10 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.SpellData;
 import net.arcanamod.systems.spell.Spells;
 import net.arcanamod.systems.spell.impls.Spell;
+import net.arcanamod.util.Pair;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -35,22 +37,23 @@ public class VisManipulatorsItem extends Item{
 	@Override
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 		ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(),1);
-		int r = random.nextInt(4);
+		int r = random.nextInt(3);
 		if (r==0){
 			toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.MINING_SPELL.build(
-					Collections.emptyList(),
-					Collections.singletonList(new CastAspect(Aspects.CHAOS,Aspects.GREED)),
+					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.GLUTTONY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 					new CompoundNBT())));
 		} else if (r==1) {
 			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.EXCHANGE_SPELL.build(
-					Collections.emptyList(),
-					Collections.emptyList(),
+					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.GLUTTONY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 					new CompoundNBT())));
 
-		} else {
+		} else if (r==2) {
 			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.FABRIC_SPELL.build(
-					Collections.emptyList(),
-					Collections.singletonList(new CastAspect(Aspects.EARTH,Aspects.EMPTY)),
+					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.FIRE,Aspects.EMPTY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
+					new CompoundNBT())));
+		} else {
+			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.VACUUM_SPELL.build(
+					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.EMPTY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 					new CompoundNBT())));
 		}
 		toSet.getOrCreateTag().putInt("style",random.nextInt(14));
@@ -59,11 +62,13 @@ public class VisManipulatorsItem extends Item{
 	}
 
 	public ISpell getSpell(){
-		return Spells.MINING_SPELL.build(Collections.emptyList(), Collections.emptyList(), new CompoundNBT());
+		return Spells.MINING_SPELL.build(
+				new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.GLUTTONY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
+				new CompoundNBT());
 	}
 
 	@Override
 	public int getUseDuration(ItemStack stack) {
-		return getSpell().getSpellDuration(); // One hour
+		return getSpell().getSpellDuration();
 	}
 }

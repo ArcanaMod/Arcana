@@ -28,6 +28,7 @@ public class MiningSpell extends Spell {
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
+		this.data = data;
 		if (compound.contains("distance"))
 			this.distance = compound.getInt("distance");
 		isBuilt = true;
@@ -57,10 +58,12 @@ public class MiningSpell extends Spell {
 	@Override
 	public int getComplexity() {
 		if (!isBuilt) return -2;
-		return  3
+		return  8
 				+ SpellValues.getOrDefault(data.firstModifier,0)
 				+ SpellValues.getOrDefault(data.secondModifier,0)
-				+ SpellValues.getOrDefault(data.sinModifier,0);
+				+ SpellValues.getOrDefault(data.sinModifier,0)
+				+ SpellValues.getOrDefault(data.primaryCast.getSecond(),0)
+				+ SpellValues.getOrDefault(data.plusCast.getSecond(),0);
 	}
 
 	@Override
