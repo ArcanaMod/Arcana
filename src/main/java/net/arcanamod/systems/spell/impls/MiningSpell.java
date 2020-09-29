@@ -21,16 +21,13 @@ import java.util.List;
 
 public class MiningSpell extends Spell {
 
-	private List<Aspect> modAspects;
-	private List<CastAspect> castAspects;
+	private SpellData data;
 	private int distance = 10;
 
 	public boolean isBuilt = false;
 
 	@Override
-	public ISpell build(List<Aspect> modAspects, List<CastAspect> castAspects, CompoundNBT compound) {
-		this.modAspects = modAspects;
-		this.castAspects = castAspects;
+	public ISpell build(SpellData data, CompoundNBT compound) {
 		if (compound.contains("distance"))
 			this.distance = compound.getInt("distance");
 		isBuilt = true;
@@ -48,28 +45,22 @@ public class MiningSpell extends Spell {
 	}
 
 	@Override
-	public List<Aspect> getModAspects() {
-		return modAspects;
+	public SpellData getSpellData() {
+		return data;
 	}
 
 	@Override
-	public List<CastAspect> getCastAspects() {
-		return castAspects;
-	}
-
-	@Override
-	public List<AspectStack> getAspectCosts() {
-		return Collections.singletonList(new AspectStack(Aspects.EARTH, 1));
+	public SpellCosts getSpellCosts() {
+		return new SpellCosts(0,0,0,1,0,0,0);
 	}
 
 	@Override
 	public int getComplexity() {
 		if (!isBuilt) return -2;
-		int temp = 0;
-		for (Aspect aspect : modAspects){
-			temp += SpellValues.getOrDefault(aspect, 0);
-		}
-		return temp != 0 ? -1 : temp;
+		return  3
+				+ SpellValues.getOrDefault(data.firstModifier,0)
+				+ SpellValues.getOrDefault(data.secondModifier,0)
+				+ SpellValues.getOrDefault(data.sinModifier,0);
 	}
 
 	@Override
@@ -79,94 +70,36 @@ public class MiningSpell extends Spell {
 
 	public int getMiningLevel() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return modAspects.size() >= 1 ? SpellValues.getOrDefault(modAspects.get(0), 2) : 2;
+		return SpellValues.getOrDefault(data.firstModifier, 2);
 	}
 
 	public int getExplosivePower() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return modAspects.size() >= 2 ? SpellValues.getOrDefault(modAspects.get(1), 0) : 0;
+		return SpellValues.getOrDefault(data.firstModifier, 0);
 	}
 
 	public int getFortune() throws SpellNotBuiltError {
 		if (!isBuilt) throw new SpellNotBuiltError();
-		return modAspects.size() >= 3 ? SpellValues.getOrDefault(modAspects.get(2), 0) : 0;
+		return SpellValues.getOrDefault(data.firstModifier, 0);
 	}
 
 	@Override
-	public void use(PlayerEntity player, Action action){
-		if(player.world.isRemote)
-			return;
-		if(castAspects.size() <= 0)
-			defaultUse(player);
-		else
-			Spell.useCasts(this, player, castAspects);
-	}
-
-	@Override
-	public void onAirCast(PlayerEntity caster, World world, BlockPos pos, int area, int duration) {
-		caster.sendMessage(new TranslationTextComponent("status.invalidspell"));
-	}
-
-	@Override
-	public void onWaterCast(PlayerEntity caster, List<Entity> entityTargets) {
-		caster.sendMessage(new TranslationTextComponent("status.invalidspell"));
-	}
-
-
-	@Override
-	public void onFireCast(PlayerEntity caster, @Nullable Entity entityTarget, BlockPos blockTarget) {
-		try {
-			if (caster.world.isRemote) return;
-				BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
-				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
-			}
-		} catch (SpellNotBuiltError spellNotBuiltError) {
-			spellNotBuiltError.printStackTrace();
-		}
-	}
-
-	@Override
-	public void onEarthCast(PlayerEntity caster, BlockPos blockTarget) {
-		try {
-			if (caster.world.isRemote) return;
-			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
-				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
-			}
-		} catch (SpellNotBuiltError spellNotBuiltError) {
-			spellNotBuiltError.printStackTrace();
-		}
-	}
-
-	@Override
-	public void onOrderCast(PlayerEntity playerTarget) {
+	public void useOnPlayer(PlayerEntity playerTarget) {
 		playerTarget.sendMessage(new TranslationTextComponent("status.invalidspell"));
 	}
 
 	@Override
-	public void onChaosCast(PlayerEntity caster, Entity entityTarget, BlockPos blockTarget) {
+	public void useOnEntity(PlayerEntity caster, Entity entityTarget) {
+		caster.sendMessage(new TranslationTextComponent("status.invalidspell"));
+	}
+
+	public void useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		try {
-			if (caster.world.isRemote) return;
+			if(caster.world.isRemote) return;
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				caster.world.destroyBlock(blockTarget, true, caster); // TODO: Add fortune and explosion power
 				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
-			}
-		} catch (SpellNotBuiltError spellNotBuiltError) {
-			spellNotBuiltError.printStackTrace();
-		}
-	}
-
-	protected void defaultUse(PlayerEntity caster) {
-		try {
-			BlockPos pos = RayTraceUtils.getTargetBlockPos(caster, caster.world, distance);
-			BlockState blockToDestroy = caster.world.getBlockState(pos);
-			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, pos, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-				caster.world.destroyBlock(pos, true, caster); // TODO: Add fortune and explosion power
-				blockToDestroy.updateNeighbors(caster.world,pos,3);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();

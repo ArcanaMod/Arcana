@@ -33,13 +33,12 @@ public class VacuumTileEntityRender<T extends VacuumTileEntity> extends TileEnti
         double viewFromDistance = tileEntity.getPos().distanceSq(this.renderDispatcher.renderInfo.getProjectedView(), true);
         int passes = this.getPasses(viewFromDistance);
         float topOffset = this.getOffset();
-        Matrix4f lvt_11_1_ = matrixStack.getLast().getMatrix();
-        this.renderCube(tileEntity, topOffset, 0.15F, lvt_11_1_, buffer.getBuffer((RenderType)RENDER_TYPES.get(0)));
+        Matrix4f matrix4f = matrixStack.getLast().getMatrix();
+        this.renderCube(tileEntity, topOffset, 0.15F, matrix4f, buffer.getBuffer((RenderType)RENDER_TYPES.get(0)));
 
         for(int i = 1; i < passes; ++i) {
-            this.renderCube(tileEntity, topOffset, 2.0F / (float)(18 - i), lvt_11_1_, buffer.getBuffer((RenderType)RENDER_TYPES.get(i)));
+            this.renderCube(tileEntity, topOffset, 2.0F / (float)(18 - i), matrix4f, buffer.getBuffer((RenderType)RENDER_TYPES.get(i)));
         }
-
     }
 
     private void renderCube(T tileEntity, float topOffset, float p_228883_3_, Matrix4f matrix, IVertexBuilder vertexBuilder) {

@@ -7,6 +7,8 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.SpellCosts;
+import net.arcanamod.systems.spell.SpellData;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -21,16 +23,14 @@ import java.util.List;
 
 public class FabricSpell extends Spell {
 
-	private List<Aspect> modAspects;
-	private List<CastAspect> castAspects;
+	private SpellData data;
 	private int distance = 10;
 
 	public boolean isBuilt = false;
 
 	@Override
-	public ISpell build(List<Aspect> modAspects, List<CastAspect> castAspects, CompoundNBT compound) {
-		this.modAspects = modAspects;
-		this.castAspects = castAspects;
+	public ISpell build(SpellData data, CompoundNBT compound) {
+		this.data = data;
 		if (compound.contains("distance"))
 			this.distance = compound.getInt("distance");
 		isBuilt = true;
@@ -48,23 +48,13 @@ public class FabricSpell extends Spell {
 	}
 
 	@Override
-	public List<Aspect> getModAspects() {
-		return modAspects;
+	public SpellData getSpellData() {
+		return data;
 	}
 
 	@Override
-	public List<CastAspect> getCastAspects() {
-		return castAspects;
-	}
-
-	/**
-	 * Cost of spell in AspectStacks.
-	 *
-	 * @return returns cost of spell.
-	 */
-	@Override
-	public List<AspectStack> getAspectCosts() {
-		return Collections.singletonList(new AspectStack(Aspects.WATER, 1));
+	public SpellCosts getSpellCosts() {
+		return new SpellCosts(0,0,0,0,0,0,1);
 	}
 
 	/**
@@ -74,7 +64,7 @@ public class FabricSpell extends Spell {
 	 */
 	@Override
 	public int getComplexity() {
-		return 0;
+		return -666;
 	}
 
 	@Override
@@ -83,43 +73,21 @@ public class FabricSpell extends Spell {
 	}
 
 	@Override
-	public void use(PlayerEntity player, Action action) {
-		useCasts(this,player,castAspects);
+	public void useOnEntity(PlayerEntity caster, Entity target) {
+		target.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"));
+		target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"));
+		target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"));
 	}
 
 	@Override
-	public void onAirCast(PlayerEntity caster, World world, BlockPos pos, int area, int duration) {
-		world.setTileEntity(pos,new ResearchTableTileEntity());
-	}
-
-	@Override
-	public void onWaterCast(PlayerEntity caster, List<Entity> entityTargets) {
-		for (Entity target : entityTargets){
-			target.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"));
-			target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"));
-			target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"));
-		}
-	}
-
-	@Override
-	public void onFireCast(PlayerEntity caster, @Nullable Entity entityTarget, BlockPos blockTarget) {
+	public void useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		caster.world.setTileEntity(blockTarget,new ResearchTableTileEntity());
 	}
 
 	@Override
-	public void onEarthCast(PlayerEntity caster, BlockPos blockTarget) {
-		caster.world.setTileEntity(blockTarget,new ResearchTableTileEntity());
-	}
-
-	@Override
-	public void onOrderCast(PlayerEntity playerTarget) {
+	public void useOnPlayer(PlayerEntity playerTarget) {
 		playerTarget.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"));
 		playerTarget.sendMessage(new StringTextComponent(playerTarget.getName().getString()+" gets gold award on r/minecraft"));
 		playerTarget.sendMessage(new StringTextComponent(playerTarget.getName().getString()+" gets gold award on r/minecraft"));
-	}
-
-	@Override
-	public void onChaosCast(PlayerEntity caster, Entity entityTarget, BlockPos blockTarget) {
-		caster.world.setTileEntity(blockTarget,new ResearchTableTileEntity());
 	}
 }
