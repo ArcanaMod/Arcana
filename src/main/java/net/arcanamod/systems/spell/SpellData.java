@@ -19,4 +19,15 @@ public class SpellData {
         this.primaryCast = primaryCast;
         this.plusCast = plusCast;
     }
+
+    @Override
+    public String toString() {
+        return "SpellData{" +
+                "firstModifier=" + firstModifier +
+                ", secondModifier=" + secondModifier +
+                ", sinModifier=" + sinModifier +
+                ", primaryCast=" + primaryCast +
+                ", plusCast=" + plusCast +
+                '}';
+    }
 }

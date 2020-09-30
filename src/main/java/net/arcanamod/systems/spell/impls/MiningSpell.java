@@ -53,12 +53,12 @@ public class MiningSpell extends Spell {
 	@Override
 	public int getComplexity() {
 		if (!isBuilt) return -2;
-		return  8
-				+ SpellValues.getOrDefault(data.firstModifier,0)
-				+ SpellValues.getOrDefault(data.secondModifier,0)
-				+ SpellValues.getOrDefault(data.sinModifier,0)
-				+ SpellValues.getOrDefault(data.primaryCast.getSecond(),0)
-				+ SpellValues.getOrDefault(data.plusCast.getSecond(),0);
+		return  (int)(6
+				+ SpellValues.getOrDefault(data.firstModifier,0)*1.5f
+				+ SpellValues.getOrDefault(data.secondModifier,0)*2
+				+ SpellValues.getOrDefault(data.sinModifier,0)*2
+				+ SpellValues.getOrDefault(data.primaryCast.getSecond(),0)*2
+				+ SpellValues.getOrDefault(data.plusCast.getSecond(),0))*2;
 	}
 
 	@Override

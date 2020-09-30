@@ -3,13 +3,18 @@ package net.arcanamod.systems.spell.impls;
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.tiles.VacuumTileEntity;
 import net.arcanamod.systems.spell.*;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class VacuumSpell extends Spell {
@@ -78,12 +83,12 @@ public class VacuumSpell extends Spell {
     @Override
     public int getComplexity() {
         if (!isBuilt) return -2;
-        return  8
-                + SpellValues.getOrDefault(data.firstModifier,0)
-                + SpellValues.getOrDefault(data.secondModifier,0)
-                + SpellValues.getOrDefault(data.sinModifier,0)
-                + SpellValues.getOrDefault(data.primaryCast.getSecond(),0)
-                + SpellValues.getOrDefault(data.plusCast.getSecond(),0);
+        return  3
+                + SpellValues.getOrDefault(data.firstModifier,0)*2
+                + SpellValues.getOrDefault(data.secondModifier,0)*4
+                + SpellValues.getOrDefault(data.sinModifier,0)*2
+                + SpellValues.getOrDefault(data.primaryCast.getSecond(),0)*3
+                + SpellValues.getOrDefault(data.plusCast.getSecond(),0)*3;
     }
 
     @Override
@@ -93,16 +98,40 @@ public class VacuumSpell extends Spell {
 
     @Override
     public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
+        try {
+            if(caster.world.isRemote) return ActionResultType.SUCCESS;
+            BlockState blockToReplace = world.getBlockState(blockTarget);
+            if (blockToReplace.getBlock() != Blocks.AIR && blockToReplace.getBlock() != Blocks.CAVE_AIR) {
+                BlockState vaccumBlock = ArcanaBlocks.VACUUM_BLOCK.get().getDefaultState();
+                world.setBlockState(blockTarget, vaccumBlock);
+                ((VacuumTileEntity)world.getTileEntity(blockTarget)).setDuration(getDuration());
+                ((VacuumTileEntity)world.getTileEntity(blockTarget)).setOriginBlock(blockToReplace);
+            }
+        } catch (SpellNotBuiltError spellNotBuiltError) {
+            spellNotBuiltError.throwException(caster);
+            return ActionResultType.FAIL;
+        }
         return ActionResultType.SUCCESS;
+    }
+
+    /**
+     * Gets Vacuum blocks duration from modifiers
+     * @return Vacuum blocks duration
+     */
+    protected int getDuration() throws SpellNotBuiltError {
+        if (!isBuilt) throw new SpellNotBuiltError();
+        return SpellValues.getOrDefault(data.firstModifier, 40);
     }
 
     @Override
     public ActionResultType useOnPlayer(PlayerEntity playerTarget) {
-        return ActionResultType.SUCCESS;
+        playerTarget.sendStatusMessage(new TranslationTextComponent("status.arcana.invalid_spell"), true);
+        return ActionResultType.FAIL;
     }
 
     @Override
     public ActionResultType useOnEntity(PlayerEntity caster, Entity entityTarget) {
-        return ActionResultType.SUCCESS;
+        caster.sendStatusMessage(new TranslationTextComponent("status.arcana.invalid_spell"), true);
+        return ActionResultType.FAIL;
     }
 }

@@ -64,8 +64,8 @@ public class ExchangeSpell extends Spell {
 				+ SpellValues.getOrDefault(data.firstModifier,0)
 				+ SpellValues.getOrDefault(data.secondModifier,0)
 				+ SpellValues.getOrDefault(data.sinModifier,0)
-				+ SpellValues.getOrDefault(data.primaryCast.getSecond(),0)
-				+ SpellValues.getOrDefault(data.plusCast.getSecond(),0);
+				+ SpellValues.getOrDefault(data.primaryCast.getSecond(),0)/2
+				+ SpellValues.getOrDefault(data.plusCast.getSecond(),0)/2;
 	}
 
 	@Override

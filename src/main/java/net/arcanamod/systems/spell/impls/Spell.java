@@ -7,6 +7,9 @@ import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.item.ItemEntity;
+import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -158,21 +161,25 @@ public abstract class Spell implements ISpell {
 				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, raytraceDistance);
 				if (cast.getSecond() == ENVY) {
 					// targets all connected blocks of the same type within a 8 block range
+					// TODO: implement this.
 				} else if (cast.getSecond() == LUST) {
 					// targets marked blocks (blocks can be marked with shift - rightclick while holding the wand
 					if (sender instanceof ItemStack) {
 						List<BlockPos> markedBlocks;
 						if (((ItemStack)sender).getOrCreateTag().contains("MarkedBlocks")) {
 							//player.sendMessage(((ListNBT) ((ItemStack) sender).getOrCreateTag().get("MarkedBlocks")).toFormattedComponent());
-							markedBlocks = ((ListNBT) ((ItemStack) sender).getOrCreateTag().get("MarkedBlocks")).stream()
+							ListNBT listNBT = ((ListNBT) ((ItemStack) sender).getOrCreateTag().get("MarkedBlocks"));
+							markedBlocks = listNBT.stream()
 									.map(inbt -> new BlockPos(((CompoundNBT) inbt).getInt("x"), ((CompoundNBT) inbt).getInt("y"), ((CompoundNBT) inbt).getInt("z"))).collect(Collectors.toList());
 							for (BlockPos markedBlock : markedBlocks) {
 								useOnBlock(player, player.world, markedBlock);
 							}
+							listNBT.clear();
 						} else return ActionResultType.FAIL;
 					} else return ActionResultType.FAIL;
 				} else if (cast.getSecond() == SLOTH) {
 					// it takes a few seconds for the spell to cast
+					// TODO: What it means???
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby blocks ~5
 					BlockPos.getAllInBoxMutable(pos.add(-5, -5, -5), pos.add(5, 5, 5)).forEach(blockPos -> {
@@ -180,11 +187,19 @@ public abstract class Spell implements ISpell {
 					});
 				} else if (cast.getSecond() == GREED) {
 					// allows players to target entites, targets the block below them
+					List<Entity> entities = RayTraceUtils.rayTraceEntities(player.world,player.getPositionVec(),player.getLookVec(),Optional.empty(),Entity.class);
+					for (Entity entity : entities){
+						useOnBlock(player, player.world,entity.getPosition());
+					}
 				} else if (cast.getSecond() == GLUTTONY) {
 					// selects a 3 * 3 * 3 area
 					BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1)).forEach(blockPos -> useOnBlock(player, player.world, blockPos));
 				} else if (cast.getSecond() == WRATH) {
 					// Allows you to target entities instead
+					List<Entity> entities = RayTraceUtils.rayTraceEntities(player.world,player.getPositionVec(),player.getLookVec(),Optional.empty(),Entity.class);
+					for (Entity entity : entities){
+						useOnEntity(player, entity);
+					}
 				} else {
 					// Default EARTH SPELL
 					return useOnBlock(player, player.world, pos);
@@ -202,22 +217,50 @@ public abstract class Spell implements ISpell {
 							new AxisAlignedBB(maxDistance, maxDistance, maxDistance, maxDistance, maxDistance, maxDistance),
 							EntityPredicates.NOT_SPECTATING);
 					for (PlayerEntity target : targets)
-						return useOnPlayer(target);
+						useOnPlayer(target);
 				} else if (cast.getSecond() == LUST) {
 					// targets you and nearby pets
+					List<PlayerEntity> targetsP = player.world.getEntitiesWithinAABB(EntityType.PLAYER,
+							new AxisAlignedBB(maxDistance, maxDistance, maxDistance, maxDistance, maxDistance, maxDistance),
+							EntityPredicates.NOT_SPECTATING);
+					List<TameableEntity> targetsE = player.world.getEntitiesWithinAABB(TameableEntity.class,
+							new AxisAlignedBB(maxDistance, maxDistance, maxDistance, maxDistance, maxDistance, maxDistance),
+							EntityPredicates.NOT_SPECTATING);
+					for (TameableEntity target : targetsE)
+						useOnEntity(player, target);
+					for (PlayerEntity target : targetsP)
+						useOnPlayer(target);
 				} else if (cast.getSecond() == SLOTH) {
 					// invalid Spell
 					player.sendStatusMessage(new TranslationTextComponent("status.arcana.invalid_spell"), true);
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby entities
+					List<Entity> targetsE = player.world.getEntitiesWithinAABB(Entity.class,
+							new AxisAlignedBB(maxDistance, maxDistance, maxDistance, maxDistance, maxDistance, maxDistance),
+							EntityPredicates.NOT_SPECTATING);
+					for (Entity target : targetsE)
+						if (player.world.rand.nextInt(5)==2)
+							useOnEntity(player, target);
 				} else if (cast.getSecond() == GREED) {
 					// targets nearby hostiles
+					List<MobEntity> targetsE = player.world.getEntitiesWithinAABB(MobEntity.class,
+							new AxisAlignedBB(maxDistance, maxDistance, maxDistance, maxDistance, maxDistance, maxDistance),
+							EntityPredicates.NOT_SPECTATING);
+					for (MobEntity target : targetsE)
+						useOnEntity(player, target);
 				} else if (cast.getSecond() == GLUTTONY) {
 					// targets nearby dropped items
+					List<ItemEntity> targetsE = player.world.getEntitiesWithinAABB(ItemEntity.class,
+							new AxisAlignedBB(maxDistance, maxDistance, maxDistance, maxDistance, maxDistance, maxDistance),
+							EntityPredicates.NOT_SPECTATING);
+					for (ItemEntity target : targetsE)
+						useOnEntity(player, target);
 				} else if (cast.getSecond() == WRATH) {
 					// becomes toggalable giving the player a faint glow and repeasts the spell every few seconds
+					// TODO: Implement this.
 				} else {
 					// Default ORDER SPELL
+					return useOnPlayer(player);
 				}
 			}
 			if (cast.getFirst() == CHAOS) {
