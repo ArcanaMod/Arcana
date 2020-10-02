@@ -13,6 +13,7 @@ import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.fish.PufferfishEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -239,6 +240,18 @@ public class Taint{
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if (entity == EntityType.DONKEY)
 			tainted = EntityType.Builder.create(TaintedDonkeyEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.CAT)
+			tainted = EntityType.Builder.create(TaintedCatEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.LLAMA)
+			tainted = EntityType.Builder.create(TaintedLlamaEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.TRADER_LLAMA)
+			tainted = EntityType.Builder.create(TaintedLlamaEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.PUFFERFISH)
+			tainted = EntityType.Builder.create(TaintedPufferfishEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else
 			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), EntityClassification.MONSTER)
