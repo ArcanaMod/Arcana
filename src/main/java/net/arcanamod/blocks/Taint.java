@@ -222,6 +222,24 @@ public class Taint{
 		else if (entity == EntityType.SLIME)
 			tainted = EntityType.Builder.create(TaintedSlimeEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.BEE)
+			tainted = EntityType.Builder.create(TaintedBeeEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.PANDA)
+			tainted = EntityType.Builder.create(TaintedPandaEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.SNOW_GOLEM)
+			tainted = EntityType.Builder.create(TaintedSnowGolemEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.RABBIT)
+			tainted = EntityType.Builder.create(TaintedRabbitEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.POLAR_BEAR)
+			tainted = EntityType.Builder.create(TaintedPolarBearEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.DONKEY)
+			tainted = EntityType.Builder.create(TaintedDonkeyEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else
 			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());

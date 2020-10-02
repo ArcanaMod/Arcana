@@ -9,12 +9,15 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class VacuumTileEntity extends TileEntity implements ITickableTileEntity {
 
     int existTime = 0;
     int duration = Short.MAX_VALUE;
-    private BlockState originBlock;
+    private BlockState originBlock = null;
 
     public VacuumTileEntity() {
         super(ArcanaTiles.VACUUM_TE.get());
@@ -33,12 +36,14 @@ public class VacuumTileEntity extends TileEntity implements ITickableTileEntity 
         super.read(compoundNBT);
         duration = compoundNBT.getInt("Duration");
         existTime = compoundNBT.getInt("ExistTime");
+        originBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(compoundNBT.getString("Block"))).getDefaultState();
     }
 
     @Override
     public CompoundNBT write(CompoundNBT compoundNBT) {
         compoundNBT.putInt("Duration",duration);
-        compoundNBT.putInt("Duration",existTime);
+        compoundNBT.putInt("ExistTime",existTime);
+        compoundNBT.putString("Block",originBlock.getBlock().getRegistryName().toString());
         return super.write(compoundNBT);
     }
 
@@ -54,7 +59,8 @@ public class VacuumTileEntity extends TileEntity implements ITickableTileEntity 
     public void tick() {
         existTime++;
         if (existTime >= duration) {
-            world.setBlockState(pos,originBlock);
+            if (originBlock != null)
+                world.setBlockState(pos,originBlock);
         }
     }
 }

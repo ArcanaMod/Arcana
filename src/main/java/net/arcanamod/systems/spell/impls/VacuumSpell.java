@@ -6,14 +6,17 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.VacuumTileEntity;
 import net.arcanamod.systems.spell.*;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -98,29 +101,43 @@ public class VacuumSpell extends Spell {
 
     @Override
     public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-        try {
-            if(caster.world.isRemote) return ActionResultType.SUCCESS;
-            BlockState blockToReplace = world.getBlockState(blockTarget);
-            if (blockToReplace.getBlock() != Blocks.AIR && blockToReplace.getBlock() != Blocks.CAVE_AIR) {
+        if(caster.world.isRemote) return ActionResultType.SUCCESS;
+        BlockPos.getAllInBoxMutable(blockTarget.add(
+                -Math.floor(getWidth(caster)),
+                -Math.floor(getWidth(caster)),
+                -Math.floor(getWidth(caster))),
+                blockTarget.offset(caster.getHorizontalFacing(),getDistance(caster)).add(
+                        Math.floor(getWidth(caster)),
+                        Math.floor(getWidth(caster)),
+                        Math.floor(getWidth(caster)))).forEach(blockPos -> {
+            Block blockToReplace = world.getBlockState(blockTarget).getBlock();
+            if (blockToReplace != Blocks.AIR && blockToReplace != Blocks.CAVE_AIR) {
                 BlockState vaccumBlock = ArcanaBlocks.VACUUM_BLOCK.get().getDefaultState();
                 world.setBlockState(blockTarget, vaccumBlock);
-                ((VacuumTileEntity)world.getTileEntity(blockTarget)).setDuration(getDuration());
-                ((VacuumTileEntity)world.getTileEntity(blockTarget)).setOriginBlock(blockToReplace);
+                ((VacuumTileEntity)world.getTileEntity(blockTarget)).setDuration(getDuration(caster));
+                ((VacuumTileEntity)world.getTileEntity(blockTarget)).setOriginBlock(blockToReplace.getDefaultState());
             }
-        } catch (SpellNotBuiltError spellNotBuiltError) {
-            spellNotBuiltError.throwException(caster);
-            return ActionResultType.FAIL;
-        }
+        });
         return ActionResultType.SUCCESS;
+    }
+
+    protected int getWidth(PlayerEntity playerEntity) {
+        if (!isBuilt) new SpellNotBuiltError().throwException(playerEntity);
+        return SpellValues.getOrDefault(data.secondModifier, 1);
+    }
+
+    protected int getDistance(PlayerEntity playerEntity) {
+        if (!isBuilt) new SpellNotBuiltError().throwException(playerEntity);
+        return SpellValues.getOrDefault(data.secondModifier, 16);
     }
 
     /**
      * Gets Vacuum blocks duration from modifiers
      * @return Vacuum blocks duration
      */
-    protected int getDuration() throws SpellNotBuiltError {
-        if (!isBuilt) throw new SpellNotBuiltError();
-        return SpellValues.getOrDefault(data.firstModifier, 40);
+    protected int getDuration(PlayerEntity playerEntity) {
+        if (!isBuilt) new SpellNotBuiltError().throwException(playerEntity);
+        return (1+SpellValues.getOrDefault(data.firstModifier, 0))*100;
     }
 
     @Override

@@ -3,7 +3,6 @@ package net.arcanamod.items;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.systems.spell.CastAspect;
 import net.arcanamod.systems.spell.ISpell;
 import net.arcanamod.systems.spell.SpellData;
 import net.arcanamod.systems.spell.Spells;
@@ -37,14 +36,14 @@ public class VisManipulatorsItem extends Item{
 	@Override
 	public ActionResultType onItemUseFirst(ItemStack stack, ItemUseContext context) {
 		ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(),1);
-		int r = random.nextInt(4);
+		int r = random.nextInt(5);
 		if (r==0){
 			toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.MINING_SPELL.build(
-					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.LUST), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
+					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.PRIDE), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 					new CompoundNBT())));
 		} else if (r==1) {
 			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.EXCHANGE_SPELL.build(
-					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.GLUTTONY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
+					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.LUST), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 					new CompoundNBT())));
 
 		} else if (r==2) {
@@ -53,7 +52,7 @@ public class VisManipulatorsItem extends Item{
 					new CompoundNBT())));
 		} else {
 			toSet.getOrCreateTag().put("Spell",Spell.serializeNBT(Spells.VACUUM_SPELL.build(
-					new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.EMPTY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
+					new SpellData(Aspects.EARTH,Aspects.EARTH,Aspects.EARTH	, Pair.of(Aspects.EARTH,Aspects.EMPTY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 					new CompoundNBT())));
 		}
 		toSet.getOrCreateTag().putInt("style",random.nextInt(36));

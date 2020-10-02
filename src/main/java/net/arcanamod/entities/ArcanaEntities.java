@@ -42,45 +42,46 @@ public class ArcanaEntities{
 
 	// Tainted
 
-	public static final RegistryObject<EntityType<TaintedBatEntity>> TAINTED_BAT = ENTITY_TYPES.register("tainted_bat", () -> Taint.taintedEntityOf(EntityType.BAT));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_BEE = ENTITY_TYPES.register("tainted_bee", () -> Taint.taintedEntityOf(EntityType.BEE));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_CAT = ENTITY_TYPES.register("tainted_cat", () -> Taint.taintedEntityOf(EntityType.CAT));
-	public static final RegistryObject<EntityType<TaintedCaveSpiderEntity>> TAINTED_CAVE_SPIDER = ENTITY_TYPES.register("tainted_cave_spider", () -> Taint.taintedEntityOf(EntityType.CAVE_SPIDER));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_DONKEY = ENTITY_TYPES.register("tainted_donkey", () -> Taint.taintedEntityOf(EntityType.DONKEY));
+	public static final RegistryObject<EntityType<TaintedDonkeyEntity>> TAINTED_DONKEY = ENTITY_TYPES.register("tainted_donkey", () -> Taint.taintedEntityOf(EntityType.DONKEY));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_DROWNED = ENTITY_TYPES.register("tainted_drowned", () -> Taint.taintedEntityOf(EntityType.DROWNED));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ELDER_GUARDIAN = ENTITY_TYPES.register("tainted_elder_guardian", () -> Taint.taintedEntityOf(EntityType.ELDER_GUARDIAN));
-	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_EVOKER = ENTITY_TYPES.register("tainted_evoker", () -> Taint.taintedEntityOf(EntityType.EVOKER));
-	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_FOX = ENTITY_TYPES.register("tainted_fox", () -> Taint.taintedEntityOf(EntityType.FOX));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_GIANT = ENTITY_TYPES.register("tainted_giant", () -> Taint.taintedEntityOf(EntityType.GIANT));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_GUARDIAN = ENTITY_TYPES.register("tainted_guardian", () -> Taint.taintedEntityOf(EntityType.GUARDIAN));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_HORSE = ENTITY_TYPES.register("tainted_horse", () -> Taint.taintedEntityOf(EntityType.HORSE));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_HUSK = ENTITY_TYPES.register("tainted_husk", () -> Taint.taintedEntityOf(EntityType.HUSK));
-	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_ILLUSIONER = ENTITY_TYPES.register("tainted_illusioner", () -> Taint.taintedEntityOf(EntityType.ILLUSIONER));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_LLAMA = ENTITY_TYPES.register("tainted_llama", () -> Taint.taintedEntityOf(EntityType.LLAMA));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_MAGMA_CUBE = ENTITY_TYPES.register("tainted_magma_cube", () -> Taint.taintedEntityOf(EntityType.MAGMA_CUBE));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_MULE = ENTITY_TYPES.register("tainted_mule", () -> Taint.taintedEntityOf(EntityType.MULE));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PANDA = ENTITY_TYPES.register("tainted_panda", () -> Taint.taintedEntityOf(EntityType.PANDA));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PARROT = ENTITY_TYPES.register("tainted_parrot", () -> Taint.taintedEntityOf(EntityType.PARROT));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PUFFERFISH = ENTITY_TYPES.register("tainted_pufferfish", () -> Taint.taintedEntityOf(EntityType.PUFFERFISH));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ZOMBIE_PIGMAN = ENTITY_TYPES.register("tainted_zombie_pigman", () -> Taint.taintedEntityOf(EntityType.ZOMBIE_PIGMAN));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_POLAR_BEAR = ENTITY_TYPES.register("tainted_polar_bear", () -> Taint.taintedEntityOf(EntityType.POLAR_BEAR));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_RABBIT = ENTITY_TYPES.register("tainted_rabbit", () -> Taint.taintedEntityOf(EntityType.RABBIT));
-	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SHEEP = ENTITY_TYPES.register("tainted_sheep", () -> Taint.taintedEntityOf(EntityType.SHEEP));// TODO: Improve Sheep AI, Eat grass or something else.
-	public static final RegistryObject<EntityType<TaintedSkeletonEntity>> TAINTED_SKELETON = ENTITY_TYPES.register("tainted_skeleton", () -> Taint.taintedEntityOf(EntityType.SKELETON));
-	public static final RegistryObject<EntityType<TaintedSlimeEntity>> TAINTED_SLIME = ENTITY_TYPES.register("tainted_slime", () -> Taint.taintedEntityOf(EntityType.SLIME));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SNOW_GOLEM = ENTITY_TYPES.register("tainted_snow_golem", () -> Taint.taintedEntityOf(EntityType.SNOW_GOLEM));
+	public static final RegistryObject<EntityType<TaintedPolarBearEntity>> TAINTED_POLAR_BEAR = ENTITY_TYPES.register("tainted_polar_bear", () -> Taint.taintedEntityOf(EntityType.POLAR_BEAR));
+	public static final RegistryObject<EntityType<TaintedRabbitEntity>> TAINTED_RABBIT = ENTITY_TYPES.register("tainted_rabbit", () -> Taint.taintedEntityOf(EntityType.RABBIT));
+	public static final RegistryObject<EntityType<TaintedSnowGolemEntity>> TAINTED_SNOW_GOLEM = ENTITY_TYPES.register("tainted_snow_golem", () -> Taint.taintedEntityOf(EntityType.SNOW_GOLEM));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_STRAY = ENTITY_TYPES.register("tainted_stray", () -> Taint.taintedEntityOf(EntityType.STRAY));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_TRADER_LLAMA = ENTITY_TYPES.register("tainted_trader_llama", () -> Taint.taintedEntityOf(EntityType.TRADER_LLAMA));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_TROPICAL_FISH = ENTITY_TYPES.register("tainted_tropical_fish", () -> Taint.taintedEntityOf(EntityType.TROPICAL_FISH));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_TURTLE = ENTITY_TYPES.register("tainted_turtle", () -> Taint.taintedEntityOf(EntityType.TURTLE));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_VEX = ENTITY_TYPES.register("tainted_vex", () -> Taint.taintedEntityOf(EntityType.VEX));
-	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_VINDICATOR = ENTITY_TYPES.register("tainted_vindicator", () -> Taint.taintedEntityOf(EntityType.VINDICATOR));
-	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_PILLAGER = ENTITY_TYPES.register("tainted_pillager", () -> Taint.taintedEntityOf(EntityType.PILLAGER));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WITHER = ENTITY_TYPES.register("tainted_wither", () -> Taint.taintedEntityOf(EntityType.WITHER));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WITHER_SKELETON = ENTITY_TYPES.register("tainted_wither_skeleton", () -> Taint.taintedEntityOf(EntityType.WITHER_SKELETON));
+	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_RAVAGER = ENTITY_TYPES.register("tainted_ravager", () -> Taint.taintedEntityOf(EntityType.RAVAGER));
+
+	public static final RegistryObject<EntityType<TaintedCaveSpiderEntity>> TAINTED_CAVE_SPIDER = ENTITY_TYPES.register("tainted_cave_spider", () -> Taint.taintedEntityOf(EntityType.CAVE_SPIDER));
+	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_ILLUSIONER = ENTITY_TYPES.register("tainted_illusioner", () -> Taint.taintedEntityOf(EntityType.ILLUSIONER));
+	public static final RegistryObject<EntityType<TaintedPandaEntity>> TAINTED_PANDA = ENTITY_TYPES.register("tainted_panda", () -> Taint.taintedEntityOf(EntityType.PANDA));
+	public static final RegistryObject<EntityType<TaintedBatEntity>> TAINTED_BAT = ENTITY_TYPES.register("tainted_bat", () -> Taint.taintedEntityOf(EntityType.BAT));
+	public static final RegistryObject<EntityType<TaintedBeeEntity>> TAINTED_BEE = ENTITY_TYPES.register("tainted_bee", () -> Taint.taintedEntityOf(EntityType.BEE));
+	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_EVOKER = ENTITY_TYPES.register("tainted_evoker", () -> Taint.taintedEntityOf(EntityType.EVOKER));
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_FOX = ENTITY_TYPES.register("tainted_fox", () -> Taint.taintedEntityOf(EntityType.FOX));
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_SHEEP = ENTITY_TYPES.register("tainted_sheep", () -> Taint.taintedEntityOf(EntityType.SHEEP));// TODO: Improve Sheep AI, Eat grass or something else.
+	public static final RegistryObject<EntityType<TaintedSkeletonEntity>> TAINTED_SKELETON = ENTITY_TYPES.register("tainted_skeleton", () -> Taint.taintedEntityOf(EntityType.SKELETON));
+	public static final RegistryObject<EntityType<TaintedSlimeEntity>> TAINTED_SLIME = ENTITY_TYPES.register("tainted_slime", () -> Taint.taintedEntityOf(EntityType.SLIME));
+	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_VINDICATOR = ENTITY_TYPES.register("tainted_vindicator", () -> Taint.taintedEntityOf(EntityType.VINDICATOR));
+	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_PILLAGER = ENTITY_TYPES.register("tainted_pillager", () -> Taint.taintedEntityOf(EntityType.PILLAGER));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WOLF = ENTITY_TYPES.register("tainted_wolf", () -> Taint.taintedEntityOf(EntityType.WOLF));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ZOMBIE = ENTITY_TYPES.register("tainted_zombie", () -> Taint.taintedEntityOf(EntityType.ZOMBIE));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_RAVAGER = ENTITY_TYPES.register("tainted_ravager", () -> Taint.taintedEntityOf(EntityType.RAVAGER));
 
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_COW = ENTITY_TYPES.register("tainted_cow", () -> Taint.taintedEntityOf(EntityType.COW));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PIG = ENTITY_TYPES.register("tainted_pig", () -> Taint.taintedEntityOf(EntityType.PIG));
@@ -106,10 +107,10 @@ public class ArcanaEntities{
 	@SuppressWarnings("rawtypes")
 	public static void render() {
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BAT.get(), TaintedBatRender::new);
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BEE.get(), manager -> new TaintedEntityRender(manager, new BeeModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BEE.get(), manager -> new TaintedEntityRender(manager, new BeeModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAT.get(), manager -> new TaintedEntityRender(manager, new CatModel(0.0F)));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAVE_SPIDER.get(), TaintedCaveSpiderRender::new);
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DONKEY.get(), manager -> new TaintedEntityRender(manager, new HorseModel(0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DONKEY.get(), manager -> new TaintedEntityRender(manager, new HorseModel(0.0F)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DROWNED.get(), manager -> new TaintedEntityRender(manager, new DrownedModel(0.5f, true)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ELDER_GUARDIAN.get(), manager -> new TaintedEntityRender(manager, new GuardianModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_EVOKER.get(), manager -> new TaintedEntityRender(manager, new IllagerModel(0.0F, 0.0F, 64, 64)));
@@ -122,16 +123,16 @@ public class ArcanaEntities{
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_LLAMA.get(), manager -> new TaintedEntityRender(manager, new LlamaModel(0.0F)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_MAGMA_CUBE.get(), manager -> new TaintedEntityRender(manager, new MagmaCubeModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_MULE.get(), manager -> new TaintedEntityRender(manager, new HorseModel(0.0F)));
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PANDA.get(), manager -> new TaintedEntityRender(manager, new PandaModel(9, 0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PANDA.get(), manager -> new TaintedEntityRender(manager, new PandaModel(9, 0.0F)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PARROT.get(), manager -> new TaintedEntityRender(manager, new ParrotModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PUFFERFISH.get(), manager -> new TaintedEntityRender(manager, new PufferFishMediumModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ZOMBIE_PIGMAN.get(), manager -> new TaintedEntityRender(manager, new ZombieModel(0.0F, false))); // 1.16 -> ZombiefiedPiglin
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_POLAR_BEAR.get(), manager -> new TaintedEntityRender(manager, new PolarBearModel()));
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_RABBIT.get(), manager -> new TaintedEntityRender(manager, new RabbitModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_POLAR_BEAR.get(), manager -> new TaintedEntityRender(manager, new PolarBearModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_RABBIT.get(), manager -> new TaintedEntityRender(manager, new RabbitModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SHEEP.get(), manager -> new TaintedEntityRender(manager, new TaintedSheepModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SKELETON.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SLIME.get(), TaintedSlimeRender::new);
-		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SNOW_GOLEM.get(), manager -> new TaintedEntityRender(manager, new SnowManModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SNOW_GOLEM.get(), manager -> new TaintedEntityRender(manager, new SnowManModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_STRAY.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_TRADER_LLAMA.get(), manager -> new TaintedEntityRender(manager, new LlamaModel(0.0F)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_TROPICAL_FISH.get(), manager -> new TaintedEntityRender(manager, new TropicalFishAModel(0.0F)));

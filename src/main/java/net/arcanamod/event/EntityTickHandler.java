@@ -137,14 +137,18 @@ public class EntityTickHandler{
 			}
 
 			if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof WandItem){
-				SpellData spellData = WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).getSpellData();
-				if ((spellData.primaryCast.getFirst() == Aspects.EARTH && spellData.primaryCast.getSecond() == Aspects.LUST)
-						|| (spellData.plusCast.getFirst() == Aspects.EARTH && spellData.plusCast.getSecond() == Aspects.LUST))
-					if (player.isCrouching()) {
-						player.sendStatusMessage(new TranslationTextComponent("status.arcana.selection_mode"), true);
-					} else {
-						player.sendStatusMessage(new TranslationTextComponent("status.arcana.break_mode"), true);
+				if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND))!= null) {
+					if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
+						SpellData spellData = WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).getSpellData();
+						if ((spellData.primaryCast.getFirst() == Aspects.EARTH && spellData.primaryCast.getSecond() == Aspects.LUST)
+								|| (spellData.plusCast.getFirst() == Aspects.EARTH && spellData.plusCast.getSecond() == Aspects.LUST))
+							if (player.isCrouching()) {
+								player.sendStatusMessage(new TranslationTextComponent("status.arcana.selection_mode"), true);
+							} else {
+								player.sendStatusMessage(new TranslationTextComponent("status.arcana.break_mode"), true);
+							}
 					}
+				}
 			}
 		}
 	}
