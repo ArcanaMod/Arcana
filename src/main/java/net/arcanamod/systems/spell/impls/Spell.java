@@ -19,6 +19,7 @@ import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
@@ -86,6 +87,9 @@ public abstract class Spell implements ISpell {
 				- Targets Entities inside
 				- Lingering effect
 				 */
+				int raytraceDistance = 10;
+
+				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, raytraceDistance);
 				if (cast.getSecond() == ENVY) {
 					// enemies killed by the cloud spawn another smaller cloud
 				} else if (cast.getSecond() == LUST) {
@@ -102,6 +106,8 @@ public abstract class Spell implements ISpell {
 					// creates a trap that creates a cloud when triggered
 				} else {
 					// Default AIR SPELL
+
+					createSpellCloud(player,player.world,new Vec3d(pos));
 				}
 			}
 			if (cast.getFirst() == WATER) {
@@ -288,6 +294,9 @@ public abstract class Spell implements ISpell {
 			}
 		}
 		return ActionResultType.SUCCESS;
+	}
+
+	private void createSpellCloud(PlayerEntity player, World world, Vec3d area) {
 	}
 
 	public abstract ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget);

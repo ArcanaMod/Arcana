@@ -40,6 +40,10 @@ public class ArcanaEntities{
 			.register("willow_spirit_entity", () -> EntityType.Builder.create(SpiritEntity::new, EntityClassification.CREATURE)
 					.size(0.6f, 0.6f).build(arcLoc("willow_spirit_entity").toString()));
 
+	public static final RegistryObject<EntityType<SpellCloudEntity>> SPELL_CLOUD = ENTITY_TYPES
+			.register("spell_cloud", () -> EntityType.Builder.<SpellCloudEntity>create(SpellCloudEntity::new, EntityClassification.CREATURE)
+					.immuneToFire().size(6.0F, 0.5F).build(arcLoc("spell_cloud").toString()));
+
 	// Tainted
 
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_DROWNED = ENTITY_TYPES.register("tainted_drowned", () -> Taint.taintedEntityOf(EntityType.DROWNED));
