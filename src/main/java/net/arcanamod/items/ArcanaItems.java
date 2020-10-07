@@ -74,6 +74,7 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> RESEARCH_NOTE = ITEMS.register("research_note", () -> new ResearchNoteItem(new Item.Properties().group(Arcana.ITEMS), false));
 	public static final RegistryObject<Item> SCRIBING_TOOLS = ITEMS.register("scribing_tools", () -> new Item(new Properties().group(Arcana.ITEMS).maxStackSize(1).maxDamage(100).setNoRepair()));
 	public static final RegistryObject<Item> RESEARCH_TABLE_PLACER = ITEMS.register("research_table_placer", () -> new ResearchTableItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
+	public static final RegistryObject<Item> FOCI_FORGE_PLACER = ITEMS.register("foci_forge_placer", () -> new FociForgeItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	public static final RegistryObject<Item> VIS_MANIPULATION_TOOLS = ITEMS.register("vis_manipulation_tools", () -> new VisManipulatorsItem(new Item.Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	public static final RegistryObject<Item> PHIAL = ITEMS.register("phial", PhialItem::new);
 	public static final RegistryObject<Item> SCRIBBLED_NOTES_COMPLETE = ITEMS.register("scribbled_notes_complete", () -> new ScribbledNotesCompleteItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
