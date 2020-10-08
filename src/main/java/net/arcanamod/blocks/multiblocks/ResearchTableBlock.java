@@ -1,4 +1,4 @@
-package net.arcanamod.blocks;
+package net.arcanamod.blocks.multiblocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.bases.GroupedBlock;
@@ -24,12 +24,12 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import static net.arcanamod.blocks.ResearchTableBlock.EnumSide.LEFT;
-import static net.arcanamod.blocks.ResearchTableBlock.EnumSide.RIGHT;
+import static net.arcanamod.blocks.multiblocks.ResearchTableBlock.EnumSide.LEFT;
+import static net.arcanamod.blocks.multiblocks.ResearchTableBlock.EnumSide.RIGHT;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-// TODO: This has a problem with being broken. I don't think this can be solved without a TER.
+// TODO: This has a visual problem when being mined. I don't think this can be solved without a TER.
 // Thankfully, I'll probably switch this over to a TER anyways to show ink, wands, and research notes. yay.
 public class ResearchTableBlock extends WaterloggableBlock implements GroupedBlock{
 	
@@ -123,65 +123,6 @@ public class ResearchTableBlock extends WaterloggableBlock implements GroupedBlo
 		else
 			return world.getTileEntity(pos.offset(world.getBlockState(pos).get(FACING).rotateYCCW()));
 	}
-	
-	/*public void breakBlock(World world, BlockPos pos, BlockState state){
-		TileEntity te;
-		if(state.getValue(PART).equals(LEFT))
-			te = world.getTileEntity(pos);
-		else
-			te = world.getTileEntity(pos.offset(state.getValue(FACING).rotateYCCW()));
-		
-		if(te instanceof ResearchTableTileEntity){
-			ResearchTableTileEntity rt = (ResearchTableTileEntity)te;
-			
-			ItemStack itemstack = new ItemStack(ArcanaItems.RESEARCH_TABLE_PLACER);
-			CompoundNBT nbttagcompound = new CompoundNBT();
-			nbttagcompound.setTag("BlockEntityTag", rt.saveToNBT());
-			itemstack.setTagCompound(nbttagcompound);
-			
-			if(state.getValue(PART).equals(LEFT)){
-				if(rt.shouldDrop())
-					spawnAsEntity(world, pos, itemstack);
-				IItemHandler items = rt.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-				if(items != null)
-					for(int i = 0; i < items.getSlots(); i++)
-						if(!items.getStackInSlot(i).isEmpty())
-							spawnAsEntity(world, pos, items.getStackInSlot(i));
-			}
-		}
-		super.breakBlock(world, pos, state);
-	}
-	
-	public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param){
-		super.eventReceived(state, worldIn, pos, id, param);
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		return tileentity != null && tileentity.receiveClientEvent(id, param);
-	}
-
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, World world, BlockPos pos, PlayerEntity player){
-		return new ItemStack(ArcanaItems.RESEARCH_TABLE_PLACER);
-	}
-	
-	public void harvestBlock(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack){
-		super.harvestBlock(world, player, pos, state, null, stack);
-	}
-	
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, BlockState state, int fortune){
-		// Handled by breakBlock while preserving aspects
-	}
-	
-	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, BlockState state, BlockPos pos, Direction face){
-		return face.equals(Direction.UP) ? BlockFaceShape.SOLID : BlockFaceShape.UNDEFINED;
-	}
-	
-	public boolean canPlaceBlockAt(World worldIn, BlockPos pos){
-		return super.canPlaceBlockAt(worldIn, pos);
-	}
-	
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack){
-		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-	}
-	*/
 	
 	public enum EnumSide implements IStringSerializable{
 		LEFT("left"),

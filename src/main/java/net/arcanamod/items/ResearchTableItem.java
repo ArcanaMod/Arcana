@@ -16,8 +16,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import static net.arcanamod.blocks.ResearchTableBlock.EnumSide.RIGHT;
-import static net.arcanamod.blocks.ResearchTableBlock.PART;
+import static net.arcanamod.blocks.multiblocks.ResearchTableBlock.EnumSide.RIGHT;
+import static net.arcanamod.blocks.multiblocks.ResearchTableBlock.PART;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
