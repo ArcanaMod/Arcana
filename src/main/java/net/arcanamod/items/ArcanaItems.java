@@ -138,7 +138,8 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> TAINTED_TROPICAL_FISH = ITEMS.register("tainted_tropical_fish", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(1).saturation(0.2f).effect(() -> new EffectInstance(ArcanaEffects.TAINTED.get(), 600, 0), 1f).build())));
 	public static final RegistryObject<Item> TAINTED_PUFFERFISH = ITEMS.register("tainted_pufferfish", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(1).saturation(0.2f).effect(() -> new EffectInstance(ArcanaEffects.TAINTED.get(), 600, 0), 1f).effect(() -> new EffectInstance(Effects.HUNGER, 300, 2), 1f).effect(() -> new EffectInstance(Effects.NAUSEA, 300, 1), 1f).effect(() -> new EffectInstance(Effects.POISON, 1200, 3), 1f).build())));
 	public static final RegistryObject<Item> TAINTED_SUGAR_CANE = ITEMS.register("tainted_sugar_cane", () -> new Item(new Properties().group(Arcana.ITEMS)));
-	
+	@GIM(ITEM) public static final RegistryObject<Item> TAINTED_SNOWBALL = ITEMS.register("tainted_snowball", () -> new SnowballItem(new Properties().group(Arcana.ITEMS)));
+
 	// Creative Only?
 	public static final RegistryObject<Item> FLUX_METER = ITEMS.register("flux_meter", () -> new Item(new Properties().group(Arcana.ITEMS).rarity(Rarity.EPIC)));
 }

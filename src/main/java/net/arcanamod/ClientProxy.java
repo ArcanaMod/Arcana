@@ -4,6 +4,7 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
+import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
@@ -11,10 +12,7 @@ import net.arcanamod.client.render.DairSpiritRenderer;
 import net.arcanamod.client.render.KoalaEntityRender;
 import net.arcanamod.client.render.WillowSpiritRenderer;
 import net.arcanamod.client.render.aspects.ArcanaParticles;
-import net.arcanamod.client.render.tiles.AspectValveTileEntityRenderer;
-import net.arcanamod.client.render.tiles.JarTileEntityRender;
-import net.arcanamod.client.render.tiles.PedestalTileEntityRenderer;
-import net.arcanamod.client.render.tiles.VacuumTileEntityRender;
+import net.arcanamod.client.render.tiles.*;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
@@ -163,6 +161,7 @@ public class ClientProxy extends CommonProxy{
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.VACUUM_TE.get(), VacuumTileEntityRender::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.PEDESTAL_TE.get(), PedestalTileEntityRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_VALVE_TE.get(), AspectValveTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.RESEARCH_TABLE_TE.get(), ResearchTableTileEntityRender::new);
 
 		//Special Render
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));

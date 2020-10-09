@@ -1,5 +1,6 @@
 package net.arcanamod.entities.tainted;
 
+import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -36,7 +37,7 @@ public class TaintedSnowGolemEntity extends SnowGolemEntity {
 				return;
 			}
 
-			BlockState blockstate = Blocks.SNOW.getDefaultState(); // TODO: TAINTED SNOW
+			BlockState blockstate = ArcanaBlocks.TAINTED_SNOW.get().getDefaultState();
 
 			for(int l = 0; l < 4; ++l) {
 				i = MathHelper.floor(this.getPosX() + (double)((float)(l % 2 * 2 - 1) * 0.25F));

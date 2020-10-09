@@ -2,6 +2,7 @@ package net.arcanamod.systems.spell.impls;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.entities.SpellCloudEntity;
 import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
@@ -23,6 +24,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 import java.util.Optional;
@@ -163,6 +165,7 @@ public abstract class Spell implements ISpell {
 				- Targets the selected block
 				 */
 				int raytraceDistance = 10;
+				int delay = 80;
 
 				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, raytraceDistance);
 				if (cast.getSecond() == ENVY) {
@@ -185,7 +188,18 @@ public abstract class Spell implements ISpell {
 					} else return ActionResultType.FAIL;
 				} else if (cast.getSecond() == SLOTH) {
 					// it takes a few seconds for the spell to cast
-					// TODO: What it means???
+
+					// Make async thread.
+					new Thread(new Runnable() { // TODO: Test this (Luna please don't scream at me I'm just testing runnables)
+						public void run(){
+							try {
+								wait(4000);
+								useOnBlock(player, player.world, pos);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					}).start();
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby blocks ~5
 					BlockPos.getAllInBoxMutable(pos.add(-5, -5, -5), pos.add(5, 5, 5)).forEach(blockPos -> {
@@ -297,6 +311,12 @@ public abstract class Spell implements ISpell {
 	}
 
 	private void createSpellCloud(PlayerEntity player, World world, Vec3d area) {
+		if (!world.isRemote) {
+			SpellCloudEntity cloud = new SpellCloudEntity(world, area);
+			cloud.setSpell(this);
+			cloud.setDuration(100);
+			((ServerWorld)world).summonEntity(cloud);
+		}
 	}
 
 	public abstract ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget);

@@ -8,6 +8,7 @@ import net.arcanamod.systems.spell.ISpell;
 import net.arcanamod.systems.spell.Spells;
 import net.arcanamod.systems.spell.impls.Spell;
 import net.minecraft.block.material.PushReaction;
+import net.minecraft.client.renderer.Vector3d;
 import net.minecraft.command.arguments.ParticleArgument;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
@@ -25,6 +26,7 @@ import net.minecraft.potion.PotionUtils;
 import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -71,6 +73,11 @@ public class SpellCloudEntity extends Entity {
 		this.setPosition(p_i46810_2_, p_i46810_4_, p_i46810_6_);
 	}
 
+	public SpellCloudEntity(World p_i46810_1_, Vec3d vec) {
+		this(ArcanaEntities.SPELL_CLOUD.get(), p_i46810_1_);
+		this.setPosition(vec.x,vec.y,vec.z);
+	}
+
 	protected void registerData() {
 		this.getDataManager().register(COLOR, 0);
 		this.getDataManager().register(RADIUS, 0.5F);
@@ -97,7 +104,7 @@ public class SpellCloudEntity extends Entity {
 		return (Float) this.getDataManager().get(RADIUS);
 	}
 
-	public void setPotion(ISpell spell) {
+	public void setSpell(ISpell spell) {
 		this.spell = spell;
 		if (!this.colorSet) {
 			this.updateFixedColor();
@@ -334,7 +341,7 @@ public class SpellCloudEntity extends Entity {
 		}
 
 		if (p_70037_1_.contains("Spell", 8)) {
-			this.setPotion(Spells.spellMap.get(new ResourceLocation(p_70037_1_.getString("Spell"))));
+			this.setSpell(Spells.spellMap.get(new ResourceLocation(p_70037_1_.getString("Spell"))));
 		}
 
 	}
