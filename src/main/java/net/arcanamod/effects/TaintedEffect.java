@@ -19,7 +19,8 @@ public class TaintedEffect extends Effect{
 	public void performEffect(LivingEntity entity, int amplifier){
 		if(!Taint.isTainted(entity.getType())){
 			entity.attackEntityFrom(TaintDamageSource.TAINT, 1.0F + amplifier);
-			if(entity.getHealth() <= (entity.getMaxHealth() / 4f) && entity.world.getDifficulty() != Difficulty.PEACEFUL)
+			if((entity.getHealth() <= (entity.getMaxHealth() / 4f) || entity.getHealth() == 1)
+					&& entity.world.getDifficulty() != Difficulty.PEACEFUL)
 				changeEntityToTainted(entity);
 		}
 	}
@@ -28,7 +29,7 @@ public class TaintedEffect extends Effect{
 		if(!(entityLiving instanceof PlayerEntity) && Taint.getTaintedOfEntity(entityLiving.getType()) != null){
 			LivingEntity l = (LivingEntity)Taint.getTaintedOfEntity(entityLiving.getType()).create(entityLiving.world);
 			if(l != null){
-				l.setPosition(entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ());
+				l.setPositionAndRotation(entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ(),entityLiving.rotationYaw,entityLiving.rotationPitch);
 				if(!l.getEntityWorld().isRemote)
 					((ServerWorld)l.getEntityWorld()).summonEntity(l);
 				entityLiving.remove();

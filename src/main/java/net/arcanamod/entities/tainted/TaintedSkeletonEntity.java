@@ -1,5 +1,7 @@
 package net.arcanamod.entities.tainted;
 
+import net.arcanamod.effects.ArcanaEffects;
+import net.arcanamod.effects.ArcanaPotions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.monster.AbstractSkeletonEntity;
@@ -8,6 +10,10 @@ import net.minecraft.entity.monster.SkeletonEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtils;
+import net.minecraft.potion.Potions;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -49,6 +55,6 @@ public class TaintedSkeletonEntity extends AbstractSkeletonEntity {
 
 	@Override
 	protected AbstractArrowEntity fireArrow(ItemStack arrowStack, float distanceFactor) {
-		return super.fireArrow(new ItemStack(Items.TIPPED_ARROW,64), distanceFactor); // TODO: Change to Tainted Arrow.
+		return super.fireArrow(PotionUtils.addPotionToItemStack(new ItemStack(Items.TIPPED_ARROW,3), ArcanaPotions.TAINT), distanceFactor);
 	}
 }
