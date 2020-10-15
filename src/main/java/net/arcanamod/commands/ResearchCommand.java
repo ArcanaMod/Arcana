@@ -50,8 +50,11 @@ public class ResearchCommand{
 		AtomicInteger ret = new AtomicInteger();
 		EntityArgument.getPlayers(ctx, "targets").forEach(entity -> {
 			ResearchBooks.streamEntries().forEach(entry -> {
-				Researcher.getFrom(entity).completeEntry(entry);
-				Connection.sendModifyResearch(PkModifyResearch.Diff.complete, entry.key(), entity);
+				Researcher from = Researcher.getFrom(entity);
+				if(from != null){
+					from.completeEntry(entry);
+					Connection.sendModifyResearch(PkModifyResearch.Diff.complete, entry.key(), entity);
+				}
 			});
 			ret.getAndIncrement();
 		});
@@ -63,8 +66,11 @@ public class ResearchCommand{
 		AtomicInteger ret = new AtomicInteger();
 		EntityArgument.getPlayers(ctx, "targets").forEach(entity -> {
 			ResearchBooks.streamEntries().forEach(entry -> {
-				Researcher.getFrom(entity).resetEntry(entry);
-				Connection.sendModifyResearch(PkModifyResearch.Diff.reset, entry.key(), entity);
+				Researcher from = Researcher.getFrom(entity);
+				if(from != null){
+					from.resetEntry(entry);
+					Connection.sendModifyResearch(PkModifyResearch.Diff.reset, entry.key(), entity);
+				}
 			});
 			ret.getAndIncrement();
 		});
@@ -80,22 +86,24 @@ public class ResearchCommand{
 				return new RuntimeException(new CommandSyntaxException(new SimpleCommandExceptionType(noSuchEntry), noSuchEntry));
 			});
 			Researcher researcher = Researcher.getFrom(entity);
-			if(diff == Diff.complete){
-				researcher.completeEntry(entry);
-				Connection.sendModifyResearch(PkModifyResearch.Diff.complete, key, entity);
-			}else if(diff == Diff.advance){
-				if(Researcher.canAdvanceEntry(researcher, entry)){
-					Researcher.takeRequirementsAndAdvanceEntry(researcher, entry);
+			if(researcher != null){
+				if(diff == Diff.complete){
+					researcher.completeEntry(entry);
+					Connection.sendModifyResearch(PkModifyResearch.Diff.complete, key, entity);
+				}else if(diff == Diff.advance){
+					if(Researcher.canAdvanceEntry(researcher, entry)){
+						Researcher.takeRequirementsAndAdvanceEntry(researcher, entry);
+						Connection.sendModifyResearch(PkModifyResearch.Diff.advance, key, entity);
+					}
+				}else if(diff == Diff.forceAdvance){
+					researcher.advanceEntry(entry);
 					Connection.sendModifyResearch(PkModifyResearch.Diff.advance, key, entity);
+				}else{
+					researcher.resetEntry(entry);
+					Connection.sendModifyResearch(PkModifyResearch.Diff.reset, key, entity);
 				}
-			}else if(diff == Diff.forceAdvance){
-				researcher.advanceEntry(entry);
-				Connection.sendModifyResearch(PkModifyResearch.Diff.advance, key, entity);
-			}else{
-				researcher.resetEntry(entry);
-				Connection.sendModifyResearch(PkModifyResearch.Diff.reset, key, entity);
+				ret.getAndIncrement();
 			}
-			ret.getAndIncrement();
 		});
 		return ret.get();
 	}

@@ -133,6 +133,8 @@
 
     "_comment": "Creative Only",
     "item.arcana.flux_meter": "Flux Meter",
+    "item.arcana.cheaters_arcanum": "Cheaters Arcanum",
+    "item.arcana.cheaters_arcanum.desc": "For the lazy",
 
     "_comment": "Arcana aspects",
     "aspect.any": "Any",
