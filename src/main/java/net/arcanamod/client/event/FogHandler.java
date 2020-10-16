@@ -35,13 +35,15 @@ public class FogHandler{
 			fog.setBlue(blue);
 		}else if(entity instanceof LivingEntity && Taint.isAreaInTaintBiome(pos, w)){
 			LivingEntity living = (LivingEntity)entity;
-			int colour = 0x4E2C5C;
-			float progress = Math.min(20, TaintTrackable.getFrom(living).getTimeInTaintBiome()) / 20f;
-			int blended = UiUtil.blend(colour, ((int)(fog.getRed() * 255) << 16) | ((int)(fog.getGreen() * 255) << 8) | ((int)(fog.getBlue() * 255)), progress);
-			
-			fog.setRed(UiUtil.red(blended) / 255f);
-			fog.setGreen(UiUtil.green(blended) / 255f);
-			fog.setBlue(UiUtil.blue(blended) / 255f);
+			if (TaintTrackable.getFrom(living)!=null) {
+				int colour = 0x4E2C5C;
+				float progress = Math.min(20, TaintTrackable.getFrom(living).getTimeInTaintBiome()) / 20f;
+				int blended = UiUtil.blend(colour, ((int) (fog.getRed() * 255) << 16) | ((int) (fog.getGreen() * 255) << 8) | ((int) (fog.getBlue() * 255)), progress);
+
+				fog.setRed(UiUtil.red(blended) / 255f);
+				fog.setGreen(UiUtil.green(blended) / 255f);
+				fog.setBlue(UiUtil.blue(blended) / 255f);
+			}
 		}
 	}
 	
@@ -53,8 +55,10 @@ public class FogHandler{
 		BlockPos pos = fog.getInfo().getBlockPos();
 		if(entity instanceof LivingEntity && Taint.isAreaInTaintBiome(pos, w)){
 			LivingEntity living = (LivingEntity)entity;
-			float progress = Math.min(20, TaintTrackable.getFrom(living).getTimeInTaintBiome()) / 20f;
-			fog.setDensity(fog.getDensity() + progress * .3f);
+			if (TaintTrackable.getFrom(living)!=null) {
+				float progress = Math.min(20, TaintTrackable.getFrom(living).getTimeInTaintBiome()) / 20f;
+				fog.setDensity(fog.getDensity() + progress * .3f);
+			}
 		}
 	}
 	
@@ -67,7 +71,7 @@ public class FogHandler{
 		if(entity instanceof LivingEntity && Taint.isAreaInTaintBiome(pos, w)){
 			LivingEntity living = (LivingEntity)entity;
 			TaintTrackable from = TaintTrackable.getFrom(living);
-			if(from.isInTaintBiome()){
+			if(from!=null && from.isInTaintBiome()){
 				float progress = Math.min(20, from.getTimeInTaintBiome()) / 30f;
 				RenderSystem.fogStart((1 - progress) * fog.getFarPlaneDistance() * .75f);
 				RenderSystem.fogEnd(fog.getFarPlaneDistance() * (1 - .8f * progress));

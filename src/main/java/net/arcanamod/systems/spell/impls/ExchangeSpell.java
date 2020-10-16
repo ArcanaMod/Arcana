@@ -6,8 +6,10 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -96,13 +98,15 @@ public class ExchangeSpell extends Spell {
 			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
 				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
-				held.shrink(1);
-				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel()>=3?Items.DIAMOND_PICKAXE:Items.IRON_PICKAXE)))) {
-					caster.addItemStackToInventory(stack);
+				if (!held.isEmpty() && Block.getBlockFromItem(held.getItem()) != Blocks.AIR) {
+					for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
+							.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel() >= 3 ? Items.DIAMOND_PICKAXE : Items.IRON_PICKAXE)))) {
+						caster.addItemStackToInventory(stack);
+					}
+					caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
+					held.shrink(1);
+					blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 				}
-				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
-				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 			}
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
