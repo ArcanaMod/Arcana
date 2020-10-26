@@ -13,17 +13,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class VacuumSpell extends Spell {
 
     private SpellData data;
-    private int distance = 10;
 
     public boolean isBuilt = false;
 
@@ -37,8 +34,6 @@ public class VacuumSpell extends Spell {
     @Override
     public ISpell build(SpellData data, CompoundNBT compound) {
         this.data = data;
-        if (compound.contains("distance"))
-            this.distance = compound.getInt("distance");
         isBuilt = true;
         return this;
     }

@@ -16,7 +16,6 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.lwjgl.opengl.GL;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;

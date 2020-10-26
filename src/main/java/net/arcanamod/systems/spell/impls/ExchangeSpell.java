@@ -24,15 +24,12 @@ import net.minecraft.world.storage.loot.LootParameters;
 public class ExchangeSpell extends Spell {
 
 	private SpellData data;
-	private int distance = 10;
 
 	public boolean isBuilt = false;
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;
-		if (compound.contains("distance"))
-			this.distance = compound.getInt("distance");
 		isBuilt = true;
 		return this;
 	}

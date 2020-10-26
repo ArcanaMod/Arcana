@@ -6,7 +6,6 @@ import net.arcanamod.ArcanaSounds;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.capabilities.TaintTrackable;
 import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -28,7 +27,6 @@ import net.minecraftforge.common.IPlantable;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Properties;
 import java.util.Random;
 
 import static net.minecraft.block.FarmlandBlock.MOISTURE;

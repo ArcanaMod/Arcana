@@ -1,7 +1,6 @@
 package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
@@ -11,8 +10,6 @@ import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
-
-import java.util.Collections;
 
 public abstract class AspectContainerScreen<T extends AspectContainer> extends ContainerScreen<T>{
 	

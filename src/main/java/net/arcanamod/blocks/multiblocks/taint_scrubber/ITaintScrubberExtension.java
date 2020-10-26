@@ -1,4 +1,4 @@
-package net.arcanamod.blocks.multiblocks;
+package net.arcanamod.blocks.multiblocks.taint_scrubber;
 
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.math.BlockPos;

@@ -1,7 +1,6 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.ISpell;
 import net.arcanamod.systems.spell.SpellData;
@@ -15,8 +14,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.Collections;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault

@@ -1,6 +1,5 @@
 package net.arcanamod.datagen;
 
-import com.google.common.collect.Maps;
 import net.arcanamod.Arcana;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;

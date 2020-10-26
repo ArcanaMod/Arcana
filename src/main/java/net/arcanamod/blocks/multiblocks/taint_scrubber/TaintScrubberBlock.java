@@ -1,4 +1,4 @@
-package net.arcanamod.blocks.multiblocks;
+package net.arcanamod.blocks.multiblocks.taint_scrubber;
 
 import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.aspects.IAspectHandler;
@@ -8,7 +8,6 @@ import net.arcanamod.blocks.tiles.TaintScrubberTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.command.arguments.ParticleArgument;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.BlockParticleData;

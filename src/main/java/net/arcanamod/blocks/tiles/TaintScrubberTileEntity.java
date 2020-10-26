@@ -1,6 +1,6 @@
 package net.arcanamod.blocks.tiles;
 
-import net.arcanamod.blocks.multiblocks.ITaintScrubberExtension;
+import net.arcanamod.blocks.multiblocks.taint_scrubber.ITaintScrubberExtension;
 import net.arcanamod.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;

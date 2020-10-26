@@ -5,29 +5,17 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.tiles.FociForgeTileEntity;
-import net.arcanamod.client.research.PuzzleRenderer;
-import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.containers.slots.AspectSlot;
-import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.systems.research.Puzzle;
-import net.arcanamod.systems.research.ResearchBooks;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import java.util.List;
-
-import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
 
 public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	public static final int WIDTH = 378;

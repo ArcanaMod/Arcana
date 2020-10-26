@@ -6,7 +6,6 @@ import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkSwapFocus;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.MouseHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;

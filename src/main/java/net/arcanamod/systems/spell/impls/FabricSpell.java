@@ -1,7 +1,6 @@
 package net.arcanamod.systems.spell.impls;
 
 import net.arcanamod.ArcanaVariables;
-import net.arcanamod.NotImplementedException;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
@@ -26,15 +25,12 @@ import org.apache.logging.log4j.LogManager;
 public class FabricSpell extends Spell {
 
 	private SpellData data;
-	private int distance = 10;
 
 	public boolean isBuilt = false;
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;
-		if (compound.contains("distance"))
-			this.distance = compound.getInt("distance");
 		isBuilt = true;
 		return this;
 	}
