@@ -293,7 +293,7 @@ public class ResearchBookScreen extends Screen{
 	}
 	
 	
-	private PageStyle style(ResearchEntry entry){
+	public PageStyle style(ResearchEntry entry){
 		// if the page is at full progress, its complete.
 		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) >= entry.sections().size())
@@ -608,8 +608,10 @@ public class ResearchBookScreen extends Screen{
 				drawModalRectWithCustomSizedTexture(x - (categoryNum == tab ? 6 : (isHovered) ? 4 : 0), y, 0, 0, 16, 16, 16, 16);
 				
 				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
-				if(isHovered)
-					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name())), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
+				if(isHovered){
+					int completion = (category.entries().size() > 0) ? ((category.streamEntries().mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / category.entries().size()) : 100;
+					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name()).trim() + " (" + completion + "%)"), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
+				}
 			}
 		}
 	}

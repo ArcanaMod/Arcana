@@ -8,7 +8,9 @@ import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.entities.tainted.*;
+import net.arcanamod.entities.tainted.group.TaintedFishEntity;
 import net.arcanamod.fluids.ArcanaFluids;
+import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
 import net.minecraft.entity.EntityClassification;
@@ -252,6 +254,9 @@ public class Taint{
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else if (entity == EntityType.PUFFERFISH)
 			tainted = EntityType.Builder.create(TaintedPufferfishEntity::new, EntityClassification.MONSTER)
+					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+		else if (entity == EntityType.COD || entity == EntityType.SALMON || entity == EntityType.DOLPHIN)
+			tainted = EntityType.Builder.create(TaintedFishEntity::new, EntityClassification.MONSTER)
 					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
 		else
 			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), EntityClassification.MONSTER)

@@ -3,6 +3,7 @@ package net.arcanamod.items;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.effects.ArcanaEffects;
+import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.items.armor.ArcanaArmourMaterials;
 import net.arcanamod.items.armor.AutoRepairArmorItem;
 import net.arcanamod.items.armor.GogglesItem;
@@ -13,6 +14,7 @@ import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.items.tools.*;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.util.annotations.GIM;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;
 import net.minecraft.item.Item.Properties;
@@ -140,6 +142,10 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> TAINTED_SUGAR_CANE = ITEMS.register("tainted_sugar_cane", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	@GIM(ITEM) public static final RegistryObject<Item> TAINTED_SNOWBALL = ITEMS.register("tainted_snowball", () -> new SnowballItem(new Properties().group(Arcana.ITEMS)));
 
+	public static final RegistryObject<Item> TAINTED_COD_BUCKED = ITEMS.register("tainted_cod_bucket",() -> new FishBucketItem(ArcanaEntities.TAINTED_COD, ()->Fluids.WATER,new Item.Properties().maxStackSize(1)));
+	public static final RegistryObject<Item> TAINTED_SALMON_BUCKED = ITEMS.register("tainted_salmon_bucket",() -> new FishBucketItem(ArcanaEntities.TAINTED_SALMON, ()->Fluids.WATER,new Item.Properties().maxStackSize(1)));
+
 	// Creative Only?
 	public static final RegistryObject<Item> FLUX_METER = ITEMS.register("flux_meter", () -> new Item(new Properties().group(Arcana.ITEMS).rarity(Rarity.EPIC)));
+	public static final RegistryObject<Item> CHEATERS_ARCANUM = ITEMS.register("cheaters_arcanum", () -> new CheatersResearchBookItem(new Properties().group(Arcana.ITEMS).maxStackSize(1).rarity(Rarity.EPIC), new ResourceLocation(MODID, "arcanum")));
 }

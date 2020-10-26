@@ -24,8 +24,8 @@ public class ResearchBookItem extends Item{
 		this.book = book;
 	}
 	
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn){
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
 		Arcana.proxy.openResearchBookUI(book);
-		return new ActionResult<>(ActionResultType.SUCCESS, playerIn.getHeldItem(handIn));
+		return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
 	}
 }

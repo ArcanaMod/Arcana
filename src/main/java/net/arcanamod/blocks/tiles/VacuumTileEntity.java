@@ -58,6 +58,7 @@ public class VacuumTileEntity extends TileEntity implements ITickableTileEntity 
         if (existTime >= duration) {
             if (originBlock != null)
                 world.setBlockState(pos,originBlock);
+            else world.setBlockState(pos,Blocks.AIR.getDefaultState());
         }
     }
 }

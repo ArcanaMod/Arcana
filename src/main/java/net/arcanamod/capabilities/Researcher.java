@@ -147,8 +147,8 @@ public interface Researcher{
 	 */
 	@SuppressWarnings("ConstantConditions")
 	@Nullable
-	static Researcher getFrom(@Nonnull PlayerEntity p){
-		return p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null).orElse(null);
+	static Researcher getFrom(@Nullable PlayerEntity p){
+		return p == null ? null : p.getCapability(ResearcherCapability.RESEARCHER_CAPABILITY, null).orElse(null);
 	}
 	
 	static boolean isEntryVisible(ResearchEntry entry, @Nonnull Researcher r){
