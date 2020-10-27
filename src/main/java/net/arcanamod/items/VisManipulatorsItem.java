@@ -69,8 +69,12 @@ public class VisManipulatorsItem extends Item{
 				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.FABRIC_SPELL.build(
 						new SpellData(Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY, Pair.of(Aspects.FIRE, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
-			} else {
+			} else if (r == 3) {
 				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.VACUUM_SPELL.build(
+						new SpellData(Aspects.EARTH, Aspects.EARTH, Aspects.EARTH, Pair.of(Aspects.EARTH, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
+						new CompoundNBT())));
+			} else {
+				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.WARDING_SPELL.build(
 						new SpellData(Aspects.EARTH, Aspects.EARTH, Aspects.EARTH, Pair.of(Aspects.EARTH, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
 			}

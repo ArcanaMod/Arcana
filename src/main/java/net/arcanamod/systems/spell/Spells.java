@@ -14,4 +14,5 @@ public class Spells {
 	public static final ISpell EXCHANGE_SPELL = new ExchangeSpell();
 	public static final ISpell FABRIC_SPELL = new FabricSpell();
 	public static final ISpell VACUUM_SPELL = new VacuumSpell();
+	public static final ISpell WARDING_SPELL = new WardingSpell();
 }
