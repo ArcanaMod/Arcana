@@ -24,10 +24,6 @@ import org.apache.logging.log4j.LogManager;
 
 public class FabricSpell extends Spell {
 
-	private SpellData data;
-
-	public boolean isBuilt = false;
-
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;

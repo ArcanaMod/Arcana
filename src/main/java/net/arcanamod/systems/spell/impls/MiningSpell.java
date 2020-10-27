@@ -25,10 +25,6 @@ import java.util.HashMap;
 
 public class MiningSpell extends Spell {
 
-	private SpellData data;
-
-	public boolean isBuilt = false;
-
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;

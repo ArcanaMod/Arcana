@@ -25,10 +25,6 @@ import net.minecraft.world.storage.loot.LootParameters;
 
 public class ExchangeSpell extends Spell {
 
-	private SpellData data;
-
-	public boolean isBuilt = false;
-
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;

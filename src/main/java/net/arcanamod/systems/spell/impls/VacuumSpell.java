@@ -20,10 +20,6 @@ import net.minecraft.world.World;
 
 public class VacuumSpell extends Spell {
 
-    private SpellData data;
-
-    public boolean isBuilt = false;
-
     /**
      * Defines all variables. DON'T USE THAT IN REGISTRY!!!
      *

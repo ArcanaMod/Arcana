@@ -36,21 +36,30 @@ import static net.arcanamod.aspects.Aspects.*;
  * ISpell class but it self registers.
  */
 public abstract class Spell implements ISpell {
+
+	protected SpellData data;
+
+	public boolean isBuilt = false;
+
 	public Spell(){
 		SpellRegistry.addSpell(getId(),this);
+	}
+
+	private static Aspect deserializeAspect(CompoundNBT compound,String deserializableAspect){
+		return AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString(deserializableAspect)));
 	}
 
 	public static ISpell deserializeNBT(CompoundNBT compound){
 		if (compound.contains("Spell")) {
 
 			return Spells.spellMap.get(new ResourceLocation(compound.getString("Spell"))).build(
-					new SpellData(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("FirstModifier"))),
-								  AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("SecondModifier"))),
-								  AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("SinModifier"))),
-								  Pair.of(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("FirstPrimaryCast"))),
-										  AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("SecondPrimaryCast")))),
-								  Pair.of(AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("FirstPlusCast"))),
-										  AspectUtils.getAspectByResourceLocation(new ResourceLocation(compound.getString("SecondPlusCast"))))
+					new SpellData(deserializeAspect(compound, "FirstModifier"),
+								  deserializeAspect(compound, "SecondModifier"),
+								  deserializeAspect(compound, "SinModifier"),
+								  Pair.of(deserializeAspect(compound, "FirstPrimaryCast"),
+										  deserializeAspect(compound, "SecondPrimaryCast")),
+								  Pair.of(deserializeAspect(compound, "FirstPlusCast"),
+										  deserializeAspect(compound, "SecondPlusCast"))
 							),
 					new CompoundNBT());
 		} else return null;
