@@ -35,7 +35,7 @@ public class WardingSpell extends Spell {
 
 	@Override
 	public Aspect getSpellAspect() {
-		return Aspects.EXCHANGE;
+		return Aspects.ARMOUR;
 	}
 
 	@Override
