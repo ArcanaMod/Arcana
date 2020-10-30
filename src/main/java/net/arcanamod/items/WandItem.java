@@ -1,6 +1,7 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
@@ -120,6 +121,7 @@ public class WandItem extends Item{
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+		ArcanaSounds.playSpellCastSound(player);
 		Focus focus = getFocus(player.getHeldItem(hand));
 		if(focus != Focus.NO_FOCUS){
 			ISpell spell = focus.getSpell(player.getHeldItem(hand));

@@ -39,6 +39,12 @@ public class ArcanaSounds {
 		playerEntity.playSound(ArcanaSounds.Impl.phial_corkpop, SoundCategory.BLOCKS,0.4f,1.4f);
 	}
 
+	public static void playSpellCastSound(PlayerEntity playerEntity) {
+		if (!playerEntity.world.isRemote) return;
+		if (ArcanaSounds.Impl.spell_cast.equals(null)) return;
+		playerEntity.playSound(ArcanaSounds.Impl.spell_cast, SoundCategory.PLAYERS,0.4f,1.0f);
+	}
+
 	//Impl
 	@ObjectHolder(Arcana.MODID)
 	@ParametersAreNonnullByDefault
@@ -72,6 +78,11 @@ public class ArcanaSounds {
 
 		@SoundName("taint_step")
 		public static final SoundEvent taint_step = null;
+
+		// Spell Cast
+
+		@SoundName("spell_cast")
+		public static final SoundEvent spell_cast = null;
 
 		public static void init() {}
 
