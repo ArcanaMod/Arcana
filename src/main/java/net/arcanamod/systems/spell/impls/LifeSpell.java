@@ -33,7 +33,7 @@ public class LifeSpell extends Spell {
 
 	@Override
 	public Aspect getSpellAspect() {
-		return Aspects.ARMOUR;
+		return Aspects.LIFE;
 	}
 
 	@Override

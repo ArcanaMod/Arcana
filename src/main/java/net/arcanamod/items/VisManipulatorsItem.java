@@ -71,11 +71,11 @@ public class VisManipulatorsItem extends Item{
 						new CompoundNBT())));
 			} else if (r == 3) {
 				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.VACUUM_SPELL.build(
-						new SpellData(Aspects.EARTH, Aspects.EARTH, Aspects.EARTH, Pair.of(Aspects.EARTH, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
+						new SpellData(Aspects.EARTH, Aspects.EARTH, Aspects.EARTH, Pair.of(Aspects.EARTH, Aspects.SLOTH), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
 			} else {
 				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.WARDING_SPELL.build(
-						new SpellData(Aspects.EARTH, Aspects.EARTH, Aspects.EARTH, Pair.of(Aspects.EARTH, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
+						new SpellData(Aspects.AIR, Aspects.AIR, Aspects.AIR, Pair.of(Aspects.AIR, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
 			}
 			toSet.getOrCreateTag().putInt("style", random.nextInt(36));

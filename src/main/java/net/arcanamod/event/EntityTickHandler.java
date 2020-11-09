@@ -13,6 +13,8 @@ import net.arcanamod.client.render.aspects.NumberParticleData;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
+import net.arcanamod.systems.spell.DelayedSpell;
+import net.arcanamod.systems.spell.DelayedSpellManager;
 import net.arcanamod.systems.spell.SpellData;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.util.RayTraceUtils;
@@ -67,6 +69,16 @@ public class EntityTickHandler{
 				ITextComponent status = new TranslationTextComponent("status.get_complete_note").applyTextStyles(TextFormatting.ITALIC, TextFormatting.LIGHT_PURPLE);
 				serverPlayerEntity.sendStatusMessage(status, false);
 			}
+
+			List<DelayedSpell> spellsScheduledToDeletion = new ArrayList<>();
+			DelayedSpellManager.delayedSpells.forEach(delayedSpell -> {
+				if (delayedSpell.ticks >= delayedSpell.ticksPassed){
+					delayedSpell.spellEvent.accept(0);
+					spellsScheduledToDeletion.add(delayedSpell);
+				}
+				else delayedSpell.ticksPassed++;
+			});
+			DelayedSpellManager.delayedSpells.removeAll(spellsScheduledToDeletion);
 		}
 
 		// Render aspect particles
