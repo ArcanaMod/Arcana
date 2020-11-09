@@ -27,4 +27,5 @@ public class ArcanaEffects extends Effect{
 				AttributeModifier.Operation.MULTIPLY_BASE
 		)
 	);
+	public static final RegistryObject<Effect> VICTUS = EFFECTS.register("victus",VictusEffect::new);
 }

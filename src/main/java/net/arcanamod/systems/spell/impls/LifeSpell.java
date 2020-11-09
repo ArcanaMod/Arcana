@@ -18,9 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-import java.util.Optional;
-
-public class WardingSpell extends Spell {
+public class LifeSpell extends Spell {
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;
@@ -30,7 +28,7 @@ public class WardingSpell extends Spell {
 
 	@Override
 	public ResourceLocation getId() {
-		return ArcanaVariables.arcLoc("warding");
+		return ArcanaVariables.arcLoc("life");
 	}
 
 	@Override
@@ -78,7 +76,7 @@ public class WardingSpell extends Spell {
 	public ActionResultType useOnEntity(PlayerEntity caster, Entity targetEntity) {
 		try {
 			if (targetEntity instanceof LivingEntity)
-				((LivingEntity)targetEntity).addPotionEffect(new EffectInstance(ArcanaEffects.WARDING.get(),getWardingDuration(),getAmplifier(),false,true));
+				((LivingEntity)targetEntity).addPotionEffect(new EffectInstance(ArcanaEffects.VICTUS.get(),getWardingDuration(),getAmplifier(),false,true));
 		} catch (SpellNotBuiltError spellNotBuiltError) {
 			spellNotBuiltError.printStackTrace();
 		}
@@ -87,10 +85,7 @@ public class WardingSpell extends Spell {
 
 	@Override
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-			if (world.isRemote) return ActionResultType.SUCCESS;
-			Block previousState = world.getBlockState(blockTarget).getBlock();
-			world.setBlockState(blockTarget, ArcanaBlocks.WARDENED_BLOCK.get().getDefaultState());
-			((WardenedBlockTileEntity)world.getTileEntity(blockTarget)).func_939844_a_(Optional.of(previousState.getDefaultState()));
+
 		return ActionResultType.SUCCESS;
 	}
 
