@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
-public class WardingSpell extends Spell {
+public class WardingCast extends Spell {
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;

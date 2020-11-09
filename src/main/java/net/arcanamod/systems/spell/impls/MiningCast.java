@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 
 import java.util.HashMap;
 
-public class MiningSpell extends Spell {
+public class MiningCast extends Spell {
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {

@@ -23,7 +23,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 
-public class ExchangeSpell extends Spell {
+public class ExchangeCast extends Spell {
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {

@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class LifeSpell extends Spell {
+public class LifeCast extends Spell {
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;

@@ -199,18 +199,7 @@ public abstract class Spell implements ISpell {
 				} else if (cast.getSecond() == SLOTH) {
 					// it takes a few seconds for the spell to cast
 					DelayedSpellManager.delayedSpells.add(new DelayedSpell(t -> useOnBlock(player, player.world, pos),delay));
-
-					// Make async thread.
-					new Thread(new Runnable() { // TODO: Test this (Luna please don't scream at me I'm just testing runnables)
-						public void run(){
-							try {
-								Thread.sleep(4000);
-								;
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-					}).start();
+					
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby blocks ~5
 					BlockPos.getAllInBoxMutable(pos.add(-5, -5, -5), pos.add(5, 5, 5)).forEach(blockPos -> {

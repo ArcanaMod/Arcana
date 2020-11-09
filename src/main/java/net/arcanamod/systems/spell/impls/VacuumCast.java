@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class VacuumSpell extends Spell {
+public class VacuumCast extends Spell {
 
     /**
      * Defines all variables. DON'T USE THAT IN REGISTRY!!!

@@ -22,7 +22,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 
-public class FabricSpell extends Spell {
+public class FabricCast extends Spell {
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {

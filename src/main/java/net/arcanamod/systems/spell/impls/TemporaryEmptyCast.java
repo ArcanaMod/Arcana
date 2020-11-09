@@ -13,7 +13,7 @@ import net.minecraft.util.ActionResultType;
 import static net.arcanamod.util.Pair.of;
 
 // Temporary class
-public class EmptySpell implements ISpell {
+public class TemporaryEmptyCast implements ISpell {
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		return this;
