@@ -49,8 +49,8 @@ public class Spell implements ISpell {
 			}
 		}else{
 			for (ICast cast : casts){
-				//for ()
-				//cast.use(caster,sender,of(castMethodsAspect,castMethodsSinAspect));
+				for (Pair<Aspect,Aspect> castMethodsAspect : castMethodsAspects)
+				cast.use(caster,sender,castMethodsAspect,action);
 			}
 		}
 		return null;
