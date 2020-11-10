@@ -12,6 +12,7 @@ import net.arcanamod.util.StreamUtils;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
@@ -119,5 +120,9 @@ public class AspectUtils {
 
 	public static List<AspectStack> squish(List<AspectStack> unSquished){
 		return StreamUtils.partialReduce(unSquished, AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
+	}
+
+	public static Aspect deserializeAspect(CompoundNBT compound, String deserializableAspect){
+		return getAspectByResourceLocation(new ResourceLocation(compound.getString(deserializableAspect)));
 	}
 }

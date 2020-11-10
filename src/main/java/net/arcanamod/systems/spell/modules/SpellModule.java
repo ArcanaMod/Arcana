@@ -8,7 +8,7 @@ import java.util.List;
 import static net.arcanamod.util.Pair.of;
 
 public abstract class SpellModule {
-	private List<Pair<SpellModule,BindType>> bounded = new ArrayList<>();
+	private List<SpellModule> bounded = new ArrayList<>();
 
 	public int getOutputAmount(){
 		return 5;
@@ -18,22 +18,19 @@ public abstract class SpellModule {
 		return 5;
 	}
 
+	public abstract boolean canConnect(SpellModule connectingModule);
+
 	// addModule
-	void bindModule(SpellModule module, BindType type){
-		bounded.add(of(module,type));
+	public void bindModule(SpellModule module){
+		bounded.add(module);
 	}
 
 	// removeModule
-	void unbindModule(SpellModule module, BindType type){
-		bounded.remove(of(module, type));
+	public void unbindModule(SpellModule module){
+		bounded.remove(module);
 	}
 
-	public List<Pair<SpellModule,BindType>> getBoundedModules(){
+	public List<SpellModule> getBoundedModules(){
 		return bounded;
-	}
-
-	enum BindType{
-		INPUT,
-		OUTPUT
 	}
 }

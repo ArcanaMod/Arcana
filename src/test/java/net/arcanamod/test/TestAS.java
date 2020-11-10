@@ -3,6 +3,11 @@ package net.arcanamod.test;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.arcanamod.aspects.*;
+import net.arcanamod.systems.spell.Spell;
+import net.arcanamod.systems.spell.modules.SpellModule;
+import net.arcanamod.systems.spell.modules.impl.CastMethod;
+import net.arcanamod.systems.spell.modules.impl.Connector;
+import net.arcanamod.systems.spell.modules.impl.StartCircle;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -24,7 +29,14 @@ public class TestAS {
 
 	@Test
 	public void createBasicSpell(){
-		Cast
+		Spell spell = new Spell();
+		Connector startToCastMethod_connector = new Connector();
+		Connector castMethodToCastCircle_connector = new Connector();
+		CastMethod castMethod = new CastMethod();
+		castMethod.bindModule(castMethodToCastCircle_connector);
+		startToCastMethod_connector.bindModule(castMethod);
+		spell.mainModule = new StartCircle();
+		spell.mainModule.bindModule(startToCastMethod_connector);
 	}
 
 	@Test
