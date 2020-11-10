@@ -137,13 +137,12 @@ public class WandItem extends Item{
 				// oh my god this code is terrible // YES, I know Xd.
 				// time for more VisUtils I guess
 				if(spell.getSpellCosts().toList().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
-					ActionResultType result;
 					if (player.isCrouching())
-						result = spell.use(player, player.getHeldItem(hand), ICast.Action.SPECIAL);
+						Spell.runSpell(createBasicSpell(),player,player.getHeldItem(hand), ICast.Action.SPECIAL);
+						//result = spell.use(player, player.getHeldItem(hand), ICast.Action.SPECIAL);
 					else
-						result = spell.use(player, player.getHeldItem(hand), ICast.Action.USE);
+						Spell.runSpell(createBasicSpell(),player,player.getHeldItem(hand), ICast.Action.USE);
 					// remove aspects from wand if spell successes.
-					if (result != ActionResultType.FAIL && result != ActionResultType.PASS)
 					for(AspectStack cost : spell.getSpellCosts().toList())
 						handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
 				}
