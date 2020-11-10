@@ -1,6 +1,7 @@
 package net.arcanamod.systems.spell;
 
 import net.arcanamod.items.WandItem;
+import net.arcanamod.systems.spell.casts.ICast;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.crash.ReportedException;
@@ -13,7 +14,7 @@ public class SpellNotBuiltError extends Exception {
         CrashReportCategory crashreportcategory = crashreport.makeCategory("Spell used");
         crashreportcategory.addDetail("Spell info", () -> {
             try {
-                IOldSpell spell = WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND));
+                ICast spell = WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND));
                 return String.format("Aspect ID: %s with data: %s",spell.getSpellAspect().getId(),spell.getSpellData().toString());
             } catch (Throwable var2) {
                 return "Spell data isn't valid!";

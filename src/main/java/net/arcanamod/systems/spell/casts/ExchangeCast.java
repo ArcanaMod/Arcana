@@ -25,7 +25,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 public class ExchangeCast extends Cast {
 
 	@Override
-	public IOldSpell build(SpellData data, CompoundNBT compound) {
+	public ICast build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
 		return this;
@@ -67,13 +67,11 @@ public class ExchangeCast extends Cast {
 		return 1;
 	}
 
-	public int getMiningLevel() throws SpellNotBuiltError {
-		if (!isBuilt) throw new SpellNotBuiltError();
+	public int getMiningLevel(){
 		return SpellValues.getOrDefault(data.firstModifier, 2);
 	}
 
-	public int getSize() throws SpellNotBuiltError {
-		if (!isBuilt) throw new SpellNotBuiltError();
+	public int getSize(){
 		return SpellValues.getOrDefault(data.secondModifier, 1);
 	}
 
@@ -85,24 +83,19 @@ public class ExchangeCast extends Cast {
 
 	@Override
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-		try {
-			if (caster.world.isRemote) return ActionResultType.SUCCESS;
-			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-				ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
-				if (!held.isEmpty() && Block.getBlockFromItem(held.getItem()) != Blocks.AIR) {
-					for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-							.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel() >= 3 ? Items.DIAMOND_PICKAXE : Items.IRON_PICKAXE)))) {
-						caster.addItemStackToInventory(stack);
-					}
-					caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
-					held.shrink(1);
-					blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
+		if (caster.world.isRemote) return ActionResultType.SUCCESS;
+		BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
+		if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+			ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
+			if (!held.isEmpty() && Block.getBlockFromItem(held.getItem()) != Blocks.AIR) {
+				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
+						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel() >= 3 ? Items.DIAMOND_PICKAXE : Items.IRON_PICKAXE)))) {
+					caster.addItemStackToInventory(stack);
 				}
+				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
+				held.shrink(1);
+				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 			}
-		} catch (SpellNotBuiltError spellNotBuiltError) {
-			spellNotBuiltError.printStackTrace();
-			return ActionResultType.FAIL;
 		}
 		return ActionResultType.SUCCESS;
 	}

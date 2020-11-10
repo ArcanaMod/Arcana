@@ -4,7 +4,6 @@ import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
-import net.arcanamod.systems.spell.IOldSpell;
 import net.arcanamod.systems.spell.SpellCosts;
 import net.arcanamod.systems.spell.SpellData;
 import net.arcanamod.systems.spell.SpellNotBuiltError;
@@ -25,7 +24,7 @@ import org.apache.logging.log4j.LogManager;
 public class FabricCast extends Cast {
 
 	@Override
-	public IOldSpell build(SpellData data, CompoundNBT compound) {
+	public ICast build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
 		return this;

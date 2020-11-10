@@ -28,7 +28,7 @@ public class VacuumCast extends Cast {
      * @return this but with defined variables.
      */
     @Override
-    public IOldSpell build(SpellData data, CompoundNBT compound) {
+    public ICast build(SpellData data, CompoundNBT compound) {
         this.data = data;
         isBuilt = true;
         return this;

@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class MiningCast extends Cast {
 
 	@Override
-	public IOldSpell build(SpellData data, CompoundNBT compound) {
+	public ICast build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
 		return this;
@@ -68,18 +68,15 @@ public class MiningCast extends Cast {
 		return 1;
 	}
 
-	public int getMiningLevel() throws SpellNotBuiltError {
-		if (!isBuilt) throw new SpellNotBuiltError();
+	public int getMiningLevel() {
 		return SpellValues.getOrDefault(data.firstModifier, 2);
 	}
 
-	public int getExplosivePower() throws SpellNotBuiltError {
-		if (!isBuilt) throw new SpellNotBuiltError();
+	public int getExplosivePower() {
 		return SpellValues.getOrDefault(data.firstModifier, 0);
 	}
 
-	public int getFortune() throws SpellNotBuiltError {
-		if (!isBuilt) throw new SpellNotBuiltError();
+	public int getFortune() {
 		return SpellValues.getOrDefault(data.firstModifier, 0);
 	}
 
@@ -96,22 +93,17 @@ public class MiningCast extends Cast {
 	}
 
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-		try {
-			if(caster.world.isRemote) return ActionResultType.SUCCESS;
-			BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-			if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-				caster.world.destroyBlock(blockTarget, true, caster);
-				TileEntity tileentity = blockToDestroy.hasTileEntity() ? world.getTileEntity(blockTarget) : null;
-				HashMap<Enchantment, Integer> map = new HashMap<>();
-				map.put(Enchantments.FORTUNE,getFortune());
-				ItemStack pickaxe = createDummyPickaxe(getMiningLevel());
-				EnchantmentHelper.setEnchantments(map,pickaxe);
-				Block.spawnDrops(blockToDestroy, world, blockTarget, tileentity, caster, pickaxe);
-				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
-			}
-		} catch (SpellNotBuiltError spellNotBuiltError) {
-			spellNotBuiltError.printStackTrace();
-			return ActionResultType.FAIL;
+		if(caster.world.isRemote) return ActionResultType.SUCCESS;
+		BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
+		if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+			caster.world.destroyBlock(blockTarget, true, caster);
+			TileEntity tileentity = blockToDestroy.hasTileEntity() ? world.getTileEntity(blockTarget) : null;
+			HashMap<Enchantment, Integer> map = new HashMap<>();
+			map.put(Enchantments.FORTUNE,getFortune());
+			ItemStack pickaxe = createDummyPickaxe(getMiningLevel());
+			EnchantmentHelper.setEnchantments(map,pickaxe);
+			Block.spawnDrops(blockToDestroy, world, blockTarget, tileentity, caster, pickaxe);
+			blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 		}
 		return ActionResultType.SUCCESS;
 	}

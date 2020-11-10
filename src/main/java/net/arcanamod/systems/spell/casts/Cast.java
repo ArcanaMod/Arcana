@@ -34,7 +34,7 @@ import static net.arcanamod.aspects.Aspects.*;
 /**
  * ISpell class but it self registers.
  */
-public abstract class Cast implements IOldSpell {
+public abstract class Cast implements ICast {
 
 	protected SpellData data;
 
@@ -50,10 +50,13 @@ public abstract class Cast implements IOldSpell {
 		return Optional.of(new TranslationTextComponent("spell." + getId().getNamespace() + "." + getId().getPath()));
 	}
 
+	public abstract ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget);
+	public abstract ActionResultType useOnPlayer(PlayerEntity playerTarget);
+	public abstract ActionResultType useOnEntity(PlayerEntity caster, Entity entityTarget);
+
 	@Override
-	public ActionResultType use(PlayerEntity player, Object sender, Action action){
-		if (action == Action.USE) {
-			Pair<Aspect, Aspect> cast = getSpellData().primaryCast;
+	public void use(PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, ICast.Action action){
+		if (action == ICast.Action.USE) {
 			if (cast.getFirst() == AIR) {
 				/*
 				- Creates Cloud
@@ -79,8 +82,6 @@ public abstract class Cast implements IOldSpell {
 					// creates a trap that creates a cloud when triggered
 				} else {
 					// Default AIR SPELL
-
-					createSpellCloud(player,player.world,new Vec3d(pos));
 				}
 			}
 			if (cast.getFirst() == WATER) {
@@ -155,8 +156,8 @@ public abstract class Cast implements IOldSpell {
 								useOnBlock(player, player.world, markedBlock);
 							}
 							listNBT.clear();
-						} else return ActionResultType.FAIL;
-					} else return ActionResultType.FAIL;
+						}
+					}
 				} else if (cast.getSecond() == SLOTH) {
 					// it takes a few seconds for the spell to cast
 					DelayedSpellManager.delayedSpells.add(new DelayedSpell(t -> useOnBlock(player, player.world, pos),delay));
@@ -168,7 +169,7 @@ public abstract class Cast implements IOldSpell {
 					});
 				} else if (cast.getSecond() == GREED) {
 					// allows players to target entites, targets the block below them
-					List<Entity> entities = RayTraceUtils.rayTraceEntities(player.world,player.getPositionVec(),player.getLookVec(),Optional.empty(),Entity.class);
+					List<Entity> entities = RayTraceUtils.rayTraceEntities(player.world,player.getPositionVec(),player.getLookVec(), Optional.empty(),Entity.class);
 					for (Entity entity : entities){
 						useOnBlock(player, player.world,entity.getPosition());
 					}
@@ -183,7 +184,7 @@ public abstract class Cast implements IOldSpell {
 					}
 				} else {
 					// Default EARTH SPELL
-					return useOnBlock(player, player.world, pos);
+					useOnBlock(player, player.world, pos);
 				}
 			}
 			if (cast.getFirst() == ORDER) {
@@ -241,7 +242,7 @@ public abstract class Cast implements IOldSpell {
 					// TODO: Implement this.
 				} else {
 					// Default ORDER SPELL
-					return useOnPlayer(player);
+					useOnPlayer(player);
 				}
 			}
 			if (cast.getFirst() == CHAOS) {
@@ -251,8 +252,8 @@ public abstract class Cast implements IOldSpell {
 				 */
 				// Not implemented yet
 			}
-		} else if (action == Action.SPECIAL) {
-			if (getSpellData().primaryCast.getFirst() == EARTH && getSpellData().primaryCast.getSecond() == LUST){
+		} else if (action == ICast.Action.SPECIAL) {
+			if (cast.getFirst() == EARTH && cast.getSecond() == LUST){
 				if (sender instanceof ItemStack) {
 					int raytraceDistance = 8;
 					BlockPos pos = RayTraceUtils.getTargetBlockPos(player, player.world, raytraceDistance);
@@ -265,10 +266,8 @@ public abstract class Cast implements IOldSpell {
 					markedBlocksNBT.add(markedBlock);
 					stack.getOrCreateTag().put("MarkedBlocks", markedBlocksNBT);
 				}
-				return ActionResultType.PASS;
 			}
 		}
-		return ActionResultType.SUCCESS;
 	}
 
 	private void createSpellCloud(PlayerEntity player, World world, Vec3d area) {
@@ -279,8 +278,4 @@ public abstract class Cast implements IOldSpell {
 			((ServerWorld)world).summonEntity(cloud);
 		}
 	}
-
-	public abstract ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget);
-	public abstract ActionResultType useOnPlayer(PlayerEntity playerTarget);
-	public abstract ActionResultType useOnEntity(PlayerEntity caster, Entity entityTarget);
 }

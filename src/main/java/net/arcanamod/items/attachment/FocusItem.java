@@ -2,7 +2,7 @@ package net.arcanamod.items.attachment;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.systems.spell.IOldSpell;
+import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.Spell;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,12 +43,12 @@ public class FocusItem extends Item implements Focus{
 		return Optional.of(this);
 	}
 
-	public IOldSpell getSpell(ItemStack stack) {
+	public ICast getSpell(ItemStack stack) {
 		return Spell.deserializeNBT(stack.getOrCreateTag().getCompound("focusData").getCompound("Spell"));
 	}
 
 	public static Aspect getColourAspect(ItemStack stack) {
-		@Nullable IOldSpell spell = Spell.deserializeNBT(stack.getOrCreateTag().getCompound("Spell"));
+		@Nullable ICast spell = Spell.deserializeNBT(stack.getOrCreateTag().getCompound("Spell"));
 		if (spell != null)
 			return spell.getSpellAspect();
 		else return Aspects.EMPTY;

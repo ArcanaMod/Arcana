@@ -3,8 +3,8 @@ package net.arcanamod.entities;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.arcanamod.systems.spell.IOldSpell;
-import net.arcanamod.systems.spell.Spells;
+import net.arcanamod.systems.spell.casts.ICast;
+import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.command.arguments.ParticleArgument;
@@ -37,7 +37,7 @@ public class SpellCloudEntity extends Entity {
 	private static final DataParameter<Integer> COLOR;
 	private static final DataParameter<Boolean> IGNORE_RADIUS;
 	private static final DataParameter<IParticleData> PARTICLE;
-	private IOldSpell spell;
+	private ICast spell;
 	private final Map<net.minecraft.entity.Entity, Integer> reapplicationDelayMap;
 	private int duration;
 	private int waitTime;
@@ -51,7 +51,7 @@ public class SpellCloudEntity extends Entity {
 
 	public SpellCloudEntity(EntityType<? extends SpellCloudEntity> p_i50389_1_, World p_i50389_2_) {
 		super(p_i50389_1_, p_i50389_2_);
-		this.spell = Spells.EMPTY_SPELL;
+		this.spell = Casts.EMPTY_SPELL;
 		this.reapplicationDelayMap = Maps.newHashMap();
 		this.duration = 600;
 		this.waitTime = 20;
@@ -96,7 +96,7 @@ public class SpellCloudEntity extends Entity {
 		return (Float) this.getDataManager().get(RADIUS);
 	}
 
-	public void setSpell(IOldSpell spell) {
+	public void setSpell(ICast spell) {
 		this.spell = spell;
 		if (!this.colorSet) {
 			this.updateFixedColor();
@@ -105,7 +105,7 @@ public class SpellCloudEntity extends Entity {
 	}
 
 	private void updateFixedColor() {
-		if (this.spell == Spells.EMPTY_SPELL) {
+		if (this.spell == Casts.EMPTY_SPELL) {
 			this.getDataManager().set(COLOR, 0);
 		} else {
 			this.getDataManager().set(COLOR, this.spell.getSpellAspect().getColorRange().get(3));
@@ -333,7 +333,7 @@ public class SpellCloudEntity extends Entity {
 		}
 
 		if (p_70037_1_.contains("Spell", 8)) {
-			this.setSpell(Spells.spellMap.get(new ResourceLocation(p_70037_1_.getString("Spell"))));
+			this.setSpell(Casts.spellMap.get(new ResourceLocation(p_70037_1_.getString("Spell"))));
 		}
 
 	}
@@ -356,7 +356,7 @@ public class SpellCloudEntity extends Entity {
 			compoundNBT.putInt("Color", this.getColor());
 		}
 
-		if (this.spell != Spells.EMPTY_SPELL && this.spell != null) {
+		if (this.spell != Casts.EMPTY_SPELL && this.spell != null) {
 			compoundNBT.putString("Spell", ((Cast) spell).getId().toString()); // TODO: REPLACE (SPELL) wit (ISPELL)
 		}
 	}

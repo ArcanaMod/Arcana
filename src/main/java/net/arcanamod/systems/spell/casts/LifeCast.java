@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 
 public class LifeCast extends Cast {
 	@Override
-	public IOldSpell build(SpellData data, CompoundNBT compound) {
+	public ICast build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
 		return this;

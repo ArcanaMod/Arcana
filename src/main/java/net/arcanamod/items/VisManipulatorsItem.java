@@ -3,10 +3,10 @@ package net.arcanamod.items;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.Taint;
-import net.arcanamod.systems.spell.IOldSpell;
+import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.SpellData;
-import net.arcanamod.systems.spell.Spells;
+import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.util.Pair;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -56,38 +56,14 @@ public class VisManipulatorsItem extends Item{
 		}else{
 			ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
 			int r = random.nextInt(5);
-			if (r == 0) {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.MINING_SPELL.build(
-						new SpellData(Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY, Pair.of(Aspects.EARTH, Aspects.GLUTTONY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
-						new CompoundNBT())));
-			} else if (r == 1) {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.EXCHANGE_SPELL.build(
-						new SpellData(Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY, Pair.of(Aspects.EARTH, Aspects.LUST), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
-						new CompoundNBT())));
-
-			} else if (r == 2) {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.FABRIC_SPELL.build(
-						new SpellData(Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY, Pair.of(Aspects.FIRE, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
-						new CompoundNBT())));
-			} else if (r == 3) {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.VACUUM_SPELL.build(
-						new SpellData(Aspects.EARTH, Aspects.EARTH, Aspects.EARTH, Pair.of(Aspects.EARTH, Aspects.SLOTH), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
-						new CompoundNBT())));
-			} else {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.WARDING_SPELL.build(
-						new SpellData(Aspects.AIR, Aspects.AIR, Aspects.AIR, Pair.of(Aspects.AIR, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
-						new CompoundNBT())));
-			}
 			toSet.getOrCreateTag().putInt("style", random.nextInt(36));
 			context.getPlayer().addItemStackToInventory(toSet);
 		}
 		return super.onItemUseFirst(stack, context);
 	}
 
-	public IOldSpell getSpell(){
-		return Spells.MINING_SPELL.build(
-				new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.GLUTTONY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
-				new CompoundNBT());
+	public ICast getSpell(){
+		return null;
 	}
 
 	@Override
