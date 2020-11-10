@@ -3,7 +3,7 @@ package net.arcanamod.entities;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.IOldSpell;
 import net.arcanamod.systems.spell.Spells;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.material.PushReaction;
@@ -37,7 +37,7 @@ public class SpellCloudEntity extends Entity {
 	private static final DataParameter<Integer> COLOR;
 	private static final DataParameter<Boolean> IGNORE_RADIUS;
 	private static final DataParameter<IParticleData> PARTICLE;
-	private ISpell spell;
+	private IOldSpell spell;
 	private final Map<net.minecraft.entity.Entity, Integer> reapplicationDelayMap;
 	private int duration;
 	private int waitTime;
@@ -96,7 +96,7 @@ public class SpellCloudEntity extends Entity {
 		return (Float) this.getDataManager().get(RADIUS);
 	}
 
-	public void setSpell(ISpell spell) {
+	public void setSpell(IOldSpell spell) {
 		this.spell = spell;
 		if (!this.colorSet) {
 			this.updateFixedColor();

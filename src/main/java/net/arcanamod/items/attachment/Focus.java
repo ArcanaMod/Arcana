@@ -1,7 +1,7 @@
 package net.arcanamod.items.attachment;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.IOldSpell;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -76,7 +76,7 @@ public interface Focus{
 	Optional<Item> getAssociatedItem();
 	
 	// TODO: switch to CompoundNBT
-	ISpell getSpell(ItemStack stack);
+	IOldSpell getSpell(ItemStack stack);
 	
 	class Impl implements Focus{
 		
@@ -112,7 +112,7 @@ public interface Focus{
 			return Optional.empty();
 		}
 		
-		public ISpell getSpell(ItemStack stack){
+		public IOldSpell getSpell(ItemStack stack){
 			return null;
 		}
 	}

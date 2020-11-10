@@ -10,7 +10,7 @@ import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.items.attachment.FocusItem;
-import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.IOldSpell;
 import net.arcanamod.util.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
@@ -124,7 +124,7 @@ public class WandItem extends Item{
 		ArcanaSounds.playSpellCastSound(player);
 		Focus focus = getFocus(player.getHeldItem(hand));
 		if(focus != Focus.NO_FOCUS){
-			ISpell spell = focus.getSpell(player.getHeldItem(hand));
+			IOldSpell spell = focus.getSpell(player.getHeldItem(hand));
 			if(spell != null){
 				IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
 				// oh my god this code is terrible // YES, I know Xd.
@@ -132,9 +132,9 @@ public class WandItem extends Item{
 				if(spell.getSpellCosts().toList().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
 					ActionResultType result;
 					if (player.isCrouching())
-						result = spell.use(player, player.getHeldItem(hand), ISpell.Action.SPECIAL);
+						result = spell.use(player, player.getHeldItem(hand), IOldSpell.Action.SPECIAL);
 					else
-						result = spell.use(player, player.getHeldItem(hand), ISpell.Action.USE);
+						result = spell.use(player, player.getHeldItem(hand), IOldSpell.Action.USE);
 					// remove aspects from wand if spell successes.
 					if (result != ActionResultType.FAIL && result != ActionResultType.PASS)
 					for(AspectStack cost : spell.getSpellCosts().toList())
@@ -241,7 +241,7 @@ public class WandItem extends Item{
 	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
 		super.addInformation(stack, world, tooltip, flag);
 		// Add focus info
-		ISpell spell = getFocus(stack).getSpell(stack);
+		IOldSpell spell = getFocus(stack).getSpell(stack);
 		if(spell != null){
 			Optional<ITextComponent> name = spell.getName(getFocusData(stack).getCompound("Spell"));
 			name.ifPresent(e -> tooltip.add(new TranslationTextComponent("tooltip.arcana.spell", e,

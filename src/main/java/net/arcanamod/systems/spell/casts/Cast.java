@@ -1,7 +1,6 @@
 package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.entities.SpellCloudEntity;
 import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.Pair;
@@ -35,7 +34,7 @@ import static net.arcanamod.aspects.Aspects.*;
 /**
  * ISpell class but it self registers.
  */
-public abstract class Cast implements ISpell {
+public abstract class Cast implements IOldSpell {
 
 	protected SpellData data;
 
@@ -50,7 +49,7 @@ public abstract class Cast implements ISpell {
 	public Optional<ITextComponent> getName(CompoundNBT nbt){
 		return Optional.of(new TranslationTextComponent("spell." + getId().getNamespace() + "." + getId().getPath()));
 	}
-	
+
 	@Override
 	public ActionResultType use(PlayerEntity player, Object sender, Action action){
 		if (action == Action.USE) {
@@ -161,7 +160,7 @@ public abstract class Cast implements ISpell {
 				} else if (cast.getSecond() == SLOTH) {
 					// it takes a few seconds for the spell to cast
 					DelayedSpellManager.delayedSpells.add(new DelayedSpell(t -> useOnBlock(player, player.world, pos),delay));
-					
+
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby blocks ~5
 					BlockPos.getAllInBoxMutable(pos.add(-5, -5, -5), pos.add(5, 5, 5)).forEach(blockPos -> {

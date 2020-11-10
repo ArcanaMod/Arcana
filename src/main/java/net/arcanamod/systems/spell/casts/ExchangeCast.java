@@ -25,7 +25,7 @@ import net.minecraft.world.storage.loot.LootParameters;
 public class ExchangeCast extends Cast {
 
 	@Override
-	public ISpell build(SpellData data, CompoundNBT compound) {
+	public IOldSpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
 		return this;

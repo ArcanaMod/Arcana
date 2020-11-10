@@ -3,11 +3,10 @@ package net.arcanamod.items;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.Taint;
-import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.IOldSpell;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.SpellData;
 import net.arcanamod.systems.spell.Spells;
-import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.util.Pair;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -85,7 +84,7 @@ public class VisManipulatorsItem extends Item{
 		return super.onItemUseFirst(stack, context);
 	}
 
-	public ISpell getSpell(){
+	public IOldSpell getSpell(){
 		return Spells.MINING_SPELL.build(
 				new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, Pair.of(Aspects.EARTH,Aspects.GLUTTONY), Pair.of(Aspects.EMPTY,Aspects.EMPTY)),
 				new CompoundNBT());

@@ -2,7 +2,7 @@ package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.systems.spell.ISpell;
+import net.arcanamod.systems.spell.IOldSpell;
 import net.arcanamod.systems.spell.SpellCosts;
 import net.arcanamod.systems.spell.SpellData;
 import net.minecraft.entity.player.PlayerEntity;
@@ -12,9 +12,9 @@ import net.minecraft.util.ActionResultType;
 import static net.arcanamod.util.Pair.of;
 
 // Temporary class
-public class TemporaryEmptyCast implements ISpell {
+public class TemporaryEmptyCast implements IOldSpell {
 	@Override
-	public ISpell build(SpellData data, CompoundNBT compound) {
+	public IOldSpell build(SpellData data, CompoundNBT compound) {
 		return this;
 	}
 

@@ -26,7 +26,7 @@ import java.util.HashMap;
 public class MiningCast extends Cast {
 
 	@Override
-	public ISpell build(SpellData data, CompoundNBT compound) {
+	public IOldSpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
 		return this;

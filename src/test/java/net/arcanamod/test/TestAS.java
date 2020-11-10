@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.arcanamod.aspects.*;
 import net.arcanamod.systems.spell.Spell;
+import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
 import net.arcanamod.systems.spell.modules.core.CastCircle;
@@ -13,6 +14,7 @@ import net.arcanamod.systems.spell.modules.core.StartCircle;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestAS {
@@ -51,9 +53,15 @@ public class TestAS {
 		return spell;
 	}
 
-	private SpellModule rUnbound(SpellModule toUnbound){
-		for (SpellModule module : toUnbound.getBoundedModules()) {
-			return rUnbound(module);
+	private SpellModule rUnbound(SpellModule toUnbound, List<Aspect> castMethodsAspects) {
+		if (toUnbound.getBoundedModules().size() > 0){
+			for (SpellModule module : toUnbound.getBoundedModules()) {
+				if (module instanceof CastMethod)
+					castMethodsAspects.add(((CastMethod) module).aspect);
+				return rUnbound(module, castMethodsAspects);
+			}
+		}else{
+			Cast
 		}
 		return null;
 	}
@@ -67,7 +75,7 @@ public class TestAS {
 	public void basicSpellToFunction(){
 		Spell spell = createBasicSpell();
 		for (SpellModule module : spell.mainModule.getBoundedModules()) {
-			rUnbound(module);
+			rUnbound(module, new ArrayList<>());
 		}
 	}
 

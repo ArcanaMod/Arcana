@@ -22,7 +22,7 @@ import java.util.Optional;
 
 public class WardingCast extends Cast {
 	@Override
-	public ISpell build(SpellData data, CompoundNBT compound) {
+	public IOldSpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
 		return this;

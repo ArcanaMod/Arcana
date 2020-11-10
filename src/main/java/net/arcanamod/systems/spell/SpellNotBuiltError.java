@@ -13,7 +13,7 @@ public class SpellNotBuiltError extends Exception {
         CrashReportCategory crashreportcategory = crashreport.makeCategory("Spell used");
         crashreportcategory.addDetail("Spell info", () -> {
             try {
-                ISpell spell = WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND));
+                IOldSpell spell = WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND));
                 return String.format("Aspect ID: %s with data: %s",spell.getSpellAspect().getId(),spell.getSpellData().toString());
             } catch (Throwable var2) {
                 return "Spell data isn't valid!";
