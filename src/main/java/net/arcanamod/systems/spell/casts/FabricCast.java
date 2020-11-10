@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell.impls;
+package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
@@ -22,7 +22,7 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 
-public class FabricCast extends Spell {
+public class FabricCast extends Cast {
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {

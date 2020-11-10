@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell.impls;
+package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.Optional;
 
-public class WardingCast extends Spell {
+public class WardingCast extends Cast {
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;

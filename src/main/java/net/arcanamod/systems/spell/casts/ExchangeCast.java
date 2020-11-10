@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell.impls;
+package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,7 +22,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 
-public class ExchangeCast extends Spell {
+public class ExchangeCast extends Cast {
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {

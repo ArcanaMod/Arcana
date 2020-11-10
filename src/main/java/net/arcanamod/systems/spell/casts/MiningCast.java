@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell.impls;
+package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 
 import java.util.HashMap;
 
-public class MiningCast extends Spell {
+public class MiningCast extends Cast {
 
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {

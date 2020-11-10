@@ -2,19 +2,9 @@ package net.arcanamod.test;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 import net.arcanamod.aspects.*;
-import net.arcanamod.systems.spell.ISpell;
-import net.arcanamod.systems.spell.Spells;
-import net.arcanamod.systems.spell.impls.Spell;
-import net.minecraft.nbt.CompoundNBT;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
-
-import java.util.Collections;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class TestAS {
 
@@ -33,8 +23,8 @@ public class TestAS {
 	}
 
 	@Test
-	public void SerializeAndDeserialize(){
-
+	public void createBasicSpell(){
+		Cast
 	}
 
 	@Test

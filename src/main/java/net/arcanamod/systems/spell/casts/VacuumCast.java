@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell.impls;
+package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
@@ -18,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
-public class VacuumCast extends Spell {
+public class VacuumCast extends Cast {
 
     /**
      * Defines all variables. DON'T USE THAT IN REGISTRY!!!

@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell.impls;
+package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
@@ -26,7 +26,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,13 +35,13 @@ import static net.arcanamod.aspects.Aspects.*;
 /**
  * ISpell class but it self registers.
  */
-public abstract class Spell implements ISpell {
+public abstract class Cast implements ISpell {
 
 	protected SpellData data;
 
 	public boolean isBuilt = false;
 
-	public Spell(){
+	public Cast(){
 		SpellRegistry.addSpell(getId(),this);
 	}
 
@@ -68,7 +67,7 @@ public abstract class Spell implements ISpell {
 
 	public static CompoundNBT serializeNBT(ISpell spell){
 		CompoundNBT compound = new CompoundNBT();
-		compound.putString("Spell",((Spell)spell).getId().toString()); // <-- Hardcoded here, fixes needed.
+		compound.putString("Spell",((Cast)spell).getId().toString()); // <-- Hardcoded here, fixes needed.
 
 		compound.putString("FirstModifier", AspectUtils.getResourceLocationFromAspect(spell.getSpellData().firstModifier).toString());
 		compound.putString("SecondModifier", AspectUtils.getResourceLocationFromAspect(spell.getSpellData().secondModifier).toString());

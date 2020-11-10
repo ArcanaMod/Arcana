@@ -1,18 +1,15 @@
 package net.arcanamod.entities;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.arcanamod.systems.spell.ISpell;
 import net.arcanamod.systems.spell.Spells;
-import net.arcanamod.systems.spell.impls.Spell;
+import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.material.PushReaction;
-import net.minecraft.client.renderer.Vector3d;
 import net.minecraft.command.arguments.ParticleArgument;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -20,14 +17,9 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import org.apache.logging.log4j.LogManager;
@@ -263,7 +255,7 @@ public class SpellCloudEntity extends Entity {
 
 						this.reapplicationDelayMap.put(lvt_7_3_, this.ticksExisted + this.reapplicationDelay);
 
-						((Spell) spell).useOnEntity(null, lvt_7_3_);
+						((Cast) spell).useOnEntity(null, lvt_7_3_);
 
 						if (this.radiusOnUse != 0.0F) {
 							lvt_2_1_ += this.radiusOnUse;
@@ -365,7 +357,7 @@ public class SpellCloudEntity extends Entity {
 		}
 
 		if (this.spell != Spells.EMPTY_SPELL && this.spell != null) {
-			compoundNBT.putString("Spell", ((Spell) spell).getId().toString()); // TODO: REPLACE (SPELL) wit (ISPELL)
+			compoundNBT.putString("Spell", ((Cast) spell).getId().toString()); // TODO: REPLACE (SPELL) wit (ISPELL)
 		}
 	}
 

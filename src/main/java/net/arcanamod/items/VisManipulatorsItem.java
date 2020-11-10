@@ -6,7 +6,7 @@ import net.arcanamod.blocks.Taint;
 import net.arcanamod.systems.spell.ISpell;
 import net.arcanamod.systems.spell.SpellData;
 import net.arcanamod.systems.spell.Spells;
-import net.arcanamod.systems.spell.impls.Spell;
+import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.util.Pair;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -57,24 +57,24 @@ public class VisManipulatorsItem extends Item{
 			ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
 			int r = random.nextInt(5);
 			if (r == 0) {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.MINING_SPELL.build(
+				toSet.getOrCreateTag().put("Spell", Cast.serializeNBT(Spells.MINING_SPELL.build(
 						new SpellData(Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY, Pair.of(Aspects.EARTH, Aspects.GLUTTONY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
 			} else if (r == 1) {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.EXCHANGE_SPELL.build(
+				toSet.getOrCreateTag().put("Spell", Cast.serializeNBT(Spells.EXCHANGE_SPELL.build(
 						new SpellData(Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY, Pair.of(Aspects.EARTH, Aspects.LUST), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
 
 			} else if (r == 2) {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.FABRIC_SPELL.build(
+				toSet.getOrCreateTag().put("Spell", Cast.serializeNBT(Spells.FABRIC_SPELL.build(
 						new SpellData(Aspects.EMPTY, Aspects.EMPTY, Aspects.EMPTY, Pair.of(Aspects.FIRE, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
 			} else if (r == 3) {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.VACUUM_SPELL.build(
+				toSet.getOrCreateTag().put("Spell", Cast.serializeNBT(Spells.VACUUM_SPELL.build(
 						new SpellData(Aspects.EARTH, Aspects.EARTH, Aspects.EARTH, Pair.of(Aspects.EARTH, Aspects.SLOTH), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
 			} else {
-				toSet.getOrCreateTag().put("Spell", Spell.serializeNBT(Spells.WARDING_SPELL.build(
+				toSet.getOrCreateTag().put("Spell", Cast.serializeNBT(Spells.WARDING_SPELL.build(
 						new SpellData(Aspects.AIR, Aspects.AIR, Aspects.AIR, Pair.of(Aspects.AIR, Aspects.EMPTY), Pair.of(Aspects.EMPTY, Aspects.EMPTY)),
 						new CompoundNBT())));
 			}

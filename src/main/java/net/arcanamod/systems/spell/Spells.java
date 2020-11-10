@@ -2,7 +2,7 @@ package net.arcanamod.systems.spell;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.arcanamod.systems.spell.impls.*;
+import net.arcanamod.systems.spell.casts.*;
 import net.minecraft.util.ResourceLocation;
 
 public class Spells {

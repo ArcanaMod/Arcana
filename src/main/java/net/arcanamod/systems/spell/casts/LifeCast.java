@@ -1,13 +1,10 @@
-package net.arcanamod.systems.spell.impls;
+package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.blocks.tiles.WardenedBlockTileEntity;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.systems.spell.*;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class LifeCast extends Spell {
+public class LifeCast extends Cast {
 	@Override
 	public ISpell build(SpellData data, CompoundNBT compound) {
 		this.data = data;
