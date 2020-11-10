@@ -21,10 +21,8 @@ import net.minecraft.world.World;
 import java.util.Optional;
 
 public class WardingCast extends Cast {
-	@Override
-	public ICast build(SpellData data, CompoundNBT compound) {
-		this.data = data;
-		isBuilt = true;
+	
+	public ICast build(CompoundNBT compound) {
 		return this;
 	}
 

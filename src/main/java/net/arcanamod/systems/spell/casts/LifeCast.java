@@ -16,10 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class LifeCast extends Cast {
-	@Override
-	public ICast build(SpellData data, CompoundNBT compound) {
-		this.data = data;
-		isBuilt = true;
+	
+	public ICast build(CompoundNBT compound) {
 		return this;
 	}
 
@@ -27,7 +25,7 @@ public class LifeCast extends Cast {
 	public ResourceLocation getId() {
 		return ArcanaVariables.arcLoc("life");
 	}
-
+	
 	@Override
 	public Aspect getSpellAspect() {
 		return Aspects.LIFE;

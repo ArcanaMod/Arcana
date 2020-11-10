@@ -15,6 +15,7 @@ import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.core.CastCircle;
 import net.arcanamod.systems.spell.modules.core.CastMethod;
+import net.arcanamod.util.Pair;
 import net.arcanamod.util.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;

@@ -22,11 +22,8 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 
 public class FabricCast extends Cast {
-
-	@Override
-	public ICast build(SpellData data, CompoundNBT compound) {
-		this.data = data;
-		isBuilt = true;
+	
+	public ICast build(CompoundNBT compound) {
 		return this;
 	}
 
