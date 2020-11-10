@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell.modules.impl;
+package net.arcanamod.systems.spell.modules.core;
 
 import net.arcanamod.systems.spell.modules.SpellModule;
 

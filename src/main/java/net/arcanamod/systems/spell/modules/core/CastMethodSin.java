@@ -1,8 +1,11 @@
-package net.arcanamod.systems.spell.modules.impl;
+package net.arcanamod.systems.spell.modules.core;
 
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.systems.spell.modules.SpellModule;
 
 public class CastMethodSin extends SpellModule {
+	public Aspect aspect;
+
 	@Override
 	public int getInputAmount() {
 		return 1;
