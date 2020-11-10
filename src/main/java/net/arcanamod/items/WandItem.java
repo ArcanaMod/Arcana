@@ -15,6 +15,7 @@ import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.core.CastCircle;
 import net.arcanamod.systems.spell.modules.core.CastMethod;
+import net.arcanamod.util.Pair;
 import net.arcanamod.util.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
@@ -137,11 +138,11 @@ public class WandItem extends Item{
 				// oh my god this code is terrible // YES, I know Xd.
 				// time for more VisUtils I guess
 				if(spell.getSpellCosts().toList().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
-					ActionResultType result;
+					ActionResultType result = null;
 					if (player.isCrouching())
-						result = spell.use(player, player.getHeldItem(hand), ICast.Action.SPECIAL);
+						spell.use(player, player.getHeldItem(hand), Pair.of(null, null), ICast.Action.SPECIAL);
 					else
-						result = spell.use(player, player.getHeldItem(hand), ICast.Action.USE);
+						spell.use(player, player.getHeldItem(hand), Pair.of(null, null), ICast.Action.USE);
 					// remove aspects from wand if spell successes.
 					if (result != ActionResultType.FAIL && result != ActionResultType.PASS)
 					for(AspectStack cost : spell.getSpellCosts().toList())

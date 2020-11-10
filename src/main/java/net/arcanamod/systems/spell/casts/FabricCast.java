@@ -22,8 +22,7 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 
 public class FabricCast extends Cast {
-
-	@Override
+	
 	public ICast build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
@@ -34,7 +33,11 @@ public class FabricCast extends Cast {
 	public ResourceLocation getId() {
 		return ArcanaVariables.arcLoc("fabric");
 	}
-
+	
+	public ICast build(CompoundNBT compound){
+		return null;
+	}
+	
 	@Override
 	public Aspect getSpellAspect() {
 		return Aspects.FABRIC;

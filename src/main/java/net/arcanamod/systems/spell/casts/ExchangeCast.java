@@ -23,8 +23,7 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 
 public class ExchangeCast extends Cast {
-
-	@Override
+	
 	public ICast build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
@@ -35,7 +34,11 @@ public class ExchangeCast extends Cast {
 	public ResourceLocation getId() {
 		return ArcanaVariables.arcLoc("exchange");
 	}
-
+	
+	public ICast build(CompoundNBT compound){
+		return null;
+	}
+	
 	@Override
 	public Aspect getSpellAspect() {
 		return Aspects.EXCHANGE;

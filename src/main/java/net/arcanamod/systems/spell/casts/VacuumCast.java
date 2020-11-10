@@ -21,13 +21,12 @@ import net.minecraft.world.World;
 public class VacuumCast extends Cast {
 
     /**
-     * Defines all variables. DON'T USE THAT IN REGISTRY!!!
+     * Defines all variables.
      *
      * @param data     spell data
      * @param compound extra data
      * @return this but with defined variables.
      */
-    @Override
     public ICast build(SpellData data, CompoundNBT compound) {
         this.data = data;
         isBuilt = true;
@@ -38,7 +37,11 @@ public class VacuumCast extends Cast {
     public ResourceLocation getId() {
         return ArcanaVariables.arcLoc("vacuum");
     }
-
+    
+    public ICast build(CompoundNBT compound){
+        return null;
+    }
+    
     /**
      * Core aspect in spell.
      *

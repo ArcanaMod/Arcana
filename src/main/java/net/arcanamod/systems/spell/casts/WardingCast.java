@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import java.util.Optional;
 
 public class WardingCast extends Cast {
-	@Override
+	
 	public ICast build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
@@ -32,7 +32,11 @@ public class WardingCast extends Cast {
 	public ResourceLocation getId() {
 		return ArcanaVariables.arcLoc("warding");
 	}
-
+	
+	public ICast build(CompoundNBT compound){
+		return null;
+	}
+	
 	@Override
 	public Aspect getSpellAspect() {
 		return Aspects.ARMOUR;

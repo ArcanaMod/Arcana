@@ -24,8 +24,7 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 
 public class MiningCast extends Cast {
-
-	@Override
+	
 	public ICast build(SpellData data, CompoundNBT compound) {
 		this.data = data;
 		isBuilt = true;
@@ -36,7 +35,11 @@ public class MiningCast extends Cast {
 	public ResourceLocation getId() {
 		return ArcanaVariables.arcLoc("mining");
 	}
-
+	
+	public ICast build(CompoundNBT compound){
+		return null;
+	}
+	
 	@Override
 	public Aspect getSpellAspect() {
 		return Aspects.MINING;
