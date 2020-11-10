@@ -79,7 +79,6 @@
     {
       "key": "arcana:alchemy",
       "name": "research.arcana.alchemy",
-      "desc": "research.arcana.alchemy.desc",
       "icons": [
         "arcana:crucible"
       ],
@@ -129,6 +128,10 @@
         {
           "type": "string",
           "content": "research.arcana.aspect_collection.stage.2"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.aspect_collection.stage.3"
         }
       ]
     },

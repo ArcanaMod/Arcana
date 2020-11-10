@@ -661,7 +661,7 @@
     "_comment": "Fluids",
     "fluid.arcana.tainted_goo": "Tainted Goo",
 
-    "_comment": "Research",
+    "_comment": "Old Research",
     "requirement.guesswork": "Guess the Recipe",
     "requirement.chemistry": "Complete the Chemistry",
     "requirement.experience": "%sx Experience Levels",
@@ -716,18 +716,18 @@
     "research.arcana.eucalyptus_tree.stage.2": "Nothing particularly interesting to note. It looks good, that's all I can say.",
 
     "research.arcana.silver": "Silver",
-    "research.arcana.silver.desc": "Kills 99.9%% of taint bugs",
+    "research.arcana.silver.desc": "Bang! and the taint is gone",
     "research.arcana.silver.stage.1": "Silver is mundane. I say that partially because it doesn't have any intrinsic magical properties - I say that also because it deflects and repels magic. It's been historically quite useful for cleaning up magical mishaps and containing magic nicely - I will *absolutely* want some of that.",
     "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. Silver tools mine tainted blocks twice as fast as other tools, on top of having near-gold base mining speed. This also gives them... lacking durability, more on-par with stone than anything I would use regularly.",
 
 
     "research.arcana.aspect_tubes": "Aspect Tubes",
-    "research.arcana.aspect_tubes.desc": "Moving aspects with no blockages",
-    "research.arcana.aspect_tubes.text": "Vis Tubes are a fast and convenient way to transfer vis from point A to point B, and for a number of magical devices, the only way. Pipes connect to other pipes, and any blocks capable of handling aspects in essentia form. When a block inserts aspects into a pipe, the aspects are relayed directly to connected blocks (so long as they can accept it). Similarly, when a block attempts to draw vis, it's drawn from connected blocks instantly. The blocks chosen to insert to, or draw aspects from, are arbitrary.\n\nThere are two variants of the essentia pipe: the aspect window and the aspect valve. The aspect window shows the last type of aspect that passed through it for some time, and the aspect valve can be opened and closed by clicking.\n\nRedstone force-closes a valve, and a window pipe emits a comparator signal while displaying an aspect.",
+    "research.arcana.aspect_tubes.desc": "Moving aspects, the fast way",
+    "research.arcana.aspect_tubes.text": "Vis Tubes are a fast and convenient way to transfer vis from point A to point B, and for a number of magical devices, the only way. Pipes connect to other pipes, and any blocks capable of handling aspects in essentia form. When a block inserts aspects into a pipe, the aspects are relayed directly to connected blocks (so long as they can accept it). Similarly, when a block attempts to draw vis, it's drawn from connected blocks instantly. The blocks chosen to insert to, or draw aspects from, are completely arbitrary - any block that can accept the aspect or be drawn from may be chosen.\n\nThere are two special variants of the essentia pipe: the aspect window and the aspect valve. The aspect window temporarily shows the last type of aspect that passed through it, and the aspect valve can be opened and closed by clicking.\n\nRedstone force-closes a valve, and a window pipe emits a comparator signal while displaying an aspect.",
 
     "research.arcana.root": "Arcanum",
     "research.arcana.root.desc": "Book of discovery",
-    "research.arcana.root.text": "Within my travels, I came across a set of scribbled notes. I didn't think much of it; the cryptic message (\"Listen to the unseen tears between dimensions, they speak of untold power that can shape the world.\") didn't make sense to me, even after days of pondering, so I left it aside. But inspiration comes when you least expect it, like the old saying goes.\n\nA strange sensation came over me, almost like a subtle pulse of energy, as I walked. I looked around to find its source, but there was nothing in sight. I tried focusing on the sensation - eyes closed and mind focused - it was weak, but I could sense it. A feeling that got stronger as I went closer to the source.\n\nI stopped and reached out with my hand, and felt a slight tingle on my fingertips. It was there! But invisible to the naked eye. Is this what the notes referred to? What is this presence? I need to know more.\n\nThis book will be a record of my findings into the field of magic. I dub this book §oArcanum§r.",
+    "research.arcana.root.text": "Within my travels, I came across a set of scribbled notes. I didn't think much of it at the time; the cryptic message (\"Listen to the unseen tears between dimensions, they speak of untold power that can shape the world.\") didn't make sense to me, even after days of pondering, so I left it aside. But inspiration comes when you least expect it, like the old saying goes.\n\nA strange sensation came over me, almost like a subtle pulse of energy, as I walked. I looked around to find its source, but there was nothing in sight. I tried focusing on the sensation - eyes closed and mind focused - it was weak, but I could sense it. A feeling that got stronger as I went closer to the source.\n\nI stopped and reached out with my hand, and felt a slight tingle on my fingertips. It was there! But invisible to the naked eye. Is this what the notes referred to? What is this presence? I need to know more.\n\nThis book will be a record of my findings into the field of magic. I dub this book §oArcanum§r.",
 
     "research.arcana.collecting_aspects": "Collecting Aspects",
     "research.arcana.collecting_aspects.stage.1": "Nobody knows everything; only learning can widen our minds. To study and use magic, I'll need to collect and concentrate it; every form of research starts with aspects.\n\nThey're useless when in the form of objects, so first I will need to separate them out into vis and essentia. First, I'll need some equipment: a crucible and alembic to distill the aspects, a suitably warded jar to contain them, and a tube to transport them.\n\nA crucible can be made by right-clicking a cauldron with a wand, which can be made with a stick and two wand caps, placed diagonally. Wands will come in useful later too.",
@@ -830,16 +830,29 @@
 
     "research.arcana.aspects": "Aspects of Magic",
     "research.arcana.aspects.desc": "The Building Blocks",
-    "research.arcana.aspects.text": "Everything is created from some combination and structure of aspects. Six aspects are considered primal, and are the fundamental building blocks of reality. A further 52 aspects are made up of other aspects; these are known as compound aspects.",
+    "research.arcana.aspects.text": "Everything is created from some combination and structure of aspects. Six aspects are considered primal, and are the fundamental building blocks of reality. A further 52 aspects are made up of other aspects; these are known as compound aspects. Aspects can also take more pure forms, like different states of mundane elements. Essentia is the most physical kind, manifesting as a liquid that imposes itself onto all it touches. Life essentia causes extreme, sudden growth; fire essentia causes, well, fire. Vis is an incorporeal form, which can be used to power any sort of magical device. Although it is often portrayed as energy itself, it is more accurately described as a highly energetic gas. (TODO: lore??)",
 
     "research.arcana.wandcraft": "Wandcraft",
+
     "research.arcana.arcane_crafting": "Arcane Crafting",
     "research.arcana.arcane_crafting.desc": "Not your regular crafting table",
+    "research.arcana.arcane_crafting.stage.1": "A crafting table is a useful tool for putting together all sorts of devices and tools. However, the lack of magical apparatus presents a significant issue when constructing magical devices, especially ones for which construction necessitates magical processes. Fixing this is top priority. Hopefully, a simple tap from a wand should make a crafting table more friendly to magic.",
+    "research.arcana.arcane_crafting.stage.2": "Any crafting table can be converted to an Arcane Crafting Table by sneak-right-clicking using a wand. The arcane variant is just as capable as the mundane version, usable for any regular crafting recipe, but also providing tools for magical recipes. Magic can be drawn directly from a wand for such recipes.\n\nOne such item is the goggles of revealing, which make visible nodes and the aspects contained within devices.",
+
     "research.arcana.alchemy": "Alchemy",
-    "research.arcana.alchemy.desc": "A controlled unity of elements",
+    "research.arcana.alchemy.stage.1": "All objects are composed of some combination of aspects, just like they are some combination of mundane elements. Like mundane elements, I will benefit from learning to separate and combine these aspects, and the simplest method available to me is heat. Of course, magic must be used to catalyze the breakdown, and no readily available mundane materials are capable of resisting the required level of heat. A magically altered cauldron, in a similar way to the arcane crafting table, should work.",
+    "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down objects into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), items thrown in will be destroyed and their aspects added to a water-essentia solution. Although drawing the pure essentia from the solution is currently beyond me, the essentia within can be used in particular recipes. Throwing in an item that completes a recipe I know will instead consume some of the stored essentia, transforming the item. More in-depth research of this will be conducted in the §oAlchemy§r category of this book.",
+
     "research.arcana.aspect_collection": "Aspect Collection",
+    "research.arcana.aspect_collection.stage.1": "Alchemy can only do so much. I need to purify essentia further. Perhaps some time exploring will give me the inspiration I need. (TODO: fieldwork - find silverwood tree?) (TODO: image of scribbles)",
+    "research.arcana.aspect_collection.stage.2": "...a flash of brilliance! The wood of a greatwood or silverwood tree, sealed by amber, enhanced further through a stability spell, is capable of supporting pure essentia. From there, separation is simple enough - essentia solution comes in, and is split into its constituent aspects and (evaporated) water. One design I've created for this is the \"Arcane Alembic\", which draws the solution from crucibles directly.",
+    "research.arcana.aspect_collection.stage.3": "Arcane Alembics must be placed above a crucible, with between 1-4 (TODO: config) air blocks between them. Up to 3 (TODO: config) alembics can be stacked on top of eachother, all of which will draw from the same crucible in parallel. (A dropper or dispenser can drop any item into a crucible without crafting an item.)",
+
     "research.arcana.aspect_crystallization": "Aspect Crystallization",
-    "research.arcana.aspect_crystallization.desc": "Solidify the immaterial",
+    "research.arcana.aspect_crystallization.desc": "Grasp the immaterial",
+    "research.arcana.aspect_crystallization.stage.1": "Essentia -> Crystals.",
+    "research.arcana.aspect_crystallization.stage.2": "h.",
+
     "research.arcana.research": "Research",
     "research.arcana.research.desc": "Knowledge is power",
     "research.arcana.fieldwork": "Fieldwork",
