@@ -2,10 +2,13 @@ package net.arcanamod.aspects;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaVariables;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.function.Consumer;
 
 public class Aspect {
+	private static Logger logger = LogManager.getLogger();
 
 	private final int id;
 	private final String aspectName;
@@ -51,7 +54,7 @@ public class Aspect {
 		Aspect aspect = new Aspect(name, colors,aspectTickConsumer);
 		Aspects.ASPECTS.put(ArcanaVariables.arcLoc(name),aspect);
 		if (!ArcanaVariables.test)
-			Arcana.logger.info("Arcana: Added new aspect '"+name+"'");
+			logger.info("Arcana: Added new aspect '"+name+"'");
 		return aspect;
 	}
 
