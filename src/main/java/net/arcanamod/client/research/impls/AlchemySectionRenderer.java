@@ -8,6 +8,7 @@ import net.arcanamod.systems.research.impls.AlchemySection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.List;
 
@@ -30,9 +31,13 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 			ItemStack[] stacks = alchemyRecipe.getIngredients().get(0).getMatchingStacks();
 			item(stacks[dispIndex(stacks.length, player)], inputX, inputY);
 			
+			// Display aspects
 			List<AspectStack> aspects = alchemyRecipe.getAspects();
 			int aspectsWidth = Math.min(3, aspects.size());
-			int aspectStartX = ulX + 12 - (8 * (aspectsWidth - 3)), aspectStartY = ulY + 29;
+			int aspectStartX = ulX + 9 - (8 * (aspectsWidth - 3)), aspectStartY = ulY + 30;
+			// Shadow behind the aspects for readability
+			int color = 0x50222222;
+			GuiUtils.drawGradientRect(0, aspectStartX - 2, aspectStartY - 2, aspectStartX + stacks.length * 19 + 2, aspectStartY + 1 + 19 * (int)Math.ceil(aspects.size() / 3f), color, color);
 			for(int i = 0, size = aspects.size(); i < size; i++){
 				AspectStack aspect = aspects.get(i);
 				int xx = aspectStartX + (i % aspectsWidth) * 19;
