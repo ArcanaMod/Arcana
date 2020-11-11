@@ -32,7 +32,7 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 			
 			List<AspectStack> aspects = alchemyRecipe.getAspects();
 			int aspectsWidth = Math.min(3, aspects.size());
-			int aspectStartX = ulX + 6 - (8 * (aspectsWidth - 3)), aspectStartY = ulY + 29;
+			int aspectStartX = ulX + 12 - (8 * (aspectsWidth - 3)), aspectStartY = ulY + 29;
 			for(int i = 0, size = aspects.size(); i < size; i++){
 				AspectStack aspect = aspects.get(i);
 				int xx = aspectStartX + (i % aspectsWidth) * 19;
@@ -56,8 +56,8 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 			int aspectStartX = ulX + 12 - (8 * (aspectsWidth - 3)), aspectStartY = ulY + 29;
 			for(int i = 0, size = aspects.size(); i < size; i++){
 				AspectStack stack = aspects.get(i);
-				int xx = aspectStartX + (i % aspectsWidth) * 17;
-				int yy = aspectStartY + (i / aspectsWidth) * 17;
+				int xx = aspectStartX + (i % aspectsWidth) * 19;
+				int yy = aspectStartY + (i / aspectsWidth) * 19;
 				aspectTooltipArea(stack.getAspect(), mouseX, mouseY, screenWidth, screenHeight, xx, yy);
 			}
 		}
