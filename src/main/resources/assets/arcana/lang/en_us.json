@@ -830,9 +830,10 @@
 
     "research.arcana.aspects": "Aspects of Magic",
     "research.arcana.aspects.desc": "The Building Blocks",
-    "research.arcana.aspects.text": "Everything is created from some combination and structure of aspects. Six aspects are considered primal, and are the fundamental building blocks of reality. A further 52 aspects are made up of other aspects; these are known as compound aspects. Aspects can also take more pure forms, like different states of mundane elements. Essentia is the most physical kind, manifesting as a liquid that imposes itself onto all it touches. Life essentia causes extreme, sudden growth; fire essentia causes, well, fire. Vis is an incorporeal form, which can be used to power any sort of magical device. Although it is often portrayed as energy itself, it is more accurately described as a highly energetic gas. (TODO: lore??)",
+    "research.arcana.aspects.text": "Everything is created from some combination and structure of aspects. Six aspects are considered primal, and are the fundamental building blocks of reality. A further 52 aspects are made up of other aspects; these are known as compound aspects. (TODO: display all aspects.) Aspects can also take more pure forms, like different states of mundane elements. Crystals are the most stable, physical kind, one I can hold in my hand and store in chests like any mundane objects; their energy bound tightly. Essentia manifests as a liquid that imposes itself onto all it touches; life essentia causes extreme, sudden growth; fire essentia causes, well, fire. Vis is an incorporeal form, which can be used to power any sort of magical device. Although it is often portrayed as energy itself, it is more equivalent to gas. (TODO: lore??)",
 
     "research.arcana.wandcraft": "Wandcraft",
+    "research.arcana.wandcraft.desc": "Tools of the trade",
 
     "research.arcana.arcane_crafting": "Arcane Crafting",
     "research.arcana.arcane_crafting.desc": "Not your regular crafting table",
@@ -841,7 +842,7 @@
 
     "research.arcana.alchemy": "Alchemy",
     "research.arcana.alchemy.stage.1": "All objects are composed of some combination of aspects, just like they are some combination of mundane elements. Like mundane elements, I will benefit from learning to separate and combine these aspects, and the simplest method available to me is heat. Of course, magic must be used to catalyze the breakdown, and no readily available mundane materials are capable of resisting the required level of heat. A magically altered cauldron, in a similar way to the arcane crafting table, should work.",
-    "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down objects into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), items thrown in will be destroyed and their aspects added to a water-essentia solution. Although drawing the pure essentia from the solution is currently beyond me, the essentia within can be used in particular recipes. Throwing in an item that completes a recipe I know will instead consume some of the stored essentia, transforming the item. More in-depth research of this will be conducted in the §oAlchemy§r category of this book.",
+    "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down objects into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), items thrown in will be destroyed and their aspects added to a water-essentia solution. Although drawing the pure essentia from the solution is currently beyond me, the essentia within can be used in particular recipes. Throwing in an item that completes a recipe I know will instead consume some of the stored essentia, transforming the item. A simple application of this is the creation of Nitor, a constant, stable flame (that can be used to heat a crucible) from coal.\n\nA crucible can be emptied by right clicking - a crucible containing only water can be emptied with a bucket. §oBreaking or emptying a crucible with aspects within it will create flux proportional to the amount of aspects within.§r.\n\nMore in-depth research of this will be conducted in the §oAlchemy§r category of this book.",
 
     "research.arcana.aspect_collection": "Aspect Collection",
     "research.arcana.aspect_collection.stage.1": "Alchemy can only do so much. I need to purify essentia further. Perhaps some time exploring will give me the inspiration I need. (TODO: fieldwork - find silverwood tree?) (TODO: image of scribbles)",
@@ -850,20 +851,46 @@
 
     "research.arcana.aspect_crystallization": "Aspect Crystallization",
     "research.arcana.aspect_crystallization.desc": "Grasp the immaterial",
-    "research.arcana.aspect_crystallization.stage.1": "Essentia -> Crystals.",
-    "research.arcana.aspect_crystallization.stage.2": "h.",
+    "research.arcana.aspect_crystallization.stage.1": "I have isolated aspects into their purest form. Many applications of magic, however, require a more stable, solid form - aspect crystals. It should not be difficult to crystallize essentia, given what I now know.",
+    "research.arcana.aspect_crystallization.stage.2": "By [TODO: lore], the Aspect Crystallizer (patent pending) is capable of solidifying essentia into crystals, given a crystal base.",
 
     "research.arcana.research": "Research",
     "research.arcana.research.desc": "Knowledge is power",
+
     "research.arcana.fieldwork": "Fieldwork",
+
     "research.arcana.research_expertise": "Research Expertise",
     "research.arcana.research_expertise.desc": "Improving my improvements",
+
     "research.arcana.research_mastery": "Research Mastery",
     "research.arcana.research_mastery.desc": "§5You can never know all the facts. Only I can.§5",
+
     "research.arcana.archaeology": "Archaeology",
     "research.arcana.archaeology.desc": "Unveiling what once was",
+
     "research.arcana.foci": "Arcane Foci",
     "research.arcana.foci.desc": "Power with purpose",
+
+    "research.arcana.alchemy_root": "Alchemy",
+    "research.arcana.alchemy_root.text": "Alchemy, the usage of essentia solutions to transform substances, will be researched and described here.",
+
+    "research.arcana.arcanium": "Magical Metallurgy",
+    "research.arcana.arcanium.stage.1": "[I want a stronger material, and magic can achieve that.]",
+    "research.arcana.arcanium.stage.2": "[And that's Arcanium.]",
+
+    "research.arcana.transmutation": "Transmutation",
+    "research.arcana.transmutation.stage.1": "[Silver??? -> Copper -> Iron -> Gold -> ???]",
+    "research.arcana.transmutation.stage.2": "[just do the goddamn recipes]",
+
+    "research.arcana.purification": "Metal Purification",
+    "research.arcana.purification.desc": "Technology 101",
+    "research.arcana.purification.stage.1": "[metal ore -> native cluster]",
+    "research.arcana.purification.stage.2": "[just do the goddamn recipes]",
+
+    "research.arcana.hedge_alchemy": "Hedge Alchemy",
+    "research.arcana.hedge_alchemy.desc": "Miscellaneous Transformations",
+    "research.arcana.hedge_alchemy.stage.1": "[f(x) -> g(x)]",
+    "research.arcana.hedge_alchemy.stage.2": "[just do the goddamn recipes]",
 
     "_comment": "Messages",
     "message.arcana.disabled": "This book is currently disabled.",

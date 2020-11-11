@@ -25,6 +25,7 @@
     {
       "key": "arcana:wandcraft",
       "name": "research.arcana.wandcraft",
+      "desc": "research.arcana.wandcraft.desc",
       "icons": [
         "arcana:item/basicwand.png"
       ],
@@ -96,11 +97,18 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.alchemy.stage.1"
+          "content": "research.arcana.alchemy.stage.1",
+          "requirements": [
+            "0*arcana:crucible"
+          ]
         },
         {
           "type": "string",
           "content": "research.arcana.alchemy.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:nitor"
         }
       ]
     },
@@ -132,6 +140,10 @@
         {
           "type": "string",
           "content": "research.arcana.aspect_collection.stage.3"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/alembic"
         }
       ]
     },

@@ -3,7 +3,6 @@
     {
       "key": "arcana:alchemy_root",
       "name": "research.arcana.alchemy_root",
-      "desc": "research.arcana.alchemy_root.desc",
       "icons": [
         "arcana:crucible"
       ],
@@ -36,7 +35,7 @@
       "meta": [
         ""
       ],
-      "x": 3,
+      "x": 4,
       "y": 0,
       "sections": [
         {
@@ -46,6 +45,93 @@
         {
           "type": "string",
           "content": "research.arcana.arcanium.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:arcanium_ingot"
+        }
+      ]
+    },
+    {
+      "key": "arcana:transmutation",
+      "name": "research.arcana.transmutation",
+      "icons": [
+        "minecraft:iron_ingot",
+        "minecraft:gold_ingot"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root"
+      ],
+      "meta": [
+        ""
+      ],
+      "x": 2,
+      "y": 2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.transmutation.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.transmutation.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:purification",
+      "name": "research.arcana.purification",
+      "icons": [
+        "minecraft:iron_ore",
+        "minecraft:gold_ore"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root"
+      ],
+      "meta": [
+        ""
+      ],
+      "x": -2,
+      "y": 2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.purification.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.purification.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:hedge_alchemy",
+      "name": "research.arcana.hedge_alchemy",
+      "icons": [
+        "minecraft:redstone",
+        "minecraft:glowstone_dust",
+        "minecraft:gunpowder",
+        "minecraft:blaze_powder"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root"
+      ],
+      "meta": [
+        ""
+      ],
+      "x": 0,
+      "y": -2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.hedge_alchemy.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.hedge_alchemy.stage.2"
         }
       ]
     }
