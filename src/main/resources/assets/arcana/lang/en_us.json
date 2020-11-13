@@ -794,6 +794,7 @@
 
     "research.arcana.wandcraft": "Wandcraft",
     "research.arcana.wandcraft.desc": "Tools of the trade",
+    "research.arcana.wandcraft.stage.1": "[someone else do this pls]",
 
     "research.arcana.arcane_crafting": "Arcane Crafting",
     "research.arcana.arcane_crafting.desc": "Not your regular crafting table",
@@ -825,6 +826,7 @@
 
     "research.arcana.research": "Research",
     "research.arcana.research.desc": "Knowledge is power",
+    "research.arcana.research.stage.1": "[h]",
 
     "research.arcana.fieldwork": "Fieldwork",
 
