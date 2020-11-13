@@ -22,28 +22,12 @@
   },
   "aspects": [
     {
-      "aspect": "arcana:air",
-      "amount": 2
-    },
-    {
-      "aspect": "arcana:chaos",
-      "amount": 2
+      "aspect": "arcana:water",
+      "amount": 5
     },
     {
       "aspect": "arcana:order",
-      "amount": 2
-    },
-    {
-      "aspect": "arcana:earth",
-      "amount": 2
-    },
-    {
-      "aspect": "arcana:fire",
-      "amount": 2
-    },
-    {
-      "aspect": "arcana:water",
-      "amount": 2
+      "amount": 10
     }
   ],
   "result": {

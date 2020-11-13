@@ -4,7 +4,12 @@
       "key": "arcana:aspects",
       "name": "research.arcana.aspects",
       "icons": [
-        "arcana:aspect_water"
+        "arcana:aspect_earth",
+        "arcana:aspect_air",
+        "arcana:aspect_water",
+        "arcana:aspect_fire",
+        "arcana:aspect_order",
+        "arcana:aspect_chaos"
       ],
       "category": "arcana:fundamentals",
       "parents": [],
@@ -69,7 +74,10 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.arcane_crafting.stage.1"
+          "content": "research.arcana.arcane_crafting.stage.1",
+          "requirements": [
+            "0*arcana:arcane_crafting_table"
+          ]
         },
         {
           "type": "string",
@@ -138,12 +146,101 @@
           "content": "research.arcana.aspect_collection.stage.2"
         },
         {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/alembic",
+          "requirements": [
+            "0*arcana:alembic"
+          ]
+        },
+        {
           "type": "string",
           "content": "research.arcana.aspect_collection.stage.3"
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/alembic"
+          "content": "arcana:arcane_crafting/jar"
+        }
+      ]
+    },
+    {
+      "key": "arcana:aspect_tubes",
+      "name": "research.arcana.aspect_tubes",
+      "desc": "research.arcana.aspect_tubes.desc",
+      "icons": [
+        "arcana:essentia_tube",
+        "arcana:essentia_window",
+        "arcana:essentia_valve"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:aspect_collection"
+      ],
+      "meta": [
+        "round_base",
+        "hidden",
+        "reverse"
+      ],
+      "x": 0,
+      "y": -3,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.aspect_tubes.text"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_tube"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_valve"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_window"
+        }
+      ]
+    },
+    {
+      "key": "arcana:variant_jars",
+      "name": "research.arcana.variant_jars",
+      "desc": "research.arcana.variant_jars.desc",
+      "icons": [
+        "arcana:secure_jar",
+        "arcana:void_jar"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:aspect_collection",
+        "arcana:flux"
+      ],
+      "meta": [],
+      "x": 4,
+      "y": -1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.variant_jars.stage.1",
+          "requirements": [
+            "3*arcana:imprison_crystal",
+            "3*arcana:taint_crystal",
+            "3*arcana:mana_crystal",
+            "3*arcana:crystal_crystal",
+            "3*arcana:earth_crystal",
+            "6*arcana:amber"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.variant_jars.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/void_jar"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/secure_jar"
         }
       ]
     },

@@ -661,7 +661,7 @@
     "_comment": "Fluids",
     "fluid.arcana.tainted_goo": "Tainted Goo",
 
-    "_comment": "Old Research",
+    "_comment": "Research",
     "requirement.guesswork": "Guess the Recipe",
     "requirement.chemistry": "Complete the Chemistry",
     "requirement.experience": "%sx Experience Levels",
@@ -672,6 +672,7 @@
     "requirement.puzzle.get_note.2": "Requires scribing tools and paper",
     "requirement.tag.accepts_any": "Any %s",
 
+    "_comment": "Old Research",
     "research.arcana.category.basics": "Basics",
     "research.arcana.category.fundamentals": "FUNdamentals",
     "research.arcana.category.artifice": "Artifice",
@@ -683,47 +684,6 @@
     "research.arcana.category.taint": "Taint",
     "research.arcana.category.crimson": "Crimson Rites",
     "research.arcana.category.illustrious": "Cleansing",
-
-    "research.arcana.willow_tree": "Willow Tree",
-    "research.arcana.willow_tree.stage.1": "Willow trees are relatively abundant among the world. Historically, Thaumaturges have used it to create wand cores. I would like to do the same, and hopefully find more uses for the wood.",
-    "research.arcana.willow_tree.stage.2": "Creating a wand core from willow wood proves to be more difficult than initially anticipated. (TODO: further research)",
-
-    "research.arcana.amber": "Amber",
-    "research.arcana.amber.stage.1": "Amber ore can be found abundantly near the surface, and has preservative properties. Perhaps these could be applied to magic?",
-    "research.arcana.amber.stage.2": "The makeup of amber makes it useful for storing aspects and preventing them from causing unwanted effects in-world. Unfortunately, it's rather difficult to integrate into magical devices.",
-
-    "research.arcana.dair_tree": "Dair Tree",
-    "research.arcana.dair_tree.desc": "Eerie Wood",
-    "research.arcana.dair_tree.stage.1": "Dair trees are common in many parts of the world, and have some convenient magical properties. Less convenient, however, are the spirits that often dwell within them, which may become hostile at an attempt to harvest their wood. Still, I should collect some for study purposes - they may make a sturdy wand core yet. Dair trees are rather large, so I hope they don't mind too much.",
-    "research.arcana.dair_tree.stage.2": "Dair wood can be quite simply shaped into a wand core, similar to hawthorn in power. It stores slightly less vis than a greatwood core, but can support more powerful caps.",
-
-    "research.arcana.hawthorn_tree": "Hawthorn Tree",
-    "research.arcana.hawthorn_tree.stage.1": "Hawthorn trees, native to magical forests, have been historically relevant among many devices for its mystical power. I should get my hand on some sooner rather than later.",
-    "research.arcana.hawthorn_tree.stage.2": "Just as expected, magic comes quite easily to hawthorn wood. An easy application of it is a strong wand core, able to support powerful caps and store plenty of vis.",
-
-    "research.arcana.greatwood_tree": "Greatwood Tree",
-    "research.arcana.greatwood_tree.desc": "Great. Fine.",
-    "research.arcana.greatwood_tree.stage.1": "Greatwood trees are massive, even compared to other large trees. They have a great (wink) capacity for vis, and their wood is applicable in a number of magical devices. Their size makes them relatively cheap, too.",
-    "research.arcana.greatwood_tree.stage.2": "A wand core made from greatwood can store plenty of vis. (TODO: ?????)",
-
-    "research.arcana.silverwood_tree": "Silverwood Tree",
-    "research.arcana.silverwood_tree.stage.1": "Protectors of magical forests, Silverwood trees are deeply valuable for their purifying properties. They help shelter denizens of magical forests from dark magic and pollution. Such effects would be invaluable for controlling magic and protecting against taint.",
-    "research.arcana.silverwood_tree.stage.2": "The wood is strong, and resistant to harmful effects, even disconnected to the plant. Creating a wand core from it will take much more work, but there are some clear short term uses for this in purifying and filtering aspects.",
-
-    "research.arcana.eucalyptus_tree": "Eucalyptus Tree",
-    "research.arcana.eucalyptus_tree.desc": "Bubblegum doesn't grow on trees",
-    "research.arcana.eucalyptus_tree.stage.1": "Eucalyptus trees can be found occasionally, and besides their attractive wood, and the cute creatures that call them home, they aren't known for any magical properties. Still, a sample would be useful.",
-    "research.arcana.eucalyptus_tree.stage.2": "Nothing particularly interesting to note. It looks good, that's all I can say.",
-
-    "research.arcana.silver": "Silver",
-    "research.arcana.silver.desc": "Bang! and the taint is gone",
-    "research.arcana.silver.stage.1": "Silver is mundane. I say that partially because it doesn't have any intrinsic magical properties - I say that also because it deflects and repels magic. It's been historically quite useful for cleaning up magical mishaps and containing magic nicely - I will *absolutely* want some of that.",
-    "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. Silver tools mine tainted blocks twice as fast as other tools, on top of having near-gold base mining speed. This also gives them... lacking durability, more on-par with stone than anything I would use regularly.",
-
-
-    "research.arcana.aspect_tubes": "Aspect Tubes",
-    "research.arcana.aspect_tubes.desc": "Moving aspects, the fast way",
-    "research.arcana.aspect_tubes.text": "Vis Tubes are a fast and convenient way to transfer vis from point A to point B, and for a number of magical devices, the only way. Pipes connect to other pipes, and any blocks capable of handling aspects in essentia form. When a block inserts aspects into a pipe, the aspects are relayed directly to connected blocks (so long as they can accept it). Similarly, when a block attempts to draw vis, it's drawn from connected blocks instantly. The blocks chosen to insert to, or draw aspects from, are completely arbitrary - any block that can accept the aspect or be drawn from may be chosen.\n\nThere are two special variants of the essentia pipe: the aspect window and the aspect valve. The aspect window temporarily shows the last type of aspect that passed through it, and the aspect valve can be opened and closed by clicking.\n\nRedstone force-closes a valve, and a window pipe emits a comparator signal while displaying an aspect.",
 
     "research.arcana.root": "Arcanum",
     "research.arcana.root.desc": "Book of discovery",
@@ -847,7 +807,16 @@
     "research.arcana.aspect_collection": "Aspect Collection",
     "research.arcana.aspect_collection.stage.1": "Alchemy can only do so much. I need to purify essentia further. Perhaps some time exploring will give me the inspiration I need. (TODO: fieldwork - find silverwood tree?) (TODO: image of scribbles)",
     "research.arcana.aspect_collection.stage.2": "...a flash of brilliance! The wood of a greatwood or silverwood tree, sealed by amber, enhanced further through a stability spell, is capable of supporting pure essentia. From there, separation is simple enough - essentia solution comes in, and is split into its constituent aspects and (evaporated) water. One design I've created for this is the \"Arcane Alembic\", which draws the solution from crucibles directly.",
-    "research.arcana.aspect_collection.stage.3": "Arcane Alembics must be placed above a crucible, with between 1-4 (TODO: config) air blocks between them. Up to 3 (TODO: config) alembics can be stacked on top of eachother, all of which will draw from the same crucible in parallel. (A dropper or dispenser can drop any item into a crucible without crafting an item.)",
+    "research.arcana.aspect_collection.stage.3": "Arcane Alembics must be placed above a crucible, with between 1-4 (TODO: config) air blocks between them. Up to 3 (TODO: config) alembics can be stacked on top of eachother, all of which will draw from the same crucible in parallel. (A dropper or dispenser can drop any item into a crucible without crafting an item.)\n\nAlembics store up to 50 of 5 aspects. Storing aspects in the long term will require dedicated storage and transport for essentia. Essentia can be stored in Warded Jars - up to 100 of any type - which can be broken and moved around, retaining their contents. Alembics output their contained aspects to all adjacent essentia-accepting blocks.\n\nJars emit a comparator signal based on the amount of essentia inside them.",
+
+    "research.arcana.aspect_tubes": "Aspect Tubes",
+    "research.arcana.aspect_tubes.desc": "Moving aspects, the fast way",
+    "research.arcana.aspect_tubes.text": "Vis Tubes are a fast and convenient way to transfer vis from point A to point B, and for a number of magical devices, the only way. Pipes connect to other pipes, and any blocks capable of handling aspects in essentia form. When a block inserts aspects into a pipe, the aspects are relayed directly to connected blocks (so long as they can accept it). Similarly, when a block attempts to draw vis, it's drawn from connected blocks instantly.\n\nThe blocks chosen to insert to, or draw aspects from, are completely arbitrary - any block that can accept the aspect or be drawn from may be chosen.\n\nThere are two special variants of the essentia pipe: the aspect window and the aspect valve. The aspect window temporarily shows the last type of aspect that passed through it, and the aspect valve can be opened and closed by clicking.\n\nRedstone force-closes a valve, and a window pipe emits a comparator signal while displaying an aspect.",
+
+    "research.arcana.variant_jars": "Variant Jars",
+    "research.arcana.variant_jars.desc": "Getting taint to sit still",
+    "research.arcana.variant_jars.stage.1": "Warded jars, while stable enough for most aspects, cannot contain the power of pure taint. Its influence radiates out, corrupting the earth it touches. Nor can store as much of the more plentiful aspects as I would like. Enhancing my jar design to contain taint is a top priority, and a capacity upgrade would be appreciated.",
+    "research.arcana.variant_jars.stage.2": "Containing wayward aspects simply requires integrating the essence of containment itself into the design of the jar, in the form of a Secure Jar. Secure jars store the same amount as regular jars, but don't allow the aspects inside to affect the world.\n\nIncreasing capacity turned out to be significantly harder than anticipated; concentrating too much of any aspect tends to produce unreliable, unstable, and dangerous results. But adding a little link to the void in the cap allows for Void Jars to ignore excess input, destroying what cannot be stored.",
 
     "research.arcana.aspect_crystallization": "Aspect Crystallization",
     "research.arcana.aspect_crystallization.desc": "Grasp the immaterial",
@@ -891,6 +860,43 @@
     "research.arcana.hedge_alchemy.desc": "Miscellaneous Transformations",
     "research.arcana.hedge_alchemy.stage.1": "[f(x) -> g(x)]",
     "research.arcana.hedge_alchemy.stage.2": "[just do the goddamn recipes]",
+
+    "_comment": "Info Entries",
+
+    "research.arcana.willow_tree": "Willow Tree",
+    "research.arcana.willow_tree.stage.1": "Willow trees are relatively abundant among the world. Historically, Thaumaturges have used it to create wand cores. I would like to do the same, and hopefully find more uses for the wood.",
+    "research.arcana.willow_tree.stage.2": "Creating a wand core from willow wood proves to be more difficult than initially anticipated. (TODO: further research)",
+
+    "research.arcana.amber": "Amber",
+    "research.arcana.amber.stage.1": "Amber ore can be found abundantly near the surface, and has preservative properties. Perhaps these could be applied to magic?",
+    "research.arcana.amber.stage.2": "The makeup of amber makes it useful for storing aspects and preventing them from causing unwanted effects in-world. Unfortunately, it's rather difficult to integrate into magical devices.",
+
+    "research.arcana.dair_tree": "Dair Tree",
+    "research.arcana.dair_tree.desc": "Eerie Wood",
+    "research.arcana.dair_tree.stage.1": "Dair trees are common in many parts of the world, and have some convenient magical properties. Less convenient, however, are the spirits that often dwell within them, which may become hostile at an attempt to harvest their wood. Still, I should collect some for study purposes - they may make a sturdy wand core yet. Dair trees are rather large, so I hope they don't mind too much.",
+    "research.arcana.dair_tree.stage.2": "Dair wood can be quite simply shaped into a wand core, similar to hawthorn in power. It stores slightly less vis than a greatwood core, but can support more powerful caps.",
+
+    "research.arcana.hawthorn_tree": "Hawthorn Tree",
+    "research.arcana.hawthorn_tree.stage.1": "Hawthorn trees, native to magical forests, have been historically relevant among many devices for its mystical power. I should get my hand on some sooner rather than later.",
+    "research.arcana.hawthorn_tree.stage.2": "Just as expected, magic comes quite easily to hawthorn wood. An easy application of it is a strong wand core, able to support powerful caps and store plenty of vis.",
+
+    "research.arcana.greatwood_tree": "Greatwood Tree",
+    "research.arcana.greatwood_tree.stage.1": "Greatwood trees are massive, even compared to other large trees. They have a great (wink) capacity for vis, and their wood is applicable in a number of magical devices. Their size makes them relatively cheap, too.",
+    "research.arcana.greatwood_tree.stage.2": "A wand core made from greatwood can store plenty of vis. (TODO: ?????)",
+
+    "research.arcana.silverwood_tree": "Silverwood Tree",
+    "research.arcana.silverwood_tree.stage.1": "Protectors of magical forests, Silverwood trees are deeply valuable for their purifying properties. They help shelter denizens of magical forests from dark magic and pollution. Such effects would be invaluable for controlling magic and protecting against taint.",
+    "research.arcana.silverwood_tree.stage.2": "The wood is strong, and resistant to harmful effects, even disconnected to the plant. Creating a wand core from it will take much more work, but there are some clear short term uses for this in purifying and filtering aspects.",
+
+    "research.arcana.eucalyptus_tree": "Eucalyptus Tree",
+    "research.arcana.eucalyptus_tree.desc": "Bubblegum doesn't grow on trees",
+    "research.arcana.eucalyptus_tree.stage.1": "Eucalyptus trees can be found occasionally, and besides their attractive wood, and the cute creatures that call them home, they aren't known for any magical properties. Still, a sample would be useful.",
+    "research.arcana.eucalyptus_tree.stage.2": "Nothing particularly interesting to note. It looks good; that's all I can say.",
+
+    "research.arcana.silver": "Silver",
+    "research.arcana.silver.desc": "Bang! and the taint is gone!",
+    "research.arcana.silver.stage.1": "Silver is mundane. I say that partially because it doesn't have any intrinsic magical properties - I say that also because it deflects and repels magic. It's been historically quite useful for cleaning up magical mishaps and containing magic nicely - I will *absolutely* want some of that.",
+    "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. Silver tools mine tainted blocks twice as fast as other tools, on top of having near-gold base mining speed. This also gives them... lacking durability, more on-par with stone than anything I would use regularly.",
 
     "_comment": "Messages",
     "message.arcana.disabled": "This book is currently disabled.",
