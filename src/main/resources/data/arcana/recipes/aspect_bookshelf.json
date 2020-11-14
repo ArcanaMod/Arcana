@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "www",
+    "  c",
+    "www"
+  ],
+  "key": {
+    "w": [
+      {
+        "item": "arcana:greatwood_planks"
+      },
+      {
+        "item": "arcana:silverwood_planks"
+      }
+    ],
+    "c": {
+      "tag": "arcana:crystals"
+    }
+  },
+  "result": {
+    "item": "arcana:aspect_bookshelf"
+  }
+}

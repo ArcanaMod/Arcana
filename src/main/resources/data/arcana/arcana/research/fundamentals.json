@@ -139,7 +139,10 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.aspect_collection.stage.1"
+          "content": "research.arcana.aspect_collection.stage.1",
+          "requirements": [
+            "10*arcana::xp"
+          ]
         },
         {
           "type": "string",
@@ -159,6 +162,10 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:arcane_crafting/jar"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:empty_phial"
         }
       ]
     },
@@ -324,8 +331,31 @@
           "content": "research.arcana.research.stage.1"
         },
         {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/research_table",
+          "requirements": [
+            "0*arcana:research_table_placer"
+          ]
+        },
+        {
           "type": "string",
           "content": "research.arcana.research.stage.2"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:scribing_tools"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:aspect_bookshelf",
+          "requirements": [
+            "arcana::puzzle{arcana:chemistry_intro_puzzle}",
+            "arcana::puzzle{arcana:gw_enchanting_table}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.research.stage.3"
         }
       ]
     },
@@ -499,6 +529,30 @@
           "type": "string",
           "content": "research.arcana.foci.stage.2"
         }
+      ]
+    }
+  ],
+  "puzzles": [
+    {
+      "key": "arcana:gw_enchanting_table",
+      "type": "guesswork",
+      "recipe": "minecraft:enchanting_table",
+      "hints": [
+        "minecraft:book=requirement.guesswork.ench.hint.book",
+        "minecraft:diamond=requirement.guesswork.ench.hint.diamond",
+        "minecraft:obsidian=requirement.guesswork.ench.hint.obsidian"
+      ]
+    },
+    {
+      "key": "arcana:chemistry_intro_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "chaos",
+        "order",
+        "water",
+        "fire",
+        "air",
+        "earth"
       ]
     }
   ]
