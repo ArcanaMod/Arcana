@@ -13,6 +13,7 @@ import net.arcanamod.systems.spell.modules.core.CastCircle;
 import net.arcanamod.systems.spell.modules.core.CastMethod;
 import net.arcanamod.systems.spell.modules.core.Connector;
 import net.arcanamod.systems.spell.modules.core.StartCircle;
+import net.minecraft.nbt.CompoundNBT;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -36,8 +37,16 @@ public class TestAS {
 	}
 
 	@Test
-	public void testAndCreateBasicSpell(){
-		Assert.assertNotNull(Spell.createBasicSpell());
+	public void testSpellSerializer(){
+		Spell spell = Spell.createAdvancedSpell();
+		Spell.Serializer serializer = new Spell.Serializer();
+		CompoundNBT output = serializer.serializeNBT(spell,new CompoundNBT());
+		Assert.assertNotNull(output);
+	}
+
+	@Test
+	public void testAndCreateAdvancedSpell(){
+		Assert.assertNotNull(Spell.createAdvancedSpell());
 	}
 
 	@Test

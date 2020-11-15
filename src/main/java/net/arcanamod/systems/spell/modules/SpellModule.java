@@ -1,14 +1,14 @@
 package net.arcanamod.systems.spell.modules;
 
-import net.arcanamod.util.Pair;
+import net.minecraft.nbt.CompoundNBT;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static net.arcanamod.util.Pair.of;
-
 public abstract class SpellModule {
 	private List<SpellModule> bounded = new ArrayList<>();
+
+	public abstract String getName();
 
 	public int getOutputAmount(){
 		return 5;
@@ -33,4 +33,6 @@ public abstract class SpellModule {
 	public List<SpellModule> getBoundedModules(){
 		return bounded;
 	}
+
+	public abstract CompoundNBT toNBT();
 }

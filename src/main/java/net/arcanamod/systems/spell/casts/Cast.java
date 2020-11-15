@@ -45,10 +45,6 @@ public abstract class Cast implements ICast {
 	}
 
 	public abstract ResourceLocation getId();
-	
-	public Optional<ITextComponent> getName(CompoundNBT nbt){
-		return Optional.of(new TranslationTextComponent("spell." + getId().getNamespace() + "." + getId().getPath()));
-	}
 
 	public abstract ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget);
 	public abstract ActionResultType useOnPlayer(PlayerEntity playerTarget);

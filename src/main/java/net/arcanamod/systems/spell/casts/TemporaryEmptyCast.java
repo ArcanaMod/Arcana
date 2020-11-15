@@ -24,21 +24,6 @@ public class TemporaryEmptyCast implements ICast {
 	}
 
 	@Override
-	public SpellData getSpellData() {
-		return new SpellData(Aspects.EMPTY,Aspects.EMPTY,Aspects.EMPTY, of(Aspects.EMPTY,Aspects.EMPTY),of(Aspects.EMPTY,Aspects.EMPTY));
-	}
-
-	@Override
-	public SpellCosts getSpellCosts() {
-		return new SpellCosts(0,0,0,0,0,0,0);
-	}
-
-	@Override
-	public int getComplexity() {
-		return 0;
-	}
-
-	@Override
 	public int getSpellDuration() {
 		return 0;
 	}

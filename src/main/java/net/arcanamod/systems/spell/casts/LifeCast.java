@@ -32,50 +32,23 @@ public class LifeCast extends Cast {
 	}
 
 	@Override
-	public SpellData getSpellData() {
-		return data;
-	}
-
-	@Override
-	public SpellCosts getSpellCosts() {
-		return new SpellCosts(0,0,1,1,0,0,0);
-	}
-
-	@Override
-	public int getComplexity() {
-		if (!isBuilt) return -2;
-		return  8
-				+ SpellValues.getOrDefault(data.firstModifier,0)
-				+ SpellValues.getOrDefault(data.secondModifier,0)
-				+ SpellValues.getOrDefault(data.sinModifier,0)
-				+ SpellValues.getOrDefault(data.primaryCast.getSecond(),0)/2
-				+ SpellValues.getOrDefault(data.plusCast.getSecond(),0)/2;
-	}
-
-	@Override
 	public int getSpellDuration() {
 		return 1;
 	}
 
-	public int getWardingDuration() throws SpellNotBuiltError {
-		if (!isBuilt) throw new SpellNotBuiltError();
+	public int getWardingDuration() {
 		return SpellValues.getOrDefault(data.firstModifier, 10);
 	}
 
-	public int getAmplifier() throws SpellNotBuiltError {
-		if (!isBuilt) throw new SpellNotBuiltError();
+	public int getAmplifier() {
 		return SpellValues.getOrDefault(data.secondModifier, 1);
 	}
 
 	@Override
 	public ActionResultType useOnEntity(PlayerEntity caster, Entity targetEntity) {
-		try {
-			if (targetEntity instanceof LivingEntity)
-				((LivingEntity)targetEntity).addPotionEffect(new EffectInstance(ArcanaEffects.VICTUS.get(),getWardingDuration(),getAmplifier(),false,true));
-		} catch (SpellNotBuiltError spellNotBuiltError) {
-			spellNotBuiltError.printStackTrace();
-		}
-		return ActionResultType.FAIL;
+		if (targetEntity instanceof LivingEntity)
+			((LivingEntity)targetEntity).addPotionEffect(new EffectInstance(ArcanaEffects.VICTUS.get(),getWardingDuration(),getAmplifier(),false,true));
+		return ActionResultType.SUCCESS;
 	}
 
 	@Override
@@ -86,11 +59,7 @@ public class LifeCast extends Cast {
 
 	@Override
 	public ActionResultType useOnPlayer(PlayerEntity playerTarget) {
-		try {
-			playerTarget.addPotionEffect(new EffectInstance(ArcanaEffects.WARDING.get(),getWardingDuration(),getAmplifier(),false,true));
-		} catch (SpellNotBuiltError spellNotBuiltError) {
-			spellNotBuiltError.printStackTrace();
-		}
-		return ActionResultType.FAIL;
+		playerTarget.addPotionEffect(new EffectInstance(ArcanaEffects.WARDING.get(),getWardingDuration(),getAmplifier(),false,true));
+		return ActionResultType.SUCCESS;
 	}
 }

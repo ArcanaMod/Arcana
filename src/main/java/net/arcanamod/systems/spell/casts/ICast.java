@@ -30,24 +30,6 @@ public interface ICast {
 	 */
 	Aspect getSpellAspect();
 
-	/**
-	 * Returns spell modifiers and returns Cast Aspects that are neat modifiers and are used in combos.
-	 * @return Mod 1, Mod 2, Sin Mod, Cast, Cast+
-	 */
-	SpellData getSpellData();
-
-	/**
-	 * Cost of spell in AspectStacks.
-	 * @return returns cost of spell.
-	 */
-	SpellCosts getSpellCosts();
-
-	/**
-	 * How spell is complex to use / create
-	 * @return returns spell complexity.
-	 */
-	int getComplexity();
-
 	int getSpellDuration();
 
 	/**
@@ -58,7 +40,7 @@ public interface ICast {
 	 * @return
 	 */
 	void use(PlayerEntity player, Object sender, Pair<Aspect,Aspect> cast, ICast.Action action);
-	
+
 	default Optional<ITextComponent> getName(CompoundNBT nbt){
 		return Optional.empty();
 	}

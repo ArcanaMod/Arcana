@@ -132,15 +132,14 @@ public class WandItem extends Item{
 		ArcanaSounds.playSpellCastSound(player);
 		Focus focus = getFocus(player.getHeldItem(hand));
 		if(focus != Focus.NO_FOCUS){
-			ICast spell = focus.getSpell(player.getHeldItem(hand));
+			Spell spell = focus.getSpell(player.getHeldItem(hand));
 			if(spell != null){
 				IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
 				// oh my god this code is terrible // YES, I know Xd.
 				// time for more VisUtils I guess
 				if(spell.getSpellCosts().toList().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
 					if (player.isCrouching())
-						Spell.runSpell(createBasicSpell(),player,player.getHeldItem(hand), ICast.Action.SPECIAL);
-						//result = spell.use(player, player.getHeldItem(hand), ICast.Action.SPECIAL);
+						Spell.runSpell(spell,player,player.getHeldItem(hand), ICast.Action.SPECIAL);
 					else
 						Spell.runSpell(createBasicSpell(),player,player.getHeldItem(hand), ICast.Action.USE);
 					// remove aspects from wand if spell successes.
@@ -248,7 +247,7 @@ public class WandItem extends Item{
 	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
 		super.addInformation(stack, world, tooltip, flag);
 		// Add focus info
-		ICast spell = getFocus(stack).getSpell(stack);
+		Spell spell = getFocus(stack).getSpell(stack);
 		if(spell != null){
 			Optional<ITextComponent> name = spell.getName(getFocusData(stack).getCompound("Spell"));
 			name.ifPresent(e -> tooltip.add(new TranslationTextComponent("tooltip.arcana.spell", e,

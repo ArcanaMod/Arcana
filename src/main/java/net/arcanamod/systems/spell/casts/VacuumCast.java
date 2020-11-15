@@ -45,42 +45,6 @@ public class VacuumCast extends Cast {
         return Aspects.VACUUM;
     }
 
-    /**
-     * Returns spell modifiers and returns Cast Aspects that are neat modifiers and are used in combos.
-     *
-     * @return Mod 1, Mod 2, Sin Mod, Cast, Cast+
-     */
-    @Override
-    public SpellData getSpellData() {
-        return data;
-    }
-
-    /**
-     * Cost of spell in AspectStacks.
-     *
-     * @return returns cost of spell.
-     */
-    @Override
-    public SpellCosts getSpellCosts() {
-        return new SpellCosts(1,0,0,0,0,1,0);
-    }
-
-    /**
-     * How spell is complex to use / create
-     *
-     * @return returns spell complexity.
-     */
-    @Override
-    public int getComplexity() {
-        if (!isBuilt) return -2;
-        return  3
-                + SpellValues.getOrDefault(data.firstModifier,0)*2
-                + SpellValues.getOrDefault(data.secondModifier,0)*4
-                + SpellValues.getOrDefault(data.sinModifier,0)*2
-                + SpellValues.getOrDefault(data.primaryCast.getSecond(),0)*3
-                + SpellValues.getOrDefault(data.plusCast.getSecond(),0)*3;
-    }
-
     @Override
     public int getSpellDuration() {
         return 1;
@@ -109,12 +73,10 @@ public class VacuumCast extends Cast {
     }
 
     protected int getWidth(PlayerEntity playerEntity) {
-        if (!isBuilt) new SpellNotBuiltError().throwException(playerEntity);
         return SpellValues.getOrDefault(data.secondModifier, 1);
     }
 
     protected int getDistance(PlayerEntity playerEntity) {
-        if (!isBuilt) new SpellNotBuiltError().throwException(playerEntity);
         return SpellValues.getOrDefault(data.secondModifier, 16);
     }
 
@@ -123,7 +85,6 @@ public class VacuumCast extends Cast {
      * @return Vacuum blocks duration
      */
     protected int getDuration(PlayerEntity playerEntity) {
-        if (!isBuilt) new SpellNotBuiltError().throwException(playerEntity);
         return (1+SpellValues.getOrDefault(data.firstModifier, 0))*100;
     }
 
