@@ -277,6 +277,10 @@ public class ResearchEntryScreen extends Screen{
 	public boolean isPauseScreen(){
 		return false;
 	}
+
+	public void onClose() {
+		returnToBook();
+	}
 	
 	class ChangePageButton extends Button{
 		
