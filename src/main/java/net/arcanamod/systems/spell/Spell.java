@@ -29,46 +29,19 @@ import static net.arcanamod.aspects.AspectUtils.deserializeAspect;
 public class Spell implements ISpell {
 	public SpellModule mainModule = null;
 
-	public static Spell deserializeNBT(CompoundNBT compound){
-		if (compound.contains("Spell")) {
-			return null;
-		} else return null;
-	}
-
-	public static CompoundNBT serializeNBT(Spell spell){
-		CompoundNBT compound = new CompoundNBT();
-
-		return compound;
+	public static Serializer getSerializer() {
+		return new Spell.Serializer();
 	}
 
 	public static class Serializer{
-		private Object __;
-
-		private Spell deserialized = null;
-		private CompoundNBT serialized = null;
-
 		public CompoundNBT serializeNBT(Spell spell, CompoundNBT compound){
 			compound.put("spell",serialize(spell.mainModule, 0));
 			return compound;
 		}
 
 		public Spell deserializeNBT(CompoundNBT compound){
-			__ = deserialize(compound);
-			return deserialized;
+			return deserialize(compound);
 		}
-
-		/*private SpellModule serialize(SpellModule toSerialize, CompoundNBT boundRef, int deepness) {
-			ListNBT boundList = new ListNBT();
-			for (SpellModule module : toSerialize.getBoundedModules()) {
-				CompoundNBT moduleNBT = new CompoundNBT();
-				moduleNBT.putString("name",module.getName());
-				moduleNBT.put("data",module.toNBT());
-				moduleNBT.put("bound",boundRef);
-				return serialize(module,moduleNBT,++deepness);
-			}
-			serialized = boundRef;
-			return null;
-		}*/
 
 		private CompoundNBT serialize(SpellModule toSerialize, int deepness) {
 			CompoundNBT moduleNBT = new CompoundNBT();
@@ -82,8 +55,8 @@ public class Spell implements ISpell {
 			return moduleNBT;
 		}
 
-		private Spell deserialize(CompoundNBT compound) {
-
+		private Spell deserialize(CompoundNBT spellNBT) {
+			//spellNBT.
 			return null;
 		}
 	}

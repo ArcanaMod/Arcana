@@ -44,11 +44,11 @@ public class FocusItem extends Item implements Focus{
 	}
 
 	public Spell getSpell(ItemStack stack) {
-		return Spell.deserializeNBT(stack.getOrCreateTag().getCompound("focusData").getCompound("Spell"));
+		return Spell.getSerializer().deserializeNBT(stack.getOrCreateTag().getCompound("focusData").getCompound("Spell"));
 	}
 
 	public static Aspect getColourAspect(ItemStack stack) {
-		@Nullable Spell spell = Spell.deserializeNBT(stack.getOrCreateTag().getCompound("Spell"));
+		@Nullable Spell spell = Spell.getSerializer().deserializeNBT(stack.getOrCreateTag().getCompound("Spell"));
 		if (spell != null)
 			return spell.getSpellColor();
 		else return Aspects.EMPTY;
