@@ -6,6 +6,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.IAspectHandler;
@@ -63,13 +64,13 @@ public class Chemistry extends Puzzle{
 		for(JsonElement node : nodeArray){
 			if(node.isJsonPrimitive()){
 				String nodeSt = node.getAsString();
-				try{
-					nodes.add(Aspects.valueOf(nodeSt.toUpperCase()));
-				}catch(IllegalArgumentException ignored){
-					LOGGER.error("Invalid aspect \"" + nodeSt + "\" found in file" + file + "! (Aspects are not case sensitive; check for misspellings.)");
-				}
+				Aspect aspect = AspectUtils.getAspectByResourceLocation(new ResourceLocation(nodeSt));
+				if(aspect != null)
+					nodes.add(aspect);
+				else
+					LOGGER.error("Invalid aspect \"" + nodeSt + "\" found in puzzle " + data.get("key").getAsString() + ", in file " + file + "! (Aspects are not case sensitive, but are namespaced; check for misspellings.)");
 			}else
-				LOGGER.error("Non-String found in nodes array in puzzle in " + file + "!");
+				LOGGER.error("Non-string found in nodes array, in puzzle " + data.get("key").getAsString() + ", in " + file + "!");
 		}
 	}
 	

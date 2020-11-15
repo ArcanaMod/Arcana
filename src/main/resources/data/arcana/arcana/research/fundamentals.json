@@ -547,12 +547,12 @@
       "key": "arcana:chemistry_intro_puzzle",
       "type": "chemistry",
       "nodes": [
-        "chaos",
-        "order",
-        "water",
-        "fire",
-        "air",
-        "earth"
+        "arcana:chaos",
+        "arcana:order",
+        "arcana:water",
+        "arcana:fire",
+        "arcana:air",
+        "arcana:earth"
       ]
     }
   ]
