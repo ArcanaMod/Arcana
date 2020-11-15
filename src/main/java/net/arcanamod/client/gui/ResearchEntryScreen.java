@@ -184,7 +184,7 @@ public class ResearchEntryScreen extends Screen{
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18)
-					return requirements.get(i).onClick(entry);
+					return requirements.get(i).onClick(entry, getMinecraft().player);
 		}
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);

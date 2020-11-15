@@ -57,7 +57,8 @@
       "name": "research.arcana.transmutation",
       "icons": [
         "minecraft:iron_ingot",
-        "minecraft:gold_ingot"
+        "minecraft:gold_ingot",
+        "arcana:silver_ingot"
       ],
       "category": "arcana:alchemy",
       "parents": [
@@ -84,7 +85,8 @@
       "name": "research.arcana.purification",
       "icons": [
         "minecraft:iron_ore",
-        "minecraft:gold_ore"
+        "minecraft:gold_ore",
+        "arcana:silver_ore"
       ],
       "category": "arcana:alchemy",
       "parents": [
@@ -113,7 +115,9 @@
         "minecraft:redstone",
         "minecraft:glowstone_dust",
         "minecraft:gunpowder",
-        "minecraft:blaze_powder"
+        "minecraft:blaze_powder",
+        "minecraft:slime_ball",
+        "minecraft:magma_cream"
       ],
       "category": "arcana:alchemy",
       "parents": [

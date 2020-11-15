@@ -192,7 +192,7 @@ public class Chemistry extends Puzzle{
 		if(slot != null)
 			return slot;
 		else
-			return puzzleSlots.get(index).getAspect();
+			return index >= puzzleSlots.size() || index < 0 ? null : puzzleSlots.get(index).getAspect();
 	}
 	
 	// TODO: this code (and everything below it) could absolutely be made better

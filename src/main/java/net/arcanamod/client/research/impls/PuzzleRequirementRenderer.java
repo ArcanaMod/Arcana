@@ -31,7 +31,10 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 	public List<ITextComponent> tooltip(PuzzleRequirement requirement, PlayerEntity player){
 		if(!(getFrom(requirement) instanceof Fieldwork)){
 			String desc = getFrom(requirement).getDesc();
-			return Arrays.asList(new TranslationTextComponent(desc != null ? desc : getFrom(requirement).getDefaultDesc()), new TranslationTextComponent("requirement.puzzle.get_note.1"), new TranslationTextComponent("requirement.puzzle.get_note.2"));
+			String puzzleDesc = desc != null ? desc : getFrom(requirement).getDefaultDesc();
+			if(requirement.satisfied(player))
+				return Arrays.asList(new TranslationTextComponent(puzzleDesc), new TranslationTextComponent("requirement.puzzle.complete"));
+			return Arrays.asList(new TranslationTextComponent(puzzleDesc), new TranslationTextComponent("requirement.puzzle.get_note.1"), new TranslationTextComponent("requirement.puzzle.get_note.2"));
 		}else
 			return Collections.singletonList(new StringTextComponent(getFrom(requirement).getDesc()));
 	}
