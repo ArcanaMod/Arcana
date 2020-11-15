@@ -47,7 +47,7 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 		int arcanumButtonLeft = guiLeft + 158, arcanumButtonTop = guiTop + 109;
 		if (isPlayerHavingArcanum())
 			if(mouseX >= arcanumButtonLeft && mouseX < arcanumButtonLeft + 20 && mouseY >= arcanumButtonTop && mouseY < arcanumButtonTop + 20)
-				Arcana.proxy.openResearchBookUI(arcLoc("arcanum"));
+				Arcana.proxy.openResearchBookUI(arcLoc("arcanum"), this);
 		return super.mouseClicked(mouseX, mouseY, buttonId);
 	}
 

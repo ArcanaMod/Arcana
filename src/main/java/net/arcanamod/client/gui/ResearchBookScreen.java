@@ -44,6 +44,7 @@ public class ResearchBookScreen extends Screen{
 	List<ResearchCategory> categories;
 	ResourceLocation texture;
 	int tab = 0;
+	Screen parentScreen;
 	
 	// public static final String SUFFIX = "_menu_gui.png";
 	public static final String SUFFIX_RESIZABLE = "_menu_resizable.png";
@@ -59,9 +60,10 @@ public class ResearchBookScreen extends Screen{
 	static float yPan = 0;
 	static float zoom = 0.7f;
 	static boolean showZoom = false;
-	
-	public ResearchBookScreen(ResearchBook book){
+
+	public ResearchBookScreen(ResearchBook book, Screen parentScreen){
 		super(new StringTextComponent(""));
+		this.parentScreen = parentScreen;
 		this.book = book;
 		texture = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + SUFFIX_RESIZABLE);
 		PlayerEntity player = Minecraft.getInstance().player;
@@ -421,7 +423,7 @@ public class ResearchBookScreen extends Screen{
 				if(button != 2){
 					if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS)
 						// left/right (& other) click: open page
-						getMinecraft().displayGuiScreen(new ResearchEntryScreen(entry));
+						getMinecraft().displayGuiScreen(new ResearchEntryScreen(entry, this));
 				}else
 					// middle click: try advance
 					Connection.sendTryAdvance(entry.key());
@@ -459,6 +461,10 @@ public class ResearchBookScreen extends Screen{
 			}
 			return false;
 		}
+	}
+
+	public void onClose() {
+		Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 	
 	/**

@@ -35,6 +35,7 @@ public class ResearchEntryScreen extends Screen{
 	ResourceLocation bg;
 	ResearchEntry entry;
 	int index;
+	Screen parentScreen;
 	
 	Button left, right, cont, ret;
 	
@@ -52,9 +53,10 @@ public class ResearchEntryScreen extends Screen{
 	
 	public static float TEXT_SCALING = ArcanaConfig.BOOK_TEXT_SCALING.get().floatValue();
 	
-	public ResearchEntryScreen(ResearchEntry entry){
+	public ResearchEntryScreen(ResearchEntry entry, Screen parentScreen){
 		super(new StringTextComponent(""));
 		this.entry = entry;
+		this.parentScreen = parentScreen;
 		bg = new ResourceLocation(entry.key().getNamespace(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
 	}
 	
@@ -145,7 +147,7 @@ public class ResearchEntryScreen extends Screen{
 			}
 		};
 		cont = addButton(button);
-		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, p_onPress_1_ -> returnToBook()));
+		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, p_onPress_1_ -> onClose()));
 		updateButtonVisibility();
 	}
 	
@@ -161,17 +163,9 @@ public class ResearchEntryScreen extends Screen{
 		else{
 			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
 			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey))
-				returnToBook();
+				onClose();
 			return false;
 		}
-	}
-	
-	private void returnToBook(){
-		ResearchBookScreen gui = new ResearchBookScreen(entry.category().book());
-		gui.tab = entry.category().book().getCategories().indexOf(entry.category());
-		if(gui.tab < 0)
-			gui.tab = 0;
-		Minecraft.getInstance().displayGuiScreen(gui);
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
@@ -279,7 +273,7 @@ public class ResearchEntryScreen extends Screen{
 	}
 
 	public void onClose() {
-		returnToBook();
+		Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 	
 	class ChangePageButton extends Button{
