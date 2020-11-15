@@ -11,7 +11,13 @@ public class FrozenEffect extends Effect {
 
 	@Override
 	public void performEffect(LivingEntity entity, int amplifier){
-		entity.setMotion(0,entity.getMotion().y*2,0);
+		// this uhhhh
+		// does not work in the slightest
+		//entity.setMotion(0,entity.getMotion().y*2,0);
+		
+		// if you want to change jump height, look at the Jump Boost effect
+		// if you want to affect fall speed, look at the Slow Fall status effect
+		// you will very likely need to mixin
 	}
 
 	@Override
