@@ -26,19 +26,37 @@ import java.util.Optional;
 import static net.arcanamod.util.Pair.of;
 import static net.arcanamod.aspects.AspectUtils.deserializeAspect;
 
+/**
+ * Spell is made of SpellModules that are bound together.
+ */
 public class Spell implements ISpell {
 	public SpellModule mainModule = null;
 
+	/**
+	 * Create new Spell serializer that can be used to deserialize or serialize spell.
+	 * @return Spell serializer.
+	 */
 	public static Serializer getSerializer() {
 		return new Spell.Serializer();
 	}
 
 	public static class Serializer{
+		/**
+		 * Spell to Spell NBT
+		 * @param spell Spell to NBT serialize
+		 * @param compound Existing CompoundNBT or new.
+		 * @return Serialized Spell
+		 */
 		public CompoundNBT serializeNBT(Spell spell, CompoundNBT compound){
 			compound.put("spell",serialize(spell.mainModule, 0));
 			return compound;
 		}
 
+		/**
+		 * Spell NBT to Spell Object
+		 * @param compound Spell NBT
+		 * @return Deserialized Spell
+		 */
 		public Spell deserializeNBT(CompoundNBT compound){
 			return deserialize(compound);
 		}
@@ -61,12 +79,23 @@ public class Spell implements ISpell {
 		}
 	}
 
+	/**
+	 * Run Spell.
+	 * Goes trough all spell modules and executes {@link ICast}.
+	 * @param spell Spell to run.
+	 * @param caster Player that uses the Spell.
+	 * @param sender {@link net.minecraft.item.ItemStack} that {@link net.minecraft.item.Item} extends {@link WandItem}
+	 * @param action Spell use Action.
+	 */
 	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
 		for (SpellModule module : spell.mainModule.getBoundedModules()) {
 			runSpellModule(module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
 		}
 	}
 
+	/**
+	 * Run spell Recursion.
+	 */
 	private static SpellModule runSpellModule(SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
 											  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
 		if (toUnbound.getBoundedModules().size() > 0){
@@ -123,51 +152,62 @@ public class Spell implements ISpell {
 		return null;
 	}
 
-	// Example of spell
-	public static Spell createBasicSpell(){
-		Spell spell = new Spell();
-		Connector startToCastMethod_connector = new Connector();
-		Connector castMethodToCastCircle_connector = new Connector();
-		DoubleModifierCircle doubleModifierCircle = new DoubleModifierCircle();
-		CastCircle castCircle = new CastCircle();
-		doubleModifierCircle.firstAspect = Aspects.AIR;
-		doubleModifierCircle.secondAspect = Aspects.FIRE;
-		castCircle.cast = Casts.MINING_SPELL.build(new CompoundNBT());
-		castCircle.bindModule(doubleModifierCircle);
-		castMethodToCastCircle_connector.bindModule(castCircle);
-		CastMethod castMethod = new CastMethod();
-		castMethod.aspect = Aspects.EARTH;
-		castMethod.bindModule(castMethodToCastCircle_connector);
-		startToCastMethod_connector.bindModule(castMethod);
-		spell.mainModule = new StartCircle();
-		spell.mainModule.bindModule(startToCastMethod_connector);
-		return spell;
-	}
+	/**
+	 * Example spells.
+	 */
+	public static class Samples{
+		/**
+		 * Create example basic Spell that is used for testing.
+		 * @return a basic Spell
+		 */
+		public static Spell createBasicSpell(){
+			Spell spell = new Spell();
+			Connector startToCastMethod_connector = new Connector();
+			Connector castMethodToCastCircle_connector = new Connector();
+			DoubleModifierCircle doubleModifierCircle = new DoubleModifierCircle();
+			CastCircle castCircle = new CastCircle();
+			doubleModifierCircle.firstAspect = Aspects.AIR;
+			doubleModifierCircle.secondAspect = Aspects.FIRE;
+			castCircle.cast = Casts.MINING_SPELL.build(new CompoundNBT());
+			castCircle.bindModule(doubleModifierCircle);
+			castMethodToCastCircle_connector.bindModule(castCircle);
+			CastMethod castMethod = new CastMethod();
+			castMethod.aspect = Aspects.EARTH;
+			castMethod.bindModule(castMethodToCastCircle_connector);
+			startToCastMethod_connector.bindModule(castMethod);
+			spell.mainModule = new StartCircle();
+			spell.mainModule.bindModule(startToCastMethod_connector);
+			return spell;
+		}
 
-	// Example of spell
-	public static Spell createAdvancedSpell(){
-		Spell spell = new Spell();
-		Connector startToCastMethod_connector = new Connector();
-		Connector castMethodToCastCircle0_connector = new Connector();
-		Connector castMethodToCastCircle1_connector = new Connector();
-		DoubleModifierCircle doubleModifierCircle = new DoubleModifierCircle();
-		CastCircle castCircle0 = new CastCircle();
-		CastCircle castCircle1 = new CastCircle();
-		castMethodToCastCircle1_connector.bindModule(castCircle1);
-		doubleModifierCircle.firstAspect = Aspects.AIR;
-		doubleModifierCircle.secondAspect = Aspects.FIRE;
-		castCircle0.cast = Casts.MINING_SPELL.build(new CompoundNBT());
-		castCircle0.bindModule(doubleModifierCircle);
-		castCircle1.cast = Casts.FABRIC_SPELL;
-		castMethodToCastCircle0_connector.bindModule(castCircle0);
-		CastMethod castMethod = new CastMethod();
-		castMethod.aspect = Aspects.EARTH;
-		castMethod.bindModule(castMethodToCastCircle0_connector);
-		castMethod.bindModule(castMethodToCastCircle1_connector);
-		startToCastMethod_connector.bindModule(castMethod);
-		spell.mainModule = new StartCircle();
-		spell.mainModule.bindModule(startToCastMethod_connector);
-		return spell;
+		/**
+		 * Create example advanced Spell that is used for testing.
+		 * @return a basic Spell
+		 */
+		public static Spell createAdvancedSpell(){
+			Spell spell = new Spell();
+			Connector startToCastMethod_connector = new Connector();
+			Connector castMethodToCastCircle0_connector = new Connector();
+			Connector castMethodToCastCircle1_connector = new Connector();
+			DoubleModifierCircle doubleModifierCircle = new DoubleModifierCircle();
+			CastCircle castCircle0 = new CastCircle();
+			CastCircle castCircle1 = new CastCircle();
+			castMethodToCastCircle1_connector.bindModule(castCircle1);
+			doubleModifierCircle.firstAspect = Aspects.AIR;
+			doubleModifierCircle.secondAspect = Aspects.FIRE;
+			castCircle0.cast = Casts.MINING_SPELL.build(new CompoundNBT());
+			castCircle0.bindModule(doubleModifierCircle);
+			castCircle1.cast = Casts.FABRIC_SPELL;
+			castMethodToCastCircle0_connector.bindModule(castCircle0);
+			CastMethod castMethod = new CastMethod();
+			castMethod.aspect = Aspects.EARTH;
+			castMethod.bindModule(castMethodToCastCircle0_connector);
+			castMethod.bindModule(castMethodToCastCircle1_connector);
+			startToCastMethod_connector.bindModule(castMethod);
+			spell.mainModule = new StartCircle();
+			spell.mainModule.bindModule(startToCastMethod_connector);
+			return spell;
+		}
 	}
 
 	/**

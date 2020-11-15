@@ -47,6 +47,10 @@ public interface ICast {
 	
 	/**
 	 * Click action
+	 *
+	 * USE -> Right click
+	 * ALT_USE -> Left Click
+	 * SPECIAL -> Shift + Right Click
 	 */
 	enum Action{
 		USE,
