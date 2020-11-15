@@ -65,18 +65,34 @@
         "arcana:alchemy_root"
       ],
       "meta": [
-        ""
       ],
       "x": 2,
       "y": 2,
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.transmutation.stage.1"
+          "content": "research.arcana.transmutation.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:iron_transmutation_puzzle}",
+            "arcana::puzzle{arcana:silver_transmutation_puzzle}",
+            "arcana::puzzle{arcana:gold_transmutation_puzzle}"
+          ]
         },
         {
           "type": "string",
           "content": "research.arcana.transmutation.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/gold_ingot_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/silver_ingot_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/iron_ingot_by_transmutation"
         }
       ]
     },
@@ -141,5 +157,35 @@
     }
   ],
   "puzzles": [
+    {
+      "key": "arcana:iron_transmutation_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:metal",
+        "arcana:exchange",
+        "arcana:tool"
+      ]
+    },
+    {
+      "key": "arcana:silver_transmutation_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:metal",
+        "arcana:exchange",
+        "arcana:ice",
+        "arcana:imprison"
+      ]
+    },
+    {
+      "key": "arcana:gold_transmutation_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:metal",
+        "arcana:exchange",
+        "arcana:greed",
+        "arcana:envy",
+        "arcana:senses"
+      ]
+    }
   ]
 }

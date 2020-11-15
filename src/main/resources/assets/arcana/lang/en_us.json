@@ -855,8 +855,8 @@
     "research.arcana.arcanium.stage.2": "[And that's Arcanium.]",
 
     "research.arcana.transmutation": "Transmutation",
-    "research.arcana.transmutation.stage.1": "[Silver??? -> Copper -> Iron -> Gold -> ???]",
-    "research.arcana.transmutation.stage.2": "[just do the goddamn recipes]",
+    "research.arcana.transmutation.stage.1": "[Silver -> Iron -> Gold -> loop]",
+    "research.arcana.transmutation.stage.2": "[also works with blocks]",
 
     "research.arcana.purification": "Metal Purification",
     "research.arcana.purification.desc": "Technology 101",
