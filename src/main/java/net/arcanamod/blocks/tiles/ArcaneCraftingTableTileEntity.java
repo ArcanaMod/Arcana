@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -100,6 +101,20 @@ public class ArcaneCraftingTableTileEntity extends LockableTileEntity {
 
 	@Override
 	public void clear() {
+
+	}
+
+	@Override
+	public CompoundNBT write(CompoundNBT nbt) {
+		super.write(nbt);
+		ItemStackHelper.saveAllItems(nbt, items);
+		return nbt;
+	}
+
+	@Override
+	public void read(CompoundNBT nbt) {
+		super.read(nbt);
+		ItemStackHelper.loadAllItems(nbt, items);
 
 	}
 }
