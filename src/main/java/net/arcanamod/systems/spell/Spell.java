@@ -1,10 +1,8 @@
 package net.arcanamod.systems.spell;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.items.WandItem;
-import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.modules.SpellModule;
@@ -13,24 +11,28 @@ import net.arcanamod.systems.spell.modules.core.*;
 import net.arcanamod.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static net.arcanamod.util.Pair.of;
-import static net.arcanamod.aspects.AspectUtils.deserializeAspect;
 
 /**
  * Spell is made of SpellModules that are bound together.
  */
 public class Spell implements ISpell {
 	public SpellModule mainModule = null;
+
+	private static Logger logger = LogManager.getLogger();
 
 	/**
 	 * Create new Spell serializer that can be used to deserialize or serialize spell.
@@ -58,13 +60,16 @@ public class Spell implements ISpell {
 		 * @return Deserialized Spell
 		 */
 		public Spell deserializeNBT(CompoundNBT compound){
-			return deserialize(compound);
+			Spell spell = new Spell();
+			spell.mainModule = new StartCircle();
+			spell.mainModule.bindModule(deserialize(spell.mainModule, (CompoundNBT) Objects.requireNonNull(compound.get("spell")), 0));
+			return spell;
 		}
 
 		private CompoundNBT serialize(SpellModule toSerialize, int deepness) {
 			CompoundNBT moduleNBT = new CompoundNBT();
 			ListNBT boundList = new ListNBT();
-			for (SpellModule module : toSerialize.getBoundedModules()) {
+			for (SpellModule module : toSerialize.getBoundModules()) {
 				moduleNBT.putString("name",module.getName());
 				moduleNBT.put("data",module.toNBT());
 				boundList.add(serialize(module,++deepness));
@@ -73,9 +78,20 @@ public class Spell implements ISpell {
 			return moduleNBT;
 		}
 
-		private Spell deserialize(CompoundNBT spellNBT) {
-			//spellNBT.
-			return null;
+		private SpellModule deserialize(SpellModule toDeserialize, CompoundNBT spellNBT, int deepness) {
+			SpellModule createdModule = null;
+			if (spellNBT.getString("name")!=null&&spellNBT.getString("name")!="")
+				 createdModule = SpellModule.fromNBT(spellNBT);
+
+			if (spellNBT.get("bound") != null && createdModule != null) {
+				for (INBT inbt : ((ListNBT) spellNBT.get("bound"))) {
+					if (inbt instanceof CompoundNBT) {
+						CompoundNBT compound = ((CompoundNBT) inbt);
+						createdModule.bindModule(deserialize(toDeserialize, compound, ++deepness));
+					}
+				}
+			}
+			return createdModule;
 		}
 	}
 
@@ -88,7 +104,7 @@ public class Spell implements ISpell {
 	 * @param action Spell use Action.
 	 */
 	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
-		for (SpellModule module : spell.mainModule.getBoundedModules()) {
+		for (SpellModule module : spell.mainModule.getBoundModules()) {
 			runSpellModule(module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
 		}
 	}
@@ -98,8 +114,8 @@ public class Spell implements ISpell {
 	 */
 	private static SpellModule runSpellModule(SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
 											  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
-		if (toUnbound.getBoundedModules().size() > 0){
-			for (SpellModule module : toUnbound.getBoundedModules()) {
+		if (toUnbound.getBoundModules().size() > 0){
+			for (SpellModule module : toUnbound.getBoundModules()) {
 				if (module instanceof CastMethod)
 					castMethodsAspects.add(of(((CastMethod) module).aspect,Aspects.EMPTY));
 				else if (module instanceof CastMethodSin) {
@@ -121,7 +137,7 @@ public class Spell implements ISpell {
 		if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof WandItem) {
 			if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)) != null) {
 				if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
-					for (SpellModule module : WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.getBoundedModules()) {
+					for (SpellModule module : WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.getBoundModules()) {
 						updateSpellStatusBarRecursive(module, player, new ArrayList<>());
 					}
 				}
@@ -131,8 +147,8 @@ public class Spell implements ISpell {
 
 	private static SpellModule updateSpellStatusBarRecursive(SpellModule toUnbound, PlayerEntity player,
 											  List<Pair<Aspect,Aspect>> castMethodsAspects) {
-		if (toUnbound.getBoundedModules().size() > 0){
-			for (SpellModule module : toUnbound.getBoundedModules()) {
+		if (toUnbound.getBoundModules().size() > 0){
+			for (SpellModule module : toUnbound.getBoundModules()) {
 				if (module instanceof CastMethod)
 					castMethodsAspects.add(of(((CastMethod) module).aspect, Aspects.EMPTY));
 				else if (module instanceof CastMethodSin) {

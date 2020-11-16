@@ -20,7 +20,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestAS {
+public class TestAspect {
 
 	@Test
 	public void vertexTest(){
@@ -34,19 +34,6 @@ public class TestAS {
 			r[i] = i-(amount/2);
 		}
 		return r;
-	}
-
-	@Test
-	public void testSpellSerializer(){
-		Spell spell = Spell.createAdvancedSpell();
-		Spell.Serializer serializer = new Spell.Serializer();
-		CompoundNBT output = serializer.serializeNBT(spell,new CompoundNBT());
-		Assert.assertNotNull(output);
-	}
-
-	@Test
-	public void testAndCreateAdvancedSpell(){
-		Assert.assertNotNull(Spell.createAdvancedSpell());
 	}
 
 	@Test

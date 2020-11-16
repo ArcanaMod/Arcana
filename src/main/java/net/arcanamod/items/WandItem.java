@@ -50,7 +50,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import static net.arcanamod.systems.spell.Spell.createBasicSpell;
+import static net.arcanamod.systems.spell.Spell.Samples.createBasicSpell;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
