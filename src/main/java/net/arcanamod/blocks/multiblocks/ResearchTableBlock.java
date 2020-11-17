@@ -4,11 +4,13 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
+import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.EnumProperty;
@@ -122,6 +124,11 @@ public class ResearchTableBlock extends WaterloggableBlock implements GroupedBlo
 			return world.getTileEntity(pos);
 		else
 			return world.getTileEntity(pos.offset(world.getBlockState(pos).get(FACING).rotateYCCW()));
+	}
+
+	@Override
+	public Item asItem() {
+		return ArcanaItems.RESEARCH_TABLE_PLACER.get();
 	}
 	
 	public enum EnumSide implements IStringSerializable{

@@ -2,9 +2,11 @@ package net.arcanamod.blocks.multiblocks.foci_forge;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.bases.GroupedBlock;
+import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -68,7 +70,12 @@ public abstract class FociForgeBlock extends Block implements GroupedBlock{
 	public BlockRenderType getRenderType(BlockState state){
 		return BlockRenderType.INVISIBLE;
 	}
-	
+
+	@Override
+	public Item asItem() {
+		return ArcanaItems.FOCI_FORGE_PLACER.get();
+	}
+
 	@Nullable
 	public ItemGroup getGroup(){
 		return null;
