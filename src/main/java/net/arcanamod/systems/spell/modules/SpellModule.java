@@ -2,11 +2,13 @@ package net.arcanamod.systems.spell.modules;
 
 import com.google.common.collect.Maps;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
 import net.arcanamod.systems.spell.modules.circle.SinModifierCircle;
 import net.arcanamod.systems.spell.modules.circle.SingleModifierCircle;
 import net.arcanamod.systems.spell.modules.core.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -24,8 +26,8 @@ public abstract class SpellModule {
 		try {
 			constructor = modules.get(spellNBT.getString("name")).getConstructor();
 			SpellModule createdModule = (SpellModule) constructor.newInstance();
-			/*if (createdModule instanceof CastCircle)
-				((CastCircle)createdModule).cast = AspectUtils.deserializeAspect((CompoundNBT)spellNBT.get("data"),"cast");*/
+			if (createdModule instanceof CastCircle)
+				((CastCircle)createdModule).cast = Casts.spellMap.get(new ResourceLocation(((CompoundNBT)spellNBT.get("data")).getString("cast")));
 			if (createdModule instanceof CastMethod)
 				((CastMethod)createdModule).aspect = AspectUtils.deserializeAspect((CompoundNBT)spellNBT.get("data"),"aspect");
 			if (createdModule instanceof CastMethodSin)

@@ -17,8 +17,14 @@ public class TestSpell {
 	}
 
 	@Test
+	public void triggerLunaWithNotWorkingHotswapFunctionBecauseIUseTests(){
+		Spell.getSerializer().serializeTest(Spell.Samples.createDebugSpell().mainModule,new CompoundNBT(), 0);
+		Assert.assertTrue(true);
+	}
+
+	@Test
 	public void testSpellSerializer(){
-		Spell spell = Spell.Samples.createAdvancedSpell();
+		Spell spell = Spell.Samples.createDebugSpell();
 		Spell.Serializer serializer = new Spell.Serializer();
 		CompoundNBT output = serializer.serializeNBT(spell,new CompoundNBT());
 		Assert.assertNotNull(output);
@@ -30,7 +36,11 @@ public class TestSpell {
 		Spell.Serializer serializer = new Spell.Serializer();
 		CompoundNBT input = serializer.serializeNBT(spell,new CompoundNBT());
 		serializer = new Spell.Serializer();
-		Spell output = serializer.deserializeNBT(input);
-		Assert.assertTrue(output==spell);
+		Spell pre_output = serializer.deserializeNBT(input);
+		serializer = new Spell.Serializer();
+		CompoundNBT pre_output_nbt = serializer.serializeNBT(pre_output,new CompoundNBT());
+		serializer = new Spell.Serializer();
+		Spell output = serializer.deserializeNBT(pre_output_nbt);
+		Assert.assertTrue(pre_output_nbt.toString().equals(input.toString()));
 	}
 }

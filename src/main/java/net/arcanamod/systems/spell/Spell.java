@@ -50,7 +50,7 @@ public class Spell implements ISpell {
 		 * @return Serialized Spell
 		 */
 		public CompoundNBT serializeNBT(Spell spell, CompoundNBT compound){
-			compound.put("spell",serialize(spell.mainModule, 0));
+			compound.put("spell",serialize(spell.mainModule, new CompoundNBT(), new ListNBT(), 0));
 			return compound;
 		}
 
@@ -66,13 +66,49 @@ public class Spell implements ISpell {
 			return spell;
 		}
 
-		private CompoundNBT serialize(SpellModule toSerialize, int deepness) {
+		private CompoundNBT serialize(SpellModule toSerialize, CompoundNBT prevModule, ListNBT prevBound, int deepness) {
+			ListNBT boundList = new ListNBT();
+			CompoundNBT moduleNBT = new CompoundNBT();
+			for (SpellModule module : toSerialize.getBoundModules()) {
+				if (module!=null) {
+					moduleNBT = new CompoundNBT();
+					moduleNBT.putString("name", module.getName());
+					moduleNBT.put("data", module.toNBT());
+					serialize(module, moduleNBT, boundList, ++deepness);
+					prevBound.add(moduleNBT);
+				}
+			}
+			prevModule.put("bound",prevBound);
+			return moduleNBT;
+		}
+
+		public CompoundNBT serializeTest(SpellModule toSerialize, CompoundNBT prevModule, int deepness) {
 			CompoundNBT moduleNBT = new CompoundNBT();
 			ListNBT boundList = new ListNBT();
 			for (SpellModule module : toSerialize.getBoundModules()) {
-				moduleNBT.putString("name",module.getName());
-				moduleNBT.put("data",module.toNBT());
-				boundList.add(serialize(module,++deepness));
+				moduleNBT.putString("name", module.getName());
+				moduleNBT.put("data", module.toNBT());
+
+
+				ListNBT boundList0 = new ListNBT();
+
+				CompoundNBT moduleNBT0 = new CompoundNBT();
+				for (SpellModule module0 : module.getBoundModules()) {
+					moduleNBT0 = new CompoundNBT();
+					moduleNBT0.putString("name", module0.getName());
+					moduleNBT0.put("data", module0.toNBT());
+
+					ListNBT boundList1 = new ListNBT();
+
+					for (SpellModule module1 : module0.getBoundModules()) {
+						CompoundNBT moduleNBT1 = new CompoundNBT();
+						moduleNBT1.putString("name", module1.getName());
+						moduleNBT1.put("data", module1.toNBT());
+						boundList0.add(moduleNBT1);
+					}
+					boundList.add(moduleNBT0);
+				}
+				moduleNBT0.put("bound",boundList0);
 			}
 			moduleNBT.put("bound",boundList);
 			return moduleNBT;
@@ -80,7 +116,7 @@ public class Spell implements ISpell {
 
 		private SpellModule deserialize(SpellModule toDeserialize, CompoundNBT spellNBT, int deepness) {
 			SpellModule createdModule = null;
-			if (spellNBT.getString("name")!=null&&spellNBT.getString("name")!="")
+			if (!spellNBT.getString("name").equals(""))
 				 createdModule = SpellModule.fromNBT(spellNBT);
 
 			if (spellNBT.get("bound") != null && createdModule != null) {
@@ -222,6 +258,26 @@ public class Spell implements ISpell {
 			startToCastMethod_connector.bindModule(castMethod);
 			spell.mainModule = new StartCircle();
 			spell.mainModule.bindModule(startToCastMethod_connector);
+			return spell;
+		}
+
+		/**
+		 * Create example debug Spell that is used for testing.
+		 * @return a basic Spell
+		 */
+		public static Spell createDebugSpell(){
+			Spell spell = new Spell();
+			CastCircle castCircle0 = new CastCircle();
+			CastCircle castCircle1 = new CastCircle();
+
+			castCircle0.cast = Casts.MINING_SPELL.build(new CompoundNBT());
+			castCircle1.cast = Casts.FABRIC_SPELL;
+			CastMethod castMethod = new CastMethod();
+			castMethod.aspect = Aspects.EARTH;
+			castMethod.bindModule(castCircle0);
+			castMethod.bindModule(castCircle1);
+			spell.mainModule = new StartCircle();
+			spell.mainModule.bindModule(castMethod);
 			return spell;
 		}
 	}
