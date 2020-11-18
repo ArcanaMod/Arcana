@@ -180,7 +180,7 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:aspect_collection"
+        "&arcana:aspect_collection"
       ],
       "meta": [
         "round_base",

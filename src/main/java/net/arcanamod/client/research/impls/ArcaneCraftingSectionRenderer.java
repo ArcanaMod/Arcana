@@ -41,7 +41,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							item(stacks[dispIndex(stacks.length, player)], itemX, itemY);
+							item(stacks[displayIndex(stacks.length, player)], itemX, itemY);
 					}
 				}
 			// Display aspects
@@ -82,7 +82,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							tooltipArea(stacks[dispIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, itemX, itemY);
+							tooltipArea(stacks[displayIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, itemX, itemY);
 					}
 				}
 			

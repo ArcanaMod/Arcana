@@ -98,9 +98,9 @@ public class ResearchLoader extends JsonReloadListener{
 				List<EntrySection> sections = jsonToSections(entry.getAsJsonArray("sections"), rl);
 				
 				// optionally parents, meta
-				List<ResourceLocation> parents = new ArrayList<>();
+				List<Parent> parents = new ArrayList<>();
 				if(entry.has("parents"))
-					parents = StreamSupport.stream(entry.getAsJsonArray("parents").spliterator(), false).map(JsonElement::getAsString).map(ResourceLocation::new).collect(Collectors.toList());
+					parents = StreamSupport.stream(entry.getAsJsonArray("parents").spliterator(), false).map(JsonElement::getAsString).map(Parent::parse).collect(Collectors.toList());
 				
 				List<String> meta = new ArrayList<>();
 				if(entry.has("meta"))

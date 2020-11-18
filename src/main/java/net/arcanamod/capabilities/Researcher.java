@@ -1,6 +1,7 @@
 package net.arcanamod.capabilities;
 
 import net.arcanamod.event.ResearchEvent;
+import net.arcanamod.systems.research.Parent;
 import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.systems.research.ResearchEntry;
@@ -152,16 +153,19 @@ public interface Researcher{
 	}
 	
 	static boolean isEntryVisible(ResearchEntry entry, @Nonnull Researcher r){
-		// abridged version of ResearchBookGUI#style
-		
-		if(r.entryStage(entry) >= entry.sections().size())
-			return true;
+		// abridged version of ResearchBookScreen#style
 		if(r.entryStage(entry) > 0)
 			return true;
 		if(entry.meta().contains("root") && entry.parents().size() == 0)
 			return true;
 		if(!entry.meta().contains("hidden"))
-			return entry.parents().stream().allMatch(x -> isEntryVisible(ResearchBooks.getEntry(x), r));
+			return entry.parents().stream().allMatch(x -> isParentSatisfied(x, ResearchBooks.getEntry(x.getEntry()), r));
 		return false;
+	}
+	
+	static boolean isParentSatisfied(Parent parent, ResearchEntry entry, @Nonnull Researcher r){
+		if(parent.getStage() == -1)
+			return r.entryStage(entry) >= entry.sections().size();
+		return r.entryStage(entry) >= parent.getStage();
 	}
 }
