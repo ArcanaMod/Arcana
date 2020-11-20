@@ -1,7 +1,7 @@
 {
   "type": "arcana:alchemy",
   "in": {
-    "tag": "forge:ingots/silver"
+    "tag": "forge:ingots/gold"
   },
   "out": {
     "item": "minecraft:iron_ingot"
@@ -20,5 +20,7 @@
       "amount": 1
     }
   ],
-  "research": "arcana:transmutation"
+  "research": [
+    "arcana:transmutation@6"
+  ]
 }

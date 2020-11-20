@@ -73,9 +73,7 @@
           "type": "string",
           "content": "research.arcana.transmutation.stage.1",
           "requirements": [
-            "arcana::puzzle{arcana:iron_transmutation_puzzle}",
-            "arcana::puzzle{arcana:silver_transmutation_puzzle}",
-            "arcana::puzzle{arcana:gold_transmutation_puzzle}"
+            "arcana::puzzle{arcana:silver_transmutation_puzzle}"
           ]
         },
         {
@@ -84,11 +82,25 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:alchemy/gold_ingot_by_transmutation"
+          "content": "arcana:alchemy/silver_ingot_by_transmutation",
+          "requirements": [
+            "arcana::puzzle{arcana:gold_transmutation_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.transmutation.stage.3"
         },
         {
           "type": "alchemy",
-          "content": "arcana:alchemy/silver_ingot_by_transmutation"
+          "content": "arcana:alchemy/gold_ingot_by_transmutation",
+          "requirements": [
+            "arcana::puzzle{arcana:iron_transmutation_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.transmutation.stage.4"
         },
         {
           "type": "alchemy",
@@ -107,9 +119,6 @@
       "category": "arcana:alchemy",
       "parents": [
         "arcana:alchemy_root"
-      ],
-      "meta": [
-        ""
       ],
       "x": -2,
       "y": 2,

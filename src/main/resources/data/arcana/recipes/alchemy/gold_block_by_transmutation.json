@@ -1,7 +1,7 @@
 {
   "type": "arcana:alchemy",
   "in": {
-    "tag": "forge:storage_blocks/iron"
+    "tag": "forge:storage_blocks/silver"
   },
   "out": {
     "item": "minecraft:gold_block"
@@ -20,5 +20,7 @@
       "amount": 9
     }
   ],
-  "research": "arcana:transmutation"
+  "research": [
+    "arcana:transmutation@6"
+  ]
 }

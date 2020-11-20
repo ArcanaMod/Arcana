@@ -855,8 +855,10 @@
     "research.arcana.arcanium.stage.2": "[And that's Arcanium.]",
 
     "research.arcana.transmutation": "Transmutation",
-    "research.arcana.transmutation.stage.1": "[Silver -> Iron -> Gold -> loop]",
-    "research.arcana.transmutation.stage.2": "[also works with blocks]",
+    "research.arcana.transmutation.stage.1": "A popular magical concept is one of alchemists attempting to create the valuable from the mundane. They knew neither chemistry nor magic; I know both. I think I may be able to do better, if only by a little, at the transmutation of metals, given my newfound knowledge.",
+    "research.arcana.transmutation.stage.2": "Upgrading iron into silver isn't the most exciting advancement I've made, although the alchemy behind this transmutation §odoes§r prompt more study into the metal's properties. No, gold is my target. Though silver may make a useful stepping stone...",
+    "research.arcana.transmutation.stage.3": "Yes! Where the old alchemists have failed, I have succeeded in transforming iron into gold. I wonder if the process could be performed in bulk, though... or if its reversible...",
+    "research.arcana.transmutation.stage.4": "The transmutations form a loop, with Iron transforming into Silver, Silver into Gold, and Gold into Iron, which could be useful given a particular need for iron. Maybe if I was into the mundane sciences. Something slightly more interesting is that all of these transmutations can also be performed in block form.",
 
     "research.arcana.purification": "Metal Purification",
     "research.arcana.purification.desc": "Technology 101",

@@ -1,5 +1,6 @@
 package net.arcanamod.systems.research;
 
+import net.arcanamod.capabilities.Researcher;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.ResourceLocationException;
 import org.apache.logging.log4j.LogManager;
@@ -66,5 +67,10 @@ public class Parent{
 	
 	public boolean shouldShowLine(){
 		return showLine;
+	}
+	
+	public boolean satisfiedBy(Researcher r){
+		ResearchEntry entry = ResearchBooks.getEntry(getEntry());
+		return entry == null || (stage == -1 ? r.entryStage(entry) >= entry.sections().size() : r.entryStage(entry) >= stage);
 	}
 }

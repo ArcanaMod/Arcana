@@ -3,6 +3,7 @@ package net.arcanamod.util;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public final class StreamUtils{
 	
@@ -24,5 +26,9 @@ public final class StreamUtils{
 				.filter(Optional::isPresent)
 				.map(Optional::get)
 				.collect(Collectors.toCollection(ArrayList::new));
+	}
+	
+	public static <X> Stream<X> toStream(@Nullable Iterable<X> iterable){
+		return iterable != null ? StreamSupport.stream(iterable.spliterator(), false) : Stream.empty();
 	}
 }
