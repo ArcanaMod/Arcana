@@ -26,7 +26,7 @@ public class CastMethodSin extends SpellModule {
 	@Override
 	public CompoundNBT toNBT(){
 		CompoundNBT compound = new CompoundNBT();
-		compound.putString("aspect", AspectUtils.getResourceLocationFromAspect(aspect).toString());
+		compound.putString("aspect", aspect.toResourceLocation().toString());
 		return compound;
 	}
 }

@@ -2,6 +2,7 @@ package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.VacuumTileEntity;
@@ -19,16 +20,6 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
 public class VacuumCast extends Cast {
-
-    /**
-     * Defines all variables.
-     *
-     * @param compound extra data
-     * @return this but with defined variables.
-     */
-    public ICast build(CompoundNBT compound) {
-        return this;
-    }
 
     @Override
     public ResourceLocation getId() {
@@ -73,11 +64,11 @@ public class VacuumCast extends Cast {
     }
 
     protected int getWidth(PlayerEntity playerEntity) {
-        return SpellValues.getOrDefault(data.secondModifier, 1);
+        return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"sinModifier"), 1);
     }
 
     protected int getDistance(PlayerEntity playerEntity) {
-        return SpellValues.getOrDefault(data.secondModifier, 16);
+        return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 16);
     }
 
     /**
@@ -85,7 +76,7 @@ public class VacuumCast extends Cast {
      * @return Vacuum blocks duration
      */
     protected int getDuration(PlayerEntity playerEntity) {
-        return (1+SpellValues.getOrDefault(data.firstModifier, 0))*100;
+        return (1+SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 0))*100;
     }
 
     @Override

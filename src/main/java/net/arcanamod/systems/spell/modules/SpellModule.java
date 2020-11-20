@@ -27,7 +27,7 @@ public abstract class SpellModule {
 			constructor = modules.get(spellNBT.getString("name")).getConstructor();
 			SpellModule createdModule = (SpellModule) constructor.newInstance();
 			if (createdModule instanceof CastCircle)
-				((CastCircle)createdModule).cast = Casts.spellMap.get(new ResourceLocation(((CompoundNBT)spellNBT.get("data")).getString("cast")));
+				((CastCircle)createdModule).cast = Casts.castMap.get(new ResourceLocation(((CompoundNBT)spellNBT.get("data")).getString("cast")));
 			if (createdModule instanceof CastMethod)
 				((CastMethod)createdModule).aspect = AspectUtils.deserializeAspect((CompoundNBT)spellNBT.get("data"),"aspect");
 			if (createdModule instanceof CastMethodSin)

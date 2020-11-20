@@ -20,7 +20,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -36,12 +35,10 @@ import static net.arcanamod.aspects.Aspects.*;
  */
 public abstract class Cast implements ICast {
 
-	protected SpellData data;
-
-	public boolean isBuilt = false;
+	public CompoundNBT data = new CompoundNBT();
 
 	public Cast(){
-		SpellRegistry.addSpell(getId(),this);
+		CastRegistry.addCast(getId(),this);
 	}
 
 	public abstract ResourceLocation getId();

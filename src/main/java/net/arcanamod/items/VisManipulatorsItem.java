@@ -1,19 +1,13 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.Taint;
 import net.arcanamod.systems.spell.casts.ICast;
-import net.arcanamod.systems.spell.Spell;
-import net.arcanamod.systems.spell.SpellData;
-import net.arcanamod.systems.spell.casts.Casts;
-import net.arcanamod.util.Pair;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 
 import javax.annotation.ParametersAreNonnullByDefault;

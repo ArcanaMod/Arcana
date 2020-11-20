@@ -4,7 +4,6 @@ import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
-import net.arcanamod.systems.spell.SpellData;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.crash.ReportedException;
@@ -20,10 +19,6 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 
 public class FabricCast extends Cast {
-	
-	public ICast build(CompoundNBT compound) {
-		return this;
-	}
 
 	@Override
 	public ResourceLocation getId() {

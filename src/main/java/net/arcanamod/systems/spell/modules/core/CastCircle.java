@@ -24,7 +24,7 @@ public class CastCircle extends SpellModule {
 		CompoundNBT compound = new CompoundNBT();
 		if (cast instanceof Cast)
 			compound.putString("cast", ((Cast)cast).getId().toString());
-		else compound.putString("cast", AspectUtils.getResourceLocationFromAspect(cast.getSpellAspect()).toString());
+		else compound.putString("cast", cast.getSpellAspect().toResourceLocation().toString());
 		return compound;
 	}
 }

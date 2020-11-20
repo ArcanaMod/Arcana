@@ -2,6 +2,7 @@ package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
 import net.minecraft.block.Block;
@@ -24,10 +25,6 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 
 public class MiningCast extends Cast {
-	
-	public ICast build(CompoundNBT compound) {
-		return this;
-	}
 
 	@Override
 	public ResourceLocation getId() {
@@ -45,15 +42,15 @@ public class MiningCast extends Cast {
 	}
 
 	public int getMiningLevel() {
-		return SpellValues.getOrDefault(data.firstModifier, 2);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 2);
 	}
 
 	public int getExplosivePower() {
-		return SpellValues.getOrDefault(data.firstModifier, 0);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 0);
 	}
 
 	public int getFortune() {
-		return SpellValues.getOrDefault(data.firstModifier, 0);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"sinModifier"), 0);
 	}
 
 	@Override

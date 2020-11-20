@@ -17,8 +17,8 @@ public class DoubleModifierCircle extends CircleSpellModule{
 	@Override
 	public CompoundNBT toNBT(){
 		CompoundNBT compound = new CompoundNBT();
-		compound.putString("firstAspect", AspectUtils.getResourceLocationFromAspect(firstAspect).toString());
-		compound.putString("secondAspect", AspectUtils.getResourceLocationFromAspect(secondAspect).toString());
+		compound.putString("firstAspect", firstAspect.toResourceLocation().toString());
+		compound.putString("secondAspect", secondAspect.toResourceLocation().toString());
 		return compound;
 	}
 

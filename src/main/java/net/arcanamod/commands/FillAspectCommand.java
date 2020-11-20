@@ -25,7 +25,7 @@ import static net.minecraft.command.Commands.literal;
 import static net.minecraft.command.arguments.ResourceLocationArgument.resourceLocation;
 
 public class FillAspectCommand {
-	private static final SuggestionProvider<CommandSource> SUGGEST_FILL_CONTAINER = (ctx, builder) -> ISuggestionProvider.func_212476_a(Arrays.stream(AspectUtils.primalAspects).map(AspectUtils::getResourceLocationFromAspect), builder);
+	private static final SuggestionProvider<CommandSource> SUGGEST_FILL_CONTAINER = (ctx, builder) -> ISuggestionProvider.func_212476_a(Arrays.stream(AspectUtils.primalAspects).map(Aspect::toResourceLocation), builder);
 
 	public static void register(CommandDispatcher<CommandSource> dispatcher){
 		dispatcher.register(

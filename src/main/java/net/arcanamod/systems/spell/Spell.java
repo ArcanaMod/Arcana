@@ -220,7 +220,7 @@ public class Spell implements ISpell {
 			CastCircle castCircle = new CastCircle();
 			doubleModifierCircle.firstAspect = Aspects.AIR;
 			doubleModifierCircle.secondAspect = Aspects.FIRE;
-			castCircle.cast = Casts.MINING_SPELL.build(new CompoundNBT());
+			castCircle.cast = Casts.MINING_CAST;
 			castCircle.bindModule(doubleModifierCircle);
 			castMethodToCastCircle_connector.bindModule(castCircle);
 			CastMethod castMethod = new CastMethod();
@@ -247,9 +247,9 @@ public class Spell implements ISpell {
 			castMethodToCastCircle1_connector.bindModule(castCircle1);
 			doubleModifierCircle.firstAspect = Aspects.AIR;
 			doubleModifierCircle.secondAspect = Aspects.FIRE;
-			castCircle0.cast = Casts.MINING_SPELL.build(new CompoundNBT());
+			castCircle0.cast = Casts.MINING_CAST;
 			castCircle0.bindModule(doubleModifierCircle);
-			castCircle1.cast = Casts.FABRIC_SPELL;
+			castCircle1.cast = Casts.FABRIC_CAST;
 			castMethodToCastCircle0_connector.bindModule(castCircle0);
 			CastMethod castMethod = new CastMethod();
 			castMethod.aspect = Aspects.EARTH;
@@ -270,8 +270,8 @@ public class Spell implements ISpell {
 			CastCircle castCircle0 = new CastCircle();
 			CastCircle castCircle1 = new CastCircle();
 
-			castCircle0.cast = Casts.MINING_SPELL.build(new CompoundNBT());
-			castCircle1.cast = Casts.FABRIC_SPELL;
+			castCircle0.cast = Casts.MINING_CAST;
+			castCircle1.cast = Casts.FABRIC_CAST;
 			CastMethod castMethod = new CastMethod();
 			castMethod.aspect = Aspects.EARTH;
 			castMethod.bindModule(castCircle0);

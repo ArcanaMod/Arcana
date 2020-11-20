@@ -148,8 +148,8 @@ public class SpellCloudEntity extends Entity {
 
 	public void tick() {
 		super.tick();
-		boolean lvt_1_1_ = this.shouldIgnoreRadius();
-		float lvt_2_1_ = this.getRadius();
+		boolean ignores = this.shouldIgnoreRadius();
+		float radius = this.getRadius();
 		if (this.world.isRemote) {
 			IParticleData lvt_3_1_ = this.getParticleData();
 			float lvt_6_1_;
@@ -158,7 +158,7 @@ public class SpellCloudEntity extends Entity {
 			int lvt_10_1_;
 			int lvt_11_1_;
 			int lvt_12_1_;
-			if (lvt_1_1_) {
+			if (ignores) {
 				if (this.rand.nextBoolean()) {
 					for (int lvt_4_1_ = 0; lvt_4_1_ < 2; ++lvt_4_1_) {
 						float lvt_5_1_ = this.rand.nextFloat() * 6.2831855F;
@@ -177,11 +177,11 @@ public class SpellCloudEntity extends Entity {
 					}
 				}
 			} else {
-				float lvt_4_2_ = 3.1415927F * lvt_2_1_ * lvt_2_1_;
+				float lvt_4_2_ = 3.1415927F * radius * radius;
 
 				for (int lvt_5_2_ = 0; (float) lvt_5_2_ < lvt_4_2_; ++lvt_5_2_) {
 					lvt_6_1_ = this.rand.nextFloat() * 6.2831855F;
-					lvt_7_1_ = MathHelper.sqrt(this.rand.nextFloat()) * lvt_2_1_;
+					lvt_7_1_ = MathHelper.sqrt(this.rand.nextFloat()) * radius;
 					lvt_8_1_ = MathHelper.cos(lvt_6_1_) * lvt_7_1_;
 					float lvt_9_2_ = MathHelper.sin(lvt_6_1_) * lvt_7_1_;
 					if (lvt_3_1_.getType() == ParticleTypes.ENTITY_EFFECT) {
@@ -202,7 +202,7 @@ public class SpellCloudEntity extends Entity {
 			}
 
 			boolean lvt_3_2_ = this.ticksExisted < this.waitTime;
-			if (lvt_1_1_ != lvt_3_2_) {
+			if (ignores != lvt_3_2_) {
 				this.setIgnoreRadius(lvt_3_2_);
 			}
 
@@ -211,13 +211,13 @@ public class SpellCloudEntity extends Entity {
 			}
 
 			if (this.radiusPerTick != 0.0F) {
-				lvt_2_1_ += this.radiusPerTick;
-				if (lvt_2_1_ < 0.5F) {
+				radius += this.radiusPerTick;
+				if (radius < 0.5F) {
 					this.remove();
 					return;
 				}
 
-				this.setRadius(lvt_2_1_);
+				this.setRadius(radius);
 			}
 
 			if (this.ticksExisted % 5 == 0) {
@@ -251,20 +251,20 @@ public class SpellCloudEntity extends Entity {
 							double lvt_8_3_ = lvt_7_3_.getPosX() - this.getPosX();
 							double lvt_10_3_ = lvt_7_3_.getPosZ() - this.getPosZ();
 							lvt_12_3_ = lvt_8_3_ * lvt_8_3_ + lvt_10_3_ * lvt_10_3_;
-						} while (lvt_12_3_ > (double) (lvt_2_1_ * lvt_2_1_));
+						} while (lvt_12_3_ > (double) (radius * radius));
 
 						this.reapplicationDelayMap.put(lvt_7_3_, this.ticksExisted + this.reapplicationDelay);
 
 						((Cast) spell).useOnEntity(null, lvt_7_3_);
 
 						if (this.radiusOnUse != 0.0F) {
-							lvt_2_1_ += this.radiusOnUse;
-							if (lvt_2_1_ < 0.5F) {
+							radius += this.radiusOnUse;
+							if (radius < 0.5F) {
 								this.remove();
 								return;
 							}
 
-							this.setRadius(lvt_2_1_);
+							this.setRadius(radius);
 						}
 
 						if (this.durationOnUse != 0) {
@@ -281,59 +281,59 @@ public class SpellCloudEntity extends Entity {
 
 	}
 
-	public void setRadiusOnUse(float p_184495_1_) {
-		this.radiusOnUse = p_184495_1_;
+	public void setRadiusOnUse(float radius) {
+		this.radiusOnUse = radius;
 	}
 
-	public void setRadiusPerTick(float p_184487_1_) {
-		this.radiusPerTick = p_184487_1_;
+	public void setRadiusPerTick(float radius) {
+		this.radiusPerTick = radius;
 	}
 
-	public void setWaitTime(int p_184485_1_) {
-		this.waitTime = p_184485_1_;
+	public void setWaitTime(int time) {
+		this.waitTime = time;
 	}
 
-	public void setOwner(@Nullable LivingEntity p_184481_1_) {
-		this.owner = p_184481_1_;
-		this.ownerUniqueId = p_184481_1_ == null ? null : p_184481_1_.getUniqueID();
+	public void setOwner(@Nullable LivingEntity owner) {
+		this.owner = owner;
+		this.ownerUniqueId = owner == null ? null : owner.getUniqueID();
 	}
 
 	@Nullable
 	public LivingEntity getOwner() {
 		if (this.owner == null && this.ownerUniqueId != null && this.world instanceof ServerWorld) {
-			net.minecraft.entity.Entity lvt_1_1_ = ((ServerWorld) this.world).getEntityByUuid(this.ownerUniqueId);
-			if (lvt_1_1_ instanceof LivingEntity) {
-				this.owner = (LivingEntity) lvt_1_1_;
+			net.minecraft.entity.Entity entity = ((ServerWorld) this.world).getEntityByUuid(this.ownerUniqueId);
+			if (entity instanceof LivingEntity) {
+				this.owner = (LivingEntity) entity;
 			}
 		}
 
 		return this.owner;
 	}
 
-	protected void readAdditional(CompoundNBT p_70037_1_) {
-		this.ticksExisted = p_70037_1_.getInt("Age");
-		this.duration = p_70037_1_.getInt("Duration");
-		this.waitTime = p_70037_1_.getInt("WaitTime");
-		this.reapplicationDelay = p_70037_1_.getInt("ReapplicationDelay");
-		this.durationOnUse = p_70037_1_.getInt("DurationOnUse");
-		this.radiusOnUse = p_70037_1_.getFloat("RadiusOnUse");
-		this.radiusPerTick = p_70037_1_.getFloat("RadiusPerTick");
-		this.setRadius(p_70037_1_.getFloat("Radius"));
-		this.ownerUniqueId = p_70037_1_.getUniqueId("OwnerUUID");
-		if (p_70037_1_.contains("Particle", 8)) {
+	protected void readAdditional(CompoundNBT compoundNBT) {
+		this.ticksExisted = compoundNBT.getInt("Age");
+		this.duration = compoundNBT.getInt("Duration");
+		this.waitTime = compoundNBT.getInt("WaitTime");
+		this.reapplicationDelay = compoundNBT.getInt("ReapplicationDelay");
+		this.durationOnUse = compoundNBT.getInt("DurationOnUse");
+		this.radiusOnUse = compoundNBT.getFloat("RadiusOnUse");
+		this.radiusPerTick = compoundNBT.getFloat("RadiusPerTick");
+		this.setRadius(compoundNBT.getFloat("Radius"));
+		this.ownerUniqueId = compoundNBT.getUniqueId("OwnerUUID");
+		if (compoundNBT.contains("Particle", 8)) {
 			try {
-				this.setParticleData(ParticleArgument.parseParticle(new StringReader(p_70037_1_.getString("Particle"))));
+				this.setParticleData(ParticleArgument.parseParticle(new StringReader(compoundNBT.getString("Particle"))));
 			} catch (CommandSyntaxException var5) {
-				PRIVATE_LOGGER.warn("Couldn't load custom particle {}", p_70037_1_.getString("Particle"), var5);
+				PRIVATE_LOGGER.warn("Couldn't load custom particle {}", compoundNBT.getString("Particle"), var5);
 			}
 		}
 
-		if (p_70037_1_.contains("Color", 99)) {
-			this.setColor(p_70037_1_.getInt("Color"));
+		if (compoundNBT.contains("Color", 99)) {
+			this.setColor(compoundNBT.getInt("Color"));
 		}
 
-		if (p_70037_1_.contains("Spell", 8)) {
-			this.setSpell(Casts.spellMap.get(new ResourceLocation(p_70037_1_.getString("Spell"))));
+		if (compoundNBT.contains("Spell", 8)) {
+			this.setSpell(Casts.castMap.get(new ResourceLocation(compoundNBT.getString("Spell"))));
 		}
 
 	}
@@ -361,12 +361,12 @@ public class SpellCloudEntity extends Entity {
 		}
 	}
 
-	public void notifyDataManagerChange(DataParameter<?> p_184206_1_) {
-		if (RADIUS.equals(p_184206_1_)) {
+	public void notifyDataManagerChange(DataParameter<?> dataParameter) {
+		if (RADIUS.equals(dataParameter)) {
 			this.recalculateSize();
 		}
 
-		super.notifyDataManagerChange(p_184206_1_);
+		super.notifyDataManagerChange(dataParameter);
 	}
 
 	public PushReaction getPushReaction() {

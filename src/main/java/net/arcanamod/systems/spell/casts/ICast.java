@@ -1,8 +1,6 @@
 package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.systems.spell.SpellCosts;
-import net.arcanamod.systems.spell.SpellData;
 import net.arcanamod.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -16,13 +14,6 @@ import java.util.Optional;
 public interface ICast {
 	
 	// TODO: improve docs, remove arrays
-	
-	/**
-	 * Defines all variables. DON'T USE THAT IN REGISTRY!!!
-	 * @param compound extra data
-	 * @return this but with defined variables.
-	 */
-	ICast build(CompoundNBT compound);
 
 	/**
 	 * Core aspect in spell.
