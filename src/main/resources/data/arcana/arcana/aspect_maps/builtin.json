@@ -639,5 +639,235 @@
     {
       "aspect": "exchange"
     }
+  ],
+  "minecraft:slime_ball": [
+    {
+      "aspect": "slime",
+      "amount": 4
+    }
+  ],
+  "minecraft:flint": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "tool"
+    }
+  ],
+  "minecraft:leather": [
+    {
+      "aspect": "beast",
+      "amount": 3
+    },
+    {
+      "aspect": "armour",
+      "amount": 3
+    }
+  ],
+  "minecraft:rabbit_hide": [
+    {
+      "aspect": "beast"
+    }
+  ],
+  "minecraft:water_bucket": [
+    {
+      "aspect": "metal",
+      "amount": 12
+    },
+    {
+      "aspect": "water",
+      "amount": 5
+    }
+  ],
+  "minecraft:lava_bucket": [
+    {
+      "aspect": "metal",
+      "amount": 12
+    },
+    {
+      "aspect": "fire",
+      "amount": 5
+    },
+    {
+      "aspect": "earth",
+      "amount": 5
+    }
+  ],
+  "minecraft:milk_bucket": [
+    {
+      "aspect": "metal",
+      "amount": 12
+    },
+    {
+      "aspect": "life",
+      "amount": 3
+    },
+    {
+      "aspect": "beast",
+      "amount": 3
+    }
+  ],
+  "minecraft:egg": [
+    {
+      "aspect": "beast",
+      "amount": 3
+    },
+    {
+      "aspect": "life",
+      "amount": 9
+    }
+  ],
+  "minecraft:glowstone_dust": [
+    {
+      "aspect": "light",
+      "amount": 4
+    },
+    {
+      "aspect": "earth"
+    },
+    {
+      "aspect": "nether"
+    }
+  ],
+  "minecraft:sugar_cane": [
+    {
+      "aspect": "water",
+      "amount": 5
+    },
+    {
+      "aspect": "plant",
+      "amount": 2
+    }
+  ],
+  "minecraft:kelp": [
+    {
+      "aspect": "water",
+      "amount": 7
+    },
+    {
+      "aspect": "plant"
+    }
+  ],
+  "minecraft:bamboo": [
+    {
+      "aspect": "earth",
+      "amount": 5
+    },
+    {
+      "aspect": "plant",
+      "amount": 2
+    }
+  ],
+  "minecraft:paper": [
+    {
+      "aspect": "plant"
+    }
+  ],
+  "minecraft:string": [
+    {
+      "aspect": "beast"
+    },
+    {
+      "aspect": "tool"
+    }
+  ],
+  "minecraft:feather": [
+    {
+      "aspect": "beast"
+    },
+    {
+      "aspect": "flight",
+      "amount": 4
+    }
+  ],
+  "minecraft:gunpowder": [
+    {
+      "aspect": "energy",
+      "amount": 10
+    },
+    {
+      "aspect": "fire",
+      "amount": 3
+    }
+  ],
+  "minecraft:wheat_seeds": [
+    {
+      "aspect": "plant",
+      "amount": 2
+    },
+    {
+      "aspect": "life",
+      "amount": 2
+    }
+  ],
+  "minecraft:wheat": [
+    {
+      "aspect": "plant",
+      "amount": 6
+    },
+    {
+      "aspect": "harvest",
+      "amount": 2
+    }
+  ],
+  "minecraft:experience_bottle": [
+    {
+      "aspect": "mana",
+      "amount": 24
+    }
+  ],
+  "minecraft:honeycomb": [
+    {
+      "aspect": "senses",
+      "amount": 4
+    },
+    {
+      "aspect": "harvest"
+    }
+  ],
+  "minecraft:honey_bottle": [
+    {
+      "aspect": "air",
+      "amount": 10
+    },
+    {
+      "aspect": "senses",
+      "amount": 3
+    }
+  ],
+  "minecraft:saddle": [
+    {
+      "aspect": "journey",
+      "amount": 20
+    },
+    {
+      "aspect": "armour",
+      "amount": 3
+    },
+    {
+      "aspect": "beast",
+      "amount": 3
+    }
+  ],
+  "minecraft:pumpkin": [
+    {
+      "aspect": "plant",
+      "amount": 4
+    },
+    {
+      "aspect": "harvest",
+      "amount": 2
+    }
+  ],
+  "minecraft:melon": [
+    {
+      "aspect": "plant",
+      "amount": 4
+    },
+    {
+      "aspect": "harvest",
+      "amount": 2
+    }
   ]
 }
