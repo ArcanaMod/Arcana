@@ -503,33 +503,6 @@
           "content": "research.arcana.flux.warp_info"
         }
       ]
-    },
-    {
-      "key": "arcana:foci",
-      "name": "research.arcana.foci",
-      "desc": "research.arcana.foci.desc",
-      "icons": [
-        "arcana:foci/focus_style_1.png"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [],
-      "meta": [
-        "root",
-        "purple_base",
-        "spiky_base"
-      ],
-      "x": 3,
-      "y": -3,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.foci.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.foci.stage.2"
-        }
-      ]
     }
   ],
   "puzzles": [

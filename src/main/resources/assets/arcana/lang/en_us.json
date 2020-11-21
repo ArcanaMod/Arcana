@@ -848,7 +848,7 @@
     "research.arcana.foci.desc": "Power with purpose",
 
     "research.arcana.alchemy_root": "Alchemy",
-    "research.arcana.alchemy_root.text": "Alchemy, the usage of essentia solutions to transform substances, will be researched and described here.",
+    "research.arcana.alchemy_root.text": "Alchemy - the usage of essentia solutions to transform substances - will be researched and described here.",
 
     "research.arcana.arcanium": "Magical Metallurgy",
     "research.arcana.arcanium.stage.1": "[I want a stronger material, and magic can achieve that.]",
@@ -869,6 +869,23 @@
     "research.arcana.hedge_alchemy.desc": "Miscellaneous Transformations",
     "research.arcana.hedge_alchemy.stage.1": "[f(x) -> g(x)]",
     "research.arcana.hedge_alchemy.stage.2": "[just do the goddamn recipes]",
+
+    "research.arcana.auromancy_root": "Auromancy",
+    "research.arcana.auromancy_root.text": "Auromancy - the manipulation of aura, especially the usage of wands - will be researched and described here.",
+
+    "research.arcana.cores_intro": "Wand Cores",
+    "research.arcana.cores_intro.text": "Cores are an essential component to any wand. They store the vis within the wand, and their strength and integrity dictate the amount of vis that can be used with it.\n\nAlthough a mundane stick is usable for the most basic purposes - simple arcane crafting, for instance - it will quickly prove difficult to use as I find more uses for vis. For that reason, magical woods (or regular materials, enchanted with powerful magic) are far more appropriate.",
+
+    "research.arcana.caps_intro": "Wand Caps",
+    "research.arcana.caps_intro.text": "Caps are an essential component to any wand. They are the lens through which vis is focused, and their magical permeability and focal strength determines the rate that vis may be handled (and by extension, the strength of magical effects caused by the wand).\n\nIron is poor in many of these aspects. Gold is a step up that doesn't require significant investment.",
+
+    "research.arcana.foci_intro": "Wand Foci",
+    "research.arcana.foci_intro.text": "The creation of meaningful effects from a wand requires focusing the vis properly.",
+
+    "research.arcana.staffs": "Staffs",
+    "research.arcana.scepters": "Staffs",
+    "research.arcana.gauntlets": "Gauntlets",
+    "research.arcana.wip": "actual content coming... when its implemented. same for icon.",
 
     "_comment": "Info Entries",
 
