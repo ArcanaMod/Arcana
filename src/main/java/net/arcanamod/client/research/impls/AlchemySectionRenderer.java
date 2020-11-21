@@ -35,9 +35,6 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 			List<AspectStack> aspects = alchemyRecipe.getAspects();
 			int aspectsWidth = Math.min(3, aspects.size());
 			int aspectStartX = ulX + 9 - (10 * (aspectsWidth - 3)), aspectStartY = ulY + 30;
-			// Shadow behind the aspects for readability
-			int color = 0x30222222;
-			GuiUtils.drawGradientRect(0, aspectStartX - 2, aspectStartY - 2, aspectStartX + (aspects.size() * 20) + 2, aspectStartY + 1 + 20 * (int)Math.ceil(aspects.size() / 3f), color, color);
 			for(int i = 0, size = aspects.size(); i < size; i++){
 				AspectStack aspect = aspects.get(i);
 				int xx = aspectStartX + (i % aspectsWidth) * 20;

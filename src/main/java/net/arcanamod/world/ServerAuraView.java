@@ -81,8 +81,9 @@ public class ServerAuraView implements AuraView{
 				));
 		// go through all loaded chunks
 		loaded.forEach((pos, chunk) -> {
-			// if they have more than 60 flux, place a tainted block and consumer 40
-			if(chunk.getTaintLevel() >= ArcanaConfig.TAINT_SPAWN_THRESHOLD.get()){
+			// if they have more than 60 flux, place a tainted block and consume 40
+			// don't do this *every* tick, to allow for existing tainted areas to spread first
+			if(chunk.getTaintLevel() >= ArcanaConfig.TAINT_SPAWN_THRESHOLD.get() && world.getGameTime() % 30 == 0){
 				// pick a completely random block
 				BlockPos blockPos = pos.asBlockPos().up(world.rand.nextInt(256)).north(world.rand.nextInt(16)).east(world.rand.nextInt(16));
 				BlockState state = world.getBlockState(blockPos);
