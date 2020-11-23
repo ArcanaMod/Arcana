@@ -1,10 +1,14 @@
 package net.arcanamod.blocks.tiles;
 
+import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.containers.FociForgeContainer;
+import net.arcanamod.containers.ResearchTableContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.text.ITextComponent;
@@ -17,8 +21,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class FociForgeTileEntity extends LockableTileEntity{
 	
-	protected FociForgeTileEntity(TileEntityType<?> typeIn){
-		super(typeIn);
+	public FociForgeTileEntity(){
+		super(ArcanaTiles.FOCI_FORGE_TE.get());
 	}
 	
 	protected ItemStackHandler items = new ItemStackHandler(2){
@@ -34,8 +38,10 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	}
 	
 	@Override
-	protected Container createMenu(int id, PlayerInventory player){
-		return null;
+	protected Container createMenu(int id, PlayerInventory player) {
+		PacketBuffer buffer = new PacketBuffer(Unpooled.buffer(8,8));
+		buffer.writeBlockPos(pos);
+		return new FociForgeContainer(id,player,buffer);
 	}
 	
 	/**

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "arcana:research_table_item"
+          "name": "arcana:foci_forge_item"
         }
       ],
       "conditions": [

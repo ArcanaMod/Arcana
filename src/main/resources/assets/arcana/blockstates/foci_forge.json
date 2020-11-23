@@ -1,7 +1,19 @@
 {
   "variants": {
-    "": {
+    "facing=north": {
       "model": "arcana:block/foci_forge"
+    },
+    "facing=south": {
+      "model": "arcana:block/foci_forge",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "arcana:block/foci_forge",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "arcana:block/foci_forge",
+      "y": 270
     }
   }
 }

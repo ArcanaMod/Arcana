@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"textures": {
 		"0": "arcana:block/research_table",
-		"particle": "arcana:block/research_table"
+		"particle": "arcana:block/greatwood_planks"
 	},
 	"elements": [
 		{

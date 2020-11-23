@@ -52,7 +52,7 @@ public class FociForgeContainer extends AspectContainer {
 
     @SuppressWarnings("ConstantConditions")
     public FociForgeContainer(int i, PlayerInventory playerInventory, PacketBuffer packetBuffer) {
-        this(ArcanaContainers.RESEARCH_TABLE.get(),i,playerInventory,(FociForgeTileEntity) playerInventory.player.getEntityWorld().getTileEntity(packetBuffer.readBlockPos()));
+        this(ArcanaContainers.FOCI_FORGE.get(),i,playerInventory,(FociForgeTileEntity) playerInventory.player.getEntityWorld().getTileEntity(packetBuffer.readBlockPos()));
     }
 
     private void addPlayerSlots(IInventory playerInventory){
@@ -77,7 +77,7 @@ public class FociForgeContainer extends AspectContainer {
         @SuppressWarnings("ConstantConditions")
         IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElse(null);
         // 137, 11
-        addSlot(new SlotItemHandler(itemHandler, 1, 137, 11){
+        addSlot(new SlotItemHandler(itemHandler, 0, 137, 11){
             public boolean isItemValid(@Nonnull ItemStack stack){
                 // only ink
                 return super.isItemValid(stack) && stack.getItem()==ArcanaItems.WAND.get();
@@ -88,7 +88,7 @@ public class FociForgeContainer extends AspectContainer {
             }
         });
         // 155, 11
-        addSlot(new SlotItemHandler(itemHandler, 2, 155, 11){
+        addSlot(new SlotItemHandler(itemHandler, 1, 155, 11){
             public boolean isItemValid(@Nonnull ItemStack stack){
                 // only notes
                 return super.isItemValid(stack) && stack.getItem() == ArcanaItems.FOCUS_PARTS.get() || stack.getItem() == ArcanaItems.DEFAULT_FOCUS.get();
@@ -143,14 +143,14 @@ public class FociForgeContainer extends AspectContainer {
         Slot slot = inventorySlots.get(index);
 
         if(slot != null && slot.getHasStack()){
-            if(index != 2){
+            if(index != 1){
                 ItemStack itemstack1 = slot.getStack();
                 itemstack = itemstack1.copy();
 
-                if(index < 3){
-                    if(!this.mergeItemStack(itemstack1, 3, inventorySlots.size(), true))
+                if(index < 2){
+                    if(!this.mergeItemStack(itemstack1, 2, inventorySlots.size(), true))
                         return ItemStack.EMPTY;
-                }else if(!this.mergeItemStack(itemstack1, 0, 3, false))
+                }else if(!this.mergeItemStack(itemstack1, 0, 2, false))
                     return ItemStack.EMPTY;
 
                 if(itemstack1.isEmpty())
