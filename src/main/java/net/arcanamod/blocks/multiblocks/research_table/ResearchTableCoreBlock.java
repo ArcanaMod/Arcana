@@ -56,7 +56,7 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
 
     @Override
     public ItemGroup getGroup() {
-        return Arcana.ITEMS;
+        return null;
     }
 
     @Override

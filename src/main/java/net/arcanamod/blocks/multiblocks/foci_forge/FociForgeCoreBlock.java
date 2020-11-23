@@ -76,7 +76,7 @@ public class FociForgeCoreBlock extends Block implements StaticComponent, Groupe
 
 	@Override
 	public ItemGroup getGroup() {
-		return Arcana.ITEMS;
+		return null;
 	}
 
 	@Override
