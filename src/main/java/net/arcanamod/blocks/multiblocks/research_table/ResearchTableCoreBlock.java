@@ -70,11 +70,11 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
     }
 
     public boolean isCore(BlockPos pos, BlockState state) {
-        return false;
+        return true;
     }
 
     public BlockPos getCorePos(BlockPos pos, BlockState state) {
-        return pos.add(ShapeUtils.fromNorth(COM_INVERT, state.get(FACING)));
+        return pos;
     }
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
@@ -122,16 +122,15 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
     }
 
     @Override
-    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult rayTraceResult) {
+    public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
         if(world.isRemote)
             return ActionResultType.SUCCESS;
-        BlockPos corePos = getCorePos(pos, state);
-        TileEntity te = world.getTileEntity(corePos);
+        TileEntity te = world.getTileEntity(pos);
         if (te instanceof ResearchTableTileEntity) {
-            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, buf -> buf.writeBlockPos(corePos));
+            NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, buf -> buf.writeBlockPos(pos));
             return ActionResultType.SUCCESS;
         }
-        return super.onBlockActivated(state, world, pos, player, handIn, rayTraceResult);
+        return super.onBlockActivated(state, world, pos, player, hand, rayTraceResult);
     }
 
     @Override

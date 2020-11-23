@@ -161,11 +161,11 @@ public class FociForgeCoreBlock extends Block implements StaticComponent, Groupe
 	}
 
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult){
+	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
 		if(world.isRemote)
 			return ActionResultType.SUCCESS;
 		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof FociForgeTileEntity){
+		if (te instanceof FociForgeTileEntity){
 			NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, buf -> buf.writeBlockPos(pos));
 			return ActionResultType.SUCCESS;
 		}
