@@ -4,6 +4,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.items.WandItem;
+import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.modules.SpellModule;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,6 +43,51 @@ public class Spell implements ISpell {
 	 */
 	public static Serializer getSerializer() {
 		return new Spell.Serializer();
+	}
+
+	/**
+	 * Run Spell.
+	 * Goes trough all spell modules and executes {@link ICast}.
+	 * @param spell Spell to run.
+	 * @param caster Player that uses the Spell.
+	 * @param sender {@link net.minecraft.item.ItemStack} that {@link net.minecraft.item.Item} extends {@link WandItem}
+	 * @param action Spell use Action.
+	 */
+	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
+		for (SpellModule module : spell.mainModule.getBoundModules()) {
+			Logic.runSpellModule(module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
+		}
+	}
+
+	public static void updateSpellStatusBar(PlayerEntity player){
+		if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof WandItem) {
+			if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)) != Focus.NO_FOCUS) {
+				if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
+					for (SpellModule module : WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.getBoundModules()) {
+						Logic.updateSpellStatusBarRecursive(module, player, new ArrayList<>());
+					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Cost of spell in AspectStacks.
+	 *
+	 * @return returns cost of spell.
+	 */
+	@Override
+	public SpellCosts getSpellCosts() {
+		return new SpellCosts(0,0,0,1,0,0,0); // Temp
+	}
+
+	public Optional<ITextComponent> getName(CompoundNBT nbt){
+		// TODO: add tooltip
+		return Optional.of(new StringTextComponent("//FIXME: NAME NOT IMPLEMENTED!!!")/*new TranslationTextComponent("spell." + getId().getNamespace() + "." + getId().getPath())*/);
+	}
+
+	public int getSpellColor() {
+		return Logic.blendAndGetColor(mainModule, 0x000000);
 	}
 
 	public static class Serializer{
@@ -118,7 +165,7 @@ public class Spell implements ISpell {
 		private SpellModule deserialize(SpellModule toDeserialize, CompoundNBT spellNBT, int deepness) {
 			SpellModule createdModule = null;
 			if (!spellNBT.getString("name").equals(""))
-				 createdModule = SpellModule.fromNBT(spellNBT);
+				createdModule = SpellModule.fromNBT(spellNBT);
 
 			if (spellNBT.get("bound") != null && createdModule != null) {
 				for (INBT inbt : ((ListNBT) Objects.requireNonNull(spellNBT.get("bound")))) {
@@ -132,77 +179,66 @@ public class Spell implements ISpell {
 		}
 	}
 
-	/**
-	 * Run Spell.
-	 * Goes trough all spell modules and executes {@link ICast}.
-	 * @param spell Spell to run.
-	 * @param caster Player that uses the Spell.
-	 * @param sender {@link net.minecraft.item.ItemStack} that {@link net.minecraft.item.Item} extends {@link WandItem}
-	 * @param action Spell use Action.
-	 */
-	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
-		for (SpellModule module : spell.mainModule.getBoundModules()) {
-			runSpellModule(module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
-		}
-	}
-
-	/**
-	 * Run spell Recursion.
-	 */
-	private static SpellModule runSpellModule(SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
-											  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
-		if (toUnbound.getBoundModules().size() > 0){
-			for (SpellModule module : toUnbound.getBoundModules()) {
-				if (module instanceof CastMethod)
-					castMethodsAspects.add(of(((CastMethod) module).aspect,Aspects.EMPTY));
-				else if (module instanceof CastMethodSin) {
-					castMethodsAspects.get(castMethodsAspects.size()-1).setSecond(((CastMethodSin) module).aspect);
-				} else if (module instanceof CastCircle)
-					casts.add(((CastCircle) module).cast);
-				return runSpellModule(module, caster, sender, action, castMethodsAspects, casts);
-			}
-		}else{
-			for (ICast cast : casts){
-				for (Pair<Aspect,Aspect> castMethodsAspect : castMethodsAspects)
-				cast.use(caster,sender,castMethodsAspect,action);
-			}
-		}
-		return null;
-	}
-
-	public static void updateSpellStatusBar(PlayerEntity player){
-		if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof WandItem) {
-			if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)) != null) {
-				if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
-					for (SpellModule module : WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.getBoundModules()) {
-						updateSpellStatusBarRecursive(module, player, new ArrayList<>());
+	private static class Logic {
+		private static SpellModule updateSpellStatusBarRecursive(SpellModule toUnbound, PlayerEntity player,
+																 List<Pair<Aspect,Aspect>> castMethodsAspects) {
+			if (toUnbound.getBoundModules().size() > 0){
+				for (SpellModule module : toUnbound.getBoundModules()) {
+					if (module instanceof CastMethod)
+						castMethodsAspects.add(of(((CastMethod) module).aspect, Aspects.EMPTY));
+					else if (module instanceof CastMethodSin) {
+						castMethodsAspects.get(castMethodsAspects.size() - 1).setSecond(((CastMethodSin) module).aspect);
+						return updateSpellStatusBarRecursive(module, player, castMethodsAspects);
 					}
 				}
+			}else{
+				for (Pair<Aspect,Aspect> castMethodsAspect : castMethodsAspects)
+					if (castMethodsAspect.getFirst() == Aspects.EARTH && castMethodsAspect.getSecond() == Aspects.LUST)
+						if (player.isCrouching()) {
+							player.sendStatusMessage(new TranslationTextComponent("status.arcana.selection_mode"), true);
+						} else {
+							player.sendStatusMessage(new TranslationTextComponent("status.arcana.break_mode"), true);
+						}
 			}
+			return null;
 		}
-	}
 
-	private static SpellModule updateSpellStatusBarRecursive(SpellModule toUnbound, PlayerEntity player,
-											  List<Pair<Aspect,Aspect>> castMethodsAspects) {
-		if (toUnbound.getBoundModules().size() > 0){
-			for (SpellModule module : toUnbound.getBoundModules()) {
-				if (module instanceof CastMethod)
-					castMethodsAspects.add(of(((CastMethod) module).aspect, Aspects.EMPTY));
-				else if (module instanceof CastMethodSin) {
-					castMethodsAspects.get(castMethodsAspects.size() - 1).setSecond(((CastMethodSin) module).aspect);
-					return updateSpellStatusBarRecursive(module, player, castMethodsAspects);
+		/**
+		 * Run spell Recursion.
+		 */
+		private static SpellModule runSpellModule(SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
+												  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
+			if (toUnbound.getBoundModules().size() > 0){
+				for (SpellModule module : toUnbound.getBoundModules()) {
+					if (module instanceof CastMethod)
+						castMethodsAspects.add(of(((CastMethod) module).aspect,Aspects.EMPTY));
+					else if (module instanceof CastMethodSin) {
+						castMethodsAspects.get(castMethodsAspects.size()-1).setSecond(((CastMethodSin) module).aspect);
+					} else if (module instanceof CastCircle)
+						casts.add(((CastCircle) module).cast);
+					return runSpellModule(module, caster, sender, action, castMethodsAspects, casts);
+				}
+			}else{
+				for (ICast cast : casts){
+					for (Pair<Aspect,Aspect> castMethodsAspect : castMethodsAspects)
+						cast.use(caster,sender,castMethodsAspect,action);
 				}
 			}
-		}else{
-			for (Pair<Aspect,Aspect> castMethodsAspect : castMethodsAspects)
-			if (castMethodsAspect.getFirst() == Aspects.EARTH && castMethodsAspect.getSecond() == Aspects.LUST)
-				if (player.isCrouching()) {
-					player.sendStatusMessage(new TranslationTextComponent("status.arcana.selection_mode"), true);
-				} else {
-					player.sendStatusMessage(new TranslationTextComponent("status.arcana.break_mode"), true);
-				}
+			return null;
 		}
-		return null;
+
+		private static int blendAndGetColor(SpellModule toUnbound, int color){
+			if (toUnbound.getBoundModules().size() > 0){
+				for (SpellModule module : toUnbound.getBoundModules()) {
+					if (module instanceof CastCircle)
+						if (color != 0x000000)
+							color = UiUtil.blend(((CastCircle)module).cast.getSpellAspect().getColorRange().get(3),color,0.5f);
+						else color = ((CastCircle)module).cast.getSpellAspect().getColorRange().get(3);
+					return blendAndGetColor(module, color);
+				}
+			}
+			return color;
+		}
 	}
 
 	/**
@@ -281,37 +317,5 @@ public class Spell implements ISpell {
 			spell.mainModule.bindModule(castMethod);
 			return spell;
 		}
-	}
-
-	/**
-	 * Cost of spell in AspectStacks.
-	 *
-	 * @return returns cost of spell.
-	 */
-	@Override
-	public SpellCosts getSpellCosts() {
-		return new SpellCosts(0,0,0,1,0,0,0); // Temp
-	}
-
-	public Optional<ITextComponent> getName(CompoundNBT nbt){
-		return Optional.empty(); // TODO: add tooltip
-		//return Optional.of(new TranslationTextComponent("spell." + getId().getNamespace() + "." + getId().getPath()));
-	}
-
-	public int getSpellColor() {
-		return blendAndGetColor(mainModule, 0x000000);
-	}
-
-	public int blendAndGetColor(SpellModule toUnbound, int color){
-		if (toUnbound.getBoundModules().size() > 0){
-			for (SpellModule module : toUnbound.getBoundModules()) {
-				if (module instanceof CastCircle)
-					if (color != 0x000000)
-						color = UiUtil.blend(((CastCircle)module).cast.getSpellAspect().getColorRange().get(3),color,0.5f);
-					else color = ((CastCircle)module).cast.getSpellAspect().getColorRange().get(3);
-				return blendAndGetColor(module, color);
-			}
-		}
-		return color;
 	}
 }
