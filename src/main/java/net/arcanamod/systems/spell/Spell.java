@@ -131,38 +131,6 @@ public class Spell implements ISpell {
 			return moduleNBT;
 		}
 
-		public CompoundNBT serializeTest(SpellModule toSerialize, CompoundNBT prevModule, int deepness) {
-			CompoundNBT moduleNBT = new CompoundNBT();
-			ListNBT boundList = new ListNBT();
-			for (SpellModule module : toSerialize.getBoundModules()) {
-				moduleNBT.putString("name", module.getName());
-				moduleNBT.put("data", module.toNBT());
-
-
-				ListNBT boundList0 = new ListNBT();
-
-				CompoundNBT moduleNBT0 = new CompoundNBT();
-				for (SpellModule module0 : module.getBoundModules()) {
-					moduleNBT0 = new CompoundNBT();
-					moduleNBT0.putString("name", module0.getName());
-					moduleNBT0.put("data", module0.toNBT());
-
-					ListNBT boundList1 = new ListNBT();
-
-					for (SpellModule module1 : module0.getBoundModules()) {
-						CompoundNBT moduleNBT1 = new CompoundNBT();
-						moduleNBT1.putString("name", module1.getName());
-						moduleNBT1.put("data", module1.toNBT());
-						boundList0.add(moduleNBT1);
-					}
-					boundList.add(moduleNBT0);
-				}
-				moduleNBT0.put("bound",boundList0);
-			}
-			moduleNBT.put("bound",boundList);
-			return moduleNBT;
-		}
-
 		private SpellModule deserialize(SpellModule toDeserialize, CompoundNBT spellNBT, int deepness) {
 			SpellModule createdModule = null;
 			if (!spellNBT.getString("name").equals(""))

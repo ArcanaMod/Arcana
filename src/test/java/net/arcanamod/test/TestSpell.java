@@ -17,12 +17,6 @@ public class TestSpell {
 	}
 
 	@Test
-	public void triggerLunaWithNotWorkingHotswapFunctionBecauseIUseTests(){
-		Spell.getSerializer().serializeTest(Spell.Samples.createDebugSpell().mainModule,new CompoundNBT(), 0);
-		Assert.assertTrue(true);
-	}
-
-	@Test
 	public void testSpellSerializer(){
 		Spell spell = Spell.Samples.createDebugSpell();
 		Spell.Serializer serializer = new Spell.Serializer();
