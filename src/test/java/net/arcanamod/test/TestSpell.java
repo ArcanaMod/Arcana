@@ -41,6 +41,6 @@ public class TestSpell {
 		CompoundNBT pre_output_nbt = serializer.serializeNBT(pre_output,new CompoundNBT());
 		serializer = new Spell.Serializer();
 		Spell output = serializer.deserializeNBT(pre_output_nbt);
-		Assert.assertTrue(pre_output_nbt.toString().equals(input.toString()));
+		Assert.assertEquals(pre_output_nbt.toString(), input.toString());
 	}
 }

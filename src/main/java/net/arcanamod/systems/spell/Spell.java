@@ -120,10 +120,11 @@ public class Spell implements ISpell {
 			for (SpellModule module : toSerialize.getBoundModules()) {
 				if (module!=null) {
 					moduleNBT = new CompoundNBT();
+					boundList = new ListNBT();
 					moduleNBT.putString("name", module.getName());
 					moduleNBT.put("data", module.toNBT());
-					serialize(module, moduleNBT, boundList, ++deepness);
 					prevBound.add(moduleNBT);
+					serialize(module, moduleNBT, boundList, ++deepness);
 				}
 			}
 			prevModule.put("bound",prevBound);
