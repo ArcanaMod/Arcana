@@ -14,6 +14,7 @@ import java.util.List;
 import static net.arcanamod.aspects.ColorRange.create;
 import static net.arcanamod.util.Pair.of;
 
+@SuppressWarnings("unused")
 public class Aspects {
 
 	/**

@@ -27,6 +27,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		this.defaultCellSize = defaultCellSize;
 	}
 
+	@SuppressWarnings("UnusedReturnValue")
 	public static AspectBattery merge(AspectBattery defaultBattery, AspectBattery... batteries) {
 		for (AspectBattery battery : batteries) {
 			defaultBattery.cells.addAll(battery.cells);
@@ -221,6 +222,7 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 		return capability == AspectHandlerCapability.ASPECT_HANDLER;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Nonnull
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> capability, @Nullable Direction facing){
 		return capability == AspectHandlerCapability.ASPECT_HANDLER ? LazyOptional.of(() -> (T)this) : LazyOptional.empty();
@@ -228,9 +230,9 @@ public class AspectBattery implements ICapabilityProvider, IAspectHandler {
 
 	@Override
 	public String toString() {
-		String cs = "";
+		StringBuilder cs = new StringBuilder();
 		for (IAspectHolder c : cells) {
-			cs += c.toString();
+			cs.append(c.toString());
 		}
 		return "AspectBattery{" +
 				"cells=" + cs +

@@ -2,6 +2,7 @@ package net.arcanamod.systems.spell;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
@@ -120,7 +121,7 @@ public class Spell implements ISpell {
 				 createdModule = SpellModule.fromNBT(spellNBT);
 
 			if (spellNBT.get("bound") != null && createdModule != null) {
-				for (INBT inbt : ((ListNBT) spellNBT.get("bound"))) {
+				for (INBT inbt : ((ListNBT) Objects.requireNonNull(spellNBT.get("bound")))) {
 					if (inbt instanceof CompoundNBT) {
 						CompoundNBT compound = ((CompoundNBT) inbt);
 						createdModule.bindModule(deserialize(toDeserialize, compound, ++deepness));
@@ -297,7 +298,20 @@ public class Spell implements ISpell {
 		//return Optional.of(new TranslationTextComponent("spell." + getId().getNamespace() + "." + getId().getPath()));
 	}
 
-	public Aspect getSpellColor() {
-		return Aspects.AURA; // TODO: blend colors
+	public int getSpellColor() {
+		return blendAndGetColor(mainModule, 0x000000);
+	}
+
+	public int blendAndGetColor(SpellModule toUnbound, int color){
+		if (toUnbound.getBoundModules().size() > 0){
+			for (SpellModule module : toUnbound.getBoundModules()) {
+				if (module instanceof CastCircle)
+					if (color != 0x000000)
+						color = UiUtil.blend(((CastCircle)module).cast.getSpellAspect().getColorRange().get(3),color,0.5f);
+					else color = ((CastCircle)module).cast.getSpellAspect().getColorRange().get(3);
+				return blendAndGetColor(module, color);
+			}
+		}
+		return color;
 	}
 }
