@@ -78,8 +78,7 @@ public class Spell implements ISpell {
 	 */
 	@Override
 	public SpellCosts getSpellCosts() {
-		Logic.getSpellCost(mainModule,new SpellCosts(0,0,0,0,0,0,0));
-		return new SpellCosts(0,0,0,1,0,0,0); // Temp
+		return Logic.getSpellCost(mainModule,new SpellCosts(0,0,0,0,0,0,0));
 	}
 
 	public Optional<ITextComponent> getName(CompoundNBT nbt){

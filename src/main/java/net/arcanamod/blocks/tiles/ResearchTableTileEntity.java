@@ -60,11 +60,11 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 		battery.clear();
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
 			if (world.getBlockState(blockPos).hasTileEntity()) {
-				TileEntity teinbox = world.getTileEntity(blockPos);
-				if (teinbox != null)
-					if (teinbox instanceof VisShareable)
-						if (((VisShareable) teinbox).isVisShareable()&&((VisShareable) teinbox).isSharingWithResearchTable()) {
-							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(teinbox);
+				TileEntity tileEntityInBox = world.getTileEntity(blockPos);
+				if (tileEntityInBox != null)
+					if (tileEntityInBox instanceof VisShareable)
+						if (((VisShareable) tileEntityInBox).isVisShareable()&&((VisShareable) tileEntityInBox).isSharingWithResearchTable()) {
+							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(tileEntityInBox);
 							if (vis != null) {
 								visContainers.add(new BlockPos(blockPos)); // Removing reference
 								AspectBattery.merge(battery, vis);

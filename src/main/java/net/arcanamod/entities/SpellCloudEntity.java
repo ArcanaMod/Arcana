@@ -49,8 +49,8 @@ public class SpellCloudEntity extends Entity {
 	private LivingEntity owner;
 	private UUID ownerUniqueId;
 
-	public SpellCloudEntity(EntityType<? extends SpellCloudEntity> p_i50389_1_, World p_i50389_2_) {
-		super(p_i50389_1_, p_i50389_2_);
+	public SpellCloudEntity(EntityType<? extends SpellCloudEntity> entityType, World world) {
+		super(entityType, world);
 		this.spell = Casts.EMPTY_SPELL;
 		this.reapplicationDelayMap = Maps.newHashMap();
 		this.duration = 600;
@@ -60,13 +60,13 @@ public class SpellCloudEntity extends Entity {
 		this.setRadius(3.0F);
 	}
 
-	public SpellCloudEntity(World p_i46810_1_, double p_i46810_2_, double p_i46810_4_, double p_i46810_6_) {
-		this(ArcanaEntities.SPELL_CLOUD.get(), p_i46810_1_);
-		this.setPosition(p_i46810_2_, p_i46810_4_, p_i46810_6_);
+	public SpellCloudEntity(World world, double x, double y, double z) {
+		this(ArcanaEntities.SPELL_CLOUD.get(), world);
+		this.setPosition(x, y, z);
 	}
 
-	public SpellCloudEntity(World p_i46810_1_, Vec3d vec) {
-		this(ArcanaEntities.SPELL_CLOUD.get(), p_i46810_1_);
+	public SpellCloudEntity(World world, Vec3d vec) {
+		this(ArcanaEntities.SPELL_CLOUD.get(), world);
 		this.setPosition(vec.x,vec.y,vec.z);
 	}
 
@@ -85,11 +85,11 @@ public class SpellCloudEntity extends Entity {
 	}
 
 	public void recalculateSize() {
-		double lvt_1_1_ = this.getPosX();
-		double lvt_3_1_ = this.getPosY();
-		double lvt_5_1_ = this.getPosZ();
+		double x = this.getPosX();
+		double y = this.getPosY();
+		double z = this.getPosZ();
 		super.recalculateSize();
-		this.setPosition(lvt_1_1_, lvt_3_1_, lvt_5_1_);
+		this.setPosition(x, y, z);
 	}
 
 	public float getRadius() {
