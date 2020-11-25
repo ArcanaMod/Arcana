@@ -5,6 +5,8 @@ import net.arcanamod.entities.SpellCloudEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;

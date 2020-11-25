@@ -32,6 +32,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import static net.arcanamod.blocks.DelegatingBlock.switchBlock;
+import static net.minecraft.entity.EntityClassification.MONSTER;
 
 public class Taint{
 	
@@ -201,66 +202,53 @@ public class Taint{
 		if(entity.getRegistryName() == null)
 			return null;
 		EntityType tainted;
+
+		String id = new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString();
+		float w = entity.getSize().width, h = entity.getSize().height;
+
 		if(entity == EntityType.BAT)
-			tainted = EntityType.Builder.create(TaintedBatEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedBatEntity::new, MONSTER).size(w, h).build(id);
 		else if(entity == EntityType.EVOKER || entity == EntityType.ILLUSIONER || entity == EntityType.VINDICATOR || entity == EntityType.PILLAGER)
-			tainted = EntityType.Builder.create(TaintedIllagerEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedIllagerEntity::new, MONSTER).size(w, h).build(id);
 		else if(entity == EntityType.CREEPER)
-			tainted = EntityType.Builder.create(TaintedCreeperEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedCreeperEntity::new, MONSTER).size(w, h).build(id);
 		else if(entity == EntityType.SQUID)
-			tainted = EntityType.Builder.create(TaintedSquidEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedSquidEntity::new, MONSTER).size(w, h).build(id);
 		else if(entity == EntityType.GHAST)
-			tainted = EntityType.Builder.create(TaintedGhastEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedGhastEntity::new, MONSTER).size(w, h).build(id);
 		else if(entity == EntityType.CAVE_SPIDER)
-			tainted = EntityType.Builder.create(TaintedCaveSpiderEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedCaveSpiderEntity::new, MONSTER).size(w, h).build(id);
 		else if(entity == EntityType.SKELETON)
-			tainted = EntityType.Builder.create(TaintedSkeletonEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedSkeletonEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.SLIME)
-			tainted = EntityType.Builder.create(TaintedSlimeEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedSlimeEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.BEE)
-			tainted = EntityType.Builder.create(TaintedBeeEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedBeeEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.PANDA)
-			tainted = EntityType.Builder.create(TaintedPandaEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedPandaEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.SNOW_GOLEM)
-			tainted = EntityType.Builder.create(TaintedSnowGolemEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedSnowGolemEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.RABBIT)
-			tainted = EntityType.Builder.create(TaintedRabbitEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedRabbitEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.POLAR_BEAR)
-			tainted = EntityType.Builder.create(TaintedPolarBearEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedPolarBearEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.DONKEY)
-			tainted = EntityType.Builder.create(TaintedDonkeyEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedDonkeyEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.CAT)
-			tainted = EntityType.Builder.create(TaintedCatEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedCatEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.LLAMA)
-			tainted = EntityType.Builder.create(TaintedLlamaEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedLlamaEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.TRADER_LLAMA)
-			tainted = EntityType.Builder.create(TaintedLlamaEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedLlamaEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.PUFFERFISH)
-			tainted = EntityType.Builder.create(TaintedPufferfishEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedPufferfishEntity::new, MONSTER).size(w, h).build(id);
 		else if (entity == EntityType.COD || entity == EntityType.SALMON || entity == EntityType.DOLPHIN)
-			tainted = EntityType.Builder.create(TaintedFishEntity::new, EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.create(TaintedFishEntity::new, MONSTER).size(w, h).build(id);
+		/*else if (entity == EntityType.PARROT)
+			tainted = EntityType.Builder.create(TaintedParrotEntity::new, MONSTER).size(w, h).build(id);*/
 		else
-			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), EntityClassification.MONSTER)
-					.size(entity.getSize().width, entity.getSize().height).build(new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString());
+			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), MONSTER)
+					.size(w, h).build(id);
 		entityTaintMap.put(entity, tainted);
 		return tainted;
 	}
