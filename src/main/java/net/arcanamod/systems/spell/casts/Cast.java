@@ -2,7 +2,6 @@ package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.entities.SpellCloudEntity;
-import net.arcanamod.systems.spell.*;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.entity.Entity;
@@ -153,7 +152,7 @@ public abstract class Cast implements ICast {
 					}
 				} else if (cast.getSecond() == SLOTH) {
 					// it takes a few seconds for the spell to cast
-					DelayedSpellManager.delayedSpells.add(new DelayedSpell(t -> useOnBlock(player, player.world, pos),delay));
+					DelayedCastManager.delayedCasts.add(new DelayedCast(t -> useOnBlock(player, player.world, pos),delay));
 
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby blocks ~5

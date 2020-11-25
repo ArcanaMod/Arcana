@@ -357,7 +357,7 @@ public class SpellCloudEntity extends Entity {
 		}
 
 		if (this.spell != Casts.EMPTY_SPELL && this.spell != null) {
-			compoundNBT.putString("Spell", ((Cast) spell).getId().toString()); // TODO: REPLACE (SPELL) wit (ISPELL)
+			compoundNBT.putString("spell", ((Cast) spell).getId().toString()); // TODO: REPLACE (SPELL) wit (ISPELL)
 		}
 	}
 

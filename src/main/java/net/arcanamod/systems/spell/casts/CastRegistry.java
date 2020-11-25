@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell;
+package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;

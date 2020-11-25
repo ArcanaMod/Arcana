@@ -78,6 +78,7 @@ public class Spell implements ISpell {
 	 */
 	@Override
 	public SpellCosts getSpellCosts() {
+		Logic.getSpellCost(mainModule,new SpellCosts(0,0,0,0,0,0,0));
 		return new SpellCosts(0,0,0,1,0,0,0); // Temp
 	}
 
@@ -207,6 +208,30 @@ public class Spell implements ISpell {
 				}
 			}
 			return color;
+		}
+
+		public static SpellCosts getSpellCost(SpellModule toUnbound, SpellCosts cost) {
+			if (toUnbound.getBoundModules().size() > 0){
+				for (SpellModule module : toUnbound.getBoundModules()) {
+					if (module instanceof CastMethod) {
+						Aspect aspect = ((CastMethod)module).aspect;
+						if (aspect==Aspects.EARTH)
+							cost.earth.setAmount(cost.earth.getAmount()+1);
+						if (aspect==Aspects.AIR)
+							cost.air.setAmount(cost.air.getAmount()+1);
+						if (aspect==Aspects.WATER)
+							cost.water.setAmount(cost.water.getAmount()+1);
+						if (aspect==Aspects.FIRE)
+							cost.fire.setAmount(cost.fire.getAmount()+1);
+						if (aspect==Aspects.ORDER)
+							cost.order.setAmount(cost.order.getAmount()+1);
+						if (aspect==Aspects.CHAOS)
+							cost.chaos.setAmount(cost.chaos.getAmount()+1);
+					}
+					return getSpellCost(module, cost);
+				}
+			}
+			return cost;
 		}
 	}
 

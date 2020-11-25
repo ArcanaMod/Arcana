@@ -1,9 +1,10 @@
-package net.arcanamod.systems.spell.casts;
+package net.arcanamod.systems.spell.casts.impl;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
+import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.crash.ReportedException;
@@ -50,13 +51,7 @@ public class FabricCast extends Cast {
 		CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking block entity");
 		CrashReportCategory crashreportcategory = crashreport.makeCategory("Block entity being ticked");
 		tileentity.addInfoToCrashReport(crashreportcategory);
-		if (net.minecraftforge.common.ForgeConfig.SERVER.removeErroringTileEntities.get()) {
-			LogManager.getLogger().fatal("{}", crashreport.getCompleteReport());
-			//tileentity.remove();
-			//this.removeTileEntity(tileentity.getPos());
-		} else
-			throw new ReportedException(crashreport);
-		return ActionResultType.SUCCESS;
+		throw new ReportedException(crashreport);
 	}
 
 	@Override

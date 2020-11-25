@@ -11,7 +11,7 @@ public class FrozenEffect extends Effect {
 
 	@Override
 	public void performEffect(LivingEntity entity, int amplifier){
-		entity.setMotion(0,entity.getMotion().y*2,0);
+		entity.setMotion(0,entity.getMotion().y,0);
 	}
 
 	@Override

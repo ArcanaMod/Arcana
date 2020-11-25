@@ -1,4 +1,4 @@
-package net.arcanamod.systems.spell.casts;
+package net.arcanamod.systems.spell.casts.impl;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
@@ -7,6 +7,7 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.VacuumTileEntity;
 import net.arcanamod.systems.spell.*;
+import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

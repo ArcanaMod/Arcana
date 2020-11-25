@@ -12,8 +12,8 @@ import net.arcanamod.client.render.aspects.AspectParticleData;
 import net.arcanamod.client.render.aspects.NumberParticleData;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.systems.spell.DelayedSpell;
-import net.arcanamod.systems.spell.DelayedSpellManager;
+import net.arcanamod.systems.spell.casts.DelayedCast;
+import net.arcanamod.systems.spell.casts.DelayedCastManager;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.util.RayTraceUtils;
@@ -68,15 +68,15 @@ public class EntityTickHandler{
 				serverPlayerEntity.sendStatusMessage(status, false);
 			}
 
-			List<DelayedSpell> spellsScheduledToDeletion = new ArrayList<>();
-			DelayedSpellManager.delayedSpells.forEach(delayedSpell -> {
-				if (delayedSpell.ticks >= delayedSpell.ticksPassed){
-					delayedSpell.spellEvent.accept(0);
-					spellsScheduledToDeletion.add(delayedSpell);
+			List<DelayedCast> spellsScheduledToDeletion = new ArrayList<>();
+			DelayedCastManager.delayedCasts.forEach(delayedCast -> {
+				if (delayedCast.ticks >= delayedCast.ticksPassed){
+					delayedCast.spellEvent.accept(0);
+					spellsScheduledToDeletion.add(delayedCast);
 				}
-				else delayedSpell.ticksPassed++;
+				else delayedCast.ticksPassed++;
 			});
-			DelayedSpellManager.delayedSpells.removeAll(spellsScheduledToDeletion);
+			DelayedCastManager.delayedCasts.removeAll(spellsScheduledToDeletion);
 		}
 
 		// Render aspect particles
