@@ -2,7 +2,7 @@ package net.arcanamod.blocks.tainted;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.capabilities.TaintTrackable;
 import net.minecraft.block.Block;

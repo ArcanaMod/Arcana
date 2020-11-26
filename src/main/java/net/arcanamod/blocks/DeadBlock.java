@@ -2,9 +2,9 @@ package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.bases.GroupedBlock;
+import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;

@@ -3,7 +3,9 @@ package net.arcanamod.systems.spell.casts.impl;
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.NotImplementedException;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.systems.spell.casts.Cast;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;
@@ -21,7 +23,14 @@ public class LightCast extends Cast {
 
 	@Override
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-		throw new NotImplementedException();
+		if (world.getBlockState(blockTarget.up()).getBlock() == ArcanaBlocks.LIGHT_BLOCK.get()){
+			return ActionResultType.SUCCESS;
+		}
+		if (world.getBlockState(blockTarget.up()).getBlock().isAir(world.getBlockState(blockTarget.up()),world,blockTarget.up())){
+			world.setBlockState(blockTarget.up(), ArcanaBlocks.LIGHT_BLOCK.get().getDefaultState());
+			return ActionResultType.SUCCESS;
+		}
+		return ActionResultType.FAIL;
 	}
 
 	@Override

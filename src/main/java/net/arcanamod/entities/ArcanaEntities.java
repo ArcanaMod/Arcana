@@ -1,7 +1,7 @@
 package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.client.model.tainted.TaintedFoxModel;
 import net.arcanamod.client.model.tainted.TaintedSheepModel;
 import net.arcanamod.client.model.tainted.TaintedWolfModel;

@@ -1,7 +1,7 @@
 package net.arcanamod.aspects;
 
 import com.google.gson.*;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.items.CrystalItem;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.StreamUtils;

@@ -137,14 +137,16 @@ public class WandItem extends Item{
 				IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
 				// oh my god this code is terrible // YES, I know Xd.
 				// time for more VisUtils I guess
-				if(spell.getSpellCosts().toList().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
+				if(spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler,stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
+					spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)){
 					if (player.isCrouching())
 						Spell.runSpell(spell,player,player.getHeldItem(hand), ICast.Action.SPECIAL);
 					else
 						Spell.runSpell(createBasicSpell(),player,player.getHeldItem(hand), ICast.Action.USE);
 					// remove aspects from wand if spell successes.
 					for(AspectStack cost : spell.getSpellCosts().toList())
-						handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
+						if (cost != AspectStack.EMPTY)
+							handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
 				}
 			}else
 				player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
@@ -160,7 +162,12 @@ public class WandItem extends Item{
 		//player.setActiveHand(hand);
 		//return ActionResult.resultConsume(player.getHeldItem(hand));
 	}
-	
+
+	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect) {
+		@Nullable IAspectHolder nullableHolder = handler.findAspectInHolders(aspect);
+		return nullableHolder != null ? nullableHolder : new AspectCell();
+	}
+
 	public int getUseDuration(ItemStack stack){
 		return 72000;
 	}

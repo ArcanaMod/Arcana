@@ -1,7 +1,7 @@
 package net.arcanamod.fluids;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.effects.ArcanaEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;

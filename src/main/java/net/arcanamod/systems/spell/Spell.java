@@ -110,7 +110,8 @@ public class Spell implements ISpell {
 		public Spell deserializeNBT(CompoundNBT compound){
 			Spell spell = new Spell();
 			spell.mainModule = new StartCircle();
-			spell.mainModule.bindModule(deserialize(spell.mainModule, (CompoundNBT) Objects.requireNonNull(compound.get("spell")), 0));
+			if (compound.get("spell") != null)
+				spell.mainModule.bindModule(deserialize(spell.mainModule, (CompoundNBT) compound.get("spell"), 0));
 			return spell;
 		}
 
@@ -177,6 +178,7 @@ public class Spell implements ISpell {
 		 */
 		private static SpellModule runSpellModule(SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
 												  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
+			SpellModule mod = null;
 			if (toUnbound.getBoundModules().size() > 0){
 				for (SpellModule module : toUnbound.getBoundModules()) {
 					if (module instanceof CastMethod)
@@ -185,7 +187,7 @@ public class Spell implements ISpell {
 						castMethodsAspects.get(castMethodsAspects.size()-1).setSecond(((CastMethodSin) module).aspect);
 					} else if (module instanceof CastCircle)
 						casts.add(((CastCircle) module).cast);
-					return runSpellModule(module, caster, sender, action, castMethodsAspects, casts);
+					mod = runSpellModule(module, caster, sender, action, castMethodsAspects, casts);
 				}
 			}else{
 				for (ICast cast : casts){
@@ -193,7 +195,7 @@ public class Spell implements ISpell {
 						cast.use(caster,sender,castMethodsAspect,action);
 				}
 			}
-			return null;
+			return mod;
 		}
 
 		private static int blendAndGetColor(SpellModule toUnbound, int color){

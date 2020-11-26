@@ -30,8 +30,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class TaintedSquidEntity extends SquidEntity{
-	public TaintedSquidEntity(EntityType<? extends TaintedSquidEntity> type, World worldIn) {
-		super(type, worldIn);
+	public TaintedSquidEntity(EntityType<? extends Entity> type, World worldIn) {
+		super((EntityType<? extends SquidEntity>) type, worldIn);
 	}
 
 	@Override

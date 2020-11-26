@@ -26,8 +26,8 @@ import java.util.Random;
 
 // TODO: Bats attack player
 public class TaintedBatEntity extends CreatureEntity {
-	public TaintedBatEntity(EntityType<? extends TaintedBatEntity> type, World worldIn) {
-		super(type, worldIn);
+	public TaintedBatEntity(EntityType<? extends Entity> type, World worldIn) {
+		super((EntityType<? extends TaintedBatEntity>) type, worldIn);
 		this.setIsBatHanging(true);
 	}
 

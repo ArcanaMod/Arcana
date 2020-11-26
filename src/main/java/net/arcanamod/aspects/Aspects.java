@@ -2,7 +2,7 @@ package net.arcanamod.aspects;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.Pair;
 import net.minecraft.util.ResourceLocation;
 

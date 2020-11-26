@@ -1,26 +1,26 @@
-package net.arcanamod.blocks;
+package net.arcanamod.systems.taint;
 
 import com.google.common.collect.Lists;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.VisShareable;
+import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.DeadBlock;
+import net.arcanamod.blocks.DeadPlantBlock;
+import net.arcanamod.blocks.TaintedBlock;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.entities.tainted.*;
-import net.arcanamod.entities.tainted.group.TaintedFishEntity;
 import net.arcanamod.fluids.ArcanaFluids;
-import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
-import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.fish.PufferfishEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
@@ -201,54 +201,55 @@ public class Taint{
 	public static EntityType taintedEntityOf(EntityType entity){
 		if(entity.getRegistryName() == null)
 			return null;
-		EntityType tainted;
+		EntityType<? extends Entity> tainted;
 
 		String id = new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString();
 		float w = entity.getSize().width, h = entity.getSize().height;
 
-		if(entity == EntityType.BAT)
-			tainted = EntityType.Builder.create(TaintedBatEntity::new, MONSTER).size(w, h).build(id);
-		else if(entity == EntityType.EVOKER || entity == EntityType.ILLUSIONER || entity == EntityType.VINDICATOR || entity == EntityType.PILLAGER)
-			tainted = EntityType.Builder.create(TaintedIllagerEntity::new, MONSTER).size(w, h).build(id);
-		else if(entity == EntityType.CREEPER)
-			tainted = EntityType.Builder.create(TaintedCreeperEntity::new, MONSTER).size(w, h).build(id);
-		else if(entity == EntityType.SQUID)
-			tainted = EntityType.Builder.create(TaintedSquidEntity::new, MONSTER).size(w, h).build(id);
-		else if(entity == EntityType.GHAST)
-			tainted = EntityType.Builder.create(TaintedGhastEntity::new, MONSTER).size(w, h).build(id);
-		else if(entity == EntityType.CAVE_SPIDER)
-			tainted = EntityType.Builder.create(TaintedCaveSpiderEntity::new, MONSTER).size(w, h).build(id);
-		else if(entity == EntityType.SKELETON)
-			tainted = EntityType.Builder.create(TaintedSkeletonEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.SLIME)
-			tainted = EntityType.Builder.create(TaintedSlimeEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.BEE)
-			tainted = EntityType.Builder.create(TaintedBeeEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.PANDA)
-			tainted = EntityType.Builder.create(TaintedPandaEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.SNOW_GOLEM)
-			tainted = EntityType.Builder.create(TaintedSnowGolemEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.RABBIT)
-			tainted = EntityType.Builder.create(TaintedRabbitEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.POLAR_BEAR)
-			tainted = EntityType.Builder.create(TaintedPolarBearEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.DONKEY)
-			tainted = EntityType.Builder.create(TaintedDonkeyEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.CAT)
-			tainted = EntityType.Builder.create(TaintedCatEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.LLAMA)
-			tainted = EntityType.Builder.create(TaintedLlamaEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.TRADER_LLAMA)
-			tainted = EntityType.Builder.create(TaintedLlamaEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.PUFFERFISH)
-			tainted = EntityType.Builder.create(TaintedPufferfishEntity::new, MONSTER).size(w, h).build(id);
-		else if (entity == EntityType.COD || entity == EntityType.SALMON || entity == EntityType.DOLPHIN)
-			tainted = EntityType.Builder.create(TaintedFishEntity::new, MONSTER).size(w, h).build(id);
-		/*else if (entity == EntityType.PARROT)
-			tainted = EntityType.Builder.create(TaintedParrotEntity::new, MONSTER).size(w, h).build(id);*/
-		else
-			tainted = EntityType.Builder.<TaintedEntity>create((p_create_1_, p_create_2_) -> new TaintedEntity(p_create_1_, p_create_2_, entity), MONSTER)
-					.size(w, h).build(id);
+		EntityType.IFactory<?> factoryIn =
+				entity == EntityType.BAT
+						? TaintedBatEntity::new
+						: entity == EntityType.EVOKER
+						|| entity == EntityType.ILLUSIONER
+						|| entity == EntityType.VINDICATOR
+						|| entity == EntityType.PILLAGER
+						? TaintedIllagerEntity::new
+						: entity == EntityType.CREEPER
+						? TaintedCreeperEntity::new
+						: entity == EntityType.SQUID
+						? TaintedSquidEntity::new
+						: entity == EntityType.GHAST
+						? TaintedGhastEntity::new
+						: entity == EntityType.CAVE_SPIDER
+						? TaintedCaveSpiderEntity::new
+						: entity == EntityType.SKELETON
+						? TaintedSkeletonEntity::new
+						: entity == EntityType.SLIME
+						? TaintedSlimeEntity::new
+						: entity == EntityType.BEE
+						? TaintedBeeEntity::new
+						: entity == EntityType.PANDA
+						? TaintedPandaEntity::new
+						: entity == EntityType.SNOW_GOLEM
+						? TaintedSnowGolemEntity::new
+						: entity == EntityType.RABBIT
+						? TaintedRabbitEntity::new
+						: entity == EntityType.POLAR_BEAR
+						? TaintedPolarBearEntity::new
+						: entity == EntityType.DONKEY
+						? TaintedDonkeyEntity::new
+						: entity == EntityType.CAT
+						? TaintedCatEntity::new
+						: entity == EntityType.LLAMA
+						|| entity == EntityType.TRADER_LLAMA
+						? TaintedLlamaEntity::new
+						: entity == EntityType.PUFFERFISH
+						? TaintedPufferfishEntity::new
+						: entity == EntityType.PARROT
+						? TaintedParrotEntity::new
+						: (type, world) -> new TaintedEntity(type, world, entity);
+		tainted = EntityType.Builder.create(factoryIn, MONSTER).size(w, h).build(id);
+
 		entityTaintMap.put(entity, tainted);
 		return tainted;
 	}

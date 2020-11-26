@@ -1,7 +1,7 @@
 package net.arcanamod.mixin;
 
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.client.gui.UiUtil;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;

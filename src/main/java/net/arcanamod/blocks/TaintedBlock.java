@@ -5,6 +5,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.capabilities.TaintTrackable;
+import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;

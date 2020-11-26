@@ -2,7 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.capabilities.TaintTrackableCapability;
 import net.arcanamod.containers.ArcanaContainers;

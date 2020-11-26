@@ -1,7 +1,7 @@
 package net.arcanamod.items.tools;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.BlockState;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.IItemTier;

@@ -2,7 +2,7 @@ package net.arcanamod.event;
 
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.capabilities.TaintTrackable;

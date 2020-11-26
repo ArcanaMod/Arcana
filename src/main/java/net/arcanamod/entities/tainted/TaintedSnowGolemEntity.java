@@ -3,6 +3,7 @@ package net.arcanamod.entities.tainted;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.util.DamageSource;
@@ -11,8 +12,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class TaintedSnowGolemEntity extends SnowGolemEntity {
-	public TaintedSnowGolemEntity(EntityType<? extends SnowGolemEntity> p_i50244_1_, World p_i50244_2_) {
-		super(p_i50244_1_, p_i50244_2_);
+	public TaintedSnowGolemEntity(EntityType<? extends Entity> p_i50244_1_, World p_i50244_2_) {
+		super((EntityType<? extends SnowGolemEntity>) p_i50244_1_, p_i50244_2_);
 	}
 
 	/**

@@ -2,6 +2,7 @@ package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
+import net.arcanamod.aspects.ColorRange;
 import net.arcanamod.blocks.bases.*;
 import net.arcanamod.blocks.multiblocks.*;
 import net.arcanamod.blocks.multiblocks.foci_forge.FociForgeComponentBlock;
@@ -21,8 +22,8 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import static net.arcanamod.blocks.Taint.taintedOf;
-import static net.arcanamod.blocks.Taint.deadOf;
+import static net.arcanamod.systems.taint.Taint.taintedOf;
+import static net.arcanamod.systems.taint.Taint.deadOf;
 import static net.arcanamod.util.annotations.GIM.Type.BLOCK_REF;
 import static net.minecraft.block.Block.Properties.create;
 import static net.minecraft.block.Block.Properties.from;
@@ -446,4 +447,5 @@ public class ArcanaBlocks{
 	// Spell made blocks
 	public static final RegistryObject<Block> VACUUM_BLOCK = BLOCKS.register("vacuum_block", () -> new VacuumBlock(create(MISCELLANEOUS).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(15)));
 	public static final RegistryObject<Block> WARDENED_BLOCK = BLOCKS.register("wardened_block", () -> new WardenedBlock(create(MISCELLANEOUS).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(3)));
+	public static final RegistryObject<Block> LIGHT_BLOCK = BLOCKS.register("light_block", () -> new Block(create(AIR).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(3)));
 }
