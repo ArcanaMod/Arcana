@@ -931,6 +931,17 @@
     "_comment": "Toasts",
     "puzzle.toast.title": "Puzzle Complete!",
 
+    "_comment": "Menu Text",
+    "config.client.custom_book_width": "Book GUI x-offset",
+    "config.client.custom_book_height": "Book GUI y-offset",
+    "config.client.book_text_scaling": "Book text scale",
+    "config.client.wand_hud_left": "Wand HUD on left",
+    "config.client.wand_hud_top": "Wand HUD on top",
+    "config.client.block_huds_top": "Block HUDs",
+    "config.client.jar_animation_speed": "Jar animation speed",
+    "config.client.no_jar_animation": "Disable jar animation",
+    "config.client.auto": "Auto",
+
     "_comment": "Spells",
     "spell.arcana.mining": "§2Mining",
     "spell.arcana.fabric": "§eVicious Mockery",
