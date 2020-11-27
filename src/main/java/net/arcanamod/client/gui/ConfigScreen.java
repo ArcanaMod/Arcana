@@ -64,6 +64,14 @@ public final class ConfigScreen extends Screen {
                         + ": " + String.format("%.1f", value.get(gs))
         ));
 
+        this.optionsRowList.addOption(new SliderPercentageOption("config.client.wand_hud_scaling",
+                0.5f, 2.0f, 0.1f,
+                (gs) -> ArcanaConfig.WAND_HUD_SCALING.get(),
+                (gs, value) -> ArcanaConfig.WAND_HUD_SCALING.set(value),
+                (gs, value) -> I18n.format("config.client.wand_hud_scaling")
+                        + ": " + String.format("%.1f", value.get(gs))
+        ));
+
         this.optionsRowList.addOption(new BooleanOption("config.client.wand_hud_left",
                 (gs) -> ArcanaConfig.WAND_HUD_LEFT.get(),
                 (gs, value) -> ArcanaConfig.WAND_HUD_LEFT.set(value)

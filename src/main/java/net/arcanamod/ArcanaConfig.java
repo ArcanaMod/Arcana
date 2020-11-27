@@ -138,8 +138,11 @@ public class ArcanaConfig{
 				.comment("The height that the research book GUI should use.", "Setting it to -1, the default, makes the GUI adjust to screen height automatically.")
 				.define("ResearchBookHeight", -1);
 		BOOK_TEXT_SCALING = CLIENT_BUILDER
-				.comment("Text scaling for the research entry GUI.", ".07 by default")
+				.comment("Text scaling for the research entry GUI.", "0.7 by default")
 				.define("ResearchBookTextScaling", 0.7);
+		WAND_HUD_SCALING = CLIENT_BUILDER
+				.comment("Texture scaling for the wand HUD.", "2.0 by default")
+				.define("WandHudScaling", 1.0);
 		WAND_HUD_LEFT = CLIENT_BUILDER
 				.comment("Whether the wand HUD should display on the left of the screen (true) or the right (false).", "True by default.")
 				.define("WandHudHorizontalSide", true);
@@ -209,6 +212,7 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1
 	public static ConfigValue<Integer> CUSTOM_BOOK_HEIGHT; // -1
 	public static ConfigValue<Double> BOOK_TEXT_SCALING; // 0.8
+	public static ConfigValue<Double> WAND_HUD_SCALING; // 2.0
 	public static ConfigValue<Boolean> WAND_HUD_LEFT; // true
 	public static ConfigValue<Boolean> WAND_HUD_TOP; // true
 	public static ConfigValue<Boolean> BLOCK_HUDS_TOP; // true

@@ -39,6 +39,10 @@ public interface Core{
 	default ResourceLocation getTextureLocation(){
 		return new ResourceLocation(getId().getNamespace(), "models/wands/materials/" + getId().getPath());
 	}
+
+	default ResourceLocation getGuiTexture(){
+		return new ResourceLocation(getId().getNamespace(), "textures/gui/hud/wand/core/" + getId().getPath() + ".png");
+	}
 	
 	default boolean capAllowed(Cap cap){
 		return level() >= cap.level();
@@ -57,7 +61,7 @@ public interface Core{
 			this.id = id;
 			CORES.put(getId(), this);
 		}
-		
+
 		public int maxVis(){
 			return maxVis;
 		}

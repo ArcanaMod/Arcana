@@ -9,6 +9,7 @@ import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.client.ClientAuraHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
+import net.arcanamod.items.attachment.Core;
 import net.arcanamod.util.GogglePriority;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -42,26 +43,18 @@ public final class Huds{
 		if(player != null && event.getType().equals(RenderGameOverlayEvent.ElementType.ALL)){
 			ItemStack stack = player.getHeldItemMainhand();
 			if(stack.getItem() instanceof WandItem){
+				Core core = WandItem.getCore(stack);
 				IAspectHandler aspects = IAspectHandler.getFrom(stack);
 				if(aspects != null){
-					float length = AspectUtils.primalAspects.length;
-					int baseX = ArcanaConfig.WAND_HUD_LEFT.get() ? 24 : event.getWindow().getScaledWidth() - 24 - 16;
-					int baseY = ArcanaConfig.WAND_HUD_TOP.get() ? 24 : event.getWindow().getScaledHeight() - 24 - 16 - 4;
-					for(int i = 0; i < length; i++){
-						Aspect primal = AspectUtils.primalAspects[i];
-						AspectStack aspStack = aspects.findAspectInHolders(primal).getContainedAspectStack();
-						int x = (int)(baseX + Math.sin((i / length * 2) * Math.PI) * 20);
-						int y = (int)(baseY + Math.cos((i / length * 2) * Math.PI) * 20);
-						if(!aspStack.isEmpty())
-							UiUtil.renderAspectStack(aspStack, x, y);
-						else{
-							RenderSystem.pushMatrix();
-							RenderSystem.color4f(.5f, .5f, .5f, 1);
-							UiUtil.renderAspect(primal, x, y);
-							RenderSystem.popMatrix();
-						}
-					}
+					float scale = 2 * ArcanaConfig.WAND_HUD_SCALING.get().floatValue();
+					int baseX = (int)(ArcanaConfig.WAND_HUD_LEFT.get() ? 8 / scale : (event.getWindow().getScaledWidth() - 8) / scale - 49);
+					int baseY = (int)(ArcanaConfig.WAND_HUD_TOP.get() ? 8 / scale : (event.getWindow().getScaledHeight() - 8) / scale - 49);
+					RenderSystem.pushMatrix();
+					RenderSystem.scalef(scale,scale,2);
+					UiUtil.renderVisCore(core, baseX, baseY);
+					UiUtil.renderVisMeter(core, aspects, baseX, baseY);
 					WandItem.getFocusStack(stack).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX, baseY));
+					RenderSystem.popMatrix();
 				}
 			}else if(stack.getItem().equals(ArcanaItems.FLUX_METER.get())){
 				// display filling at 8,8

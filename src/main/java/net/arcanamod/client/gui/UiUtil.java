@@ -2,10 +2,8 @@ package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.*;
+import net.arcanamod.items.attachment.Core;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -243,5 +241,47 @@ public final class UiUtil{
 	
 	public static void drawAspectStyleTooltip(String text, int mouseX, int mouseY, int screenWidth, int screenHeight){
 		GuiUtils.drawHoveringText(Collections.singletonList(text), mouseX, mouseY, screenWidth, screenHeight, -1, GuiUtils.DEFAULT_BACKGROUND_COLOR, 0xFF00505F, 0xFF00282F, Minecraft.getInstance().fontRenderer);
+	}
+
+	public static void renderVisCore(Core core, int x, int y) {
+		Minecraft.getInstance().getTextureManager().bindTexture(core.getGuiTexture());
+		drawModalRectWithCustomSizedTexture(x, y, 0, 0, 49, 49, 49, 49);
+	}
+
+	public static void renderVisMeter(Core core, IAspectHandler aspects, int x, int y) {
+		int poolOffset = 2;
+		int poolSpacing = 6;
+		int poolFromEdge = 24;
+		// "2": distance to first vis pool
+		// "+= 6": distance between vis pools
+		// "24": constant distance to vis pool
+		Aspect[] vertical = {Aspects.AIR, Aspects.CHAOS, Aspects.EARTH};
+		Aspect[] horizontal = {Aspects.FIRE, Aspects.ORDER, Aspects.WATER};
+		int offset = poolOffset;
+		for (Aspect aspect : vertical) {
+			IAspectHolder holder = aspects.findAspectInHolders(aspect);
+			renderVisFill(holder.getContainedAspectStack(), holder.getCapacity(aspect), true, x + offset, y + poolFromEdge);
+			offset += poolSpacing;
+		}
+		offset = poolOffset;
+		for (Aspect aspect : horizontal) {
+			IAspectHolder holder = aspects.findAspectInHolders(aspect);
+			renderVisFill(holder.getContainedAspectStack(), holder.getCapacity(aspect), false, x + poolFromEdge, y + offset);
+			offset += poolSpacing;
+		}
+	}
+
+	public static void renderVisFill(AspectStack aspStack, int visMax, boolean vertical, int x, int y) {
+		int meterShort = 3;
+		int meterLen = 16;
+		int renderLen = (aspStack.getAmount() * 16) / visMax;
+		if (renderLen > 0) {
+			Minecraft.getInstance().getTextureManager().bindTexture(aspStack.getAspect().getVisMeterTexture());
+			// TODO: Someone please tell me why this isn't incorrect. What the hell...
+			if (vertical)
+				drawModalRectWithCustomSizedTexture(x, y, 0, 0, meterShort, renderLen, meterLen, meterShort);
+			else
+				drawModalRectWithCustomSizedTexture(x, y, 0, 0, renderLen, meterShort, meterShort, meterLen);
+		}
 	}
 }

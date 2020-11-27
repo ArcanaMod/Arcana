@@ -2,6 +2,7 @@ package net.arcanamod.aspects;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaVariables;
+import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,6 +47,11 @@ public class Aspect {
 	@Override
 	public String toString() {
 		return "Aspect: "+aspectName+" ("+id+")";
+	}
+
+	public ResourceLocation getVisMeterTexture() {
+		// only valid for primals
+		return new ResourceLocation(Arcana.MODID, "textures/gui/hud/wand/vis/" + aspectName + ".png");
 	}
 
 	// Static Methods
