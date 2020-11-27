@@ -935,6 +935,7 @@
     "config.client.custom_book_width": "Book GUI x-offset",
     "config.client.custom_book_height": "Book GUI y-offset",
     "config.client.book_text_scaling": "Book text scale",
+    "config.client.wand_hud_scaling": "Wand HUD scale",
     "config.client.wand_hud_left": "Wand HUD on left",
     "config.client.wand_hud_top": "Wand HUD on top",
     "config.client.block_huds_top": "Block HUDs",
