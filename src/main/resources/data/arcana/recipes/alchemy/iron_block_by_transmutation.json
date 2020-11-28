@@ -1,0 +1,26 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:storage_blocks/gold"
+  },
+  "out": {
+    "item": "minecraft:iron_block"
+  },
+  "aspects": [
+    {
+      "aspect": "exchange",
+      "amount": 27
+    },
+    {
+      "aspect": "metal",
+      "amount": 9
+    },
+    {
+      "aspect": "tool",
+      "amount": 9
+    }
+  ],
+  "research": [
+    "arcana:transmutation@6"
+  ]
+}

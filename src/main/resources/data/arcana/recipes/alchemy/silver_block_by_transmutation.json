@@ -1,0 +1,26 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:storage_blocks/iron"
+  },
+  "out": {
+    "item": "arcana:silver_block"
+  },
+  "aspects": [
+    {
+      "aspect": "exchange",
+      "amount": 27
+    },
+    {
+      "aspect": "ice",
+      "amount": 9
+    },
+    {
+      "aspect": "imprison",
+      "amount": 9
+    }
+  ],
+  "research": [
+    "arcana:transmutation@6"
+  ]
+}

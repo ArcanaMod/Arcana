@@ -66,7 +66,7 @@ public class Connection{
 	}
 
 	public static void sendGetNoteHandler(ResourceLocation id, String pageName) {
-		INSTANCE.sendToServer(new PkGetNote(id,pageName));
+		INSTANCE.sendToServer(new PkGetNote(id, pageName));
 	}
 
 	public static void sendClientSlotDrain(int windowId, int slotId, PkAspectClick.ClickType type, ServerPlayerEntity target) {

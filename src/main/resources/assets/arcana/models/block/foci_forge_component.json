@@ -1,0 +1,7 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "arcana:block/foci_forge",
+    "particle": "arcana:block/dungeon_bricks"
+  }
+}

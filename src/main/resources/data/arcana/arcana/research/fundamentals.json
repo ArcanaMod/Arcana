@@ -4,7 +4,12 @@
       "key": "arcana:aspects",
       "name": "research.arcana.aspects",
       "icons": [
-        "arcana:aspect_water"
+        "arcana:aspect_earth",
+        "arcana:aspect_air",
+        "arcana:aspect_water",
+        "arcana:aspect_fire",
+        "arcana:aspect_order",
+        "arcana:aspect_chaos"
       ],
       "category": "arcana:fundamentals",
       "parents": [],
@@ -25,6 +30,7 @@
     {
       "key": "arcana:wandcraft",
       "name": "research.arcana.wandcraft",
+      "desc": "research.arcana.wandcraft.desc",
       "icons": [
         "arcana:item/basicwand.png"
       ],
@@ -68,7 +74,10 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.arcane_crafting.stage.1"
+          "content": "research.arcana.arcane_crafting.stage.1",
+          "requirements": [
+            "0*arcana:arcane_crafting_table"
+          ]
         },
         {
           "type": "string",
@@ -79,7 +88,6 @@
     {
       "key": "arcana:alchemy",
       "name": "research.arcana.alchemy",
-      "desc": "research.arcana.alchemy.desc",
       "icons": [
         "arcana:crucible"
       ],
@@ -97,11 +105,18 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.alchemy.stage.1"
+          "content": "research.arcana.alchemy.stage.1",
+          "requirements": [
+            "0*arcana:crucible"
+          ]
         },
         {
           "type": "string",
           "content": "research.arcana.alchemy.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:nitor"
         }
       ]
     },
@@ -124,11 +139,115 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.aspect_collection.stage.1"
+          "content": "research.arcana.aspect_collection.stage.1",
+          "requirements": [
+            "10*arcana::xp"
+          ]
         },
         {
           "type": "string",
           "content": "research.arcana.aspect_collection.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/alembic",
+          "requirements": [
+            "0*arcana:alembic"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.aspect_collection.stage.3"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/jar"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:empty_phial"
+        }
+      ]
+    },
+    {
+      "key": "arcana:aspect_tubes",
+      "name": "research.arcana.aspect_tubes",
+      "desc": "research.arcana.aspect_tubes.desc",
+      "icons": [
+        "arcana:essentia_tube",
+        "arcana:essentia_window",
+        "arcana:essentia_valve"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "&arcana:aspect_collection"
+      ],
+      "meta": [
+        "round_base",
+        "hidden",
+        "reverse"
+      ],
+      "x": 0,
+      "y": -3,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.aspect_tubes.text"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_tube"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_valve"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:essentia_window"
+        }
+      ]
+    },
+    {
+      "key": "arcana:variant_jars",
+      "name": "research.arcana.variant_jars",
+      "desc": "research.arcana.variant_jars.desc",
+      "icons": [
+        "arcana:secure_jar",
+        "arcana:void_jar"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:aspect_collection",
+        "arcana:flux"
+      ],
+      "meta": [],
+      "x": 4,
+      "y": -1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.variant_jars.stage.1",
+          "requirements": [
+            "3*arcana:imprison_crystal",
+            "3*arcana:taint_crystal",
+            "3*arcana:mana_crystal",
+            "3*arcana:crystal_crystal",
+            "3*arcana:earth_crystal",
+            "6*arcana:amber"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.variant_jars.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/void_jar"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/secure_jar"
         }
       ]
     },
@@ -212,8 +331,31 @@
           "content": "research.arcana.research.stage.1"
         },
         {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/research_table",
+          "requirements": [
+            "0*arcana:research_table_placer"
+          ]
+        },
+        {
           "type": "string",
           "content": "research.arcana.research.stage.2"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:scribing_tools"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:aspect_bookshelf",
+          "requirements": [
+            "arcana::puzzle{arcana:chemistry_intro_puzzle}",
+            "arcana::puzzle{arcana:gw_enchanting_table}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.research.stage.3"
         }
       ]
     },
@@ -361,32 +503,29 @@
           "content": "research.arcana.flux.warp_info"
         }
       ]
+    }
+  ],
+  "puzzles": [
+    {
+      "key": "arcana:gw_enchanting_table",
+      "type": "guesswork",
+      "recipe": "minecraft:enchanting_table",
+      "hints": [
+        "minecraft:book=requirement.guesswork.ench.hint.book",
+        "minecraft:diamond=requirement.guesswork.ench.hint.diamond",
+        "minecraft:obsidian=requirement.guesswork.ench.hint.obsidian"
+      ]
     },
     {
-      "key": "arcana:foci",
-      "name": "research.arcana.foci",
-      "desc": "research.arcana.foci.desc",
-      "icons": [
-        "arcana:foci/focus_style_1.png"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [],
-      "meta": [
-        "root",
-        "purple_base",
-        "spiky_base"
-      ],
-      "x": 3,
-      "y": -3,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.foci.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.foci.stage.2"
-        }
+      "key": "arcana:chemistry_intro_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:chaos",
+        "arcana:order",
+        "arcana:water",
+        "arcana:fire",
+        "arcana:air",
+        "arcana:earth"
       ]
     }
   ]

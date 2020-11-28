@@ -26,13 +26,15 @@ import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public abstract class AbstractCraftingSectionRenderer<T extends AbstractCraftingSection> implements EntrySectionRenderer<T>{
 	
-	protected ResourceLocation textures;
+	protected ResourceLocation textures = null;
 	
 	public void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		// if recipe exists: render result at specified position, defer drawing recipe
 		// otherwise: render error message
 		ResearchBook book = ResearchBooks.getEntry(section.getEntry()).category().book();
-		textures = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + ResearchEntryScreen.OVERLAY_SUFFIX);
+		// don't make a new RLoc every frame
+		if(textures == null || !textures.getNamespace().equals(book.getKey().getNamespace()))
+			textures = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + ResearchEntryScreen.OVERLAY_SUFFIX);
 		Optional<? extends IRecipe<?>> optRecipe = player.world.getRecipeManager().getRecipe(section.getRecipe());
 		optRecipe.ifPresent(recipe -> {
 			// draw result
@@ -41,6 +43,8 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 			renderRecipe(recipe, section, pageIndex, screenWidth, screenHeight, mouseX, mouseY, right, player);
 		});
 		// else display error
+		if(!optRecipe.isPresent())
+			error();
 	}
 	
 	public void renderAfter(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
@@ -109,7 +113,7 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 		// display error
 	}
 	
-	protected int dispIndex(int max, @Nonnull Entity player){
+	protected int displayIndex(int max, @Nonnull Entity player){
 		return (player.ticksExisted / 30) % max;
 	}
 }

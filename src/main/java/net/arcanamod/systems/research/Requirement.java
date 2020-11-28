@@ -81,7 +81,7 @@ public abstract class Requirement{
 	
 	public abstract CompoundNBT data();
 	
-	public boolean onClick(ResearchEntry entry){
+	public boolean onClick(ResearchEntry entry, PlayerEntity player){
 		return false;
 	}
 	

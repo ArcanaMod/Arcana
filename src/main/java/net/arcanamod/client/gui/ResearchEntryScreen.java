@@ -35,6 +35,7 @@ public class ResearchEntryScreen extends Screen{
 	ResourceLocation bg;
 	ResearchEntry entry;
 	int index;
+	Screen parentScreen;
 	
 	Button left, right, cont, ret;
 	
@@ -52,9 +53,10 @@ public class ResearchEntryScreen extends Screen{
 	
 	public static float TEXT_SCALING = ArcanaConfig.BOOK_TEXT_SCALING.get().floatValue();
 	
-	public ResearchEntryScreen(ResearchEntry entry){
+	public ResearchEntryScreen(ResearchEntry entry, Screen parentScreen){
 		super(new StringTextComponent(""));
 		this.entry = entry;
+		this.parentScreen = parentScreen;
 		bg = new ResourceLocation(entry.key().getNamespace(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
 	}
 	
@@ -145,7 +147,7 @@ public class ResearchEntryScreen extends Screen{
 			}
 		};
 		cont = addButton(button);
-		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, p_onPress_1_ -> returnToBook()));
+		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, p_onPress_1_ -> onClose()));
 		updateButtonVisibility();
 	}
 	
@@ -161,17 +163,9 @@ public class ResearchEntryScreen extends Screen{
 		else{
 			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
 			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey))
-				returnToBook();
+				onClose();
 			return false;
 		}
-	}
-	
-	private void returnToBook(){
-		ResearchBookScreen gui = new ResearchBookScreen(entry.category().book());
-		gui.tab = entry.category().book().getCategories().indexOf(entry.category());
-		if(gui.tab < 0)
-			gui.tab = 0;
-		Minecraft.getInstance().displayGuiScreen(gui);
 	}
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
@@ -184,7 +178,7 @@ public class ResearchEntryScreen extends Screen{
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++)
 				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18)
-					return requirements.get(i).onClick(entry);
+					return requirements.get(i).onClick(entry, getMinecraft().player);
 		}
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);
@@ -276,6 +270,10 @@ public class ResearchEntryScreen extends Screen{
 	
 	public boolean isPauseScreen(){
 		return false;
+	}
+
+	public void onClose() {
+		Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 	
 	class ChangePageButton extends Button{

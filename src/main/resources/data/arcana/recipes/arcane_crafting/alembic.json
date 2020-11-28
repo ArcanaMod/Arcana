@@ -1,9 +1,9 @@
 {
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
-    "grg",
+    "gag",
     "wcw",
-    "grg"
+    "gag"
   ],
   "key": {
     "w": [
@@ -17,8 +17,8 @@
     "g": {
       "tag": "forge:ingots/gold"
     },
-    "r": {
-      "tag": "forge:dusts/redstone"
+    "a": {
+      "item": "arcana:amber"
     },
     "c": {
       "tag": "arcana:crystals"
@@ -27,7 +27,15 @@
   "aspects": [
     {
       "aspect": "arcana:air",
-      "amount": 4
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 10
     }
   ],
   "result": {

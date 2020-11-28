@@ -7,10 +7,8 @@ import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.network.Connection;
-import net.arcanamod.systems.research.ResearchBook;
-import net.arcanamod.systems.research.ResearchBooks;
-import net.arcanamod.systems.research.ResearchCategory;
-import net.arcanamod.systems.research.ResearchEntry;
+import net.arcanamod.systems.research.*;
+import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -44,6 +42,7 @@ public class ResearchBookScreen extends Screen{
 	List<ResearchCategory> categories;
 	ResourceLocation texture;
 	int tab = 0;
+	Screen parentScreen;
 	
 	// public static final String SUFFIX = "_menu_gui.png";
 	public static final String SUFFIX_RESIZABLE = "_menu_resizable.png";
@@ -59,9 +58,10 @@ public class ResearchBookScreen extends Screen{
 	static float yPan = 0;
 	static float zoom = 0.7f;
 	static boolean showZoom = false;
-	
-	public ResearchBookScreen(ResearchBook book){
+
+	public ResearchBookScreen(ResearchBook book, Screen parentScreen){
 		super(new StringTextComponent(""));
+		this.parentScreen = parentScreen;
 		this.book = book;
 		texture = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + SUFFIX_RESIZABLE);
 		PlayerEntity player = Minecraft.getInstance().player;
@@ -174,113 +174,129 @@ public class ResearchBookScreen extends Screen{
 				// for every visible parent
 				// draw an arrow & arrowhead
 				RenderSystem.enableBlend();
-				for(ResourceLocation parentKey : entry.parents()){
-					ResearchEntry parent = ResearchBooks.getEntry(parentKey);
-					if(parent != null && parent.category().equals(entry.category()) && style(parent) != PageStyle.NONE){
+				for(Parent parent : entry.parents()){
+					ResearchEntry parentEntry = ResearchBooks.getEntry(parent.getEntry());
+					if(parentEntry != null && parent.shouldShowLine() && parentEntry.category().equals(entry.category()) && style(parentEntry) != PageStyle.NONE){
 						getMinecraft().getTextureManager().bindTexture(ARROWS_AND_BASES);
-						int xdiff = abs(entry.x() - parent.x());
-						int ydiff = abs(entry.y() - parent.y());
+						int xdiff = abs(entry.x() - parentEntry.x());
+						int ydiff = abs(entry.y() - parentEntry.y());
 						// if there is a y-difference or x-difference of 0, draw a line
 						if(xdiff == 0 || ydiff == 0)
 							if(xdiff == 0){
-								arrows.drawVerticalLine(parent.x(), entry.y(), parent.y());
-								if(parent.y() > entry.y())
-									arrows.drawUpArrow(entry.x(), entry.y() + 1);
-								else
-									arrows.drawDownArrow(entry.x(), entry.y() - 1);
+								arrows.drawVerticalLine(parentEntry.x(), entry.y(), parentEntry.y());
+								if(parent.shouldShowArrowhead())
+									if(parentEntry.y() > entry.y())
+										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+									else
+										arrows.drawDownArrow(entry.x(), entry.y() - 1);
 							}else{
-								arrows.drawHorizontalLine(parent.y(), entry.x(), parent.x());
-								if(parent.x() > entry.x())
-									arrows.drawLeftArrow(entry.x() + 1, entry.y());
-								else
-									arrows.drawRightArrow(entry.x() - 1, entry.y());
+								arrows.drawHorizontalLine(parentEntry.y(), entry.x(), parentEntry.x());
+								if(parent.shouldShowArrowhead())
+									if(parentEntry.x() > entry.x())
+										arrows.drawLeftArrow(entry.x() + 1, entry.y());
+									else
+										arrows.drawRightArrow(entry.x() - 1, entry.y());
 							}
 						else{
 							boolean unreversed = !entry.meta().contains("reverse");
 							if(xdiff < 2 || ydiff < 2){
 								// from entry's POV
 								if(unreversed){
-									arrows.drawVerticalLine(entry.x(), parent.y(), entry.y());
-									arrows.drawHorizontalLine(parent.y(), parent.x(), entry.x());
-									if(entry.x() > parent.x()){
-										if(entry.y() > parent.y()){
-											arrows.drawLdCurve(entry.x(), parent.y());
-											arrows.drawDownArrow(entry.x(), entry.y() - 1);
+									arrows.drawVerticalLine(entry.x(), parentEntry.y(), entry.y());
+									arrows.drawHorizontalLine(parentEntry.y(), parentEntry.x(), entry.x());
+									if(entry.x() > parentEntry.x()){
+										if(entry.y() > parentEntry.y()){
+											arrows.drawLdCurve(entry.x(), parentEntry.y());
+											if(parent.shouldShowArrowhead())
+												arrows.drawDownArrow(entry.x(), entry.y() - 1);
 										}else{
-											arrows.drawLuCurve(entry.x(), parent.y());
-											arrows.drawUpArrow(entry.x(), entry.y() + 1);
+											arrows.drawLuCurve(entry.x(), parentEntry.y());
+											if(parent.shouldShowArrowhead())
+												arrows.drawUpArrow(entry.x(), entry.y() + 1);
 										}
 									}else{
-										if(entry.y() > parent.y()){
-											arrows.drawRdCurve(entry.x(), parent.y());
-											arrows.drawDownArrow(entry.x(), entry.y() - 1);
+										if(entry.y() > parentEntry.y()){
+											arrows.drawRdCurve(entry.x(), parentEntry.y());
+											if(parent.shouldShowArrowhead())
+												arrows.drawDownArrow(entry.x(), entry.y() - 1);
 										}else{
-											arrows.drawRuCurve(entry.x(), parent.y());
-											arrows.drawUpArrow(entry.x(), entry.y() + 1);
+											arrows.drawRuCurve(entry.x(), parentEntry.y());
+											if(parent.shouldShowArrowhead())
+												arrows.drawUpArrow(entry.x(), entry.y() + 1);
 										}
 									}
 									// RDs and RUs are called at the same time (when LDs and LUs should)
 								}else{
-									arrows.drawHorizontalLine(entry.y(), entry.x(), parent.x());
-									arrows.drawVerticalLine(parent.x(), parent.y(), entry.y());
-									if(entry.x() > parent.x()){
-										if(entry.y() > parent.y()){
+									arrows.drawHorizontalLine(entry.y(), entry.x(), parentEntry.x());
+									arrows.drawVerticalLine(parentEntry.x(), parentEntry.y(), entry.y());
+									if(entry.x() > parentEntry.x()){
+										if(entry.y() > parentEntry.y()){
 											// ld
-											arrows.drawRuCurve(entry.x() - 1, parent.y() + 1);
-											arrows.drawRightArrow(entry.x() - 1, entry.y());
+											arrows.drawRuCurve(entry.x() - 1, parentEntry.y() + 1);
+											if(parent.shouldShowArrowhead())
+												arrows.drawRightArrow(entry.x() - 1, entry.y());
 										}else{
 											// lu
-											arrows.drawRdCurve(entry.x() - 1, parent.y() - 1);
-											arrows.drawRightArrow(entry.x() - 1, entry.y());
+											arrows.drawRdCurve(entry.x() - 1, parentEntry.y() - 1);
+											if(parent.shouldShowArrowhead())
+												arrows.drawRightArrow(entry.x() - 1, entry.y());
 										}
 									}else{
-										if(entry.y() > parent.y()){
+										if(entry.y() > parentEntry.y()){
 											// rd
-											arrows.drawLuCurve(entry.x() + 1, parent.y() + 1);
-											arrows.drawLeftArrow(entry.x() + 1, entry.y());
+											arrows.drawLuCurve(entry.x() + 1, parentEntry.y() + 1);
+											if(parent.shouldShowArrowhead())
+												arrows.drawLeftArrow(entry.x() + 1, entry.y());
 										}else{
 											// ru
-											arrows.drawLdCurve(entry.x() + 1, parent.y() - 1);
-											arrows.drawLeftArrow(entry.x() + 1, entry.y());
+											arrows.drawLdCurve(entry.x() + 1, parentEntry.y() - 1);
+											if(parent.shouldShowArrowhead())
+												arrows.drawLeftArrow(entry.x() + 1, entry.y());
 										}
 									}
 								}
 							}else{
 								if(unreversed){
-									arrows.drawHorizontalLineMinus1(parent.y(), parent.x(), entry.x());
-									arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parent.y());
-									if(entry.x() > parent.x()){
-										if(entry.y() > parent.y()){
-											arrows.drawLargeLdCurve(entry.x() - 1, parent.y());
-											arrows.drawDownArrow(entry.x(), entry.y() - 1);
+									arrows.drawHorizontalLineMinus1(parentEntry.y(), parentEntry.x(), entry.x());
+									arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parentEntry.y());
+									if(entry.x() > parentEntry.x()){
+										if(entry.y() > parentEntry.y()){
+											arrows.drawLargeLdCurve(entry.x() - 1, parentEntry.y());
+											if(parent.shouldShowArrowhead())
+												arrows.drawDownArrow(entry.x(), entry.y() - 1);
 										}else{
-											arrows.drawLargeLuCurve(entry.x() - 1, parent.y() - 1);
-											arrows.drawUpArrow(entry.x(), entry.y() + 1);
+											arrows.drawLargeLuCurve(entry.x() - 1, parentEntry.y() - 1);
+											if(parent.shouldShowArrowhead())
+												arrows.drawUpArrow(entry.x(), entry.y() + 1);
 										}
 									}else{
-										if(entry.y() > parent.y()){
-											arrows.drawLargeRdCurve(entry.x(), parent.y());
-											arrows.drawDownArrow(entry.x(), entry.y() - 1);
+										if(entry.y() > parentEntry.y()){
+											arrows.drawLargeRdCurve(entry.x(), parentEntry.y());
+											if(parent.shouldShowArrowhead())
+												arrows.drawDownArrow(entry.x(), entry.y() - 1);
 										}else{
-											arrows.drawLargeRuCurve(entry.x(), parent.y() - 1);
-											arrows.drawUpArrow(entry.x(), entry.y() + 1);
+											arrows.drawLargeRuCurve(entry.x(), parentEntry.y() - 1);
+											if(parent.shouldShowArrowhead())
+												arrows.drawUpArrow(entry.x(), entry.y() + 1);
 										}
 									}
 								}else{
-									arrows.drawHorizontalLineMinus1(entry.y(), entry.x(), parent.x());
-									arrows.drawVerticalLineMinus1(parent.x(), parent.y(), entry.y());
-									if(entry.x() > parent.x()){
-										if(entry.y() > parent.y())
-											arrows.drawLargeRuCurve(parent.x(), entry.y() - 1);
+									arrows.drawHorizontalLineMinus1(entry.y(), entry.x(), parentEntry.x());
+									arrows.drawVerticalLineMinus1(parentEntry.x(), parentEntry.y(), entry.y());
+									if(entry.x() > parentEntry.x()){
+										if(entry.y() > parentEntry.y())
+											arrows.drawLargeRuCurve(parentEntry.x(), entry.y() - 1);
 										else
-											arrows.drawLargeRdCurve(parent.x(), entry.y() - 1);
-										arrows.drawRightArrow(entry.x() - 1, entry.y());
+											arrows.drawLargeRdCurve(parentEntry.x(), entry.y() - 1);
+										if(parent.shouldShowArrowhead())
+											arrows.drawRightArrow(entry.x() - 1, entry.y());
 									}else{
-										if(entry.y() > parent.y())
+										if(entry.y() > parentEntry.y())
 											arrows.drawLargeLuCurve(entry.x() + 1, entry.y() - 1);
 										else
 											arrows.drawLargeLdCurve(entry.x() + 1, entry.y());
-										arrows.drawLeftArrow(entry.x() + 1, entry.y());
+										if(parent.shouldShowArrowhead())
+											arrows.drawLeftArrow(entry.x() + 1, entry.y());
 									}
 								}
 							}
@@ -306,7 +322,35 @@ public class ResearchBookScreen extends Screen{
 			return PageStyle.IN_PROGRESS;
 		// if it does not have the "hidden" tag:
 		if(!entry.meta().contains("hidden")){
-			List<PageStyle> parentStyles = entry.parents().stream().map(ResearchBooks::getEntry).map(this::style).collect(Collectors.toList());
+			List<PageStyle> parentStyles = entry.parents().stream().map(parent -> Pair.of(ResearchBooks.getEntry(parent.getEntry()), parent)).map(p -> parentStyle(p.getFirst(), p.getSecond())).collect(Collectors.toList());
+			// if all of its parents are complete, it is available to do and in progress.
+			if(parentStyles.stream().allMatch(PageStyle.COMPLETE::equals))
+				return PageStyle.IN_PROGRESS;
+			// if at least one of its parents are in progress, its pending.
+			if(parentStyles.stream().anyMatch(PageStyle.IN_PROGRESS::equals))
+				return PageStyle.PENDING;
+		}
+		// otherwise, its invisible
+		return PageStyle.NONE;
+	}
+	
+	public PageStyle parentStyle(ResearchEntry entry, Parent parent){
+		// if the parent is greater than required, consider it complete
+		Researcher r = Researcher.getFrom(getMinecraft().player);
+		if(parent.getStage() == -1){
+			if(r.entryStage(entry) >= entry.sections().size())
+				return PageStyle.COMPLETE;
+		}else if(r.entryStage(entry) >= parent.getStage())
+			return PageStyle.COMPLETE;
+		// if its progress is greater than zero, then its in progress.
+		if(r.entryStage(entry) > 0)
+			return PageStyle.IN_PROGRESS;
+		// if it has no parents *and* the "root" tag, its available to do and in progress.
+		if(entry.meta().contains("root") && entry.parents().size() == 0)
+			return PageStyle.IN_PROGRESS;
+		// if it does not have the "hidden" tag:
+		if(!entry.meta().contains("hidden")){
+			List<PageStyle> parentStyles = entry.parents().stream().map(p -> Pair.of(ResearchBooks.getEntry(p.getEntry()), p)).map(p -> parentStyle(p.getFirst(), p.getSecond())).collect(Collectors.toList());
 			// if all of its parents are complete, it is available to do and in progress.
 			if(parentStyles.stream().allMatch(PageStyle.COMPLETE::equals))
 				return PageStyle.IN_PROGRESS;
@@ -421,7 +465,7 @@ public class ResearchBookScreen extends Screen{
 				if(button != 2){
 					if((style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS)
 						// left/right (& other) click: open page
-						getMinecraft().displayGuiScreen(new ResearchEntryScreen(entry));
+						getMinecraft().displayGuiScreen(new ResearchEntryScreen(entry, this));
 				}else
 					// middle click: try advance
 					Connection.sendTryAdvance(entry.key());
@@ -459,6 +503,10 @@ public class ResearchBookScreen extends Screen{
 			}
 			return false;
 		}
+	}
+
+	public void onClose() {
+		Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 	
 	/**

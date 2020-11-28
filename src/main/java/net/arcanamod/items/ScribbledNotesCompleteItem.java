@@ -20,7 +20,7 @@ import static net.arcanamod.Arcana.arcLoc;
 @MethodsReturnNonnullByDefault
 public class ScribbledNotesCompleteItem extends Item{
     
-    private static final ResourceLocation ROOT = arcLoc("root");
+    private static final ResourceLocation ROOT = arcLoc("aspects");
     
     public ScribbledNotesCompleteItem(Properties properties){
         super(properties);

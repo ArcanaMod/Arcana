@@ -112,9 +112,9 @@
 
     "item.arcana.research_note": "Research Note",
     "item.arcana.research_note_complete": "Complete Research Note",
-    "item.arcana.research_table_placer": "Research Table",
     "item.arcana.scribing_tools": "Scribing Tools",
     "item.arcana.vis_manipulation_tools": "Vis Manipulation Tools",
+
 
     "_comment": "Tainted Items",
     "item.arcana.cooked_tainted_cod": "Cooked Tainted Cod",
@@ -442,7 +442,8 @@
     
 
     "_comment": "Functional",
-    "block.arcana.research_table": "Research Table Block",
+    "block.arcana.research_table": "Research Table",
+    "block.arcana.foci_forge": "Foci Forge",
     "block.arcana.taint_bore": "Taint Bore",
     "block.arcana.taint_sucker": "Taint Sucker",
     "block.arcana.taint_booster": "Taint Scrubber Booster",
@@ -645,7 +646,8 @@
 
     "_comment": "GUIs",
     "researchEntry.continue": "Continue",
-    "researchTable.ink_needed": "Scribing tools required",
+    "researchTable.ink_needed": "Scribing tools required!",
+    "researchTable.ink_refill_needed": "Refill scribing tools!",
     "researchTable.search": "Search...",
     "scribbledNote.text": "Listen to the tears between worlds, they speak of untold power that can shape the world.",
     "devtools.more": "More...",
@@ -670,64 +672,21 @@
     "requirement.item.num": "%sx %s",
     "requirement.puzzle.get_note.1": "Click to get research note",
     "requirement.puzzle.get_note.2": "Requires scribing tools and paper",
+    "requirement.puzzle.complete": "Already complete",
     "requirement.tag.accepts_any": "Any %s",
 
+    "_comment": "Old Research",
     "research.arcana.category.basics": "Basics",
-    "research.arcana.category.fundamentals": "FUNdamentals",
     "research.arcana.category.artifice": "Artifice",
-    "research.arcana.category.alchemy": "Alchemy",
     "research.arcana.category.infusion": "Infusion",
     "research.arcana.category.golemancy": "Golemancy",
-    "research.arcana.category.auromancy": "Auromancy",
-    "research.arcana.category.eldritch": "Eldritch",
     "research.arcana.category.taint": "Taint",
     "research.arcana.category.crimson": "Crimson Rites",
     "research.arcana.category.illustrious": "Cleansing",
 
-    "research.arcana.willow_tree": "Willow Tree",
-    "research.arcana.willow_tree.stage.1": "Willow trees are relatively abundant among the world. Historically, Thaumaturges have used it to create wand cores. I would like to do the same, and hopefully find more uses for the wood.",
-    "research.arcana.willow_tree.stage.2": "Creating a wand core from willow wood proves to be more difficult than initially anticipated. (TODO: further research)",
-
-    "research.arcana.amber": "Amber",
-    "research.arcana.amber.stage.1": "Amber ore can be found abundantly near the surface, and has preservative properties. Perhaps these could be applied to magic?",
-    "research.arcana.amber.stage.2": "The makeup of amber makes it useful for storing aspects and preventing them from causing unwanted effects in-world. Unfortunately, it's rather difficult to integrate into magical devices.",
-
-    "research.arcana.dair_tree": "Dair Tree",
-    "research.arcana.dair_tree.desc": "Eerie Wood",
-    "research.arcana.dair_tree.stage.1": "Dair trees are common in many parts of the world, and have some convenient magical properties. Less convenient, however, are the spirits that often dwell within them, which may become hostile at an attempt to harvest their wood. Still, I should collect some for study purposes - they may make a sturdy wand core yet. Dair trees are rather large, so I hope they don't mind too much.",
-    "research.arcana.dair_tree.stage.2": "Dair wood can be quite simply shaped into a wand core, similar to hawthorn in power. It stores slightly less vis than a greatwood core, but can support more powerful caps.",
-
-    "research.arcana.hawthorn_tree": "Hawthorn Tree",
-    "research.arcana.hawthorn_tree.stage.1": "Hawthorn trees, native to magical forests, have been historically relevant among many devices for its mystical power. I should get my hand on some sooner rather than later.",
-    "research.arcana.hawthorn_tree.stage.2": "Just as expected, magic comes quite easily to hawthorn wood. An easy application of it is a strong wand core, able to support powerful caps and store plenty of vis.",
-
-    "research.arcana.greatwood_tree": "Greatwood Tree",
-    "research.arcana.greatwood_tree.desc": "Great. Fine.",
-    "research.arcana.greatwood_tree.stage.1": "Greatwood trees are massive, even compared to other large trees. They have a great (wink) capacity for vis, and their wood is applicable in a number of magical devices. Their size makes them relatively cheap, too.",
-    "research.arcana.greatwood_tree.stage.2": "A wand core made from greatwood can store plenty of vis. (TODO: ?????)",
-
-    "research.arcana.silverwood_tree": "Silverwood Tree",
-    "research.arcana.silverwood_tree.stage.1": "Protectors of magical forests, Silverwood trees are deeply valuable for their purifying properties. They help shelter denizens of magical forests from dark magic and pollution. Such effects would be invaluable for controlling magic and protecting against taint.",
-    "research.arcana.silverwood_tree.stage.2": "The wood is strong, and resistant to harmful effects, even disconnected to the plant. Creating a wand core from it will take much more work, but there are some clear short term uses for this in purifying and filtering aspects.",
-
-    "research.arcana.eucalyptus_tree": "Eucalyptus Tree",
-    "research.arcana.eucalyptus_tree.desc": "Bubblegum doesn't grow on trees",
-    "research.arcana.eucalyptus_tree.stage.1": "Eucalyptus trees can be found occasionally, and besides their attractive wood, and the cute creatures that call them home, they aren't known for any magical properties. Still, a sample would be useful.",
-    "research.arcana.eucalyptus_tree.stage.2": "Nothing particularly interesting to note. It looks good, that's all I can say.",
-
-    "research.arcana.silver": "Silver",
-    "research.arcana.silver.desc": "Kills 99.9%% of taint bugs",
-    "research.arcana.silver.stage.1": "Silver is mundane. I say that partially because it doesn't have any intrinsic magical properties - I say that also because it deflects and repels magic. It's been historically quite useful for cleaning up magical mishaps and containing magic nicely - I will *absolutely* want some of that.",
-    "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. Silver tools mine tainted blocks twice as fast as other tools, on top of having near-gold base mining speed. This also gives them... lacking durability, more on-par with stone than anything I would use regularly.",
-
-
-    "research.arcana.aspect_tubes": "Aspect Tubes",
-    "research.arcana.aspect_tubes.desc": "Moving aspects with no blockages",
-    "research.arcana.aspect_tubes.text": "Vis Tubes are a fast and convenient way to transfer vis from point A to point B, and for a number of magical devices, the only way. Pipes connect to other pipes, and any blocks capable of handling aspects in essentia form. When a block inserts aspects into a pipe, the aspects are relayed directly to connected blocks (so long as they can accept it). Similarly, when a block attempts to draw vis, it's drawn from connected blocks instantly. The blocks chosen to insert to, or draw aspects from, are arbitrary.\n\nThere are two variants of the essentia pipe: the aspect window and the aspect valve. The aspect window shows the last type of aspect that passed through it for some time, and the aspect valve can be opened and closed by clicking.\n\nRedstone force-closes a valve, and a window pipe emits a comparator signal while displaying an aspect.",
-
     "research.arcana.root": "Arcanum",
     "research.arcana.root.desc": "Book of discovery",
-    "research.arcana.root.text": "Within my travels, I came across a set of scribbled notes. I didn't think much of it; the cryptic message (\"Listen to the unseen tears between dimensions, they speak of untold power that can shape the world.\") didn't make sense to me, even after days of pondering, so I left it aside. But inspiration comes when you least expect it, like the old saying goes.\n\nA strange sensation came over me, almost like a subtle pulse of energy, as I walked. I looked around to find its source, but there was nothing in sight. I tried focusing on the sensation - eyes closed and mind focused - it was weak, but I could sense it. A feeling that got stronger as I went closer to the source.\n\nI stopped and reached out with my hand, and felt a slight tingle on my fingertips. It was there! But invisible to the naked eye. Is this what the notes referred to? What is this presence? I need to know more.\n\nThis book will be a record of my findings into the field of magic. I dub this book §oArcanum§r.",
+    "research.arcana.root.text": "Within my travels, I came across a set of scribbled notes. I didn't think much of it at the time; the cryptic message (\"Listen to the unseen tears between dimensions, they speak of untold power that can shape the world.\") didn't make sense to me, even after days of pondering, so I left it aside. But inspiration comes when you least expect it, like the old saying goes.\n\nA strange sensation came over me, almost like a subtle pulse of energy, as I walked. I looked around to find its source, but there was nothing in sight. I tried focusing on the sensation - eyes closed and mind focused - it was weak, but I could sense it. A feeling that got stronger as I went closer to the source.\n\nI stopped and reached out with my hand, and felt a slight tingle on my fingertips. It was there! But invisible to the naked eye. Is this what the notes referred to? What is this presence? I need to know more.\n\nThis book will be a record of my findings into the field of magic. I dub this book §oArcanum§r.",
 
     "research.arcana.collecting_aspects": "Collecting Aspects",
     "research.arcana.collecting_aspects.stage.1": "Nobody knows everything; only learning can widen our minds. To study and use magic, I'll need to collect and concentrate it; every form of research starts with aspects.\n\nThey're useless when in the form of objects, so first I will need to separate them out into vis and essentia. First, I'll need some equipment: a crucible and alembic to distill the aspects, a suitably warded jar to contain them, and a tube to transport them.\n\nA crucible can be made by right-clicking a cauldron with a wand, which can be made with a stick and two wand caps, placed diagonally. Wands will come in useful later too.",
@@ -822,6 +781,11 @@
     "research.arcana.tainted.stage.1": "Taint, in its natural state, is unwieldy and unusable, corrupting all in its path and twisting them into husks of their former selves. Despite my best efforts to contain it, its spread seems inevitable at times, with only diligent cleanup and harsh work keeping it in check. Perhaps there's a better way -- perhaps I can instead tame the beast, and put it to my own uses.\n\nTo that end, I have created the §otainted codex§r: a safe store for my research, to contain whatever revelations or ramblings I create.\\n\\nThe first obvious usage of taint is in spellcasting; specifically, using it as part of a wand. I will need to test how a tainted component affects its spellcasting and vis storage capabilities.",
 
     "_comment": "New Research",
+    "research.arcana.category.fundamentals": "Fundamentals",
+    "research.arcana.category.alchemy": "Alchemy",
+    "research.arcana.category.auromancy": "Auromancy",
+    "research.arcana.category.eldritch": "Eldritch",
+
     "research.arcana.flux": "Flux, Taint, Warp",
     "research.arcana.flux.desc": "No such thing as free lunch",
     "research.arcana.flux.flux_info": "Flux forms when magical devices are overloaded, or from aspects being improperly handled or overly exploited. The more aspects are tampered with, the more flux is created, and the more it spreads. When enough flux is concentrated in one place, taint begins to spread.",
@@ -830,27 +794,136 @@
 
     "research.arcana.aspects": "Aspects of Magic",
     "research.arcana.aspects.desc": "The Building Blocks",
-    "research.arcana.aspects.text": "Everything is created from some combination and structure of aspects. Six aspects are considered primal, and are the fundamental building blocks of reality. A further 52 aspects are made up of other aspects; these are known as compound aspects.",
+    "research.arcana.aspects.text": "Everything is created from some combination and structure of aspects. Six aspects are considered primal, and are the fundamental building blocks of reality. A further 52 aspects are made up of other aspects; these are known as compound aspects. (TODO: display all aspects.) Aspects can also take more pure forms, like different states of mundane elements. Crystals are the most stable, physical kind, one I can hold in my hand and store in chests like any mundane objects; their energy bound tightly. Essentia manifests as a liquid that imposes itself onto all it touches; life essentia causes extreme, sudden growth; fire essentia causes, well, fire. Vis is an incorporeal form, which can be used to power any sort of magical device. Although it is often portrayed as energy itself, it is more equivalent to gas. (TODO: lore??)",
 
     "research.arcana.wandcraft": "Wandcraft",
+    "research.arcana.wandcraft.desc": "Tools of the trade",
+    "research.arcana.wandcraft.stage.1": "[someone else do this pls]",
+
     "research.arcana.arcane_crafting": "Arcane Crafting",
     "research.arcana.arcane_crafting.desc": "Not your regular crafting table",
+    "research.arcana.arcane_crafting.stage.1": "A crafting table is a useful tool for putting together all sorts of devices and tools. However, the lack of magical apparatus presents a significant issue when constructing magical devices, especially ones for which construction necessitates magical processes. Fixing this is top priority. Hopefully, a simple tap from a wand should make a crafting table more friendly to magic.",
+    "research.arcana.arcane_crafting.stage.2": "Any crafting table can be converted to an Arcane Crafting Table by sneak-right-clicking using a wand. The arcane variant is just as capable as the mundane version, usable for any regular crafting recipe, but also providing tools for magical recipes. Magic can be drawn directly from a wand for such recipes.\n\nOne such item is the goggles of revealing, which make visible nodes and the aspects contained within devices.",
+
     "research.arcana.alchemy": "Alchemy",
-    "research.arcana.alchemy.desc": "A controlled unity of elements",
+    "research.arcana.alchemy.stage.1": "All objects are composed of some combination of aspects, just like they are some combination of mundane elements. Like mundane elements, I will benefit from learning to separate and combine these aspects, and the simplest method available to me is heat. Of course, magic must be used to catalyze the breakdown, and no readily available mundane materials are capable of resisting the required level of heat. A magically altered cauldron, in a similar way to the arcane crafting table, should work.",
+    "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down objects into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), items thrown in will be destroyed and their aspects added to a water-essentia solution. Although drawing the pure essentia from the solution is currently beyond me, the essentia within can be used in particular recipes. Throwing in an item that completes a recipe I know will instead consume some of the stored essentia, transforming the item. A simple application of this is the creation of Nitor, a constant, stable flame (that can be used to heat a crucible) from coal.\nA crucible can be emptied by right clicking - a crucible containing only water can be emptied with a bucket too. §oBreaking or emptying a crucible with aspects within it will create flux proportional to the amount of aspects within.§r\n\nMore in-depth research of this will be conducted in the §oAlchemy§r category of this book.",
+
     "research.arcana.aspect_collection": "Aspect Collection",
+    "research.arcana.aspect_collection.stage.1": "Alchemy can only do so much. I need to purify essentia further. Perhaps some time exploring will give me the inspiration I need. (TODO: fieldwork - find silverwood tree?) (TODO: image of scribbles)",
+    "research.arcana.aspect_collection.stage.2": "...a flash of brilliance! The wood of a greatwood or silverwood tree, sealed by amber, enhanced further through a stability spell, is capable of supporting pure essentia. From there, separation is simple enough - essentia solution comes in, and is split into its constituent aspects and (evaporated) water. One design I've created for this is the \"Arcane Alembic\", which draws the solution from crucibles directly.",
+    "research.arcana.aspect_collection.stage.3": "Arcane Alembics must be placed above a crucible, with between 1-4 (TODO: config) air blocks between them. Up to 3 (TODO: config) alembics can be stacked on top of eachother, all of which will draw from the same crucible in parallel. (A dropper or dispenser can drop any item into a crucible without crafting an item.)\n\nAlembics store up to 50 of 5 aspects. Storing aspects in the long term will require dedicated storage and transport for essentia. Essentia can be stored in Warded Jars - up to 100 of any type - which can be broken and moved around, retaining their contents. Alembics output their contained aspects to all adjacent essentia-accepting blocks. Phials are a handheld way of storing vis, holding up to 8 of any one type. Phials of the same type storing the same amount can be stacked.\n\nJars emit a comparator signal based on the amount of essentia inside them. Phials can be filled and emptied by dispensers.",
+
+    "research.arcana.aspect_tubes": "Aspect Tubes",
+    "research.arcana.aspect_tubes.desc": "Moving aspects, the fast way",
+    "research.arcana.aspect_tubes.text": "Vis Tubes are a fast and convenient way to transfer vis from point A to point B, and for a number of magical devices, the only way. Pipes connect to other pipes, and any blocks capable of handling aspects in essentia form. When a block inserts aspects into a pipe, the aspects are relayed directly to connected blocks (so long as they can accept it). Similarly, when a block attempts to draw vis, it's drawn from connected blocks instantly.\n\nThe blocks chosen to insert to, or draw aspects from, are completely arbitrary - any block that can accept the aspect or be drawn from may be chosen.\n\nThere are two special variants of the essentia pipe: the aspect window and the aspect valve. The aspect window temporarily shows the last type of aspect that passed through it, and the aspect valve can be opened and closed by clicking.\n\nRedstone force-closes a valve, and a window pipe emits a comparator signal while displaying an aspect.",
+
+    "research.arcana.variant_jars": "Variant Jars",
+    "research.arcana.variant_jars.desc": "Getting taint to sit still",
+    "research.arcana.variant_jars.stage.1": "Warded jars, while stable enough for most aspects, cannot contain the power of pure taint. Its influence radiates out, corrupting the earth it touches. Nor can store as much of the more plentiful aspects as I would like. Enhancing my jar design to contain taint is a top priority, and a capacity upgrade would be appreciated.",
+    "research.arcana.variant_jars.stage.2": "Containing wayward aspects simply requires integrating the essence of containment itself into the design of the jar, in the form of a Secure Jar. Secure jars store the same amount as regular jars, but don't allow the aspects inside to affect the world.\n\nIncreasing capacity turned out to be significantly harder than anticipated; concentrating too much of any aspect tends to produce unreliable, unstable, and dangerous results. But adding a little link to the void in the cap allows for Void Jars to ignore excess input, destroying what cannot be stored.",
+
     "research.arcana.aspect_crystallization": "Aspect Crystallization",
-    "research.arcana.aspect_crystallization.desc": "Solidify the immaterial",
+    "research.arcana.aspect_crystallization.desc": "Grasp the immaterial",
+    "research.arcana.aspect_crystallization.stage.1": "I have isolated aspects into their purest form. Many applications of magic, however, require a more stable, solid form - aspect crystals. It should not be difficult to crystallize essentia, given what I now know.",
+    "research.arcana.aspect_crystallization.stage.2": "By [TODO: lore], the Aspect Crystallizer (patent pending) is capable of solidifying essentia into crystals, given a crystal catalyst of quartz.",
+
     "research.arcana.research": "Research",
     "research.arcana.research.desc": "Knowledge is power",
+    "research.arcana.research.stage.1": "So far, I haven't created anything particularly original or complex. My greatest breakthroughs have been by chance, and likely done many times before. To create anything more powerful, I will need a proper way to create and test theories, hypothesis, and designs. I need a proper workspace, equipped with tools for manipulating essentia and sketching my ideas. I need a Research Table.",
+    "research.arcana.research.stage.2": "Now, I have a space and method to test my ideas. A research entry may have §oResearch requirements§r. Clicking on an unfinished research requirement with paper and Scribing Tools on me will create a set of research notes. Placing the research notes in a research table, along with a set of scribing tools, will allow me to test the theory in the form of a minigame.\n\nThe two most common minigames, §oChemistry§r and §oGuesswork§r, are detailed here, and other minigames may be introduced later.\n\nChemistry involves forming a path between multiple aspects: initial aspects are placed on the edges of a hexagonal grid, and I may place (and remove) aspects onto other hexagonal cells. The aspects I place are drawn from phials in nearby Phialshelves. Aspects connect to the two aspects that make them up. Once a continuous path is formed between all aspects, the research note is complete. [TODO: flux and inspiration.]\n\nGuesswork is simpler: I begin with the outline of a recipe (its shape and output), and a clue for each ingredient. Once I correctly fill in the recipe grid, the research is complete.\n\nCompleting a research yields a §oComplete Research Note§r, which, when used, completes the research requirement.\n\nNow seems like a good time to test this equipment using a well known design, and strongly-linked aspects.",
+    "research.arcana.research.stage.3": "And as shown, the research table is a valuable tool for thaumaturgy.",
+
     "research.arcana.fieldwork": "Fieldwork",
+
     "research.arcana.research_expertise": "Research Expertise",
     "research.arcana.research_expertise.desc": "Improving my improvements",
+
     "research.arcana.research_mastery": "Research Mastery",
     "research.arcana.research_mastery.desc": "§5You can never know all the facts. Only I can.§5",
+
     "research.arcana.archaeology": "Archaeology",
     "research.arcana.archaeology.desc": "Unveiling what once was",
+
     "research.arcana.foci": "Arcane Foci",
     "research.arcana.foci.desc": "Power with purpose",
+
+    "research.arcana.alchemy_root": "Alchemy",
+    "research.arcana.alchemy_root.text": "Alchemy - the usage of essentia solutions to transform substances - will be researched and described here.",
+
+    "research.arcana.arcanium": "Magical Metallurgy",
+    "research.arcana.arcanium.stage.1": "[I want a stronger material, and magic can achieve that.]",
+    "research.arcana.arcanium.stage.2": "[And that's Arcanium.]",
+
+    "research.arcana.transmutation": "Transmutation",
+    "research.arcana.transmutation.stage.1": "A popular magical concept is one of alchemists attempting to create the valuable from the mundane. They knew neither chemistry nor magic; I know both. I think I may be able to do better, if only by a little, at the transmutation of metals, given my newfound knowledge.",
+    "research.arcana.transmutation.stage.2": "Upgrading iron into silver isn't the most exciting advancement I've made, although the alchemy behind this transmutation §odoes§r prompt more study into the metal's properties. No, gold is my target. Though silver may make a useful stepping stone...",
+    "research.arcana.transmutation.stage.3": "Yes! Where the old alchemists have failed, I have succeeded in transforming iron into gold. I wonder if the process could be performed in bulk, though... or if its reversible...",
+    "research.arcana.transmutation.stage.4": "The transmutations form a loop, with Iron transforming into Silver, Silver into Gold, and Gold into Iron, which could be useful given a particular need for iron. Maybe if I was into the mundane sciences. Something slightly more interesting is that all of these transmutations can also be performed in block form.",
+
+    "research.arcana.purification": "Metal Purification",
+    "research.arcana.purification.desc": "Technology 101",
+    "research.arcana.purification.stage.1": "[metal ore -> native cluster]",
+    "research.arcana.purification.stage.2": "[just do the goddamn recipes]",
+
+    "research.arcana.hedge_alchemy": "Hedge Alchemy",
+    "research.arcana.hedge_alchemy.desc": "Miscellaneous Transformations",
+    "research.arcana.hedge_alchemy.stage.1": "[f(x) -> g(x)]",
+    "research.arcana.hedge_alchemy.stage.2": "[just do the goddamn recipes]",
+
+    "research.arcana.auromancy_root": "Auromancy",
+    "research.arcana.auromancy_root.text": "Auromancy - the manipulation of aura, especially the usage of wands - will be researched and described here.",
+
+    "research.arcana.cores_intro": "Wand Cores",
+    "research.arcana.cores_intro.text": "Cores are an essential component to any wand. They store the vis within the wand, and their strength and integrity dictate the amount of vis that can be used with it.\n\nAlthough a mundane stick is usable for the most basic purposes - simple arcane crafting, for instance - it will quickly prove difficult to use as I find more uses for vis. For that reason, magical woods (or regular materials, enchanted with powerful magic) are far more appropriate.",
+
+    "research.arcana.caps_intro": "Wand Caps",
+    "research.arcana.caps_intro.text": "Caps are an essential component to any wand. They are the lens through which vis is focused, and their magical permeability and focal strength determines the rate that vis may be handled (and by extension, the strength of magical effects caused by the wand).\n\nIron is poor in many of these aspects. Gold is a step up that doesn't require significant investment.",
+
+    "research.arcana.foci_intro": "Wand Foci",
+    "research.arcana.foci_intro.text": "The creation of meaningful effects from a wand requires focusing the vis properly.",
+
+    "research.arcana.staffs": "Staffs",
+    "research.arcana.scepters": "Staffs",
+    "research.arcana.gauntlets": "Gauntlets",
+    "research.arcana.wip": "actual content coming... when its implemented. same for icon.",
+
+    "_comment": "Info Entries",
+
+    "research.arcana.willow_tree": "Willow Tree",
+    "research.arcana.willow_tree.stage.1": "Willow trees are relatively abundant among the world. Historically, Thaumaturges have used it to create wand cores. I would like to do the same, and hopefully find more uses for the wood.",
+    "research.arcana.willow_tree.stage.2": "Creating a wand core from willow wood proves to be more difficult than initially anticipated. (TODO: further research)",
+
+    "research.arcana.amber": "Amber",
+    "research.arcana.amber.stage.1": "Amber ore can be found abundantly near the surface, and has preservative properties. Perhaps these could be applied to magic?",
+    "research.arcana.amber.stage.2": "The makeup of amber makes it useful for storing aspects and preventing them from causing unwanted effects in-world. Unfortunately, it's rather difficult to integrate into magical devices.",
+
+    "research.arcana.dair_tree": "Dair Tree",
+    "research.arcana.dair_tree.desc": "Eerie Wood",
+    "research.arcana.dair_tree.stage.1": "Dair trees are common in many parts of the world, and have some convenient magical properties. Less convenient, however, are the spirits that often dwell within them, which may become hostile at an attempt to harvest their wood. Still, I should collect some for study purposes - they may make a sturdy wand core yet. Dair trees are rather large, so I hope they don't mind too much.",
+    "research.arcana.dair_tree.stage.2": "Dair wood can be quite simply shaped into a wand core, similar to hawthorn in power. It stores slightly less vis than a greatwood core, but can support more powerful caps.",
+
+    "research.arcana.hawthorn_tree": "Hawthorn Tree",
+    "research.arcana.hawthorn_tree.stage.1": "Hawthorn trees, native to magical forests, have been historically relevant among many devices for its mystical power. I should get my hand on some sooner rather than later.",
+    "research.arcana.hawthorn_tree.stage.2": "Just as expected, magic comes quite easily to hawthorn wood. An easy application of it is a strong wand core, able to support powerful caps and store plenty of vis.",
+
+    "research.arcana.greatwood_tree": "Greatwood Tree",
+    "research.arcana.greatwood_tree.stage.1": "Greatwood trees are massive, even compared to other large trees. They have a great (wink) capacity for vis, and their wood is applicable in a number of magical devices. Their size makes them relatively cheap, too.",
+    "research.arcana.greatwood_tree.stage.2": "A wand core made from greatwood can store plenty of vis. (TODO: ?????)",
+
+    "research.arcana.silverwood_tree": "Silverwood Tree",
+    "research.arcana.silverwood_tree.stage.1": "Protectors of magical forests, Silverwood trees are deeply valuable for their purifying properties. They help shelter denizens of magical forests from dark magic and pollution. Such effects would be invaluable for controlling magic and protecting against taint.",
+    "research.arcana.silverwood_tree.stage.2": "The wood is strong, and resistant to harmful effects, even disconnected to the plant. Creating a wand core from it will take much more work, but there are some clear short term uses for this in purifying and filtering aspects.",
+
+    "research.arcana.eucalyptus_tree": "Eucalyptus Tree",
+    "research.arcana.eucalyptus_tree.desc": "Bubblegum doesn't grow on trees",
+    "research.arcana.eucalyptus_tree.stage.1": "Eucalyptus trees can be found occasionally, and besides their attractive wood, and the cute creatures that call them home, they aren't known for any magical properties. Still, a sample would be useful.",
+    "research.arcana.eucalyptus_tree.stage.2": "Nothing particularly interesting to note. It looks good; that's all I can say.",
+
+    "research.arcana.silver": "Silver",
+    "research.arcana.silver.desc": "Bang! and the taint is gone!",
+    "research.arcana.silver.stage.1": "Silver is mundane. I say that partially because it doesn't have any intrinsic magical properties - I say that also because it deflects and repels magic. It's been historically quite useful for cleaning up magical mishaps and containing magic nicely - I will *absolutely* want some of that.",
+    "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. Silver tools mine tainted blocks twice as fast as other tools, on top of having near-gold base mining speed. This also gives them... lacking durability, more on-par with stone than anything I would use regularly.",
 
     "_comment": "Messages",
     "message.arcana.disabled": "This book is currently disabled.",

@@ -20,7 +20,7 @@ public class SmeltingSectionRenderer extends AbstractCraftingSectionRenderer<Sme
 			mc().getTextureManager().bindTexture(textures);
 			drawTexturedModalRect(inputX - 9, inputY - 9, 219, 1, 34, 48);
 			ItemStack[] stacks = cookingRecipe.getIngredients().get(0).getMatchingStacks();
-			item(stacks[dispIndex(stacks.length, player)], inputX, inputY);
+			item(stacks[displayIndex(stacks.length, player)], inputX, inputY);
 		}else
 			error();
 	}
@@ -31,7 +31,7 @@ public class SmeltingSectionRenderer extends AbstractCraftingSectionRenderer<Sme
 			int x = right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X, y = ResearchEntryScreen.PAGE_Y;
 			int inputX = x + (screenWidth - 256 + ResearchEntryScreen.PAGE_WIDTH) / 2 - 8, inputY = y + (screenHeight - 181 + ResearchEntryScreen.PAGE_HEIGHT) / 2 + 8 + HEIGHT_OFFSET;
 			ItemStack[] stacks = cookingRecipe.getIngredients().get(0).getMatchingStacks();
-			tooltipArea(stacks[dispIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, inputX, inputY);
+			tooltipArea(stacks[displayIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, inputX, inputY);
 		}
 	}
 }

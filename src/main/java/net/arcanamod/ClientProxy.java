@@ -4,7 +4,6 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
-import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
@@ -17,7 +16,6 @@ import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.containers.ArcanaContainers;
-import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.fluids.ArcanaFluids;
@@ -27,6 +25,7 @@ import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.systems.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.settings.KeyBinding;
@@ -115,9 +114,10 @@ public class ClientProxy extends CommonProxy{
 		ClientRegistry.registerKeyBinding(SWAP_FOCUS_BINDING);
 	}
 
-	public void openResearchBookUI(ResourceLocation book){
+	@Override
+	public void openResearchBookUI(ResourceLocation book, Screen parentScreen){
 		if(!ResearchBooks.disabled.contains(book))
-			Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book)));
+			Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book), parentScreen));
 		else
 			Minecraft.getInstance().player.sendMessage(new TranslationTextComponent("message.arcana.disabled").applyTextStyle(TextFormatting.RED));
 	}

@@ -32,7 +32,7 @@ public class ResearchEntry{
 	private ResourceLocation key;
 	private List<EntrySection> sections;
 	private List<String> meta;
-	private List<ResourceLocation> parents;
+	private List<Parent> parents;
 	private List<Icon> icons;
 	private ResearchCategory category;
 	
@@ -40,7 +40,7 @@ public class ResearchEntry{
 	
 	private int x, y;
 	
-	public ResearchEntry(ResourceLocation key, List<EntrySection> sections, List<Icon> icons, List<String> meta, List<ResourceLocation> parents, ResearchCategory category, String name, String desc, int x, int y){
+	public ResearchEntry(ResourceLocation key, List<EntrySection> sections, List<Icon> icons, List<String> meta, List<Parent> parents, ResearchCategory category, String name, String desc, int x, int y){
 		this.key = key;
 		this.sections = sections;
 		this.icons = icons;
@@ -65,7 +65,7 @@ public class ResearchEntry{
 		return meta;
 	}
 	
-	public List<ResourceLocation> parents(){
+	public List<Parent> parents(){
 		return parents;
 	}
 	
@@ -113,7 +113,7 @@ public class ResearchEntry{
 		nbt.put("icons", icons);
 		// parents
 		ListNBT parents = new ListNBT();
-		parents().forEach((parent) -> parents.add(StringNBT.valueOf(parent.toString())));
+		parents().forEach((parent) -> parents.add(StringNBT.valueOf(parent.asString())));
 		nbt.put("parents", parents);
 		// meta
 		ListNBT meta = new ListNBT();
@@ -129,10 +129,10 @@ public class ResearchEntry{
 		int x = nbt.getInt("x");
 		int y = nbt.getInt("y");
 		List<EntrySection> sections = streamAndApply(nbt.getList("sections", 10), CompoundNBT.class, EntrySection::deserialze).collect(Collectors.toList());
-		List<ResourceLocation> parents = streamAndApply(nbt.getList("parents", 8), StringNBT.class, StringNBT::getString).map(ResourceLocation::new).collect(Collectors.toList());
+		List<Parent> betterParents = streamAndApply(nbt.getList("parents", 8), StringNBT.class, StringNBT::getString).map(Parent::parse).collect(Collectors.toList());
 		List<Icon> icons = streamAndApply(nbt.getList("icons", 8), StringNBT.class, StringNBT::getString).map(Icon::fromString).collect(Collectors.toList());
 		List<String> meta = streamAndApply(nbt.getList("meta", 8), StringNBT.class, StringNBT::getString).collect(Collectors.toList());
-		return new ResearchEntry(key, sections, icons, meta, parents, in, name, desc, x, y);
+		return new ResearchEntry(key, sections, icons, meta, betterParents, in, name, desc, x, y);
 	}
 	
 	public boolean equals(Object o){

@@ -19,13 +19,6 @@
   ],
   "categories": [
     {
-      "key": "arcana:basics",
-      "in": "arcana:arcanum",
-      "icon": "arcana:aspect/light.png",
-      "name": "research.arcana.category.basics",
-      "bg": "arcana:research/research_bg1_b.png"
-    },
-    {
       "key": "arcana:fundamentals",
       "in": "arcana:arcanum",
       "icon": "arcana:research/haha_funny_debug_texture_go_missing_image.png",
@@ -38,7 +31,33 @@
       "icon": "arcana:item/crucible_item.png",
       "name": "research.arcana.category.alchemy",
       "bg": "arcana:research/basics_bg.png",
-      "requires": "arcana:alchemy_intro"
+      "requires": "arcana:alchemy"
+    },
+    {
+      "key": "arcana:auromancy",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/focus_parts.png",
+      "name": "research.arcana.category.auromancy",
+      "bg": "arcana:research/basics_bg.png",
+      "requires": "arcana:wandcraft"
+    },
+    {
+      "key": "arcana:eldritch",
+      "in": "arcana:arcanum",
+      "icon": "arcana:research/eldritch.png",
+      "name": "research.arcana.category.eldritch",
+      "bg": "arcana:research/eldritch_bg.png"
+    },
+
+
+
+    {
+      "key": "arcana:infusion",
+      "in": "arcana:arcanum",
+      "icon": "arcana:aspect/mana.png",
+      "name": "research.arcana.category.infusion",
+      "bg": "arcana:research/starry_bg.png",
+      "requires": "arcana:infusion_intro"
     },
     {
       "key": "arcana:artifice",
@@ -49,35 +68,12 @@
       "requires": "arcana:artifice_intro"
     },
     {
-      "key": "arcana:auromancy",
-      "in": "arcana:arcanum",
-      "icon": "arcana:item/focus_parts.png",
-      "name": "research.arcana.category.auromancy",
-      "bg": "arcana:research/colourvoid_bg.png",
-      "requires": "arcana:auromancy_intro"
-    },
-    {
-      "key": "arcana:infusion",
-      "in": "arcana:arcanum",
-      "icon": "arcana:aspect/mana.png",
-      "name": "research.arcana.category.infusion",
-      "bg": "arcana:research/starry_bg.png",
-      "requires": "arcana:infusion_intro"
-    },
-    {
       "key": "arcana:golemancy",
       "in": "arcana:arcanum",
       "icon": "arcana:aspect/human.png",
       "name": "research.arcana.category.golemancy",
       "bg": "arcana:research/starry_bg.png",
       "requires": "arcana:golemancy_intro"
-    },
-    {
-      "key": "arcana:eldritch",
-      "in": "arcana:arcanum",
-      "icon": "arcana:research/eldritch.png",
-      "name": "research.arcana.category.eldritch",
-      "bg": "arcana:research/eldritch_bg.png"
     },
     {
       "key": "arcana:tainted_basics",

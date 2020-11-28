@@ -8,6 +8,7 @@ import net.arcanamod.systems.research.impls.AlchemySection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.List;
 
@@ -28,15 +29,16 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 			
 			int inputX = ulX + 1, inputY = ulY - 5;
 			ItemStack[] stacks = alchemyRecipe.getIngredients().get(0).getMatchingStacks();
-			item(stacks[dispIndex(stacks.length, player)], inputX, inputY);
+			item(stacks[displayIndex(stacks.length, player)], inputX, inputY);
 			
+			// Display aspects
 			List<AspectStack> aspects = alchemyRecipe.getAspects();
 			int aspectsWidth = Math.min(3, aspects.size());
-			int aspectStartX = ulX + 6 - (8 * (aspectsWidth - 3)), aspectStartY = ulY + 29;
+			int aspectStartX = ulX + 9 - (10 * (aspectsWidth - 3)), aspectStartY = ulY + 30;
 			for(int i = 0, size = aspects.size(); i < size; i++){
 				AspectStack aspect = aspects.get(i);
-				int xx = aspectStartX + (i % aspectsWidth) * 19;
-				int yy = aspectStartY + (i / aspectsWidth) * 19;
+				int xx = aspectStartX + (i % aspectsWidth) * 20;
+				int yy = aspectStartY + (i / aspectsWidth) * 20;
 				UiUtil.renderAspectStack(aspect, xx, yy);
 			}
 		}else
@@ -50,14 +52,14 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 			int ulX = x + (screenWidth - 256 + ResearchEntryScreen.PAGE_WIDTH) / 2 - 35, ulY = y + (screenHeight - 181 + ResearchEntryScreen.PAGE_HEIGHT) / 2 - 10 + HEIGHT_OFFSET;
 			int inputX = ulX + 1, inputY = ulY - 5;
 			ItemStack[] stacks = alchemyRecipe.getIngredients().get(0).getMatchingStacks();
-			tooltipArea(stacks[dispIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, inputX, inputY);
+			tooltipArea(stacks[displayIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, inputX, inputY);
 			List<AspectStack> aspects = alchemyRecipe.getAspects();
 			int aspectsWidth = Math.min(3, aspects.size());
 			int aspectStartX = ulX + 12 - (8 * (aspectsWidth - 3)), aspectStartY = ulY + 29;
 			for(int i = 0, size = aspects.size(); i < size; i++){
 				AspectStack stack = aspects.get(i);
-				int xx = aspectStartX + (i % aspectsWidth) * 17;
-				int yy = aspectStartY + (i / aspectsWidth) * 17;
+				int xx = aspectStartX + (i % aspectsWidth) * 19;
+				int yy = aspectStartY + (i / aspectsWidth) * 19;
 				aspectTooltipArea(stack.getAspect(), mouseX, mouseY, screenWidth, screenHeight, xx, yy);
 			}
 		}

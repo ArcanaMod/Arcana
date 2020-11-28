@@ -6,16 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:block_state_property",
-              "block": "arcana:research_table",
-              "properties": {
-                "part": "left"
-              }
-            }
-          ],
-          "name": "arcana:research_table"
+          "name": "arcana:research_table_item"
         }
       ],
       "conditions": [

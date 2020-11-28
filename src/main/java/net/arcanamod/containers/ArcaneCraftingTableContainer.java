@@ -35,6 +35,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	public final PlayerInventory playerInventory;
 	public final AspectCraftingInventory craftMatrix;
 	public final CraftResultInventory craftResult = new CraftResultInventory();
+	public final int craftResultSlot;
 
 	public ArcaneCraftingTableContainer(ContainerType<?> type, int id, PlayerInventory playerInventory, IInventory inventory){
 		super(type, id);
@@ -43,6 +44,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 		WandSlot wandSlot = new WandSlot(this, inventory, 10, 160, 18);
 		this.craftMatrix = new AspectCraftingInventory(this, wandSlot, 3, 3, inventory);
 		this.addSlot(new AspectCraftingResultSlot(playerInventory.player, this.craftMatrix, this.craftResult, 0, 160, 64));
+		this.craftResultSlot = 1;
 		this.addSlot(wandSlot);
 		for(int i = 0; i < 3; ++i)
 			for(int j = 0; j < 3; ++j)
@@ -130,7 +132,7 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 
 	@Override
 	public int getOutputSlot(){
-		return 0;
+		return craftResultSlot;
 	}
 
 	@Override
@@ -152,7 +154,6 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 	 * Handle when the stack in slot {@code index} is shift-clicked. Normally this moves the stack between the player
 	 * inventory and the other inventory(s).
 	 */
-	// TODO: Pls someone can fix that?????????
 	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
 		ItemStack itemstack = ItemStack.EMPTY;
 		Slot slot = inventorySlots.get(index);
@@ -161,22 +162,22 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 			itemstack = itemstack1.copy();
 			if (index == 0) {
 				itemstack1.getItem().onCreated(itemstack1, player.world, player);
-				if (!mergeItemStack(itemstack1, 10, 46, true)) {
+				if (!mergeItemStack(itemstack1, 11, 47, true)) {
 					return ItemStack.EMPTY;
 				}
 
 				slot.onSlotChange(itemstack1, itemstack);
-			} else if (index >= 10 && index < 46) {
-				if (!mergeItemStack(itemstack1, 1, 10, false)) {
-					if (index < 37) {
-						if (!mergeItemStack(itemstack1, 37, 46, false)) {
+			} else if (index >= 11 && index < 47) {
+				if (!mergeItemStack(itemstack1, 1, 11, false)) {
+					if (index < 38) {  // prioritize hotbar
+						if (!mergeItemStack(itemstack1, 38, 47, false)) {
 							return ItemStack.EMPTY;
 						}
-					} else if (!mergeItemStack(itemstack1, 10, 37, false)) {
+					} else if (!mergeItemStack(itemstack1, 11, 38, false)) {
 						return ItemStack.EMPTY;
 					}
 				}
-			} else if (!mergeItemStack(itemstack1, 10, 46, false)) {
+			} else if (!mergeItemStack(itemstack1, 11, 47, false)) {
 				return ItemStack.EMPTY;
 			}
 

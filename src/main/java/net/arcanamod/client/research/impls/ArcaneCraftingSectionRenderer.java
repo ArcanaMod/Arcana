@@ -12,6 +12,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
 import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
@@ -40,13 +41,17 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							item(stacks[dispIndex(stacks.length, player)], itemX, itemY);
+							item(stacks[displayIndex(stacks.length, player)], itemX, itemY);
 					}
 				}
 			// Display aspects
 			int aspectX = ulX + 73 / 2 - craftingRecipe.getAspectStacks().length * 18 / 2 - 5;
 			int aspectY = ulY + 82;
 			UndecidedAspectStack[] stacks = craftingRecipe.getAspectStacks();
+			// Shadow behind the aspects for readability
+			int margin = 2;
+			int color = 0x50222222;
+			GuiUtils.drawGradientRect(0, aspectX - margin - 1, aspectY - margin, aspectX + stacks.length * 18 + margin + 1, aspectY + margin + 18, color, color);
 			for(int i = 0, length = stacks.length; i < length; i++){
 				UndecidedAspectStack stack = stacks[i];
 				Aspect display = stack.any ? Aspects.EXCHANGE : stack.stack.getAspect();
@@ -77,7 +82,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							tooltipArea(stacks[dispIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, itemX, itemY);
+							tooltipArea(stacks[displayIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, itemX, itemY);
 					}
 				}
 			

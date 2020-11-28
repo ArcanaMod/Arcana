@@ -1,0 +1,26 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:ingots/silver"
+  },
+  "out": {
+    "item": "minecraft:gold_ingot"
+  },
+  "aspects": [
+    {
+      "aspect": "exchange",
+      "amount": 3
+    },
+    {
+      "aspect": "greed",
+      "amount": 1
+    },
+    {
+      "aspect": "senses",
+      "amount": 1
+    }
+  ],
+  "research": [
+    "arcana:transmutation@4"
+  ]
+}

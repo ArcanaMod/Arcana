@@ -19,6 +19,8 @@ public class ArcanaTiles{
 			TES.register("aspect_shelf", () -> new TileEntityType<>(AspectBookshelfTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_BOOKSHELF.get()), null));
 	public static final RegistryObject<TileEntityType<ResearchTableTileEntity>> RESEARCH_TABLE_TE =
 			TES.register("research_table", () -> new TileEntityType<>(ResearchTableTileEntity::new, Sets.newHashSet(ArcanaBlocks.RESEARCH_TABLE.get()), null));
+	public static final RegistryObject<TileEntityType<FociForgeTileEntity>> FOCI_FORGE_TE =
+			TES.register("foci_forge", () -> new TileEntityType<>(FociForgeTileEntity::new, Sets.newHashSet(ArcanaBlocks.FOCI_FORGE.get()), null));
 	public static final RegistryObject<TileEntityType<AspectTesterTileEntity>> ASPECT_TESTER =
 			TES.register("aspect_tester", () -> new TileEntityType<>(AspectTesterTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_TESTER.get()), null));
 	public static final RegistryObject<TileEntityType<TaintScrubberTileEntity>> TAINT_SCRUBBER_TE =

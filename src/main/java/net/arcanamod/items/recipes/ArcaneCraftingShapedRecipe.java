@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-// Don't touch, it is working.
-// No, I think I will touch.
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShapedRecipe<AspectCraftingInventory> {
@@ -401,9 +399,9 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 
 		protected UndecidedAspectStack readUndecidedAspectStack(PacketBuffer buffer){
 			boolean any = buffer.readBoolean();
-			String aspect_name = buffer.readString();
+			String aspect = buffer.readString();
 			int amount = buffer.readInt();
-			return UndecidedAspectStack.create(AspectUtils.getAspectByName(aspect_name),amount,any);
+			return UndecidedAspectStack.create(AspectUtils.getAspectByName(aspect),amount,any);
 		}
 	}
 }

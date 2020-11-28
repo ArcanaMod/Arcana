@@ -2,6 +2,7 @@ package net.arcanamod.systems.research.impls;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.network.Connection;
+import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.Requirement;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.systems.research.ResearchEntry;
@@ -38,8 +39,9 @@ public class PuzzleRequirement extends Requirement{
 		return compound;
 	}
 	
-	public boolean onClick(ResearchEntry entry){
-		if(!(ResearchBooks.puzzles.get(puzzleId) instanceof Fieldwork))
+	public boolean onClick(ResearchEntry entry, PlayerEntity player){
+		Puzzle puzzle = ResearchBooks.puzzles.get(puzzleId);
+		if(!(puzzle instanceof Fieldwork || satisfied(player)))
 			Connection.sendGetNoteHandler(puzzleId, entry.key().toString());
 		return false;
 	}

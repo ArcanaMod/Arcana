@@ -47,7 +47,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                arcana {
                     source sourceSets.main
                 }
             }
@@ -64,7 +64,7 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             mods {
-                examplemod {
+                arcana {
                     source sourceSets.main
                 }
             }

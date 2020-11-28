@@ -1,0 +1,153 @@
+{
+  "entries": [
+    {
+      "key": "arcana:auromancy_root",
+      "name": "research.arcana.auromancy_root",
+      "icons": [
+        "arcana:item/basicwand.png"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:wandcraft"
+      ],
+      "meta": [
+        "spiky_base"
+      ],
+      "x": 0,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.auromancy_root.text"
+        }
+      ]
+    },
+    {
+      "key": "arcana:cores_intro",
+      "name": "research.arcana.cores_intro",
+      "icons": [
+        "arcana:greatwood_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:auromancy_root"
+      ],
+      "meta": [
+        "round_base",
+        "yellow_base"
+      ],
+      "x": 0,
+      "y": 3,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.cores_intro.text"
+        }
+      ]
+    },
+    {
+      "key": "arcana:caps_intro",
+      "name": "research.arcana.caps_intro",
+      "icons": [
+        "arcana:gold_cap"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:auromancy_root"
+      ],
+      "meta": [
+        "round_base",
+        "yellow_base"
+      ],
+      "x": 0,
+      "y": -3,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.caps_intro.text"
+        }
+      ]
+    },
+    {
+      "key": "arcana:foci_intro",
+      "name": "research.arcana.foci_intro",
+      "icons": [
+        "arcana:focus_parts"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "&arcana:auromancy_root"
+      ],
+      "meta": [
+        "round_base",
+        "yellow_base"
+      ],
+      "x": 3,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.foci_intro.text"
+        }
+      ]
+    },
+    {
+      "key": "arcana:staffs",
+      "name": "research.arcana.staffs",
+      "icons": [
+        "arcana:hawthorn_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:auromancy_root"
+      ],
+      "x": -3,
+      "y": -2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.wip"
+        }
+      ]
+    },
+    {
+      "key": "arcana:scepters",
+      "name": "research.arcana.scepters",
+      "icons": [
+        "arcana:thaumium_cap"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:auromancy_root"
+      ],
+      "x": -3,
+      "y": 2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.wip"
+        }
+      ]
+    },
+    {
+      "key": "arcana:gauntlets",
+      "name": "research.arcana.gauntlets",
+      "icons": [
+        "minecraft:barrier"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:staffs",
+        "arcana:scepters"
+      ],
+      "x": -6,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.wip"
+        }
+      ]
+    }
+  ]
+}
