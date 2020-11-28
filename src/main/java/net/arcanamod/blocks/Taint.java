@@ -6,6 +6,8 @@ import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.VisShareable;
 import net.arcanamod.blocks.tainted.TaintedFallingBlock;
 import net.arcanamod.blocks.tainted.TaintedPlantBlock;
+import net.arcanamod.blocks.tainted.TaintedSlabBlock;
+import net.arcanamod.blocks.tainted.TaintedStairsBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.entities.tainted.*;
 import net.arcanamod.entities.tainted.group.TaintedFishEntity;
@@ -53,6 +55,10 @@ public class Taint{
 			tainted = new TaintedFallingBlock(parent);
 		else if (parent instanceof IPlantable || parent instanceof IShearable || parent instanceof IGrowable)
 			tainted = new TaintedPlantBlock(parent);
+		else if (parent instanceof StairsBlock)
+			tainted = new TaintedStairsBlock(parent);
+		else if (parent instanceof SlabBlock)
+			tainted = new TaintedSlabBlock(parent);
 		else
 			tainted = new TaintedBlock(parent);
 
