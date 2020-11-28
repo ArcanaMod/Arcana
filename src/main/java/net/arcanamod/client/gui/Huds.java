@@ -46,9 +46,11 @@ public final class Huds{
 				Core core = WandItem.getCore(stack);
 				IAspectHandler aspects = IAspectHandler.getFrom(stack);
 				if(aspects != null){
-					float scale = 2 * ArcanaConfig.WAND_HUD_SCALING.get().floatValue();
-					int baseX = (int)(ArcanaConfig.WAND_HUD_LEFT.get() ? 8 / scale : (event.getWindow().getScaledWidth() - 8) / scale - 49);
-					int baseY = (int)(ArcanaConfig.WAND_HUD_TOP.get() ? 8 / scale : (event.getWindow().getScaledHeight() - 8) / scale - 49);
+					int offX = ArcanaConfig.WAND_HUD_X.get().intValue();
+					int offY = ArcanaConfig.WAND_HUD_Y.get().intValue();
+					float scale = 1.5f * ArcanaConfig.WAND_HUD_SCALING.get().floatValue();
+					int baseX = (int)(ArcanaConfig.WAND_HUD_LEFT.get() ? offX / scale : (event.getWindow().getScaledWidth() - offX) / scale - 49);
+					int baseY = (int)(ArcanaConfig.WAND_HUD_TOP.get() ? offY / scale : (event.getWindow().getScaledHeight() - offY) / scale - 49);
 					RenderSystem.pushMatrix();
 					RenderSystem.scalef(scale,scale,2);
 					UiUtil.renderVisCore(core, baseX, baseY);

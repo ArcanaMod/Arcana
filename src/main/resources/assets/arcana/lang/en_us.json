@@ -941,6 +941,8 @@
     "config.client.block_huds_top": "Block HUDs",
     "config.client.jar_animation_speed": "Jar animation speed",
     "config.client.no_jar_animation": "Disable jar animation",
+    "config.client.wand_hud_x": "Wand HUD distance from side",
+    "config.client.wand_hud_y": "Wand HUD distance from top/bottom",
     "config.client.auto": "Auto",
 
     "_comment": "Spells",

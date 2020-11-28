@@ -64,6 +64,22 @@ public final class ConfigScreen extends Screen {
                         + ": " + String.format("%.1f", value.get(gs))
         ));
 
+        this.optionsRowList.addOption(new SliderPercentageOption("config.client.wand_hud_x",
+                0.0f, 16.0f, 1.0f,
+                (gs) -> ArcanaConfig.WAND_HUD_X.get(),
+                (gs, value) -> ArcanaConfig.WAND_HUD_X.set(value),
+                (gs, value) -> I18n.format("config.client.wand_hud_x")
+                        + ": " + String.format("%.1f", value.get(gs))
+        ));
+
+        this.optionsRowList.addOption(new SliderPercentageOption("config.client.wand_hud_y",
+                0.0f, 16.0f, 1.0f,
+                (gs) -> ArcanaConfig.WAND_HUD_Y.get(),
+                (gs, value) -> ArcanaConfig.WAND_HUD_Y.set(value),
+                (gs, value) -> I18n.format("config.client.wand_hud_y")
+                        + ": " + String.format("%.1f", value.get(gs))
+        ));
+
         this.optionsRowList.addOption(new SliderPercentageOption("config.client.wand_hud_scaling",
                 0.5f, 2.0f, 0.1f,
                 (gs) -> ArcanaConfig.WAND_HUD_SCALING.get(),
@@ -90,7 +106,7 @@ public final class ConfigScreen extends Screen {
         this.optionsRowList.addOption(new SliderPercentageOption("config.client.jar_animation_speed",
                 0.5f, 2.0f, 0.1f,
                 (gs) -> ArcanaConfig.JAR_ANIMATION_SPEED.get(),
-                (gs, value) -> ArcanaConfig.JAR_ANIMATION_SPEED.set((double)(Math.round(value * 10) / 10)),
+                (gs, value) -> ArcanaConfig.JAR_ANIMATION_SPEED.set((double)(Math.round(value * 10)) / 10),
                 (gs, value) -> I18n.format("config.client.jar_animation_speed")
                         + ": " + String.format("%.1f", value.get(gs))
         ));
