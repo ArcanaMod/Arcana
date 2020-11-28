@@ -129,7 +129,7 @@ public class ClientProxy extends CommonProxy{
 	
 	public void onResearchChange(ResearchEvent event){
 		if(Minecraft.getInstance().currentScreen instanceof ResearchEntryScreen)
-			((ResearchEntryScreen)Minecraft.getInstance().currentScreen).updateButtonVisibility();
+			((ResearchEntryScreen)Minecraft.getInstance().currentScreen).updateButtons();
 	}
 	
 	public PlayerEntity getPlayerOnClient(){

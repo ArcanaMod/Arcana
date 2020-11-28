@@ -151,24 +151,10 @@ public class ResearchBookScreen extends Screen{
 				drawTexturedModalRect((int)((entry.x() * 30 + getXOffset() + 2)), (int)((entry.y() * 30 + getYOffset() + 2)), base % 4 * 26, base / 4 * 26, 26, 26);
 				// render texture
 				if(entry.icons().size() > 0){
-					ResearchEntry.Icon icon = entry.icons().get((getMinecraft().player.ticksExisted / 30) % entry.icons().size());
-					// first, check if its an item
+					Icon icon = entry.icons().get((getMinecraft().player.ticksExisted / 30) % entry.icons().size());
 					int x = (int)(entry.x() * 30 + getXOffset() + 7);
 					int y = (int)(entry.y() * 30 + getYOffset() + 7);
-					if(icon.getStack() != null && !icon.getStack().isEmpty()){
-						itemRenderer.zLevel = 50;
-						RenderSystem.enableDepthTest();
-						RenderHelper.enableStandardItemLighting();
-						RenderSystem.disableLighting();
-						itemRenderer.renderItemAndEffectIntoGUI(icon.getStack(), x, y);
-						RenderSystem.disableLighting();
-						RenderSystem.enableRescaleNormal();
-					}else{
-						// otherwise, check for a texture
-						getMinecraft().getTextureManager().bindTexture(icon.getResourceLocation());
-						RenderSystem.enableDepthTest();
-						drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
-					}
+					UiUtil.renderIcon(icon, x, y, 100);
 				}
 				
 				// for every visible parent
