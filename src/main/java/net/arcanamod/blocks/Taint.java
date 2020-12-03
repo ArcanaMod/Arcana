@@ -4,17 +4,20 @@ import com.google.common.collect.Lists;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.VisShareable;
-import net.arcanamod.blocks.tainted.TaintedFallingBlock;
-import net.arcanamod.blocks.tainted.TaintedPlantBlock;
-import net.arcanamod.blocks.tainted.TaintedSlabBlock;
-import net.arcanamod.blocks.tainted.TaintedStairsBlock;
+import net.arcanamod.blocks.tainted.*;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.entities.tainted.*;
 import net.arcanamod.entities.tainted.group.TaintedFishEntity;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.systems.taint.TaintedBirchTree;
+import net.arcanamod.systems.taint.TaintedJungleTree;
+import net.arcanamod.systems.taint.TaintedOakTree;
+import net.arcanamod.systems.taint.TaintedSpruceTree;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
+import net.minecraft.block.trees.OakTree;
+import net.minecraft.block.trees.Tree;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.fish.PufferfishEntity;
@@ -53,6 +56,8 @@ public class Taint{
 		Block tainted;
 		if (parent instanceof FallingBlock)
 			tainted = new TaintedFallingBlock(parent);
+		else if (parent instanceof SaplingBlock)
+			tainted = new TaintedSaplingBlock(parent);
 		else if (parent instanceof IPlantable || parent instanceof IShearable || parent instanceof IGrowable)
 			tainted = new TaintedPlantBlock(parent);
 		else if (parent instanceof StairsBlock)
@@ -287,5 +292,17 @@ public class Taint{
 	@SuppressWarnings("rawtypes")
 	public static Collection<EntityType> getTaintedEntities(){
 		return entityTaintMap.values();
+	}
+
+	public static Tree taintedTreeOf(SaplingBlock block) {
+		if (block == Blocks.OAK_SAPLING)
+			return new TaintedOakTree();
+		if (block == Blocks.BIRCH_SAPLING)
+			return new TaintedBirchTree();
+		if (block == Blocks.SPRUCE_SAPLING)
+			return new TaintedSpruceTree();
+		if (block == Blocks.JUNGLE_SAPLING)
+			return new TaintedJungleTree();
+		return new OakTree();
 	}
 }

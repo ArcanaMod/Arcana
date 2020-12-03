@@ -1,6 +1,5 @@
 package net.arcanamod.client.event;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.client.render.tiles.AspectValveTileEntityRenderer;
 import net.arcanamod.client.render.tiles.JarTileEntityRender;
