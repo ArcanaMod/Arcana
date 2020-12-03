@@ -142,10 +142,10 @@ public class WandItem extends Item{
 					if (player.isCrouching())
 						Spell.runSpell(spell,player,player.getHeldItem(hand), ICast.Action.SPECIAL);
 					else
-						Spell.runSpell(createBasicSpell(),player,player.getHeldItem(hand), ICast.Action.USE);
+						Spell.runSpell(spell,player,player.getHeldItem(hand), ICast.Action.USE);
 					// remove aspects from wand if spell successes.
 					for(AspectStack cost : spell.getSpellCosts().toList())
-						if (cost != AspectStack.EMPTY)
+						if (cost.getAspect()!=Aspects.EMPTY)
 							handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
 				}
 			}else

@@ -269,27 +269,58 @@ public class Spell implements ISpell {
 		 * @return a basic Spell
 		 */
 		public static Spell createAdvancedSpell(){
+			// Create spell
 			Spell spell = new Spell();
+
+			// Create connectors
 			Connector startToCastMethod_connector = new Connector();
 			Connector castMethodToCastCircle0_connector = new Connector();
 			Connector castMethodToCastCircle1_connector = new Connector();
+
+			// Create Double Modifier Circle
 			DoubleModifierCircle doubleModifierCircle = new DoubleModifierCircle();
+
+			// Create Cast Circles
 			CastCircle castCircle0 = new CastCircle();
 			CastCircle castCircle1 = new CastCircle();
+
+			// Bind "castMethodToCastCircle1_connector" to "castCircle1" connector
 			castMethodToCastCircle1_connector.bindModule(castCircle1);
+
+			// Add modifiers to doubleModifierCircle
 			doubleModifierCircle.firstAspect = Aspects.AIR;
 			doubleModifierCircle.secondAspect = Aspects.FIRE;
-			castCircle0.cast = Casts.MINING_CAST;
+
+			// Set MINING_CAST to castCircle0
+			castCircle0.cast = Casts.EXCHANGE_CAST;
+
+			// Bind "castCircle0" to "doubleModifierCircle" connector
 			castCircle0.bindModule(doubleModifierCircle);
-			castCircle1.cast = Casts.FABRIC_CAST;
+
+			// Set FABRIC_CAST to castCircle0
+			castCircle1.cast = Casts.MINING_CAST;
+
+			// Bind "castMethodToCastCircle0_connector" to "castCircle0" connector
 			castMethodToCastCircle0_connector.bindModule(castCircle0);
+
+			// Create Cast Method
 			CastMethod castMethod = new CastMethod();
+
+			// Set aspect to cast method
 			castMethod.aspect = Aspects.EARTH;
+
+			// Bind "castMethod" to connectors
 			castMethod.bindModule(castMethodToCastCircle0_connector);
 			castMethod.bindModule(castMethodToCastCircle1_connector);
+
+			// Bind "startToCastMethod_connector" to "castMethod"
 			startToCastMethod_connector.bindModule(castMethod);
+
+			// Create mainModule and bind modules to mainModule
 			spell.mainModule = new StartCircle();
 			spell.mainModule.bindModule(startToCastMethod_connector);
+
+			// Return spell
 			return spell;
 		}
 
