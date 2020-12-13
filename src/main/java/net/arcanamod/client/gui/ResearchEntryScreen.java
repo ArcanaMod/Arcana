@@ -17,6 +17,7 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
+import net.minecraft.item.BlockItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -65,7 +66,6 @@ public class ResearchEntryScreen extends Screen{
 	
 	public void render(int mouseX, int mouseY, float partialTicks){
 		renderBackground();
-		super.render(mouseX, mouseY, partialTicks);
 		getMinecraft().getTextureManager().bindTexture(bg);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
 		drawTexturedModalRect((width - 256) / 2, (height - 181) / 2 + HEIGHT_OFFSET, 0, 0, 256, 181);
@@ -120,6 +120,9 @@ public class ResearchEntryScreen extends Screen{
 			if(section != null)
 				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
+		
+		// Render buttons last so pin tooltips look OK
+		super.render(mouseX, mouseY, partialTicks);
 	}
 	
 	public void init(@Nonnull Minecraft mc, int p_init_2_, int p_init_3_){
@@ -140,6 +143,7 @@ public class ResearchEntryScreen extends Screen{
 		String text = I18n.format("researchEntry.continue");
 		ExtendedButton button = new ExtendedButton(x - getMinecraft().fontRenderer.getStringWidth(text) / 2 + 2, y + 20, getMinecraft().fontRenderer.getStringWidth(text) + 10, 18, text, __ -> {
 			Connection.sendTryAdvance(entry.key());
+			// need to update visuals when an advance packet is received...
 			updateButtons();
 		}){
 			// I can't be bothered to make a new type for something which will use this behaviours exactly once.
@@ -168,7 +172,7 @@ public class ResearchEntryScreen extends Screen{
 		List<Pin> collect = entry.getAllPins(getMinecraft().world).collect(Collectors.toList());
 		for(int i = 0, size = collect.size(); i < size; i++){
 			Pin pin = collect.get(i);
-			PinButton e = new PinButton((width / 2) + PAGE_WIDTH + 10, (height - PAGE_HEIGHT) / 2 + i * 20, pin);
+			PinButton e = new PinButton((width / 2) + PAGE_WIDTH + 21, (height - PAGE_HEIGHT) / 2 + i * 22, pin);
 			pins.add(e);
 			addButton(e);
 		}
@@ -371,11 +375,16 @@ public class ResearchEntryScreen extends Screen{
 				RenderSystem.color3f(1, 1, 1);
 				
 				int stageIndex = indexOfStage(pin.getStage());
-				UiUtil.renderIcon(pin.getIcon(), x + (index == (stageIndex % 2 == 0 ? stageIndex : stageIndex - 1) ? 6 : isHovered ? 4 : 0) - 1, y - 1, 0);
+				int xOffset = index == (stageIndex % 2 == 0 ? stageIndex : stageIndex - 1) ? 6 : isHovered ? 4 : 0;
+				UiUtil.renderIcon(pin.getIcon(), x + xOffset - 1, y - 1, 0);
+				
+				getMinecraft().getTextureManager().bindTexture(bg);
+				RenderSystem.color4f(1f, 1f, 1f, 1f);
+				drawTexturedModalRect(x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
 				
 				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 				if(isHovered)
-					GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getResourceLocation().toString()), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
+					GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText()), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
 		}
 	}

@@ -248,6 +248,7 @@ public final class UiUtil{
 	public static void renderIcon(Icon icon, int x, int y, int itemZLevel){
 		// first, check if its an item
 		if(icon.getStack() != null && !icon.getStack().isEmpty()){
+			// this, uhh, doesn't work
 			// ItemRenderer adds 50 automatically, so we adjust for it
 			Minecraft.getInstance().getItemRenderer().zLevel = itemZLevel - 50;
 			RenderSystem.enableDepthTest();
