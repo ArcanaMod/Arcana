@@ -19,54 +19,34 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+/**
+ * Syncs the player's progress through research. Not to be confused with {@link PkSyncResearch}, which syncs all existing research.
+ */
 public class PkSyncPlayerResearch{
 	
 	public static final Logger LOGGER = LogManager.getLogger();
 	
-	Map<ResourceLocation, Integer> bookProgress;
-	Set<ResourceLocation> puzzleProgress;
+	// how about I just change this to use regular serialization methods...
 	
-	public PkSyncPlayerResearch(Map<ResourceLocation, Integer> bookProgress, Set<ResourceLocation> puzzleProgress){
-		this.bookProgress = bookProgress;
-		this.puzzleProgress = puzzleProgress;
+	CompoundNBT data;
+	
+	public PkSyncPlayerResearch(CompoundNBT nbt){
+		data = nbt;
 	}
 	
 	public static void encode(PkSyncPlayerResearch msg, PacketBuffer buffer){
-		CompoundNBT compound = new CompoundNBT();
-		
-		CompoundNBT entries = new CompoundNBT();
-		msg.bookProgress.forEach((key, value) -> entries.putInt(key.toString(), value));
-		compound.put("entries", entries);
-		
-		ListNBT puzzles = new ListNBT();
-		msg.puzzleProgress.forEach(puzzle -> puzzles.add(StringNBT.valueOf(puzzle.toString())));
-		compound.put("puzzles", puzzles);
-		
-		buffer.writeCompoundTag(compound);
+		buffer.writeCompoundTag(msg.data);
 	}
 	
 	public static PkSyncPlayerResearch decode(PacketBuffer buffer){
-		CompoundNBT data = buffer.readCompoundTag();
-		
-		Map<ResourceLocation, Integer> entryDat = new HashMap<>();
-		CompoundNBT entries = data.getCompound("entries");
-		for(String s : entries.keySet())
-			entryDat.put(new ResourceLocation(s), entries.getInt(s));
-		
-		Set<ResourceLocation> puzzleDat = new HashSet<>();
-		ListNBT puzzles = data.getList("puzzles", Constants.NBT.TAG_STRING);
-		for(INBT key : puzzles)
-			puzzleDat.add(new ResourceLocation(key.getString()));
-		
-		return new PkSyncPlayerResearch(entryDat, puzzleDat);
+		return new PkSyncPlayerResearch(buffer.readCompoundTag());
 	}
 	
 	public static void handle(PkSyncPlayerResearch msg, Supplier<NetworkEvent.Context> supplier){
 		// from server to client
 		supplier.get().enqueueWork(() -> {
 			Researcher researcher = Researcher.getFrom(Arcana.proxy.getPlayerOnClient());
-			researcher.setEntryData(msg.bookProgress);
-			researcher.setPuzzleData(msg.puzzleProgress);
+			researcher.deserializeNBT(msg.data);
 		});
 		supplier.get().setPacketHandled(true);
 	}

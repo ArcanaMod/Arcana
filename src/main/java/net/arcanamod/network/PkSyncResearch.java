@@ -18,6 +18,9 @@ import java.util.function.Supplier;
 
 import static java.lang.String.format;
 
+/**
+ * Syncs all existing research. Not to be confused with {@link PkSyncPlayerResearch}, which syncs the player's progress.
+ */
 public class PkSyncResearch{
 	
 	public static final Logger LOGGER = LogManager.getLogger();
