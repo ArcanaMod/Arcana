@@ -13,7 +13,7 @@ import java.util.Optional;
  */
 public interface ICast {
 	
-	// TODO: improve docs, remove arrays
+	// TODO: improve docs
 
 	/**
 	 * Core aspect in spell.
