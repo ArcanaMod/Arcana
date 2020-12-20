@@ -1,6 +1,6 @@
 package net.arcanamod.blocks.tainted;
 
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.Block;
 import net.minecraft.block.SaplingBlock;
 

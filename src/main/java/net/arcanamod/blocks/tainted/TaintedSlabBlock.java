@@ -2,13 +2,12 @@ package net.arcanamod.blocks.tainted;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
-import net.arcanamod.blocks.Taint;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.capabilities.TaintTrackable;
+import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SlabBlock;
-import net.minecraft.block.StairsBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
