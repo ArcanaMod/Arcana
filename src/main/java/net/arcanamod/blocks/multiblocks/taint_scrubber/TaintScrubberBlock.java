@@ -3,7 +3,7 @@ package net.arcanamod.blocks.multiblocks.taint_scrubber;
 import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.VisShareable;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.tiles.TaintScrubberTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

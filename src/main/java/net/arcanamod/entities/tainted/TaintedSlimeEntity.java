@@ -1,5 +1,6 @@
 package net.arcanamod.entities.tainted;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.SlimeEntity;
@@ -8,8 +9,8 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.World;
 
 public class TaintedSlimeEntity extends SlimeEntity {
-	public TaintedSlimeEntity(EntityType<? extends TaintedSlimeEntity> type, World worldIn) {
-		super(type, worldIn);
+	public TaintedSlimeEntity(EntityType<? extends Entity> type, World worldIn) {
+		super((EntityType<? extends SlimeEntity>) type, worldIn);
 	}
 
 	@Override

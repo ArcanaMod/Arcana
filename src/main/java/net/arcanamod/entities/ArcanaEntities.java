@@ -1,7 +1,7 @@
 package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.client.model.tainted.TaintedFoxModel;
 import net.arcanamod.client.model.tainted.TaintedSheepModel;
 import net.arcanamod.client.model.tainted.TaintedWolfModel;
@@ -42,8 +42,12 @@ public class ArcanaEntities{
 					.size(0.6f, 0.6f).build(arcLoc("willow_spirit_entity").toString()));
 
 	public static final RegistryObject<EntityType<SpellCloudEntity>> SPELL_CLOUD = ENTITY_TYPES
-			.register("spell_cloud", () -> EntityType.Builder.<SpellCloudEntity>create(SpellCloudEntity::new, EntityClassification.CREATURE)
+			.register("spell_cloud", () -> EntityType.Builder.<SpellCloudEntity>create(SpellCloudEntity::new, EntityClassification.MISC)
 					.immuneToFire().size(6.0F, 0.5F).build(arcLoc("spell_cloud").toString()));
+
+	public static final RegistryObject<EntityType<SpellEggEntity>> SPELL_EGG = ENTITY_TYPES
+			.register("spell_projectile", () -> EntityType.Builder.<SpellEggEntity>create(SpellEggEntity::new, EntityClassification.MISC)
+					.immuneToFire().size(6.0F, 0.5F).build(arcLoc("spell_projectile").toString()));
 
 	// Tainted
 
@@ -62,7 +66,7 @@ public class ArcanaEntities{
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_RAVAGER = ENTITY_TYPES.register("tainted_ravager", () -> Taint.taintedEntityOf(EntityType.RAVAGER));
 
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PUFFERFISH = ENTITY_TYPES.register("tainted_pufferfish", () -> Taint.taintedEntityOf(EntityType.PUFFERFISH));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PARROT = ENTITY_TYPES.register("tainted_parrot", () -> Taint.taintedEntityOf(EntityType.PARROT));
+	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PARROT = ENTITY_TYPES.register("tainted_parrot", () -> Taint.taintedEntityOf(EntityType.PARROT));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_HORSE = ENTITY_TYPES.register("tainted_horse", () -> Taint.taintedEntityOf(EntityType.HORSE));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_MULE = ENTITY_TYPES.register("tainted_mule", () -> Taint.taintedEntityOf(EntityType.MULE));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_TURTLE = ENTITY_TYPES.register("tainted_turtle", () -> Taint.taintedEntityOf(EntityType.TURTLE));

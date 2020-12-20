@@ -2,11 +2,9 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.blocks.Taint;
-import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.Spell;
-import net.arcanamod.systems.spell.SpellData;
-import net.arcanamod.systems.spell.casts.Casts;
+import net.arcanamod.systems.taint.Taint;
+import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.util.Pair;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -56,6 +54,9 @@ public class VisManipulatorsItem extends Item{
 		}else{
 			ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
 			int r = random.nextInt(5);
+			if (r == 0) {
+				toSet.getOrCreateTag().put("spell", Spell.getSerializer().serializeNBT(Spell.Samples.createAdvancedSpell(),new CompoundNBT()));
+			}
 			toSet.getOrCreateTag().putInt("style", random.nextInt(36));
 			context.getPlayer().addItemStackToInventory(toSet);
 		}

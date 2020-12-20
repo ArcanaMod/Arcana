@@ -2,7 +2,7 @@ package net.arcanamod.event;
 
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.capabilities.TaintTrackable;
@@ -12,10 +12,9 @@ import net.arcanamod.client.render.aspects.AspectParticleData;
 import net.arcanamod.client.render.aspects.NumberParticleData;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.WandItem;
-import net.arcanamod.systems.spell.DelayedSpell;
-import net.arcanamod.systems.spell.DelayedSpellManager;
-import net.arcanamod.systems.spell.SpellData;
+import net.arcanamod.systems.spell.casts.DelayedCast;
+import net.arcanamod.systems.spell.casts.DelayedCastManager;
+import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.util.RayTraceUtils;
 import net.arcanamod.world.AuraView;
@@ -29,7 +28,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -70,15 +68,15 @@ public class EntityTickHandler{
 				serverPlayerEntity.sendStatusMessage(status, false);
 			}
 
-			List<DelayedSpell> spellsScheduledToDeletion = new ArrayList<>();
-			DelayedSpellManager.delayedSpells.forEach(delayedSpell -> {
-				if (delayedSpell.ticks >= delayedSpell.ticksPassed){
-					delayedSpell.spellEvent.accept(0);
-					spellsScheduledToDeletion.add(delayedSpell);
+			List<DelayedCast> spellsScheduledToDeletion = new ArrayList<>();
+			DelayedCastManager.delayedCasts.forEach(delayedCast -> {
+				if (delayedCast.ticks >= delayedCast.ticksPassed){
+					delayedCast.spellEvent.accept(0);
+					spellsScheduledToDeletion.add(delayedCast);
 				}
-				else delayedSpell.ticksPassed++;
+				else delayedCast.ticksPassed++;
 			});
-			DelayedSpellManager.delayedSpells.removeAll(spellsScheduledToDeletion);
+			DelayedCastManager.delayedCasts.removeAll(spellsScheduledToDeletion);
 		}
 
 		// Render aspect particles
@@ -148,20 +146,7 @@ public class EntityTickHandler{
 				}
 			}
 
-			if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof WandItem){
-				if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND))!= null) {
-					if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
-						SpellData spellData = WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).getSpellData();
-						if ((spellData.primaryCast.getFirst() == Aspects.EARTH && spellData.primaryCast.getSecond() == Aspects.LUST)
-								|| (spellData.plusCast.getFirst() == Aspects.EARTH && spellData.plusCast.getSecond() == Aspects.LUST))
-							if (player.isCrouching()) {
-								player.sendStatusMessage(new TranslationTextComponent("status.arcana.selection_mode"), true);
-							} else {
-								player.sendStatusMessage(new TranslationTextComponent("status.arcana.break_mode"), true);
-							}
-					}
-				}
-			}
+			Spell.updateSpellStatusBar(player);
 		}
 	}
 

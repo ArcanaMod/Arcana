@@ -2,7 +2,7 @@ package net.arcanamod.aspects;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.Pair;
 import net.minecraft.util.ResourceLocation;
 
@@ -14,6 +14,7 @@ import java.util.List;
 import static net.arcanamod.aspects.ColorRange.create;
 import static net.arcanamod.util.Pair.of;
 
+@SuppressWarnings("unused")
 public class Aspects {
 
 	/**

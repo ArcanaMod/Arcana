@@ -1,11 +1,11 @@
 package net.arcanamod.effects;
 
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
+import net.arcanamod.systems.taint.TaintDamageSource;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
-import net.minecraft.util.DamageSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.server.ServerWorld;
 

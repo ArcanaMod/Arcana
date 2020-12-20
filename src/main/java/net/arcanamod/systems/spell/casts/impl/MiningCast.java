@@ -1,9 +1,11 @@
-package net.arcanamod.systems.spell.casts;
+package net.arcanamod.systems.spell.casts.impl;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
+import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.Enchantment;
@@ -11,6 +13,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
@@ -24,10 +27,6 @@ import net.minecraft.world.World;
 import java.util.HashMap;
 
 public class MiningCast extends Cast {
-	
-	public ICast build(CompoundNBT compound) {
-		return this;
-	}
 
 	@Override
 	public ResourceLocation getId() {
@@ -40,41 +39,20 @@ public class MiningCast extends Cast {
 	}
 
 	@Override
-	public SpellData getSpellData() {
-		return data;
-	}
-
-	@Override
-	public SpellCosts getSpellCosts() {
-		return new SpellCosts(0,0,0,1,0,0,0);
-	}
-
-	@Override
-	public int getComplexity() {
-		if (!isBuilt) return -2;
-		return  (int)(6
-				+ SpellValues.getOrDefault(data.firstModifier,0)*1.5f
-				+ SpellValues.getOrDefault(data.secondModifier,0)*2
-				+ SpellValues.getOrDefault(data.sinModifier,0)*2
-				+ SpellValues.getOrDefault(data.primaryCast.getSecond(),0)*2
-				+ SpellValues.getOrDefault(data.plusCast.getSecond(),0))*2;
-	}
-
-	@Override
 	public int getSpellDuration() {
 		return 1;
 	}
 
 	public int getMiningLevel() {
-		return SpellValues.getOrDefault(data.firstModifier, 2);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 2);
 	}
 
 	public int getExplosivePower() {
-		return SpellValues.getOrDefault(data.firstModifier, 0);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 0);
 	}
 
 	public int getFortune() {
-		return SpellValues.getOrDefault(data.firstModifier, 0);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"sinModifier"), 0);
 	}
 
 	@Override
@@ -92,14 +70,23 @@ public class MiningCast extends Cast {
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		if(caster.world.isRemote) return ActionResultType.SUCCESS;
 		BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-		if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-			caster.world.destroyBlock(blockTarget, true, caster);
+		if (blockToDestroy.getHarvestLevel() <= getMiningLevel() && blockToDestroy.getBlockHardness(world,blockTarget) != -1 && blockTarget.getY() != 0) {
+			// Spawn block_break particles
+			world.playEvent(2001, blockTarget, Block.getStateId(blockToDestroy));
+
+			// Check of it has tile entity
 			TileEntity tileentity = blockToDestroy.hasTileEntity() ? world.getTileEntity(blockTarget) : null;
+
+			// Create dummy Pickaxe with enchantments and mining level
 			HashMap<Enchantment, Integer> map = new HashMap<>();
 			map.put(Enchantments.FORTUNE,getFortune());
 			ItemStack pickaxe = createDummyPickaxe(getMiningLevel());
 			EnchantmentHelper.setEnchantments(map,pickaxe);
+
+			// Spawn drops and destroy block.
 			Block.spawnDrops(blockToDestroy, world, blockTarget, tileentity, caster, pickaxe);
+			IFluidState ifluidstate = blockToDestroy.getBlock().getFluidState(blockToDestroy);
+			world.setBlockState(blockTarget, ifluidstate.getBlockState(), 3);
 			blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 		}
 		return ActionResultType.SUCCESS;

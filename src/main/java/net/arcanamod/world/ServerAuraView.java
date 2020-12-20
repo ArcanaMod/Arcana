@@ -2,7 +2,7 @@ package net.arcanamod.world;
 
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.blocks.DelegatingBlock;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.TaintedBlock;
 import net.arcanamod.capabilities.AuraChunk;
 import net.arcanamod.network.Connection;

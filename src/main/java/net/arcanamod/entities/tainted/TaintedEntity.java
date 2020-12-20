@@ -12,8 +12,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 public class TaintedEntity extends MonsterEntity implements IMob {
 	public EntityType parentEntity;
 
-	public TaintedEntity(EntityType<? extends MonsterEntity> type, World worldIn, EntityType entity) {
-		super(type,worldIn);
+	public TaintedEntity(EntityType<? extends Entity> type, World worldIn, EntityType entity) {
+		super((EntityType<? extends MonsterEntity>) type,worldIn);
 		parentEntity = entity;
 	}
 

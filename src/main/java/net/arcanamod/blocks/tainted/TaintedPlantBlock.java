@@ -1,7 +1,7 @@
 package net.arcanamod.blocks.tainted;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.TaintedBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

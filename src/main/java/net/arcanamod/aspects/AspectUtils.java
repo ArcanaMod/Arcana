@@ -94,8 +94,8 @@ public class AspectUtils {
 		return I18n.format("aspect." + aspect.name().toLowerCase());
 	}
 
-	public static ResourceLocation getResourceLocationFromAspect(Aspect aspect) {
-		return Aspects.ASPECTS.inverse().get(aspect);
+	public static Aspect deserializeAspect(CompoundNBT compound, String deserializableAspect){
+		return Aspect.fromResourceLocation(new ResourceLocation(compound.getString(deserializableAspect)));
 	}
 
 	public static String aspectHandlerToJson(IAspectHandler handler) {
@@ -103,10 +103,6 @@ public class AspectUtils {
 				.setPrettyPrinting()
 				.create();
 		return gson.toJson(handler.getHolders());
-	}
-
-	public static Aspect getAspectByResourceLocation(ResourceLocation resourceLocation) {
-		return Aspects.ASPECTS.get(resourceLocation);
 	}
 
 	public static Aspect getAspectByDisplayName(String name) {
@@ -120,9 +116,5 @@ public class AspectUtils {
 
 	public static List<AspectStack> squish(List<AspectStack> unSquished){
 		return StreamUtils.partialReduce(unSquished, AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
-	}
-
-	public static Aspect deserializeAspect(CompoundNBT compound, String deserializableAspect){
-		return getAspectByResourceLocation(new ResourceLocation(compound.getString(deserializableAspect)));
 	}
 }

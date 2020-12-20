@@ -105,7 +105,7 @@ public class ClientProxy extends CommonProxy{
 		);
 		
 		inst.getItemColors().register((stack, layer) ->
-				layer == 1 ? FocusItem.getColourAspect(stack).getColorRange().get(3) : 0xffffffff,
+				layer == 1 ? FocusItem.getColourAspect(stack) : 0xffffffff,
 				ArcanaItems.DEFAULT_FOCUS::get
 		);
 		

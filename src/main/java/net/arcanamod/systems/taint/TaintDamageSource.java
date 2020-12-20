@@ -1,4 +1,4 @@
-package net.arcanamod.effects;
+package net.arcanamod.systems.taint;
 
 import net.minecraft.util.DamageSource;
 
