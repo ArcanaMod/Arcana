@@ -13,6 +13,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
@@ -70,13 +71,22 @@ public class MiningCast extends Cast {
 		if(caster.world.isRemote) return ActionResultType.SUCCESS;
 		BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
 		if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
-			caster.world.destroyBlock(blockTarget, true, caster);
+			// Spawn block_break particles
+			world.playEvent(2001, blockTarget, Block.getStateId(blockToDestroy));
+
+			// Check of it has tile entity
 			TileEntity tileentity = blockToDestroy.hasTileEntity() ? world.getTileEntity(blockTarget) : null;
+
+			// Create dummy Pickaxe with enchantments and mining level
 			HashMap<Enchantment, Integer> map = new HashMap<>();
 			map.put(Enchantments.FORTUNE,getFortune());
 			ItemStack pickaxe = createDummyPickaxe(getMiningLevel());
 			EnchantmentHelper.setEnchantments(map,pickaxe);
+
+			// Spawn drops and destroy block.
 			Block.spawnDrops(blockToDestroy, world, blockTarget, tileentity, caster, pickaxe);
+			IFluidState ifluidstate = blockToDestroy.getBlock().getFluidState(blockToDestroy);
+			world.setBlockState(blockTarget, ifluidstate.getBlockState(), 3);
 			blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 		}
 		return ActionResultType.SUCCESS;
