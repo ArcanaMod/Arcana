@@ -10,10 +10,7 @@ import net.arcanamod.entities.tainted.*;
 import net.arcanamod.entities.tainted.group.TaintedFishEntity;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.systems.taint.TaintedBirchTree;
-import net.arcanamod.systems.taint.TaintedJungleTree;
-import net.arcanamod.systems.taint.TaintedOakTree;
-import net.arcanamod.systems.taint.TaintedSpruceTree;
+import net.arcanamod.systems.taint.*;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
 import net.minecraft.block.trees.OakTree;
@@ -303,6 +300,10 @@ public class Taint{
 			return new TaintedSpruceTree();
 		if (block == Blocks.JUNGLE_SAPLING)
 			return new TaintedJungleTree();
-		return new OakTree();
+		if (block == Blocks.ACACIA_SAPLING)
+			return new TaintedAcaciaTree();
+		if (block == Blocks.DARK_OAK_SAPLING)
+			return new TaintedDarkOakTree();
+		return new TaintedOakTree();
 	}
 }
