@@ -70,7 +70,7 @@ public class MiningCast extends Cast {
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		if(caster.world.isRemote) return ActionResultType.SUCCESS;
 		BlockState blockToDestroy = caster.world.getBlockState(blockTarget);
-		if (blockToDestroy.getBlock().canHarvestBlock(blockToDestroy, caster.world, blockTarget, caster) && blockToDestroy.getHarvestLevel() <= getMiningLevel()) {
+		if (blockToDestroy.getHarvestLevel() <= getMiningLevel() && blockToDestroy.getBlockHardness(world,blockTarget) != -1 && blockTarget.getY() != 0) {
 			// Spawn block_break particles
 			world.playEvent(2001, blockTarget, Block.getStateId(blockToDestroy));
 
