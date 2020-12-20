@@ -1,11 +1,10 @@
 package net.arcanamod.systems.spell.casts.impl;
 
 import net.arcanamod.ArcanaVariables;
-import net.arcanamod.NotImplementedException;
+import net.arcanamod.util.NotImplementedException;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.systems.spell.casts.Cast;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResultType;

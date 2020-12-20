@@ -44,13 +44,10 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-
-import static net.arcanamod.systems.spell.Spell.Samples.createBasicSpell;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
