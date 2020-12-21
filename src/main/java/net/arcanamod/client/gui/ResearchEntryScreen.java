@@ -252,7 +252,7 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	// Index of the given stage
-	private int indexOfStage(int stage){
+	int indexOfStage(int stage){
 		int cur = 0;
 		List<EntrySection> sections = getVisibleSections();
 		for(int i = 0, size = sections.size(); i < size; i++){
@@ -269,7 +269,8 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	private boolean visible(EntrySection section){
-		return Researcher.getFrom(getMinecraft().player).entryStage(entry) >= entry.sections().indexOf(section);
+		// cant use getMinecraft here because this is called from ResearchBookScreen before this is set
+		return Researcher.getFrom(Minecraft.getInstance().player).entryStage(entry) >= entry.sections().indexOf(section);
 	}
 	
 	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){
@@ -296,7 +297,7 @@ public class ResearchEntryScreen extends Screen{
 	}
 	
 	private int span(EntrySection section){
-		return EntrySectionRenderer.get(section).span(section, getMinecraft().player);
+		return EntrySectionRenderer.get(section).span(section, Minecraft.getInstance().player);
 	}
 	
 	public boolean isPauseScreen(){
@@ -401,12 +402,13 @@ public class ResearchEntryScreen extends Screen{
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
 				
+				// TODO: item tooltips get messed up when overlapping the bookmark
+				// and so do other pin tooltips...
+				// render the following separately!
+				
 				// check if we're already pinned
 				List<Integer> pinned = Researcher.getFrom(getMinecraft().player).getPinned().get(entry.key());
 				String tooltip = TextFormatting.AQUA + I18n.format(pinned != null && pinned.contains(pin.getStage()) ? "researchEntry.unpin" : "researchEntry.pin");
-				
-				// TODO: item tooltips get messed up when overlapping the bookmark
-				// and so do other pin tooltips...
 				
 				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 				if(isHovered)

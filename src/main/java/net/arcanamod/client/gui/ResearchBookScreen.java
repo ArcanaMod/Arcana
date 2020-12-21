@@ -28,6 +28,7 @@ import org.lwjgl.opengl.GL11;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.*;
@@ -122,6 +123,17 @@ public class ResearchBookScreen extends Screen{
 			ResearchCategory category = categories.get(i);
 			addButton(new CategoryButton(i, (width - getFrameWidth()) / 2 - 12, 32 + ((height - getFrameHeight()) / 2) + 20 * i, category));
 		}
+		
+		AtomicInteger i = new AtomicInteger();
+		Researcher.getFrom(mc.player).getPinned().forEach((entryKey, pins) -> pins.forEach(pin -> {
+			// create Pin object
+			ResearchEntry entry = ResearchBooks.getEntry(entryKey);
+			if(entry != null && entry.category().book().equals(book)){
+				Pin pinObj = new Pin(entry, pin, mc.world);
+				addButton(new PinButton((width + getFrameWidth()) / 2 + 1, 32 + ((height - getFrameHeight()) / 2) + i.get() * 22, pinObj));
+			}
+			i.incrementAndGet();
+		}));
 	}
 	
 	private void renderResearchBackground(){
@@ -419,7 +431,7 @@ public class ResearchBookScreen extends Screen{
 	private int getFrameWidth(){
 		int conf = ArcanaConfig.CUSTOM_BOOK_WIDTH.get();
 		if(conf == -1)
-			return width - 40;
+			return width - 60;
 		else
 			return clamp(conf, 220, width);
 	}
@@ -642,6 +654,46 @@ public class ResearchBookScreen extends Screen{
 					int completion = (category.entries().size() > 0) ? ((category.streamEntries().mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / category.entries().size()) : 100;
 					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name()).trim() + " (" + completion + "%)"), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 				}
+			}
+		}
+	}
+	
+	class PinButton extends Button{
+		
+		Pin pin;
+		
+		
+		public PinButton(int x, int y, Pin pin){
+			super(x, y, 18, 18, "", b -> {
+				// lets jump over to the specific stage
+				// first check if you even have the research
+				ResearchEntry entry = pin.getEntry();
+				if(entry != null && Researcher.getFrom(Minecraft.getInstance().player).entryStage(entry) >= pin.getStage()){
+					ResearchEntryScreen in = new ResearchEntryScreen(entry, Minecraft.getInstance().currentScreen);
+					int stageIndex = in.indexOfStage(pin.getStage());
+					in.index = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
+					Minecraft.getInstance().displayGuiScreen(in);
+				}
+			});
+			this.pin = pin;
+		}
+		
+		public void renderButton(int mouseX, int mouseY, float partialTicks){
+			if(visible){
+				RenderSystem.color3f(1, 1, 1);
+				
+				int xOffset = isHovered ? 3 : 0;
+				UiUtil.renderIcon(pin.getIcon(), x + xOffset, y - 1, 0);
+				
+				getMinecraft().getTextureManager().bindTexture(texture);
+				RenderSystem.color4f(1f, 1f, 1f, 1f);
+				drawTexturedModalRect(x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
+				
+				// todo: same as in research entry screen
+				
+				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+				if(isHovered)
+					GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), TextFormatting.AQUA + I18n.format("researchBook.jump_to_pin")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
 		}
 	}
