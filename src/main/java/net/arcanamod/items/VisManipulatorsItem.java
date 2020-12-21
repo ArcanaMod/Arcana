@@ -57,6 +57,9 @@ public class VisManipulatorsItem extends Item{
 			if (r == 0) {
 				toSet.getOrCreateTag().put("spell", Spell.getSerializer().serializeNBT(Spell.Samples.createAdvancedSpell(),new CompoundNBT()));
 			}
+			if (r == 1) {
+				toSet.getOrCreateTag().put("spell", Spell.getSerializer().serializeNBT(Spell.Samples.createBasicSpell(),new CompoundNBT()));
+			}
 			toSet.getOrCreateTag().putInt("style", random.nextInt(36));
 			context.getPlayer().addItemStackToInventory(toSet);
 		}

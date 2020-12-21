@@ -2,6 +2,7 @@ package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.entities.SpellCloudEntity;
+import net.arcanamod.entities.SpellEggEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
@@ -27,6 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.List;
 import java.util.Optional;
@@ -123,7 +125,7 @@ public abstract class Cast implements ICast {
 				Random random = new Random();
 				player.world.playSound((PlayerEntity)null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 				if (!player.world.isRemote) {
-					EggEntity eggentity = new EggEntity(player.world, player);
+					SpellEggEntity eggentity = new SpellEggEntity(player.world, player, this);
 					eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
 					eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
 

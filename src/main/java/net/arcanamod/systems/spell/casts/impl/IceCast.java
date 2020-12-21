@@ -39,13 +39,13 @@ public class IceCast extends Cast {
 	}
 
 	private int getFrozenDuration() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"),10);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"),10) * 20;
 	}
 
 	@Override
 	public ActionResultType useOnEntity(PlayerEntity caster, Entity entityTarget){
 		if (entityTarget instanceof LivingEntity)
-			((LivingEntity)entityTarget).addPotionEffect(new EffectInstance(ArcanaEffects.WARDING.get(),getFrozenDuration(),getAmplifier(),false,false));
+			((LivingEntity)entityTarget).addPotionEffect(new EffectInstance(ArcanaEffects.FROZEN.get(),getFrozenDuration(),getAmplifier(),false,false));
 		return ActionResultType.SUCCESS;
 	}
 

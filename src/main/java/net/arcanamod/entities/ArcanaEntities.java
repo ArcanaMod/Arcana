@@ -1,6 +1,7 @@
 package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.client.render.SpellEggEntityRender;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.client.model.tainted.TaintedFoxModel;
 import net.arcanamod.client.model.tainted.TaintedSheepModel;
@@ -46,8 +47,8 @@ public class ArcanaEntities{
 					.immuneToFire().size(6.0F, 0.5F).build(arcLoc("spell_cloud").toString()));
 
 	public static final RegistryObject<EntityType<SpellEggEntity>> SPELL_EGG = ENTITY_TYPES
-			.register("spell_projectile", () -> EntityType.Builder.<SpellEggEntity>create(SpellEggEntity::new, EntityClassification.MISC)
-					.immuneToFire().size(6.0F, 0.5F).build(arcLoc("spell_projectile").toString()));
+			.register("spell_egg", () -> EntityType.Builder.<SpellEggEntity>create(SpellEggEntity::new, EntityClassification.MISC)
+					.immuneToFire().size(0.5F, 0.5F).build(arcLoc("spell_egg").toString()));
 
 	// Tainted
 
@@ -116,6 +117,7 @@ public class ArcanaEntities{
 
 	@SuppressWarnings("rawtypes")
 	public static void render() {
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_EGG.get(), SpellEggEntityRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BAT.get(), TaintedBatRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BEE.get(), manager -> new TaintedEntityRender(manager, new BeeModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAT.get(), manager -> new TaintedEntityRender(manager, new CatModel(0.0F)));

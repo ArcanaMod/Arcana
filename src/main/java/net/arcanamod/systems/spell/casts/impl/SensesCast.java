@@ -1,7 +1,7 @@
 package net.arcanamod.systems.spell.casts.impl;
 
 import net.arcanamod.ArcanaVariables;
-import net.arcanamod.NotImplementedException;
+import net.arcanamod.util.NotImplementedException;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.entity.Entity;
