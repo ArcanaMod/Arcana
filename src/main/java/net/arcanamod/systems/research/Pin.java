@@ -1,6 +1,10 @@
 package net.arcanamod.systems.research;
 
+import net.arcanamod.systems.research.impls.AbstractCraftingSection;
+import net.arcanamod.systems.research.impls.CraftingSection;
 import net.minecraft.item.Item;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
@@ -19,6 +23,24 @@ public class Pin{
 		this.entry = entry;
 		this.stage = stage;
 		this.icon = icon;
+	}
+	
+	// Grabs the icon and item from the entry.
+	// If a recipe isn't being pointed to, uses the icon of the entry its in.
+	public Pin(ResearchEntry entry, int stage, World world){
+		// Check if the section is a recipe.
+		if(entry.sections().size() > stage){
+			this.stage = stage;
+			EntrySection section = entry.sections().get(stage);
+			if(section instanceof AbstractCraftingSection && world.getRecipeManager().getRecipe(((AbstractCraftingSection)section).getRecipe()).isPresent()){
+				IRecipe<?> recipe = world.getRecipeManager().getRecipe(((AbstractCraftingSection)section).getRecipe()).get();
+				this.icon = new Icon(recipe.getRecipeOutput());
+				this.result = recipe.getRecipeOutput().getItem();
+			}else
+				this.icon = entry.icons().get(0);
+		}else
+			this.stage = 0;
+		this.entry = entry;
 	}
 	
 	public ResearchEntry getEntry(){

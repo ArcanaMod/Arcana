@@ -46,6 +46,11 @@ public class Icon{
 		this.stack = stack;
 	}
 	
+	public Icon(ItemStack stack){
+		this.resourceLocation = stack.getItem().getRegistryName();
+		this.stack = stack;
+	}
+	
 	@Nullable
 	public ItemStack getStack(){
 		return stack;

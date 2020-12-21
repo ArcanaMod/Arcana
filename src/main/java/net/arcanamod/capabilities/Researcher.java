@@ -6,19 +6,14 @@ import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.systems.research.ResearchEntry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
+import net.minecraft.nbt.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public interface Researcher{
 	
@@ -96,6 +91,17 @@ public interface Researcher{
 	
 	void setPuzzleData(Set<ResourceLocation> data);
 	
+	// don't want to create a new proto-pin data type or hack extra stuff into Pin so here we go
+	Map<ResourceLocation, List<Integer>> getPinned();
+	
+	void setPinned(Map<ResourceLocation, List<Integer>> pins);
+	
+	void addPinned(ResourceLocation entry, Integer stage);
+	
+	void removePinned(ResourceLocation entry, Integer stage);
+	
+	// let's pretend to be an abstract interface but actually not be, that's a great idea because nobody needs
+	// to extend this ever or modify its behavior haha
 	default CompoundNBT serializeNBT(){
 		CompoundNBT compound = new CompoundNBT();
 		
@@ -106,6 +112,14 @@ public interface Researcher{
 		ListNBT puzzles = new ListNBT();
 		getPuzzleData().forEach(puzzle -> puzzles.add(StringNBT.valueOf(puzzle.toString())));
 		compound.put("puzzles", puzzles);
+		
+		CompoundNBT pins = new CompoundNBT();
+		getPinned().forEach((pin, stage) -> {
+			ListNBT stages = new ListNBT();
+			stage.forEach(integer -> stages.add(IntNBT.valueOf(integer)));
+			pins.put(pin.toString(), stages);
+		});
+		compound.put("pins", pins);
 		return compound;
 	}
 	
@@ -120,8 +134,13 @@ public interface Researcher{
 		ListNBT puzzles = data.getList("puzzles", Constants.NBT.TAG_STRING);
 		for(INBT key : puzzles)
 			puzzleDat.add(new ResourceLocation(key.getString()));
-		
 		setPuzzleData(puzzleDat);
+		
+		Map<ResourceLocation, List<Integer>> pinData = new HashMap<>();
+		CompoundNBT pins = data.getCompound("pins");
+		for(String s : pins.keySet())
+			pinData.put(new ResourceLocation(s), pins.getList(s, Constants.NBT.TAG_INT).stream().map(nbt -> ((IntNBT)nbt).getInt()).collect(Collectors.toList()));
+		setPinned(pinData);
 	}
 	
 	static boolean canAdvanceEntry(Researcher r, ResearchEntry entry){

@@ -1,9 +1,11 @@
 package net.arcanamod.event;
 
 import net.arcanamod.capabilities.*;
+import net.arcanamod.network.Connection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -38,9 +40,13 @@ public class AttachCapabilities{
 	@SuppressWarnings("ConstantConditions")
 	@SubscribeEvent
 	public static void playerClone(PlayerEvent.Clone event){
-		if(!event.isWasDeath()){
-			Researcher.getFrom(event.getPlayer()).setEntryData(Researcher.getFrom(event.getOriginal()).getEntryData());
-			TaintTrackable.getFrom(event.getPlayer()).deserializeNBT(TaintTrackable.getFrom(event.getOriginal()).serializeNBT());
-		}
+		Researcher.getFrom(event.getPlayer()).deserializeNBT(Researcher.getFrom(event.getOriginal()).serializeNBT());
+		TaintTrackable.getFrom(event.getPlayer()).deserializeNBT(TaintTrackable.getFrom(event.getOriginal()).serializeNBT());
+		
+		// research gets desynced here
+		// so we send a sync packet
+		// yes its always a ServerPlayerEntity
+		// we also need to delay by a tick so the new player can actually get the capability
+		WorldTickHandler.onTick.add(world -> Connection.sendSyncPlayerResearch(Researcher.getFrom(event.getPlayer()), (ServerPlayerEntity)event.getPlayer()));
 	}
 }

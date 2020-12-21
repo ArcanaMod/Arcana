@@ -2,6 +2,7 @@ package net.arcanamod.network;
 
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.systems.research.Pin;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -35,6 +36,7 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkClientSlotDrain.class, PkClientSlotDrain::encode, PkClientSlotDrain::decode, PkClientSlotDrain::handle);
 		INSTANCE.registerMessage(id++, PkSyncPlayerFlux.class, PkSyncPlayerFlux::encode, PkSyncPlayerFlux::decode, PkSyncPlayerFlux::handle);
 		INSTANCE.registerMessage(id++, PkSwapFocus.class, PkSwapFocus::encode, PkSwapFocus::decode, PkSwapFocus::handle);
+		INSTANCE.registerMessage(id++, PkModifyPins.class, PkModifyPins::encode, PkModifyPins::decode, PkModifyPins::handle);
 	}
 	
 	public static void sendTo(Object packet, ServerPlayerEntity target){
@@ -54,7 +56,7 @@ public class Connection{
 	}
 	
 	public static void sendSyncPlayerResearch(Researcher from, ServerPlayerEntity target){
-		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncPlayerResearch(from.getEntryData(), from.getPuzzleData()));
+		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncPlayerResearch(from.serializeNBT()));
 	}
 
 	public static void sendAspectClick(int windowId, int slotId, PkAspectClick.ClickType type){
@@ -71,5 +73,9 @@ public class Connection{
 
 	public static void sendClientSlotDrain(int windowId, int slotId, PkAspectClick.ClickType type, ServerPlayerEntity target) {
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkClientSlotDrain(windowId, slotId, type));
+	}
+	
+	public static void sendModifyPins(Pin pin, PkModifyPins.Diff diff){
+		INSTANCE.sendToServer(new PkModifyPins(diff, pin.getEntry().key(), pin.getStage()));
 	}
 }

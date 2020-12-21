@@ -7,6 +7,7 @@ import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.network.Connection;
+import net.arcanamod.network.PkModifyPins;
 import net.arcanamod.systems.research.EntrySection;
 import net.arcanamod.systems.research.Pin;
 import net.arcanamod.systems.research.Requirement;
@@ -357,13 +358,31 @@ public class ResearchEntryScreen extends Screen{
 		
 		public PinButton(int x, int y, Pin pin){
 			super(x, y, 18, 18, "", b -> {
-				// can't reference index here directly!
 				if(Minecraft.getInstance().currentScreen instanceof ResearchEntryScreen){
-					// if stage index is an even number, skip there; else skip to before it.
+					// can't reference variables here directly
 					ResearchEntryScreen screen = (ResearchEntryScreen)Minecraft.getInstance().currentScreen;
-					int stageIndex = screen.indexOfStage(pin.getStage());
-					screen.index = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
-					screen.updateButtons();
+					if(!Screen.hasControlDown()){
+						// if stage index is an even number, skip there; else skip to before it.
+						int stageIndex = screen.indexOfStage(pin.getStage());
+						screen.index = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
+						screen.updateButtons();
+					}else{
+						Researcher from = Researcher.getFrom(Minecraft.getInstance().player);
+						List<Integer> pinned = from.getPinned().get(pin.getEntry().key());
+						if(pinned != null){
+							if(!pinned.contains(pin.getStage())){
+								from.addPinned(pin.getEntry().key(), pin.getStage());
+								Connection.sendModifyPins(pin, PkModifyPins.Diff.pin);
+							}else{
+								from.removePinned(pin.getEntry().key(), pin.getStage());
+								Connection.sendModifyPins(pin, PkModifyPins.Diff.unpin);
+							}
+						}else{
+							// well we know for sure its not been pinned so we have no pins here
+							from.addPinned(pin.getEntry().key(), pin.getStage());
+							Connection.sendModifyPins(pin, PkModifyPins.Diff.pin);
+						}
+					}
 				}
 			});
 			visible = true;
@@ -382,9 +401,16 @@ public class ResearchEntryScreen extends Screen{
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
 				
+				// check if we're already pinned
+				List<Integer> pinned = Researcher.getFrom(getMinecraft().player).getPinned().get(entry.key());
+				String tooltip = TextFormatting.AQUA + I18n.format(pinned != null && pinned.contains(pin.getStage()) ? "researchEntry.unpin" : "researchEntry.pin");
+				
+				// TODO: item tooltips get messed up when overlapping the bookmark
+				// and so do other pin tooltips...
+				
 				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 				if(isHovered)
-					GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText()), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
+					GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), tooltip), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
 		}
 	}

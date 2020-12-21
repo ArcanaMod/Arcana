@@ -646,6 +646,8 @@
 
     "_comment": "GUIs",
     "researchEntry.continue": "Continue",
+    "researchEntry.pin": "Ctrl-click to pin",
+    "researchEntry.unpin": "Ctrl-click to unpin",
     "researchTable.ink_needed": "Scribing tools required!",
     "researchTable.ink_refill_needed": "Refill scribing tools!",
     "researchTable.search": "Search...",

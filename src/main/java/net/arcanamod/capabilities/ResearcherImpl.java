@@ -1,9 +1,9 @@
 package net.arcanamod.capabilities;
 
+import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.systems.research.ResearchEntry;
-import net.arcanamod.event.ResearchEvent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,6 +14,7 @@ public class ResearcherImpl implements Researcher{
 	
 	protected Map<ResourceLocation, Integer> data = new HashMap<>();
 	protected Set<ResourceLocation> completePuzzles = new HashSet<>();
+	protected Map<ResourceLocation, List<Integer>> pins = new HashMap<>();
 	protected PlayerEntity player;
 	
 	public int entryStage(ResearchEntry entry){
@@ -80,6 +81,29 @@ public class ResearcherImpl implements Researcher{
 	public void setPuzzleData(Set<ResourceLocation> data){
 		completePuzzles.clear();
 		completePuzzles.addAll(data);
+	}
+	
+	public Map<ResourceLocation, List<Integer>> getPinned(){
+		return pins;
+	}
+	
+	public void setPinned(Map<ResourceLocation, List<Integer>> pins){
+		this.pins = new HashMap<>(pins);
+	}
+	
+	public void addPinned(ResourceLocation entry, Integer stage){
+		List<Integer> stages = pins.computeIfAbsent(entry, k -> new ArrayList<>(1));
+		if(!stages.contains(stage))
+			stages.add(stage);
+	}
+	
+	public void removePinned(ResourceLocation entry, Integer stage){
+		List<Integer> integers = pins.get(entry);
+		if(integers == null)
+			return;
+		integers.remove(stage);
+		if(integers.isEmpty())
+			pins.remove(entry);
 	}
 	
 	public void setPlayer(PlayerEntity player){
