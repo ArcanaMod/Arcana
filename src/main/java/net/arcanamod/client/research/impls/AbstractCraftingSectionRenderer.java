@@ -73,7 +73,7 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 		int rY = y + (screenHeight - 181) / 2 + 16 + HEIGHT_OFFSET;
 		drawTexturedModalRect(rX, rY, 1, 167, 58, 20);
 		item(result, rX + 29 - 8, rY + 10 - 8);
-		int stX = x + (screenWidth - 256) / 2 + (ResearchEntryScreen.PAGE_WIDTH - fr().getStringWidth(result.getTextComponent().getFormattedText())) / 2;
+		int stX = x + (screenWidth - 256) / 2 + (ResearchEntryScreen.PAGE_WIDTH - fr().getStringWidth(result.getTextComponent().getFormattedText())) / 2 + 5;
 		int stY = y + (screenHeight - 181) / 2 + 11 - fr().FONT_HEIGHT + HEIGHT_OFFSET;
 		fr().drawString(result.getDisplayName().getFormattedText(), stX, stY, 0);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
