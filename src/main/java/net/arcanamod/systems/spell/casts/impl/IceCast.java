@@ -6,6 +6,7 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.systems.spell.SpellValues;
 import net.arcanamod.systems.spell.casts.Cast;
+import net.arcanamod.world.WorldInteractions;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,7 +26,8 @@ public class IceCast extends Cast {
 
 	@Override
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-		return null;
+		WorldInteractions.fromWorld(world).freezeBlock(blockTarget);
+		return ActionResultType.SUCCESS;
 	}
 
 	@Override

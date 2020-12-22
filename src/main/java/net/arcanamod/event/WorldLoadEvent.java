@@ -13,6 +13,8 @@ import net.arcanamod.network.PkSyncResearch;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.systems.research.ResearchLoader;
 import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.world.WorldInteractions;
+import net.arcanamod.world.WorldInteractionsRegistry;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -65,6 +67,7 @@ public class WorldLoadEvent{
 		IReloadableResourceManager manager = event.getServer().getResourceManager();
 		manager.addReloadListener(Arcana.researchManager = new ResearchLoader());
 		manager.addReloadListener(Arcana.itemAspectRegistry = new ItemAspectRegistry(event.getServer()));
+		manager.addReloadListener(Arcana.worldInteractionsRegistry = new WorldInteractionsRegistry(event.getServer()));
 	}
 	
 	@SubscribeEvent

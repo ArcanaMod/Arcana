@@ -1,0 +1,17 @@
+{
+  "values": [
+	{
+	  "from": "minecraft:water",
+	  "to": "minecraft:frosted_ice"
+	},
+	{
+	  "from": "minecraft:frosted_ice",
+	  "to": "minecraft:ice"
+	},
+	{
+	  "from": "minecraft:grass_block",
+	  "to": "minecraft:grass_block",
+	  "cover": "minecraft:snow"
+	}
+  ]
+}

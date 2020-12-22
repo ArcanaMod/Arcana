@@ -128,6 +128,7 @@ public abstract class Cast implements ICast {
 					SpellEggEntity eggentity = new SpellEggEntity(player.world, player, this);
 					eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
 					eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+					eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
 
 					if (cast.getSecond() == ENVY) {
 						// entities killed fire the same spell to the closest entity

@@ -13,6 +13,8 @@ import net.minecraft.network.IPacket;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -52,11 +54,30 @@ public class SpellEggEntity extends ProjectileItemEntity {
 
 	@Override
 	protected void onImpact(RayTraceResult result) {
-		if (result.getType() == RayTraceResult.Type.ENTITY) {
-			((EntityRayTraceResult)result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.1F);
-			if (!world.isRemote)
-			cast.useOnEntity(caster, ((EntityRayTraceResult)result).getEntity());
+		if (cast != null) {
+			if (result.getType() == RayTraceResult.Type.ENTITY) {
+				((EntityRayTraceResult) result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.5F);
+				if (!world.isRemote)
+					cast.useOnEntity(caster, ((EntityRayTraceResult) result).getEntity());
+			}
+			if (result.getType() == RayTraceResult.Type.BLOCK) {
+				if (!world.isRemote)
+					cast.useOnBlock(caster, world, ((BlockRayTraceResult) result).getPos());
+			}
 		}
+	}
+
+	@Override
+	public void tick() {
+		if (isInWater()){
+			if (cast != null){
+				if (!world.isRemote)
+					cast.useOnBlock(caster, world, getPosition());
+				remove();
+			}
+		}
+
+		super.tick();
 	}
 
 	public void setCast(PlayerEntity caster, Cast cast){
