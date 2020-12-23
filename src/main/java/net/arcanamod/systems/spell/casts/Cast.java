@@ -8,6 +8,7 @@ import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
+import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -123,32 +124,50 @@ public abstract class Cast implements ICast {
 				- Targets the block / entity hit
 				 */
 				Random random = new Random();
-				player.world.playSound((PlayerEntity)null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+				//player.world.playSound((PlayerEntity)null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 				if (!player.world.isRemote) {
-					SpellEggEntity eggentity = new SpellEggEntity(player.world, player, this);
-					eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
-					eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
-					eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
 
 					if (cast.getSecond() == ENVY) {
 						// entities killed fire the same spell to the closest entity
 					} else if (cast.getSecond() == LUST) {
 						// homes to players / passive mobs
+						SpellEggEntity eggentity = new SpellEggEntity(player.world, player, this);
+						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
+						eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
+						eggentity.enableHoming(PlayerEntity.class, CreatureEntity.class);
+						player.world.addEntity(eggentity);
 					} else if (cast.getSecond() == SLOTH) {
 						// the projectile bounces
 					} else if (cast.getSecond() == PRIDE) {
 						// shotguns projectiles
+						for (int i = 0; i < 3; i++) {
+							SpellEggEntity eggentity = new SpellEggEntity(player.world, player, this);
+							eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
+							eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 0.6F, 20.0F);
+							eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
+							player.world.addEntity(eggentity);
+						}
 					} else if (cast.getSecond() == GREED) {
 						// homes to hostile mobs
+						SpellEggEntity eggentity = new SpellEggEntity(player.world, player, this);
+						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
+						eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
+						eggentity.enableHoming(MobEntity.class);
+						player.world.addEntity(eggentity);
 					} else if (cast.getSecond() == GLUTTONY) {
 						// the projectile is bigger
 					} else if (cast.getSecond() == WRATH) {
 						// fires a long range beam, longer range than the a lightning bolt but ticks slower
 					} else {
 						// Default FIRE SPELL
+						SpellEggEntity eggentity = new SpellEggEntity(player.world, player, this);
+						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
+						eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
+						player.world.addEntity(eggentity);
 					}
-
-					player.world.addEntity(eggentity);
 				}
 			}
 			if (cast.getFirst() == EARTH) {

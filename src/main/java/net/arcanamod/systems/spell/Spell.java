@@ -152,7 +152,7 @@ public class Spell implements ISpell {
 	private static class Logic {
 		private static SpellModule updateSpellStatusBarRecursive(SpellModule toUnbound, PlayerEntity player,
 																 List<Pair<Aspect,Aspect>> castMethodsAspects) {
-			if (toUnbound.getBoundModules().size() > 0){
+/*			if (toUnbound.getBoundModules().size() > 0){
 				for (SpellModule module : toUnbound.getBoundModules()) {
 					if (module instanceof CastMethod)
 						castMethodsAspects.add(of(((CastMethod) module).aspect, Aspects.EMPTY));
@@ -169,7 +169,7 @@ public class Spell implements ISpell {
 						} else {
 							player.sendStatusMessage(new TranslationTextComponent("status.arcana.break_mode"), true);
 						}
-			}
+			}*/
 			return null;
 		}
 
@@ -184,7 +184,8 @@ public class Spell implements ISpell {
 					if (module instanceof CastMethod)
 						castMethodsAspects.add(of(((CastMethod) module).aspect,Aspects.EMPTY));
 					else if (module instanceof CastMethodSin) {
-						castMethodsAspects.get(castMethodsAspects.size()-1).setSecond(((CastMethodSin) module).aspect);
+						if (castMethodsAspects.size() > 0)
+							castMethodsAspects.get(castMethodsAspects.size()-1).setSecond(((CastMethodSin) module).aspect);
 					} else if (module instanceof CastCircle)
 						casts.add(((CastCircle) module).cast);
 					mod = runSpellModule(module, caster, sender, action, castMethodsAspects, casts);
@@ -255,9 +256,14 @@ public class Spell implements ISpell {
 			castCircle.cast = Casts.ICE_CAST;
 			castCircle.bindModule(doubleModifierCircle);
 			castMethodToCastCircle_connector.bindModule(castCircle);
+
+			CastMethodSin sinMethod = new CastMethodSin();
+			sinMethod.aspect = Aspects.PRIDE;
+			sinMethod.bindModule(castMethodToCastCircle_connector);
+
 			CastMethod castMethod = new CastMethod();
 			castMethod.aspect = Aspects.FIRE;
-			castMethod.bindModule(castMethodToCastCircle_connector);
+			castMethod.bindModule(sinMethod);
 			startToCastMethod_connector.bindModule(castMethod);
 			spell.mainModule = new StartCircle();
 			spell.mainModule.bindModule(startToCastMethod_connector);
