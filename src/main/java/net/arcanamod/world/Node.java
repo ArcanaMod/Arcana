@@ -17,21 +17,24 @@ public class Node implements IPosition{
 	NodeType type;
 	double x, y, z;
 	UUID nodeUniqueId = MathHelper.getRandomUUID();
+	int timeUntilRecharge;
 	
-	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z){
+	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge){
 		this.aspects = aspects;
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.timeUntilRecharge = timeUntilRecharge;
 	}
 	
-	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, UUID nodeUniqueId){
+	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge, UUID nodeUniqueId){
 		this.aspects = aspects;
 		this.type = type;
 		this.x = x;
 		this.y = y;
 		this.z = z;
+		this.timeUntilRecharge = timeUntilRecharge;
 		this.nodeUniqueId = nodeUniqueId;
 	}
 	
@@ -47,6 +50,7 @@ public class Node implements IPosition{
 		nbt.putDouble("y", getY());
 		nbt.putDouble("z", getZ());
 		nbt.putUniqueId("nodeUniqueId", nodeUniqueId);
+		nbt.putInt("timeUntilRecharge", timeUntilRecharge);
 		return nbt;
 	}
 	
@@ -55,7 +59,8 @@ public class Node implements IPosition{
 		aspects.deserializeNBT(nbt.getCompound("aspects"));
 		NodeType type = NodeType.TYPES.get(new ResourceLocation(nbt.getString("type")));
 		double x = nbt.getDouble("x"), y = nbt.getDouble("y"), z = nbt.getDouble("z");
-		return nbt.hasUniqueId("nodeUniqueId") ? new Node(aspects, type, x, y, z, nbt.getUniqueId("nodeUniqueId")) : new Node(aspects, type, x, y, z);
+		int timeUntilRecharge = nbt.getInt("timeUntilRecharge");
+		return nbt.hasUniqueId("nodeUniqueId") ? new Node(aspects, type, x, y, z, timeUntilRecharge, nbt.getUniqueId("nodeUniqueId")) : new Node(aspects, type, x, y, z, timeUntilRecharge);
 	}
 
 	public Vec3d getPosition(){return new Vec3d(x,y,z);}
@@ -76,6 +81,10 @@ public class Node implements IPosition{
 		return z;
 	}
 	
+	public int getTimeUntilRecharge(){
+		return timeUntilRecharge;
+	}
+	
 	public void setType(NodeType type){
 		this.type = type;
 	}
@@ -92,6 +101,10 @@ public class Node implements IPosition{
 		this.z = z;
 	}
 	
+	public void setTimeUntilRecharge(int timeUntilRecharge){
+		this.timeUntilRecharge = timeUntilRecharge;
+	}
+	
 	public UUID nodeUniqueId(){
 		return nodeUniqueId;
 	}
@@ -104,6 +117,7 @@ public class Node implements IPosition{
 				", y=" + y +
 				", z=" + z +
 				", nodeUniqueId=" + nodeUniqueId +
+				", timeUntilRecharge=" + timeUntilRecharge +
 				'}';
 	}
 }
