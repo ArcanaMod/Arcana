@@ -16,6 +16,7 @@ import net.arcanamod.systems.spell.casts.DelayedCast;
 import net.arcanamod.systems.spell.casts.DelayedCastManager;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.util.GogglePriority;
+import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
@@ -44,14 +45,15 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
 public class EntityTickHandler{
-
+	
 	@SubscribeEvent
 	public static void tickPlayer(TickEvent.PlayerTickEvent event){
 		PlayerEntity player = event.player;
-
+		
 		// Give completed scribbled note when player is near node
 		if(player instanceof ServerPlayerEntity && event.side == LogicalSide.SERVER && event.phase == TickEvent.Phase.END){
 			ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity)player;
@@ -67,18 +69,18 @@ public class EntityTickHandler{
 				ITextComponent status = new TranslationTextComponent("status.get_complete_note").applyTextStyles(TextFormatting.ITALIC, TextFormatting.LIGHT_PURPLE);
 				serverPlayerEntity.sendStatusMessage(status, false);
 			}
-
+			
 			List<DelayedCast> spellsScheduledToDeletion = new ArrayList<>();
 			DelayedCastManager.delayedCasts.forEach(delayedCast -> {
-				if (delayedCast.ticks >= delayedCast.ticksPassed){
+				if(delayedCast.ticks >= delayedCast.ticksPassed){
 					delayedCast.spellEvent.accept(0);
 					spellsScheduledToDeletion.add(delayedCast);
-				}
-				else delayedCast.ticksPassed++;
+				}else
+					delayedCast.ticksPassed++;
 			});
 			DelayedCastManager.delayedCasts.removeAll(spellsScheduledToDeletion);
 		}
-
+		
 		// Render aspect particles
 		if(player instanceof ClientPlayerEntity && event.side == LogicalSide.CLIENT && event.phase == TickEvent.Phase.END){
 			ClientPlayerEntity clientPlayerEntity = (ClientPlayerEntity)player;
@@ -87,19 +89,17 @@ public class EntityTickHandler{
 			BlockPos pos = RayTraceUtils.getTargetBlockPos(clientPlayerEntity, world, (int)reach);
 			TileEntity te = world.getTileEntity(pos);
 			GogglePriority priority = GogglePriority.getClientGogglePriority();
-
+			
 			// Render aspect particle around Node
 			if(priority == GogglePriority.SHOW_ASPECTS){
 				AuraView view = AuraView.SIDED_FACTORY.apply(player.world);
 				Vec3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
 				view.raycast(position, reach, player).ifPresent(node -> {
 					List<IAspectHolder> holders = node.getAspects().getHolders();
-					ArrayList<AspectStack> stacks = new ArrayList<AspectStack>();
-					for(int i = 0, size = holders.size(); i < size; i++){
-						IAspectHolder holder = holders.get(i);
-						stacks.add(holder.getContainedAspectStack());
-					}
-					renderAspectAndNumberParticlesInCircle(world,node.getPosition(),clientPlayerEntity,stacks);
+					ArrayList<Pair<Aspect, Integer>> stacks = new ArrayList<>();
+					for(IAspectHolder holder : holders)
+						stacks.add(Pair.of(holder.getContainedAspect(), holder.getCurrentVis()));
+					renderAspectAndNumberParticlesInCircle(world, node.getPosition(), clientPlayerEntity, stacks);
 				});
 			}
 			// Render aspect particle around Jar
@@ -113,13 +113,13 @@ public class EntityTickHandler{
 							double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw)));
 							double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw)));
 							// Add Aspect Particle
-							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
+							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/", "").replace(".png", "")), ArcanaParticles.ASPECT_PARTICLE.get()),
 									pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 							int currVis = jte.vis.getHolder(0).getCurrentVis();
 							int color = UiUtil.invert(jte.vis.getHolder(0).getContainedAspect().getColorRange().get(2));
 							// Add Number Particles
 							// If you change Y, particle is no more good aligned with particle
-							renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,color,world);
+							renderNumberParticles(pos.getX() + 0.5D + ((-srx * 1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx * 1.01) / 2), clientPlayerEntity.rotationYaw, currVis, color, world);
 						}
 				}
 			}
@@ -130,41 +130,39 @@ public class EntityTickHandler{
 					// If player has googles show particle
 					if(priority == GogglePriority.SHOW_ASPECTS){
 						IAspectHandler vis = IAspectHandler.getFrom(abte);
-						if(vis != null) {
+						if(vis != null){
 							// Get all stacks from phialshelf
 							ArrayList<AspectStack> stacks = new ArrayList<AspectStack>();
-							for (int i = 0; i < vis.getHoldersAmount(); i++) {
-								if (vis.getHolder(i).getContainedAspect() != Aspects.EMPTY) {
+							for(int i = 0; i < vis.getHoldersAmount(); i++)
+								if(vis.getHolder(i).getContainedAspect() != Aspects.EMPTY)
 									stacks.add(vis.getHolder(i).getContainedAspectStack());
-								}
-							}
 							// Squish aspect stacks in to reducedStacks
 							List<AspectStack> reducedStacks = AspectUtils.squish(stacks);
-							renderAspectAndNumberParticlesInCircle(world,new Vec3d(pos),clientPlayerEntity,reducedStacks);
+							renderAspectAndNumberParticlesInCircle(world, new Vec3d(pos), clientPlayerEntity, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()));
 						}
 					}
 				}
 			}
-
+			
 			Spell.updateSpellStatusBar(player);
 		}
 	}
-
-	protected static void renderAspectAndNumberParticlesInCircle(World world, Vec3d pos, ClientPlayerEntity clientPlayerEntity, List<AspectStack> aspectStacks){
-		float[] v = spreadVertices(aspectStacks.size(),24);
-		for (int i = 0; i < aspectStacks.size(); i++){
+	
+	protected static void renderAspectAndNumberParticlesInCircle(World world, Vec3d pos, ClientPlayerEntity clientPlayerEntity, List<Pair<Aspect, Integer>> aspectStacks){
+		float[] v = spreadVertices(aspectStacks.size(), 32);
+		for(int i = 0; i < aspectStacks.size(); i++){
 			double centerSpread = v[i];
 			// track player head rotation
-			double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw+centerSpread+10)));
-			double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw+centerSpread+10)));
+			double srx = (-Math.sin(Math.toRadians(clientPlayerEntity.rotationYaw + centerSpread + 10)));
+			double crx = (Math.cos(Math.toRadians(clientPlayerEntity.rotationYaw + centerSpread + 10)));
 			// Add Aspect Particle
-			world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(aspectStacks.get(i).getAspect()).toString().replace("textures/","").replace(".png","")), ArcanaParticles.ASPECT_PARTICLE.get()),
+			world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(aspectStacks.get(i).getFirst()).toString().replace("textures/", "").replace(".png", "")), ArcanaParticles.ASPECT_PARTICLE.get()),
 					pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
-			int currVis = aspectStacks.get(i).getAmount();
-			int color = aspectStacks.get(i).getAspect().getColorRange().get(2);
+			int currVis = aspectStacks.get(i).getSecond();
+			int color = aspectStacks.get(i).getFirst().getColorRange().get(2);
 			// Add Number Particles
 			// If you change Y, particle is no more good aligned with particle
-			renderNumberParticles(pos.getX() + 0.5D + ((-srx*1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx*1.01) / 2),clientPlayerEntity.rotationYaw,currVis,color,world);
+			renderNumberParticles(pos.getX() + 0.5D + ((-srx * 1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx * 1.01) / 2), clientPlayerEntity.rotationYaw, currVis, color, world);
 		}
 	}
 	
@@ -199,14 +197,14 @@ public class EntityTickHandler{
 		double z = baseZ - array.length * rotOffsetZ * size * center;
 		for(int i = 0, length = array.length; i < length; i++){
 			char c = array[i];
-			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)),color, ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY, z + rotOffsetZ * i * size * padding, 0, 0, 0);
+			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), color, ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY, z + rotOffsetZ * i * size * padding, 0, 0, 0);
 		}
 	}
-
+	
 	private static float[] spreadVertices(float amount, float padding){
 		float[] r = new float[(int)amount];
-		for (int i = 0; i < amount; i++){
-			r[i] = i-(amount/2);
+		for(int i = 0; i < amount; i++){
+			r[i] = i - (amount / 2);
 			r[i] *= padding;
 		}
 		return r;
