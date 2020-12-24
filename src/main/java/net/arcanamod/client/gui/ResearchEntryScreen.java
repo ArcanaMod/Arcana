@@ -18,7 +18,6 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.item.BlockItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -42,7 +41,7 @@ public class ResearchEntryScreen extends Screen{
 	Screen parentScreen;
 	
 	Button left, right, cont, ret;
-	List<Button> pins;
+	List<PinButton> pins;
 	
 	// there is: golem, crucible, crafting, infusion circle, arcane crafting, structure, wand(, arrow), crafting result
 	public static final String OVERLAY_SUFFIX = "_gui_overlay.png";
@@ -67,6 +66,7 @@ public class ResearchEntryScreen extends Screen{
 	
 	public void render(int mouseX, int mouseY, float partialTicks){
 		renderBackground();
+		super.render(mouseX, mouseY, partialTicks);
 		getMinecraft().getTextureManager().bindTexture(bg);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
 		drawTexturedModalRect((width - 256) / 2, (height - 181) / 2 + HEIGHT_OFFSET, 0, 0, 256, 181);
@@ -122,8 +122,8 @@ public class ResearchEntryScreen extends Screen{
 				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
 		
-		// Render buttons last so pin tooltips look OK
-		super.render(mouseX, mouseY, partialTicks);
+		// Pin tooltips
+		pins.forEach(button -> button.renderAfter(mouseX, mouseY));
 	}
 	
 	public void init(@Nonnull Minecraft mc, int p_init_2_, int p_init_3_){
@@ -401,19 +401,17 @@ public class ResearchEntryScreen extends Screen{
 				getMinecraft().getTextureManager().bindTexture(bg);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
-				
-				// TODO: item tooltips get messed up when overlapping the bookmark
-				// and so do other pin tooltips...
-				// render the following separately!
-				
-				// check if we're already pinned
-				List<Integer> pinned = Researcher.getFrom(getMinecraft().player).getPinned().get(entry.key());
-				String tooltip = TextFormatting.AQUA + I18n.format(pinned != null && pinned.contains(pin.getStage()) ? "researchEntry.unpin" : "researchEntry.pin");
-				
-				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
-				if(isHovered)
-					GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), tooltip), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
+		}
+		
+		public void renderAfter(int mouseX, int mouseY){
+			// check if we're already pinned
+			List<Integer> pinned = Researcher.getFrom(getMinecraft().player).getPinned().get(entry.key());
+			String tooltip = TextFormatting.AQUA + I18n.format(pinned != null && pinned.contains(pin.getStage()) ? "researchEntry.unpin" : "researchEntry.pin");
+			
+			isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+			if(isHovered)
+				GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), tooltip), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 		}
 	}
 }

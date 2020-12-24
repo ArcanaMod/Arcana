@@ -27,6 +27,7 @@ import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -44,6 +45,7 @@ public class ResearchBookScreen extends Screen{
 	ResourceLocation texture;
 	int tab = 0;
 	Screen parentScreen;
+	List<TooltipButton> tooltipButtons = new ArrayList<>();
 	
 	// public static final String SUFFIX = "_menu_gui.png";
 	public static final String SUFFIX_RESIZABLE = "_menu_resizable.png";
@@ -90,6 +92,7 @@ public class ResearchBookScreen extends Screen{
 	public void render(int mouseX, int mouseY, float partialTicks){
 		renderBackground();
 		RenderSystem.enableBlend();
+		super.render(mouseX, mouseY, partialTicks);
 		
 		// draw stuff
 		// 224x196 viewing area
@@ -111,7 +114,7 @@ public class ResearchBookScreen extends Screen{
 		setBlitOffset(0);
 		renderEntryTooltip(mouseX, mouseY);
 		
-		super.render(mouseX, mouseY, partialTicks);
+		tooltipButtons.forEach(pin -> pin.renderAfter(mouseX, mouseY));
 		RenderSystem.enableBlend();
 	}
 	
@@ -121,7 +124,9 @@ public class ResearchBookScreen extends Screen{
 		// add buttons
 		for(int i = 0, size = categories.size(); i < size; i++){
 			ResearchCategory category = categories.get(i);
-			addButton(new CategoryButton(i, (width - getFrameWidth()) / 2 - 12, 32 + ((height - getFrameHeight()) / 2) + 20 * i, category));
+			CategoryButton categoryButton = new CategoryButton(i, (width - getFrameWidth()) / 2 - 12, 32 + ((height - getFrameHeight()) / 2) + 20 * i, category);
+			addButton(categoryButton);
+			tooltipButtons.add(categoryButton);
 		}
 		
 		AtomicInteger i = new AtomicInteger();
@@ -129,8 +134,9 @@ public class ResearchBookScreen extends Screen{
 			// create Pin object
 			ResearchEntry entry = ResearchBooks.getEntry(entryKey);
 			if(entry != null && entry.category().book().equals(book)){
-				Pin pinObj = new Pin(entry, pin, mc.world);
-				addButton(new PinButton((width + getFrameWidth()) / 2 + 1, 32 + ((height - getFrameHeight()) / 2) + i.get() * 22, pinObj));
+				PinButton pinButton = new PinButton((width + getFrameWidth()) / 2 + 1, 32 + ((height - getFrameHeight()) / 2) + i.get() * 22, new Pin(entry, pin, mc.world));
+				addButton(pinButton);
+				tooltipButtons.add(pinButton);
 			}
 			i.incrementAndGet();
 		}));
@@ -625,7 +631,12 @@ public class ResearchBookScreen extends Screen{
 		}
 	}
 	
-	class CategoryButton extends Button{
+	interface TooltipButton{
+		
+		void renderAfter(int mouseX, int mouseY);
+	}
+	
+	class CategoryButton extends Button implements TooltipButton{
 		
 		protected int categoryNum;
 		protected ResearchCategory category;
@@ -650,18 +661,20 @@ public class ResearchBookScreen extends Screen{
 				drawModalRectWithCustomSizedTexture(x - (categoryNum == tab ? 6 : (isHovered) ? 4 : 0), y, 0, 0, 16, 16, 16, 16);
 				
 				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
-				if(isHovered){
-					int completion = (category.entries().size() > 0) ? ((category.streamEntries().mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / category.entries().size()) : 100;
-					GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name()).trim() + " (" + completion + "%)"), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
-				}
+			}
+		}
+		
+		public void renderAfter(int mouseX, int mouseY){
+			if(isHovered){
+				int completion = (category.entries().size() > 0) ? ((category.streamEntries().mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / category.entries().size()) : 100;
+				GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name()).trim() + " (" + completion + "%)"), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
 		}
 	}
 	
-	class PinButton extends Button{
+	class PinButton extends Button implements TooltipButton{
 		
 		Pin pin;
-		
 		
 		public PinButton(int x, int y, Pin pin){
 			super(x, y, 18, 18, "", b -> {
@@ -688,13 +701,13 @@ public class ResearchBookScreen extends Screen{
 				getMinecraft().getTextureManager().bindTexture(texture);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
-				
-				// todo: same as in research entry screen
-				
-				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
-				if(isHovered)
-					GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), TextFormatting.AQUA + I18n.format("researchBook.jump_to_pin")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
+		}
+		
+		public void renderAfter(int mouseX, int mouseY){
+			isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+			if(isHovered)
+				GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), TextFormatting.AQUA + I18n.format("researchBook.jump_to_pin")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 		}
 	}
 }
