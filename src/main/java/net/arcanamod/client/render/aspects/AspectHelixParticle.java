@@ -1,6 +1,7 @@
 package net.arcanamod.client.render.aspects;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.util.LocalAxis;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -48,27 +49,13 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 		if(age++ >= maxAge)
 			setExpired();
 		else{
-			float f = .6f;
+			float f = .05f;
 			float x1 = f * MathHelper.cos(time);
 			float z1 = f * MathHelper.sin(time);
 			
-			// TODO: Use LocalAxis here, it should replace and fix basically all of this
-			// There are certain directions that appear mostly straight due to this.
-			// I can't figure this out.
-			Vec3d cross1 = new Vec3d(-1, -1, -1).normalize();
-			Vec3d cross2 = new Vec3d(1, -1, -1).normalize();
-			Vec3d cross = cross1.dotProduct(direction) < cross2.dotProduct(direction) ? cross1 : cross2;
-			
-			Vec3d y = direction.mul(.05, .05, .05);
-			Vec3d z = cross.crossProduct(direction);
-			Vec3d x = z.crossProduct(direction);
-			z = z.mul(z1, z1, z1).mul(.07, .07, .07);
-			x = x.mul(x1, x1, x1).mul(.07, .07, .07);
-			
-			motionX = x.x + y.x + z.x;
-			motionY = x.y + y.y + z.y;
-			motionZ = x.z + y.z + z.z;
-			move(motionX, motionY, motionZ);
+			// FIXME: this, uhh, doesn't work, I'm working on it
+			Vec3d motion = LocalAxis.toAbsolutePos(new Vec3d(x1, f, z1), direction, Vec3d.ZERO);
+			move(motion.x, motion.y, motion.z);
 			
 			time += .2f;
 		}

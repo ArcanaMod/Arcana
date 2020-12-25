@@ -24,4 +24,12 @@ public final class LocalAxis{
 		double zOff = vec3d2.z * localPos.z + vec3d3.z * localPos.y + vec3d4.z * localPos.x;
 		return new Vec3d(worldPos.x + xOff, worldPos.y + yOff, worldPos.z + zOff);
 	}
+	
+	// Converts from direction to pitch/yaw immediately.
+	// TODO: better impl
+	public static Vec3d toAbsolutePos(Vec3d localPos, Vec3d facing, Vec3d worldPos){
+		float pitch = (float)Math.asin(-facing.y);
+		float yaw = (float)Math.atan2(facing.x, facing.z);
+		return toAbsolutePos(localPos, new Vec2f(pitch, yaw), worldPos);
+	}
 }

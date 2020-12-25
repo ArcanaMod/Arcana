@@ -1,10 +1,7 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.ItemAspectRegistry;
+import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
 import net.arcanamod.items.recipes.AlchemyInventory;
@@ -56,6 +53,7 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 	public void tick(){
 		BlockState below = world.getBlockState(pos.down());
 		IFluidState fluidState = world.getFluidState(pos.down());
+		// TODO: use a block+fluid tag
 		boiling = hasWater() && (below.getBlock() == Blocks.FIRE || below.getBlock() == Blocks.MAGMA_BLOCK || below.getBlock() == ArcanaBlocks.NITOR.get() || fluidState.getFluid() == Fluids.FLOWING_LAVA || fluidState.getFluid() == Fluids.LAVA);
 		
 		// check for items
@@ -103,7 +101,8 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 						markDirty();
 						world.notifyBlockUpdate(pos, world.getBlockState(pos), world.getBlockState(pos), 2);
 						for(AspectStack aspect : aspects)
-							aspectStackMap.put(aspect.getAspect(), new AspectStack(aspect.getAspect(), aspect.getAmount() * stack.getCount() + (aspectStackMap.containsKey(aspect.getAspect()) ? aspectStackMap.get(aspect.getAspect()).getAmount() : 0)));
+							if(aspect.getAmount() != 0)
+								aspectStackMap.put(aspect.getAspect(), new AspectStack(aspect.getAspect(), aspect.getAmount() * stack.getCount() + (aspectStackMap.containsKey(aspect.getAspect()) ? aspectStackMap.get(aspect.getAspect()).getAmount() : 0)));
 					}
 				}
 			}

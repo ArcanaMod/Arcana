@@ -126,6 +126,8 @@ public class WandItem extends Item{
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+		// TODO: only do this if you're casting a spell
+		// first do node raycast check, and then check if you have a focus
 		ArcanaSounds.playSpellCastSound(player);
 		Focus focus = getFocus(player.getHeldItem(hand));
 		if(focus != Focus.NO_FOCUS){
@@ -156,8 +158,6 @@ public class WandItem extends Item{
 			ret.set(ActionResult.resultConsume(itemstack));
 		});
 		return ret.get();
-		//player.setActiveHand(hand);
-		//return ActionResult.resultConsume(player.getHeldItem(hand));
 	}
 
 	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect) {
