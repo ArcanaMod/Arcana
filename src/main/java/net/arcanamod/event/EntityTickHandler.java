@@ -2,7 +2,6 @@ package net.arcanamod.event;
 
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
-import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.capabilities.TaintTrackable;
@@ -12,10 +11,12 @@ import net.arcanamod.client.render.aspects.AspectParticleData;
 import net.arcanamod.client.render.aspects.NumberParticleData;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.casts.DelayedCast;
 import net.arcanamod.systems.spell.casts.DelayedCastManager;
-import net.arcanamod.systems.spell.Spell;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.GogglePriority;
+import net.arcanamod.util.LocalAxis;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
 import net.arcanamod.world.AuraView;
@@ -31,6 +32,7 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -99,7 +101,22 @@ public class EntityTickHandler{
 					ArrayList<Pair<Aspect, Integer>> stacks = new ArrayList<>();
 					for(IAspectHolder holder : holders)
 						stacks.add(Pair.of(holder.getContainedAspect(), holder.getCurrentVis()));
-					renderAspectAndNumberParticlesInCircle(world, node.getPosition(), clientPlayerEntity, stacks);
+					
+					for(int i = 0, size = stacks.size(); i < size; i++){
+						Pair<Aspect, Integer> stack = stacks.get(i);
+						// let's place them on X/Y positions on a local axis, then convert to world co-ords
+						// then its as easy as picking positions on a circle
+						float angle = (float)(Math.toRadians(360 * i) / size);
+						// TODO: ease in/out (multiply by some fraction)
+						Vec3d localPos = new Vec3d(MathHelper.sin(angle) * (size / 5f), MathHelper.cos(angle) * (size / 5f), 0);
+						Vec3d wPos = LocalAxis.toAbsolutePos(localPos, player.getPitchYaw(), node.getPosition());
+						// why?
+						world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(stack.getFirst()).toString().replace("textures/", "").replace(".png", "")), ArcanaParticles.ASPECT_PARTICLE.get()), wPos.getX(), wPos.getY(), wPos.getZ(), 0, 0, 0);
+						// TODO: client reference (UiUtil::tooltipColour)
+						Vec3d numberPos = new Vec3d(MathHelper.sin(angle) * ((size / 5f) - .04), MathHelper.cos(angle) * ((size / 5f) - .04), -.1);
+						wPos = LocalAxis.toAbsolutePos(numberPos, player.getPitchYaw(), node.getPosition());
+						renderNumberParticles(wPos.x, wPos.y, wPos.z, player.getYaw(0), stack.getSecond(), UiUtil.tooltipColour(stack.getFirst()), world);
+					}
 				});
 			}
 			// Render aspect particle around Jar

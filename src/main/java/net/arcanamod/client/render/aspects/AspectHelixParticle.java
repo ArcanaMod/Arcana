@@ -52,6 +52,7 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 			float x1 = f * MathHelper.cos(time);
 			float z1 = f * MathHelper.sin(time);
 			
+			// TODO: Use LocalAxis here, it should replace and fix basically all of this
 			// There are certain directions that appear mostly straight due to this.
 			// I can't figure this out.
 			Vec3d cross1 = new Vec3d(-1, -1, -1).normalize();
