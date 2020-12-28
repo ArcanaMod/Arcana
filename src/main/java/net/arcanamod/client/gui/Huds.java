@@ -55,7 +55,7 @@ public final class Huds{
 					RenderSystem.scalef(scale,scale,2);
 					UiUtil.renderVisCore(core, baseX, baseY);
 					UiUtil.renderVisMeter(core, aspects, baseX, baseY);
-					WandItem.getFocusStack(stack).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX, baseY));
+					WandItem.getFocusStack(stack).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
 					RenderSystem.popMatrix();
 				}
 			}else if(stack.getItem().equals(ArcanaItems.FLUX_METER.get())){
