@@ -8,7 +8,7 @@ import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.render.DairSpiritRenderer;
-import net.arcanamod.client.render.KoalaEntityRender;
+import net.arcanamod.client.render.KoalaEntityRenderer;
 import net.arcanamod.client.render.WillowSpiritRenderer;
 import net.arcanamod.client.render.aspects.ArcanaParticles;
 import net.arcanamod.client.render.tiles.*;
@@ -167,7 +167,7 @@ public class ClientProxy extends CommonProxy{
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));
 
 		//Entity Render
-		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.WILLOW_SPIRIT.get(), WillowSpiritRenderer::new);
 

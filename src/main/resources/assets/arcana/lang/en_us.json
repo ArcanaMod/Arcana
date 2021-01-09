@@ -17,6 +17,7 @@
     "item.arcana.scribbled_notes": "Scribbled Notes",
     "item.arcana.scribbled_notes_complete": "Complete Scribbled Notes",
     "item.arcana.tainted_goo_bucket": "Tainted Goo Bucket",
+    "item.arcana.taint_in_a_bottle": "Taint in a Bottle",
 
     "_comment": "Wands",
     "item.arcana.error_wand": "%s Errorred Wand",
@@ -877,6 +878,11 @@
     "research.arcana.hedge_alchemy.desc": "Miscellaneous Transformations",
     "research.arcana.hedge_alchemy.stage.1": "[f(x) -> g(x)]",
     "research.arcana.hedge_alchemy.stage.2": "[just do the goddamn recipes]",
+
+    "research.arcana.taint_in_a_bottle": "Containing Taint",
+    "research.arcana.taint_in_a_bottle.desc": "Bottled Madness",
+    "research.arcana.taint_in_a_bottle.stage.1": "Taint is dangerous and eager to spread. Given even a small amount of flux, it will poison the land around it startlingly fast. Perhaps alchemy could be used to contain it? First, I'll attempt to seal some into a bottle, and in the future I can construct a more useful solution.",
+    "research.arcana.taint_in_a_bottle.stage.2": "...the applications of this are limited at best, and dangerous at worst. When Taint in a Bottle is thrown and hits a surface, it instantly taints up to six nearby blocks, and releases some flux. If less than six blocks are tainted, more flux is released.\n\nAs a weapon, bottles are dangerous, but also expensive. Tainting a large area would require quite a few, but would also render that area uninhabitable for quite some time...\n\nA more peaceful use could be to collect tainted blocks. While I don't think I can get a net profit of Virimus, tainted blocks become stable after mining and do not spread (similar to leaves), and so could be collected for decorative purposes.\n\nStill, I don't see any practical use beyond that of this. Only a mad alchemist would mass produce this.",
 
     "research.arcana.auromancy_root": "Auromancy",
     "research.arcana.auromancy_root.text": "Auromancy - the manipulation of aura, especially the usage of wands - will be researched and described here.",

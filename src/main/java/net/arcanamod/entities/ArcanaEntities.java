@@ -1,7 +1,8 @@
 package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
-import net.arcanamod.client.render.SpellEggEntityRender;
+import net.arcanamod.client.render.SpellEggEntityRenderer;
+import net.arcanamod.client.render.TaintBottleEntityRenderer;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.client.model.tainted.TaintedFoxModel;
 import net.arcanamod.client.model.tainted.TaintedSheepModel;
@@ -32,45 +33,30 @@ public class ArcanaEntities{
 
 	public static final RegistryObject<EntityType<KoalaEntity>> KOALA_ENTITY = ENTITY_TYPES
 			.register("koala_entity", () -> EntityType.Builder.create(KoalaEntity::new, EntityClassification.CREATURE)
-				.size(0.6f, 0.6f).build(arcLoc("koala_entity").toString()));
+				.size(.6f, .6f).build(arcLoc("koala_entity").toString()));
 
 	public static final RegistryObject<EntityType<SpiritEntity>> DAIR_SPIRIT = ENTITY_TYPES
 			.register("dair_spirit_entity", () -> EntityType.Builder.create(SpiritEntity::new, EntityClassification.CREATURE)
-					.size(0.6f, 0.6f).build(arcLoc("dair_spirit_entity").toString()));
+					.size(.6f, .6f).build(arcLoc("dair_spirit_entity").toString()));
 
 	public static final RegistryObject<EntityType<SpiritEntity>> WILLOW_SPIRIT = ENTITY_TYPES
 			.register("willow_spirit_entity", () -> EntityType.Builder.create(SpiritEntity::new, EntityClassification.CREATURE)
-					.size(0.6f, 0.6f).build(arcLoc("willow_spirit_entity").toString()));
+					.size(.6f, .6f).build(arcLoc("willow_spirit_entity").toString()));
 
 	public static final RegistryObject<EntityType<SpellCloudEntity>> SPELL_CLOUD = ENTITY_TYPES
 			.register("spell_cloud", () -> EntityType.Builder.<SpellCloudEntity>create(SpellCloudEntity::new, EntityClassification.MISC)
-					.immuneToFire().size(6.0F, 0.5F).build(arcLoc("spell_cloud").toString()));
+					.immuneToFire().size(6, .5f).build(arcLoc("spell_cloud").toString()));
 
 	public static final RegistryObject<EntityType<SpellEggEntity>> SPELL_EGG = ENTITY_TYPES
 			.register("spell_egg", () -> EntityType.Builder.<SpellEggEntity>create(SpellEggEntity::new, EntityClassification.MISC)
-					.immuneToFire().size(0.5F, 0.5F).build(arcLoc("spell_egg").toString()));
-
-	// Tainted
-
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_DROWNED = ENTITY_TYPES.register("tainted_drowned", () -> Taint.taintedEntityOf(EntityType.DROWNED));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ELDER_GUARDIAN = ENTITY_TYPES.register("tainted_elder_guardian", () -> Taint.taintedEntityOf(EntityType.ELDER_GUARDIAN));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_GIANT = ENTITY_TYPES.register("tainted_giant", () -> Taint.taintedEntityOf(EntityType.GIANT));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_GUARDIAN = ENTITY_TYPES.register("tainted_guardian", () -> Taint.taintedEntityOf(EntityType.GUARDIAN));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_HUSK = ENTITY_TYPES.register("tainted_husk", () -> Taint.taintedEntityOf(EntityType.HUSK));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_MAGMA_CUBE = ENTITY_TYPES.register("tainted_magma_cube", () -> Taint.taintedEntityOf(EntityType.MAGMA_CUBE));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ZOMBIE_PIGMAN = ENTITY_TYPES.register("tainted_zombie_pigman", () -> Taint.taintedEntityOf(EntityType.ZOMBIE_PIGMAN));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_STRAY = ENTITY_TYPES.register("tainted_stray", () -> Taint.taintedEntityOf(EntityType.STRAY));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_TROPICAL_FISH = ENTITY_TYPES.register("tainted_tropical_fish", () -> Taint.taintedEntityOf(EntityType.TROPICAL_FISH));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_VEX = ENTITY_TYPES.register("tainted_vex", () -> Taint.taintedEntityOf(EntityType.VEX));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WITHER = ENTITY_TYPES.register("tainted_wither", () -> Taint.taintedEntityOf(EntityType.WITHER));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WITHER_SKELETON = ENTITY_TYPES.register("tainted_wither_skeleton", () -> Taint.taintedEntityOf(EntityType.WITHER_SKELETON));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_RAVAGER = ENTITY_TYPES.register("tainted_ravager", () -> Taint.taintedEntityOf(EntityType.RAVAGER));
+					.immuneToFire().size(.5f, .5f).build(arcLoc("spell_egg").toString()));
+	
+	public static final RegistryObject<EntityType<TaintBottleEntity>> TAINT_BOTTLE = ENTITY_TYPES
+			.register("taint_in_a_bottle", () -> EntityType.Builder.<TaintBottleEntity>create(TaintBottleEntity::new, EntityClassification.MISC)
+					.immuneToFire().size(.5f, .5f).build(arcLoc("taint_in_a_bottle").toString()));
 
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PUFFERFISH = ENTITY_TYPES.register("tainted_pufferfish", () -> Taint.taintedEntityOf(EntityType.PUFFERFISH));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PARROT = ENTITY_TYPES.register("tainted_parrot", () -> Taint.taintedEntityOf(EntityType.PARROT));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_HORSE = ENTITY_TYPES.register("tainted_horse", () -> Taint.taintedEntityOf(EntityType.HORSE));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_MULE = ENTITY_TYPES.register("tainted_mule", () -> Taint.taintedEntityOf(EntityType.MULE));
-	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_TURTLE = ENTITY_TYPES.register("tainted_turtle", () -> Taint.taintedEntityOf(EntityType.TURTLE));
 
 	public static final RegistryObject<EntityType<TaintedLlamaEntity>> TAINTED_LLAMA = ENTITY_TYPES.register("tainted_llama", () -> Taint.taintedEntityOf(EntityType.LLAMA));
 	public static final RegistryObject<EntityType<TaintedLlamaEntity>> TAINTED_TRADER_LLAMA = ENTITY_TYPES.register("tainted_trader_llama", () -> Taint.taintedEntityOf(EntityType.TRADER_LLAMA));
@@ -117,7 +103,8 @@ public class ArcanaEntities{
 
 	@SuppressWarnings("rawtypes")
 	public static void render() {
-		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_EGG.get(), SpellEggEntityRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_EGG.get(), SpellEggEntityRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINT_BOTTLE.get(), TaintBottleEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BAT.get(), TaintedBatRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BEE.get(), manager -> new TaintedEntityRender(manager, new BeeModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAT.get(), manager -> new TaintedEntityRender(manager, new CatModel(0.0F)));

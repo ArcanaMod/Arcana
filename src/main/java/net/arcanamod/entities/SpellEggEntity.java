@@ -35,14 +35,14 @@ public class SpellEggEntity extends ProjectileItemEntity {
 		super(type, world);
 	}
 
-	public SpellEggEntity(World worldIn, PlayerEntity throwerIn, Cast cast) {
-		super(ArcanaEntities.SPELL_EGG.get(), throwerIn, worldIn);
+	public SpellEggEntity(World world, PlayerEntity thrower, Cast cast) {
+		super(ArcanaEntities.SPELL_EGG.get(), thrower, world);
 		this.cast = cast;
-		this.caster = throwerIn;
+		this.caster = thrower;
 	}
 
-	public SpellEggEntity(World worldIn, double x, double y, double z) {
-		super(ArcanaEntities.SPELL_EGG.get(), x, y, z, worldIn);
+	public SpellEggEntity(World world, double x, double y, double z) {
+		super(ArcanaEntities.SPELL_EGG.get(), x, y, z, world);
 	}
 
 	@OnlyIn(Dist.CLIENT)

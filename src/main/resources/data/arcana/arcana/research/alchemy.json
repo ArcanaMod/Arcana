@@ -164,9 +164,6 @@
       "parents": [
         "arcana:alchemy_root"
       ],
-      "meta": [
-        ""
-      ],
       "x": 0,
       "y": -2,
       "sections": [
@@ -177,6 +174,38 @@
         {
           "type": "string",
           "content": "research.arcana.hedge_alchemy.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:taint_in_a_bottle",
+      "name": "research.arcana.taint_in_a_bottle",
+      "desc": "research.arcana.taint_in_a_bottle.desc",
+      "icons": [
+        "arcana:taint_in_a_bottle"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root",
+        "arcana:flux"
+      ],
+      "x": -4,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.taint_in_a_bottle.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:bottled_taint_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.taint_in_a_bottle.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/taint_in_a_bottle"
         }
       ]
     }
@@ -210,6 +239,18 @@
         "arcana:greed",
         "arcana:envy",
         "arcana:senses"
+      ]
+    },
+    {
+      "key": "arcana:bottled_taint_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:taint",
+        "arcana:imprison",
+        "arcana:seeds",
+        "arcana:taint",
+        "arcana:harvest",
+        "arcana:aura"
       ]
     }
   ]

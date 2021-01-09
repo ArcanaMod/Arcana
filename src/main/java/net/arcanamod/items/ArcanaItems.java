@@ -79,6 +79,7 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> PHIAL = ITEMS.register("phial", PhialItem::new);
 	public static final RegistryObject<Item> SCRIBBLED_NOTES_COMPLETE = ITEMS.register("scribbled_notes_complete", () -> new ScribbledNotesCompleteItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	public static final RegistryObject<Item> SCRIBBLED_NOTES = ITEMS.register("scribbled_notes", () -> new ScribbledNoteItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
+	public static final RegistryObject<Item> TAINT_IN_A_BOTTLE = ITEMS.register("taint_in_a_bottle", () -> new TaintBottleItem(new Properties().group(Arcana.ITEMS)));
 	
 	// Books
 	public static final RegistryObject<Item> ARCANUM = ITEMS.register("arcanum", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), new ResourceLocation(MODID, "arcanum")));
