@@ -35,7 +35,7 @@ public class AspectUtils {
 	public static void register(){
 		// Automatically register all aspects' items
 		// Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
-		for(Aspect aspect : Aspects.values())
+		for(Aspect aspect : Aspects.getAll())
 			if(aspect != Aspects.EMPTY){
 				AspectItem item = new AspectItem("aspect_" + aspect.name().toLowerCase());
 				ArcanaItems.ITEMS.register("aspect_" + aspect.name().toLowerCase(), () -> item);
@@ -69,7 +69,7 @@ public class AspectUtils {
 	public static Aspect getAspectByName(@Nullable String name){
 		if(name == null)
 			return null;
-		for(Aspect aspect : Aspects.values())
+		for(Aspect aspect : Aspects.getAll())
 			if(aspect.name().equalsIgnoreCase(name))
 				return aspect;
 		return null;
@@ -108,7 +108,7 @@ public class AspectUtils {
 	public static Aspect getAspectByDisplayName(String name) {
 		if(name == null)
 			return null;
-		for(Aspect aspect : Aspects.values())
+		for(Aspect aspect : Aspects.getAll())
 			if(I18n.format("aspect."+aspect.name()).equalsIgnoreCase(name))
 				return aspect;
 		return null;

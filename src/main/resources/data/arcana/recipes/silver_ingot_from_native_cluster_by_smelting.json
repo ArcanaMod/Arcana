@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "arcana:silver_native_cluster"
+  },
+  "result": {
+    "item": "arcana:silver_ingot",
+    "count": 2
+  },
+  "experience": 0.7,
+  "cookingtime": 200
+}

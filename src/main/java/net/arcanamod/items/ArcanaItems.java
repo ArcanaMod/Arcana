@@ -96,6 +96,11 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> SILVERWOOD_STICK = ITEMS.register("silverwood_stick", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> AMBER = ITEMS.register("amber", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
+	@GIM(ITEM) public static final RegistryObject<Item> IRON_NATIVE_CLUSTER = ITEMS.register("iron_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	@GIM(ITEM) public static final RegistryObject<Item> GOLD_NATIVE_CLUSTER = ITEMS.register("gold_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	@GIM(ITEM) public static final RegistryObject<Item> SILVER_NATIVE_CLUSTER = ITEMS.register("silver_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	// copper, tin, lead, etc... clusters
+	
 	// Goggles
 	public static final RegistryObject<Item> GOGGLES_OF_REVEALING = ITEMS.register("goggles_of_revealing", () -> new GogglesItem(ArcanaArmourMaterials.GOGGLES, new Properties().group(Arcana.ITEMS), GogglePriority.SHOW_ASPECTS));
 	
@@ -143,7 +148,7 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> TAINTED_COD_BUCKED = ITEMS.register("tainted_cod_bucket",() -> new FishBucketItem(ArcanaEntities.TAINTED_COD, ()->Fluids.WATER,new Item.Properties().maxStackSize(1)));
 	public static final RegistryObject<Item> TAINTED_SALMON_BUCKED = ITEMS.register("tainted_salmon_bucket",() -> new FishBucketItem(ArcanaEntities.TAINTED_SALMON, ()->Fluids.WATER,new Item.Properties().maxStackSize(1)));
 
-	// BlockItems
+	// Multiblock Items
 	@GIM(ITEM) public static final RegistryObject<Item> RESEARCH_TABLE_ITEM = ITEMS.register("research_table_item", () -> new BlockItem(ArcanaBlocks.RESEARCH_TABLE.get(), new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	@GIM(ITEM) public static final RegistryObject<Item> FOCI_FORGE_ITEM = ITEMS.register("foci_forge_item", () -> new BlockItem(ArcanaBlocks.FOCI_FORGE.get(), new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 

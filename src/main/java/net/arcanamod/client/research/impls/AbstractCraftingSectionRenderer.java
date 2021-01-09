@@ -89,6 +89,7 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 	
 	protected void item(ItemStack stack, int x, int y){
 		mc().getItemRenderer().renderItemAndEffectIntoGUI(stack, x, y);
+		mc().getItemRenderer().renderItemOverlayIntoGUI(mc().fontRenderer, stack, x, y, null);
 	}
 	
 	protected void tooltipArea(ItemStack stack, int mouseX, int mouseY, int screenWidth, int screenHeight, int areaX, int areaY){

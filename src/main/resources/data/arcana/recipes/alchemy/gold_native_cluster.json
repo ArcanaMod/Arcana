@@ -1,0 +1,23 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:ores/gold"
+  },
+  "out": {
+    "item": "arcana:gold_native_cluster"
+  },
+  "aspects": [
+    {
+      "aspect": "order",
+      "amount": 4
+    },
+    {
+      "aspect": "chaos",
+      "amount": 2
+    },
+    {
+      "aspect": "crystal",
+      "amount": 1
+    }
+  ]
+}

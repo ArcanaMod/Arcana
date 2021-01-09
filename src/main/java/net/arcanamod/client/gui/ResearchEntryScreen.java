@@ -163,14 +163,15 @@ public class ResearchEntryScreen extends Screen{
 	public void updateButtons(){
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
-		cont.visible = Researcher.getFrom(getMinecraft().player).entryStage(entry) < getVisibleSections().size();
+		Researcher researcher = Researcher.getFrom(getMinecraft().player);
+		cont.visible = researcher.entryStage(entry) < getVisibleSections().size();
 		
 		pins.forEach(button -> {
 			buttons.remove(button);
 			children.remove(button);
 		});
 		pins.clear();
-		List<Pin> collect = entry.getAllPins(getMinecraft().world).collect(Collectors.toList());
+		List<Pin> collect = entry.getAllPins(getMinecraft().world).filter(p -> researcher.entryStage(p.getEntry()) >= p.getStage()).collect(Collectors.toList());
 		for(int i = 0, size = collect.size(); i < size; i++){
 			Pin pin = collect.get(i);
 			PinButton e = new PinButton((width / 2) + PAGE_WIDTH + 21, (height - PAGE_HEIGHT) / 2 + i * 22, pin);
