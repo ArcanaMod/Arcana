@@ -1,0 +1,43 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "wPw",
+    "gcg",
+    "wpw"
+  ],
+  "key": {
+    "w": [
+      {
+        "item": "arcana:greatwood_planks"
+      },
+      {
+        "item": "arcana:silverwood_planks"
+      }
+    ],
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "c": {
+      "item": "arcana:aura_crystal"
+    },
+    "p": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 3
+    }
+  ],
+  "result": {
+    "item": "arcana:taint_bore"
+  }
+}

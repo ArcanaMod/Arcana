@@ -19,101 +19,88 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import static net.arcanamod.blocks.DelegatingBlock.switchBlock;
 
-public class TaintScrubberBlock extends Block implements ITaintScrubberExtension {
+public class TaintScrubberBlock extends Block implements ITaintScrubberExtension{
+	
 	public static final BooleanProperty SUPPORTED = BooleanProperty.create("supported"); // false by default
-
-	public TaintScrubberBlock(Properties properties) {
+	
+	public TaintScrubberBlock(Properties properties){
 		super(properties);
 	}
-
+	
 	@Nullable
 	@Override
-	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+	public TileEntity createTileEntity(BlockState state, IBlockReader world){
 		return new TaintScrubberTileEntity();
 	}
-
+	
 	@Override
-	public boolean hasTileEntity(BlockState state) {
+	public boolean hasTileEntity(BlockState state){
 		return true;
 	}
-
-	public BlockState getStateForPlacement(BlockItemUseContext context){
-		return super.getStateForPlacement(context).with(SUPPORTED,false);
+	
+	public BlockState getStateForPlacement(@Nonnull BlockItemUseContext context){
+		BlockState state = super.getStateForPlacement(context);
+		return state != null ? state.with(SUPPORTED, false) : null;
 	}
-
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
+	
+	protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder){
 		super.fillStateContainer(builder);
 		builder.add(SUPPORTED);
 	}
-
-	/**
-	 * It checks if the extension is in right place
-	 *
-	 * @param world World
-	 * @param pos   Position of extension
-	 * @return isValidConnection
-	 */
+	
 	@Override
-	public boolean isValidConnection(World world, BlockPos pos) {
+	public boolean isValidConnection(World world, BlockPos pos){
 		return true;
 	}
-
-	/**
-	 * It is performed if this block is found by TaintScrubber.
-	 *
-	 * @param world World
-	 * @param pos   Position of extension
-	 */
+	
 	@Override
-	public void sendUpdate(World world, BlockPos pos) {
-
-	}
-
-	/**
-	 * Runs extension action.
-	 *
-	 * @param world World
-	 * @param pos   Position of extension
-	 */
+	public void sendUpdate(World world, BlockPos pos){}
+	
 	@Override
-	public void run(World world, BlockPos pos, CompoundNBT compound) {
+	public void run(World world, BlockPos pos, CompoundNBT compound){
+		// TODO: don't use NBT for this, just have methods for getting range and speed from extensions directly
+		// pick the highest range, and add speeds.
 		int rh = compound.getInt("h_range");
 		int rv = compound.getInt("v_range");
-		for (int i = 0; i < compound.getInt("speed")+(rv/32)+1; i++) {
-			// pick a block within a rh x rh x rv area
+		for(int i = 0; i < compound.getInt("speed") + (rv / 32) + 1; i++){
+			// Pick a block within a rh x rh x rv area.
 			// If this block is air, stop. If this block doesn't have a tainted form, re-roll.
-			// Do this up to 5 times.
+			// Do this up to 8 times.
 			Block dead = null;
 			BlockPos taintingPos = pos;
 			int iter = 0;
-			while(dead == null && iter < 5){
-				taintingPos = pos.north(RANDOM.nextInt(rh+1) - (rh/2)).west(RANDOM.nextInt(rh+1) - (rh/2)).up(RANDOM.nextInt(rv+1) - (rv/2));
+			while(dead == null && iter < 8){
+				// TODO: don't try to pick blocks below or above the height limit, for the Bore's sake.
+				// TODO: separate up/down ranges would also be useful, also for the bore, so its not terrible on the surface.
+				taintingPos = pos.north(RANDOM.nextInt(rh + 1) - (rh / 2)).west(RANDOM.nextInt(rh + 1) - (rh / 2)).up(RANDOM.nextInt(rv + 1) - (rv / 2));
 				dead = world.getBlockState(taintingPos).getBlock();
 				if(dead.isAir(world.getBlockState(taintingPos), world, taintingPos)){
 					dead = null;
 					break;
 				}
 				// Drain open/unsealed jars
-				if (dead.hasTileEntity(world.getBlockState(taintingPos))){
-					TileEntity teinbox = world.getTileEntity(taintingPos);
-					if (teinbox instanceof VisShareable){
-						VisShareable shareable = ((VisShareable)teinbox);
-						if (shareable.isVisShareable() && !shareable.isSecure()) {
-							AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(teinbox);
-							if (vis != null) {
-								if (vis.getHoldersAmount()!=0)
-									vis.drain(RANDOM.nextInt(vis.getHoldersAmount()),8,false);
+				// TODO: replace with essentia input.
+				if(dead.hasTileEntity(world.getBlockState(taintingPos))){
+					TileEntity te = world.getTileEntity(taintingPos);
+					if(te instanceof VisShareable){
+						VisShareable shareable = ((VisShareable)te);
+						if(shareable.isVisShareable() && !shareable.isSecure()){
+							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(te);
+							if(vis != null){
+								if(vis.getHoldersAmount() != 0)
+									vis.drain(RANDOM.nextInt(vis.getHoldersAmount()), 8, false);
 							}
 						}
 						break;
 					}
 				}
 				dead = Taint.getDeadOfBlock(Taint.getPureOfBlock(dead));
-				if (compound.getBoolean("silk_touch"))
+				if(compound.getBoolean("silk_touch"))
 					dead = Taint.getPureOfBlock(dead);
 				iter++;
 			}
@@ -122,21 +109,21 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 				BlockState deadState = switchBlock(world.getBlockState(taintingPos), dead);
 				world.setBlockState(taintingPos, deadState);
 				if(dead.isAir(world.getBlockState(taintingPos), world, taintingPos)){
-					int rnd = RANDOM.nextInt(9)+4;
-					for (int j = 0; j < rnd; j++) {
+					int rnd = RANDOM.nextInt(9) + 4;
+					for(int j = 0; j < rnd; j++){
 						world.addParticle(
 								new BlockParticleData(ParticleTypes.FALLING_DUST, Blocks.BLACK_CONCRETE_POWDER.getDefaultState()),
-								taintingPos.getX()+0.5f+((RANDOM.nextInt(9)-4)/10f),taintingPos.getY()+0.5f+((RANDOM.nextInt(9)-4)/10f),taintingPos.getZ()+0.5f+((RANDOM.nextInt(9)-4)/10f),
-								0.1f,0.1f,0.1f
+								taintingPos.getX() + 0.5f + ((RANDOM.nextInt(9) - 4) / 10f), taintingPos.getY() + 0.5f + ((RANDOM.nextInt(9) - 4) / 10f), taintingPos.getZ() + 0.5f + ((RANDOM.nextInt(9) - 4) / 10f),
+								0.1f, 0.1f, 0.1f
 						); // Ash Particle if block is destroyed
 					}
 				}
 			}
 		}
 	}
-
+	
 	@Override
-	public CompoundNBT getShareableData(CompoundNBT compound) {
+	public CompoundNBT getShareableData(CompoundNBT compound){
 		return compound;
 	}
 }

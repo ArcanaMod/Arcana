@@ -1,0 +1,44 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "aaw",
+    " cg",
+    " ww"
+  ],
+  "key": {
+    "w": [
+      {
+        "item": "arcana:greatwood_planks"
+      },
+      {
+        "item": "arcana:silverwood_planks"
+      }
+    ],
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "c": {
+      "item": "arcana:aura_crystal"
+    },
+    "a": {
+      "tag": "forge:ingots/arcanium"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:air",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 3
+    }
+  ],
+  "result": {
+    "item": "arcana:taint_booster"
+  }
+}
