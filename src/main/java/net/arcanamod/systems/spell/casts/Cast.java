@@ -124,7 +124,6 @@ public abstract class Cast implements ICast {
 				- Targets the block / entity hit
 				 */
 				Random random = new Random();
-				//player.world.playSound((PlayerEntity)null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
 				if (!player.world.isRemote) {
 
 					if (cast.getSecond() == ENVY) {

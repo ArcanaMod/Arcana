@@ -258,7 +258,7 @@ public class Spell implements ISpell {
 			castMethodToCastCircle_connector.bindModule(castCircle);
 
 			CastMethodSin sinMethod = new CastMethodSin();
-			sinMethod.aspect = Aspects.PRIDE;
+			sinMethod.aspect = Aspects.GREED;
 			sinMethod.bindModule(castMethodToCastCircle_connector);
 
 			CastMethod castMethod = new CastMethod();
