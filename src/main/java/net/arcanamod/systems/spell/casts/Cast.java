@@ -2,31 +2,36 @@ package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.entities.SpellCloudEntity;
-import net.arcanamod.systems.spell.*;
+import net.arcanamod.entities.SpellEggEntity;
+import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.AbstractArrowEntity;
+import net.minecraft.entity.projectile.EggEntity;
+import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static net.arcanamod.aspects.Aspects.*;
@@ -36,23 +41,27 @@ import static net.arcanamod.aspects.Aspects.*;
  */
 public abstract class Cast implements ICast {
 
-	protected SpellData data;
-
-	public boolean isBuilt = false;
+	public CompoundNBT data = new CompoundNBT();
 
 	public Cast(){
-		SpellRegistry.addSpell(getId(),this);
+		CastRegistry.addCast(getId(),this);
 	}
 
 	public abstract ResourceLocation getId();
-	
-	public Optional<ITextComponent> getName(CompoundNBT nbt){
-		return Optional.of(new TranslationTextComponent("spell." + getId().getNamespace() + "." + getId().getPath()));
-	}
 
 	public abstract ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget);
 	public abstract ActionResultType useOnPlayer(PlayerEntity playerTarget);
 	public abstract ActionResultType useOnEntity(PlayerEntity caster, Entity entityTarget);
+
+	public static float getArrowVelocity(int charge) {
+		float f = (float)charge / 20.0F;
+		f = (f * f + f * 2.0F) / 3.0F;
+		if (f > 1.0F) {
+			f = 1.0F;
+		}
+
+		return f;
+	}
 
 	@Override
 	public void use(PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, ICast.Action action){
@@ -112,22 +121,33 @@ public abstract class Cast implements ICast {
 				- Fires a projectilets with a long range
 				- Targets the block / entity hit
 				 */
-				if (cast.getSecond() == ENVY) {
-					// entities killed fire the same spell to the closest entity
-				} else if (cast.getSecond() == LUST) {
-					// homes to players / passive mobs
-				} else if (cast.getSecond() == SLOTH) {
-					// the projectile bounces
-				} else if (cast.getSecond() == PRIDE) {
-					// shotguns projectiles
-				} else if (cast.getSecond() == GREED) {
-					// homes to hostile mobs
-				} else if (cast.getSecond() == GLUTTONY) {
-					// the projectile is bigger
-				} else if (cast.getSecond() == WRATH) {
-					// fires a long range beam, longer range than the a lightning bolt but ticks slower
-				} else {
-					// Default FIRE SPELL
+				Random random = new Random();
+				player.world.playSound((PlayerEntity)null, player.getPosX(), player.getPosY(), player.getPosZ(), SoundEvents.ENTITY_EGG_THROW, SoundCategory.PLAYERS, 0.5F, 0.4F / (random.nextFloat() * 0.4F + 0.8F));
+				if (!player.world.isRemote) {
+					EggEntity eggentity = new EggEntity(player.world, player);
+					//eggentity.setCast(player,this);
+					eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
+					eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+
+					if (cast.getSecond() == ENVY) {
+						// entities killed fire the same spell to the closest entity
+					} else if (cast.getSecond() == LUST) {
+						// homes to players / passive mobs
+					} else if (cast.getSecond() == SLOTH) {
+						// the projectile bounces
+					} else if (cast.getSecond() == PRIDE) {
+						// shotguns projectiles
+					} else if (cast.getSecond() == GREED) {
+						// homes to hostile mobs
+					} else if (cast.getSecond() == GLUTTONY) {
+						// the projectile is bigger
+					} else if (cast.getSecond() == WRATH) {
+						// fires a long range beam, longer range than the a lightning bolt but ticks slower
+					} else {
+						// Default FIRE SPELL
+					}
+
+					player.world.addEntity(eggentity);
 				}
 			}
 			if (cast.getFirst() == EARTH) {
@@ -160,7 +180,7 @@ public abstract class Cast implements ICast {
 					}
 				} else if (cast.getSecond() == SLOTH) {
 					// it takes a few seconds for the spell to cast
-					DelayedSpellManager.delayedSpells.add(new DelayedSpell(t -> useOnBlock(player, player.world, pos),delay));
+					DelayedCastManager.delayedCasts.add(new DelayedCast(t -> useOnBlock(player, player.world, pos),delay));
 
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby blocks ~5

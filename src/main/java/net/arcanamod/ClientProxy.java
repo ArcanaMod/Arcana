@@ -62,6 +62,7 @@ public class ClientProxy extends CommonProxy{
 	public void construct(){
 		super.construct();
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(BakeEvent::onModelBake);
 		
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		modEventBus.addListener(RenderTooltip::makeTooltip);
@@ -184,6 +185,8 @@ public class ClientProxy extends CommonProxy{
 
 	protected void setRenderLayers(){
 		//Render Layers for Blocks
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WARDENED_BLOCK.get(), RenderType.getSolid());
+
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.JAR.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SECURE_JAR.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.VOID_JAR.get(), RenderType.getTranslucent());

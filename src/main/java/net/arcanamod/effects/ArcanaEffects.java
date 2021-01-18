@@ -23,8 +23,8 @@ public class ArcanaEffects extends Effect{
 	public static final RegistryObject<Effect> FROZEN = EFFECTS.register("frozen", FrozenEffect::new);
 	public static final RegistryObject<Effect> WARDING = EFFECTS.register("warding", ()-> new WardingEffect().addAttributesModifier(
 				SharedMonsterAttributes.ARMOR,
-				UUID.randomUUID().toString(), 2.0d,
-				AttributeModifier.Operation.MULTIPLY_BASE
+				UUID.randomUUID().toString(), 8.0d,
+				AttributeModifier.Operation.MULTIPLY_TOTAL
 		)
 	);
 	public static final RegistryObject<Effect> VICTUS = EFFECTS.register("victus",VictusEffect::new);

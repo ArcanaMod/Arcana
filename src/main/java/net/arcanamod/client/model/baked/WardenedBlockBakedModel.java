@@ -1,6 +1,5 @@
 package net.arcanamod.client.model.baked;
 
-import net.arcanamod.blocks.WardenedBlock;
 import net.arcanamod.blocks.tiles.WardenedBlockTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;

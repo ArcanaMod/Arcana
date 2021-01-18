@@ -50,7 +50,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-import static net.arcanamod.systems.spell.Spell.createBasicSpell;
+import static net.arcanamod.systems.spell.Spell.Samples.createBasicSpell;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -132,21 +132,23 @@ public class WandItem extends Item{
 		ArcanaSounds.playSpellCastSound(player);
 		Focus focus = getFocus(player.getHeldItem(hand));
 		if(focus != Focus.NO_FOCUS){
-			ICast spell = focus.getSpell(player.getHeldItem(hand));
+			Spell spell = focus.getSpell(player.getHeldItem(hand));
 			if(spell != null){
 				IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
 				// oh my god this code is terrible // YES, I know Xd.
 				// time for more VisUtils I guess
-				if(spell.getSpellCosts().toList().stream().allMatch(stack -> handler.findAspectInHolders(stack.getAspect()).getCurrentVis() >= stack.getAmount())){
+				try {
+				if(spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler,stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
+					spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)){
 					if (player.isCrouching())
-						Spell.runSpell(createBasicSpell(),player,player.getHeldItem(hand), ICast.Action.SPECIAL);
-						//result = spell.use(player, player.getHeldItem(hand), ICast.Action.SPECIAL);
+						Spell.runSpell(spell,player,player.getHeldItem(hand), ICast.Action.SPECIAL);
 					else
-						Spell.runSpell(createBasicSpell(),player,player.getHeldItem(hand), ICast.Action.USE);
+						Spell.runSpell(spell,player,player.getHeldItem(hand), ICast.Action.USE);
 					// remove aspects from wand if spell successes.
 					for(AspectStack cost : spell.getSpellCosts().toList())
-						handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
-				}
+						if (cost.getAspect()!=Aspects.EMPTY)
+							handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
+				}} catch (Exception ex) {ex.printStackTrace();}
 			}else
 				player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
 		}
@@ -161,7 +163,12 @@ public class WandItem extends Item{
 		//player.setActiveHand(hand);
 		//return ActionResult.resultConsume(player.getHeldItem(hand));
 	}
-	
+
+	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect) {
+		@Nullable IAspectHolder nullableHolder = handler.findAspectInHolders(aspect);
+		return nullableHolder != null ? nullableHolder : new AspectCell();
+	}
+
 	public int getUseDuration(ItemStack stack){
 		return 72000;
 	}
@@ -248,7 +255,7 @@ public class WandItem extends Item{
 	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
 		super.addInformation(stack, world, tooltip, flag);
 		// Add focus info
-		ICast spell = getFocus(stack).getSpell(stack);
+		Spell spell = getFocus(stack).getSpell(stack);
 		if(spell != null){
 			Optional<ITextComponent> name = spell.getName(getFocusData(stack).getCompound("Spell"));
 			name.ifPresent(e -> tooltip.add(new TranslationTextComponent("tooltip.arcana.spell", e,
