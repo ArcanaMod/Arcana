@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Optional;
 
 public class FocusItem extends Item implements Focus{
-	
+	public static final int DEFAULT_NUMSTYLES = 36;
+
 	private int numStyles;
 	private final List<ResourceLocation> modelLocations;
 	

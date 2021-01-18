@@ -2,6 +2,7 @@ package net.arcanamod.containers.slots;
 
 import net.arcanamod.aspects.*;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class AspectSlot{
@@ -17,6 +18,12 @@ public class AspectSlot{
 	 * be accessed by clients.
 	 */
 	public boolean visible = true;
+
+	/**
+	 * If true, this slot will act similar to the creative menu. The slot will not display its capacity and
+	 * aspects can be freely taken out.
+	 */
+	public boolean symbolic = false;
 	
 	/**
 	 * If true, this slot will act more like an item stack: when empty, any aspect can be inserted
@@ -24,7 +31,7 @@ public class AspectSlot{
 	 */
 	public boolean storeSlot = false;
 	
-	public AspectSlot(Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y){
+	public AspectSlot(Aspect aspect, @Nonnull Supplier<IAspectHandler> inventory, int x, int y){
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
@@ -37,6 +44,10 @@ public class AspectSlot{
 		this.x = x;
 		this.y = y;
 		this.storeSlot = storeSlot;
+	}
+
+	public void setSymbolic(boolean state) {
+		symbolic = state;
 	}
 	
 	public int getAmount(){
@@ -70,7 +81,7 @@ public class AspectSlot{
 	}
 	
 	public boolean shouldShowAmount(){
-		return true;
+		return !symbolic;
 	}
 	
 	/**

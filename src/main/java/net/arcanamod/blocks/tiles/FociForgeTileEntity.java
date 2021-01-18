@@ -2,19 +2,29 @@ package net.arcanamod.blocks.tiles;
 
 import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectBattery;
+import net.arcanamod.aspects.AspectHandlerCapability;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.ItemStackHandler;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
@@ -24,13 +34,29 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	public FociForgeTileEntity(){
 		super(ArcanaTiles.FOCI_FORGE_TE.get());
 	}
-	
+
 	protected ItemStackHandler items = new ItemStackHandler(2){
 		protected void onContentsChanged(int slot){
 			super.onContentsChanged(slot);
 			markDirty();
 		}
 	};
+
+	protected ItemStackHandler foci = new ItemStackHandler(9);
+
+	@Override
+	public void read(CompoundNBT compound){
+		super.read(compound);
+		if(compound.contains("items"))
+			items.deserializeNBT(compound.getCompound("items"));
+	}
+
+	@Override
+	public CompoundNBT write(CompoundNBT compound){
+		super.write(compound);
+		compound.put("items", items.serializeNBT());
+		return compound;
+	}
 	
 	@Override
 	protected ITextComponent getDefaultName(){
@@ -43,7 +69,31 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		buffer.writeBlockPos(pos);
 		return new FociForgeContainer(id,player,buffer);
 	}
-	
+
+	// TODO: Required to show aspects on screen!
+	@Nonnull
+	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing){
+		if(capability == AspectHandlerCapability.ASPECT_HANDLER) {
+			AspectBattery battery = new AspectBattery(0, 0);
+			return battery.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
+		}
+		return super.getCapability(capability, facing).cast();
+	}
+
+	@Nonnull
+	@Override
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+		return this.getCapability(cap,null);
+	}
+
+	public ItemStack visItem(){
+		return items.getStackInSlot(0);
+	}
+
+	public ItemStack focus(){
+		return items.getStackInSlot(1);
+	}
+
 	/**
 	 * Returns the number of slots in the inventory.
 	 */
@@ -54,7 +104,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	
 	@Override
 	public boolean isEmpty(){
-		return true;
+		return false;
 	}
 	
 	@Override

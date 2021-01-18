@@ -64,18 +64,18 @@ public class ResearchTableContainer extends AspectContainer{
 	}
 
 	private void addPlayerSlots(IInventory playerInventory){
-		int baseX = 139, baseY = ResearchTableScreen.HEIGHT - 61;
+		int hotX = 79, invX = 139, baseY = ResearchTableScreen.HEIGHT - 61;
 		// Slots for the main inventory
 		for(int row = 0; row < 3; row++)
 			for(int col = 0; col < 9; col++){
-				int x = baseX + col * 18;
+				int x = invX + col * 18;
 				int y = row * 18 + baseY;
 				addSlot(new Slot(playerInventory, col + row * 9 + 9, x, y));
 			}
 		
 		for(int row = 0; row < 3; ++row)
 			for(int col = 0; col < 3; ++col){
-				int x = 79 + col * 18;
+				int x = hotX + col * 18;
 				int y = row * 18 + baseY;
 				addSlot(new Slot(playerInventory, col + row * 3, x, y));
 			}

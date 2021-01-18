@@ -1,5 +1,6 @@
 package net.arcanamod.containers;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
@@ -9,8 +10,10 @@ import net.arcanamod.client.gui.FociForgeScreen;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaTags;
+import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.ResearchBooks;
+import net.minecraft.client.gui.screen.inventory.CreativeScreen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -18,6 +21,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.ClickType;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
@@ -25,19 +29,30 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.Supplier;
 
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class FociForgeContainer extends AspectContainer {
+    public static final int ASPECT_H_COUNT = 4;
+    public static final int ASPECT_V_COUNT = 7;
+    public static final int FOCI_V_COUNT = 9;
+
     protected FociForgeContainer(@Nullable ContainerType<?> type, int id){
         super(type, id);
     }
 
     public FociForgeTileEntity te;
+    //public List<AspectSlot> primalSlots = new ArrayList<>();
+    //public List<AspectSlot> sinSlots = new ArrayList<>();
     public List<AspectSlot> scrollableSlots = new ArrayList<>();
+    public Inventory fociSlots = new Inventory(9);
 
     public IInventory puzzleInventorySlots;
     PlayerEntity lastClickPlayer;
@@ -48,6 +63,7 @@ public class FociForgeContainer extends AspectContainer {
         addOwnSlots(playerInventory);
         addPlayerSlots(playerInventory);
         addAspectSlots(playerInventory);
+        addFociSlots(playerInventory);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -56,18 +72,18 @@ public class FociForgeContainer extends AspectContainer {
     }
 
     private void addPlayerSlots(IInventory playerInventory){
-        int baseX = 139, baseY = FociForgeScreen.HEIGHT - 61;
+        int hotX = 88, invX = 148, baseY = FociForgeScreen.HEIGHT - 61;
         // Slots for the main inventory
         for(int row = 0; row < 3; row++)
             for(int col = 0; col < 9; col++){
-                int x = baseX + col * 18;
+                int x = invX + col * 18;
                 int y = row * 18 + baseY;
                 addSlot(new Slot(playerInventory, col + row * 9 + 9, x, y));
             }
 
         for(int row = 0; row < 3; ++row)
             for(int col = 0; col < 3; ++col){
-                int x = 79 + col * 18;
+                int x = hotX + col * 18;
                 int y = row * 18 + baseY;
                 addSlot(new Slot(playerInventory, col + row * 3, x, y));
             }
@@ -76,10 +92,10 @@ public class FociForgeContainer extends AspectContainer {
     private void addOwnSlots(IInventory playerInventory){
         @SuppressWarnings("ConstantConditions")
         IItemHandler itemHandler = te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).orElse(null);
-        // 137, 11
-        addSlot(new SlotItemHandler(itemHandler, 0, 137, 11){
+        // 303, 11
+        addSlot(new SlotItemHandler(itemHandler, 0, 303, 11){
             public boolean isItemValid(@Nonnull ItemStack stack){
-                // only ink
+                // only wand
                 return super.isItemValid(stack) && stack.getItem()==ArcanaItems.WAND.get();
             }
 
@@ -87,13 +103,12 @@ public class FociForgeContainer extends AspectContainer {
                 super.onSlotChanged();
             }
         });
-        // 155, 11
-        addSlot(new SlotItemHandler(itemHandler, 1, 155, 11){
+        // 361, 16
+        addSlot(new SlotItemHandler(itemHandler, 1, 361, 12){
             public boolean isItemValid(@Nonnull ItemStack stack){
-                // only notes
+                // only foci or foci parts
                 return super.isItemValid(stack) && stack.getItem() == ArcanaItems.FOCUS_PARTS.get() || stack.getItem() == ArcanaItems.DEFAULT_FOCUS.get();
             }
-
             public void onSlotChanged(){
                 super.onSlotChanged();
             }
@@ -114,26 +129,107 @@ public class FociForgeContainer extends AspectContainer {
     }
 
     protected void addAspectSlots(IInventory playerInventory){
-        Aspect[] values = (Aspect[]) Aspects.getWithoutEmpty().toArray();
-        Supplier<IAspectHandler> table = () -> IAspectHandler.getFrom(te);
-        for(int i = 0; i < values.length; i++){
-            Aspect aspect = values[i];
-            int yy = i / 6;
-            int xx = i % 6;
-            boolean visible = true;
-            if(yy >= 6){
-                visible = false;
-                // wrap
-                yy %= 6;
+        Aspect[] primals = AspectUtils.primalAspects;
+        Aspect[] sins = AspectUtils.sinAspects;
+        Supplier<IAspectHandler> source = () -> IAspectHandler.getFrom(te);
+
+        for (int xx = 0; xx < primals.length; xx++) {
+            int x = 10 + 17 * xx;
+            int y = 11;
+            AspectSlot slot = new AspectSlot(primals[xx], source, x, y);
+            slot.setSymbolic(true);
+            aspectSlots.add(slot);
+        }
+        for (int yy = 0; yy < ASPECT_V_COUNT; yy++) {
+            for (int xx = 0; xx < ASPECT_H_COUNT; xx++) {
+                int x = 10 + 17 * xx;
+                int y = 52 + 16 * yy;
+                AspectSlot slot = new AspectSlot(Aspects.EMPTY, source, x, y);
+                slot.setSymbolic(true);
+                aspectSlots.add(slot);
+                scrollableSlots.add(slot);
             }
-            int x = 11 + 20 * xx;
-            int y = 32 + 21 * yy;
-            if(xx % 2 == 0)
-                y += 5;
-            AspectSlot slot = new AspectSlot(aspect, table, x, y);
-            slot.visible = visible;
-            getAspectSlots().add(slot);
-            scrollableSlots.add(slot);
+        }
+        for (int yy = 0; yy < sins.length ; yy++) {
+            int x = 95;
+            int y = 52 + 16 * yy;
+            AspectSlot slot = new AspectSlot(sins[yy], source, x, y);
+            slot.setSymbolic(true);
+            aspectSlots.add(slot);
+        }
+        scrollAspectTo(0);
+    }
+
+    protected void addFociSlots(IInventory playerInventory){
+        int SLOT_X = 361;
+        int SLOT_Y = 40;
+        int SLOT_DELTA = 17;
+
+        for (int yy = 0; yy < FOCI_V_COUNT; yy++) {
+            int y = SLOT_Y + SLOT_DELTA * yy;
+            Slot slot = new Slot(fociSlots, yy, SLOT_X, y) {
+                @Override
+                public boolean canTakeStack(PlayerEntity player) {
+                    return false;
+                }
+
+                @Override
+                public boolean isEnabled() {
+                    return false;
+                }
+            };
+        }
+        scrollFociTo(0);
+    }
+
+    private void changeFociStyle(int style) {
+        Item item = te.focus().getItem();
+        if (item == ArcanaItems.FOCUS_PARTS.get() || item instanceof FocusItem) {
+            te.focus().getOrCreateTag().putInt("style", style);
+        }
+    }
+
+    public void scrollAspectTo(float pos) {
+        List<Aspect> searchAspects = Aspects.getWithoutPrimalsOrSins();
+        int extraRows = (searchAspects.size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;
+        int scroll = Math.max(0, Math.round(pos * extraRows));
+
+        for(int row = 0; row < ASPECT_V_COUNT; row++) {
+            for(int col = 0; col < ASPECT_H_COUNT; col++) {
+                int slot = row * ASPECT_H_COUNT + col;
+                int aspectNum = (scroll + row) * ASPECT_H_COUNT + col;
+                if (aspectNum >= 0 && aspectNum < searchAspects.size()) {
+                    this.scrollableSlots.get(slot).setAspect(searchAspects.get(aspectNum));
+                } else {
+                    this.scrollableSlots.get(slot).setAspect(Aspects.EMPTY);
+                }
+            }
+        }
+
+    }
+
+    public void scrollFociTo(float pos) {
+        Item item = te.focus().getItem();
+        if (item == ArcanaItems.FOCUS_PARTS.get() || item instanceof FocusItem) {
+            int possibleFoci = FocusItem.DEFAULT_NUMSTYLES;
+
+            int extraRows = possibleFoci - FOCI_V_COUNT;
+            int scroll = Math.max(0, Math.round(pos * extraRows));
+
+            for (int row = 0; row < FOCI_V_COUNT; row++) {
+                int fociNum = scroll + row;
+                if (fociNum >= 0 && fociNum < possibleFoci) {
+                    ItemStack dummyFoci = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
+                    dummyFoci.getOrCreateTag().putInt("style", fociNum);
+                    this.fociSlots.setInventorySlotContents(row, dummyFoci);
+                } else {
+                    this.fociSlots.setInventorySlotContents(row, ItemStack.EMPTY);
+                }
+            }
+        } else {
+            for (int row = 0; row < FOCI_V_COUNT; row++) {
+                this.fociSlots.setInventorySlotContents(row, ItemStack.EMPTY);
+            }
         }
     }
 

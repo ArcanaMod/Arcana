@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static net.arcanamod.aspects.ColorRange.create;
 import static net.arcanamod.util.Pair.of;
@@ -160,7 +161,7 @@ public class Aspects {
 	}
 
 	/**
-	 * Returns array of ALL aspects. Including Empty.
+	 * Returns array of ALL aspects. Excluding Empty.
 	 * @return ALL aspects.
 	 */
 	public static List<Aspect> getWithoutEmpty()
@@ -170,7 +171,7 @@ public class Aspects {
 	}
 
 	/**
-	 * Returns array of ALL aspects. Excluding Empty.
+	 * Returns array of ALL aspects. Including Empty.
 	 * @return ALL aspects.
 	 */
 	public static List<Aspect> getAll()
@@ -182,6 +183,29 @@ public class Aspects {
 		return ASPECTS.values().stream()
 				.filter(entry -> entry.name().equalsIgnoreCase(value))
 				.findAny().orElse(Aspects.EMPTY);
+	}
+
+	/**
+	 * Returns array of all elements, except primals and sins.
+	 * @return A list of relevant aspects.
+	 */
+	public static List<Aspect> getWithoutPrimalsOrSins() {
+		return ASPECTS.values().stream()
+				.filter(entry -> !entry.equals(EMPTY))
+				.filter(entry -> !entry.equals(AIR))
+				.filter(entry -> !entry.equals(CHAOS))
+				.filter(entry -> !entry.equals(FIRE))
+				.filter(entry -> !entry.equals(EARTH))
+				.filter(entry -> !entry.equals(ORDER))
+				.filter(entry -> !entry.equals(WATER))
+				.filter(entry -> !entry.equals(LUST))
+				.filter(entry -> !entry.equals(SLOTH))
+				.filter(entry -> !entry.equals(GLUTTONY))
+				.filter(entry -> !entry.equals(WRATH))
+				.filter(entry -> !entry.equals(ENVY))
+				.filter(entry -> !entry.equals(PRIDE))
+				.filter(entry -> !entry.equals(GREED))
+				.collect(Collectors.toList());
 	}
 
 	public static void init() {}
