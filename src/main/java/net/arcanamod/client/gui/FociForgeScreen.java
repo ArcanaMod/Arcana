@@ -4,9 +4,11 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.FociForgeTileEntity;
 import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.containers.slots.AspectSlot;
+import net.arcanamod.items.attachment.FocusItem;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
@@ -131,11 +133,18 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 
 	@Override
 	public boolean mouseScrolled(double x, double y, double bars) {
-		int extraRows = (this.container.scrollableSlots.size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;
-		this.aspectScroll = (float)(this.aspectScroll - bars / extraRows);
-		this.aspectScroll = MathHelper.clamp(this.aspectScroll, 0.0F, 1.0F);
-		this.container.scrollAspectTo(this.aspectScroll);
-		this.refreshSlotVisibility();
+		if (x < (this.guiLeft + WIDTH) / 2.0) {
+			int extraRows = (Aspects.getWithoutPrimalsOrSins().size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;
+			this.aspectScroll = (float)(this.aspectScroll - bars / extraRows);
+			this.aspectScroll = MathHelper.clamp(this.aspectScroll, 0.0F, 1.0F);
+			this.container.scrollAspectTo(this.aspectScroll);
+			this.refreshSlotVisibility();
+		} else {
+			int extraRows = FocusItem.DEFAULT_NUMSTYLES - ASPECT_V_COUNT;
+			this.fociScroll = (float)(this.fociScroll - bars / extraRows);
+			this.fociScroll = MathHelper.clamp(this.fociScroll, 0.0F, 1.0F);
+			this.container.scrollFociTo(this.fociScroll);
+		}
 		return true;
 	}
 
