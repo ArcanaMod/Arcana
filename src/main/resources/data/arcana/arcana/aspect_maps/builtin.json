@@ -15,6 +15,17 @@
       "amount": 5
     }
   ],
+  "minecraft:lapis_lazuli": [
+    {
+    "aspect": "mind",
+      "amount": 3
+    },
+    {
+      "aspect": "crystal",
+      "amount": 1
+
+    }
+  ],
   "minecraft:enchanted_book": [
     {
       "aspect": "senses",
