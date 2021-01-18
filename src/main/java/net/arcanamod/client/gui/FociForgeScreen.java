@@ -165,7 +165,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	}
 
 	protected void refreshSlotVisibility(){
-		List<AspectSlot> slots = aspectContainer.scrollableSlots;
+		List<AspectSlot> slots = aspectContainer.getAspectSlots();
 		for(int i = 0; i < slots.size(); i++){
 			AspectSlot slot = slots.get(i);
 			slot.visible = slotMatchesSearch(slot, searchWidget.getText());;
