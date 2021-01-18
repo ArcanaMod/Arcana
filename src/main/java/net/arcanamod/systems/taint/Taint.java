@@ -258,7 +258,9 @@ public class Taint{
 						: entity == EntityType.PUFFERFISH
 						? TaintedPufferfishEntity::new
 						: entity == EntityType.PARROT
-						? TaintedParrotEntity::new
+						? TaintedPufferfishEntity::new
+						: entity == EntityType.HORSE
+						? TaintedHorseEntity::new
 						: (type, world) -> new TaintedEntity(type, world, entity);
 		tainted = EntityType.Builder.create(factoryIn, MONSTER).size(w, h).build(id);
 

@@ -1,6 +1,7 @@
 package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.entities.BigSpellEggEntity;
 import net.arcanamod.entities.SpellCloudEntity;
 import net.arcanamod.entities.SpellEggEntity;
 import net.arcanamod.items.ArcanaItems;
@@ -138,6 +139,7 @@ public abstract class Cast implements ICast {
 						player.world.addEntity(eggentity);
 					} else if (cast.getSecond() == SLOTH) {
 						// the projectile bounces
+						// TODO: IMPLEMENT THIS
 					} else if (cast.getSecond() == PRIDE) {
 						// shotguns projectiles
 						for (int i = 0; i < 3; i++) {
@@ -157,6 +159,11 @@ public abstract class Cast implements ICast {
 						player.world.addEntity(eggentity);
 					} else if (cast.getSecond() == GLUTTONY) {
 						// the projectile is bigger
+						BigSpellEggEntity eggentity = new BigSpellEggEntity(player.world, player, this);
+						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
+						eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
+						player.world.addEntity(eggentity);
 					} else if (cast.getSecond() == WRATH) {
 						// fires a long range beam, longer range than the a lightning bolt but ticks slower
 					} else {
