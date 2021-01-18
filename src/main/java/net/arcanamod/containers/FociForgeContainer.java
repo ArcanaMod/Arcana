@@ -42,17 +42,14 @@ import java.util.function.Supplier;
 public class FociForgeContainer extends AspectContainer {
     public static final int ASPECT_H_COUNT = 4;
     public static final int ASPECT_V_COUNT = 7;
-    public static final int FOCI_V_COUNT = 9;
+    public static final Inventory TMP_FOCI = new Inventory(9);
 
     protected FociForgeContainer(@Nullable ContainerType<?> type, int id){
         super(type, id);
     }
 
     public FociForgeTileEntity te;
-    //public List<AspectSlot> primalSlots = new ArrayList<>();
-    //public List<AspectSlot> sinSlots = new ArrayList<>();
     public List<AspectSlot> scrollableSlots = new ArrayList<>();
-    public Inventory fociSlots = new Inventory(9);
 
     public IInventory puzzleInventorySlots;
     PlayerEntity lastClickPlayer;
@@ -98,10 +95,6 @@ public class FociForgeContainer extends AspectContainer {
                 // only wand
                 return super.isItemValid(stack) && stack.getItem()==ArcanaItems.WAND.get();
             }
-
-            public void onSlotChanged(){
-                super.onSlotChanged();
-            }
         });
         // 361, 16
         addSlot(new SlotItemHandler(itemHandler, 1, 361, 12){
@@ -109,15 +102,44 @@ public class FociForgeContainer extends AspectContainer {
                 // only foci or foci parts
                 return super.isItemValid(stack) && stack.getItem() == ArcanaItems.FOCUS_PARTS.get() || stack.getItem() == ArcanaItems.DEFAULT_FOCUS.get();
             }
-            public void onSlotChanged(){
-                super.onSlotChanged();
+
+            @Override
+            public int getItemStackLimit(@Nonnull ItemStack stack) {
+                return 1;
             }
         });
     }
 
+    protected void addFociSlots(IInventory playerInventory){
+        int SLOT_X = 361;
+        int SLOT_Y = 40;
+        int SLOT_DELTA = 17;
+
+        for (int yy = 0; yy < FociForgeScreen.FOCI_V_COUNT; yy++) {
+            int y = SLOT_Y + SLOT_DELTA * yy;
+            addSlot(new Slot(TMP_FOCI, yy, SLOT_X, y) {
+                @Override
+                public boolean canTakeStack(PlayerEntity player) {
+                    return false;
+                }
+
+                @Override
+                public boolean isEnabled() {
+                    return true;
+                }
+            });
+        }
+    }
+
     public ItemStack slotClick(int slot, int dragType, ClickType clickType, PlayerEntity player){
         lastClickPlayer = player;
-        ItemStack stack = super.slotClick(slot, dragType, clickType, player);
+        ItemStack stack;
+        if (slot >= 0 && slot < inventorySlots.size() && inventorySlots.get(slot).inventory == TMP_FOCI) {
+            changeFociStyle(inventorySlots.get(slot).getStack().getOrCreateTag().getInt("style"));
+            stack = ItemStack.EMPTY;
+        } else {
+            stack = super.slotClick(slot, dragType, clickType, player);
+        }
         return stack;
     }
 
@@ -157,80 +179,14 @@ public class FociForgeContainer extends AspectContainer {
             slot.setSymbolic(true);
             aspectSlots.add(slot);
         }
-        scrollAspectTo(0);
-    }
-
-    protected void addFociSlots(IInventory playerInventory){
-        int SLOT_X = 361;
-        int SLOT_Y = 40;
-        int SLOT_DELTA = 17;
-
-        for (int yy = 0; yy < FOCI_V_COUNT; yy++) {
-            int y = SLOT_Y + SLOT_DELTA * yy;
-            Slot slot = new Slot(fociSlots, yy, SLOT_X, y) {
-                @Override
-                public boolean canTakeStack(PlayerEntity player) {
-                    return false;
-                }
-
-                @Override
-                public boolean isEnabled() {
-                    return false;
-                }
-            };
-        }
-        scrollFociTo(0);
     }
 
     private void changeFociStyle(int style) {
         Item item = te.focus().getItem();
-        if (item == ArcanaItems.FOCUS_PARTS.get() || item instanceof FocusItem) {
+        if (item == ArcanaItems.FOCUS_PARTS.get())
+            te.setInventorySlotContents(1, new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1));
+        if (item instanceof FocusItem)
             te.focus().getOrCreateTag().putInt("style", style);
-        }
-    }
-
-    public void scrollAspectTo(float pos) {
-        List<Aspect> searchAspects = Aspects.getWithoutPrimalsOrSins();
-        int extraRows = (searchAspects.size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;
-        int scroll = Math.max(0, Math.round(pos * extraRows));
-
-        for(int row = 0; row < ASPECT_V_COUNT; row++) {
-            for(int col = 0; col < ASPECT_H_COUNT; col++) {
-                int slot = row * ASPECT_H_COUNT + col;
-                int aspectNum = (scroll + row) * ASPECT_H_COUNT + col;
-                if (aspectNum >= 0 && aspectNum < searchAspects.size()) {
-                    this.scrollableSlots.get(slot).setAspect(searchAspects.get(aspectNum));
-                } else {
-                    this.scrollableSlots.get(slot).setAspect(Aspects.EMPTY);
-                }
-            }
-        }
-
-    }
-
-    public void scrollFociTo(float pos) {
-        Item item = te.focus().getItem();
-        if (item == ArcanaItems.FOCUS_PARTS.get() || item instanceof FocusItem) {
-            int possibleFoci = FocusItem.DEFAULT_NUMSTYLES;
-
-            int extraRows = possibleFoci - FOCI_V_COUNT;
-            int scroll = Math.max(0, Math.round(pos * extraRows));
-
-            for (int row = 0; row < FOCI_V_COUNT; row++) {
-                int fociNum = scroll + row;
-                if (fociNum >= 0 && fociNum < possibleFoci) {
-                    ItemStack dummyFoci = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
-                    dummyFoci.getOrCreateTag().putInt("style", fociNum);
-                    this.fociSlots.setInventorySlotContents(row, dummyFoci);
-                } else {
-                    this.fociSlots.setInventorySlotContents(row, ItemStack.EMPTY);
-                }
-            }
-        } else {
-            for (int row = 0; row < FOCI_V_COUNT; row++) {
-                this.fociSlots.setInventorySlotContents(row, ItemStack.EMPTY);
-            }
-        }
     }
 
     @Override
