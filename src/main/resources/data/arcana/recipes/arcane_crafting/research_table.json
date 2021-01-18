@@ -1,9 +1,9 @@
 {
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
-    "s  ",
-    "app",
-    "www"
+    "a  ",
+    "sss",
+    "w w"
   ],
   "key": {
     "w": [
@@ -12,16 +12,30 @@
       },
       {
         "item": "arcana:silverwood_planks"
+      },
+      {
+        "item": "arcana:dair_planks"
+      },
+      {
+        "item": "arcana:hawthorn_planks"
       }
     ],
-    "p": {
-      "item": "minecraft:paper"
-    },
+    "s": [
+      {
+        "item": "arcana:greatwood_slab"
+      },
+      {
+        "item": "arcana:silverwood_slab"
+      },
+      {
+        "item": "arcana:dair_slab"
+      },
+      {
+        "item": "arcana:hawthorn_slab"
+      }
+    ],
     "a": {
       "item": "arcana:amber"
-    },
-    "s": {
-      "item": "minecraft:diamond"
     }
   },
   "aspects": [

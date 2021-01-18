@@ -1,7 +1,7 @@
 {
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
-    "whw",
+    "bhb",
     "gcg",
     " w "
   ],
@@ -21,8 +21,16 @@
       "item": "arcana:aura_crystal"
     },
     "h": {
-      "item": "minecraft:hopper"
-    }
+      "item": "arcana:vis_hopper"
+    },
+    "b": [
+      {
+        "item": "arcana:greatwood_beam"
+      },
+      {
+        "item": "arcana:silverwood_beam"
+      }
+    ]
   },
   "aspects": [
     {

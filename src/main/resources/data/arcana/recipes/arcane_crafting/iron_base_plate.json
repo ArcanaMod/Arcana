@@ -1,0 +1,28 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "iIi",
+    "IaI",
+    "iIi"
+  ],
+  "key": {
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "I": {
+      "item": "arcana:metal_crystal"
+    },
+    "a": {
+      "item": "arcana:arcanium_ingot"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 4
+    }
+  ],
+  "result": {
+    "item": "arcana:greatwood_beam"
+  }
+}

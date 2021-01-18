@@ -1,0 +1,46 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "iPi",
+    "wjw",
+    "iPi"
+  ],
+  "key": {
+    "w": [
+      {
+        "item": "arcana:greatwood_planks"
+      },
+      {
+        "item": "arcana:silverwood_planks"
+      },
+      {
+        "item": "arcana:dair_planks"
+      },
+      {
+        "item": "arcana:hawthorn_planks"
+      }
+    ],
+    "i": {
+      "tag": "forge:ingots/iron"
+    },
+    "j": {
+      "item": "arcana:jar"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:water",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 10
+    }
+  ],
+  "result": {
+    "item": "arcana:aspect_crystallizer"
+  }
+}

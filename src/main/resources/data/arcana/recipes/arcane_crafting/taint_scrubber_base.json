@@ -2,8 +2,8 @@
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
     "wdw",
-    "sgs",
-    "wcw"
+    "scs",
+    "wiw"
   ],
   "key": {
     "w": [
@@ -14,8 +14,8 @@
         "item": "arcana:silverwood_planks"
       }
     ],
-    "g": {
-      "item": "minecraft:glass"
+    "i": {
+      "item": "arcana:iron_base_plate"
     },
     "c": {
       "item": "arcana:aura_crystal"

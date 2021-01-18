@@ -3,7 +3,7 @@
   "pattern": [
     "aaw",
     " cg",
-    " ww"
+    " wb"
   ],
   "key": {
     "w": [
@@ -22,7 +22,15 @@
     },
     "a": {
       "tag": "forge:ingots/arcanium"
-    }
+    },
+    "b": [
+      {
+        "item": "arcana:greatwood_beam"
+      },
+      {
+        "item": "arcana:silverwood_beam"
+      }
+    ]
   },
   "aspects": [
     {

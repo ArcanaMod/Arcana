@@ -1,19 +1,14 @@
 {
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
-    "wPw",
+    "tPt",
     "gcg",
-    "wpw"
+    "tpt"
   ],
   "key": {
-    "w": [
-      {
-        "item": "arcana:greatwood_planks"
-      },
-      {
-        "item": "arcana:silverwood_planks"
-      }
-    ],
+    "t": {
+      "item": "arcana:thaumium_beam"
+    },
     "g": {
       "tag": "forge:ingots/gold"
     },

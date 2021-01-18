@@ -1,0 +1,22 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    " W ",
+    " W",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "item": "arcana:greatwood_planks"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    }
+  ],
+  "result": {
+    "item": "arcana:greatwood_beam"
+  }
+}
