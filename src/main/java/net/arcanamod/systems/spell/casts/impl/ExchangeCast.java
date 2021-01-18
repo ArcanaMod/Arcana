@@ -1,9 +1,11 @@
-package net.arcanamod.systems.spell.casts;
+package net.arcanamod.systems.spell.casts.impl;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.systems.spell.*;
+import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -23,10 +25,6 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootParameters;
 
 public class ExchangeCast extends Cast {
-	
-	public ICast build(CompoundNBT compound) {
-		return this;
-	}
 
 	@Override
 	public ResourceLocation getId() {
@@ -39,37 +37,16 @@ public class ExchangeCast extends Cast {
 	}
 
 	@Override
-	public SpellData getSpellData() {
-		return data;
-	}
-
-	@Override
-	public SpellCosts getSpellCosts() {
-		return new SpellCosts(0,0,0,0,1,0,0);
-	}
-
-	@Override
-	public int getComplexity() {
-		if (!isBuilt) return -2;
-		return  2
-				+ SpellValues.getOrDefault(data.firstModifier,0)
-				+ SpellValues.getOrDefault(data.secondModifier,0)
-				+ SpellValues.getOrDefault(data.sinModifier,0)
-				+ SpellValues.getOrDefault(data.primaryCast.getSecond(),0)/2
-				+ SpellValues.getOrDefault(data.plusCast.getSecond(),0)/2;
-	}
-
-	@Override
 	public int getSpellDuration() {
 		return 1;
 	}
 
 	public int getMiningLevel(){
-		return SpellValues.getOrDefault(data.firstModifier, 2);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 2);
 	}
 
 	public int getSize(){
-		return SpellValues.getOrDefault(data.secondModifier, 1);
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 1);
 	}
 
 	@Override

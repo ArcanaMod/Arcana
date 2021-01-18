@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "arcana:iron_native_cluster"
+  },
+  "result": {
+    "item": "minecraft:iron_ingot",
+    "count": 2
+  },
+  "experience": 0.7,
+  "cookingtime": 200
+}

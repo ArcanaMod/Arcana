@@ -43,8 +43,8 @@ public class TaintedIllagerEntity extends AbstractIllagerEntity {
 		return p_213678_0_ == Difficulty.NORMAL || p_213678_0_ == Difficulty.HARD;
 	};
 
-	public TaintedIllagerEntity(EntityType<? extends TaintedIllagerEntity> type, World world) {
-		super(type, world);
+	public TaintedIllagerEntity(EntityType<? extends Entity> type, World world) {
+		super((EntityType<? extends AbstractIllagerEntity>) type, world);
 	}
 
 	protected void registerGoals() {

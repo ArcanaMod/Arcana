@@ -1,12 +1,10 @@
-package net.arcanamod.systems.spell.casts;
+package net.arcanamod.systems.spell.casts.impl;
 
 import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
-import net.arcanamod.systems.spell.SpellCosts;
-import net.arcanamod.systems.spell.SpellData;
-import net.arcanamod.systems.spell.SpellNotBuiltError;
+import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.crash.CrashReport;
 import net.minecraft.crash.CrashReportCategory;
 import net.minecraft.crash.ReportedException;
@@ -22,10 +20,6 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 
 public class FabricCast extends Cast {
-	
-	public ICast build(CompoundNBT compound) {
-		return this;
-	}
 
 	@Override
 	public ResourceLocation getId() {
@@ -35,26 +29,6 @@ public class FabricCast extends Cast {
 	@Override
 	public Aspect getSpellAspect() {
 		return Aspects.FABRIC;
-	}
-
-	@Override
-	public SpellData getSpellData() {
-		return data;
-	}
-
-	@Override
-	public SpellCosts getSpellCosts() {
-		return new SpellCosts(0,0,0,0,0,0,1);
-	}
-
-	/**
-	 * How spell is complex to use / create
-	 *
-	 * @return returns spell complexity.
-	 */
-	@Override
-	public int getComplexity() {
-		return -666;
 	}
 
 	@Override
@@ -73,17 +47,11 @@ public class FabricCast extends Cast {
 	@Override
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		TileEntity tileentity = new ResearchTableTileEntity();
-		Throwable throwable = new SpellNotBuiltError();
+		Throwable throwable = new NullPointerException();
 		CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking block entity");
 		CrashReportCategory crashreportcategory = crashreport.makeCategory("Block entity being ticked");
 		tileentity.addInfoToCrashReport(crashreportcategory);
-		if (net.minecraftforge.common.ForgeConfig.SERVER.removeErroringTileEntities.get()) {
-			LogManager.getLogger().fatal("{}", crashreport.getCompleteReport());
-			//tileentity.remove();
-			//this.removeTileEntity(tileentity.getPos());
-		} else
-			throw new ReportedException(crashreport);
-		return ActionResultType.SUCCESS;
+		throw new ReportedException(crashreport);
 	}
 
 	@Override

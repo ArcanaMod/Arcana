@@ -35,7 +35,7 @@ public class AspectUtils {
 	public static void register(){
 		// Automatically register all aspects' items
 		// Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
-		for(Aspect aspect : Aspects.values())
+		for(Aspect aspect : Aspects.getAll())
 			if(aspect != Aspects.EMPTY){
 				AspectItem item = new AspectItem("aspect_" + aspect.name().toLowerCase());
 				ArcanaItems.ITEMS.register("aspect_" + aspect.name().toLowerCase(), () -> item);
@@ -69,7 +69,7 @@ public class AspectUtils {
 	public static Aspect getAspectByName(@Nullable String name){
 		if(name == null)
 			return null;
-		for(Aspect aspect : Aspects.values())
+		for(Aspect aspect : Aspects.getAll())
 			if(aspect.name().equalsIgnoreCase(name))
 				return aspect;
 		return null;
@@ -94,8 +94,8 @@ public class AspectUtils {
 		return I18n.format("aspect." + aspect.name().toLowerCase());
 	}
 
-	public static ResourceLocation getResourceLocationFromAspect(Aspect aspect) {
-		return Aspects.ASPECTS.inverse().get(aspect);
+	public static Aspect deserializeAspect(CompoundNBT compound, String deserializableAspect){
+		return Aspect.fromResourceLocation(new ResourceLocation(compound.getString(deserializableAspect)));
 	}
 
 	public static String aspectHandlerToJson(IAspectHandler handler) {
@@ -105,14 +105,10 @@ public class AspectUtils {
 		return gson.toJson(handler.getHolders());
 	}
 
-	public static Aspect getAspectByResourceLocation(ResourceLocation resourceLocation) {
-		return Aspects.ASPECTS.get(resourceLocation);
-	}
-
 	public static Aspect getAspectByDisplayName(String name) {
 		if(name == null)
 			return null;
-		for(Aspect aspect : Aspects.values())
+		for(Aspect aspect : Aspects.getAll())
 			if(I18n.format("aspect."+aspect.name()).equalsIgnoreCase(name))
 				return aspect;
 		return null;
@@ -120,9 +116,5 @@ public class AspectUtils {
 
 	public static List<AspectStack> squish(List<AspectStack> unSquished){
 		return StreamUtils.partialReduce(unSquished, AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
-	}
-
-	public static Aspect deserializeAspect(CompoundNBT compound, String deserializableAspect){
-		return getAspectByResourceLocation(new ResourceLocation(compound.getString(deserializableAspect)));
 	}
 }

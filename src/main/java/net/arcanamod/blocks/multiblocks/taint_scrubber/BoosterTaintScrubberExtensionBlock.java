@@ -14,88 +14,74 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class BoosterTaintScrubberExtensionBlock extends Block implements ITaintScrubberExtension {
-	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+import javax.annotation.Nonnull;
 
-	public BoosterTaintScrubberExtensionBlock(Block.Properties properties) {
+@SuppressWarnings("deprecation")
+public class BoosterTaintScrubberExtensionBlock extends Block implements ITaintScrubberExtension{
+	
+	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	
+	public BoosterTaintScrubberExtensionBlock(Block.Properties properties){
 		super(properties);
 		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.NORTH));
 	}
-
-	/**
-	 * It checks if the extension is in right place
-	 *
-	 * @param world World
-	 * @param pos   Position of extension
-	 * @return isValidConnection
-	 */
+	
 	@Override
-	public boolean isValidConnection(World world, BlockPos pos) {
-		if (world.getBlockState(pos.north()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK2.get())){
+	public boolean isValidConnection(World world, BlockPos pos){
+		if(world.getBlockState(pos.north()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK2.get()))
 			return true;
-		}
-		if (world.getBlockState(pos.south()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK2.get())){
+		if(world.getBlockState(pos.south()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK2.get()))
 			return true;
-		}
-		if (world.getBlockState(pos.west()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK2.get())){
+		if(world.getBlockState(pos.west()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK2.get()))
 			return true;
-		}
-		if (world.getBlockState(pos.east()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK2.get())){
-			return true;
-		}
-		return false;
+		return world.getBlockState(pos.east()).getBlock().equals(ArcanaBlocks.TAINT_SCRUBBER_MK2.get());
 	}
-
+	
 	/**
 	 * It is performed if this block is found by TaintScrubber.
 	 *
-	 * @param world World
-	 * @param pos   Position of extension
+	 * @param world
+	 * 		World
+	 * @param pos
+	 * 		Position of extension
 	 */
 	@Override
-	public void sendUpdate(World world, BlockPos pos) {
-
+	public void sendUpdate(World world, BlockPos pos){
+	
 	}
-
-	/**
-	 * Runs extension action.
-	 *
-	 * @param world    World
-	 * @param pos      Position of extension
-	 * @param compound
-	 */
+	
 	@Override
-	public void run(World world, BlockPos pos, CompoundNBT compound) {
-
-	}
-
+	public void run(World world, BlockPos pos, CompoundNBT compound){}
+	
 	@Override
-	public CompoundNBT getShareableData(CompoundNBT compound) {
-		compound.putInt("speed",compound.getInt("speed")+1);
+	public CompoundNBT getShareableData(CompoundNBT compound){
+		compound.putInt("speed", compound.getInt("speed") + 1);
 		return compound;
 	}
-
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	
+	public BlockState getStateForPlacement(BlockItemUseContext context){
 		return this.getDefaultState().with(FACING, context.getPlacementHorizontalFacing());
 	}
-
+	
 	/**
 	 * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
 	 * blockstate.
 	 */
-	public BlockState rotate(BlockState state, Rotation rot) {
+	@Nonnull
+	public BlockState rotate(BlockState state, Rotation rot){
 		return state.with(FACING, rot.rotate(state.get(FACING)));
 	}
-
+	
 	/**
 	 * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
 	 * blockstate.
 	 */
-	public BlockState mirror(BlockState state, Mirror mirrorIn) {
+	@Nonnull
+	public BlockState mirror(BlockState state, Mirror mirrorIn){
 		return state.rotate(mirrorIn.toRotation(state.get(FACING)));
 	}
-
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
+	
+	protected void fillStateContainer(@Nonnull StateContainer.Builder<Block, BlockState> builder){
 		super.fillStateContainer(builder);
 		builder.add(FACING);
 	}

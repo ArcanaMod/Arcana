@@ -2,6 +2,7 @@ package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
+import net.arcanamod.aspects.ColorRange;
 import net.arcanamod.blocks.bases.*;
 import net.arcanamod.blocks.multiblocks.foci_forge.FociForgeComponentBlock;
 import net.arcanamod.blocks.multiblocks.foci_forge.FociForgeCoreBlock;
@@ -22,8 +23,8 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import static net.arcanamod.blocks.Taint.taintedOf;
-import static net.arcanamod.blocks.Taint.deadOf;
+import static net.arcanamod.systems.taint.Taint.taintedOf;
+import static net.arcanamod.systems.taint.Taint.deadOf;
 import static net.arcanamod.util.annotations.GIM.Type.BLOCK_REF;
 import static net.arcanamod.util.annotations.GIM.Type.ITEM;
 import static net.minecraft.block.Block.Properties.create;
@@ -134,14 +135,14 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<Block> ASPECT_TUBE = BLOCKS.register("essentia_tube", () -> new AspectTubeBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> ASPECT_VALVE = BLOCKS.register("essentia_valve", () -> new AspectValveBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> ASPECT_WINDOW = BLOCKS.register("essentia_window", () -> new AspectWindowBlock(create(IRON).sound(SoundType.GLASS).hardnessAndResistance(3).notSolid()));
-	@GLT @GIM(value = BLOCK_REF) public static final RegistryObject<Block> ASPECT_CRYSTALLIZER = BLOCKS.register("aspect_crystallizer", () -> new AspectCrystallizerBlock(create(IRON).hardnessAndResistance(3)));
+	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> ASPECT_CRYSTALLIZER = BLOCKS.register("aspect_crystallizer", () -> new AspectCrystallizerBlock(create(IRON).hardnessAndResistance(3)));
 	
-	// Taint Scrubber //What is proper material for taint scrubber?
+	// Taint Scrubber parts
 	@GLT public static final RegistryObject<Block> TAINT_SCRUBBER_MK1 = BLOCKS.register("taint_scrubber_mk1", () -> new TaintScrubberBlock(create(IRON).hardnessAndResistance(3).notSolid()));
-	@GLT public static final RegistryObject<Block> TAINT_SCRUBBER_MK2 = BLOCKS.register("taint_scrubber_mk2", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberExtensionBlock.Type.SCRUBBER_MK2));
+	@GLT public static final RegistryObject<Block> TAINT_SCRUBBER_MK2 = BLOCKS.register("taint_scrubber_mk2", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(), TaintScrubberExtensionBlock.Type.SCRUBBER_MK2));
 	@GLT public static final RegistryObject<Block> TAINT_BOOSTER = BLOCKS.register("taint_booster", () -> new BoosterTaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid()));
-	@GLT public static final RegistryObject<Block> TAINT_SUCKER = BLOCKS.register("taint_sucker", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberExtensionBlock.Type.SUCKER));
-	@GLT public static final RegistryObject<Block> TAINT_BORE = BLOCKS.register("taint_bore", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(),TaintScrubberExtensionBlock.Type.BORE));
+	@GLT public static final RegistryObject<Block> TAINT_SUCKER = BLOCKS.register("taint_sucker", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(), TaintScrubberExtensionBlock.Type.SUCKER));
+	@GLT public static final RegistryObject<Block> TAINT_BORE = BLOCKS.register("taint_bore", () -> new TaintScrubberExtensionBlock(create(IRON).hardnessAndResistance(3).notSolid(), TaintScrubberExtensionBlock.Type.BORE));
 
 	@GLT public static final RegistryObject<Block> SEE_NO_EVIL_STATUE = BLOCKS.register("see_no_evil_statue", () -> new StatueBlock(create(WOOD).hardnessAndResistance(4).notSolid()));
 	@GLT public static final RegistryObject<Block> HEAR_NO_EVIL_STATUE = BLOCKS.register("hear_no_evil_statue", () -> new StatueBlock(create(WOOD).hardnessAndResistance(4).notSolid()));
@@ -451,4 +452,5 @@ public class ArcanaBlocks{
 	// Spell made blocks
 	public static final RegistryObject<Block> VACUUM_BLOCK = BLOCKS.register("vacuum_block", () -> new VacuumBlock(create(MISCELLANEOUS).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(15)));
 	public static final RegistryObject<Block> WARDENED_BLOCK = BLOCKS.register("wardened_block", () -> new WardenedBlock(create(MISCELLANEOUS).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(3)));
+	public static final RegistryObject<Block> LIGHT_BLOCK = BLOCKS.register("light_block", () -> new Block(create(AIR).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(3)));
 }

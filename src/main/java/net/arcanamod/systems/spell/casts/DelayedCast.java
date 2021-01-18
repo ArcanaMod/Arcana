@@ -1,13 +1,13 @@
-package net.arcanamod.systems.spell;
+package net.arcanamod.systems.spell.casts;
 
 import java.util.function.Consumer;
 
-public class DelayedSpell {
+public class DelayedCast {
 	public Consumer<Integer> spellEvent;
 	public int ticks;
 	public int ticksPassed;
 
-	public DelayedSpell(Consumer<Integer> spellEvent, int ticks){
+	public DelayedCast(Consumer<Integer> spellEvent, int ticks){
 		this.spellEvent = spellEvent;
 		this.ticks = ticks;
 	}

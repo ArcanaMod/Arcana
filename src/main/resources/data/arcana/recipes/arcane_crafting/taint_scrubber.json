@@ -1,0 +1,59 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    " a ",
+    "gsg",
+    "wcw"
+  ],
+  "key": {
+    "w": [
+      {
+        "item": "arcana:greatwood_planks"
+      },
+      {
+        "item": "arcana:silverwood_planks"
+      }
+    ],
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "c": {
+      "item": "arcana:aura_crystal"
+    },
+    "a": {
+      "tag": "forge:storage_blocks/arcanium"
+    },
+    "s": {
+      "tag": "forge:ingots/silver"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:water",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:air",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 10
+    }
+  ],
+  "result": {
+    "item": "arcana:taint_scrubber_mk1"
+  }
+}

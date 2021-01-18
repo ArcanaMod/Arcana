@@ -1,6 +1,8 @@
 package net.arcanamod.entities;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.client.render.SpellEggEntityRenderer;
+import net.arcanamod.client.render.TaintBottleEntityRenderer;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.client.model.tainted.TaintedFoxModel;
 import net.arcanamod.client.model.tainted.TaintedSheepModel;
@@ -31,25 +33,27 @@ public class ArcanaEntities{
 
 	public static final RegistryObject<EntityType<KoalaEntity>> KOALA_ENTITY = ENTITY_TYPES
 			.register("koala_entity", () -> EntityType.Builder.create(KoalaEntity::new, EntityClassification.CREATURE)
-				.size(0.6f, 0.6f).build(arcLoc("koala_entity").toString()));
+				.size(.6f, .6f).build(arcLoc("koala_entity").toString()));
 
 	public static final RegistryObject<EntityType<SpiritEntity>> DAIR_SPIRIT = ENTITY_TYPES
 			.register("dair_spirit_entity", () -> EntityType.Builder.create(SpiritEntity::new, EntityClassification.CREATURE)
-					.size(0.6f, 0.6f).build(arcLoc("dair_spirit_entity").toString()));
+					.size(.6f, .6f).build(arcLoc("dair_spirit_entity").toString()));
 
 	public static final RegistryObject<EntityType<SpiritEntity>> WILLOW_SPIRIT = ENTITY_TYPES
 			.register("willow_spirit_entity", () -> EntityType.Builder.create(SpiritEntity::new, EntityClassification.CREATURE)
-					.size(0.6f, 0.6f).build(arcLoc("willow_spirit_entity").toString()));
+					.size(.6f, .6f).build(arcLoc("willow_spirit_entity").toString()));
 
 	public static final RegistryObject<EntityType<SpellCloudEntity>> SPELL_CLOUD = ENTITY_TYPES
 			.register("spell_cloud", () -> EntityType.Builder.<SpellCloudEntity>create(SpellCloudEntity::new, EntityClassification.MISC)
-					.immuneToFire().size(6.0F, 0.5F).build(arcLoc("spell_cloud").toString()));
+					.immuneToFire().size(6, .5f).build(arcLoc("spell_cloud").toString()));
 
 	public static final RegistryObject<EntityType<SpellEggEntity>> SPELL_EGG = ENTITY_TYPES
-			.register("spell_projectile", () -> EntityType.Builder.<SpellEggEntity>create(SpellEggEntity::new, EntityClassification.MISC)
-					.size(0.25F, 0.25F).build(arcLoc("spell_projectile").toString()));
+			.register("spell_egg", () -> EntityType.Builder.<SpellEggEntity>create(SpellEggEntity::new, EntityClassification.MISC)
+					.immuneToFire().size(.4f, .4f).build(arcLoc("spell_egg").toString()));
 
-	// Tainted
+	public static final RegistryObject<EntityType<TaintBottleEntity>> TAINT_BOTTLE = ENTITY_TYPES
+			.register("taint_in_a_bottle", () -> EntityType.Builder.<TaintBottleEntity>create(TaintBottleEntity::new, EntityClassification.MISC)
+					.immuneToFire().size(.5f, .5f).build(arcLoc("taint_in_a_bottle").toString()));
 
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_DROWNED = ENTITY_TYPES.register("tainted_drowned", () -> Taint.taintedEntityOf(EntityType.DROWNED));
 	//public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_ELDER_GUARDIAN = ENTITY_TYPES.register("tainted_elder_guardian", () -> Taint.taintedEntityOf(EntityType.ELDER_GUARDIAN));
@@ -116,6 +120,8 @@ public class ArcanaEntities{
 
 	@SuppressWarnings("rawtypes")
 	public static void render() {
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_EGG.get(), SpellEggEntityRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINT_BOTTLE.get(), TaintBottleEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BAT.get(), TaintedBatRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BEE.get(), manager -> new TaintedEntityRender(manager, new BeeModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAT.get(), manager -> new TaintedEntityRender(manager, new CatModel(0.0F)));

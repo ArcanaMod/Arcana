@@ -44,13 +44,10 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-
-import static net.arcanamod.systems.spell.Spell.Samples.createBasicSpell;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -129,6 +126,8 @@ public class WandItem extends Item{
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+		// TODO: only do this if you're casting a spell
+		// first do node raycast check, and then check if you have a focus
 		ArcanaSounds.playSpellCastSound(player);
 		Focus focus = getFocus(player.getHeldItem(hand));
 		if(focus != Focus.NO_FOCUS){
@@ -137,7 +136,6 @@ public class WandItem extends Item{
 				IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
 				// oh my god this code is terrible // YES, I know Xd.
 				// time for more VisUtils I guess
-				try {
 				if(spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler,stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
 					spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)){
 					if (player.isCrouching())
@@ -148,7 +146,7 @@ public class WandItem extends Item{
 					for(AspectStack cost : spell.getSpellCosts().toList())
 						if (cost.getAspect()!=Aspects.EMPTY)
 							handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
-				}} catch (Exception ex) {ex.printStackTrace();}
+				}
 			}else
 				player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
 		}
@@ -160,8 +158,6 @@ public class WandItem extends Item{
 			ret.set(ActionResult.resultConsume(itemstack));
 		});
 		return ret.get();
-		//player.setActiveHand(hand);
-		//return ActionResult.resultConsume(player.getHeldItem(hand));
 	}
 
 	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect) {

@@ -17,6 +17,7 @@
     "item.arcana.scribbled_notes": "Scribbled Notes",
     "item.arcana.scribbled_notes_complete": "Complete Scribbled Notes",
     "item.arcana.tainted_goo_bucket": "Tainted Goo Bucket",
+    "item.arcana.taint_in_a_bottle": "Taint in a Bottle",
 
     "_comment": "Wands",
     "item.arcana.error_wand": "%s Errorred Wand",
@@ -109,6 +110,10 @@
     "item.arcana.silverwood_stick": "Silverwood Stick",
     "item.arcana.amber": "Amber",
     "item.arcana.quicksilver": "Quicksilver",
+
+    "item.arcana.iron_native_cluster": "Iron Native Cluster",
+    "item.arcana.gold_native_cluster": "Gold Native Cluster",
+    "item.arcana.silver_native_cluster": "Silver Native Cluster",
 
     "item.arcana.research_note": "Research Note",
     "item.arcana.research_note_complete": "Complete Research Note",
@@ -646,6 +651,9 @@
 
     "_comment": "GUIs",
     "researchEntry.continue": "Continue",
+    "researchEntry.pin": "Ctrl-click to pin",
+    "researchEntry.unpin": "Ctrl-click to unpin",
+    "researchBook.jump_to_pin": "Jump to Recipe",
     "researchTable.ink_needed": "Scribing tools required!",
     "researchTable.ink_refill_needed": "Refill scribing tools!",
     "researchTable.search": "Search...",
@@ -870,6 +878,33 @@
     "research.arcana.hedge_alchemy.desc": "Miscellaneous Transformations",
     "research.arcana.hedge_alchemy.stage.1": "[f(x) -> g(x)]",
     "research.arcana.hedge_alchemy.stage.2": "[just do the goddamn recipes]",
+
+    "research.arcana.taint_in_a_bottle": "Containing Taint",
+    "research.arcana.taint_in_a_bottle.desc": "Bottled Madness",
+    "research.arcana.taint_in_a_bottle.stage.1": "Taint is dangerous and eager to spread. Given even a small amount of flux, it will poison the land around it startlingly fast. Perhaps alchemy could be used to contain it? First, I'll attempt to seal some into a bottle, and in the future I can construct a more useful solution.",
+    "research.arcana.taint_in_a_bottle.stage.2": "...the applications of this are limited at best, and dangerous at worst. When Taint in a Bottle is thrown and hits a surface, it instantly taints up to six nearby blocks, and releases some flux. If less than six blocks are tainted, more flux is released.\n\nAs a weapon, bottles are dangerous, but also expensive. Tainting a large area would require quite a few, but would also render that area uninhabitable for quite some time...\n\nA more peaceful use could be to collect tainted blocks. While I don't think I can get a net profit of Virimus, tainted blocks become stable after mining and do not spread (similar to leaves), and so could be collected for decorative purposes.\n\nStill, I don't see any practical use beyond that of this. Only a mad alchemist would mass produce this.",
+
+    "research.arcana.taint_scrubber": "A Proper Solution to Taint",
+    "research.arcana.taint_scrubber.desc": "Cleansing the Earth",
+    "research.arcana.taint_scrubber.stage.1": "So far, I have learned how to spread and contain all types of magic, including taint. I have learned of materials that conduct magic and repel taint. At this point, I should be able to construct a contraption to remove taint for me - I shouldn't be running about cleaning things up manually!",
+    "research.arcana.taint_scrubber.stage.2": "Arcanium seems to slowly radiate away its Praecantatio. At its regular rate, it would take about my lifetime to dull (becoming a metal historically known as \"thaumium\").\n\nI believe I can amplify this effect, and focus it through an Auram crystal adorned with Silver to create an Auram field capable of dissolving taint.",
+    "research.arcana.taint_scrubber.stage.3": "The §oTaint Scrubber§r produces a field that dissolves taint. Nonliving blocks within its range of 8 blocks return to their regular state. Living tainted blocks become dead, non-tainted blocks.\n\n[TODO: preventing taint biome, tainted mobs, essentia input/output.]",
+    "research.arcana.taint_scrubber.stage.4": "Its range leaves something to be desired, to say the least. Its power seems too unfocused, or out of phase... I should be able to increase its range and speed by focusing its power... somehow.",
+    "research.arcana.taint_scrubber.stage.5": "When a Taint Scrubber is placed atop a §oFlux Scrubber Base§r, its incoherent energy is directed downwards and brought into phase, increasing its range and speed.\n\n[TODO: use luminiferous glass in recipe, allow for input from this block too.]",
+
+    "research.arcana.better_taint_scrubbing": "Better Taint Scrubbing",
+    "research.arcana.better_taint_scrubbing.stage.1": "I believe I can make the Taint Scrubber a little faster yet. The Flux Scrubber Base should be capable of handling multiple Praecantatio inputs at once - perhaps improvements could be made adding side inputs?",
+    "research.arcana.better_taint_scrubbing.stage.2": "§oTaint Scrubber Boosters§r can be attached to the side of a Flux Scrubber Base to increase its speed somewhat.\n\nThe improvement isn't as strong as I expected, but its useful nonetheless.\n\n[TODO: increase essentia requirement.]",
+
+    "research.arcana.further_flux_cleanup": "Further Flux Cleanup",
+    "research.arcana.further_flux_cleanup.desc": "Cleansing the Earth and Air",
+    "research.arcana.further_flux_cleanup.stage.1": "The Flux Scrubber does a good job of removing the taint around it. But what about preventing a mishap in the first place? Or removing taint that has hidden underground?",
+    "research.arcana.further_flux_cleanup.stage.2": "I have designed two attachments to the regular Flux Scrubber to aid with these problems. The §oTaint Sucker§r will, when placed above a Taint Scrubber, directly remove flux from the aura, allowing the Flux Scrubber to be useful even before an outbreak of taint. [TODO: expensive essentia-wise.]\n\n The §oTaint Bore§r, when placed below a Flux Scrubber or Flux Scrubber Base, extend its range to the bottom of the world, allowing it to tackle hidden taint. This is a slow process, however, as the Auram field is spread thinner.",
+
+    "research.arcana.life_powder": "Preventing Dead Terrain",
+    "research.arcana.life_powder.desc": "Life-Giving Powder",
+    "research.arcana.life_powder.stage.1": "Once a taint outbreak has been dissolved by a Taint Scrubber, dead blocks are left behind. Although these are far easier to clean up than taint itself (posing no threat to me), their death can lead to valuable life being irretrievably lost.\n\nA further look at these dead blocks reveals that they were killed by the taint itself, rather than its sudden removal.\n\nOne particular plant resists this effect, though: the Silverwood tree. Its wood and leaves cannot be tainted to my knowledge, no matter how much flux is applied. I hope that studying it provides some insight into how to save wildlife in the event of a taint outbreak.",
+    "research.arcana.life_powder.stage.2": "By mixing the ash of a dead plant and crushed silverwood leaves, and infusing them with Victus through alchemy, I can create a throwable powder that restores life to dead blocks. I could not find a way to prevent the death, but at least I can restore the dead.\n\nDead flowers and logs contain no memory of their original species, and become entirely random species upon revival. [TODO: maybe a special flower and tree type for restored flowers and logs?]",
 
     "research.arcana.auromancy_root": "Auromancy",
     "research.arcana.auromancy_root.text": "Auromancy - the manipulation of aura, especially the usage of wands - will be researched and described here.",

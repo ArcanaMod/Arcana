@@ -1,7 +1,7 @@
 package net.arcanamod.client.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.capabilities.TaintTrackable;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.fluids.ArcanaFluids;

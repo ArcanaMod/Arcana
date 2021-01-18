@@ -1,7 +1,7 @@
 package net.arcanamod.aspects;
 
 import com.google.gson.*;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.items.CrystalItem;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.StreamUtils;
@@ -92,6 +92,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			news.addAll(right);
 			return news;
 		}));
+		
 		// for every item tag, give them aspects
 		itemTagAssociations.forEach((key, value) -> {
 			for(Item item : key.getAllElements())
@@ -101,6 +102,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 					return news;
 				});
 		});
+		
 		// for every item not already given aspects in this way, give according to recipes
 		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes()){
 			Item item = recipe.getRecipeOutput().getItem();
@@ -115,9 +117,9 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		for(Item item : itemMirror)
 			if(itemAspects.containsKey(item)){
 				List<AspectStack> squished = squish(itemAspects.get(item));
+				squished.removeIf(AspectStack::isEmpty);
 				itemAspects.put(item, squished);
 			}
-		
 		LOGGER.info("Assigned aspects to {} items", itemAspects.size());
 		processing = false;
 	}
@@ -130,8 +132,8 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		generating.add(item);
 		List<AspectStack> ret;
 		List<List<AspectStack>> allGenerated = new ArrayList<>();
-		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes()){
-			// consider every recipe that produces this item
+		// consider every recipe that produces this item
+		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes())
 			if(recipe.getRecipeOutput().getItem() == item){
 				List<AspectStack> generated = new ArrayList<>();
 				for(Ingredient ingredient : recipe.getIngredients()){
@@ -148,7 +150,6 @@ public class ItemAspectRegistry extends JsonReloadListener{
 					((AspectInfluencingRecipe)recipe).influence(generated);
 				allGenerated.add(generated);
 			}
-		}
 		ret = allGenerated.stream()
 				// pair of aspects:total num of aspects
 				.map(stacks -> Pair.of(stacks, stacks.stream().mapToInt(AspectStack::getAmount).sum()))

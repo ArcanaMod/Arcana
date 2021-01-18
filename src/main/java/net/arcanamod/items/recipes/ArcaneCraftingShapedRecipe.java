@@ -333,7 +333,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 			if (saspect.equalsIgnoreCase("any")||saspect.equalsIgnoreCase("arcana:any")){
 				aspectStack = UndecidedAspectStack.createAny(amount);
 			}else{
-				aspectStack = UndecidedAspectStack.create(AspectUtils.getAspectByResourceLocation(new ResourceLocation(saspect)),amount,false);
+				aspectStack = UndecidedAspectStack.create(Aspect.fromResourceLocation(new ResourceLocation(saspect)),amount,false);
 			}
 			aspectStacks.add(aspectStack);
 		});

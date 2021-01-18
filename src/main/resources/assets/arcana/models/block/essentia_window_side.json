@@ -1,0 +1,50 @@
+{
+	"credit": "Made with Blockbench",
+	"ambientocclusion": false,
+	"textures": {
+		"1": "arcana:block/essentia_window",
+		"2": "arcana:block/essentia_window_grayscale",
+		"particle": "arcana:block/essentia_window_grayscale"
+	},
+	"elements": [
+		{
+			"from": [6, 6, 6],
+			"to": [10, 10, 10],
+			"faces": {
+				"north": {"uv": [6.5, 6.5, 9.5, 9.5], "texture": "#missing"},
+				"east": {"uv": [0, 0, 0, 0], "texture": "#1"}
+			}
+		},
+		{
+			"from": [6, 6, 0],
+			"to": [10, 10, 6],
+			"faces": {
+				"north": {"uv": [7, 7, 9, 9], "texture": "#1", "cullface": "north"},
+				"east": {"uv": [10, 7, 13.5, 9], "texture": "#1"},
+				"west": {"uv": [2.5, 7, 6, 9], "texture": "#1"},
+				"up": {"uv": [7, 2.5, 9, 6], "texture": "#1"},
+				"down": {"uv": [7, 10, 9, 13.5], "texture": "#1"}
+			}
+		},
+		{
+			"from": [6.1, 6.1, 0.1],
+			"to": [9.9, 9.9, 5.9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [15, 17, 13]},
+			"faces": {
+				"north": {"uv": [1.5, 7, 4.5, 9], "texture": "#2", "tintindex": 0},
+				"east": {"uv": [1.5, 7, 4.5, 9], "texture": "#2", "tintindex": 0},
+				"south": {"uv": [1.5, 7, 4.5, 9], "texture": "#2", "tintindex": 0},
+				"west": {"uv": [1.5, 7, 4.5, 9], "texture": "#2", "tintindex": 0},
+				"up": {"uv": [1.5, 7, 4.5, 9], "texture": "#2", "tintindex": 0},
+				"down": {"uv": [1.5, 7, 4.5, 9], "texture": "#2", "tintindex": 0}
+			}
+		}
+	],
+	"groups": [0,
+		{
+			"name": "chorus_plant_side",
+			"origin": [8, 8, 8],
+			"children": [1, 2]
+		}
+	]
+}

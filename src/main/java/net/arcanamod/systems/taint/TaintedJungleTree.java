@@ -1,7 +1,6 @@
 package net.arcanamod.systems.taint;
 
 import net.minecraft.block.trees.BigTree;
-import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.feature.*;
 
 import javax.annotation.Nullable;
@@ -22,6 +21,6 @@ public class TaintedJungleTree extends BigTree {
 	 */
 	@Nullable
 	protected ConfiguredFeature<HugeTreeFeatureConfig, ?> getHugeTreeFeature(Random random) {
-		return Feature.MEGA_JUNGLE_TREE.withConfiguration(DefaultBiomeFeatures.MEGA_JUNGLE_TREE_CONFIG);
+		return Feature.MEGA_JUNGLE_TREE.withConfiguration(TaintedFeatures.Config.MEGA_JUNGLE_TREE_CONFIG);
 	}
 }

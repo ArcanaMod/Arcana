@@ -4,12 +4,14 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.*;
 import net.arcanamod.items.attachment.Core;
+import net.arcanamod.systems.research.Icon;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
@@ -241,6 +243,26 @@ public final class UiUtil{
 	
 	public static void drawAspectStyleTooltip(String text, int mouseX, int mouseY, int screenWidth, int screenHeight){
 		GuiUtils.drawHoveringText(Collections.singletonList(text), mouseX, mouseY, screenWidth, screenHeight, -1, GuiUtils.DEFAULT_BACKGROUND_COLOR, 0xFF00505F, 0xFF00282F, Minecraft.getInstance().fontRenderer);
+	}
+	
+	public static void renderIcon(Icon icon, int x, int y, int itemZLevel){
+		// first, check if its an item
+		if(icon.getStack() != null && !icon.getStack().isEmpty()){
+			// this, uhh, doesn't work
+			// ItemRenderer adds 50 automatically, so we adjust for it
+			Minecraft.getInstance().getItemRenderer().zLevel = itemZLevel - 50;
+			RenderSystem.enableDepthTest();
+			RenderHelper.enableStandardItemLighting();
+			RenderSystem.disableLighting();
+			Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(icon.getStack(), x, y);
+			RenderSystem.disableLighting();
+			RenderSystem.enableRescaleNormal();
+		}else{
+			// otherwise, check for a texture
+			Minecraft.getInstance().getTextureManager().bindTexture(icon.getResourceLocation());
+			RenderSystem.enableDepthTest();
+			drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+		}
 	}
 
 	public static void renderVisCore(Core core, int x, int y) {

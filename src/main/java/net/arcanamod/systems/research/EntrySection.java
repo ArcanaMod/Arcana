@@ -4,20 +4,21 @@ import net.arcanamod.systems.research.impls.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static net.arcanamod.util.StreamUtils.streamAndApply;
 
 /**
- * Represents one section of content - for example, continuous text, an image, or an inline recipe.
+ * Represents one section of content - for example, continuous text, an image, or an inline recipe. May provide a number of pins.
  */
 public abstract class EntrySection{
 	
 	// static stuff
-	
 	// when addon support is to be added: change this from strings to ResourceLocations so mods can register more
 	private static Map<String, Function<String, EntrySection>> factories = new LinkedHashMap<>();
 	private static Map<String, Function<CompoundNBT, EntrySection>> deserializers = new LinkedHashMap<>();
@@ -97,5 +98,20 @@ public abstract class EntrySection{
 	public abstract CompoundNBT getData();
 	
 	public void addOwnRequirements(){
+	}
+	
+	/**
+	 * Returns a stream containing this entry's pins.
+	 *
+	 * @param index
+	 * 		The index in the entry of this section.
+	 * @param world
+	 * 		The world the player is in.
+	 * @param entry
+	 * 		The entry this is in.
+	 * @return This entry's pins.
+	 */
+	public Stream<Pin> getPins(int index, World world, ResearchEntry entry){
+		return Stream.empty();
 	}
 }

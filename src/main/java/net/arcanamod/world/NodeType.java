@@ -50,15 +50,50 @@ public abstract class NodeType{
 	}
 	
 	public void tick(IWorld world, AuraView nodes, Node node){
+		// Display the node
 		if(world.isRemote()){
 			GogglePriority priority = GogglePriority.getClientGogglePriority();
 			if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS)
 				world.addParticle(new NodeParticleData(node.nodeUniqueId(), node.type().texture(world, nodes, node), ArcanaParticles.NODE_PARTICLE.get()), node.getX(), node.getY(), node.getZ(), 0, 0, 0);
 		}
+		
+		// Regenerate aspects over time
+		// Time: default is 20 * 60, bright has 20 * 45, pale has 20 * 75
+		// Cap: default is 23, bright has 47, pale has 11
+		// Power: default is 5, bright has 7, pale has 4 (all +/- 1)
+		// These are random numbers I pulled out of the void, please adjust as is reasonable
+		
+		if(node.timeUntilRecharge <= 0){
+			node.timeUntilRecharge =rechargeTime(world, nodes, node);
+			// are we below our cap? if so, charge
+			if(node.getAspects().getHolders().stream().mapToInt(IAspectHolder::getCurrentVis).sum() < rechargeCap(world, nodes, node)){
+				int toCharge = rechargePower(world, nodes, node) + world.getRandom().nextInt(3) - 1;
+				// pick a random aspect and give 1-3 aspect to it until we're done
+				while(toCharge > 0){
+					IAspectHolder holder = node.getAspects().getHolders().get(world.getRandom().nextInt(node.getAspects().getHolders().size()));
+					int giving = Math.min(world.getRandom().nextInt(3) + 1, toCharge);
+					holder.insert(new AspectStack(holder.getContainedAspect(), giving), false);
+					toCharge -= giving;
+				}
+			}
+		}else
+			node.timeUntilRecharge--;
 	}
 	
 	public abstract ResourceLocation texture(IWorld world, AuraView nodes, Node node);
 	public abstract Collection<ResourceLocation> textures();
+	
+	public int rechargeTime(IWorld world, AuraView nodes, Node node){
+		return 20 * 60;
+	}
+	
+	public int rechargeCap(IWorld world, AuraView nodes, Node node){
+		return 23;
+	}
+	
+	public int rechargePower(IWorld world, AuraView nodes, Node node){
+		return 5;
+	}
 	
 	public String toString(){
 		return TYPES.containsValue(this) ? TYPES.inverse().get(this).toString() : super.toString();
@@ -128,6 +163,18 @@ public abstract class NodeType{
 				holder.insert(new AspectStack(holder.getContainedAspect(), holder.getCurrentVis() / 2), false);
 			return handler;
 		}
+		
+		public int rechargeTime(IWorld world, AuraView nodes, Node node){
+			return 20 * 45;
+		}
+		
+		public int rechargeCap(IWorld world, AuraView nodes, Node node){
+			return 47;
+		}
+		
+		public int rechargePower(IWorld world, AuraView nodes, Node node){
+			return 7;
+		}
 	}
 	
 	public static class PaleNodeType extends NodeType{
@@ -146,6 +193,18 @@ public abstract class NodeType{
 			for(IAspectHolder holder : handler.getHolders())
 				holder.drain(new AspectStack(holder.getContainedAspect(), (int)(holder.getCurrentVis() * 0.3)), false);
 			return handler;
+		}
+		
+		public int rechargeTime(IWorld world, AuraView nodes, Node node){
+			return 20 * 75;
+		}
+		
+		public int rechargeCap(IWorld world, AuraView nodes, Node node){
+			return 11;
+		}
+		
+		public int rechargePower(IWorld world, AuraView nodes, Node node){
+			return 4;
 		}
 	}
 	

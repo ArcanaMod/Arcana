@@ -12,11 +12,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class KoalaEntityRender extends MobRenderer<KoalaEntity, KoalaEntityModel<KoalaEntity>> {
+public class KoalaEntityRenderer extends MobRenderer<KoalaEntity, KoalaEntityModel<KoalaEntity>> {
     protected static final ResourceLocation TEXTURE = new ResourceLocation(Arcana.MODID,
             "textures/entity/koala.png");
 
-    public KoalaEntityRender(EntityRendererManager renderManagerIn) {
+    public KoalaEntityRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new KoalaEntityModel<KoalaEntity>(), 0.5f);
     }
 

@@ -64,7 +64,7 @@ public class Chemistry extends Puzzle{
 		for(JsonElement node : nodeArray){
 			if(node.isJsonPrimitive()){
 				String nodeSt = node.getAsString();
-				Aspect aspect = AspectUtils.getAspectByResourceLocation(new ResourceLocation(nodeSt));
+				Aspect aspect = Aspect.fromResourceLocation(new ResourceLocation(nodeSt));
 				if(aspect != null)
 					nodes.add(aspect);
 				else

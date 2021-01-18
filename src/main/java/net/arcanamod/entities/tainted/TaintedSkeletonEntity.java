@@ -20,8 +20,8 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 public class TaintedSkeletonEntity extends AbstractSkeletonEntity {
-	public TaintedSkeletonEntity(EntityType<? extends TaintedSkeletonEntity> p_i50194_1_, World p_i50194_2_) {
-		super(p_i50194_1_, p_i50194_2_);
+	public TaintedSkeletonEntity(EntityType<? extends Entity> type, World world) {
+		super((EntityType<? extends AbstractSkeletonEntity>) type, world);
 	}
 
 	protected SoundEvent getAmbientSound() {

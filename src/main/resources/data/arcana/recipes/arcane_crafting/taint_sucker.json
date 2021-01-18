@@ -1,0 +1,40 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "whw",
+    "gcg",
+    " w "
+  ],
+  "key": {
+    "w": [
+      {
+        "item": "arcana:greatwood_planks"
+      },
+      {
+        "item": "arcana:silverwood_planks"
+      }
+    ],
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "c": {
+      "item": "arcana:aura_crystal"
+    },
+    "h": {
+      "item": "minecraft:hopper"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:air",
+      "amount": 3
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 3
+    }
+  ],
+  "result": {
+    "item": "arcana:taint_sucker"
+  }
+}

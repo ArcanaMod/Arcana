@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:glass_bottle"
+  },
+  "out": {
+    "item": "arcana:taint_in_a_bottle"
+  },
+  "aspects": [
+    {
+      "aspect": "taint",
+      "amount": 10
+    },
+    {
+      "aspect": "imprison",
+      "amount": 3
+    }
+  ],
+  "research": [
+    "arcana:taint_in_a_bottle@2"
+  ]
+}

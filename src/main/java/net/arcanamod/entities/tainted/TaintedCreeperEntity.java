@@ -37,8 +37,8 @@ public class TaintedCreeperEntity extends CreeperEntity {
 	private int explosionRadius = 3;
 	private int droppedSkulls;
 
-	public TaintedCreeperEntity(EntityType<? extends CreeperEntity> type, World worldIn) {
-		super(type, worldIn);
+	public TaintedCreeperEntity(EntityType<? extends Entity> type, World worldIn) {
+		super((EntityType<? extends CreeperEntity>) type, worldIn);
 	}
 
 	protected void registerGoals() {

@@ -2,7 +2,7 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.blocks.Taint;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.capabilities.TaintTrackableCapability;
 import net.arcanamod.client.gui.ConfigScreen;
@@ -21,6 +21,8 @@ import net.arcanamod.capabilities.ResearcherCapability;
 import net.arcanamod.items.recipes.ArcanaRecipes;
 import net.arcanamod.world.NodeType;
 import net.arcanamod.capabilities.AuraChunkCapability;
+import net.arcanamod.world.WorldInteractions;
+import net.arcanamod.world.WorldInteractionsRegistry;
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.block.BlockState;
@@ -59,20 +61,27 @@ import javax.annotation.Nonnull;
  */
 @Mod(Arcana.MODID)
 public class Arcana{
-	public static final String MODID = "arcana";
 
+	// Main
+	public static final String MODID = "arcana";
 	public static final Logger logger = LogManager.getLogger("Arcana");
 	public static Arcana instance;
+
+	// Json Registry
 	public static ResearchLoader researchManager;
 	public static ItemAspectRegistry itemAspectRegistry;
-	
+	public static WorldInteractionsRegistry worldInteractionsRegistry;
+
+	// Item Groups
 	public static ItemGroup ITEMS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaBlocks.ARCANE_STONE.get()))
 			.setHasSearchBar(true)
 			.setBackgroundImage(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
 	public static ItemGroup TAINT = new SupplierItemGroup("taint", () -> new ItemStack(ArcanaBlocks.TAINTED_GRASS_BLOCK.get()));
-	
+
+	// Proxy
 	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
+	// Debug Mode
 	public static final boolean debug = true;
 	
 	public Arcana(){

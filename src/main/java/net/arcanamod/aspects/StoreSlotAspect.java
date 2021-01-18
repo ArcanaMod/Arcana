@@ -1,6 +1,6 @@
 package net.arcanamod.aspects;
 
-import net.arcanamod.NotImplementedException;
+import net.arcanamod.util.NotImplementedException;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
 import net.minecraftforge.common.capabilities.Capability;

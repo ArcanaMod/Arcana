@@ -1,14 +1,17 @@
 package net.arcanamod.client.gui;
 
+import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.ArcanaConfig;
+import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.network.Connection;
+import net.arcanamod.network.PkModifyPins;
 import net.arcanamod.systems.research.EntrySection;
+import net.arcanamod.systems.research.Pin;
 import net.arcanamod.systems.research.Requirement;
 import net.arcanamod.systems.research.ResearchEntry;
-import net.arcanamod.capabilities.Researcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -38,6 +41,7 @@ public class ResearchEntryScreen extends Screen{
 	Screen parentScreen;
 	
 	Button left, right, cont, ret;
+	List<PinButton> pins;
 	
 	// there is: golem, crucible, crafting, infusion circle, arcane crafting, structure, wand(, arrow), crafting result
 	public static final String OVERLAY_SUFFIX = "_gui_overlay.png";
@@ -117,6 +121,9 @@ public class ResearchEntryScreen extends Screen{
 			if(section != null)
 				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
+		
+		// Pin tooltips
+		pins.forEach(button -> button.renderAfter(mouseX, mouseY));
 	}
 	
 	public void init(@Nonnull Minecraft mc, int p_init_2_, int p_init_3_){
@@ -127,17 +134,18 @@ public class ResearchEntryScreen extends Screen{
 		left = addButton(new ChangePageButton(x - dist, y, false, button -> {
 			if(canTurnLeft())
 				index -= 2;
-			updateButtonVisibility();
+			updateButtons();
 		}));
 		right = addButton(new ChangePageButton(x + dist, y, true, button -> {
 			if(canTurnRight())
 				index += 2;
-			updateButtonVisibility();
+			updateButtons();
 		}));
 		String text = I18n.format("researchEntry.continue");
 		ExtendedButton button = new ExtendedButton(x - getMinecraft().fontRenderer.getStringWidth(text) / 2 + 2, y + 20, getMinecraft().fontRenderer.getStringWidth(text) + 10, 18, text, __ -> {
 			Connection.sendTryAdvance(entry.key());
-			updateButtonVisibility();
+			// need to update visuals when an advance packet is received...
+			updateButtons();
 		}){
 			// I can't be bothered to make a new type for something which will use this behaviours exactly once.
 			// If I ever need this behaviour elsewhere, I'll move it to a proper class.
@@ -147,14 +155,29 @@ public class ResearchEntryScreen extends Screen{
 			}
 		};
 		cont = addButton(button);
-		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, p_onPress_1_ -> onClose()));
-		updateButtonVisibility();
+		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, b -> onClose()));
+		pins = new ArrayList<>();
+		updateButtons();
 	}
 	
-	public void updateButtonVisibility(){
+	public void updateButtons(){
 		left.visible = canTurnLeft();
 		right.visible = canTurnRight();
-		cont.visible = Researcher.getFrom(getMinecraft().player).entryStage(entry) < getVisibleSections().size();
+		Researcher researcher = Researcher.getFrom(getMinecraft().player);
+		cont.visible = researcher.entryStage(entry) < getVisibleSections().size();
+		
+		pins.forEach(button -> {
+			buttons.remove(button);
+			children.remove(button);
+		});
+		pins.clear();
+		List<Pin> collect = entry.getAllPins(getMinecraft().world).filter(p -> researcher.entryStage(p.getEntry()) >= p.getStage()).collect(Collectors.toList());
+		for(int i = 0, size = collect.size(); i < size; i++){
+			Pin pin = collect.get(i);
+			PinButton e = new PinButton((width / 2) + PAGE_WIDTH + 21, (height - PAGE_HEIGHT) / 2 + i * 22, pin);
+			pins.add(e);
+			addButton(e);
+		}
 	}
 	
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers){
@@ -205,6 +228,7 @@ public class ResearchEntryScreen extends Screen{
 		return entry.sections().stream().filter(this::visible).mapToInt(this::span).sum();
 	}
 	
+	// What entry we're looking at
 	private EntrySection getSectionAtIndex(int index){
 		if(index == 0)
 			return entry.sections().get(0);
@@ -217,6 +241,7 @@ public class ResearchEntryScreen extends Screen{
 		return null;
 	}
 	
+	// How far along in the entry we are
 	private int sectionIndex(int index){
 		int cur = 0;
 		for(EntrySection section : getVisibleSections()){
@@ -227,12 +252,26 @@ public class ResearchEntryScreen extends Screen{
 		return 0; // throw/show an error
 	}
 	
+	// Index of the given stage
+	int indexOfStage(int stage){
+		int cur = 0;
+		List<EntrySection> sections = getVisibleSections();
+		for(int i = 0, size = sections.size(); i < size; i++){
+			EntrySection section = sections.get(i);
+			if(i == stage)
+				return cur;
+			cur += span(section);
+		}
+		return 0; // throw/show an error
+	}
+	
 	private List<EntrySection> getVisibleSections(){
 		return entry.sections().stream().filter(this::visible).collect(Collectors.toList());
 	}
 	
 	private boolean visible(EntrySection section){
-		return Researcher.getFrom(getMinecraft().player).entryStage(entry) >= entry.sections().indexOf(section);
+		// cant use getMinecraft here because this is called from ResearchBookScreen before this is set
+		return Researcher.getFrom(Minecraft.getInstance().player).entryStage(entry) >= entry.sections().indexOf(section);
 	}
 	
 	private <T extends Requirement> RequirementRenderer<T> renderer(T requirement){
@@ -250,22 +289,16 @@ public class ResearchEntryScreen extends Screen{
 			setBlitOffset(0);
 		}else{
 			String s = String.valueOf(amount);
-			/*RenderSystem.disableLighting();
-			RenderSystem.disableDepthTest();
-			RenderSystem.disableBlend();*/
 			IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
 			Matrix4f matrix = TransformationMatrix.identity().getMatrix();
 			matrix.translate(new Vector3f(0, 0, 300));
 			getMinecraft().fontRenderer.renderString(s, (float)(x + 17 - getMinecraft().fontRenderer.getStringWidth(s)), (float)(y + 9), complete ? 0xaaffaa : 0xffaaaa, true, matrix, buffer, false, 0, 15728880);
 			buffer.finish();
-			/*RenderSystem.enableBlend();
-			RenderSystem.enableLighting();
-			RenderSystem.enableDepthTest();*/
 		}
 	}
 	
 	private int span(EntrySection section){
-		return EntrySectionRenderer.get(section).span(section, getMinecraft().player);
+		return EntrySectionRenderer.get(section).span(section, Minecraft.getInstance().player);
 	}
 	
 	public boolean isPauseScreen(){
@@ -302,8 +335,8 @@ public class ResearchEntryScreen extends Screen{
 	
 	class ReturnToBookButton extends Button{
 		
-		public ReturnToBookButton(int x, int y, IPressable pressable){
-			super(x, y, 15, 8, "text", pressable);
+		public ReturnToBookButton(int x, int y, IPressable event){
+			super(x, y, 15, 8, "", event);
 		}
 		
 		@ParametersAreNonnullByDefault
@@ -318,6 +351,68 @@ public class ResearchEntryScreen extends Screen{
 				drawTexturedModalRect(x, y, texX, texY, width, height);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 			}
+		}
+	}
+	
+	class PinButton extends Button{
+		
+		Pin pin;
+		
+		public PinButton(int x, int y, Pin pin){
+			super(x, y, 18, 18, "", b -> {
+				if(Minecraft.getInstance().currentScreen instanceof ResearchEntryScreen){
+					// can't reference variables here directly
+					ResearchEntryScreen screen = (ResearchEntryScreen)Minecraft.getInstance().currentScreen;
+					if(!Screen.hasControlDown()){
+						// if stage index is an even number, skip there; else skip to before it.
+						int stageIndex = screen.indexOfStage(pin.getStage());
+						screen.index = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
+						screen.updateButtons();
+					}else{
+						Researcher from = Researcher.getFrom(Minecraft.getInstance().player);
+						List<Integer> pinned = from.getPinned().get(pin.getEntry().key());
+						if(pinned != null){
+							if(!pinned.contains(pin.getStage())){
+								from.addPinned(pin.getEntry().key(), pin.getStage());
+								Connection.sendModifyPins(pin, PkModifyPins.Diff.pin);
+							}else{
+								from.removePinned(pin.getEntry().key(), pin.getStage());
+								Connection.sendModifyPins(pin, PkModifyPins.Diff.unpin);
+							}
+						}else{
+							// well we know for sure its not been pinned so we have no pins here
+							from.addPinned(pin.getEntry().key(), pin.getStage());
+							Connection.sendModifyPins(pin, PkModifyPins.Diff.pin);
+						}
+					}
+				}
+			});
+			visible = true;
+			this.pin = pin;
+		}
+		
+		public void renderButton(int mouseX, int mouseY, float partialTicks){
+			if(visible){
+				RenderSystem.color3f(1, 1, 1);
+				
+				int stageIndex = indexOfStage(pin.getStage());
+				int xOffset = index == (stageIndex % 2 == 0 ? stageIndex : stageIndex - 1) ? 6 : isHovered ? 4 : 0;
+				UiUtil.renderIcon(pin.getIcon(), x + xOffset - 1, y - 1, 0);
+				
+				getMinecraft().getTextureManager().bindTexture(bg);
+				RenderSystem.color4f(1f, 1f, 1f, 1f);
+				drawTexturedModalRect(x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
+			}
+		}
+		
+		public void renderAfter(int mouseX, int mouseY){
+			// check if we're already pinned
+			List<Integer> pinned = Researcher.getFrom(getMinecraft().player).getPinned().get(entry.key());
+			String tooltip = TextFormatting.AQUA + I18n.format(pinned != null && pinned.contains(pin.getStage()) ? "researchEntry.unpin" : "researchEntry.pin");
+			
+			isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+			if(isHovered)
+				GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), tooltip), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 		}
 	}
 }

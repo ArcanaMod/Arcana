@@ -40,7 +40,7 @@ public class ArmourCast extends Cast {
 	}
 
 	public int getWardingDuration() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 1)*200;
+		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 10);
 	}
 
 	public int getAmplifier() {
@@ -50,7 +50,7 @@ public class ArmourCast extends Cast {
 	@Override
 	public ActionResultType useOnEntity(PlayerEntity caster, Entity targetEntity) {
 		if (targetEntity instanceof LivingEntity)
-			((LivingEntity)targetEntity).addPotionEffect(new EffectInstance(ArcanaEffects.WARDING.get(),getWardingDuration(),getAmplifier(),false,true));
+			((LivingEntity)targetEntity).addPotionEffect(new EffectInstance(ArcanaEffects.WARDING.get(),getWardingDuration(),getAmplifier(),false,false));
 		return ActionResultType.SUCCESS;
 	}
 

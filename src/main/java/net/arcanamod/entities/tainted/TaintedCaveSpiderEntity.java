@@ -15,8 +15,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class TaintedCaveSpiderEntity extends SpiderEntity {
-	public TaintedCaveSpiderEntity(EntityType<? extends TaintedCaveSpiderEntity> type, World worldIn) {
-		super(type, worldIn);
+	public TaintedCaveSpiderEntity(EntityType<? extends Entity> type, World worldIn) {
+		super((EntityType<? extends SpiderEntity>) type, worldIn);
 	}
 
 	protected void registerAttributes() {

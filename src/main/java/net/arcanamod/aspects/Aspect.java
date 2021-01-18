@@ -2,6 +2,7 @@ package net.arcanamod.aspects;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaVariables;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -72,5 +73,13 @@ public class Aspect {
 
 	public static Aspect createDummy() {
 		return new Aspect("dummy",((int)Short.MAX_VALUE)+1,ColorRange.create(0x0,0x0,0x0,0x0,0x0),null);
+	}
+
+	public ResourceLocation toResourceLocation() {
+		return Aspects.ASPECTS.inverse().get(this);
+	}
+
+	public static Aspect fromResourceLocation(ResourceLocation resourceLocation) {
+		return Aspects.ASPECTS.get(resourceLocation);
 	}
 }

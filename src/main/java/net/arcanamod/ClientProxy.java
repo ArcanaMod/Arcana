@@ -8,7 +8,7 @@ import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.render.DairSpiritRenderer;
-import net.arcanamod.client.render.KoalaEntityRender;
+import net.arcanamod.client.render.KoalaEntityRenderer;
 import net.arcanamod.client.render.WillowSpiritRenderer;
 import net.arcanamod.client.render.aspects.ArcanaParticles;
 import net.arcanamod.client.render.tiles.*;
@@ -106,7 +106,7 @@ public class ClientProxy extends CommonProxy{
 		);
 		
 		inst.getItemColors().register((stack, layer) ->
-				layer == 1 ? FocusItem.getColourAspect(stack).getColorRange().get(3) : 0xffffffff,
+				layer == 1 ? FocusItem.getColourAspect(stack) : 0xffffffff,
 				ArcanaItems.DEFAULT_FOCUS::get
 		);
 		
@@ -130,7 +130,7 @@ public class ClientProxy extends CommonProxy{
 	
 	public void onResearchChange(ResearchEvent event){
 		if(Minecraft.getInstance().currentScreen instanceof ResearchEntryScreen)
-			((ResearchEntryScreen)Minecraft.getInstance().currentScreen).updateButtonVisibility();
+			((ResearchEntryScreen)Minecraft.getInstance().currentScreen).updateButtons();
 	}
 	
 	public PlayerEntity getPlayerOnClient(){
@@ -168,7 +168,7 @@ public class ClientProxy extends CommonProxy{
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));
 
 		//Entity Render
-		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.WILLOW_SPIRIT.get(), WillowSpiritRenderer::new);
 
