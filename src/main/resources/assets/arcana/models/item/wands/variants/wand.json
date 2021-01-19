@@ -8,12 +8,12 @@
 			"to": [8.9, 14, 8.9],
 			"rotation": {"angle": 0, "axis": "y", "origin": [16, 13, 16]},
 			"faces": {
-				"north": {"uv": [1.5, 0, 2.5, 6], "texture": "#core"},
-				"east": {"uv": [1.5, 0, 2.5, 6], "texture": "#core"},
-				"south": {"uv": [1.5, 0, 2.5, 6], "texture": "#core"},
-				"west": {"uv": [1.5, 0, 2.5, 6], "texture": "#core"},
-				"up": {"uv": [0, 0, 1.8, 0.9], "texture": "#core"},
-				"down": {"uv": [0, 0, 1.8, 0.9], "texture": "#core"}
+				"north": {"uv": [0, 0, 16, 16], "texture": "#core"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#core"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#core"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#core"},
+				"up": {"uv": [0, 0, 16, 2.66667], "texture": "#core"},
+				"down": {"uv": [0, 0, 16, 2.66667], "texture": "#core"}
 			}
 		}
 	],
@@ -27,12 +27,5 @@
 		"fixed": {
 			"translation": [0, 0, -0.75]
 		}
-	},
-	"groups": [
-		{
-			"name": "Wand",
-			"origin": [15, 23, 15],
-			"children": [0]
-		}
-	]
+	}
 }
