@@ -5,6 +5,48 @@
       "amount": 5
     }
   ],
+  "minecraft:turtle_egg": [
+    {
+      "aspect": "life",
+      "amount": 6
+    },
+    {
+      "aspect": "beast",
+      "amount": 3
+    },
+    {
+      "aspect": "water",
+      "amount": 5
+    }
+  ],
+  "minecraft:heart_of_the_sea": [
+    {
+      "aspect": "life",
+      "amount": 5
+    },
+    {
+      "aspect": "aura",
+      "amount": 5
+    },
+    {
+      "aspect": "water",
+      "amount": 20
+    }
+  ],
+  "minecraft:nautilus_shell": [
+    {
+      "aspect": "air",
+      "amount": 5
+    },
+    {
+      "aspect": "water",
+      "amount": 10
+    },
+    {
+      "aspect": "greed",
+      "amount": 1
+    }
+  ],
   "minecraft:book": [
     {
       "aspect": "senses",
