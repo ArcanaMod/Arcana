@@ -69,8 +69,9 @@ public class ResearchNoteItem extends Item{
 	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
 		CompoundNBT compound = stack.getTag();
 		if(compound != null && compound.contains("research")){
-			ResourceLocation research = new ResourceLocation(compound.getString("research"));
-			tooltip.add(new TranslationTextComponent(ResearchBooks.getEntry(research).name()).applyTextStyle(TextFormatting.AQUA));
+			ResearchEntry research = ResearchBooks.getEntry(new ResourceLocation(compound.getString("research")));
+			if(research != null)
+				tooltip.add(new TranslationTextComponent(research.name()).applyTextStyle(TextFormatting.AQUA));
 		}
 	}
 }
