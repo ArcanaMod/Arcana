@@ -41,10 +41,26 @@ public final class Huds{
 	public static void onRenderGameOverlay(RenderGameOverlayEvent.Post event){
 		ClientPlayerEntity player = Minecraft.getInstance().player;
 		if(player != null && event.getType().equals(RenderGameOverlayEvent.ElementType.ALL)){
-			ItemStack stack = player.getHeldItemMainhand();
-			if(stack.getItem() instanceof WandItem){
-				Core core = WandItem.getCore(stack);
-				IAspectHandler aspects = IAspectHandler.getFrom(stack);
+			ItemStack mainHand = player.getHeldItemMainhand();
+			ItemStack offHand = player.getHeldItemOffhand();
+
+			ItemStack wand = ItemStack.EMPTY;
+			ItemStack meter = ItemStack.EMPTY;
+			if (mainHand.getItem() instanceof WandItem) {
+				wand = mainHand;
+			} else if (offHand.getItem() instanceof WandItem) {
+				wand = offHand;
+			}
+			if (mainHand.getItem().equals(ArcanaItems.FLUX_METER.get())) {
+				meter = mainHand;
+			} else if (offHand.getItem().equals(ArcanaItems.FLUX_METER.get())) {
+				meter = offHand;
+			}
+
+			// wand GUI (high render priority)
+			if (wand != ItemStack.EMPTY) {
+				Core core = WandItem.getCore(wand);
+				IAspectHandler aspects = IAspectHandler.getFrom(wand);
 				if(aspects != null){
 					int offX = ArcanaConfig.WAND_HUD_X.get().intValue();
 					int offY = ArcanaConfig.WAND_HUD_Y.get().intValue();
@@ -55,10 +71,11 @@ public final class Huds{
 					RenderSystem.scalef(scale,scale,2);
 					UiUtil.renderVisCore(core, baseX, baseY);
 					UiUtil.renderVisMeter(core, aspects, baseX, baseY);
-					WandItem.getFocusStack(stack).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
+					WandItem.getFocusStack(wand).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
 					RenderSystem.popMatrix();
 				}
-			}else if(stack.getItem().equals(ArcanaItems.FLUX_METER.get())){
+			// flux meter GUI
+			} else if (meter != ItemStack.EMPTY){
 				// display filling at 8,8
 				// 10 frames, 32x100
 				int frame = (int)((player.ticksExisted + event.getPartialTicks()) % 10);
