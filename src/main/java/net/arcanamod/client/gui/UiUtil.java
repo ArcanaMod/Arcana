@@ -296,14 +296,13 @@ public final class UiUtil{
 	public static void renderVisFill(AspectStack aspStack, int visMax, boolean vertical, int x, int y) {
 		int meterShort = 3;
 		int meterLen = 16;
-		int renderLen = (aspStack.getAmount() * 16) / visMax;
+		int renderLen = (aspStack.getAmount() * meterLen) / visMax;
 		if (renderLen > 0) {
 			Minecraft.getInstance().getTextureManager().bindTexture(aspStack.getAspect().getVisMeterTexture());
-			// TODO: Someone please tell me why this isn't incorrect. What the hell...
 			if (vertical)
-				drawModalRectWithCustomSizedTexture(x, y, 0, 0, meterShort, renderLen, meterLen, meterShort);
+				drawModalRectWithCustomSizedTexture(x, y, 0, 0, meterShort, renderLen, meterLen, meterLen);
 			else
-				drawModalRectWithCustomSizedTexture(x, y, 0, 0, renderLen, meterShort, meterShort, meterLen);
+				drawModalRectWithCustomSizedTexture(x, y, 0, 0, renderLen, meterShort, meterLen, meterLen);
 		}
 	}
 }
