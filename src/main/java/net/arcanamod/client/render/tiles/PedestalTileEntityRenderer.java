@@ -22,7 +22,6 @@ public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTileE
 		super(rendererDispatcher);
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void render(PedestalTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay){
 		matrixStack.push();
 		

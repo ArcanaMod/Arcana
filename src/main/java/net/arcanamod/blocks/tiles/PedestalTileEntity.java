@@ -4,6 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -54,5 +55,9 @@ public class PedestalTileEntity extends TileEntity{
 	public void handleUpdateTag(CompoundNBT tag){
 		super.handleUpdateTag(tag);
 		items.deserializeNBT(tag.getCompound("items"));
+	}
+	
+	public AxisAlignedBB getRenderBoundingBox(){
+		return new AxisAlignedBB(pos, pos.add(1, 2, 1));
 	}
 }
