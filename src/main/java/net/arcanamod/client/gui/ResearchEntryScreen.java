@@ -193,6 +193,12 @@ public class ResearchEntryScreen extends Screen{
 	
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
 		super.mouseClicked(mouseX, mouseY, mouseButton);
+		// mouse button 1 is right click, just return
+		if(mouseButton == 1){
+			onClose();
+			return true;
+		}
+		// mouse button 0 is left click, defer to entries and requirements
 		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
@@ -212,6 +218,18 @@ public class ResearchEntryScreen extends Screen{
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
 				return EntrySectionRenderer.get(section).onClick(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
+		}
+		return false;
+	}
+	
+	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
+		if(scroll > 0 && canTurnLeft()){
+			index -= 2;
+			return true;
+		}
+		if(scroll < 0 && canTurnRight()){
+			index += 2;
+			return true;
 		}
 		return false;
 	}
