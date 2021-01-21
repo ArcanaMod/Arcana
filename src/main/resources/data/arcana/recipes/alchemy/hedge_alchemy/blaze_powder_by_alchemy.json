@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:gunpowder"
+  },
+  "out": {
+    "item": "minecraft:blaze_powder"
+  },
+  "aspects": [
+    {
+      "aspect": "fire",
+      "amount": 2
+    },
+    {
+      "aspect": "energy",
+      "amount": 2
+    }
+  ],
+  "research": [
+    "arcana:hedge_alchemy@3"
+  ]
+}

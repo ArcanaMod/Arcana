@@ -174,7 +174,7 @@ public class ResearchEntryScreen extends Screen{
 		List<Pin> collect = entry.getAllPins(getMinecraft().world).filter(p -> researcher.entryStage(p.getEntry()) >= p.getStage()).collect(Collectors.toList());
 		for(int i = 0, size = collect.size(); i < size; i++){
 			Pin pin = collect.get(i);
-			PinButton e = new PinButton((width / 2) + PAGE_WIDTH + 21, (height - PAGE_HEIGHT) / 2 + i * 22, pin);
+			PinButton e = new PinButton((width / 2) + PAGE_WIDTH + 21, (height - PAGE_HEIGHT) / 2 + i * (size > 7 ? 21 : 22) - (size > 7 ? 15 : 0), pin);
 			pins.add(e);
 			addButton(e);
 		}

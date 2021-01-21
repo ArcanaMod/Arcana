@@ -5,6 +5,7 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.IAspectHolder;
 
+import java.util.Comparator;
 import java.util.List;
 
 // TODO: this stuff should be fine in AspectHandler but that's currently a little messy so its here rn
@@ -24,12 +25,15 @@ public final class VisUtils{
 	 */
 	public static void moveAllAspects(IAspectHandler from, IAspectHandler to, int max){
 		int transferred = 0;
-		List<IAspectHolder> toHolders = from.getHolders();
-		for(IAspectHolder holder : toHolders){
+		List<IAspectHolder> fromHolders = from.getHolders();
+		for(IAspectHolder holder : fromHolders){
 			if(transferred >= max && max != -1)
 				break;
-			if(holder.getCurrentVis() > 0)
-				for(IAspectHolder toHolder : to.getHolders()){
+			if(holder.getCurrentVis() > 0){
+				List<IAspectHolder> holders = to.getHolders();
+				// move empty holders to the end
+				//holders.sort((a, b) -> a.getCurrentVis() == 0 ? (b.getCurrentVis() == 0 ? 0 : 1) : (b.getCurrentVis() == 0 ? -1 : 0));
+				for(IAspectHolder toHolder : holders){
 					if(transferred >= max && max != -1)
 						break;
 					if(toHolder.getContainedAspect() == holder.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
@@ -44,6 +48,7 @@ public final class VisUtils{
 							toHolder.insert(stack, false);
 						}
 				}
+			}
 		}
 	}
 	
@@ -58,8 +63,11 @@ public final class VisUtils{
 	 */
 	public static void moveAspects(IAspectHolder from, IAspectHandler to, int max){
 		int transferred = 0;
-		if(from.getCurrentVis() > 0)
-			for(IAspectHolder toHolder : to.getHolders()){
+		if(from.getCurrentVis() > 0){
+			List<IAspectHolder> holders = to.getHolders();
+			// move empty holders to the end
+			//holders.sort((a, b) -> a.getCurrentVis() == 0 ? (b.getCurrentVis() == 0 ? 0 : 1) : (b.getCurrentVis() == 0 ? -1 : 0));
+			for(IAspectHolder toHolder : holders){
 				if(transferred >= max && max != -1)
 					break;
 				if(toHolder.getContainedAspect() == from.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
@@ -74,5 +82,6 @@ public final class VisUtils{
 						toHolder.insert(stack, false);
 					}
 			}
+		}
 	}
 }

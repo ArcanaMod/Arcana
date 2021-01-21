@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "minecraft:leaves"
+  },
+  "out": {
+    "item": "minecraft:dead_bush"
+  },
+  "aspects": [
+    {
+      "aspect": "death",
+      "amount": 1
+    },
+    {
+      "aspect": "fire",
+      "amount": 1
+    }
+  ],
+  "research": [
+    "arcana:hedge_alchemy@3"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:quartz"
+  },
+  "out": {
+    "item": "minecraft:flint"
+  },
+  "aspects": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "crystal",
+      "amount": 2
+    }
+  ],
+  "research": [
+    "arcana:hedge_alchemy@3"
+  ]
+}

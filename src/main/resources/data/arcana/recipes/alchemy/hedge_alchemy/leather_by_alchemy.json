@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:rotten_flesh"
+  },
+  "out": {
+    "item": "minecraft:leather"
+  },
+  "aspects": [
+    {
+      "aspect": "ice",
+      "amount": 1
+    },
+    {
+      "aspect": "armour",
+      "amount": 1
+    }
+  ],
+  "research": [
+    "arcana:hedge_alchemy@3"
+  ]
+}
