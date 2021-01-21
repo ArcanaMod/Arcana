@@ -40,15 +40,21 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.arcanium.stage.1"
+          "content": "research.arcana.arcanium.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:arcanium_puzzle}"
+          ]
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/arcanium_ingot",
+          "requirements": [
+            "0*arcana:arcanium_ingot"
+          ]
         },
         {
           "type": "string",
           "content": "research.arcana.arcanium.stage.2"
-        },
-        {
-          "type": "alchemy",
-          "content": "arcana:arcanium_ingot"
         }
       ]
     },
@@ -506,6 +512,16 @@
         "arcana:sloth",
         "arcana:slime",
         "arcana:crystal"
+      ]
+    },
+    {
+      "key": "arcana:arcanium_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:mana",
+        "arcana:metal",
+        "arcana:energy",
+        "arcana:tool"
       ]
     }
   ]

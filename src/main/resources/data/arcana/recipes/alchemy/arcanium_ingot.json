@@ -11,5 +11,8 @@
       "aspect": "mana",
       "amount": 6
     }
+  ],
+  "research": [
+    "arcana:arcanium@1"
   ]
 }
