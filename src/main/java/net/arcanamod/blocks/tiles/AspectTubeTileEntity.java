@@ -349,6 +349,14 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		public void setIgnoreFullness(boolean ignoreFullness){
 			cell.setIgnoreFullness(ignoreFullness);
 		}
+		
+		public boolean canInput(){
+			return cell.canInput();
+		}
+		
+		public void setCanInput(boolean canInput){
+			cell.setCanInput(canInput);
+		}
 	}
 
 	@Override

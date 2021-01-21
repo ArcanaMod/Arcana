@@ -9,7 +9,7 @@ public class AspectCell implements IAspectHolder {
 	private AspectStack stored = AspectStack.EMPTY;
 	private Aspect optionalWhitelist = null;
 	private int capacity;
-	public boolean ignoreFullness = false;
+	public boolean ignoreFullness = false, canInput = true;
 
 	public AspectCell(){
 		this(100);
@@ -94,6 +94,7 @@ public class AspectCell implements IAspectHolder {
 		nbt.putString("aspect", stored.getAspect().name().toLowerCase());
 		nbt.putString("whitelisted", optionalWhitelist != null ? optionalWhitelist.name().toLowerCase() : "null");
 		nbt.putBoolean("ignoreFullness", ignoreFullness);
+		nbt.putBoolean("canInput", canInput);
 		return nbt;
 	}
 
@@ -104,8 +105,11 @@ public class AspectCell implements IAspectHolder {
 		String whitelisted = compoundNBT.getString("whitelisted");
 		Aspect whitelist = whitelisted.equals("null") ? null : Aspects.valueOf(whitelisted.toUpperCase());
 		boolean ignoresFullness = compoundNBT.getBoolean("ignoreFullness");
+		// getter returns false by default, but we want this to be true by default
+		boolean canInput = !compoundNBT.contains("canInput") || compoundNBT.getBoolean("canInput");
 		AspectCell cell = new AspectCell(capacity != 0 ? capacity : 100, whitelist);
 		cell.ignoreFullness = ignoresFullness;
+		cell.canInput = canInput;
 		cell.insert(new AspectStack(aspect, amount), false);
 		return cell;
 	}
@@ -141,6 +145,14 @@ public class AspectCell implements IAspectHolder {
 		this.ignoreFullness = ignoreFullness;
 	}
 	
+	public boolean canInput(){
+		return canInput;
+	}
+	
+	public void setCanInput(boolean canInput){
+		this.canInput = canInput;
+	}
+	
 	public void setWhitelist(Aspect whitelist){
 		this.optionalWhitelist = whitelist;
 	}
@@ -151,6 +163,8 @@ public class AspectCell implements IAspectHolder {
 				"stored=" + stored +
 				", capacity=" + capacity +
 				", whitelisted=" + optionalWhitelist +
+				", ignoresFullness=" + ignoreFullness +
+				", canInput=" + canInput +
 				'}';
 	}
 }

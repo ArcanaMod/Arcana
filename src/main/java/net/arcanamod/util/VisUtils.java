@@ -11,6 +11,10 @@ import java.util.List;
 // TODO: this stuff should be fine in AspectHandler but that's currently a little messy so its here rn
 public final class VisUtils{
 	
+	public static final Comparator<IAspectHolder> EMPTY_SORTER = (a, b) -> a.getCurrentVis() == 0 ? (b.getCurrentVis() == 0 ? 0 : 1) : (b.getCurrentVis() == 0 ? -1 : 0);
+	public static final Comparator<IAspectHolder> VOID_SORTER = (a, b) -> a.isIgnoringFullness() ? (b.isIgnoringFullness() ? 0 : 1) : (b.isIgnoringFullness() ? -1 : 0);
+	public static final Comparator<IAspectHolder> INPUT_PRIORITY_SORTER = VOID_SORTER.thenComparing(EMPTY_SORTER);
+	
 	/**
 	 * Moves som eor all aspects from <code>from</code> to <code>to</code>.
 	 * Iterates through every holder in <code>from</code> and tries to empty them into every holder in <code>to</code>.
@@ -31,13 +35,13 @@ public final class VisUtils{
 				break;
 			if(holder.getCurrentVis() > 0){
 				List<IAspectHolder> holders = to.getHolders();
-				// move empty holders to the end
-				//holders.sort((a, b) -> a.getCurrentVis() == 0 ? (b.getCurrentVis() == 0 ? 0 : 1) : (b.getCurrentVis() == 0 ? -1 : 0));
+				// move void cells, then empty cells to the end
+				holders.sort(INPUT_PRIORITY_SORTER);
 				for(IAspectHolder toHolder : holders){
 					if(transferred >= max && max != -1)
 						break;
 					if(toHolder.getContainedAspect() == holder.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
-						if(toHolder.getCapacity() > toHolder.getCurrentVis()){
+						if(toHolder.canInput() && (toHolder.getCapacity() > toHolder.getCurrentVis() || toHolder.isIgnoringFullness())){
 							int toInsert = holder.getCurrentVis();
 							if(!toHolder.isIgnoringFullness())
 								toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getCurrentVis());
@@ -65,13 +69,13 @@ public final class VisUtils{
 		int transferred = 0;
 		if(from.getCurrentVis() > 0){
 			List<IAspectHolder> holders = to.getHolders();
-			// move empty holders to the end
-			//holders.sort((a, b) -> a.getCurrentVis() == 0 ? (b.getCurrentVis() == 0 ? 0 : 1) : (b.getCurrentVis() == 0 ? -1 : 0));
+			// move void cells, then empty cells to the end
+			holders.sort(INPUT_PRIORITY_SORTER);
 			for(IAspectHolder toHolder : holders){
 				if(transferred >= max && max != -1)
 					break;
 				if(toHolder.getContainedAspect() == from.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
-					if(toHolder.getCapacity() > toHolder.getCurrentVis()){
+					if(toHolder.canInput() && (toHolder.getCapacity() > toHolder.getCurrentVis() || toHolder.isIgnoringFullness())){
 						int toInsert = from.getCurrentVis();
 						if(!toHolder.isIgnoringFullness())
 							toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getCurrentVis());

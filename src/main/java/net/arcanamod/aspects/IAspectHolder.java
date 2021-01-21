@@ -100,4 +100,8 @@ public interface IAspectHolder {
 	boolean isIgnoringFullness();
 
 	void setIgnoreFullness(boolean ignoreFullness);
+	
+	boolean canInput();
+	
+	void setCanInput(boolean canInput);
 }

@@ -39,8 +39,11 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	public AlembicTileEntity(){
 		super(ArcanaTiles.ALEMBIC_TE.get());
 		// why isn't this done by default :(
-		for(int i = 0; i < 5; i++)
-			aspects.createCell(new AspectCell(50));
+		for(int i = 0; i < 5; i++){
+			AspectCell cell = new AspectCell(50);
+			cell.setCanInput(false);
+			aspects.createCell(cell);
+		}
 	}
 	
 	public void tick(){
