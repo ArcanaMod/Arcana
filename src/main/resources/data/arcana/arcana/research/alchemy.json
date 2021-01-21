@@ -55,6 +55,14 @@
         {
           "type": "string",
           "content": "research.arcana.arcanium.stage.2"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:silverwood_sticks"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:tools/arcanium/arcanium_pickaxe"
         }
       ]
     },
