@@ -7,10 +7,13 @@ import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.network.Connection;
+import net.arcanamod.network.PkModifyPins;
 import net.arcanamod.systems.research.*;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Matrix4f;
@@ -30,6 +33,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.*;
@@ -678,14 +682,31 @@ public class ResearchBookScreen extends Screen{
 		
 		public PinButton(int x, int y, Pin pin){
 			super(x, y, 18, 18, "", b -> {
-				// lets jump over to the specific stage
-				// first check if you even have the research
-				ResearchEntry entry = pin.getEntry();
-				if(entry != null && Researcher.getFrom(Minecraft.getInstance().player).entryStage(entry) >= pin.getStage()){
-					ResearchEntryScreen in = new ResearchEntryScreen(entry, Minecraft.getInstance().currentScreen);
-					int stageIndex = in.indexOfStage(pin.getStage());
-					in.index = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
-					Minecraft.getInstance().displayGuiScreen(in);
+				if(Screen.hasControlDown()){
+					// unpin
+					Researcher from = Researcher.getFrom(Minecraft.getInstance().player);
+					List<Integer> pinned = from.getPinned().get(pin.getEntry().key());
+					if(pinned != null){
+						from.removePinned(pin.getEntry().key(), pin.getStage());
+						Connection.sendModifyPins(pin, PkModifyPins.Diff.unpin);
+					}
+					// and remove this button
+					ResearchBookScreen thisScreen = (ResearchBookScreen)Minecraft.getInstance().currentScreen;
+					// can't use this because we're still in superclass constructor, h
+					Predicate<Object> isThatButtonThis = n -> n instanceof PinButton && ((PinButton)n).pin == pin;
+					thisScreen.buttons.removeIf(isThatButtonThis);
+					thisScreen.children.removeIf(isThatButtonThis);
+					thisScreen.tooltipButtons.removeIf(isThatButtonThis);
+				}else{
+					// lets jump over to the specific stage
+					// first check if you even have the research
+					ResearchEntry entry = pin.getEntry();
+					if(entry != null && Researcher.getFrom(Minecraft.getInstance().player).entryStage(entry) >= pin.getStage()){
+						ResearchEntryScreen in = new ResearchEntryScreen(entry, Minecraft.getInstance().currentScreen);
+						int stageIndex = in.indexOfStage(pin.getStage());
+						in.index = stageIndex % 2 == 0 ? stageIndex : stageIndex - 1;
+						Minecraft.getInstance().displayGuiScreen(in);
+					}
 				}
 			});
 			this.pin = pin;
@@ -707,7 +728,7 @@ public class ResearchBookScreen extends Screen{
 		public void renderAfter(int mouseX, int mouseY){
 			isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			if(isHovered)
-				GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), TextFormatting.AQUA + I18n.format("researchBook.jump_to_pin")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
+				GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), TextFormatting.AQUA + I18n.format("researchBook.jump_to_pin"), TextFormatting.AQUA + I18n.format("researchEntry.unpin")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 		}
 	}
 }
