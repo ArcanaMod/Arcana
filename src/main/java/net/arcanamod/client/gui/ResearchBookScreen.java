@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -46,6 +47,7 @@ public class ResearchBookScreen extends Screen{
 	int tab = 0;
 	Screen parentScreen;
 	List<TooltipButton> tooltipButtons = new ArrayList<>();
+	ItemStack sender;
 	
 	// public static final String SUFFIX = "_menu_gui.png";
 	public static final String SUFFIX_RESIZABLE = "_menu_resizable.png";
@@ -62,8 +64,9 @@ public class ResearchBookScreen extends Screen{
 	static float zoom = 0.7f;
 	static boolean showZoom = false;
 
-	public ResearchBookScreen(ResearchBook book, Screen parentScreen){
+	public ResearchBookScreen(ResearchBook book, Screen parentScreen, ItemStack sender){
 		super(new StringTextComponent(""));
+		this.sender = sender;
 		this.parentScreen = parentScreen;
 		this.book = book;
 		texture = new ResourceLocation(book.getKey().getNamespace(), "textures/gui/research/" + book.getPrefix() + SUFFIX_RESIZABLE);
@@ -506,6 +509,9 @@ public class ResearchBookScreen extends Screen{
 	}
 
 	public void onClose() {
+		if (sender != null)
+			sender.getOrCreateTag().putBoolean("open",false);
+
 		Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 	

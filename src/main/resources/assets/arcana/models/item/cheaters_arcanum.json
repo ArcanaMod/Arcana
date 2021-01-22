@@ -2,5 +2,9 @@
   "parent": "item/generated",
   "textures": {
     "layer0": "arcana:item/cheaters_arcanum"
-  }
+  },
+  "overrides": [
+    { "predicate": { "open": 0 }, "model": "arcana:item/cheaters_arcanum_closed" },
+    { "predicate": { "open": 1 }, "model": "arcana:item/arcanum_open" }
+]
 }

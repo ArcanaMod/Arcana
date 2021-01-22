@@ -28,7 +28,7 @@ public class CommonProxy{
 	public void preInit(FMLCommonSetupEvent event){
 	}
 	
-	public void openResearchBookUI(ResourceLocation book, Screen parentScreen){
+	public void openResearchBookUI(ResourceLocation book, Screen parentScreen, ItemStack sender){
 	}
 	
 	public void openScribbledNotesUI(){

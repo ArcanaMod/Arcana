@@ -2,6 +2,7 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.IAspectHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,11 +22,20 @@ public class ResearchBookItem extends Item{
 	
 	public ResearchBookItem(Properties properties, ResourceLocation book){
 		super(properties);
+		this.addPropertyOverride(new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
+			if(!itemStack.getOrCreateTag().contains("open"))
+				return 0;
+			if(itemStack.getOrCreateTag().getBoolean("open"))
+				return 1;
+			return 0;
+		});
 		this.book = book;
 	}
 	
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
-		Arcana.proxy.openResearchBookUI(book, null);
+		player.getHeldItem(hand).getOrCreateTag().putBoolean("open",true);
+
+		Arcana.proxy.openResearchBookUI(book, null, player.getHeldItem(hand));
 		return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
 	}
 }

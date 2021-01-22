@@ -116,9 +116,9 @@ public class ClientProxy extends CommonProxy{
 	}
 
 	@Override
-	public void openResearchBookUI(ResourceLocation book, Screen parentScreen){
+	public void openResearchBookUI(ResourceLocation book, Screen parentScreen, ItemStack sender){
 		if(!ResearchBooks.disabled.contains(book))
-			Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book), parentScreen));
+			Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book), parentScreen, sender));
 		else
 			Minecraft.getInstance().player.sendMessage(new TranslationTextComponent("message.arcana.disabled").applyTextStyle(TextFormatting.RED));
 	}
@@ -166,6 +166,11 @@ public class ClientProxy extends CommonProxy{
 
 		//Special Render
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/phial"));
+		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/arcanum"));
+		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/cheaters_arcanum"));
+		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/illustrious_grimoire"));
+		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/tainted_codex"));
+		ModelLoader.addSpecialModel(new ResourceLocation(MODID,"item/crimson_rites"));
 
 		//Entity Render
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRenderer::new);

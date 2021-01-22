@@ -2,7 +2,6 @@ package net.arcanamod.blocks;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
-import net.arcanamod.aspects.ColorRange;
 import net.arcanamod.blocks.bases.*;
 import net.arcanamod.blocks.multiblocks.foci_forge.FociForgeComponentBlock;
 import net.arcanamod.blocks.multiblocks.foci_forge.FociForgeCoreBlock;

@@ -33,7 +33,7 @@ import static net.arcanamod.util.annotations.GIM.Type.ITEM;
  * Contains all items.
  *
  * @author Merijn, Tea
- * @see ArcanaBlocks
+ * @see ArcanaItems
  */
 @SuppressWarnings({"unused", "RedundantSuppression"})
 public class ArcanaItems{
