@@ -334,7 +334,7 @@
           "type": "arcane_crafting",
           "content": "arcana:arcane_crafting/research_table",
           "requirements": [
-            "0*arcana:research_table_placer"
+            "0*arcana:research_table_item"
           ]
         },
         {
