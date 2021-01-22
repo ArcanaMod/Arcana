@@ -1,0 +1,18 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:snow_block"
+  },
+  "out": {
+    "item": "minecraft:ice"
+  },
+  "aspects": [
+    {
+      "aspect": "ice",
+      "amount": 2
+    }
+  ],
+  "research": [
+    "arcana:hedge_alchemy@3"
+  ]
+}

@@ -21,6 +21,14 @@
 		"thirdperson_righthand": {
 			"translation": [0, 0.25, 0]
 		},
+		"firstperson_righthand": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 1.25, 0],
+			"scale": [0.75, 0.75, 0.75]
+		},
 		"gui": {
 			"rotation": [0, 0, -45]
 		},

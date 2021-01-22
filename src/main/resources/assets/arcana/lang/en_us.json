@@ -860,8 +860,8 @@
     "research.arcana.alchemy_root.text": "Alchemy - the usage of essentia solutions to transform substances - will be researched and described here.",
 
     "research.arcana.arcanium": "Magical Metallurgy",
-    "research.arcana.arcanium.stage.1": "[I want a stronger material, and magic can achieve that.]",
-    "research.arcana.arcanium.stage.2": "[And that's Arcanium.]",
+    "research.arcana.arcanium.stage.1": "Mundane materials just aren't cutting it anymore. Tools break much too fast, armour doesn't protect my well enough, and these simple materials aren't as conductive to arcane crafts as I would like.\n\nTexts from ancient alchemists describe a material named §oThaumium§r, created by infusing iron with magic itself alchemically. I don't know how reputable of a source they are, given the lack of documentation on taint or silver, but there's no reason not to try myself.",
+    "research.arcana.arcanium.stage.2": "This isn't thaumium. At least, not how they described it. It's similar, but much too bright, and its constantly giving off some of its infused magic. Perhaps I overshot a little...\n\nEither way, its stronger than most of the materials I have in plentiful supply, and much more conductive to aspects than any.\n\nBlocks can be converted at once, using 9 times as much Praecantatio.",
 
     "research.arcana.transmutation": "Transmutation",
     "research.arcana.transmutation.stage.1": "A popular magical concept is one of alchemists attempting to create the valuable from the mundane. They knew neither chemistry nor magic; I know both. I think I may be able to do better, if only by a little, at the transmutation of metals, given my newfound knowledge.",
@@ -876,8 +876,9 @@
 
     "research.arcana.hedge_alchemy": "Hedge Alchemy",
     "research.arcana.hedge_alchemy.desc": "Miscellaneous Transformations",
-    "research.arcana.hedge_alchemy.stage.1": "[f(x) -> g(x)]",
-    "research.arcana.hedge_alchemy.stage.2": "[just do the goddamn recipes]",
+    "research.arcana.hedge_alchemy.stage.1": "Certain items are especially annoying or tedious to obtain, and often come in short supply. Hopefully, I can use alchemy to obtain these items from related compounds. My first step will be to determine suitable alchemical bases for these, which will require a number of samples.",
+    "research.arcana.hedge_alchemy.stage.2": "From my experimentation, §oGunpowder§r is closely alchemically related to §oBlaze Powder§r; §oRedstone§r and §oGlowstone§r share very similar structures; and §oQuartz§r has an odd resemblance to §oDiamond§r.\n\nI believe I can also use alchemy to emulate more mundane reactions: tanning §oRotten Flesh§r into §oLeather§r, freezing §oSnow§r into §oIce§r, drying §oLeaves§r into §oDead Bushes§r, and binding §oString§r into §oCobwebs§r.\n\nI'll need to verify experimentally that these are possible, though.",
+    "research.arcana.hedge_alchemy.stage.3": "Most of these conversions are fully viable alchemical recipes. ...Quartz to Diamond was something of a non-starter, instead turning to Flint in my practical experiments, and converting Snow into Ice proved less efficient than I had originally anticipated. Could this be because of my equipment, or my technique? Perhaps, but my current results are satisfying, for now.",
 
     "research.arcana.taint_in_a_bottle": "Containing Taint",
     "research.arcana.taint_in_a_bottle.desc": "Bottled Madness",
@@ -887,7 +888,7 @@
     "research.arcana.taint_scrubber": "A Proper Solution to Taint",
     "research.arcana.taint_scrubber.desc": "Cleansing the Earth",
     "research.arcana.taint_scrubber.stage.1": "So far, I have learned how to spread and contain all types of magic, including taint. I have learned of materials that conduct magic and repel taint. At this point, I should be able to construct a contraption to remove taint for me - I shouldn't be running about cleaning things up manually!",
-    "research.arcana.taint_scrubber.stage.2": "Arcanium seems to slowly radiate away its Praecantatio. At its regular rate, it would take about my lifetime to dull (becoming a metal historically known as \"thaumium\").\n\nI believe I can amplify this effect, and focus it through an Auram crystal adorned with Silver to create an Auram field capable of dissolving taint.",
+    "research.arcana.taint_scrubber.stage.2": "Arcanium to slowly radiates away its Praecantatio. At its regular rate, it would take about my lifetime to dull (possibly becoming the ancient material known as \"thaumium\").\n\nI believe I can amplify this effect, and focus it through an Auram crystal adorned with Silver to create an Auram field capable of dissolving taint.",
     "research.arcana.taint_scrubber.stage.3": "The §oTaint Scrubber§r produces a field that dissolves taint. Nonliving blocks within its range of 8 blocks return to their regular state. Living tainted blocks become dead, non-tainted blocks.\n\n[TODO: preventing taint biome, tainted mobs, essentia input/output.]",
     "research.arcana.taint_scrubber.stage.4": "Its range leaves something to be desired, to say the least. Its power seems too unfocused, or out of phase... I should be able to increase its range and speed by focusing its power... somehow.",
     "research.arcana.taint_scrubber.stage.5": "When a Taint Scrubber is placed atop a §oFlux Scrubber Base§r, its incoherent energy is directed downwards and brought into phase, increasing its range and speed.\n\n[TODO: use luminiferous glass in recipe, allow for input from this block too.]",

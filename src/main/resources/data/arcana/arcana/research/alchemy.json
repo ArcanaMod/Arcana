@@ -40,15 +40,29 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.arcanium.stage.1"
+          "content": "research.arcana.arcanium.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:arcanium_puzzle}"
+          ]
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/arcanium_ingot",
+          "requirements": [
+            "0*arcana:arcanium_ingot"
+          ]
         },
         {
           "type": "string",
           "content": "research.arcana.arcanium.stage.2"
         },
         {
-          "type": "alchemy",
-          "content": "arcana:arcanium_ingot"
+          "type": "crafting",
+          "content": "arcana:silverwood_sticks"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:tools/arcanium/arcanium_pickaxe"
         }
       ]
     },
@@ -157,8 +171,8 @@
         "minecraft:glowstone_dust",
         "minecraft:gunpowder",
         "minecraft:blaze_powder",
-        "minecraft:slime_ball",
-        "minecraft:magma_cream"
+        "minecraft:leather",
+        "minecraft:diamond"
       ],
       "category": "arcana:alchemy",
       "parents": [
@@ -169,11 +183,65 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.hedge_alchemy.stage.1"
+          "content": "research.arcana.hedge_alchemy.stage.1",
+          "requirements": [
+            "5*minecraft:gunpowder",
+            "5*minecraft:blaze_powder",
+            "5*minecraft:redstone",
+            "5*minecraft:glowstone",
+            "2*minecraft:lapis_lazuli",
+            "2*minecraft:quartz",
+            "minecraft:diamond",
+            "3*minecraft:flint",
+            "6*minecraft:rotten_flesh",
+            "2*minecraft:leather",
+            "#minecraft:leaves",
+            "3*minecraft:string",
+            "3*minecraft:cobweb"
+          ]
         },
         {
           "type": "string",
-          "content": "research.arcana.hedge_alchemy.stage.2"
+          "content": "research.arcana.hedge_alchemy.stage.2",
+          "requirements": [
+            "arcana::puzzle{arcana:hedge_alchemy_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.hedge_alchemy.stage.3"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hedge_alchemy/blaze_powder_by_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hedge_alchemy/redstone_by_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hedge_alchemy/glowstone_dust_by_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hedge_alchemy/flint_by_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hedge_alchemy/leather_by_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hedge_alchemy/ice_by_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hedge_alchemy/dead_bush_by_alchemy"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hedge_alchemy/cobweb_by_alchemy"
         }
       ]
     },
@@ -438,6 +506,30 @@
         "arcana:energy",
         "arcana:machine",
         "arcana:aura"
+      ]
+    },
+    {
+      "key": "arcana:hedge_alchemy_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:exchange",
+        "arcana:creation",
+        "arcana:ice",
+        "arcana:plant",
+        "arcana:exchange",
+        "arcana:sloth",
+        "arcana:slime",
+        "arcana:crystal"
+      ]
+    },
+    {
+      "key": "arcana:arcanium_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:mana",
+        "arcana:metal",
+        "arcana:energy",
+        "arcana:tool"
       ]
     }
   ]

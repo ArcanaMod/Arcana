@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:redstone"
+  },
+  "out": {
+    "item": "minecraft:glowstone_dust"
+  },
+  "aspects": [
+    {
+      "aspect": "light",
+      "amount": 2
+    },
+    {
+      "aspect": "nether",
+      "amount": 2
+    }
+  ],
+  "research": [
+    "arcana:hedge_alchemy@3"
+  ]
+}
