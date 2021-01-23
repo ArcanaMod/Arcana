@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 
-public class BakeEvent {
+public class BakeEventHandler {
 
 	private static Logger LOGGER = LogManager.getLogger();
 

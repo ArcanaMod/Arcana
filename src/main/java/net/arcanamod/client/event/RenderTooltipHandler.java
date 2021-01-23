@@ -19,7 +19,7 @@ import java.awt.*;
 import java.util.List;
 
 @Mod.EventBusSubscriber
-public class RenderTooltip{
+public class RenderTooltipHandler {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
 	public static void onRenderTooltipPost(@Nonnull RenderTooltipEvent.PostText event){

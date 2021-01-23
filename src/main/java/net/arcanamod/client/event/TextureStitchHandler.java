@@ -13,7 +13,7 @@ import net.minecraftforge.client.event.TextureStitchEvent;
 
 import javax.annotation.Nonnull;
 
-public class TextureStitch{
+public class TextureStitchHandler {
 	
 	@SuppressWarnings("deprecation")
 	public static void onTextureStitch(@Nonnull TextureStitchEvent.Pre event){
@@ -30,6 +30,7 @@ public class TextureStitch{
 			event.addSprite(ArcanaVariables.arcLoc("font/number_7"));
 			event.addSprite(ArcanaVariables.arcLoc("font/number_8"));
 			event.addSprite(ArcanaVariables.arcLoc("font/number_9"));
+			event.addSprite(ArcanaVariables.arcLoc("models/items/thaumonomicon_model"));
 			event.addSprite(AspectValveTileEntityRenderer.GEAR_TEX);
 			
 			// add all of the wand related textures

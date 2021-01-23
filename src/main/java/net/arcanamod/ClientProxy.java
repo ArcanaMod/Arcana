@@ -4,6 +4,7 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
+import net.arcanamod.client.BookRenderer;
 import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
@@ -61,18 +62,20 @@ public class ClientProxy extends CommonProxy{
 	
 	public void construct(){
 		super.construct();
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitch::onTextureStitch);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(BakeEvent::onModelBake);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitchHandler::onTextureStitch);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(BakeEventHandler::onModelBake);
 		
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		modEventBus.addListener(RenderTooltip::makeTooltip);
+		modEventBus.addListener(RenderTooltipHandler::makeTooltip);
 		modEventBus.addListener(FogHandler::setFogColour);
 		modEventBus.addListener(FogHandler::setFogDensity);
 		modEventBus.addListener(FogHandler::setFogLength);
 		modEventBus.addListener(InitScreenHandler::onInitGuiEvent);
 		modEventBus.addListener(ParticleFactoryEvent::onParticleFactoryRegister);
 
+		MinecraftForge.EVENT_BUS.register(ClientTickHandler.class);
 		MinecraftForge.EVENT_BUS.register(InitScreenHandler.class);
+		MinecraftForge.EVENT_BUS.register(BookRenderer.class);
 		MinecraftForge.EVENT_BUS.register(ParticleFactoryEvent.class);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);

@@ -4,6 +4,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "arcana.refmap.json",
   "mixins": [
+    "AccessorFirstPersonRenderer",
+    "AccessorMinecraft"
   ],
   "client": [
     "BiomeColorMixin",

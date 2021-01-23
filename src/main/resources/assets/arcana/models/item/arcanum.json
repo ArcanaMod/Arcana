@@ -4,7 +4,6 @@
     "layer0": "arcana:item/arcanum"
   },
   "overrides": [
-    { "predicate": { "open": 0 }, "model": "arcana:item/arcanum_closed" },
     { "predicate": { "open": 1 }, "model": "arcana:item/arcanum_open" }
 ]
 }
