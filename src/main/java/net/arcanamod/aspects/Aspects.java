@@ -27,7 +27,7 @@ public class Aspects {
 		return ASPECTS.values().toArray(new Aspect[0]);
 	}
 
-	protected static BiMap<ResourceLocation, Aspect> ASPECTS = HashBiMap.create();
+	public static BiMap<ResourceLocation, Aspect> ASPECTS = HashBiMap.create();
 
 	public static final Aspect
 			EMPTY = Aspect.create("empty", create(0x0, 0x0, 0x0, 0x0, 0x0), null),
@@ -91,6 +91,7 @@ public class Aspects {
 			WIND = Aspect.create("wind", create(0x5d5f71, 0x888599, 0x9ea0bd, 0xccd0df, 0xfffde8), null),
 			WRATH = Aspect.create("wrath", create(0x5a0b3d, 0x8e0f3e, 0xc61626, 0xed1507, 0xffbe8d), null);
 	
+	public static BiMap<Aspect, ResourceLocation> ASPECT_IDS = ASPECTS.inverse();
 	public static final BiMap<Pair<Aspect, Aspect>, Aspect> COMBINATIONS = HashBiMap.create(Aspects.values().length);
 	
 	static{

@@ -2,7 +2,6 @@ package net.arcanamod.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
@@ -178,12 +177,22 @@ public class ResearchTableContainer extends AspectContainer{
 	public void onContainerClosed(@Nonnull PlayerEntity player){
 		super.onContainerClosed(player);
 		if(puzzleInventorySlots != null)
-			if(!player.world.isRemote)
+			if(!player.world.isRemote){
 				clearContainer(player, player.world, puzzleInventorySlots);
+				// save aspect slots to research note
+				CompoundNBT aspectSave = new CompoundNBT();
+				for(int i = 0, size = aspectSlots.size(); i < size; i++){
+					AspectSlot slot = aspectSlots.get(i);
+					if(slot.getAspect() != null)
+						aspectSave.putString(String.valueOf(i), Aspects.ASPECT_IDS.get(slot.getAspect()).toString());
+				}
+				if(!note.isEmpty())
+					note.getOrCreateTag().put("progress", aspectSave);
+			}
 	}
 	
 	protected void addAspectSlots(IInventory playerInventory){
-		Supplier<IAspectHandler> aspects = () -> IAspectHandler.getFrom(te.visItem());
+		/*Supplier<IAspectHandler> aspects = () -> IAspectHandler.getFrom(te.visItem());
 		for(int i = 0; i < AspectUtils.primalAspects.length; i++){
 			Aspect primal = AspectUtils.primalAspects[i];
 			int x = 31 + 16 * i;
@@ -191,7 +200,7 @@ public class ResearchTableContainer extends AspectContainer{
 			if(i % 2 == 0)
 				y += 5;
 			getAspectSlots().add(new AspectSlot(primal, aspects, x, y));
-		}
+		}*/
 		Aspect[] values = (Aspect[]) Aspects.getWithoutEmpty().toArray();
 		Supplier<IAspectHandler> table = () -> IAspectHandler.getFrom(te);
 		for(int i = 0; i < values.length; i++){
@@ -212,6 +221,19 @@ public class ResearchTableContainer extends AspectContainer{
 			slot.visible = visible;
 			getAspectSlots().add(slot);
 			scrollableSlots.add(slot);
+		}
+		
+		// populate from save, if there are any saved
+		if(!note.isEmpty() && note.getTag() != null && note.getTag().contains("progress") && note.getTag().get("progress") instanceof CompoundNBT){
+			CompoundNBT nbt = (CompoundNBT)note.getTag().get("progress");
+			for(String slot : nbt.keySet())
+				try{
+					int index = Integer.parseInt(slot);
+					Aspect aspect = Aspects.ASPECTS.get(new ResourceLocation(nbt.getString(slot)));
+					if(getAspectSlots().size() > index){
+						getAspectSlots().get(index).setAspect(aspect);
+					}
+				}catch(NumberFormatException ignored){}
 		}
 		
 		refreshPuzzleSlots(playerInventory);
@@ -250,34 +272,36 @@ public class ResearchTableContainer extends AspectContainer{
 	}
 	
 	public void validate(){
-		if(getFromNote().map(puzzle -> puzzle.validate(puzzleSlots, puzzleItemSlots, lastClickPlayer, this)).orElse(false)){
-			ItemStack complete = new ItemStack(ArcanaItems.RESEARCH_NOTE_COMPLETE.get());
-			CompoundNBT data = note.getTag();
-			
-			// I might store e.g. chemistry data for display in the future.
-			complete.setTag(data);
-			
-			// Don't close them, because that will move aspects over to the main table.
-			// This will need changing if slots need to be able to clean up arbitrary resources.
-			aspectSlots.removeAll(puzzleSlots);
-			puzzleSlots.clear();
-			
-			for(int i = puzzleItemSlots.size() - 1; i >= 0; i--){
-				Slot slot = puzzleItemSlots.get(i);
-				inventorySlots.remove(slot);
+		if(getFromNote().isPresent()){
+			Puzzle puzzle = getFromNote().get();
+			if(puzzle.validate(puzzleSlots, puzzleItemSlots, lastClickPlayer, this)){
+				ItemStack complete = new ItemStack(ArcanaItems.RESEARCH_NOTE_COMPLETE.get());
+				CompoundNBT data = note.getTag();
+				complete.setTag(data);
+				
+				// Don't close them, because that will move aspects over to the main table.
+				// This will need changing if slots need to be able to clean up arbitrary resources.
+				aspectSlots.removeAll(puzzleSlots);
+				puzzleSlots.clear();
+				
+				for(int i = puzzleItemSlots.size() - 1; i >= 0; i--){
+					Slot slot = puzzleItemSlots.get(i);
+					inventorySlots.remove(slot);
+				}
+				puzzleItemSlots.clear();
+				puzzleInventorySlots = null;
+				
+				// lastClickPlayer can be null
+				// so we can't go through this normal means
+				int amount = te.ink().getItem().damageItem(te.ink(), 1, null, __ -> {
+				});
+				te.ink().attemptDamageItem(amount, new Random(), null);
+				
+				te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> {
+					handler.extractItem(2, 64, false);
+					handler.insertItem(2, complete, false);
+				});
 			}
-			puzzleItemSlots.clear();
-			puzzleInventorySlots = null;
-			
-			// lastClickPlayer can be null
-			// so we can't go through this normal means
-			int amount = te.ink().getItem().damageItem(te.ink(), 1, null, __ -> {});
-			te.ink().attemptDamageItem(amount, new Random(), null);
-			
-			te.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(handler -> {
-				handler.extractItem(2, 64, false);
-				handler.insertItem(2, complete, false);
-			});
 		}
 	}
 	
