@@ -9,11 +9,8 @@ import net.arcanamod.blocks.tiles.FociForgeTileEntity;
 import net.arcanamod.client.gui.FociForgeScreen;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.ArcanaTags;
 import net.arcanamod.items.attachment.FocusItem;
-import net.arcanamod.systems.research.Puzzle;
-import net.arcanamod.systems.research.ResearchBooks;
-import net.minecraft.client.gui.screen.inventory.CreativeScreen;
+import net.arcanamod.systems.spell.Spell;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -23,13 +20,10 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import org.lwjgl.system.CallbackI;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -50,8 +44,8 @@ public class FociForgeContainer extends AspectContainer {
 
     public FociForgeTileEntity te;
     public List<AspectSlot> scrollableSlots = new ArrayList<>();
+    public List<Slot> fociSlots = new ArrayList<>();
 
-    public IInventory puzzleInventorySlots;
     PlayerEntity lastClickPlayer;
 
     public FociForgeContainer(ContainerType type, int id, IInventory playerInventory, FociForgeTileEntity te){
@@ -96,7 +90,7 @@ public class FociForgeContainer extends AspectContainer {
                 return super.isItemValid(stack) && stack.getItem()==ArcanaItems.WAND.get();
             }
         });
-        // 361, 16
+        // 361, 12
         addSlot(new SlotItemHandler(itemHandler, 1, 361, 12){
             public boolean isItemValid(@Nonnull ItemStack stack){
                 // only foci or foci parts
@@ -107,7 +101,26 @@ public class FociForgeContainer extends AspectContainer {
             public int getItemStackLimit(@Nonnull ItemStack stack) {
                 return 1;
             }
+
+            @Override
+            public void onSlotChanged() {
+                onFociSlotChange();
+            }
         });
+    }
+
+    private void onFociSlotChange() {
+        // if spell changed, keep it until saved or discarded
+        // else replace current spell with nothing/new spell
+        if (!te.spellModified) {
+            if (te.focus() == ItemStack.EMPTY) {
+                te.replaceSpell(null);
+            } else if (te.focus().getItem() == ArcanaItems.FOCUS_PARTS.get()) {
+                te.replaceSpell(new Spell());
+            } else if (te.focus().getItem() == ArcanaItems.DEFAULT_FOCUS.get()) {
+                te.replaceSpell(Spell.getSerializer().deserializeNBT(te.focus().getOrCreateTag()));
+            }
+        }
     }
 
     protected void addFociSlots(IInventory playerInventory){
@@ -117,17 +130,17 @@ public class FociForgeContainer extends AspectContainer {
 
         for (int yy = 0; yy < FociForgeScreen.FOCI_V_COUNT; yy++) {
             int y = SLOT_Y + SLOT_DELTA * yy;
-            addSlot(new Slot(TMP_FOCI, yy, SLOT_X, y) {
+            Slot slot = new Slot(TMP_FOCI, yy, SLOT_X, y) {
                 @Override
                 public boolean canTakeStack(PlayerEntity player) {
                     return false;
                 }
-
-                @Override
-                public boolean isEnabled() {
-                    return true;
-                }
-            });
+            };
+            addSlot(slot);
+            fociSlots.add(slot);
+            ItemStack dummyFoci = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
+            dummyFoci.getOrCreateTag().putInt("style", yy);
+            slot.putStack(dummyFoci);
         }
     }
 
@@ -141,13 +154,6 @@ public class FociForgeContainer extends AspectContainer {
             stack = super.slotClick(slot, dragType, clickType, player);
         }
         return stack;
-    }
-
-    public void onContainerClosed(@Nonnull PlayerEntity player){
-        super.onContainerClosed(player);
-        if(puzzleInventorySlots != null)
-            if(!player.world.isRemote)
-                clearContainer(player, player.world, puzzleInventorySlots);
     }
 
     protected void addAspectSlots(IInventory playerInventory){

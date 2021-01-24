@@ -1,7 +1,5 @@
 package net.arcanamod.client.gui;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
@@ -14,20 +12,13 @@ import net.arcanamod.items.attachment.FocusItem;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 
-import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.List;
 
 import static net.arcanamod.containers.FociForgeContainer.ASPECT_H_COUNT;
@@ -53,9 +44,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	FociForgeTileEntity te;
 	float aspectScroll = 0, fociScroll = 0;
 	boolean isScrollingAspect = false, isScrollingFoci = false;
-	private final Inventory TMP_FOCI = new Inventory(9);
 
-	Button leftArrow, rightArrow;
 	TextFieldWidget searchWidget;
 
 	public FociForgeScreen(FociForgeContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){
@@ -74,6 +63,11 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + ASPECT_SCROLL_X, guiTop + ASPECT_SCROLL_Y + (int)(ASPECT_SCROLL_HEIGHT * aspectScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + FOCI_SCROLL_X, guiTop + FOCI_SCROLL_Y + (int)(FOCI_SCROLL_HEIGHT * fociScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
+		if (te.currentSpell != null) {
+			for (int i = 0; i < 9; i++) {
+				UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + 9 + 35 * i, guiTop + 169, 32 * i, 313, 32, 32, 397, 397);
+			}
+		}
 		searchWidget.render(mouseX, mouseY, partialTicks);
 	}
 
@@ -159,8 +153,6 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		return true;
 	}
 
-
-
 	public void scrollAspectTo(float pos) {
 		List<Aspect> searchAspects = Aspects.getWithoutPrimalsOrSins();
 		int extraRows = (searchAspects.size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;
@@ -187,12 +179,12 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 
 		for (int row = 0; row < FOCI_V_COUNT; row++) {
 			int fociNum = scroll + row;
-			if (fociNum >= 0 && fociNum < possibleFoci) {
+			if (te.focus() != ItemStack.EMPTY && fociNum >= 0 && fociNum < possibleFoci) {
 				ItemStack dummyFoci = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
 				dummyFoci.getOrCreateTag().putInt("style", fociNum);
-				FociForgeContainer.TMP_FOCI.setInventorySlotContents(row, dummyFoci);
+				container.fociSlots.get(row).putStack(dummyFoci);
 			} else {
-				FociForgeContainer.TMP_FOCI.setInventorySlotContents(row, ItemStack.EMPTY);
+				container.fociSlots.get(row).putStack(ItemStack.EMPTY);
 			}
 		}
 	}
@@ -217,16 +209,10 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		children.add(searchWidget);
 	}
 
-	protected void actionPerformed(@Nonnull Button button) {
-		if (searchWidget.getText().equals(""))
-			refreshSlotVisibility();
-	}
-
 	protected void refreshSlotVisibility(){
 		List<AspectSlot> slots = aspectContainer.getAspectSlots();
-		for(int i = 0; i < slots.size(); i++){
-			AspectSlot slot = slots.get(i);
-			slot.visible = slotMatchesSearch(slot, searchWidget.getText());;
+		for (AspectSlot slot : slots) {
+			slot.visible = slotMatchesSearch(slot, searchWidget.getText());
 		}
 	}
 }

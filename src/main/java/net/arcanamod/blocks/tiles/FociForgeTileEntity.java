@@ -2,12 +2,11 @@ package net.arcanamod.blocks.tiles;
 
 import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectBattery;
 import net.arcanamod.aspects.AspectHandlerCapability;
-import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.FociForgeContainer;
-import net.arcanamod.containers.ResearchTableContainer;
+import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.systems.spell.Spell;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -15,7 +14,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.LockableTileEntity;
-import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -30,7 +28,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class FociForgeTileEntity extends LockableTileEntity{
-	
+
+	public Spell currentSpell = null;
+	public boolean spellModified = false;
 	public FociForgeTileEntity(){
 		super(ArcanaTiles.FOCI_FORGE_TE.get());
 	}
@@ -42,13 +42,18 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		}
 	};
 
-	protected ItemStackHandler foci = new ItemStackHandler(9);
-
 	@Override
 	public void read(CompoundNBT compound){
 		super.read(compound);
-		if(compound.contains("items"))
+		if (compound.contains("items")) {
 			items.deserializeNBT(compound.getCompound("items"));
+		}
+
+		if (compound.contains("spell")) {
+			currentSpell = Spell.getSerializer().deserializeNBT(compound);
+		} else {
+			currentSpell = null;
+		}
 	}
 
 	@Override
@@ -150,5 +155,11 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		for(int i = 0; i < items.getSlots() - 1; i++){
 			items.getStackInSlot(i).setCount(0);
 		}
+	}
+
+	public void replaceSpell(@Nullable Spell newSpell) {
+		currentSpell = newSpell;
+		spellModified = false;
+		markDirty();
 	}
 }
