@@ -1,0 +1,29 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "AAA",
+    "A A"
+  ],
+  "key": {
+    "A": {
+      "tag": "forge:nuggets/gold"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:any",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:fire",
+      "amount": 2
+    }
+  ],
+  "result": {
+    "item": "arcana:gold_cap"
+  }
+}

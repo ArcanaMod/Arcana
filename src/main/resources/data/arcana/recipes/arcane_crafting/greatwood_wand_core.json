@@ -1,0 +1,29 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    " w",
+    "w "
+  ],
+  "key": {
+    "w": {
+        "item": "arcana:greatwood_planks"
+      }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:any",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 2
+    }
+  ],
+  "result": {
+    "item": "arcana:greatwood_wand_core"
+  }
+}
