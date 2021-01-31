@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "arcana:block/clusters/order_cluster"
+    }
+}

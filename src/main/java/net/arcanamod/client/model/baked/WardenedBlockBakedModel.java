@@ -56,7 +56,7 @@ public class WardenedBlockBakedModel implements IBakedModel {
 	@Nonnull
 	public IModelData getModelData(@Nonnull ILightReader world, @Nonnull BlockPos pos, @Nonnull BlockState state, @Nonnull IModelData tileData)
 	{
-		Optional<BlockState> bestAdjacentBlock = ((WardenedBlockTileEntity)world.getTileEntity(pos)).func_939845_a_();
+		Optional<BlockState> bestAdjacentBlock = ((WardenedBlockTileEntity)world.getTileEntity(pos)).getState();
 		ModelDataMap modelDataMap = getEmptyIModelData();
 		modelDataMap.setData(COPIED_BLOCK, bestAdjacentBlock);
 		return modelDataMap;

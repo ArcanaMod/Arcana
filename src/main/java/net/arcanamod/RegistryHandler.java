@@ -2,7 +2,9 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.CrystalClusterBlock;
 import net.arcanamod.blocks.bases.GroupedBlock;
+import net.arcanamod.items.CrystalClusterItem;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -14,11 +16,6 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.registries.IForgeRegistry;
 
-/**
- * Register objects here
- *
- * @author Atlas, Merijn
- */
 @EventBusSubscriber(modid = Arcana.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class RegistryHandler{
 	
@@ -28,15 +25,15 @@ public class RegistryHandler{
 		IForgeRegistry<Item> registry = event.getRegistry();
 		ArcanaBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
 			Item.Properties properties = new Item.Properties();
-			if(!(block instanceof FlowingFluidBlock)) {
-				if (block instanceof GroupedBlock) {
-					GroupedBlock grouped = (GroupedBlock) block;
+			if(!(block instanceof FlowingFluidBlock)){
+				if(block instanceof GroupedBlock){
+					GroupedBlock grouped = (GroupedBlock)block;
 					ItemGroup group = grouped.getGroup();
-					if (group != null)
+					if(group != null)
 						properties = properties.group(group);
-				} else
+				}else
 					properties = properties.group(Arcana.ITEMS);
-				BlockItem blockItem = new BlockItem(block, properties);
+				Item blockItem = block instanceof CrystalClusterBlock ? new CrystalClusterItem(block, properties, 3) : new BlockItem(block, properties);
 				blockItem.setRegistryName(block.getRegistryName());
 				registry.register(blockItem);
 			}

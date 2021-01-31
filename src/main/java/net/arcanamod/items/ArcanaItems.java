@@ -105,6 +105,14 @@ public class ArcanaItems{
 	// Goggles
 	public static final RegistryObject<Item> GOGGLES_OF_REVEALING = ITEMS.register("goggles_of_revealing", () -> new GogglesItem(ArcanaArmourMaterials.GOGGLES, new Properties().group(Arcana.ITEMS), GogglePriority.SHOW_ASPECTS));
 	
+	// Crystal Cluster Seeds
+	public static final RegistryObject<Item> AIR_CRYSTAL_SEED = ITEMS.register("air_cluster_seed", () -> new CrystalClusterItem(ArcanaBlocks.AIR_CLUSTER.get(), new Properties().group(Arcana.ITEMS), 0));
+	public static final RegistryObject<Item> EARTH_CRYSTAL_SEED = ITEMS.register("earth_cluster_seed", () -> new CrystalClusterItem(ArcanaBlocks.EARTH_CLUSTER.get(), new Properties().group(Arcana.ITEMS), 0));
+	public static final RegistryObject<Item> FIRE_CRYSTAL_SEED = ITEMS.register("fire_cluster_seed", () -> new CrystalClusterItem(ArcanaBlocks.FIRE_CLUSTER.get(), new Properties().group(Arcana.ITEMS), 0));
+	public static final RegistryObject<Item> WATER_CRYSTAL_SEED = ITEMS.register("water_cluster_seed", () -> new CrystalClusterItem(ArcanaBlocks.WATER_CLUSTER.get(), new Properties().group(Arcana.ITEMS), 0));
+	public static final RegistryObject<Item> ORDER_CRYSTAL_SEED = ITEMS.register("order_cluster_seed", () -> new CrystalClusterItem(ArcanaBlocks.ORDER_CLUSTER.get(), new Properties().group(Arcana.ITEMS), 0));
+	public static final RegistryObject<Item> CHAOS_CRYSTAL_SEED = ITEMS.register("chaos_cluster_seed", () -> new CrystalClusterItem(ArcanaBlocks.CHAOS_CLUSTER.get(), new Properties().group(Arcana.ITEMS), 0));
+	
 	// Caps
 	public static final RegistryObject<CapItem> IRON_CAP = ITEMS.register("iron_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 2, 1, 1, arcLoc("iron_cap")));
 	public static final RegistryObject<CapItem> GOLD_CAP = ITEMS.register("gold_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 3, 2, 2, arcLoc("gold_cap")));

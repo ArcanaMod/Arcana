@@ -1,0 +1,100 @@
+{
+  "multipart": [
+    {
+      "when": { "age": 0, "facing": "up" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_1" }
+    },
+    {
+      "when": { "age": 1, "facing": "up" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_2" }
+    },
+    {
+      "when": { "age": 2, "facing": "up" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_3" }
+    },
+    {
+      "when": { "age": 3, "facing": "up" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_full" }
+    },
+    {
+      "when": { "age": 0, "facing": "down" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_1", "x": 180 }
+    },
+    {
+      "when": { "age": 1, "facing": "down" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_2", "x": 180 }
+    },
+    {
+      "when": { "age": 2, "facing": "down" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_3", "x": 180 }
+    },
+    {
+      "when": { "age": 3, "facing": "down" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_full", "x": 180 }
+    },
+    {
+      "when": { "age": 0, "facing": "north" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_1", "x": 90 }
+    },
+    {
+      "when": { "age": 1, "facing": "north" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_2", "x": 90 }
+    },
+    {
+      "when": { "age": 2, "facing": "north" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_3", "x": 90 }
+    },
+    {
+      "when": { "age": 3, "facing": "north" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_full", "x": 90 }
+    },
+    {
+      "when": { "age": 0, "facing": "south" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_1", "x": 270 }
+    },
+    {
+      "when": { "age": 1, "facing": "south" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_2", "x": 270 }
+    },
+    {
+      "when": { "age": 2, "facing": "south" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_3", "x": 270 }
+    },
+    {
+      "when": { "age": 3, "facing": "south" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_full", "x": 270 }
+    },
+    {
+      "when": { "age": 0, "facing": "east" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_1", "x": 90, "y": 90 }
+    },
+    {
+      "when": { "age": 1, "facing": "east" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_2", "x": 90, "y": 90 }
+    },
+    {
+      "when": { "age": 2, "facing": "east" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_3", "x": 90, "y": 90 }
+    },
+    {
+      "when": { "age": 3, "facing": "east" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_full", "x": 90, "y": 90 }
+    },
+    {
+      "when": { "age": 0, "facing": "west" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_1", "x": 90, "y": 270 }
+    },
+    {
+      "when": { "age": 1, "facing": "west" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_2", "x": 90, "y": 270 }
+    },
+    {
+      "when": { "age": 2, "facing": "west" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_3", "x": 90, "y": 270 }
+    },
+    {
+      "when": { "age": 3, "facing": "west" },
+      "apply": { "model": "arcana:block/clusters/fire_cluster_full", "x": 90, "y": 270 }
+    }
+  ]
+}

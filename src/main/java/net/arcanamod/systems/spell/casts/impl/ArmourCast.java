@@ -13,7 +13,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
@@ -59,7 +58,7 @@ public class ArmourCast extends Cast {
 		if (world.isRemote) return ActionResultType.SUCCESS;
 			Block previousState = world.getBlockState(blockTarget).getBlock();
 			world.setBlockState(blockTarget, ArcanaBlocks.WARDENED_BLOCK.get().getDefaultState());
-			((WardenedBlockTileEntity)world.getTileEntity(blockTarget)).func_939844_a_(Optional.of(previousState.getDefaultState()));
+			((WardenedBlockTileEntity)world.getTileEntity(blockTarget)).setState(Optional.of(previousState.getDefaultState()));
 		return ActionResultType.SUCCESS;
 	}
 

@@ -99,7 +99,6 @@
     "item.arcana.void_metal_shovel": "Void Metal Shovel",
     "item.arcana.void_metal_hoe": "Void Metal Hoe",
 
-
     "_comment": "Materials",
     "item.arcana.thaumium_ingot": "Thaumium Ingot",
     "item.arcana.arcanium_ingot": "Arcanium Ingot",
@@ -459,6 +458,21 @@
     "block.arcana.dead_grass": "Dead Grass",
     "block.arcana.dead_grass_block": "Dead Grass Block",
     "block.arcana.dead_flower": "Dead Flower",
+
+    "_comment": "Clusters",
+    "block.arcana.air_cluster": "Air Crystal Cluster",
+    "block.arcana.earth_cluster": "Earth Crystal Cluster",
+    "block.arcana.fire_cluster": "Fire Crystal Cluster",
+    "block.arcana.water_cluster": "Water Crystal Cluster",
+    "block.arcana.order_cluster": "Order Crystal Cluster",
+    "block.arcana.chaos_cluster": "Chaos Crystal Cluster",
+
+    "block.arcana.air_cluster_seed": "Air Crystal Seed",
+    "block.arcana.earth_cluster_seed": "Earth Crystal Seed",
+    "block.arcana.fire_cluster_seed": "Fire Crystal Seed",
+    "block.arcana.water_cluster_seed": "Water Crystal Seed",
+    "block.arcana.order_cluster_seed": "Order Crystal Seed",
+    "block.arcana.chaos_cluster_seed": "Chaos Crystal Seed",
 
     "_comment": "Tainted",
     "block.arcana.tainted_acacia_leaves": "Tainted Acacia Leaves",
