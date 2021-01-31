@@ -205,7 +205,7 @@ public class ResearchBookScreen extends Screen{
 										arrows.drawRightArrow(entry.x() - 1, entry.y());
 							}
 						else{
-							boolean unreversed = !entry.meta().contains("reverse");
+							boolean unreversed = !(entry.meta().contains("reverse") || parent.shouldReverseLine());
 							if(xdiff < 2 || ydiff < 2){
 								// from entry's POV
 								if(unreversed){
@@ -238,24 +238,24 @@ public class ResearchBookScreen extends Screen{
 									arrows.drawVerticalLine(parentEntry.x(), parentEntry.y(), entry.y());
 									if(entry.x() > parentEntry.x()){
 										if(entry.y() > parentEntry.y()){
-											// ld
-											arrows.drawRuCurve(entry.x() - 1, parentEntry.y() + 1);
+											// ru
+											arrows.drawRuCurve(parentEntry.x(), entry.y());
 											if(parent.shouldShowArrowhead())
 												arrows.drawRightArrow(entry.x() - 1, entry.y());
 										}else{
-											// lu
+											// rd
 											arrows.drawRdCurve(entry.x() - 1, parentEntry.y() - 1);
 											if(parent.shouldShowArrowhead())
 												arrows.drawRightArrow(entry.x() - 1, entry.y());
 										}
 									}else{
 										if(entry.y() > parentEntry.y()){
-											// rd
-											arrows.drawLuCurve(entry.x() + 1, parentEntry.y() + 1);
+											// lu
+											arrows.drawLuCurve(entry.x() + 1, entry.y());
 											if(parent.shouldShowArrowhead())
 												arrows.drawLeftArrow(entry.x() + 1, entry.y());
 										}else{
-											// ru
+											// ld
 											arrows.drawLdCurve(entry.x() + 1, parentEntry.y() - 1);
 											if(parent.shouldShowArrowhead())
 												arrows.drawLeftArrow(entry.x() + 1, entry.y());

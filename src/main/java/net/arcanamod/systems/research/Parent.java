@@ -10,7 +10,7 @@ public class Parent{
 	
 	ResourceLocation entry;
 	int stage = -1;
-	boolean showArrowhead = true, showLine = true;
+	boolean showArrowhead = true, showLine = true, reverseLine = false;
 	
 	public static Logger LOGGER = LogManager.getLogger();
 	
@@ -22,7 +22,7 @@ public class Parent{
 		Parent parent = new Parent(null);
 		String original = text;
 		// Check for prefixes
-		// ~ for no line, & for no arrowheads
+		// ~ for no line, & for no arrowheads, / for reversed
 		// @ for stage
 		if(text.startsWith("~")){
 			text = text.substring(1);
@@ -31,6 +31,10 @@ public class Parent{
 		if(text.startsWith("&")){
 			text = text.substring(1);
 			parent.showArrowhead = false;
+		}
+		if(text.startsWith("/")){
+			text = text.substring(1);
+			parent.reverseLine = true;
 		}
 		if(text.contains("@")){
 			String[] sections = text.split("@");
@@ -50,7 +54,7 @@ public class Parent{
 	}
 	
 	public String asString(){
-		return (!showLine ? "~" : "") + (!showArrowhead ? "&" : "") + entry + (stage != -1 ? "@" + stage : "");
+		return (!showLine ? "~" : "") + (!showArrowhead ? "&" : "")+ (reverseLine ? "/" : "") + entry + (stage != -1 ? "@" + stage : "");
 	}
 	
 	public ResourceLocation getEntry(){
@@ -67,6 +71,10 @@ public class Parent{
 	
 	public boolean shouldShowLine(){
 		return showLine;
+	}
+	
+	public boolean shouldReverseLine(){
+		return reverseLine;
 	}
 	
 	public boolean satisfiedBy(Researcher r){
