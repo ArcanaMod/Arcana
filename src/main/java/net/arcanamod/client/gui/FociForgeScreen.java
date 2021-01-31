@@ -97,20 +97,22 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 
 	@Override
 	public boolean mouseClicked(double x, double y, int button) {
-		if (button == 0) {
-			double guiX = x - (double)this.guiLeft;
-			double guiY = y - (double)this.guiTop;
+		double guiX = x - guiLeft;
+		double guiY = y - guiTop;
 
+		if (button == 0) {
 			if (guiX > ASPECT_SCROLL_X && guiX < ASPECT_SCROLL_X + SCROLL_WIDTH
 				&& guiY > ASPECT_SCROLL_Y && guiY < ASPECT_SCROLL_X + ASPECT_SCROLL_HEIGHT) {
 				isScrollingAspect = true;
 			} else if (guiX > FOCI_SCROLL_X && guiX < FOCI_SCROLL_X + SCROLL_WIDTH
-					&& guiY > FOCI_SCROLL_Y && guiY < FOCI_SCROLL_X + FOCI_SCROLL_HEIGHT) {
+						&& guiY > FOCI_SCROLL_Y && guiY < FOCI_SCROLL_X + FOCI_SCROLL_HEIGHT) {
 				isScrollingFoci = true;
-			} else if (guiX > SPELL_X && guiX < SPELL_X + SPELL_WIDTH
-					&& guiY > SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT) {
-				spellHasFocus = spellRenderer.mouseClicked(x, y, button);
 			}
+		}
+		if (guiX > SPELL_X && guiX < SPELL_X + SPELL_WIDTH
+			&& guiY > SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT) {
+			spellRenderer.mouseClicked(guiX - SPELL_X, guiY - SPELL_Y, button);
+			spellHasFocus = true;
 		}
 
 		return super.mouseClicked(x, y, button);
@@ -118,7 +120,8 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 
 	@Override
 	public boolean mouseDragged(double x, double y, int button, double move_x, double move_y) {
-		double guiY = y - (double)this.guiTop;
+		double guiX = x - guiLeft;
+		double guiY = y - guiTop;
 		if (isScrollingAspect) {
 			this.aspectScroll = (float)((guiY - ASPECT_SCROLL_Y - 7.5F) / (ASPECT_SCROLL_HEIGHT));
 			this.aspectScroll = MathHelper.clamp(this.aspectScroll, 0.0F, 1.0F);
@@ -130,7 +133,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 			scrollFociTo(this.fociScroll);
 			return true;
 		} else if (spellHasFocus) {
-			spellRenderer.mouseDragged(x, y, button, move_x, move_y);
+			spellRenderer.mouseDragged(guiX - SPELL_X, guiY - SPELL_Y, button, move_x, move_y);
 			return true;
 		} else {
 			return super.mouseDragged(x, y, button, move_x, move_y);
@@ -139,9 +142,14 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 
 	@Override
 	public boolean mouseReleased(double x, double y, int button) {
+		double guiX = x - guiLeft;
+		double guiY = y - guiTop;
 		if (button == 0) {
 			isScrollingAspect = false;
 			isScrollingFoci = false;
+		}
+		if (spellHasFocus) {
+			spellRenderer.mouseReleased(guiX - SPELL_X, guiY - SPELL_Y, button);
 			spellHasFocus = false;
 		}
 

@@ -31,18 +31,19 @@ public class SpellRenderer {
         }
     }
 
-    public boolean mouseClicked(double x, double y, int button) {
+    public void mouseClicked(double x, double y, int button) {
         clickActive = true;
-        return clickActive;
     }
 
 
     public void mouseDragged(double x, double y, int button, double move_x, double move_y) {
-        move((float)move_x, (float)move_y);
+        if (button == 0 && clickActive) {
+            move((float)move_x, (float)move_y);
+        }
     }
 
     public void mouseReleased(double x, double y, int button) {
-
+        clickActive = false;
     }
 
     public void render(Spell spell, int left, int top, int width, int height) {
@@ -53,6 +54,7 @@ public class SpellRenderer {
 
         double gui_scale = mc.getMainWindow().getGuiScaleFactor();
         GL11.glEnable(GL11.GL_SCISSOR_TEST);
+        // TODO: De-magic '85' because I don't know what it is
         GL11.glScissor((int)(gui_scale * left), (int)(gui_scale * (top + 85)), (int)(gui_scale * width), (int)(gui_scale * height));
         int bg_texX = (spell == null ? 16 : 0);
 
