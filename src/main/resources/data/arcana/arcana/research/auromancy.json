@@ -50,6 +50,100 @@
       ]
     },
     {
+      "key": "arcana:hawthorn_core",
+      "name": "research.arcana.hawthorn_core",
+      "icons": [
+        "arcana:hawthorn_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:cores_intro"
+      ],
+      "x": 0,
+      "y": 6,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.cores_intro.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/greatwood_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:arcanium_core",
+      "name": "research.arcana.arcanium_core",
+      "icons": [
+        "arcana:arcanium_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:cores_intro"
+      ],
+      "x": 2,
+      "y": 5,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.cores_intro.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/greatwood_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:dair_core",
+      "name": "research.arcana.dair_core",
+      "icons": [
+        "arcana:dair_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:cores_intro"
+      ],
+      "x": 3,
+      "y": 3,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.cores_intro.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/greatwood_wand_core"
+        }
+      ]
+    },
+    {
+      "key": "arcana:silverwood_core",
+      "name": "research.arcana.silverwood_core",
+      "icons": [
+        "arcana:silverwood_wand_core"
+      ],
+      "category": "arcana:auromancy",
+      "parents": [
+        "arcana:dair_core",
+        "/arcana:hawthorn_core",
+        "/arcana:arcanium_core"
+      ],
+      "x": 4,
+      "y": 7,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.cores_intro.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/greatwood_wand_core"
+        }
+      ]
+    },
+    {
       "key": "arcana:caps_intro",
       "name": "research.arcana.caps_intro",
       "icons": [
