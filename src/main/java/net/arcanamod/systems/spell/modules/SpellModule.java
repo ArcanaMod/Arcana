@@ -77,13 +77,13 @@ public abstract class SpellModule {
 
 	static {
 		modules.put("start_circle", StartCircle.class);
-		modules.put("split_connector", SplitConnector.class);
-		modules.put("connector", Connector.class);
 		modules.put("cast_method_sin", CastMethodSin.class);
 		modules.put("cast_method", CastMethod.class);
 		modules.put("cast_circle", CastCircle.class);
 		modules.put("sin_modifier_circle", SingleModifierCircle.class);
 		modules.put("single_modifier_circle", SingleModifierCircle.class);
 		modules.put("double_modifier_circle", DoubleModifierCircle.class);
+		modules.put("connector", Connector.class);
+		modules.put("comment", CommentBlock.class);
 	}
 }
