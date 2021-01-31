@@ -5,15 +5,14 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.FociForgeTileEntity;
+import net.arcanamod.client.forge.SpellRenderer;
 import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.FocusItem;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -28,6 +27,11 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	public static final int WIDTH = 397;
 	public static final int HEIGHT = 283;
 
+	public static final int SPELL_X = 119;
+	public static final int SPELL_Y = 32;
+	public static final int SPELL_WIDTH = 202;
+	public static final int SPELL_HEIGHT = 133;
+
 	public static final int ASPECT_SCROLL_X = 80;
 	public static final int ASPECT_SCROLL_Y = 52;
 	public static final int ASPECT_SCROLL_HEIGHT = 97;
@@ -39,11 +43,11 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	public static final int FOCI_V_COUNT = 9;
 
 	private static final ResourceLocation BG = new ResourceLocation(Arcana.MODID, "textures/gui/container/gui_fociforge.png");
-
+	private final SpellRenderer spellRenderer = new SpellRenderer();
 
 	FociForgeTileEntity te;
 	float aspectScroll = 0, fociScroll = 0;
-	boolean isScrollingAspect = false, isScrollingFoci = false;
+	boolean isScrollingAspect = false, isScrollingFoci = false, spellHasFocus = false;
 
 	TextFieldWidget searchWidget;
 
@@ -59,6 +63,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
+		spellRenderer.render(te.currentSpell, guiLeft + SPELL_X, guiTop + SPELL_Y, SPELL_WIDTH, SPELL_HEIGHT);
 		minecraft.getTextureManager().bindTexture(BG);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + ASPECT_SCROLL_X, guiTop + ASPECT_SCROLL_Y + (int)(ASPECT_SCROLL_HEIGHT * aspectScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
@@ -102,6 +107,9 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 			} else if (guiX > FOCI_SCROLL_X && guiX < FOCI_SCROLL_X + SCROLL_WIDTH
 					&& guiY > FOCI_SCROLL_Y && guiY < FOCI_SCROLL_X + FOCI_SCROLL_HEIGHT) {
 				isScrollingFoci = true;
+			} else if (guiX > SPELL_X && guiX < SPELL_X + SPELL_WIDTH
+					&& guiY > SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT) {
+				spellHasFocus = spellRenderer.mouseClicked(x, y, button);
 			}
 		}
 
@@ -109,28 +117,32 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	}
 
 	@Override
-	public boolean mouseDragged(double x, double y, int p_mouseDragged_5_, double p_mouseDragged_6_, double p_mouseDragged_8_) {
+	public boolean mouseDragged(double x, double y, int button, double move_x, double move_y) {
 		double guiY = y - (double)this.guiTop;
-		if (this.isScrollingAspect) {
+		if (isScrollingAspect) {
 			this.aspectScroll = (float)((guiY - ASPECT_SCROLL_Y - 7.5F) / (ASPECT_SCROLL_HEIGHT));
 			this.aspectScroll = MathHelper.clamp(this.aspectScroll, 0.0F, 1.0F);
 			scrollAspectTo(this.aspectScroll);
 			return true;
-		} else if (this.isScrollingFoci) {
-			this.fociScroll = (float)((guiY - FOCI_SCROLL_Y - 7.5F) / (FOCI_SCROLL_HEIGHT));
+		} else if (isScrollingFoci) {
+			this.fociScroll = (float) ((guiY - FOCI_SCROLL_Y - 7.5F) / (FOCI_SCROLL_HEIGHT));
 			this.fociScroll = MathHelper.clamp(this.fociScroll, 0.0F, 1.0F);
 			scrollFociTo(this.fociScroll);
 			return true;
+		} else if (spellHasFocus) {
+			spellRenderer.mouseDragged(x, y, button, move_x, move_y);
+			return true;
 		} else {
-			return super.mouseDragged(x, y, p_mouseDragged_5_, p_mouseDragged_6_, p_mouseDragged_8_);
+			return super.mouseDragged(x, y, button, move_x, move_y);
 		}
 	}
 
 	@Override
 	public boolean mouseReleased(double x, double y, int button) {
 		if (button == 0) {
-			this.isScrollingAspect = false;
-			this.isScrollingFoci = false;
+			isScrollingAspect = false;
+			isScrollingFoci = false;
+			spellHasFocus = false;
 		}
 
 		return super.mouseReleased(x, y, button);

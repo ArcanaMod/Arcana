@@ -60,6 +60,9 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	public CompoundNBT write(CompoundNBT compound){
 		super.write(compound);
 		compound.put("items", items.serializeNBT());
+		if (currentSpell != null) {
+			Spell.getSerializer().serializeNBT(currentSpell, compound);
+		}
 		return compound;
 	}
 	
