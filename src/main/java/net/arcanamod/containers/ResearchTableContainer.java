@@ -2,11 +2,13 @@ package net.arcanamod.containers;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.containers.slots.AspectSlot;
+import net.arcanamod.containers.slots.AspectStoreSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaTags;
 import net.arcanamod.systems.research.Puzzle;
@@ -20,8 +22,11 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -50,7 +55,7 @@ public class ResearchTableContainer extends AspectContainer{
 	PlayerEntity lastClickPlayer;
 	
 	public ResearchTableContainer(ContainerType type, int id, IInventory playerInventory, ResearchTableTileEntity te){
-		super(type,id);
+		super(type, id);
 		this.te = te;
 		addOwnSlots(playerInventory);
 		addPlayerSlots(playerInventory);
@@ -109,11 +114,9 @@ public class ResearchTableContainer extends AspectContainer{
 			
 			public void onSlotChanged(){
 				super.onSlotChanged();
-				if(!ItemStack.areItemStacksEqual(note, te.note())){
-					note = te.note();
-					// remove added slots & aspect slots
-					refreshPuzzleSlots(playerInventory);
-				}
+				note = te.note();
+				// remove added slots & aspect slots
+				refreshPuzzleSlots(playerInventory);
 			}
 		});
 	}
@@ -131,7 +134,6 @@ public class ResearchTableContainer extends AspectContainer{
 		if(playerEntity == null)
 			playerEntity = ((PlayerInventory)playerInventory).player;
 		aspectSlots.removeAll(puzzleSlots);
-		puzzleSlots.forEach(AspectSlot::onClose);
 		puzzleSlots.clear();
 		
 		if(puzzleInventorySlots != null)
@@ -172,35 +174,38 @@ public class ResearchTableContainer extends AspectContainer{
 					}
 				}
 		});
+		
+		// populate from save, if there are any saved
+		if(!note.isEmpty() && note.getTag() != null && note.getTag().contains("progress")){
+			ListNBT nbt = note.getTag().getList("progress", Constants.NBT.TAG_COMPOUND);
+			for(INBT tag : nbt)
+				if(tag instanceof CompoundNBT){
+					CompoundNBT compound = (CompoundNBT)tag;
+					if(compound.contains("slot") && compound.contains("aspect")){
+						int index = compound.getInt("slot");
+						Aspect aspect = Aspects.ASPECTS.get(new ResourceLocation(compound.getString("aspect")));
+						if(puzzleSlots.size() > index){
+							AspectSlot slot1 = puzzleSlots.get(index);
+							if(slot1 instanceof AspectStoreSlot)
+								((AspectStoreSlot)slot1).getHolder().getHolder(0).insert(new AspectStack(aspect, 1), false);
+						}
+					}
+				}
+		}
 	}
 	
 	public void onContainerClosed(@Nonnull PlayerEntity player){
 		super.onContainerClosed(player);
 		if(puzzleInventorySlots != null)
-			if(!player.world.isRemote){
+			if(!player.world.isRemote)
 				clearContainer(player, player.world, puzzleInventorySlots);
-				// save aspect slots to research note
-				CompoundNBT aspectSave = new CompoundNBT();
-				for(int i = 0, size = aspectSlots.size(); i < size; i++){
-					AspectSlot slot = aspectSlots.get(i);
-					if(slot.getAspect() != null)
-						aspectSave.putString(String.valueOf(i), Aspects.ASPECT_IDS.get(slot.getAspect()).toString());
-				}
-				if(!note.isEmpty())
-					note.getOrCreateTag().put("progress", aspectSave);
-			}
+	}
+	
+	public boolean shouldReturnAspectsOnClose(){
+		return false;
 	}
 	
 	protected void addAspectSlots(IInventory playerInventory){
-		/*Supplier<IAspectHandler> aspects = () -> IAspectHandler.getFrom(te.visItem());
-		for(int i = 0; i < AspectUtils.primalAspects.length; i++){
-			Aspect primal = AspectUtils.primalAspects[i];
-			int x = 31 + 16 * i;
-			int y = 14;
-			if(i % 2 == 0)
-				y += 5;
-			getAspectSlots().add(new AspectSlot(primal, aspects, x, y));
-		}*/
 		Aspect[] values = (Aspect[]) Aspects.getWithoutEmpty().toArray();
 		Supplier<IAspectHandler> table = () -> IAspectHandler.getFrom(te);
 		for(int i = 0; i < values.length; i++){
@@ -221,19 +226,6 @@ public class ResearchTableContainer extends AspectContainer{
 			slot.visible = visible;
 			getAspectSlots().add(slot);
 			scrollableSlots.add(slot);
-		}
-		
-		// populate from save, if there are any saved
-		if(!note.isEmpty() && note.getTag() != null && note.getTag().contains("progress") && note.getTag().get("progress") instanceof CompoundNBT){
-			CompoundNBT nbt = (CompoundNBT)note.getTag().get("progress");
-			for(String slot : nbt.keySet())
-				try{
-					int index = Integer.parseInt(slot);
-					Aspect aspect = Aspects.ASPECTS.get(new ResourceLocation(nbt.getString(slot)));
-					if(getAspectSlots().size() > index){
-						getAspectSlots().get(index).setAspect(aspect);
-					}
-				}catch(NumberFormatException ignored){}
 		}
 		
 		refreshPuzzleSlots(playerInventory);
@@ -269,6 +261,20 @@ public class ResearchTableContainer extends AspectContainer{
 		super.onAspectSlotChange();
 		if(!ink.isEmpty())
 			validate();
+		
+		// save aspect slots to research note
+		ListNBT aspectSave = new ListNBT();
+		for(int i = 0, size = puzzleSlots.size(); i < size; i++){
+			AspectSlot slot = puzzleSlots.get(i);
+			if(slot.getAspect() != null){
+				CompoundNBT slotNbt = new CompoundNBT();
+				slotNbt.putInt("slot", i);
+				slotNbt.putString("aspect", Aspects.ASPECT_IDS.get(slot.getAspect()).toString());
+				aspectSave.add(slotNbt);
+			}
+		}
+		if(!note.isEmpty())
+			note.getOrCreateTag().put("progress", aspectSave);
 	}
 	
 	public void validate(){

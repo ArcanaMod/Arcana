@@ -63,6 +63,10 @@
         {
           "type": "crafting",
           "content": "arcana:tools/arcanium/arcanium_pickaxe"
+        },
+        {
+          "type": "crafting",
+          "content": "arcana:armour/arcanium/arcanium_chestplate"
         }
       ]
     },

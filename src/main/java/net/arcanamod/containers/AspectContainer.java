@@ -94,9 +94,13 @@ public abstract class AspectContainer extends Container{
 	
 	public void onContainerClosed(@Nonnull PlayerEntity player){
 		super.onContainerClosed(player);
-		aspectSlots.forEach(AspectSlot::onClose);
+		if(shouldReturnAspectsOnClose())
+			aspectSlots.forEach(AspectSlot::onClose);
 	}
 	
-	public void onAspectSlotChange(){
+	public boolean shouldReturnAspectsOnClose(){
+		return true;
 	}
+	
+	public void onAspectSlotChange(){}
 }
