@@ -11,6 +11,7 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
@@ -22,9 +23,9 @@ import java.awt.*;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class JarTileEntity extends TileEntity implements ITickableTileEntity, VisShareable{
-	
 	private final JarBlock.Type jarType;
 	public AspectBattery vis = new AspectBattery(1, 100);
+	public Direction label = null;
 	private double lastVis;
 	
 	private double clientVis;
@@ -60,7 +61,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	}
 	
 	public Color getAspectColor(){
-		if(this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.DUNGEON_BRICKS.get())
+		if(this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.ASPECT_TESTER.get())
 			return getCreativeJarColor();
 		else
 			return vis.getHolder(0).getContainedAspect() != Aspects.EMPTY ? new Color(vis.getHolder(0).getContainedAspect().getColorRange().get(2)) : Color.WHITE;
@@ -162,5 +163,14 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	
 	public JarBlock.Type getJarType(){
 		return jarType;
+	}
+
+	public ResourceLocation getPaperAspectLocation() {
+		return new ResourceLocation(vis.getHolder(0).getContainedAspect().toResourceLocation().toString()
+				.replace((CharSequence)":",(CharSequence)":aspect/paper/paper_"));
+	}
+
+	public @Nullable Direction getLabelSide() {
+		return label;
 	}
 }

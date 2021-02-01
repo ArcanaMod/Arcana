@@ -4,17 +4,23 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.tiles.JarTileEntity;
+import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.text.ITextComponent;
@@ -88,7 +94,28 @@ public class JarBlock extends Block{
 		else
 			worldIn.setBlockState(pos, state.with(UP, false));
 	}
-	
+
+	@Override
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		if (player.getHeldItem(handIn).getItem() == ArcanaItems.LABEL.get())
+			((JarTileEntity)worldIn.getTileEntity(pos)).label = getYaw(player);
+		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
+	}
+
+	public static Direction getYaw(PlayerEntity player) {
+		float yaw = player.getRotationYawHead();
+		yaw = (yaw % 360 + 360) % 360; // true modulo, as javas modulo is weird for negative values
+		if (yaw > 135 || yaw < -135) {
+			return Direction.NORTH;
+		} else if (yaw < -45) {
+			return Direction.EAST;
+		} else if (yaw > 45) {
+			return Direction.WEST;
+		} else {
+			return Direction.SOUTH;
+		}
+	}
+
 	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state){
 		ItemStack itemstack = super.getItem(worldIn, pos, state);
 		JarTileEntity jarTe = (JarTileEntity)worldIn.getTileEntity(pos);

@@ -1,6 +1,8 @@
 package net.arcanamod.client.event;
 
 import net.arcanamod.ArcanaVariables;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.render.tiles.AspectValveTileEntityRenderer;
 import net.arcanamod.client.render.tiles.JarTileEntityRender;
 import net.arcanamod.items.attachment.Cap;
@@ -20,6 +22,7 @@ public class TextureStitchHandler {
 		if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)){
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);
+			event.addSprite(JarTileEntityRender.JAR_LABEL);
 			event.addSprite(ArcanaVariables.arcLoc("font/number_0"));
 			event.addSprite(ArcanaVariables.arcLoc("font/number_1"));
 			event.addSprite(ArcanaVariables.arcLoc("font/number_2"));
@@ -32,6 +35,10 @@ public class TextureStitchHandler {
 			event.addSprite(ArcanaVariables.arcLoc("font/number_9"));
 			event.addSprite(ArcanaVariables.arcLoc("models/items/thaumonomicon_model"));
 			event.addSprite(AspectValveTileEntityRenderer.GEAR_TEX);
+
+			for (Aspect aspect : Aspects.getAll()){
+				event.addSprite(ArcanaVariables.arcLoc("aspect/paper/paper_"+aspect.name()));
+			}
 			
 			// add all of the wand related textures
 			for(Cap cap : Cap.CAPS.values())
