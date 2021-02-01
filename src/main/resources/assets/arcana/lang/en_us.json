@@ -467,12 +467,12 @@
     "block.arcana.order_cluster": "Order Crystal Cluster",
     "block.arcana.chaos_cluster": "Chaos Crystal Cluster",
 
-    "block.arcana.air_cluster_seed": "Air Crystal Seed",
-    "block.arcana.earth_cluster_seed": "Earth Crystal Seed",
-    "block.arcana.fire_cluster_seed": "Fire Crystal Seed",
-    "block.arcana.water_cluster_seed": "Water Crystal Seed",
-    "block.arcana.order_cluster_seed": "Order Crystal Seed",
-    "block.arcana.chaos_cluster_seed": "Chaos Crystal Seed",
+    "item.arcana.air_cluster_seed": "Air Crystal Seed",
+    "item.arcana.earth_cluster_seed": "Earth Crystal Seed",
+    "item.arcana.fire_cluster_seed": "Fire Crystal Seed",
+    "item.arcana.water_cluster_seed": "Water Crystal Seed",
+    "item.arcana.order_cluster_seed": "Order Crystal Seed",
+    "item.arcana.chaos_cluster_seed": "Chaos Crystal Seed",
 
     "_comment": "Tainted",
     "block.arcana.tainted_acacia_leaves": "Tainted Acacia Leaves",
