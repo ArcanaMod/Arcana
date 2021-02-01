@@ -1,0 +1,21 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "cc",
+    "cc"
+  ],
+  "key": {
+    "c": {
+      "item": "arcana:order_crystal"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:order",
+      "amount": 1
+    }
+  ],
+  "result": {
+    "item": "arcana:order_cluster"
+  }
+}

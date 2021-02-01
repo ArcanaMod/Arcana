@@ -1,0 +1,21 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "cc",
+    "cc"
+  ],
+  "key": {
+    "c": {
+      "item": "arcana:air_crystal"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:air",
+      "amount": 1
+    }
+  ],
+  "result": {
+    "item": "arcana:air_cluster"
+  }
+}

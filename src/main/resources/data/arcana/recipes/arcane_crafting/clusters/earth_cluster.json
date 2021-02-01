@@ -1,0 +1,21 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "cc",
+    "cc"
+  ],
+  "key": {
+    "c": {
+      "item": "arcana:earth_crystal"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 1
+    }
+  ],
+  "result": {
+    "item": "arcana:earth_cluster"
+  }
+}

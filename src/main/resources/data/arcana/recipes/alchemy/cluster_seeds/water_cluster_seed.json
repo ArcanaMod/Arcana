@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "arcana:water_crystal"
+  },
+  "out": {
+    "item": "arcana:water_cluster_seed"
+  },
+  "aspects": [
+    {
+      "aspect": "seeds",
+      "amount": 2
+    },
+    {
+      "aspect": "crystal",
+      "amount": 1
+    }
+  ]
+}

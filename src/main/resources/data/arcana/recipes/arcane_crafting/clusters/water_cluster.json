@@ -1,0 +1,21 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "cc",
+    "cc"
+  ],
+  "key": {
+    "c": {
+      "item": "arcana:water_crystal"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:water",
+      "amount": 1
+    }
+  ],
+  "result": {
+    "item": "arcana:water_cluster"
+  }
+}

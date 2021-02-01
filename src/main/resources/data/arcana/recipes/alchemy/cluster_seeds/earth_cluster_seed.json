@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "arcana:earth_crystal"
+  },
+  "out": {
+    "item": "arcana:earth_cluster_seed"
+  },
+  "aspects": [
+    {
+      "aspect": "seeds",
+      "amount": 2
+    },
+    {
+      "aspect": "crystal",
+      "amount": 1
+    }
+  ]
+}
