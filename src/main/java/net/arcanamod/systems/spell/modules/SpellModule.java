@@ -18,6 +18,7 @@ import java.util.List;
 
 public abstract class SpellModule {
 	public static HashMap<String, Class<? extends SpellModule>> modules = Maps.newHashMap();
+	public static HashMap<Integer, Class<? extends SpellModule>> byIndex = Maps.newHashMap();
 
 	private List<SpellModule> bound = new ArrayList<>();
 
@@ -75,15 +76,20 @@ public abstract class SpellModule {
 
 	public abstract CompoundNBT toNBT();
 
+	private static void registerModule(String id, Class<? extends SpellModule> clazz, int index) {
+		modules.put(id, clazz);
+		byIndex.put(index, clazz);
+	}
+
 	static {
-		modules.put("start_circle", StartCircle.class);
-		modules.put("cast_method_sin", CastMethodSin.class);
-		modules.put("cast_method", CastMethod.class);
-		modules.put("cast_circle", CastCircle.class);
-		modules.put("sin_modifier_circle", SingleModifierCircle.class);
-		modules.put("single_modifier_circle", SingleModifierCircle.class);
-		modules.put("double_modifier_circle", DoubleModifierCircle.class);
-		modules.put("connector", Connector.class);
-		modules.put("comment", CommentBlock.class);
+		registerModule("start_circle", StartCircle.class, 0);
+		registerModule("cast_circle", CastCircle.class, 1);
+		registerModule("single_modifier_circle", SingleModifierCircle.class, 2);
+		registerModule("double_modifier_circle", DoubleModifierCircle.class, 3);
+		registerModule("sin_modifier_circle", SingleModifierCircle.class, 4);
+		registerModule("cast_method", CastMethod.class, 5);
+		registerModule("cast_method_sin", CastMethodSin.class, 6);
+		registerModule("connector", Connector.class, 7);
+		registerModule("comment", CommentBlock.class, 8);
 	}
 }

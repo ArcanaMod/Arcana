@@ -7,12 +7,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+/// HEAVY IN PROGRESS
+/// This and FociForgeScreen are in progress
+/// missteps and bad design are prominent and will be fixed
 public class SpellRenderer {
 
     private static final ResourceLocation SPELL_RESOURCES = new ResourceLocation(Arcana.MODID, "textures/gui/container/foci_forge_minigame.png");
 
     private float x = 0;
     private float y = 0;
+    public int currentModule = -1;
 
     private boolean clickActive = false;
 
@@ -44,6 +48,7 @@ public class SpellRenderer {
 
     public void mouseReleased(double x, double y, int button) {
         clickActive = false;
+        currentModule = -1;
     }
 
     public void render(Spell spell, int left, int top, int width, int height) {
