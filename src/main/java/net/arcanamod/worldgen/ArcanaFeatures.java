@@ -24,7 +24,7 @@ public class ArcanaFeatures{
 	
 	public static final RegistryObject<Feature<NoFeatureConfig>> NODE = FEATURES.register("node", () -> new NodeFeature(NoFeatureConfig::deserialize));
 	public static final RegistryObject<Feature<TreeFeatureConfig>> SILVERWOOD_TREE = FEATURES.register("silverwood_tree", () -> {
-		SILVERWOOD_TREE_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(3, 1)).heightRandA(2).heightRandB(3).baseHeight(7).build();
+		SILVERWOOD_TREE_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(3, 1)).heightRandA(2).heightRandB(2).baseHeight(10).build();
 		return new SilverwoodTreeFeature(TreeFeatureConfig::func_227338_a_);
 	});
 }
