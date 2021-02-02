@@ -31,6 +31,7 @@ public abstract class NodeType{
 			PALE = new PaleNodeType(),
 			ELDRITCH = new EldritchNodeType(),
 			HUNGRY = new HungryNodeType(),
+			PURE = new PureNodeType(),
 			TAINTED = new TaintedNodeType();
 	
 	public static final NodeType DEFAULT = NORMAL;
@@ -41,12 +42,14 @@ public abstract class NodeType{
 		TYPES.put(arcLoc("pale"), PALE);
 		TYPES.put(arcLoc("eldritch"), ELDRITCH);
 		TYPES.put(arcLoc("hungry"), HUNGRY);
+		TYPES.put(arcLoc("pure"), PURE);
 		TYPES.put(arcLoc("tainted"), TAINTED);
 		
 		SPECIAL_TYPES.add(BRIGHT);
 		SPECIAL_TYPES.add(PALE);
 		SPECIAL_TYPES.add(ELDRITCH);
 		SPECIAL_TYPES.add(HUNGRY);
+		SPECIAL_TYPES.add(PURE);
 	}
 	
 	public void tick(IWorld world, AuraView nodes, Node node){
@@ -227,6 +230,17 @@ public abstract class NodeType{
 		
 		public Collection<ResourceLocation> textures(){
 			return Collections.singleton(arcLoc("nodes/hungry_node"));
+		}
+	}
+
+	public static class PureNodeType extends NodeType{
+
+		public ResourceLocation texture(IWorld world, AuraView nodes, Node node){
+			return arcLoc("nodes/pure_node");
+		}
+
+		public Collection<ResourceLocation> textures(){
+			return Collections.singleton(arcLoc("nodes/pure_node"));
 		}
 	}
 	
