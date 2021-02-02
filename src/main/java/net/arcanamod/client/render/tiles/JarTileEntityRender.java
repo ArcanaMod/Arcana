@@ -65,24 +65,30 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 
 		// label
 		if (labelSide != null){
-		matrixStack.push();
-		matrixStack.scale(scale, scale, scale);
-		Quaternion q = new Quaternion(-25,0,0,true);
-		matrixStack.rotate(q);
+			matrixStack.push();
+			matrixStack.scale(scale, scale, scale);
+			matrixStack.translate(.445f, .5f, 1f);
 
-		matrixStack.translate(.445f, .1f, 1.2f);
+			Quaternion q = new Quaternion(-15,0,0,true);
+			matrixStack.rotate(q);
 
-		add(builder, matrixStack, Color.WHITE, 0, 1, 0, label.getMinU(), label.getMaxV());
-		add(builder, matrixStack, Color.WHITE, 0, 0, 0, label.getMaxU(), label.getMaxV());
-		add(builder, matrixStack, Color.WHITE, 0, 0, 1, label.getMaxU(), label.getMinV());
-		add(builder, matrixStack, Color.WHITE, 0, 1, 1, label.getMinU(), label.getMinV());
+			add(builder, matrixStack, Color.WHITE, 0, 1, 0, label.getMinU(), label.getMaxV());
+			add(builder, matrixStack, Color.WHITE, 0, 0, 0, label.getMaxU(), label.getMaxV());
+			add(builder, matrixStack, Color.WHITE, 0, 0, 1, label.getMaxU(), label.getMinV());
+			add(builder, matrixStack, Color.WHITE, 0, 1, 1, label.getMinU(), label.getMinV());
 
-		matrixStack.translate(-.02, -.02, -.02);
-		add(builder, matrixStack, Color.WHITE, 0, 1, 0, aspect.getMinU(), aspect.getMaxV());
-		add(builder, matrixStack, Color.WHITE, 0, 0, 0, aspect.getMaxU(), aspect.getMaxV());
-		add(builder, matrixStack, Color.WHITE, 0, 0, 1, aspect.getMaxU(), aspect.getMinV());
-		add(builder, matrixStack, Color.WHITE, 0, 1, 1, aspect.getMinU(), aspect.getMinV());
-		matrixStack.pop();
+			q = new Quaternion(15-90,0,0,true);
+			matrixStack.rotate(q);
+			matrixStack.translate(0.5,0,0);
+
+			scale = 0.8f;
+			matrixStack.scale(scale, scale, scale);
+			matrixStack.translate(-.02, -.02, -.02);
+			add(builder, matrixStack, Color.WHITE, 0, 1, 0, aspect.getMinU(), aspect.getMaxV());
+			add(builder, matrixStack, Color.WHITE, 0, 0, 0, aspect.getMaxU(), aspect.getMaxV());
+			add(builder, matrixStack, Color.WHITE, 0, 0, 1, aspect.getMaxU(), aspect.getMinV());
+			add(builder, matrixStack, Color.WHITE, 0, 1, 1, aspect.getMinU(), aspect.getMinV());
+			matrixStack.pop();
 		}
 
 		scale = 0.5f;
