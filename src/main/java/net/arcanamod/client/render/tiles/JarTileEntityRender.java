@@ -20,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
+import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -66,10 +67,36 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 		// label
 		if (labelSide != null){
 			matrixStack.push();
+
+			Quaternion q;
+
+			switch (labelSide) {
+				case NORTH:
+					q = new Quaternion(0,-90,0,true);
+					break;
+				case SOUTH:
+					q = new Quaternion(0,180,0,true);
+					break;
+				case WEST:
+					q = new Quaternion(0,90,0,true);
+					break;
+				case EAST:
+					q = new Quaternion(0,0,0,true);
+					break;
+				case UP:
+					q = new Quaternion(0, new Random().nextInt(2) == 1 ? 0 : 180,0,true);
+					break;
+				case DOWN:
+					q = new Quaternion(0, new Random().nextInt(2) == 1 ? 90 : 270,0,true);
+					break;
+				default: q = new Quaternion(0,0,0,true);
+			}
+			matrixStack.rotate(q);
+
 			matrixStack.scale(scale, scale, scale);
 			matrixStack.translate(.445f, .5f, 1f);
 
-			Quaternion q = new Quaternion(-15,0,0,true);
+			q = new Quaternion(-15,0,0,true);
 			matrixStack.rotate(q);
 
 			add(builder, matrixStack, Color.WHITE, 0, 1, 0, label.getMinU(), label.getMaxV());
