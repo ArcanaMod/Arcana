@@ -92,10 +92,6 @@ public class CrystalClusterItem extends Item{
 		}
 	}
 	
-	protected SoundEvent getPlaceSound(BlockState state){
-		return state.getSoundType().getPlaceSound();
-	}
-	
 	protected SoundEvent getPlaceSound(BlockState state, World world, BlockPos pos, PlayerEntity entity){
 		return state.getSoundType(world, pos, entity).getPlaceSound();
 	}
@@ -162,9 +158,8 @@ public class CrystalClusterItem extends Item{
 			if(compoundnbt != null){
 				TileEntity tileentity = worldIn.getTileEntity(pos);
 				if(tileentity != null){
-					if(!worldIn.isRemote && tileentity.onlyOpsCanSetNbt() && (player == null || !player.canUseCommandBlock())){
+					if(!worldIn.isRemote && tileentity.onlyOpsCanSetNbt() && (player == null || !player.canUseCommandBlock()))
 						return false;
-					}
 					
 					CompoundNBT compoundnbt1 = tileentity.write(new CompoundNBT());
 					CompoundNBT compoundnbt2 = compoundnbt1.copy();
@@ -185,20 +180,20 @@ public class CrystalClusterItem extends Item{
 	}
 	
 	public String getTranslationKey(){
-		return this.getBlock().getTranslationKey();
+		return stage == 3 ? getBlock().getTranslationKey() : super.getTranslationKey();
 	}
 	
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		this.getBlock().addInformation(stack, worldIn, tooltip, flagIn);
+		getBlock().addInformation(stack, worldIn, tooltip, flagIn);
 	}
 	
 	public Block getBlock(){
-		return this.getBlockRaw() == null ? null : this.getBlockRaw().delegate.get();
+		return getBlockRaw().delegate.get();
 	}
 	
 	private Block getBlockRaw(){
-		return this.block;
+		return block;
 	}
 }

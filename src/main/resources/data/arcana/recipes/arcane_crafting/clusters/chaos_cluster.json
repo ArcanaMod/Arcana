@@ -1,0 +1,21 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "cc",
+    "cc"
+  ],
+  "key": {
+    "c": {
+      "item": "arcana:chaos_crystal"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:chaos",
+      "amount": 1
+    }
+  ],
+  "result": {
+    "item": "arcana:chaos_cluster"
+  }
+}

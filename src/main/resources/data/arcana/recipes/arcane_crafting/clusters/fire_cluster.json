@@ -1,0 +1,21 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "cc",
+    "cc"
+  ],
+  "key": {
+    "c": {
+      "item": "arcana:fire_crystal"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:fire",
+      "amount": 1
+    }
+  ],
+  "result": {
+    "item": "arcana:fire_cluster"
+  }
+}

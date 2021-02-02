@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "arcana:fire_crystal"
+  },
+  "out": {
+    "item": "arcana:fire_cluster_seed"
+  },
+  "aspects": [
+    {
+      "aspect": "seeds",
+      "amount": 2
+    },
+    {
+      "aspect": "crystal",
+      "amount": 1
+    }
+  ]
+}
