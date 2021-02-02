@@ -1,9 +1,16 @@
 package net.arcanamod.worldgen;
 
 import com.mojang.datafixers.Dynamic;
+import net.arcanamod.ArcanaConfig;
+import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.capabilities.AuraChunk;
+import net.arcanamod.event.WorldTickHandler;
+import net.arcanamod.world.Node;
+import net.arcanamod.world.NodeType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
+import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.IWorldGenerationBaseReader;
 import net.minecraft.world.gen.IWorldGenerationReader;
 import net.minecraft.world.gen.feature.AbstractTreeFeature;
@@ -13,6 +20,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
+
+import static java.util.Objects.requireNonNull;
 
 @ParametersAreNonnullByDefault
 public class SilverwoodTreeFeature extends AbstractTreeFeature<TreeFeatureConfig>{
@@ -41,6 +50,7 @@ public class SilverwoodTreeFeature extends AbstractTreeFeature<TreeFeatureConfig
 				
 				int top = y + height - 1;
 				
+				// main trunk
 				for(int curHeight = 0; curHeight < height; ++curHeight){
 					int k2 = y + curHeight;
 					BlockPos curPos = new BlockPos(x, k2, z);
@@ -52,6 +62,7 @@ public class SilverwoodTreeFeature extends AbstractTreeFeature<TreeFeatureConfig
 					}
 				}
 				
+				// main leaves
 				for(int cX = -3; cX <= 0; ++cX)
 					for(int cZ = -3; cZ <= 0; ++cZ){
 						func_227219_b_(world, rand, new BlockPos(x + cX, top - 1, z + cZ), leaves, box, config);
@@ -66,6 +77,7 @@ public class SilverwoodTreeFeature extends AbstractTreeFeature<TreeFeatureConfig
 						}
 					}
 				
+				// add little square of leaves on top
 				func_227219_b_(world, rand, new BlockPos(x, top + 2, z), leaves, box, config);
 				func_227219_b_(world, rand, new BlockPos(x + 1, top + 2, z), leaves, box, config);
 				func_227219_b_(world, rand, new BlockPos(x + 1, top + 2, z + 1), leaves, box, config);
@@ -80,6 +92,7 @@ public class SilverwoodTreeFeature extends AbstractTreeFeature<TreeFeatureConfig
 					for(int k4 = -1; k4 <= 2; ++k4)
 						if(l3 < 0 || l3 > 1 || k4 < 0 || k4 > 1){
 							if(rand.nextInt(3) <= 0){
+								// at extra logs at top
 								for(int l2 = 0; l2 < rand.nextInt(3) + 2; ++l2)
 									func_227216_a_(world, rand, new BlockPos(x + l3, top - l2 - 1, z + k4), logs, box, config);
 								
@@ -92,9 +105,18 @@ public class SilverwoodTreeFeature extends AbstractTreeFeature<TreeFeatureConfig
 										if(Math.abs(k5) != 2 || Math.abs(l5) != 2)
 											func_227219_b_(world, rand, new BlockPos(x + l3 + k5, top - 1, z + k4 + l5), leaves, box, config);
 							}
+							// add extra logs at roots
 							for(int l2 = 0; l2 < rand.nextInt(3) + 1; ++l2)
 								func_227216_a_(world, rand, new BlockPos(x + l3, y + l2 - 1, z + k4), logs, box, config);
 						}
+				
+				// add pure node at half height
+				if(rand.nextInt(100) < ArcanaConfig.SILVERWOOD_NODE_CHANCE.get())
+					WorldTickHandler.onTick.add(w -> {
+						NodeType type = NodeType.PURE;
+						IAspectHandler aspects = type.genBattery(pos, w, rand);
+						requireNonNull(AuraChunk.getFrom((Chunk)w.getChunk(pos))).addNode(new Node(aspects, type, x + 1, y + height / 2f, z + 1, 0));
+					});
 				
 				return true;
 			}

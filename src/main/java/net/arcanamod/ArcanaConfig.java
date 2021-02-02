@@ -126,6 +126,11 @@ public class ArcanaConfig{
 		TAINT_SPREAD_TRIES = COMMON_BUILDER
 				.comment("The number of times that a tainted block will attempt to spread taint on a random tick.", "5 by default.")
 				.define("TaintSpreadTries", 5);
+		
+		SILVERWOOD_NODE_CHANCE = COMMON_BUILDER
+				.comment("The chance of a pure aura node generating with a silverwood tree, out of 100.", "50 by default.")
+				.define("SilverwoodNodeChance", 50);
+		
 		COMMON_BUILDER.pop();
 		
 		
@@ -213,6 +218,7 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> TAINT_SPREAD_FLUX_COST; // 1
 	public static ConfigValue<Integer> TAINT_SPREAD_TRIES; // 5
 	
+	public static ConfigValue<Integer> SILVERWOOD_NODE_CHANCE; // 50
 	
 	// Client
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1
