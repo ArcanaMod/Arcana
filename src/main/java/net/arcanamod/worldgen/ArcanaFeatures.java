@@ -21,10 +21,15 @@ public class ArcanaFeatures{
 	
 	// have to delay populating it until block registry is done because forge thonk
 	public static TreeFeatureConfig SILVERWOOD_TREE_CONFIG;
+	public static HugeTreeFeatureConfig GREATWOOD_TREE_CONFIG;
 	
 	public static final RegistryObject<Feature<NoFeatureConfig>> NODE = FEATURES.register("node", () -> new NodeFeature(NoFeatureConfig::deserialize));
 	public static final RegistryObject<Feature<TreeFeatureConfig>> SILVERWOOD_TREE = FEATURES.register("silverwood_tree", () -> {
 		SILVERWOOD_TREE_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(3, 1)).heightRandA(2).heightRandB(2).baseHeight(10).build();
 		return new SilverwoodTreeFeature(TreeFeatureConfig::func_227338_a_);
+	});
+	public static final RegistryObject<Feature<HugeTreeFeatureConfig>> GREATWOOD_TREE = FEATURES.register("greatwood_tree", () -> {
+		GREATWOOD_TREE_CONFIG = new HugeTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.GREATWOOD_LEAVES.get().getDefaultState())).setSapling(ArcanaBlocks.GREATWOOD_SAPLING.get()).baseHeight(18).build();
+		return new GreatwoodTreeFeature(HugeTreeFeatureConfig::func_227277_a_);
 	});
 }
