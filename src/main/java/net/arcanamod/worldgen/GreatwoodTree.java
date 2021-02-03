@@ -14,7 +14,7 @@ public class GreatwoodTree extends BigTree{
 	
 	@Nullable
 	protected ConfiguredFeature<HugeTreeFeatureConfig, ?> getHugeTreeFeature(Random rand){
-		return ArcanaFeatures.GREATWOOD_TREE.get().withConfiguration(ArcanaFeatures.GREATWOOD_TREE_CONFIG);
+		return ArcanaFeatures.GREATWOOD_TREE.withConfiguration(ArcanaFeatures.GREATWOOD_TREE_CONFIG);
 	}
 	
 	@Nullable

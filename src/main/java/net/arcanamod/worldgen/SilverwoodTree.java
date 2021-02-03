@@ -13,6 +13,6 @@ public class SilverwoodTree extends Tree{
 	
 	@Nullable
 	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random rand, boolean h){
-		return ArcanaFeatures.SILVERWOOD_TREE.get().withConfiguration(ArcanaFeatures.SILVERWOOD_TREE_CONFIG);
+		return ArcanaFeatures.SILVERWOOD_TREE.withConfiguration(ArcanaFeatures.SILVERWOOD_TREE_CONFIG);
 	}
 }
