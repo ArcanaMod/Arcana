@@ -98,9 +98,9 @@ public class ServerAuraView implements AuraView{
 				if(loaded.containsKey(neighbor)){
 					// if they have more than 30 more flux
 					AuraChunk chunk1 = loaded.get(neighbor);
-					if(chunk1.getTaintLevel() - chunk.getTaintLevel() > 30){
-						// take a third of the difference
-						int diff = (chunk1.getTaintLevel() - chunk.getTaintLevel()) / 8;
+					if(chunk1.getTaintLevel() - chunk.getTaintLevel() > 60){
+						// move some of the difference
+						int diff = (chunk1.getTaintLevel() - chunk.getTaintLevel()) / 12;
 						chunk.addTaint(diff);
 						chunk1.addTaint(-diff);
 					}
