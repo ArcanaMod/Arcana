@@ -1,0 +1,62 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "arcana:block/clusters/earth_crystal_fragments",
+        "x": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "arcana:block/clusters/earth_crystal_fragments",
+        "y": 270,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "arcana:block/clusters/earth_crystal_fragments",
+        "x": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "arcana:block/clusters/earth_crystal_fragments",
+        "y": 90,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "arcana:block/clusters/earth_crystal_fragments",
+        "y": 180,
+        "uvlock": true
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "arcana:block/clusters/earth_crystal_fragments"
+      }
+    }
+  ]
+}

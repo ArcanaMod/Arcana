@@ -476,6 +476,13 @@
     "item.arcana.order_cluster_seed": "Order Crystal Seed",
     "item.arcana.chaos_cluster_seed": "Chaos Crystal Seed",
 
+    "block.arcana.air_crystal_fragments": "Air Crystal Fragments",
+    "block.arcana.earth_crystal_fragments": "Earth Crystal Fragments",
+    "block.arcana.fire_crystal_fragments": "Fire Crystal Fragments",
+    "block.arcana.water_crystal_fragments": "Water Crystal Fragments",
+    "block.arcana.order_crystal_fragments": "Order Crystal Fragments",
+    "block.arcana.chaos_crystal_fragments": "Chaos Crystal Fragments",
+
     "_comment": "Tainted",
     "block.arcana.tainted_acacia_leaves": "Tainted Acacia Leaves",
     "block.arcana.tainted_acacia_log": "Tainted Acacia Log",

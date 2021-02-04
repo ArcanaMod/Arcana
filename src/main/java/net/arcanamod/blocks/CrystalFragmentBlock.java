@@ -139,10 +139,4 @@ public class CrystalFragmentBlock extends WaterloggableBlock {
             super.neighborChanged(state, world, pos, block, fromPos, isMoving);
         }
     }
-
-    @Override
-    public boolean isLadder(BlockState state, IWorldReader world, BlockPos pos, LivingEntity entity) {
-        return true;
-    }
-
 }
