@@ -50,6 +50,8 @@ public class ArcaneCraftingTableContainer extends RecipeBookContainer<AspectCraf
 			for(int j = 0; j < 3; ++j)
 				this.addSlot(new Slot(craftMatrix, j + i * 3, 42 + j * 23, 41 + i * 23));
 		addPlayerSlots(playerInventory);
+		// guarantee craft() called on serverside
+		craft(this.windowId, this.playerInventory.player.world, this.playerInventory.player, this.craftMatrix, this.craftResult);
 	}
 
 	public ArcaneCraftingTableContainer(int id, PlayerInventory playerInventory, IInventory inventory){
