@@ -278,7 +278,7 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> WATER_CLUSTER = BLOCKS.register("water_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.WATER));
 	public static final RegistryObject<Block> ORDER_CLUSTER = BLOCKS.register("order_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.ORDER));
 	public static final RegistryObject<Block> CHAOS_CLUSTER = BLOCKS.register("chaos_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.CHAOS));
-	public static final RegistryObject<Block> WATER_CRYSTAL_FRAGMENTS = BLOCKS.register("water_crystal_fragments", () -> new Block(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(SoundType.GLASS)));
+	public static final RegistryObject<Block> WATER_CRYSTAL_FRAGMENTS = BLOCKS.register("water_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(SoundType.GLASS), Aspects.WATER));
 
 	//Misc Tainted Blocks
 	//public static final RegistryObject<Block> TAINTED_DESTROYED_ORE = BLOCKS.register("tainted_destroyed_ore", () -> Taint.taintedOf(Blocks.STONE_BRICKS));
