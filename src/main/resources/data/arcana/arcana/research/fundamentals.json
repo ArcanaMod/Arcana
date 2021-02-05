@@ -1,6 +1,28 @@
 {
   "entries": [
     {
+      "key": "arcana:root",
+      "name": "research.arcana.root",
+      "desc": "research.arcana.root.desc",
+      "icons": [
+        "arcana:arcanum"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [],
+      "meta": [
+        "spiky_base",
+        "purple_base"
+      ],
+      "x": 0,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.root.text"
+        }
+      ]
+    },
+    {
       "key": "arcana:aspects",
       "name": "research.arcana.aspects",
       "icons": [
@@ -12,14 +34,15 @@
         "arcana:aspect_chaos"
       ],
       "category": "arcana:fundamentals",
-      "parents": [],
+      "parents": [
+        "&arcana:root"
+      ],
       "meta": [
-        "root",
         "spiky_base",
         "purple_base"
       ],
       "x": 0,
-      "y": 1,
+      "y": 4,
       "sections": [
         {
           "type": "string",
@@ -36,13 +59,12 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:aspects"
+        "&arcana:aspects"
       ],
       "meta": [
-        "round_base",
-        "reverse"
+        "round_base"
       ],
-      "x": 1,
+      "x": 2,
       "y": 2,
       "sections": [
         {
@@ -69,8 +91,8 @@
       "meta": [
         "round_base"
       ],
-      "x": 2,
-      "y": 1,
+      "x": 4,
+      "y": 0,
       "sections": [
         {
           "type": "string",
@@ -104,8 +126,8 @@
         "purple_base",
         "reverse"
       ],
-      "x": 1,
-      "y": 0,
+      "x": 2,
+      "y": -2,
       "sections": [
         {
           "type": "string",
@@ -139,7 +161,7 @@
         "reverse"
       ],
       "x": 0,
-      "y": -1,
+      "y": -4,
       "sections": [
         {
           "type": "string",
@@ -188,11 +210,10 @@
       ],
       "meta": [
         "round_base",
-        "hidden",
-        "reverse"
+        "hidden"
       ],
       "x": 0,
-      "y": -3,
+      "y": -8,
       "sections": [
         {
           "type": "string",
@@ -227,7 +248,7 @@
       ],
       "meta": [],
       "x": 4,
-      "y": -1,
+      "y": -4,
       "sections": [
         {
           "type": "string",
@@ -270,8 +291,8 @@
         "purple_base",
         "reverse"
       ],
-      "x": -1,
-      "y": -2,
+      "x": 2,
+      "y": -6,
       "sections": [
         {
           "type": "string",
@@ -299,8 +320,8 @@
         "purple_base",
         "reverse"
       ],
-      "x": 1,
-      "y": -2,
+      "x": -2,
+      "y": -6,
       "sections": [
         {
           "type": "string",
@@ -327,8 +348,8 @@
         "square_base",
         "purple_base"
       ],
-      "x": -1,
-      "y": 0,
+      "x": -2,
+      "y": -2,
       "sections": [
         {
           "type": "string",
@@ -364,33 +385,6 @@
       ]
     },
     {
-      "key": "arcana:fieldwork",
-      "name": "research.arcana.fieldwork",
-      "icons": [
-        "arcana:item/research_monocle.png"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [
-        "arcana:research"
-      ],
-      "meta": [
-        "hexagon_base",
-        "purple_base"
-      ],
-      "x": -2,
-      "y": -1,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.fieldwork.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.fieldwork.stage.2"
-        }
-      ]
-    },
-    {
       "key": "arcana:research_expertise",
       "name": "research.arcana.research_expertise",
       "desc": "research.arcana.research_expertise.desc",
@@ -404,8 +398,8 @@
       "meta": [
         "round_base"
       ],
-      "x": -2,
-      "y": 1,
+      "x": -4,
+      "y": 0,
       "sections": [
         {
           "type": "string",
@@ -430,9 +424,9 @@
       ],
       "meta": [
         "round_base",
-        "research"
+        "reverse"
       ],
-      "x": -1,
+      "x": -2,
       "y": 2,
       "sections": [
         {
@@ -442,35 +436,6 @@
         {
           "type": "string",
           "content": "research.arcana.research_mastery.stage.2"
-        }
-      ]
-    },
-    {
-      "key": "arcana:archaeology",
-      "name": "research.arcana.archaeology",
-      "desc": "research.arcana.archaeology.desc",
-      "icons": [
-        "arcana:research/journal.png"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [
-        "arcana:research_mastery"
-      ],
-      "meta": [
-        "hexagon_base",
-        "purple_base",
-        "research"
-      ],
-      "x": 0,
-      "y": 3,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.archaeology.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.archaeology.stage.2"
         }
       ]
     },
@@ -488,8 +453,8 @@
         "purple_base",
         "spiky_base"
       ],
-      "x": 3,
-      "y": -2,
+      "x": 6,
+      "y": -6,
       "sections": [
         {
           "type": "string",

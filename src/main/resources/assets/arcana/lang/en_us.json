@@ -729,6 +729,10 @@
     "research.arcana.category.auromancy": "Auromancy",
     "research.arcana.category.eldritch": "Eldritch",
 
+    "research.arcana.root": "Arcana",
+    "research.arcana.root.desc": "The Start of Something Amazing",
+    "research.arcana.root.text": "That was an... odd experience. That sudden burst of inspiration... I can't blame it on anything mundane. No, this is something magical.\n\nI'll write down my notes in this book: the Arcanum, and read through those scribbled notes ones more time. I might just keep them here, for future reference.",
+
     "research.arcana.flux": "Flux, Taint, Warp",
     "research.arcana.flux.desc": "No such thing as free lunch",
     "research.arcana.flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes. Among them was various vague warnings on \"flux\" and \"taint\", and nigh-unreadable references to \"warp\", as being some consequences of improper use of magic.\n\nFlux being a pollution that hangs in the air, a kind of damage to the aura, brought about by improper alchemy or wasteful equipment. Taint being a physical manifestation of that, twisting creatures into horrific monsters when left to its own devices.\n\nAnd while I couldn't fully parse the texts on warp... the incomprehensible notes and dark rituals that surround it definitely gives a bad first impression.\n\nI should get my own look at this \"flux\" myself.",

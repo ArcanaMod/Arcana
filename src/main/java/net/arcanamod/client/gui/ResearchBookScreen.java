@@ -294,7 +294,7 @@ public class ResearchBookScreen extends Screen{
 										if(entry.y() > parentEntry.y())
 											arrows.drawLargeRuCurve(parentEntry.x(), entry.y() - 1);
 										else
-											arrows.drawLargeRdCurve(parentEntry.x(), entry.y() - 1);
+											arrows.drawLargeRdCurve(parentEntry.x(), entry.y());
 										if(parent.shouldShowArrowhead())
 											arrows.drawRightArrow(entry.x() - 1, entry.y());
 									}else{
