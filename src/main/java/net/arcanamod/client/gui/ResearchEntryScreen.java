@@ -225,10 +225,12 @@ public class ResearchEntryScreen extends Screen{
 	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
 		if(scroll > 0 && canTurnLeft()){
 			index -= 2;
+			updateButtons();
 			return true;
 		}
 		if(scroll < 0 && canTurnRight()){
 			index += 2;
+			updateButtons();
 			return true;
 		}
 		return false;
