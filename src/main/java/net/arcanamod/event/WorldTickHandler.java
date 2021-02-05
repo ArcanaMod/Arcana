@@ -14,11 +14,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.function.Consumer;
 
-/**
- * Handles processing at end of world tick
- *
- * @author Mozaran
- */
 @Mod.EventBusSubscriber
 public class WorldTickHandler{
 	

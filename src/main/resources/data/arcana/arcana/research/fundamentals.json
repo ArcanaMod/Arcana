@@ -491,7 +491,7 @@
           "type": "string",
           "content": "research.arcana.flux.flux_info",
           "requirements": [
-            "arcana:tainted_flower"
+            "arcana::puzzle{arcana:flux_build_research}"
           ]
         },
         {
@@ -527,6 +527,11 @@
         "arcana:air",
         "arcana:earth"
       ]
+    },
+    {
+      "key": "arcana:flux_build_research",
+      "type": "fieldwork",
+      "desc": "puzzle.arcana.flux_build"
     }
   ]
 }

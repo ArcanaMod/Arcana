@@ -706,6 +706,17 @@
     "requirement.puzzle.complete": "Already complete",
     "requirement.tag.accepts_any": "Any %s",
 
+    "puzzle.arcana.flux_build": "Taste the \"flux\" for yourself",
+    "puzzle.arcana.bottled_taint": "Try to understand taint",
+    "puzzle.arcana.hedge_alchemy": "Test how these structures can be manipulated",
+    "puzzle.arcana.silver_transmutation": "Understand the transmutation of silver",
+    "puzzle.arcana.gold_transmutation": "Understand the transmutation of gold",
+    "puzzle.arcana.iron_transmutation": "Understand the transmutation of iron",
+    "puzzle.arcana.taint_scrubber": "Take advantage of Arcanium's power",
+    "puzzle.arcana.taint_scrubber_focus": "Sketch plans for a lens",
+    "puzzle.arcana.taint_sucker": "Capture the flux of the sky",
+    "puzzle.arcana.taint_bore": "Capture the taint of the earth",
+
     "_comment": "Old Research",
     "research.arcana.category.basics": "Basics",
     "research.arcana.category.artifice": "Artifice",

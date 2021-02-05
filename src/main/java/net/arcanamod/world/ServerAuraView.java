@@ -1,13 +1,16 @@
 package net.arcanamod.world;
 
+import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.blocks.DelegatingBlock;
-import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.TaintedBlock;
 import net.arcanamod.capabilities.AuraChunk;
+import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkSyncChunkNodes;
 import net.arcanamod.network.PkSyncPlayerFlux;
+import net.arcanamod.systems.research.ResearchBooks;
+import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.dispenser.IPosition;
@@ -106,10 +109,13 @@ public class ServerAuraView implements AuraView{
 					}
 				}
 		});
-		// send an update packet to every player
-		// so flux meters are accurate
-		for(ServerPlayerEntity player : world.getPlayers())
+		// send an update packet to every player to update their flux meters
+		// check if they're eligible for "Taste flux firsthand"
+		for(ServerPlayerEntity player : world.getPlayers()){
 			Connection.sendTo(new PkSyncPlayerFlux(getTaintAt(player.getPosition())), player);
+			if(getTaintAt(player.getPosition()) > ArcanaConfig.FLUX_RESEARCH_REQUIREMENT.get())
+				Researcher.getFrom(player).completePuzzle(ResearchBooks.puzzles.get(Arcana.arcLoc("flux_build_research")));
+		}
 	}
 	
 	private List<ChunkPos> neighbors(ChunkPos pos){
