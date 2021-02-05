@@ -718,109 +718,10 @@
     "puzzle.arcana.taint_bore": "Capture the taint of the earth",
 
     "_comment": "Old Research",
-    "research.arcana.category.basics": "Basics",
-    "research.arcana.category.artifice": "Artifice",
-    "research.arcana.category.infusion": "Infusion",
-    "research.arcana.category.golemancy": "Golemancy",
-    "research.arcana.category.taint": "Taint",
-    "research.arcana.category.crimson": "Crimson Rites",
-    "research.arcana.category.illustrious": "Cleansing",
-
-    "research.arcana.root": "Arcanum",
-    "research.arcana.root.desc": "Book of discovery",
-    "research.arcana.root.text": "Within my travels, I came across a set of scribbled notes. I didn't think much of it at the time; the cryptic message (\"Listen to the unseen tears between dimensions, they speak of untold power that can shape the world.\") didn't make sense to me, even after days of pondering, so I left it aside. But inspiration comes when you least expect it, like the old saying goes.\n\nA strange sensation came over me, almost like a subtle pulse of energy, as I walked. I looked around to find its source, but there was nothing in sight. I tried focusing on the sensation - eyes closed and mind focused - it was weak, but I could sense it. A feeling that got stronger as I went closer to the source.\n\nI stopped and reached out with my hand, and felt a slight tingle on my fingertips. It was there! But invisible to the naked eye. Is this what the notes referred to? What is this presence? I need to know more.\n\nThis book will be a record of my findings into the field of magic. I dub this book §oArcanum§r.",
-
-    "research.arcana.collecting_aspects": "Collecting Aspects",
-    "research.arcana.collecting_aspects.stage.1": "Nobody knows everything; only learning can widen our minds. To study and use magic, I'll need to collect and concentrate it; every form of research starts with aspects.\n\nThey're useless when in the form of objects, so first I will need to separate them out into vis and essentia. First, I'll need some equipment: a crucible and alembic to distill the aspects, a suitably warded jar to contain them, and a tube to transport them.\n\nA crucible can be made by right-clicking a cauldron with a wand, which can be made with a stick and two wand caps, placed diagonally. Wands will come in useful later too.",
-    "research.arcana.collecting_aspects.stage.2": "First, I put down a crucible, fill it with water, and stoke a fire under it. Torches aren't enough; fire or lava is suitable. A crucible will melt items I drop in into a magic sludge, which is then distilled by an arcane alembic, placed above the crucible (with at least a single block gap). The alembic doesn't require fuel, and has 5 cells storing 50 of any aspect. The alembic will push aspects through tubes placed next to it horizontally, which can connect to a jar. A jar can store up to 100 of any single aspect.",
-
-    "research.arcana.research_intro": "Introduction to Research",
-    "research.arcana.research_intro.desc": "Learning about the world",
-    "research.arcana.research_intro.stage.1": "With access to aspects, I can now perform research. Not everything will use the same methodology, but they'll all need a dedicated space, and maybe require some thinking outside the box... or Research Table. The Research Table won't handle everything for me, but it will bring me far enough. Performing research will use a variety of, but not too many, aspects. Using warded phials and aspect bookshelves allows me to compactly store up to 9 different aspects in one block.",
-    "research.arcana.research_intro.stage.2": "A research table holds a set of scribing tools and a research note. A puzzle will be displayed on the right side of the screen, which can require items (from my inventory) or aspects, shown on the left, drawn from aspect holding blocks up to 4 blocks away. Aspect bookshelves are dedicated to such a thing.",
-
-    "research.arcana.revealing": "Revealing the Arcane",
-    "research.arcana.revealing.desc": "Now you see me, now you don't",
-    "research.arcana.revealing.stage.1": "Although this wand is somewhat magical on its own, it does seem to have the capacity to do so much more, if I could use it correctly. My experience using it has taught me something vital about the world: energy is all around me. Energy that can't be seen or felt directly - at least, not at its usual concentration. I have dubbed this energy *vis*, and need to find a proper source of it to do anything more powerful than creating fancy books. Scattered around the world are glowing points in space, which seem to have a higher-than-average concentration of vis. I have designed a set of goggles with which I can view vis, and nodes too, directly.",
-    "research.arcana.revealing.stage.2": "While wearing the §oGoggles of Revealing§r, Aura Nodes become immediately observable to me, and interactions between vis and materials become easy to test and iterate on.",
-
     "research.arcana.tome_of_sharing": "Tome of Sharing",
     "research.arcana.tome_of_sharing.desc": "Sharing is caring",
     "research.arcana.tome_of_sharing.stage.1": "It's quite useful to have my knowledge bound to myself, rather than any specific copy of the this book, but it can also be limiting when trying to share my discoveries with friends. Teaching them everything manually is irritating and time-consuming. Perhaps a modified version of this book could teach them instead?",
     "research.arcana.tome_of_sharing.stage.2": "By combining this book with an eye of ender, I can link it to my knowledge specifically, taking advantage of what seems to be similar to the mechanism behind ender chests. Anyone else reading it will gain access to my knowledge.",
-
-    "research.arcana.vis_manipulators": "Basic Vis Manipulation",
-    "research.arcana.vis_manipulators.stage.1": "All living things seem to weakly interact with vis in some way, including myself. I intend to take advantage of vis for my own purposes, but to do so, I'll need to figure out how I can manipulate it properly and consistently.",
-    "research.arcana.vis_manipulators.stage.2": "Certain materials seem to interact with it in interesting ways. Glass can manipulate it similarly to light, albeit in a more convoluted way; redstone can act as a kind of semiconductor; diamond can concentrate and store it, although I have no way to know how much, yet. Lapis is a kind of fossil fuel for it, capable of releasing a large amount of it (could this be related to enchantment?). Gold, then, is like a superconductor, freely transmitting vis. Finally, iron is resistant to it, absorbing large amounts before showing obserable differences. Wood is a simple, primitive, but abundant vis storage material.\\n\\nMy next task will be creating a tool based on these concepts to properly control vis.",
-    "research.arcana.vis_manipulators.stage.3": "The §oVis Manipulation Tools§r are built on the the abilities of diamond, redstone, and glass. With them, I can transfer vis between items capable of containing it - currently just wands - and combine aspects into their compound aspects - that is, if I had anything capable of storing compound aspects. I expect more applications for their use fill appear soon.",
-
-    "research.arcana.guesswork_info": "Puzzle: Guesswork",
-    "research.arcana.guesswork_info.desc": "It's exactly what it sounds like",
-    "research.arcana.guesswork_info.stage.1": "The simplest puzzle is a guessing game. Given the shape of a recipe, and a few hints, I fill it in.",
-
-    "research.arcana.chemistry_info": "Puzzle: Chemistry",
-    "research.arcana.chemistry_info.desc": "A + B = C",
-    "research.arcana.chemistry_info.stage.1": "The chemistry puzzle consists of a hexagonal grid with a few aspects placed at the edges. To complete this puzzle, I need to connect the aspects by placing my own aspects between them. Aspects will only connect if one of them is a direct component of another; for example, Victus can connect to Aqua and Terra, and Arbor can connect to Victus and Terra, but Arbor cannot connect to Aqua. Once every edge aspect is connected, the puzzle is complete.",
-    "research.arcana.chemistry_info.stage.2": "I should be able to use this to figure out how to utilize multiple disparate aspects together.",
-
-    "requirement.guesswork.ench.hint.diamond": "A pure crystal",
-    "requirement.guesswork.ench.hint.book": "A storage of text",
-    "requirement.guesswork.ench.hint.obsidian": "A dark, hard rock",
-
-    "research.arcana.thaumaturgy_intro": "Introduction to Thaumaturgy",
-    "research.arcana.thaumaturgy_intro.desc": "Tools of the Trade",
-    "research.arcana.thaumaturgy_intro.stage.1": "Work in progress...",
-    "research.arcana.thaumaturgy_intro.stage.2": "Work in progress...",
-
-    "research.arcana.alchemy_intro": "Introduction to Alchemy",
-    "research.arcana.alchemy_intro.desc": "Al-chemistry",
-    "research.arcana.alchemy_intro.stage.1": "Right click a cauldron with a wand to make a crucible.",
-    "research.arcana.alchemy_intro.stage.2": "Combine Vis essentia and gold to create Arcanium. Alchemy doesn't yet work, so here's a simpler recipe for you instead.",
-    "research.arcana.alchemy_intro.stage.3": "Well done, you've completed the demo.",
-
-    "research.arcana.artifice_intro": "Introduction to Artifice",
-    "research.arcana.artifice_intro.stage.1": "Work in progress...",
-    "research.arcana.artifice_intro.stage.2": "Work in progress...",
-
-    "research.arcana.infusion_intro": "Introduction to Infusion",
-    "research.arcana.infusion_intro.stage.1": "Work in progress...",
-    "research.arcana.infusion_intro.stage.2": "Work in progress...",
-
-    "research.arcana.auromancy_intro": "Introduction to Auromancy",
-    "research.arcana.auromancy_intro.stage.1": "Work in progress...",
-    "research.arcana.auromancy_intro.stage.2": "Work in progress...",
-
-    "research.arcana.golemancy_intro": "Introduction to Golemancy",
-    "research.arcana.golemancy_intro.desc": "It's alive!",
-    "research.arcana.golemancy_intro.stage.1": "Work in progress...",
-    "research.arcana.golemancy_intro.stage.2": "Work in progress...",
-
-    "research.arcana.study": "Study",
-    "research.arcana.study.desc": "Breaking things down",
-    "research.arcana.study.stage.1": "Work in progress...",
-    "research.arcana.study.stage.2": "Work in progress...",
-
-    "research.arcana.inspiration": "Inspiration",
-    "research.arcana.inspiration.desc": "Using case studies",
-    "research.arcana.inspiration.stage.1": "Work in progress...",
-    "research.arcana.inspiration.stage.2": "Work in progress...",
-
-    "research.arcana.cartography": "Cartography",
-    "research.arcana.cartography.desc": "Mapping my way to new discoveries",
-    "research.arcana.cartography.stage.1": "Work in progress...",
-    "research.arcana.cartography.stage.2": "Work in progress...",
-
-    "research.arcana.crimson": "introduction",
-    "research.arcana.crimson.desc": "welcome to the crimson.",
-    "research.arcana.crimson.all": "we have all seen things that we might not want to have seen. we have all found out some piece of critical info that doesn't fit our worldview. perhaps something as magical as a revelation from beyond, or something as mundane as a broken heart. whatever it is that lead you to the crimson, you're welcome here. you will be useful here.",
-
-    "research.arcana.crimson_initiation": "initiation",
-    "research.arcana.crimson_initiation.desc": "pacing yourself.",
-    "research.arcana.crimson_initiation.all": "some say there is a thin line between insanity and genius. some will proudly exclaim it having seen the eventual fate of their heroes or idols.\n\nthese people are nearly correct. but rather: genius and insanity feed into eachother.\n\nyou cannot have genius without first understanding insanity, and the knowledge you gain makes many incoherent to those not in the know. we know, though;\n\nand, soon, so will you.\n\nthese pages contain information that, while now difficult to fully understand, will soon become second nature to you; information that will widen your understanding of everything.\n\njust   o p e n   y o u r   e y e s   .",
-
-    "research.arcana.tainted": "Tainted Exploration",
-    "research.arcana.tainted.desc": "A Second Look at the Common Fiend",
-    "research.arcana.tainted.stage.1": "Taint, in its natural state, is unwieldy and unusable, corrupting all in its path and twisting them into husks of their former selves. Despite my best efforts to contain it, its spread seems inevitable at times, with only diligent cleanup and harsh work keeping it in check. Perhaps there's a better way -- perhaps I can instead tame the beast, and put it to my own uses.\n\nTo that end, I have created the §otainted codex§r: a safe store for my research, to contain whatever revelations or ramblings I create.\\n\\nThe first obvious usage of taint is in spellcasting; specifically, using it as part of a wand. I will need to test how a tainted component affects its spellcasting and vis storage capabilities.",
 
     "_comment": "New Research",
     "research.arcana.category.fundamentals": "Fundamentals",
@@ -830,29 +731,28 @@
 
     "research.arcana.flux": "Flux, Taint, Warp",
     "research.arcana.flux.desc": "No such thing as free lunch",
-    "research.arcana.flux.flux_info": "Flux forms when magical devices are overloaded, or from aspects being improperly handled or overly exploited. The more aspects are tampered with, the more flux is created, and the more it spreads. When enough flux is concentrated in one place, taint begins to spread.",
-    "research.arcana.flux.taint_info": "Taint warps the environment and its inhabitants into grotesque creatures, and poisoned land, spreading underground and polluting the earth. A small amount of taint can be neutralised, but enough of it will spread at an alarming rate. Taint can be found hidden within mundane objects, rarely, throughout the world, but is normally prompted through an overflow of flux. Taint spread does require and consume flux - eventually, an area of taint will be unable to spread further without continuous flux creation. The true origin of taint is currently unknown.",
-    "research.arcana.flux.warp_info": "Where flux and taint are physical, warp is a psychological price for improper magic. Warp can be considered a kind of insanity, prompting illusions and mental effects... and some magical.",
+    "research.arcana.flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes. Among them was various vague warnings on \"flux\" and \"taint\", and nigh-unreadable references to \"warp\", as being some consequences of improper use of magic.\n\nFlux being a pollution that hangs in the air, a kind of damage to the aura, brought about by improper alchemy or wasteful equipment. Taint being a physical manifestation of that, twisting creatures into horrific monsters when left to its own devices.\n\nAnd while I couldn't fully parse the texts on warp... the incomprehensible notes and dark rituals that surround it definitely gives a bad first impression.\n\nI should get my own look at this \"flux\" myself.",
+    "research.arcana.flux.stage.2": "That was probably a mistake. With so much flux in the air, I can feel something is incredibly off.\n\nI now believe that, when large quantities of flux are present in one area - much more than I've experienced so far - it can somehow coalesce into taint, which can, now given a physical foothold, spread much more quickly using flux. I will need to make a tool to monitor flux, and avoid too much more waste.",
 
     "research.arcana.aspects": "Aspects of Magic",
     "research.arcana.aspects.desc": "The Building Blocks",
-    "research.arcana.aspects.text": "Everything is created from some combination and structure of aspects. Six aspects are considered primal, and are the fundamental building blocks of reality. A further 52 aspects are made up of other aspects; these are known as compound aspects. (TODO: display all aspects.) Aspects can also take more pure forms, like different states of mundane elements. Crystals are the most stable, physical kind, one I can hold in my hand and store in chests like any mundane objects; their energy bound tightly. Essentia manifests as a liquid that imposes itself onto all it touches; life essentia causes extreme, sudden growth; fire essentia causes, well, fire. Vis is an incorporeal form, which can be used to power any sort of magical device. Although it is often portrayed as energy itself, it is more equivalent to gas. (TODO: lore??)",
+    "research.arcana.aspects.text": "My new perspective has enabled me to understand the ramblings of these scribbled notes. Among them are key insights into the workings of reality.\n\nAll matter is composed of Aspects, the fundamental building blocks of reality. Aspects come in a number of varieties, each of which corresponds to some concept, and all of which are composed of two simpler aspects, with the exception of the six Primal aspects: aer (air), terra (earth), aqua (water), ignis (fire), ordo (order), and perditio (chaos).\n\nChemical elements can also be considered to be the fundamental building blocks of matter. The two co-exist: modifying one modifies the other.\n\nThese aspects can also, apparently, be isolated, into solid-like, fluid-like, and gaseous-like forms: crystals are solid, and result from overflows of a particular aspect in the aura. The aura, in turn, is made up of the more gaseous vis form, and is almost entirely uniform, except around constant sources of aspects called nodes.\n\nFinally, equipment can supposedly be used to purify it into a fluid state known as essentia. Being much less stable than crystals, and much more concentrated than vis, essentia requires special measures to contain - though the notes were irritatingly vague on those. The upside is that it can be easily used to produce powerful effects - a controlled spray of ignis essentia here, and you've got easy fire.",
 
     "research.arcana.wandcraft": "Wandcraft",
     "research.arcana.wandcraft.desc": "Tools of the trade",
-    "research.arcana.wandcraft.stage.1": "[someone else do this pls]",
+    "research.arcana.wandcraft.stage.1": "To continue any further, I'll need to be able to directly manipulate aspects in some form. The standard tools once used for this were wands or variations of such, though some notes instead describe some kind of glove.\n\nThe basic wand design is much simpler to create, so I'll be going with that. All it seems to need is some metal wand caps for channeling vis, and living wood core to store vis.\n\nCrafting this wand simply requires placing a wand cap, a stick, and another wand cap diagonally in a crafting table.",
 
     "research.arcana.arcane_crafting": "Arcane Crafting",
     "research.arcana.arcane_crafting.desc": "Not your regular crafting table",
-    "research.arcana.arcane_crafting.stage.1": "A crafting table is a useful tool for putting together all sorts of devices and tools. However, the lack of magical apparatus presents a significant issue when constructing magical devices, especially ones for which construction necessitates magical processes. Fixing this is top priority. Hopefully, a simple tap from a wand should make a crafting table more friendly to magic.",
-    "research.arcana.arcane_crafting.stage.2": "Any crafting table can be converted to an Arcane Crafting Table by sneak-right-clicking using a wand. The arcane variant is just as capable as the mundane version, usable for any regular crafting recipe, but also providing tools for magical recipes. Magic can be drawn directly from a wand for such recipes.\n\nOne such item is the goggles of revealing, which make visible nodes and the aspects contained within devices.",
+    "research.arcana.arcane_crafting.stage.1": "The regular crafting table, while massively useful, is not capable of handling aspects in the way I require. It should only require a little modification - a touch of my wand's magic - to convert it into the far more useful Arcane Crafting Table.",
+    "research.arcana.arcane_crafting.stage.2": "Any crafting table can be converted to an Arcane Crafting Table by tapping it with my wand. The arcane variant is just as capable as the regular one for crafting mundane items, but also providing tools for magical recipes. Magic can be drawn directly from a wand placed inside for magic recipes, of any of the primal aspects.\n\nOne such item is the Goggles of Revealing, which make visible nodes and the aspects contained within devices.",
 
     "research.arcana.alchemy": "Alchemy",
-    "research.arcana.alchemy.stage.1": "All objects are composed of some combination of aspects, just like they are some combination of mundane elements. Like mundane elements, I will benefit from learning to separate and combine these aspects, and the simplest method available to me is heat. Of course, magic must be used to catalyze the breakdown, and no readily available mundane materials are capable of resisting the required level of heat. A magically altered cauldron, in a similar way to the arcane crafting table, should work.",
-    "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down objects into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), items thrown in will be destroyed and their aspects added to a water-essentia solution. Although drawing the pure essentia from the solution is currently beyond me, the essentia within can be used in particular recipes. Throwing in an item that completes a recipe I know will instead consume some of the stored essentia, transforming the item. A simple application of this is the creation of Nitor, a constant, stable flame (that can be used to heat a crucible) from coal.\nA crucible can be emptied by right clicking - a crucible containing only water can be emptied with a bucket too. §oBreaking or emptying a crucible with aspects within it will create flux proportional to the amount of aspects within.§r\n\nMore in-depth research of this will be conducted in the §oAlchemy§r category of this book.",
+    "research.arcana.alchemy.stage.1": "Like mundane elements, I will benefit from learning to separate and combine aspects, and the simplest method available to me to split apart an object's aspects is plain old heat. Of course, magic must be used to catalyze the breakdown, and no readily available mundane materials are capable of resisting the required level of heat. A magically altered cauldron, in a similar way to the arcane crafting table, should work.",
+    "research.arcana.alchemy.stage.2": "A Crucible can be used to melt down objects into their constituent aspects. When filled with water and placed over a heat source (like fire, lava, or magma), items thrown in will be destroyed, and their aspects added to a water-essentia solution. Although drawing the pure essentia from the solution is currently far beyond me, the essentia within can be used in particular alchemy recipes.\n\nThrowing in an item that completes a recipe I know will instead consume some of the stored essentia, transforming the item. A simple application of this is the creation of Nitor, a constant, stable flame (that can be used to heat a crucible) from coal.\n\nA crucible can be emptied by right clicking - a crucible containing only water can be emptied with a bucket too. §oBreaking or emptying a crucible with aspects within it will create flux, proportional to the amount of aspects within.§r\n\nMore in-depth research of this will be conducted in the §oAlchemy§r category of this book.\n\nNote that items dropped into a crucible by a block or entity will §oalways§r be melted down, as they know no alchemy recipes.",
 
     "research.arcana.aspect_collection": "Aspect Collection",
-    "research.arcana.aspect_collection.stage.1": "Alchemy can only do so much. I need to purify essentia further. Perhaps some time exploring will give me the inspiration I need. (TODO: fieldwork - find silverwood tree?) (TODO: image of scribbles)",
+    "research.arcana.aspect_collection.stage.1": "Alchemy can only do so much. I need to isolate the essentia. Perhaps some time exploring will give me the inspiration I need. (TODO: fieldwork - find silverwood tree?) (TODO: image of scribbles)",
     "research.arcana.aspect_collection.stage.2": "...a flash of brilliance! The wood of a greatwood or silverwood tree, sealed by amber, enhanced further through a stability spell, is capable of supporting pure essentia. From there, separation is simple enough - essentia solution comes in, and is split into its constituent aspects and (evaporated) water. One design I've created for this is the \"Arcane Alembic\", which draws the solution from crucibles directly.",
     "research.arcana.aspect_collection.stage.3": "Arcane Alembics must be placed above a crucible, with between 1-4 (TODO: config) air blocks between them. Up to 3 (TODO: config) alembics can be stacked on top of eachother, all of which will draw from the same crucible in parallel. (A dropper or dispenser can drop any item into a crucible without crafting an item.)\n\nAlembics store up to 50 of 5 aspects. Storing aspects in the long term will require dedicated storage and transport for essentia. Essentia can be stored in Warded Jars - up to 100 of any type - which can be broken and moved around, retaining their contents. Alembics output their contained aspects to all adjacent essentia-accepting blocks. Phials are a handheld way of storing vis, holding up to 8 of any one type. Phials of the same type storing the same amount can be stacked.\n\nJars emit a comparator signal based on the amount of essentia inside them. Phials can be filled and emptied by dispensers.",
 

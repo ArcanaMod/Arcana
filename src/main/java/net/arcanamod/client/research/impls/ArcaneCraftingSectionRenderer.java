@@ -12,7 +12,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
 import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
@@ -45,18 +44,20 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 					}
 				}
 			// Display aspects
-			int aspectX = ulX + 73 / 2 - craftingRecipe.getAspectStacks().length * 18 / 2 - 5;
-			int aspectY = ulY + 82;
 			UndecidedAspectStack[] stacks = craftingRecipe.getAspectStacks();
+			// 1 aspect -> 0, 2-3 aspects -> 3 spacing, 4-5 aspects -> 2 spacing, 6 aspects -> 1 spacing
+			int spacing = (stacks.length == 1) ? 0 : (stacks.length >= 6) ? 1 : (stacks.length < 4) ? 3 : 2;
+			int aspectX = ulX + 73 / 2 - (craftingRecipe.getAspectStacks().length * (16 + spacing * 2)) / 2 - 4;
+			int aspectY = ulY + 82;
 			// Shadow behind the aspects for readability
-			int margin = 2;
-			int color = 0x50222222;
-			GuiUtils.drawGradientRect(0, aspectX - margin - 1, aspectY - margin, aspectX + stacks.length * 18 + margin + 1, aspectY + margin + 18, color, color);
+			//int margin = 2;
+			//int color = 0x50222222;
+			//GuiUtils.drawGradientRect(0, aspectX - margin - 1, aspectY - margin, aspectX + stacks.length * 18 + margin + 1, aspectY + margin + 18, color, color);
 			for(int i = 0, length = stacks.length; i < length; i++){
 				UndecidedAspectStack stack = stacks[i];
 				Aspect display = stack.any ? Aspects.EXCHANGE : stack.stack.getAspect();
 				int amount = stack.stack.getAmount();
-				UiUtil.renderAspectStack(display, amount, aspectX + i * 18, aspectY);
+				UiUtil.renderAspectStack(display, amount, aspectX + i * (16 + 2 * spacing) + spacing, aspectY);
 			}
 		}else
 			error();

@@ -50,8 +50,8 @@
           "content": "research.arcana.wandcraft.stage.1"
         },
         {
-          "type": "string",
-          "content": "research.arcana.wandcraft.stage.2"
+          "type": "crafting",
+          "content": "arcana:iron_cap"
         }
       ]
     },
@@ -82,6 +82,10 @@
         {
           "type": "string",
           "content": "research.arcana.arcane_crafting.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/goggles_of_revealing"
         }
       ]
     },
@@ -489,18 +493,14 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.flux.flux_info",
+          "content": "research.arcana.flux.stage.1",
           "requirements": [
             "arcana::puzzle{arcana:flux_build_research}"
           ]
         },
         {
           "type": "string",
-          "content": "research.arcana.flux.taint_info"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.flux.warp_info"
+          "content": "research.arcana.flux.stage.2"
         }
       ]
     }
