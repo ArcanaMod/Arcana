@@ -337,6 +337,10 @@
     "block.arcana.smooth_limestone": "Smooth Limestone",
     "block.arcana.limestone_tile": "Limestone Tile",
 
+    "block.arcana.hardened_glass": "Hardened Glass",
+    "block.arcana.smokey_glass": "Smokey Glass",
+    "block.arcana.luminiferous_glass": "Luminiferous Glass",
+
     "_comment": "Ores",
     "block.arcana.amber_ore": "Amber Ore",
     "block.arcana.silver_ore": "Silver Ore",
