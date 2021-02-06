@@ -1,0 +1,18 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:glass"
+  },
+  "out": {
+    "item": "arcana:luminiferous_glass"
+  },
+  "aspects": [
+    {
+      "aspect": "light",
+      "amount": 2
+    }
+  ],
+  "research": [
+    "arcana:alchemical_glass@3"
+  ]
+}

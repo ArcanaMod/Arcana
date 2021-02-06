@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:glass"
+  },
+  "out": {
+    "item": "arcana:smokey_glass"
+  },
+  "aspects": [
+    {
+      "aspect": "darkness",
+      "amount": 2
+    },
+    {
+      "aspect": "senses",
+      "amount": 2
+    }
+  ],
+  "research": [
+    "arcana:alchemical_glass@5"
+  ]
+}

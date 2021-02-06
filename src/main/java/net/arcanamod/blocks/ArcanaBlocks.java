@@ -103,7 +103,7 @@ public class ArcanaBlocks{
 	// Alchemical Glass
 	public static final RegistryObject<Block> HARDENED_GLASS = BLOCKS.register("hardened_glass", () -> new GlassBlock(create(GLASS).hardnessAndResistance(5, 1200).sound(SoundType.GLASS).notSolid()));
 	public static final RegistryObject<Block> SMOKEY_GLASS = BLOCKS.register("smokey_glass", () -> new Block(create(GLASS).hardnessAndResistance(.3f).sound(SoundType.GLASS).notSolid()));
-	public static final RegistryObject<Block> LUMINIFEROUS_GLASS = BLOCKS.register("luminiferous_glass", () -> new GlassBlock(create(GLASS).hardnessAndResistance(.3f).sound(SoundType.GLASS).notSolid().lightValue(13)));
+	public static final RegistryObject<Block> LUMINIFEROUS_GLASS = BLOCKS.register("luminiferous_glass", () -> new GlassBlock(create(GLASS).hardnessAndResistance(.3f).sound(SoundType.GLASS).notSolid().lightValue(15)));
 	
 	// Functional
 	public static final RegistryObject<Block> AMBER_ORE = BLOCKS.register("amber_ore", () -> new Block(create(ROCK).harvestLevel(1).hardnessAndResistance(3.0F, 3.0F)));
