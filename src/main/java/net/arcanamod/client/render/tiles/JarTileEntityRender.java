@@ -72,7 +72,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 
 			Quaternion q;
 			float xt, zt;
-			float xta, zta;
+			float xta, yta, zta;
 
 			switch (labelSide) {
 				case NORTH:
@@ -84,7 +84,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 					break;
 				case SOUTH:
 					q = new Quaternion(0,90,0,true);
-					xt = -0.5f;
+					xt = -1.8f;
 					zt = 1.045f;
 					xta = -0.25f;
 					zta = -0.5f;
@@ -94,14 +94,14 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 					xt = .445f;
 					zt = 1f;
 					xta = -0.02f;
-					zta = 1f;
+					zta = 0.1f;
 					break;
 				case EAST:
 					q = new Quaternion(0,180,0,true);
 					xt = -2.045f;
 					zt = -1.5f;
 					xta = -0.02f;
-					zta = 1f;
+					zta = 0.1f;
 					break;
 				default:
 					q = new Quaternion(0,0,0,true);
@@ -111,6 +111,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 					zta = 0;
 					break;
 			}
+			yta = -0.25f;
 
 			matrixStack.scale(scale, scale, scale);
 			matrixStack.rotate(q);
@@ -129,7 +130,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 
 			q = new Quaternion(15-90,0,0,true);
 			matrixStack.rotate(q);
-			matrixStack.translate(xta,0,zta);
+			matrixStack.translate(xta,yta,zta);
 
 			scale = 0.8f;
 			matrixStack.scale(scale, scale, scale);
