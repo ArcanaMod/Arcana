@@ -209,11 +209,12 @@
         "&arcana:aspect_collection"
       ],
       "meta": [
-        "round_base",
-        "hidden"
+        "hexagon_base",
+        "hidden",
+        "reverse"
       ],
-      "x": 0,
-      "y": -8,
+      "x": -2,
+      "y": -6,
       "sections": [
         {
           "type": "string",
@@ -287,8 +288,6 @@
         "arcana:aspect_collection"
       ],
       "meta": [
-        "hexagon_base",
-        "purple_base",
         "reverse"
       ],
       "x": 2,
@@ -313,15 +312,11 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:aspect_collection"
+        "arcana:crystal_farming"
       ],
-      "meta": [
-        "hexagon_base",
-        "purple_base",
-        "reverse"
-      ],
-      "x": -2,
-      "y": -6,
+      "meta": [],
+      "x": -5,
+      "y": -4,
       "sections": [
         {
           "type": "string",
@@ -468,6 +463,80 @@
           "content": "research.arcana.flux.stage.2"
         }
       ]
+    },
+    {
+      "key": "arcana:flux_meter",
+      "name": "research.arcana.flux_meter",
+      "icons": [
+        "arcana:flux_meter"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:flux",
+        "arcana:arcanium"
+      ],
+      "meta": [
+        "hexagon_base"
+      ],
+      "x": 8,
+      "y": -4,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.flux_meter.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/flux_meter"
+        }
+      ]
+    },
+    {
+      "key": "arcana:crystal_farming",
+      "name": "research.arcana.crystal_farming",
+      "desc": "research.arcana.crystal_farming.desc",
+      "icons": [
+        "arcana:air_cluster_seed",
+        "arcana:air_cluster",
+        "arcana:earth_cluster_seed",
+        "arcana:earth_cluster",
+        "arcana:fire_cluster_seed",
+        "arcana:fire_cluster",
+        "arcana:water_cluster_seed",
+        "arcana:water_cluster",
+        "arcana:order_cluster_seed",
+        "arcana:order_cluster",
+        "arcana:chaos_cluster_seed",
+        "arcana:chaos_cluster"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "~arcana:research"
+      ],
+      "meta": [],
+      "x": -5,
+      "y": -6,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.crystal_farming.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:crystal_farming_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.crystal_farming.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/cluster_seeds/air_cluster_seed"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/clusters/air_cluster"
+        }
+      ]
     }
   ],
   "puzzles": [
@@ -497,6 +566,21 @@
       "key": "arcana:flux_build_research",
       "type": "fieldwork",
       "desc": "puzzle.arcana.flux_build"
+    },
+    {
+      "key": "arcana:crystal_farming_puzzle",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.crystal_farming",
+      "nodes": [
+        "arcana:air",
+        "arcana:earth",
+        "arcana:fire",
+        "arcana:crystal",
+        "arcana:water",
+        "arcana:order",
+        "arcana:chaos",
+        "arcana:aura"
+      ]
     }
   ]
 }

@@ -716,6 +716,7 @@
     "puzzle.arcana.taint_scrubber_focus": "Sketch plans for a lens",
     "puzzle.arcana.taint_sucker": "Capture the flux of the sky",
     "puzzle.arcana.taint_bore": "Capture the taint of the earth",
+    "puzzle.arcana.crystal_farming": "Test how aspects can be given crystal structures",
 
     "_comment": "Old Research",
     "research.arcana.tome_of_sharing": "Tome of Sharing",
@@ -737,6 +738,9 @@
     "research.arcana.flux.desc": "No such thing as free lunch",
     "research.arcana.flux.stage.1": "My new perspective has enabled me to understand the ramblings of these scribbled notes. Among them was various vague warnings on \"flux\" and \"taint\", and nigh-unreadable references to \"warp\", as being some consequences of improper use of magic.\n\nFlux being a pollution that hangs in the air, a kind of damage to the aura, brought about by improper alchemy or wasteful equipment. Taint being a physical manifestation of that, twisting creatures into horrific monsters when left to its own devices.\n\nAnd while I couldn't fully parse the texts on warp... the incomprehensible notes and dark rituals that surround it definitely gives a bad first impression.\n\nI should get my own look at this \"flux\" myself.",
     "research.arcana.flux.stage.2": "That was probably a mistake. With so much flux in the air, I can feel something is incredibly off.\n\nI now believe that, when large quantities of flux are present in one area - much more than I've experienced so far - it can somehow coalesce into taint, which can, now given a physical foothold, spread much more quickly using flux. I will need to make a tool to monitor flux, and avoid too much more waste.",
+
+    "research.arcana.flux_meter": "Measuring Flux",
+    "research.arcana.flux_meter.text": "With my access to materials better able to contain taint, I have designed a simple device capable of measuring flux. The Flux Meter displays the current level of flux where I am, displaying the exact number when I sneak.\n\nWhen flux is over 100 (the maximum amount displayable), the meter flashes white. I should hope it never goes that high; taint should manifest before it gets to that level.",
 
     "research.arcana.aspects": "Aspects of Magic",
     "research.arcana.aspects.desc": "The Building Blocks",
@@ -780,7 +784,10 @@
     "research.arcana.research.stage.2": "Now, I have a space and method to test my ideas. A research entry may have §oResearch requirements§r. Clicking on an unfinished research requirement with paper and Scribing Tools on me will create a set of research notes. Placing the research notes in a research table, along with a set of scribing tools, will allow me to test the theory in the form of a minigame.\n\nThe two most common minigames, §oChemistry§r and §oGuesswork§r, are detailed here, and other minigames may be introduced later.\n\nChemistry involves forming a path between multiple aspects: initial aspects are placed on the edges of a hexagonal grid, and I may place (and remove) aspects onto other hexagonal cells. The aspects I place are drawn from phials in nearby Phialshelves. Aspects connect to the two aspects that make them up. Once a continuous path is formed between all aspects, the research note is complete. [TODO: flux and inspiration.]\n\nGuesswork is simpler: I begin with the outline of a recipe (its shape and output), and a clue for each ingredient. Once I correctly fill in the recipe grid, the research is complete.\n\nCompleting a research yields a §oComplete Research Note§r, which, when used, completes the research requirement.\n\nNow seems like a good time to test this equipment using a well known design, and strongly-linked aspects.",
     "research.arcana.research.stage.3": "And as shown, the research table is a valuable tool for thaumaturgy.",
 
-    "research.arcana.fieldwork": "Fieldwork",
+    "research.arcana.crystal_farming": "Crystal Farming",
+    "research.arcana.crystal_farming.desc": "Sustainably sourced magic",
+    "research.arcana.crystal_farming.stage.1": "Grabbing crystals from the occasional node, or delving deep for crystal growths, can only sustain me for so long. Aspect crystals are an essential part of many devices, and I will require a proper, sustainable, source.\n\nAlchemy may present a way of seeding crystals, which should hopefully be simple to cultivate.",
+    "research.arcana.crystal_farming.stage.2": "Crystal cluster seeds of all primal aspects can be created using a simple alchemy recipe. The recipe for air seeds are shown here; other primal seeds simply require a different input.\n\nFull crystal clusters can also be crafted through arcane crafting, at a crystal loss.",
 
     "research.arcana.research_expertise": "Research Expertise",
     "research.arcana.research_expertise.desc": "Improving my improvements",
@@ -805,7 +812,7 @@
     "research.arcana.transmutation.stage.1": "A popular magical concept is one of alchemists attempting to create the valuable from the mundane. They knew neither chemistry nor magic; I know both. I think I may be able to do better, if only by a little, at the transmutation of metals, given my newfound knowledge.",
     "research.arcana.transmutation.stage.2": "Upgrading iron into silver isn't the most exciting advancement I've made, although the alchemy behind this transmutation §odoes§r prompt more study into the metal's properties. No, gold is my target. Though silver may make a useful stepping stone...",
     "research.arcana.transmutation.stage.3": "Yes! Where the old alchemists have failed, I have succeeded in transforming iron into gold. I wonder if the process could be performed in bulk, though... or if its reversible...",
-    "research.arcana.transmutation.stage.4": "The transmutations form a loop, with Iron transforming into Silver, Silver into Gold, and Gold into Iron, which could be useful given a particular need for iron. Maybe if I was into the mundane sciences. Something slightly more interesting is that all of these transmutations can also be performed in block form.",
+    "research.arcana.transmutation.stage.4": "The transmutations form a loop, with Iron transforming into Silver, Silver into Gold, and Gold into Iron, which could be useful given a particular need for iron. Maybe if I was into the mundane sciences.\n\nSomething slightly more interesting is that all of these transmutations can also be performed in block form.",
 
     "research.arcana.purification": "Metal Purification",
     "research.arcana.purification.desc": "Technology 101",
@@ -821,24 +828,24 @@
     "research.arcana.taint_in_a_bottle": "Containing Taint",
     "research.arcana.taint_in_a_bottle.desc": "Bottled Madness",
     "research.arcana.taint_in_a_bottle.stage.1": "Taint is dangerous and eager to spread. Given even a small amount of flux, it will poison the land around it startlingly fast. Perhaps alchemy could be used to contain it? First, I'll attempt to seal some into a bottle, and in the future I can construct a more useful solution.",
-    "research.arcana.taint_in_a_bottle.stage.2": "...the applications of this are limited at best, and dangerous at worst. When Taint in a Bottle is thrown and hits a surface, it instantly taints up to six nearby blocks, and releases some flux. If less than six blocks are tainted, more flux is released.\n\nAs a weapon, bottles are dangerous, but also expensive. Tainting a large area would require quite a few, but would also render that area uninhabitable for quite some time...\n\nA more peaceful use could be to collect tainted blocks. While I don't think I can get a net profit of Virimus, tainted blocks become stable after mining and do not spread (similar to leaves), and so could be collected for decorative purposes.\n\nStill, I don't see any practical use beyond that of this. Only a mad alchemist would mass produce this.",
+    "research.arcana.taint_in_a_bottle.stage.2": "...the applications of this are limited at best, and dangerous at worst. When Taint in a Bottle is thrown and hits a surface, it instantly taints up to six nearby blocks, and releases some flux. If less than six blocks are tainted, more flux is released.\n\nAs a weapon, bottles are dangerous, but also expensive. Tainting a large area would require quite a few bottles, but would also render that area uninhabitable for quite some time...\n\nA more peaceful use could be to collect tainted blocks. While I don't think I can get a net profit of Virimus, tainted blocks become stable after mining and do not spread (similar to leaves), and so could be collected for decorative purposes.\n\nStill, I don't see any practical use beyond that of this. Only a mad alchemist would mass produce this.",
 
     "research.arcana.taint_scrubber": "A Proper Solution to Taint",
     "research.arcana.taint_scrubber.desc": "Cleansing the Earth",
     "research.arcana.taint_scrubber.stage.1": "So far, I have learned how to spread and contain all types of magic, including taint. I have learned of materials that conduct magic and repel taint. At this point, I should be able to construct a contraption to remove taint for me - I shouldn't be running about cleaning things up manually!",
     "research.arcana.taint_scrubber.stage.2": "Arcanium to slowly radiates away its Praecantatio. At its regular rate, it would take about my lifetime to dull (possibly becoming the ancient material known as \"thaumium\").\n\nI believe I can amplify this effect, and focus it through an Auram crystal adorned with Silver to create an Auram field capable of dissolving taint.",
-    "research.arcana.taint_scrubber.stage.3": "The §oTaint Scrubber§r produces a field that dissolves taint. Nonliving blocks within its range of 8 blocks return to their regular state. Living tainted blocks become dead, non-tainted blocks.\n\n[TODO: preventing taint biome, tainted mobs, essentia input/output.]",
+    "research.arcana.taint_scrubber.stage.3": "The §oTaint Scrubber§r produces a field that dissolves taint. Nonliving blocks within its range of 8 blocks return to their regular state. Living tainted blocks become dead, non-tainted blocks.\n\n",
     "research.arcana.taint_scrubber.stage.4": "Its range leaves something to be desired, to say the least. Its power seems too unfocused, or out of phase... I should be able to increase its range and speed by focusing its power... somehow.",
-    "research.arcana.taint_scrubber.stage.5": "When a Taint Scrubber is placed atop a §oFlux Scrubber Base§r, its incoherent energy is directed downwards and brought into phase, increasing its range and speed.\n\n[TODO: use luminiferous glass in recipe, allow for input from this block too.]",
+    "research.arcana.taint_scrubber.stage.5": "When a Taint Scrubber is placed atop a §oFlux Scrubber Base§r, its incoherent energy is directed downwards and brought into phase, increasing its range and speed.",
 
     "research.arcana.better_taint_scrubbing": "Better Taint Scrubbing",
     "research.arcana.better_taint_scrubbing.stage.1": "I believe I can make the Taint Scrubber a little faster yet. The Flux Scrubber Base should be capable of handling multiple Praecantatio inputs at once - perhaps improvements could be made adding side inputs?",
-    "research.arcana.better_taint_scrubbing.stage.2": "§oTaint Scrubber Boosters§r can be attached to the side of a Flux Scrubber Base to increase its speed somewhat.\n\nThe improvement isn't as strong as I expected, but its useful nonetheless.\n\n[TODO: increase essentia requirement.]",
+    "research.arcana.better_taint_scrubbing.stage.2": "§oTaint Scrubber Boosters§r can be attached to the side of a Flux Scrubber Base to increase its speed somewhat.\n\nThe improvement isn't as strong as I expected, but its useful nonetheless.",
 
     "research.arcana.further_flux_cleanup": "Further Flux Cleanup",
     "research.arcana.further_flux_cleanup.desc": "Cleansing the Earth and Air",
     "research.arcana.further_flux_cleanup.stage.1": "The Flux Scrubber does a good job of removing the taint around it. But what about preventing a mishap in the first place? Or removing taint that has hidden underground?",
-    "research.arcana.further_flux_cleanup.stage.2": "I have designed two attachments to the regular Flux Scrubber to aid with these problems. The §oTaint Sucker§r will, when placed above a Taint Scrubber, directly remove flux from the aura, allowing the Flux Scrubber to be useful even before an outbreak of taint. [TODO: expensive essentia-wise.]\n\n The §oTaint Bore§r, when placed below a Flux Scrubber or Flux Scrubber Base, extend its range to the bottom of the world, allowing it to tackle hidden taint. This is a slow process, however, as the Auram field is spread thinner.",
+    "research.arcana.further_flux_cleanup.stage.2": "I have designed two attachments to the regular Flux Scrubber to aid with these problems. The §oTaint Sucker§r will, when placed above a Taint Scrubber, directly remove flux from the aura, allowing the Flux Scrubber to be useful even before an outbreak of taint.\n\nThe §oTaint Bore§r, when placed below a Flux Scrubber or Flux Scrubber Base, extend its range to the bottom of the world, allowing it to tackle hidden taint. This slows the process, however, as it thins out the Auram field.",
 
     "research.arcana.life_powder": "Preventing Dead Terrain",
     "research.arcana.life_powder.desc": "Life-Giving Powder",

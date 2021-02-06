@@ -11,9 +11,7 @@ import net.arcanamod.network.PkModifyPins;
 import net.arcanamod.systems.research.*;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Matrix4f;
@@ -51,6 +49,7 @@ public class ResearchBookScreen extends Screen{
 	int tab = 0;
 	Screen parentScreen;
 	List<TooltipButton> tooltipButtons = new ArrayList<>();
+	List<PinButton> pinButtons = new ArrayList<>();
 	ItemStack sender;
 	
 	// public static final String SUFFIX = "_menu_gui.png";
@@ -136,6 +135,14 @@ public class ResearchBookScreen extends Screen{
 			tooltipButtons.add(categoryButton);
 		}
 		
+		refreshPinButtons(mc);
+	}
+	
+	void refreshPinButtons(Minecraft mc){
+		tooltipButtons.removeAll(pinButtons);
+		buttons.removeAll(pinButtons);
+		children.removeAll(pinButtons);
+		pinButtons.clear();
 		AtomicInteger i = new AtomicInteger();
 		Researcher.getFrom(mc.player).getPinned().forEach((entryKey, pins) -> pins.forEach(pin -> {
 			// create Pin object
@@ -144,6 +151,7 @@ public class ResearchBookScreen extends Screen{
 				PinButton pinButton = new PinButton((width + getFrameWidth()) / 2 + 1, 32 + ((height - getFrameHeight()) / 2) + i.get() * 22, new Pin(entry, pin, mc.world));
 				addButton(pinButton);
 				tooltipButtons.add(pinButton);
+				pinButtons.add(pinButton);
 			}
 			i.incrementAndGet();
 		}));
@@ -698,11 +706,7 @@ public class ResearchBookScreen extends Screen{
 					}
 					// and remove this button
 					ResearchBookScreen thisScreen = (ResearchBookScreen)Minecraft.getInstance().currentScreen;
-					// can't use this because we're still in superclass constructor, h
-					Predicate<Object> isThatButtonThis = n -> n instanceof PinButton && ((PinButton)n).pin == pin;
-					thisScreen.buttons.removeIf(isThatButtonThis);
-					thisScreen.children.removeIf(isThatButtonThis);
-					thisScreen.tooltipButtons.removeIf(isThatButtonThis);
+					thisScreen.refreshPinButtons(Minecraft.getInstance());
 				}else{
 					// lets jump over to the specific stage
 					// first check if you even have the research

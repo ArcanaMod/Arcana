@@ -1,7 +1,6 @@
 package net.arcanamod.systems.research;
 
 import net.arcanamod.systems.research.impls.AbstractCraftingSection;
-import net.arcanamod.systems.research.impls.CraftingSection;
 import net.minecraft.item.Item;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;

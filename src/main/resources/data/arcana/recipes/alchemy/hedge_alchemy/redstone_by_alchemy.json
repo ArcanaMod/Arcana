@@ -1,7 +1,7 @@
 {
   "type": "arcana:alchemy",
   "in": {
-    "item": "minecraft:glowstone"
+    "item": "minecraft:glowstone_dust"
   },
   "out": {
     "item": "minecraft:redstone"

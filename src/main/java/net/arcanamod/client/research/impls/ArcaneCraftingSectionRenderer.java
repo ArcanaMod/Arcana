@@ -50,9 +50,6 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 			int aspectX = ulX + 73 / 2 - (craftingRecipe.getAspectStacks().length * (16 + spacing * 2)) / 2 - 4;
 			int aspectY = ulY + 82;
 			// Shadow behind the aspects for readability
-			//int margin = 2;
-			//int color = 0x50222222;
-			//GuiUtils.drawGradientRect(0, aspectX - margin - 1, aspectY - margin, aspectX + stacks.length * 18 + margin + 1, aspectY + margin + 18, color, color);
 			for(int i = 0, length = stacks.length; i < length; i++){
 				UndecidedAspectStack stack = stacks[i];
 				Aspect display = stack.any ? Aspects.EXCHANGE : stack.stack.getAspect();
@@ -88,13 +85,14 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 				}
 			
 			// Display aspect tooltips
-			int aspectX = ulX + 73 / 2 - craftingRecipe.getAspectStacks().length * 18 / 2 - 5;
-			int aspectY = ulY + 82;
 			UndecidedAspectStack[] stacks = craftingRecipe.getAspectStacks();
+			int spacing = (stacks.length == 1) ? 0 : (stacks.length >= 6) ? 1 : (stacks.length < 4) ? 3 : 2;
+			int aspectX = ulX + 73 / 2 - (craftingRecipe.getAspectStacks().length * (16 + spacing * 2)) / 2 - 4;
+			int aspectY = ulY + 82;
 			for(int i = 0, length = stacks.length; i < length; i++){
 				UndecidedAspectStack stack = stacks[i];
 				String displayed = stack.any ? I18n.format("aspect.any") : I18n.format("aspect." + stack.stack.getAspect().name().toLowerCase());
-				int areaX = aspectX + i * 18;
+				int areaX = aspectX + i * (16 + 2 * spacing) + spacing;
 				if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= aspectY && mouseY < aspectY + 16)
 					UiUtil.drawAspectStyleTooltip(displayed, mouseX, mouseY, screenWidth, screenHeight);
 			}
