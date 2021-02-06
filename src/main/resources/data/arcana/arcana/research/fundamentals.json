@@ -213,7 +213,7 @@
         "hidden"
       ],
       "x": 0,
-      "y": -8,
+      "y": -7,
       "sections": [
         {
           "type": "string",
@@ -466,6 +466,33 @@
         {
           "type": "string",
           "content": "research.arcana.flux.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:flux_meter",
+      "name": "research.arcana.flux_meter",
+      "icons": [
+        "arcana:flux_meter"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:flux",
+        "arcana:arcanium"
+      ],
+      "meta": [
+        "hexagon_base"
+      ],
+      "x": 8,
+      "y": -4,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.flux_meter.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/flux_meter"
         }
       ]
     }
