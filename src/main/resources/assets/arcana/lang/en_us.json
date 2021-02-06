@@ -716,6 +716,7 @@
     "puzzle.arcana.taint_scrubber_focus": "Sketch plans for a lens",
     "puzzle.arcana.taint_sucker": "Capture the flux of the sky",
     "puzzle.arcana.taint_bore": "Capture the taint of the earth",
+    "puzzle.arcana.crystal_farming": "Test how aspects can be given crystal structures",
 
     "_comment": "Old Research",
     "research.arcana.tome_of_sharing": "Tome of Sharing",
@@ -783,7 +784,10 @@
     "research.arcana.research.stage.2": "Now, I have a space and method to test my ideas. A research entry may have §oResearch requirements§r. Clicking on an unfinished research requirement with paper and Scribing Tools on me will create a set of research notes. Placing the research notes in a research table, along with a set of scribing tools, will allow me to test the theory in the form of a minigame.\n\nThe two most common minigames, §oChemistry§r and §oGuesswork§r, are detailed here, and other minigames may be introduced later.\n\nChemistry involves forming a path between multiple aspects: initial aspects are placed on the edges of a hexagonal grid, and I may place (and remove) aspects onto other hexagonal cells. The aspects I place are drawn from phials in nearby Phialshelves. Aspects connect to the two aspects that make them up. Once a continuous path is formed between all aspects, the research note is complete. [TODO: flux and inspiration.]\n\nGuesswork is simpler: I begin with the outline of a recipe (its shape and output), and a clue for each ingredient. Once I correctly fill in the recipe grid, the research is complete.\n\nCompleting a research yields a §oComplete Research Note§r, which, when used, completes the research requirement.\n\nNow seems like a good time to test this equipment using a well known design, and strongly-linked aspects.",
     "research.arcana.research.stage.3": "And as shown, the research table is a valuable tool for thaumaturgy.",
 
-    "research.arcana.fieldwork": "Fieldwork",
+    "research.arcana.crystal_farming": "Crystal Farming",
+    "research.arcana.crystal_farming.desc": "Sustainably sourced magic",
+    "research.arcana.crystal_farming.stage.1": "Grabbing crystals from the occasional node, or delving deep for crystal growths, can only sustain me for so long. Aspect crystals are an essential part of many devices, and I will require a proper, sustainable, source.\n\nAlchemy may present a way of seeding crystals, which should hopefully be simple to cultivate.",
+    "research.arcana.crystal_farming.stage.2": "Crystal cluster seeds of all primal aspects can be created using a simple alchemy recipe. The recipe for air seeds are shown here; other primal seeds simply require a different input.\n\nFull crystal clusters can also be crafted through arcane crafting, at a crystal loss.",
 
     "research.arcana.research_expertise": "Research Expertise",
     "research.arcana.research_expertise.desc": "Improving my improvements",
