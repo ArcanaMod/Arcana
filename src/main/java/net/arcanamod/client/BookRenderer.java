@@ -3,6 +3,7 @@ package net.arcanamod.client;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.arcanamod.ArcanaVariables;
 import net.arcanamod.client.event.ClientTickHandler;
 import net.arcanamod.client.model.ArcanumModel;
 import net.arcanamod.items.ArcanaItems;
@@ -97,14 +98,16 @@ public class BookRenderer {
 			}
 		}
 
+		// Move whole book
 		if (side == HandSide.RIGHT) {
-			ms.translate(0.3F + 0.02F * ticks, 0.125F + 0.01F * ticks, -0.2F - 0.035F * ticks);
-			ms.rotate(Vector3f.YP.rotationDegrees(180F + ticks * 6));
+			ms.translate(0.3F + 0.02F * ticks - 0.4, 0.125F + 0.01F * ticks, -0.2F - 0.035F * ticks);
+			ms.rotate(Vector3f.YP.rotationDegrees(74F + ticks * 6));
 		} else {
 			ms.translate(0.1F - 0.02F * ticks, 0.125F + 0.01F * ticks, -0.2F - 0.035F * ticks);
 			ms.rotate(Vector3f.YP.rotationDegrees(200F + ticks * 10));
 		}
-		ms.rotate(Vector3f.ZP.rotationDegrees(-0.3F + ticks * 2.85F));
+
+		ms.rotate(Vector3f.ZP.rotationDegrees(-0.9F + ticks * 2.85F));
 		float opening = MathHelper.clamp(ticks / 12F, 0, 1);
 
 		float pageFlipTicks = ClientTickHandler.pageFlipTicks;
@@ -112,7 +115,7 @@ public class BookRenderer {
 			pageFlipTicks -= ClientTickHandler.partialTicks;
 		}
 
-		float pageFlip = pageFlipTicks / 5F;
+		float pageFlip = pageFlipTicks / 5F + 0.1f;
 
 		float leftPageAngle = MathHelper.frac(pageFlip + 0.25F) * 1.6F - 0.3F;
 		float rightPageAngle = MathHelper.frac(pageFlip + 0.75F) * 1.6F - 0.3F;
