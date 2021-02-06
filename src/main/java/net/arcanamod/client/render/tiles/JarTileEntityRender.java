@@ -72,7 +72,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 
 			Quaternion q;
 			float xt, zt;
-			float xta, yta, zta;
+			float xta, yta = -0.68f, zta;
 
 			switch (labelSide) {
 				case NORTH:
@@ -84,9 +84,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 					break;
 				case SOUTH:
 					q = new Quaternion(0,90,0,true);
-					xt = -1.8f;
+					xt = -2.05f;
 					zt = 1.045f;
-					xta = -0.25f;
+					xta = 0.02f;
+					yta = 0.5f;
 					zta = -0.5f;
 					break;
 				case WEST:
@@ -94,14 +95,14 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 					xt = .445f;
 					zt = 1f;
 					xta = -0.02f;
-					zta = 0.1f;
+					zta = 0.2f;
 					break;
 				case EAST:
 					q = new Quaternion(0,180,0,true);
 					xt = -2.045f;
 					zt = -1.5f;
 					xta = -0.02f;
-					zta = 0.1f;
+					zta = 0.2f;
 					break;
 				default:
 					q = new Quaternion(0,0,0,true);
@@ -111,11 +112,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 					zta = 0;
 					break;
 			}
-			yta = -0.25f;
 
 			matrixStack.scale(scale, scale, scale);
 			matrixStack.rotate(q);
-			matrixStack.translate(xt, .9f, zt);
+			matrixStack.translate(xt, .5f, zt);
 
 			//Logger _LOGGER = LogManager.getLogger();
 			//_LOGGER.debug(label);
