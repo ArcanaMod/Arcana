@@ -78,7 +78,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 				case NORTH:
 					q = new Quaternion(0,-90,0,true);
 					xt = -1f;
-					zt = .445f;
+					zt = 1.445f;
 					xta = 0.25f;
 					zta = 0.5f;
 					break;
