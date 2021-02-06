@@ -16,11 +16,13 @@ import java.util.Set;
 @MethodsReturnNonnullByDefault
 public class AspectCraftingInventory extends CraftingInventory{
 	
-	private WandSlot wandSlot;
-	private IInventory deferred;
-	
+	private final WandSlot wandSlot;
+	private final IInventory deferred;
+	private final Container eventHandler; // just store this twice
+
 	public AspectCraftingInventory(Container eventHandler, WandSlot wandSlot, int width, int height, IInventory deferred){
 		super(eventHandler, width, height);
+		this.eventHandler = eventHandler;
 		this.wandSlot = wandSlot;
 		this.deferred = deferred;
 	}
@@ -37,12 +39,17 @@ public class AspectCraftingInventory extends CraftingInventory{
 		return deferred.removeStackFromSlot(index);
 	}
 	
-	public ItemStack decrStackSize(int index, int count){
-		return deferred.decrStackSize(index, count);
+	public ItemStack decrStackSize(int index, int count) {
+		ItemStack itemstack = deferred.decrStackSize(index, count);
+		if (!itemstack.isEmpty()) {
+			this.eventHandler.onCraftMatrixChanged(this);
+		}
+		return itemstack;
 	}
 	
 	public void setInventorySlotContents(int index, ItemStack stack){
 		deferred.setInventorySlotContents(index, stack);
+		this.eventHandler.onCraftMatrixChanged(this);
 	}
 	
 	public void markDirty(){

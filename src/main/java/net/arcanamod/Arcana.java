@@ -23,6 +23,7 @@ import net.arcanamod.world.NodeType;
 import net.arcanamod.capabilities.AuraChunkCapability;
 import net.arcanamod.world.WorldInteractions;
 import net.arcanamod.world.WorldInteractionsRegistry;
+import net.arcanamod.worldgen.ArcanaBiomes;
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.block.BlockState;
@@ -79,7 +80,7 @@ public class Arcana{
 	public static ItemGroup TAINT = new SupplierItemGroup("taint", () -> new ItemStack(ArcanaBlocks.TAINTED_GRASS_BLOCK.get()));
 
 	// Proxy
-	public static CommonProxy proxy = DistExecutor.runForDist(() -> ClientProxy::new, () -> CommonProxy::new);
+	public static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
 
 	// Debug Mode
 	public static final boolean debug = true;
@@ -108,6 +109,7 @@ public class Arcana{
 		ArcanaTiles.TES.register(modEventBus);
 		ArcanaContainers.CON.register(modEventBus);
 		ArcanaFeatures.FEATURES.register(modEventBus);
+		ArcanaBiomes.BIOMES.register(modEventBus);
 		ArcanaFluids.FLUIDS.register(modEventBus);
 
 		proxy.construct();

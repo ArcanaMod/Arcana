@@ -413,6 +413,7 @@
     {
       "key": "arcana:iron_transmutation_puzzle",
       "type": "chemistry",
+      "desc": "puzzle.arcana.iron_transmutation",
       "nodes": [
         "arcana:metal",
         "arcana:exchange",
@@ -422,6 +423,7 @@
     {
       "key": "arcana:silver_transmutation_puzzle",
       "type": "chemistry",
+      "desc": "puzzle.arcana.silver_transmutation",
       "nodes": [
         "arcana:metal",
         "arcana:exchange",
@@ -432,6 +434,7 @@
     {
       "key": "arcana:gold_transmutation_puzzle",
       "type": "chemistry",
+      "desc": "puzzle.arcana.gold_transmutation",
       "nodes": [
         "arcana:metal",
         "arcana:exchange",
@@ -443,6 +446,7 @@
     {
       "key": "arcana:bottled_taint_puzzle",
       "type": "chemistry",
+      "desc": "puzzle.arcana.bottled_taint",
       "nodes": [
         "arcana:taint",
         "arcana:imprison",
@@ -455,6 +459,7 @@
     {
       "key": "arcana:taint_scrubber_puzzle_1",
       "type": "chemistry",
+      "desc": "puzzle.arcana.taint_scrubber",
       "nodes": [
         "arcana:mana",
         "arcana:taint",
@@ -467,6 +472,7 @@
     {
       "key": "arcana:taint_scrubber_puzzle_2",
       "type": "chemistry",
+      "desc": "puzzle.arcana.taint_scrubber_focus",
       "nodes": [
         "arcana:mana",
         "arcana:aura",
@@ -491,6 +497,7 @@
     {
       "key": "arcana:taint_sucker_puzzle",
       "type": "chemistry",
+      "desc": "puzzle.arcana.taint_sucker",
       "nodes": [
         "arcana:air",
         "arcana:order",
@@ -503,6 +510,7 @@
     {
       "key": "arcana:taint_bore_puzzle",
       "type": "chemistry",
+      "desc": "puzzle.arcana.taint_bore",
       "nodes": [
         "arcana:earth",
         "arcana:chaos",
@@ -515,6 +523,7 @@
     {
       "key": "arcana:hedge_alchemy_puzzle",
       "type": "chemistry",
+      "desc": "puzzle.arcana.hedge_alchemy",
       "nodes": [
         "arcana:exchange",
         "arcana:creation",

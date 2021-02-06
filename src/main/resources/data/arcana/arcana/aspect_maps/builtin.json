@@ -922,5 +922,107 @@
       "aspect": "harvest",
       "amount": 2
     }
+  ],
+  "arcana:air_cluster_seed": [
+    {
+      "aspect": "seeds"
+    },
+    {
+      "aspect": "crystal"
+    },
+    {
+      "aspect": "air"
+    }
+  ],
+  "arcana:earth_cluster_seed": [
+    {
+      "aspect": "seeds"
+    },
+    {
+      "aspect": "crystal"
+    },
+    {
+      "aspect": "earth"
+    }
+  ],
+  "arcana:fire_cluster_seed": [
+    {
+      "aspect": "seeds"
+    },
+    {
+      "aspect": "crystal"
+    },
+    {
+      "aspect": "fire"
+    }
+  ],
+  "arcana:water_cluster_seed": [
+    {
+      "aspect": "seeds"
+    },
+    {
+      "aspect": "crystal"
+    },
+    {
+      "aspect": "water"
+    }
+  ],
+  "arcana:order_cluster_seed": [
+    {
+      "aspect": "seeds"
+    },
+    {
+      "aspect": "crystal"
+    },
+    {
+      "aspect": "order"
+    }
+  ],
+  "arcana:chaos_cluster_seed": [
+    {
+      "aspect": "seeds"
+    },
+    {
+      "aspect": "crystal"
+    },
+    {
+      "aspect": "chaos"
+    }
+  ],
+  "arcana:air_cluster": [
+    {
+      "aspect": "air",
+      "amount": 5
+    }
+  ],
+  "arcana:earth_cluster": [
+    {
+      "aspect": "earth",
+      "amount": 5
+    }
+  ],
+  "arcana:fire_cluster": [
+    {
+      "aspect": "fire",
+      "amount": 5
+    }
+  ],
+  "arcana:water_cluster": [
+    {
+      "aspect": "water",
+      "amount": 5
+    }
+  ],
+  "arcana:order_cluster": [
+    {
+      "aspect": "order",
+      "amount": 5
+    }
+  ],
+  "arcana:chaos_cluster": [
+    {
+      "aspect": "chaos",
+      "amount": 5
+    }
   ]
 }

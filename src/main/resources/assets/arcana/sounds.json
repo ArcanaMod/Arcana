@@ -48,5 +48,24 @@
     "sounds": [
       "arcana:phialshelf_slide"
     ]
+  },
+  "crystal_break": {
+    "subtitle": "arcana.sounds.crystal_break",
+    "sounds": [
+      "arcana:crystal/arcanacrystal_break1positive",
+      "arcana:crystal/arcanacrystal_break2positive",
+      "arcana:crystal/arcanacrystal_break3positive"
+
+    ]
+  },
+  "crystal_place": {
+    "subtitle": "arcana.sounds.crystal_place",
+    "sounds": [
+      "arcana:crystal/arcanacrystal_place1positive",
+      "arcana:crystal/arcanacrystal_place2positive",
+      "arcana:crystal/arcanacrystal_place3positive",
+      "arcana:crystal/arcanacrystal_place4positive"
+
+    ]
   }
 }

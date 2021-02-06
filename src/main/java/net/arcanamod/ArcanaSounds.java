@@ -23,6 +23,7 @@ public class ArcanaSounds {
 	// SoundTypes
 	public static SoundType JAR = new SoundType(0.6F, 1.0F,Impl.jar_break,Impl.jar_step,Impl.jar_place,Impl.jar_break,Impl.jar_step);
 	public static SoundType TAINT = new SoundType(0.6F, 1.0F,Impl.taint_step,Impl.taint_step,Impl.taint_step,Impl.taint_step,Impl.taint_step);
+	public static SoundType CRYSTAL = new SoundType(0.6F, 1.0F,Impl.crystal_break,Impl.crystal_place,Impl.crystal_place,Impl.crystal_break,Impl.crystal_place);
 
 	// SoundEvents
 	@SuppressWarnings("ConstantConditions")
@@ -78,6 +79,15 @@ public class ArcanaSounds {
 
 		@SoundName("taint_step")
 		public static final SoundEvent taint_step = null;
+
+		// Crystal Block Sounds
+
+		@SoundName("crystal_break")
+		public static final SoundEvent crystal_break = null;
+
+		@SoundName("crystal_place")
+		public static final SoundEvent crystal_place = null;
+
 
 		// Spell Cast
 
