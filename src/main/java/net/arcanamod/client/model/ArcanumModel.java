@@ -3,6 +3,7 @@ package net.arcanamod.client.model;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.arcanamod.ArcanaVariables;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BookModel;
 import net.minecraft.client.renderer.model.Model;
@@ -13,8 +14,8 @@ import net.minecraft.util.math.MathHelper;
 import java.util.List;
 
 public class ArcanumModel extends Model {
-	private final ModelRenderer coverRight = (new ModelRenderer(48, 48, 27, 21)).addBox(-4.0F, -4.0F, 1.0F, 9.0F, 12.0F, 1.0F);
-	private final ModelRenderer coverLeft = (new ModelRenderer(48, 48, 27, 33)).addBox(-4.0F, -4.0F, -2.0F, 9.0F, 12.0F, 1.0F);
+	private final ModelRenderer coverRight = (new ModelRenderer(48, 48, 27, 21)).addBox(-4.0F, -5.0F, 0F, 9.0F, 12.0F, 1.0F);
+	private final ModelRenderer coverLeft = (new ModelRenderer(48, 48, 27, 33)).addBox(-4.0F, -4.0F, 0.25F, 9.0F, 12.0F, 1.0F);
 	//private final ModelRenderer bookSpine = (new ModelRenderer(48, 48, 31, 9)).addBox(4.0F, -4.0F, -1.0F, 1.0F, 12.0F, 2.0F);
 	private final ModelRenderer pagesRight;
 	private final ModelRenderer pagesLeft;
@@ -24,8 +25,8 @@ public class ArcanumModel extends Model {
 		super(RenderType::getEntitySolid);
 
 		//setRotationAngle(coverLeft,(float)Math.PI / 2F,(float)Math.PI / 2F,(float)Math.PI / 2F);
-		pagesLeft = (new ModelRenderer(48, 48, 0, 23)).addBox(-3.0F, -3.5F, -1.0F, 7.0F, 11.0F, 1.0F);
-		pagesRight = (new ModelRenderer(48, 48, 0, 35)).addBox(-3.0F, -3.5F, 0.0F, 7.0F, 11.0F, 1.0F);
+		pagesLeft = (new ModelRenderer(48, 48, 0, 23)).addBox(-3.0F, -3.5F, -3.0F, 7.0F, 11.0F, 1.0F);
+		pagesRight = (new ModelRenderer(48, 48, 0, 35)).addBox(-3.0F, -3.5F, -2.0F, 7.0F, 11.0F, 1.0F);
 		this.field_228246_h_ = ImmutableList.of(this.coverRight, this.coverLeft, /*this.bookSpine,*/ this.pagesRight, this.pagesLeft/*, this.flippingPageRight, this.flippingPageLeft*/);
 		this.coverRight.setRotationPoint(0.0F, 0.0F, -1.0F);
 		this.coverLeft.setRotationPoint(0.0F, 0.0F, 1.0F);
