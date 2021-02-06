@@ -17,6 +17,8 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
@@ -69,32 +71,53 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			matrixStack.push();
 
 			Quaternion q;
+			float xt, zt;
+			float xta, zta;
 
 			switch (labelSide) {
 				case NORTH:
 					q = new Quaternion(0,-90,0,true);
+					xt = -1f;
+					zt = .445f;
+					xta = 0.25f;
+					zta = 0.5f;
 					break;
 				case SOUTH:
-					q = new Quaternion(0,180,0,true);
+					q = new Quaternion(0,90,0,true);
+					xt = -0.5f;
+					zt = 1.045f;
+					xta = -0.25f;
+					zta = -0.5f;
 					break;
 				case WEST:
-					q = new Quaternion(0,90,0,true);
+					q = new Quaternion(0,0,0,true);
+					xt = .445f;
+					zt = 1f;
+					xta = -0.02f;
+					zta = 1f;
 					break;
 				case EAST:
+					q = new Quaternion(0,180,0,true);
+					xt = -2.045f;
+					zt = -1.5f;
+					xta = -0.02f;
+					zta = 1f;
+					break;
+				default:
 					q = new Quaternion(0,0,0,true);
+					xt = 0;
+					zt = 0;
+					xta = 0;
+					zta = 0;
 					break;
-				case UP:
-					q = new Quaternion(0, new Random().nextInt(2) == 1 ? 0 : 180,0,true);
-					break;
-				case DOWN:
-					q = new Quaternion(0, new Random().nextInt(2) == 1 ? 90 : 270,0,true);
-					break;
-				default: q = new Quaternion(0,0,0,true);
 			}
-			matrixStack.rotate(q);
 
 			matrixStack.scale(scale, scale, scale);
-			matrixStack.translate(.445f, .5f, 1f);
+			matrixStack.rotate(q);
+			matrixStack.translate(xt, .9f, zt);
+
+			//Logger _LOGGER = LogManager.getLogger();
+			//_LOGGER.debug(label);
 
 			q = new Quaternion(-15,0,0,true);
 			matrixStack.rotate(q);
@@ -106,7 +129,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 
 			q = new Quaternion(15-90,0,0,true);
 			matrixStack.rotate(q);
-			matrixStack.translate(0.5,0,0);
+			matrixStack.translate(xta,0,zta);
 
 			scale = 0.8f;
 			matrixStack.scale(scale, scale, scale);
