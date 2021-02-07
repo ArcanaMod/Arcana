@@ -11,7 +11,6 @@ import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
@@ -198,7 +197,7 @@ public final class UiUtil{
 	}
 	
 	public static boolean shouldShowAspectIngredients(){
-		// TODO: research gating?
+		// true if research expertise has been completed
 		return true;
 	}
 	

@@ -5,14 +5,13 @@ import com.google.common.graph.MutableGraph;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.Aspects;
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.slots.AspectStoreSlot;
-import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.util.GraphTraverser;
 import net.minecraft.entity.player.PlayerEntity;
@@ -203,7 +202,7 @@ public class Chemistry extends Puzzle{
 			return null;
 	}
 	
-	private List<Integer> getAspectSlotIndexes(){
+	public List<Integer> getAspectSlotIndexes(){
 		// there are 24 slots on the edges
 		// with nodes.size() aspects to distribute equally among these slots
 		int spacing = (int)Math.floor(24 / (float)nodes.size());
