@@ -47,6 +47,10 @@
         {
           "type": "string",
           "content": "research.arcana.aspects.text"
+        },
+        {
+          "type": "image",
+          "content": "arcana:textures/research/elements_diagram.png"
         }
       ]
     },

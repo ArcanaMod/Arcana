@@ -20,6 +20,7 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		map.put(SmeltingSection.TYPE, new SmeltingSectionRenderer());
 		map.put(AlchemySection.TYPE, new AlchemySectionRenderer());
 		map.put(ArcaneCraftingSection.TYPE, new ArcaneCraftingSectionRenderer());
+		map.put(ImageSection.TYPE, new ImageSectionRenderer());
 	}
 	
 	void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);
