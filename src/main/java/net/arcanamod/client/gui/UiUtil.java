@@ -251,12 +251,7 @@ public final class UiUtil{
 			// this, uhh, doesn't work
 			// ItemRenderer adds 50 automatically, so we adjust for it
 			Minecraft.getInstance().getItemRenderer().zLevel = itemZLevel - 50;
-			RenderSystem.enableDepthTest();
-			RenderHelper.enableStandardItemLighting();
-			RenderSystem.disableLighting();
 			Minecraft.getInstance().getItemRenderer().renderItemAndEffectIntoGUI(icon.getStack(), x, y);
-			RenderSystem.disableLighting();
-			RenderSystem.enableRescaleNormal();
 		}else{
 			// otherwise, check for a texture
 			Minecraft.getInstance().getTextureManager().bindTexture(icon.getResourceLocation());
