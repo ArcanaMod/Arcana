@@ -16,7 +16,6 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	
 	static void init(){
 		map.put(StringSection.TYPE, new StringSectionRenderer());
-		map.put(GuessworkSection.TYPE, new GuessworkSectionRenderer());
 		map.put(CraftingSection.TYPE, new CraftingSectionRenderer());
 		map.put(SmeltingSection.TYPE, new SmeltingSectionRenderer());
 		map.put(AlchemySection.TYPE, new AlchemySectionRenderer());
