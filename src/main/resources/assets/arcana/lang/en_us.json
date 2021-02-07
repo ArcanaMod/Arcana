@@ -216,7 +216,7 @@
     "aspect.nether.desc": "The Nether",
     "aspect.order": "Ordo",
     "aspect.order.desc": "Order",
-    "aspect.overworld": "???",
+    "aspect.overworld": "Orbis",
     "aspect.overworld.desc": "The Overworld",
     "aspect.plant": "Herba",
     "aspect.plant.desc": "Plants",
@@ -709,6 +709,8 @@
     "requirement.puzzle.get_note.2": "Requires scribing tools and paper",
     "requirement.puzzle.complete": "Already complete",
     "requirement.tag.accepts_any": "Any %s",
+
+    "requirement.research_completed": "Complete the missing research",
 
     "puzzle.arcana.flux_build": "Taste the \"flux\" for yourself",
     "puzzle.arcana.bottled_taint": "Try to understand taint",

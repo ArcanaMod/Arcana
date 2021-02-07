@@ -1,9 +1,6 @@
 package net.arcanamod.systems.research;
 
-import net.arcanamod.systems.research.impls.ItemRequirement;
-import net.arcanamod.systems.research.impls.ItemTagRequirement;
-import net.arcanamod.systems.research.impls.PuzzleRequirement;
-import net.arcanamod.systems.research.impls.XpRequirement;
+import net.arcanamod.systems.research.impls.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ItemTags;
@@ -50,6 +47,8 @@ public abstract class Requirement{
 		deserializers.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		factories.put(PuzzleRequirement.TYPE, params -> new PuzzleRequirement(new ResourceLocation(params.get(0))));
 		deserializers.put(PuzzleRequirement.TYPE, compound -> new PuzzleRequirement(new ResourceLocation(compound.getString("puzzle"))));
+		factories.put(ResearchCompletedRequirement.TYPE, params -> new ResearchCompletedRequirement(params.get(0)));
+		deserializers.put(ResearchCompletedRequirement.TYPE, compound -> new ResearchCompletedRequirement(compound.getString("requirement")));
 	}
 	
 	////////// instance stuff
