@@ -1,9 +1,6 @@
 package net.arcanamod.util;
 
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.aspects.IAspectHolder;
+import net.arcanamod.aspects.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -38,6 +35,10 @@ public final class VisUtils{
 				// move void cells, then empty cells to the end
 				holders.sort(INPUT_PRIORITY_SORTER);
 				for(IAspectHolder toHolder : holders){
+					// disallow self insertions
+					// you shouldn't be transferring from a NotifyingHolder to a NotifyingHolder
+					if(from.getHolders().contains(toHolder instanceof DelegatingAspectCell ? ((DelegatingAspectCell)toHolder).underlying() : toHolder))
+						continue;
 					if(transferred >= max && max != -1)
 						break;
 					if(toHolder.getContainedAspect() == holder.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
