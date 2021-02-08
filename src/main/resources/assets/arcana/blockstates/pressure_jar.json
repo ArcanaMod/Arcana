@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "up=false": {
+      "model": "arcana:block/pressure_jar"
+    },
+    "up=true": {
+      "model": "arcana:block/pressure_jar_connected"
+    }
+  }
+}

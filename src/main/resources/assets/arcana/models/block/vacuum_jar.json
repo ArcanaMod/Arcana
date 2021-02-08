@@ -1,0 +1,73 @@
+{
+	"parent": "block/cube_all",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "arcana:block/jar_vacuum",
+		"particle": "arcana:block/jar_particle"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 3],
+			"to": [13, 12, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0]},
+			"faces": {
+				"north": {"uv": [2.5, 5, 5, 11], "texture": "#0"},
+				"east": {"uv": [0, 5, 2.5, 11], "texture": "#0"},
+				"south": {"uv": [7.5, 5, 10, 11], "texture": "#0"},
+				"west": {"uv": [5, 5, 7.5, 11], "texture": "#0"},
+				"up": {"uv": [5, 5, 2.5, 0], "texture": "#0"},
+				"down": {"uv": [7.5, 0, 5, 5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 12, 5],
+			"to": [11, 14, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0]},
+			"faces": {
+				"north": {"uv": [1.5, 15, 3, 16], "texture": "#0"},
+				"east": {"uv": [0, 15, 1.5, 16], "texture": "#0"},
+				"south": {"uv": [4.5, 15, 6, 16], "texture": "#0"},
+				"west": {"uv": [3, 15, 4.5, 16], "texture": "#0"},
+				"up": {"uv": [3, 15, 1.5, 12], "texture": "#0"},
+				"down": {"uv": [4.5, 12, 3, 15], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 0.75, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 0.75, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 2.25, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 2.25, 0],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"ground": {
+			"translation": [0, 0.5, 0],
+			"scale": [0.4, 0.4, 0.4]
+		},
+		"gui": {
+			"rotation": [25, 45, 0],
+			"translation": [0, 1.75, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"head": {
+			"translation": [0, 2.25, 0.75]
+		}
+	},
+	"groups": [
+		{
+			"name": "bone",
+			"origin": [0, 0, 0],
+			"children": [0, 1]
+		}
+	]
+}

@@ -2,6 +2,7 @@ package net.arcanamod.util;
 
 import net.arcanamod.aspects.*;
 
+import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
@@ -24,7 +25,9 @@ public final class VisUtils{
 	 * @param max
 	 *      The maximum amount of aspects to move, or -1 for no limit.
 	 */
-	public static void moveAllAspects(IAspectHandler from, IAspectHandler to, int max){
+	public static void moveAllAspects(@Nullable IAspectHandler from, @Nullable IAspectHandler to, int max){
+		if(from == null || to == null)
+			return;
 		int transferred = 0;
 		List<IAspectHolder> fromHolders = from.getHolders();
 		for(IAspectHolder holder : fromHolders){
@@ -37,7 +40,7 @@ public final class VisUtils{
 				for(IAspectHolder toHolder : holders){
 					// disallow self insertions
 					// you shouldn't be transferring from a NotifyingHolder to a NotifyingHolder
-					if(from.getHolders().contains(toHolder instanceof DelegatingAspectCell ? ((DelegatingAspectCell)toHolder).underlying() : toHolder))
+					if(from.getHolders().contains(toHolder instanceof DelegatingAspectCell ? ((DelegatingAspectCell)toHolder).underlying() : toHolder) && to.getHolders().contains(holder instanceof DelegatingAspectCell ? ((DelegatingAspectCell)holder).underlying() : toHolder))
 						continue;
 					if(transferred >= max && max != -1)
 						break;

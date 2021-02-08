@@ -299,6 +299,9 @@
     "block.arcana.jar": "Warded Jar",
     "block.arcana.void_jar": "Void Jar",
     "block.arcana.secure_jar": "Secure Jar",
+    "block.arcana.vacuum_jar": "Vacuum Jar",
+    "block.arcana.pressure_jar": "Pressure Jar",
+
     "block.arcana.aspect_bookshelf": "Phialshelf",
     "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
     "block.arcana.crucible": "Crucible",

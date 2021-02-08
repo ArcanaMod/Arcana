@@ -5,6 +5,7 @@ import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
+import net.arcanamod.util.VisUtils;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -30,6 +31,8 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	
 	private double clientVis;
 	private double visAnimationSpeed = ArcanaConfig.JAR_ANIMATION_SPEED.get();
+	
+	private static final int MAX_PUSH = 4;
 	
 	public JarTileEntity(JarBlock.Type type){
 		super(ArcanaTiles.JAR_TE.get());
@@ -150,6 +153,13 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 			clientVis = Math.max(clientVis - visAnimationSpeed, newVis);
 		else if(clientVis < newVis)
 			clientVis = Math.min(clientVis + visAnimationSpeed, newVis);
+		
+		TileEntity entity = world.getTileEntity(pos.up());
+		if(entity instanceof AspectTubeTileEntity)
+			if(getJarType() == JarBlock.Type.VACUUM) // pull in
+				VisUtils.moveAllAspects(IAspectHandler.getFrom(entity), vis, MAX_PUSH);
+			else if(getJarType() == JarBlock.Type.PRESSURE) // push out
+				VisUtils.moveAllAspects(vis, IAspectHandler.getFrom(entity), MAX_PUSH);
 	}
 	
 	public double getClientVis(float partialTicks){
