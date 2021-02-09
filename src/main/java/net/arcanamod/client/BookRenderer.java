@@ -100,7 +100,7 @@ public class BookRenderer {
 
 		// Move whole book
 		if (side == HandSide.RIGHT) {
-			ms.translate(0.3F + 0.02F * ticks - 0.4, 0.125F + 0.01F * ticks, -0.2F - 0.035F * ticks);
+			ms.translate(0.3F + 0.02F * ticks, 0.125F + 0.01F * ticks, -0.2F - 0.035F * ticks);
 			ms.rotate(Vector3f.YP.rotationDegrees(74F + ticks * 6));
 		} else {
 			ms.translate(0.1F - 0.02F * ticks, 0.125F + 0.01F * ticks, -0.2F - 0.035F * ticks);
