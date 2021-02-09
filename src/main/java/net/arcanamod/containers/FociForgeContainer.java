@@ -197,6 +197,8 @@ public class FociForgeContainer extends AspectContainer {
 
     @Override
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index){
+        this.setHeldAspect(null);
+
         ItemStack itemstack = ItemStack.EMPTY;
         Slot slot = inventorySlots.get(index);
 

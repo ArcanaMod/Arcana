@@ -1,5 +1,6 @@
 package net.arcanamod.network;
 
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.capabilities.Researcher;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -57,8 +58,8 @@ public class Connection{
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncPlayerResearch(from.getEntryData(), from.getPuzzleData()));
 	}
 
-	public static void sendAspectClick(int windowId, int slotId, PkAspectClick.ClickType type){
-		INSTANCE.sendToServer(new PkAspectClick(windowId, slotId, type));
+	public static void sendAspectClick(int windowId, int slotId, PkAspectClick.ClickType type, Aspect expectedAspect){
+		INSTANCE.sendToServer(new PkAspectClick(windowId, slotId, type, expectedAspect));
 	}
 
 	public static void sendSyncAspectContainer(AspectContainer container, ServerPlayerEntity target) {

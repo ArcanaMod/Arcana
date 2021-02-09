@@ -18,7 +18,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	public static final int SCROLL_HEIGHT = 15;
 	public static final int FOCI_V_COUNT = 9;
 
-	private static final ResourceLocation BG = new ResourceLocation(Arcana.MODID, "textures/gui/container/gui_fociforge.png");
+	public static final ResourceLocation BG = new ResourceLocation(Arcana.MODID, "textures/gui/container/gui_fociforge.png");
 
 	FociForgeTileEntity te;
 	float aspectScroll = 0, fociScroll = 0;
@@ -62,6 +61,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		super(screenContainer, inv, titleIn);
 		this.te = screenContainer.te;
 		this.aspectContainer = screenContainer;
+		this.aspectContainer.setSymbolic(true);
 		xSize = WIDTH;
 		ySize = HEIGHT;
 		scrollAspectTo(0);

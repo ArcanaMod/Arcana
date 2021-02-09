@@ -46,8 +46,9 @@ public class AspectStoreSlot extends AspectSlot{
 		else
 			return 0;
 	}
-	
-	public boolean shouldShowAmount(){
+
+	@Override
+	public boolean shouldShowAmount() {
 		return holder.getCapacity() > 1;
 	}
 	
