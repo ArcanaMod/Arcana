@@ -58,6 +58,8 @@ public interface PuzzleRenderer<T extends Puzzle>{
 		blit(guiLeft(screenWidth) + 141, guiTop(screenHeight) + 35, 0, 0, 214, 134, 214, 134);
 	}
 	
+	default void renderAfter(T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player){}
+	
 	default int guiLeft(int screenWidth){
 		return (screenWidth - ResearchTableScreen.WIDTH) / 2;
 	}

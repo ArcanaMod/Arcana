@@ -168,6 +168,61 @@
       ]
     },
     {
+      "key": "arcana:alchemical_glass",
+      "name": "research.arcana.alchemical_glass",
+      "desc": "research.arcana.alchemical_glass.desc",
+      "icons": [
+        "arcana:hardened_glass",
+        "arcana:smokey_glass",
+        "arcana:luminiferous_glass"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:alchemy_root"
+      ],
+      "x": 0,
+      "y": -2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.alchemical_glass.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:hardened_glass_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.alchemical_glass.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/hardened_glass",
+          "requirements": [
+            "arcana::puzzle{arcana:luminiferous_glass_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.alchemical_glass.stage.3"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/luminiferous_glass",
+          "requirements": [
+            "arcana::puzzle{arcana:smokey_glass_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.alchemical_glass.stage.4"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/smokey_glass"
+        }
+      ]
+    },
+    {
       "key": "arcana:hedge_alchemy",
       "name": "research.arcana.hedge_alchemy",
       "icons": [
@@ -180,10 +235,10 @@
       ],
       "category": "arcana:alchemy",
       "parents": [
-        "arcana:alchemy_root"
+        "arcana:alchemical_glass"
       ],
       "x": 0,
-      "y": -2,
+      "y": -4,
       "sections": [
         {
           "type": "string",
@@ -328,7 +383,8 @@
           "content": "research.arcana.taint_scrubber.stage.4",
           "requirements": [
             "arcana::puzzle{arcana:taint_scrubber_puzzle_2}",
-            "0*arcana:taint_scrubber_mk1"
+            "0*arcana:taint_scrubber_mk1",
+            "arcana::research_completed{arcana:alchemical_glass@3}"
           ]
         },
         {
@@ -518,6 +574,39 @@
         "arcana:energy",
         "arcana:machine",
         "arcana:aura"
+      ]
+    },
+    {
+      "key": "arcana:hardened_glass_puzzle",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.hardened_glass",
+      "nodes": [
+        "arcana:crystal",
+        "arcana:earth",
+        "arcana:armour",
+        "arcana:earth"
+      ]
+    },
+    {
+      "key": "arcana:luminiferous_glass_puzzle",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.luminiferous_glass",
+      "nodes": [
+        "arcana:crystal",
+        "arcana:air",
+        "arcana:light",
+        "arcana:air"
+      ]
+    },
+    {
+      "key": "arcana:smokey_glass_puzzle",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.smokey_glass",
+      "nodes": [
+        "arcana:crystal",
+        "arcana:chaos",
+        "arcana:vacuum",
+        "arcana:chaos"
       ]
     },
     {

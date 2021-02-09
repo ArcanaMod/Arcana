@@ -21,7 +21,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		for(AspectSlot slot : aspectContainer.getAspectSlots()){
+		for(AspectSlot slot : aspectContainer.getAspectSlots())
 			if(slot.getInventory().get() != null && slot.visible){
 				if(slot.getAspect() != null){
 					itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(slot.getAspect()), slot.x, slot.y);
@@ -33,7 +33,6 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 					GuiUtils.drawGradientRect(300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
 				}
 			}
-		}
 	}
 
 	@Override
@@ -43,8 +42,6 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 			if(slot.getInventory().get() != null && slot.visible)
 				if(isMouseOverSlot(mouseX, mouseY, slot))
 					if(slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null)
-						/*String name = AspectUtils.getLocalizedAspectDisplayName(slot.getAspect());
-						renderTooltip(Collections.singletonList(name + ((char)20)), mouseX, mouseY, Minecraft.getInstance().getFontResourceManager().getFontRenderer(Arcana.arcLoc("eldrich")));*/
 						UiUtil.drawAspectTooltip(slot.getAspect(), mouseX, mouseY, width, height);
 	}
 

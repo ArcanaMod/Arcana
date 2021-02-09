@@ -29,7 +29,6 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	public static final int HEIGHT = 280;
 	
 	private static final ResourceLocation BG = new ResourceLocation(Arcana.MODID, "textures/gui/container/gui_researchbook.png");
-	//private static final ResourceLocation NO_INK = new ResourceLocation(Arcana.MODID, "textures/gui/research/no_ink_overlay.png");
 	
 	ResearchTableTileEntity te;
 	int page = 0;
@@ -66,6 +65,18 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 			}
 		}
 		searchWidget.render(mouseX, mouseY, partialTicks);
+	}
+	
+	public void render(int mouseX, int mouseY, float partialTicks){
+		super.render(mouseX, mouseY, partialTicks);
+		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
+			CompoundNBT compound = te.note().getTag();
+			if(compound != null){
+				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
+				if(puzzle != null)
+					PuzzleRenderer.get(puzzle).renderAfter(puzzle, aspectContainer.puzzleSlots, aspectContainer.puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
+			}
+		}
 	}
 	
 	@Override

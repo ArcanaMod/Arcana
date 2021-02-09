@@ -1,0 +1,85 @@
+{
+	"credit": "Made with Blockbench",
+	"parent": "block/cube_all",
+	"ambientocclusion": false,
+	"textures": {
+		"0": "arcana:block/jar_pressure",
+		"particle": "arcana:block/jar_particle",
+		"1_0": "arcana:block/essentia_pipe"
+	},
+	"elements": [
+		{
+			"from": [3, 0, 3],
+			"to": [13, 12, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0]},
+			"faces": {
+				"north": {"uv": [2.5, 5, 5, 11], "texture": "#0"},
+				"east": {"uv": [0, 5, 2.5, 11], "texture": "#0"},
+				"south": {"uv": [7.5, 5, 10, 11], "texture": "#0"},
+				"west": {"uv": [5, 5, 7.5, 11], "texture": "#0"},
+				"up": {"uv": [5, 5, 2.5, 0], "texture": "#0"},
+				"down": {"uv": [7.5, 0, 5, 5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [5, 12, 5],
+			"to": [11, 14, 11],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0, 0]},
+			"faces": {
+				"north": {"uv": [1.5, 15, 3, 16], "texture": "#0"},
+				"east": {"uv": [0, 15, 1.5, 16], "texture": "#0"},
+				"south": {"uv": [4.5, 15, 6, 16], "texture": "#0"},
+				"west": {"uv": [3, 15, 4.5, 16], "texture": "#0"},
+				"up": {"uv": [3, 15, 1.5, 12], "texture": "#0"},
+				"down": {"uv": [4.5, 12, 3, 15], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6, 14, 6],
+			"to": [10, 16, 10],
+			"faces": {
+				"north": {"uv": [7, 15, 9, 16], "rotation": 180, "texture": "#1_0"},
+				"east": {"uv": [15, 7, 16, 9], "rotation": 270, "texture": "#1_0"},
+				"south": {"uv": [7, 0, 9, 1], "texture": "#1_0"},
+				"west": {"uv": [0, 7, 1, 9], "rotation": 90, "texture": "#1_0"},
+				"up": {"uv": [7, 7, 9, 9], "rotation": 180, "texture": "#1_0", "cullface": "north"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 0.75, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 0.75, -0.5],
+			"scale": [0.5, 0.5, 0.5]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 2.25, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 2.25, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"ground": {
+			"translation": [0, 0.5, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"gui": {
+			"rotation": [25, 45, 0],
+			"translation": [0, 1.75, 0],
+			"scale": [0.7, 0.7, 0.7]
+		},
+		"head": {
+			"translation": [0, 2.25, 0.75]
+		}
+	},
+	"groups": [
+		{
+			"name": "bone",
+			"origin": [0, 0, 0],
+			"children": [0, 1]
+		}, 2]
+}

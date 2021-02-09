@@ -216,7 +216,7 @@
     "aspect.nether.desc": "The Nether",
     "aspect.order": "Ordo",
     "aspect.order.desc": "Order",
-    "aspect.overworld": "???",
+    "aspect.overworld": "Orbis",
     "aspect.overworld.desc": "The Overworld",
     "aspect.plant": "Herba",
     "aspect.plant.desc": "Plants",
@@ -299,6 +299,9 @@
     "block.arcana.jar": "Warded Jar",
     "block.arcana.void_jar": "Void Jar",
     "block.arcana.secure_jar": "Secure Jar",
+    "block.arcana.vacuum_jar": "Vacuum Jar",
+    "block.arcana.pressure_jar": "Pressure Jar",
+
     "block.arcana.aspect_bookshelf": "Phialshelf",
     "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
     "block.arcana.crucible": "Crucible",
@@ -336,6 +339,10 @@
     "block.arcana.rough_limestone": "Rough Limestone",
     "block.arcana.smooth_limestone": "Smooth Limestone",
     "block.arcana.limestone_tile": "Limestone Tile",
+
+    "block.arcana.hardened_glass": "Hardened Glass",
+    "block.arcana.smokey_glass": "Smokey Glass",
+    "block.arcana.luminiferous_glass": "Luminiferous Glass",
 
     "_comment": "Ores",
     "block.arcana.amber_ore": "Amber Ore",
@@ -705,6 +712,9 @@
     "requirement.puzzle.get_note.2": "Requires scribing tools and paper",
     "requirement.puzzle.complete": "Already complete",
     "requirement.tag.accepts_any": "Any %s",
+    "requirement.research_completed": "Complete the missing research",
+    "requirement.puzzles_completed": "Complete %s puzzles",
+    "requirement.puzzles_completed.progress": "%s/%s completed",
 
     "puzzle.arcana.flux_build": "Taste the \"flux\" for yourself",
     "puzzle.arcana.bottled_taint": "Try to understand taint",
@@ -717,6 +727,9 @@
     "puzzle.arcana.taint_sucker": "Capture the flux of the sky",
     "puzzle.arcana.taint_bore": "Capture the taint of the earth",
     "puzzle.arcana.crystal_farming": "Test how aspects can be given crystal structures",
+    "puzzle.arcana.hardened_glass": "Try to give glass a diamond structure",
+    "puzzle.arcana.luminiferous_glass": "Try to fill glass with light",
+    "puzzle.arcana.smokey_glass": "Try to give glass an impossible opacity",
 
     "_comment": "Old Research",
     "research.arcana.tome_of_sharing": "Tome of Sharing",
@@ -776,7 +789,7 @@
     "research.arcana.aspect_crystallization": "Aspect Crystallization",
     "research.arcana.aspect_crystallization.desc": "Grasp the immaterial",
     "research.arcana.aspect_crystallization.stage.1": "I have isolated aspects into their purest form. Many applications of magic, however, require a more stable, solid form - aspect crystals. It should not be difficult to crystallize essentia, given what I now know.",
-    "research.arcana.aspect_crystallization.stage.2": "By [TODO: lore], the Aspect Crystallizer (patent pending) is capable of solidifying essentia into crystals, given a crystal catalyst of quartz.",
+    "research.arcana.aspect_crystallization.stage.2": "By compressing essentia around a crystal base, the Aspect Crystallizer (patent pending) is capable of solidifying essentia into crystals, given a crystal catalyst of quartz.",
 
     "research.arcana.research": "Research",
     "research.arcana.research.desc": "Knowledge is power",
@@ -791,15 +804,11 @@
 
     "research.arcana.research_expertise": "Research Expertise",
     "research.arcana.research_expertise.desc": "Improving my improvements",
+    "research.arcana.research_expertise.stage.1": "Performing more research will teach me more about the research process itself.\n\nWith a little practical experience, I should be able to simplify the process, and offset the increasing difficulty of these puzzles.",
+    "research.arcana.research_expertise.stage.2": "I'm getting better at this.\n\nHovering over an aspect in the research table and holding shift will now display what the aspect is made up of.",
 
     "research.arcana.research_mastery": "Research Mastery",
     "research.arcana.research_mastery.desc": "§5You can never know all the facts. Only I can.§5",
-
-    "research.arcana.archaeology": "Archaeology",
-    "research.arcana.archaeology.desc": "Unveiling what once was",
-
-    "research.arcana.foci": "Arcane Foci",
-    "research.arcana.foci.desc": "Power with purpose",
 
     "research.arcana.alchemy_root": "Alchemy",
     "research.arcana.alchemy_root.text": "Alchemy - the usage of essentia solutions to transform substances - will be researched and described here.",
@@ -819,8 +828,14 @@
     "research.arcana.purification.stage.1": "[metal ore -> native cluster]",
     "research.arcana.purification.stage.2": "[just do the goddamn recipes]",
 
+    "research.arcana.alchemical_glass": "Alchemical Glass",
+    "research.arcana.alchemical_glass.desc": "Advancing my material knowledge",
+    "research.arcana.alchemical_glass.stage.1": "Glass is a wonderful substance. Neutral and strong, capable of containing a vast array of mundane reagents and materials - and transparent too, allowing full view of any reactions, and making it useful for home decor.\n\nNow that I have alchemy, I should be able to improve upon this further, and produce materials even better suited for decoration and sciences alike. Perhaps glass that's a little less brittle would be nice...",
+    "research.arcana.alchemical_glass.stage.2": "Increasing the strength of glass simply requires copying some of diamond's structure onto it. Hardened Glass is explosion-proof, harder, and will drop itself when broken even without Silk Touch, which might make construction a little less painful.\n\nOn the topic of buildings, perhaps I could eliminate some of those ugly torches by granting my windows the same light-bearing property?",
+    "research.arcana.alchemical_glass.stage.3": "Just adding some Lux is all it takes to produce Luminiferous Glass, which gives off a light level of 15 (equivalent to glowstone).\n\nThe glass doesn't truly generate light, instead giving off its stored light over time. One day, it will revert to some kind of inert glass... long after my death, most likely.\n\nThis begs the question of if I can grant glass some more paradoxical properties... can I produce glass that allows me to view through it, but does not truly allow light past?",
+    "research.arcana.alchemical_glass.stage.4": "Yes, apparently. Smokey Glass does exactly that: allows me to view through it, but does not transfer light levels past it.\n\nThis should allow me to create areas dark enough for monsters to congregate, under my view; and test alchemical reactions between compounds sensitive to light.",
+
     "research.arcana.hedge_alchemy": "Hedge Alchemy",
-    "research.arcana.hedge_alchemy.desc": "Miscellaneous Transformations",
     "research.arcana.hedge_alchemy.stage.1": "Certain items are especially annoying or tedious to obtain, and often come in short supply. Hopefully, I can use alchemy to obtain these items from related compounds. My first step will be to determine suitable alchemical bases for these, which will require a number of samples.",
     "research.arcana.hedge_alchemy.stage.2": "From my experimentation, §oGunpowder§r is closely alchemically related to §oBlaze Powder§r; §oRedstone§r and §oGlowstone§r share very similar structures; and §oQuartz§r has an odd resemblance to §oDiamond§r.\n\nI believe I can also use alchemy to emulate more mundane reactions: tanning §oRotten Flesh§r into §oLeather§r, freezing §oSnow§r into §oIce§r, drying §oLeaves§r into §oDead Bushes§r, and binding §oString§r into §oCobwebs§r.\n\nI'll need to verify experimentally that these are possible, though.",
     "research.arcana.hedge_alchemy.stage.3": "Most of these conversions are fully viable alchemical recipes. ...Quartz to Diamond was something of a non-starter, instead turning to Flint in my practical experiments, and converting Snow into Ice proved less efficient than I had originally anticipated. Could this be because of my equipment, or my technique? Perhaps, but my current results are satisfying, for now.",

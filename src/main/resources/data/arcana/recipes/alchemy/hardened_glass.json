@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "forge:glass"
+  },
+  "out": {
+    "item": "arcana:hardened_glass"
+  },
+  "aspects": [
+    {
+      "aspect": "earth",
+      "amount": 2
+    },
+    {
+      "aspect": "crystal",
+      "amount": 2
+    }
+  ],
+  "research": [
+    "arcana:alchemical_glass@1"
+  ]
+}

@@ -16,11 +16,11 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 	
 	static void init(){
 		map.put(StringSection.TYPE, new StringSectionRenderer());
-		map.put(GuessworkSection.TYPE, new GuessworkSectionRenderer());
 		map.put(CraftingSection.TYPE, new CraftingSectionRenderer());
 		map.put(SmeltingSection.TYPE, new SmeltingSectionRenderer());
 		map.put(AlchemySection.TYPE, new AlchemySectionRenderer());
 		map.put(ArcaneCraftingSection.TYPE, new ArcaneCraftingSectionRenderer());
+		map.put(ImageSection.TYPE, new ImageSectionRenderer());
 	}
 	
 	void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);

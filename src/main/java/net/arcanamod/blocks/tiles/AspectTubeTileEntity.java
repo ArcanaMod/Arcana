@@ -272,7 +272,7 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		}
 	}
 	
-	private class NotifyingHolder implements IAspectHolder{
+	private class NotifyingHolder implements IAspectHolder, DelegatingAspectCell{
 		
 		private IAspectHolder cell;
 		private Collection<BlockPos> notifying;
@@ -283,22 +283,12 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		}
 		
 		public int insert(AspectStack stack, boolean simulate){
-			if(!stack.isEmpty() && !simulate)
-				notifying.forEach(pos -> {
-					TileEntity entity = getWorld().getTileEntity(pos);
-					if(entity instanceof AspectTubeTileEntity)
-						((AspectTubeTileEntity)entity).notifyAspect(stack.getAspect());
-				});
+			tryNotify(stack, simulate);
 			return cell.insert(stack, simulate);
 		}
 		
 		public int drain(AspectStack stack, boolean simulate){
-			if(!stack.isEmpty() && !simulate)
-				notifying.forEach(pos -> {
-					TileEntity entity = getWorld().getTileEntity(pos);
-					if(entity instanceof AspectTubeTileEntity)
-						((AspectTubeTileEntity)entity).notifyAspect(stack.getAspect());
-				});
+			tryNotify(stack, simulate);
 			return cell.drain(stack, simulate);
 		}
 		
@@ -356,6 +346,19 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		
 		public void setCanInput(boolean canInput){
 			cell.setCanInput(canInput);
+		}
+		
+		private void tryNotify(AspectStack stack, boolean simulate){
+			if(!stack.isEmpty() && !simulate)
+				notifying.forEach(pos -> {
+					TileEntity entity = getWorld().getTileEntity(pos);
+					if(entity instanceof AspectTubeTileEntity)
+						((AspectTubeTileEntity)entity).notifyAspect(stack.getAspect());
+				});
+		}
+		
+		public IAspectHolder underlying(){
+			return cell;
 		}
 	}
 

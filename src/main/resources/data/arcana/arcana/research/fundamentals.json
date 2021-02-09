@@ -47,6 +47,10 @@
         {
           "type": "string",
           "content": "research.arcana.aspects.text"
+        },
+        {
+          "type": "image",
+          "content": "arcana:textures/research/elements_diagram.png"
         }
       ]
     },
@@ -398,7 +402,10 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.research_expertise.stage.1"
+          "content": "research.arcana.research_expertise.stage.1",
+          "requirements": [
+            "6*arcana::puzzles_completed", "10*arcana::xp"
+          ]
         },
         {
           "type": "string",
