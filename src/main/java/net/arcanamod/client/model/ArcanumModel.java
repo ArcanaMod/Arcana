@@ -51,7 +51,7 @@ public class ArcanumModel extends Model {
 	}
 
 	public void func_228247_a_(float p_228247_1_, float p_228247_2_, float p_228247_3_, float p_228247_4_) {
-		float f = (MathHelper.sin(p_228247_1_ * 0.02F) * 0.1F + 0.75F) * p_228247_4_;
+		float f = (MathHelper.sin(p_228247_1_ * 0.02F) * 0.1F + 0.95F) * p_228247_4_;
 		this.coverRight.rotateAngleY = (float)Math.PI + f;
 		this.coverLeft.rotateAngleY = -f;
 		this.pagesRight.rotateAngleY = f;
