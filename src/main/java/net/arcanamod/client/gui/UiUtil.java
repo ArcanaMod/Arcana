@@ -2,9 +2,13 @@ package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
+import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.systems.research.Icon;
+import net.arcanamod.systems.research.ResearchBooks;
+import net.arcanamod.systems.research.ResearchEntry;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -12,6 +16,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.Collections;
@@ -20,6 +25,8 @@ import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public final class UiUtil{
+	
+	private static ResourceLocation RESEARCH_EXPERTISE = Arcana.arcLoc("research_expertise");
 	
 	private UiUtil(){
 	}
@@ -198,7 +205,10 @@ public final class UiUtil{
 	
 	public static boolean shouldShowAspectIngredients(){
 		// true if research expertise has been completed
-		return true;
+		Researcher from = Researcher.getFrom(Minecraft.getInstance().player);
+		ResearchEntry entry = ResearchBooks.getEntry(RESEARCH_EXPERTISE);
+		// If the player is null, their researcher is null, or research expertise no longer exists, display anyways
+		return entry == null || (from != null && from.entryStage(entry) >= entry.sections().size());
 	}
 	
 	public static void drawAspectTooltip(Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight){

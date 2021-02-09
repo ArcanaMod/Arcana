@@ -1,7 +1,6 @@
 package net.arcanamod.systems.research.impls;
 
 import net.arcanamod.capabilities.Researcher;
-import net.arcanamod.systems.research.Parent;
 import net.arcanamod.systems.research.Requirement;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,18 +8,12 @@ import net.minecraft.util.ResourceLocation;
 
 import static net.arcanamod.Arcana.arcLoc;
 
-public class ResearchCompletedRequirement extends Requirement{
+public class PuzzlesCompletedRequirement extends Requirement{
 	
-	public static final ResourceLocation TYPE = arcLoc("research_completed");
-	
-	protected Parent req;
-	
-	public ResearchCompletedRequirement(String req){
-		this.req = Parent.parse(req);
-	}
+	public static final ResourceLocation TYPE = arcLoc("puzzles_completed");
 	
 	public boolean satisfied(PlayerEntity player){
-		return req.satisfiedBy(Researcher.getFrom(player));
+		return Researcher.getFrom(player).getPuzzlesCompleted() >= getAmount();
 	}
 	
 	public void take(PlayerEntity player){
@@ -32,8 +25,6 @@ public class ResearchCompletedRequirement extends Requirement{
 	}
 	
 	public CompoundNBT data(){
-		CompoundNBT compound = new CompoundNBT();
-		compound.putString("requirement", req.asString());
-		return compound;
+		return new CompoundNBT();
 	}
 }
