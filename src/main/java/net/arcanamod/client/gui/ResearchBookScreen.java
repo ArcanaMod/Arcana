@@ -727,11 +727,12 @@ public class ResearchBookScreen extends Screen{
 				RenderSystem.color3f(1, 1, 1);
 				
 				int xOffset = isHovered ? 3 : 0;
-				UiUtil.renderIcon(pin.getIcon(), x + xOffset, y - 1, 0);
 				
 				getMinecraft().getTextureManager().bindTexture(texture);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
+				
+				UiUtil.renderIcon(pin.getIcon(), x + xOffset, y - 1, 0);
 			}
 		}
 		

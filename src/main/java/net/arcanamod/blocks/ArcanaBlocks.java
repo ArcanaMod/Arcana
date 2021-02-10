@@ -411,13 +411,7 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<Block> DEAD_FLOWER = BLOCKS.register("dead_flower", () -> deadOf(
 			Blocks.CORNFLOWER,Blocks.DANDELION,Blocks.POPPY,Blocks.BLUE_ORCHID,Blocks.ALLIUM,Blocks.AZURE_BLUET,Blocks.RED_TULIP,Blocks.ORANGE_TULIP,Blocks.WHITE_TULIP,Blocks.PINK_TULIP,Blocks.OXEYE_DAISY,Blocks.LILY_OF_THE_VALLEY
 	));
-
-	// Dead silverwood
-	//public static final RegistryObject<Block> DEAD_SILVERWOOD_LOG = BLOCKS.register("dead_silverwood_log", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	//public static final RegistryObject<Block> DEAD_SILVERWOOD_PLANKS = BLOCKS.register("dead_silverwood_planks", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	//public static final RegistryObject<Block> DEAD_SILVERWOOD_SLAB = BLOCKS.register("dead_silverwood_slab", () -> new SlabBlock(create(WOOD, MaterialColor.SAND).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
-	//public static final RegistryObject<Block> DEAD_SILVERWOOD_STAIRS = BLOCKS.register("dead_silverwood_stairs", () -> new StairsBlock(() -> DEAD_SILVERWOOD_PLANKS.get().getDefaultState(), create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
-
+	
 	// Dead wood
 	// Dead wood
 	@GLT public static final RegistryObject<Block> DEAD_LOG = BLOCKS.register("dead_log", () -> deadOf(
