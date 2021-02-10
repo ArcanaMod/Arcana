@@ -100,8 +100,11 @@ public class ArcanaSounds {
 		public static final SoundEvent crystal_place = null;
 
 		//Music Discs
-		@SoundName("disc_arcana_theme")
-		public static final SoundEvent disc_arcana_theme = null;
+		@SoundName("music_arcana_theme")
+		public static final SoundEvent music_arcana_theme = null;
+
+		@SoundName("music_arcana_green_sleeves")
+		public static final SoundEvent music_arcana_green_sleeves = null;
 
 		// Spell Cast
 

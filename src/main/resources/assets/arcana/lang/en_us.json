@@ -457,6 +457,8 @@
     "_comment": "Discs",
     "item.arcana.music_disc_main": "Music Disc",
     "item.arcana.music_disc_main.desc": "Yelldow - Arcana Theme",
+    "item.arcana.music_disc_green_sleeves": "Music Disc",
+    "item.arcana.music_disc_green_sleeves.desc": "Yelldow - Green Sleeves",
 
     "_comment": "Functional",
     "block.arcana.research_table": "Research Table",

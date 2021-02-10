@@ -68,10 +68,17 @@
 
     ]
   },
-  "disc_arcana_theme": {
-    "subtitle": "arcana.sounds.disc_arcana_theme",
+  "music_arcana_theme": {
+    "subtitle": "arcana.sounds.music_arcana_theme",
     "sounds": [
-      "arcana:discs/arcanatheme"
+      "arcana:music/arcanatheme"
+    ]
+  },
+
+  "music_arcana_green_sleeves": {
+    "subtitle": "music_arcana_green_sleeves",
+    "sounds": [
+      "arcana:music/arcanagreensleeves"
     ]
   }
 }
