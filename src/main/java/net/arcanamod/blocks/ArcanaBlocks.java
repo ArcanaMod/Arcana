@@ -167,7 +167,11 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<Block> DAIR_BUTTON = BLOCKS.register("dair_button", () -> new AWoodButtonBlock(create(MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<FenceBlock> DAIR_FENCE = BLOCKS.register("dair_fence", () -> new FenceBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<FenceGateBlock> DAIR_FENCE_GATE = BLOCKS.register("dair_fence_gate", () -> new FenceGateBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
-	
+	//@GLT public static final RegistryObject<Block> DAIR_WOOD = BLOCKS.register("dair_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	//@GLT public static final RegistryObject<Block> STRIPPED_DAIR_LOG = BLOCKS.register("stripped_dair_log", () -> new LogBlock(MaterialColor.BROWN, create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	//@GLT public static final RegistryObject<Block> STRIPPED_DAIR_WOOD = BLOCKS.register("stripped_dair_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+
+
 	public static final RegistryObject<Block> TAINTED_DAIR_LEAVES = BLOCKS.register("tainted_dair_leaves", () -> taintedOf(ArcanaBlocks.DAIR_LEAVES.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_DAIR_LOG = BLOCKS.register("tainted_dair_log", () -> taintedOf(ArcanaBlocks.DAIR_LOG.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_DAIR_PLANKS = BLOCKS.register("tainted_dair_planks", () -> taintedOf(ArcanaBlocks.DAIR_PLANKS.get()));

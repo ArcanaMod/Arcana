@@ -1,6 +1,7 @@
 package net.arcanamod.items;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaSounds;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
@@ -21,6 +22,7 @@ import net.minecraft.item.Item.Properties;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,7 +41,10 @@ import static net.arcanamod.util.annotations.GIM.Type.ITEM;
 public class ArcanaItems{
 	
 	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MODID);
-	
+
+	//Music discs
+	public static final RegistryObject<Item> MUSIC_DISC_MAIN = ITEMS.register("music_disc_main", () -> new ArcanaMusicDiscItem(1, ArcanaSounds.Impl.disc_arcana_theme, new Properties().maxStackSize(1).group(Arcana.ITEMS)));
+
 	// Arcanium
 	public static final RegistryObject<Item> ARCANIUM_SWORD = ITEMS.register("arcanium_sword", () -> new SwordItem(ArcanaToolTiers.ARCANIUM, 3, -2.4f, new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> ARCANIUM_SHOVEL = ITEMS.register("arcanium_shovel", () -> new ShovelItem(ArcanaToolTiers.ARCANIUM, 1.5f, -3, new Properties().group(Arcana.ITEMS)));

@@ -67,5 +67,11 @@
       "arcana:crystal/arcanacrystal_place4positive"
 
     ]
+  },
+  "disc_arcana_theme": {
+    "subtitle": "arcana.sounds.disc_arcana_theme",
+    "sounds": [
+      "arcana:discs/arcanatheme"
+    ]
   }
 }
