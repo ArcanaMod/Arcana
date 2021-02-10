@@ -43,7 +43,8 @@ public class ArcanaItems{
 	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MODID);
 
 	//Music discs
-	public static final RegistryObject<Item> MUSIC_DISC_MAIN = ITEMS.register("music_disc_main", () -> new ArcanaMusicDiscItem(1, ArcanaSounds.Impl.disc_arcana_theme, new Properties().maxStackSize(1).group(Arcana.ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> MUSIC_DISC_MAIN = ITEMS.register("music_disc_main", () -> new ArcanaMusicDiscItem(1, ArcanaSounds.Impl.music_arcana_theme, new Properties().maxStackSize(1).group(Arcana.ITEMS).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> MUSIC_DISC_GREEN_SLEEVES = ITEMS.register("music_disc_green_sleeves", () -> new ArcanaMusicDiscItem(1, ArcanaSounds.Impl.music_arcana_green_sleeves, new Properties().maxStackSize(1).group(Arcana.ITEMS).rarity(Rarity.RARE)));
 
 	// Arcanium
 	public static final RegistryObject<Item> ARCANIUM_SWORD = ITEMS.register("arcanium_sword", () -> new SwordItem(ArcanaToolTiers.ARCANIUM, 3, -2.4f, new Properties().group(Arcana.ITEMS)));
