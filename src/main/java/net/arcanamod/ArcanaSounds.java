@@ -17,7 +17,13 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.util.Locale;
 
-@SuppressWarnings("ConstantConditions")
+@SuppressWarnings({"ConstantConditions", "DanglingJavadoc"})
+/**
+ *	Sound class that contains:
+ * 	- Impl (SoundEvent registration)
+ * 	- SoundTypes
+ * 	- Play SoundEvent functions
+ */
 public class ArcanaSounds {
 
 	// SoundTypes
@@ -49,7 +55,12 @@ public class ArcanaSounds {
 	//Impl
 	@ObjectHolder(Arcana.MODID)
 	@ParametersAreNonnullByDefault
-	@SuppressWarnings("null")
+	@SuppressWarnings({"null", "DanglingJavadoc"})
+	/**
+	 * Implementation of SoundEvents.
+	 * Every SoundEvent in this class will be registered.
+	 * You get SoundName from sounds.json
+	 */
 	public static class Impl {
 
 		@Retention(RetentionPolicy.RUNTIME)
