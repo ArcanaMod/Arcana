@@ -452,7 +452,10 @@
     "block.arcana.willow_stairs": "Willow Stairs",
     "block.arcana.willow_fence": "Willow Fence",
     "block.arcana.willow_fence_gate": "Willow Fence Gate",
-    
+
+    "_comment": "Discs",
+    "item.arcana.music_disc_main": "Music Disc",
+    "item.arcana.music_disc_main.desc": "Yelldow - Arcana Theme",
 
     "_comment": "Functional",
     "block.arcana.research_table": "Research Table",
