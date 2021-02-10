@@ -950,5 +950,8 @@
     "_comment": "Spells",
     "spell.arcana.mining": "§2Mining",
     "spell.arcana.fabric": "§eVicious Mockery",
-    "spell.arcana.exchange": "§aEquivalent Exchange"
+    "spell.arcana.exchange": "§aEquivalent Exchange",
+
+    "_comment": "Biomes",
+    "biome.arcana.magical_forest": "Magical Forest"
 }
