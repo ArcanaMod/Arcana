@@ -15,7 +15,7 @@
       }
     ],
     "g": {
-      "item": "minecraft:glass"
+      "item": "arcana:luminiferous_glass"
     },
     "c": {
       "item": "arcana:aura_crystal"

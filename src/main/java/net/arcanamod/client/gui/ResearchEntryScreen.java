@@ -225,10 +225,12 @@ public class ResearchEntryScreen extends Screen{
 	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
 		if(scroll > 0 && canTurnLeft()){
 			index -= 2;
+			updateButtons();
 			return true;
 		}
 		if(scroll < 0 && canTurnRight()){
 			index += 2;
+			updateButtons();
 			return true;
 		}
 		return false;
@@ -415,11 +417,12 @@ public class ResearchEntryScreen extends Screen{
 				
 				int stageIndex = indexOfStage(pin.getStage());
 				int xOffset = index == (stageIndex % 2 == 0 ? stageIndex : stageIndex - 1) ? 6 : isHovered ? 4 : 0;
-				UiUtil.renderIcon(pin.getIcon(), x + xOffset - 1, y - 1, 0);
 				
 				getMinecraft().getTextureManager().bindTexture(bg);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
+				
+				UiUtil.renderIcon(pin.getIcon(), x + xOffset - 1, y - 1, 0);
 			}
 		}
 		

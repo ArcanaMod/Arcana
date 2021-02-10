@@ -100,6 +100,8 @@ public interface Researcher{
 	
 	void removePinned(ResourceLocation entry, Integer stage);
 	
+	int getPuzzlesCompleted();
+	
 	// let's pretend to be an abstract interface but actually not be, that's a great idea because nobody needs
 	// to extend this ever or modify its behavior haha
 	default CompoundNBT serializeNBT(){

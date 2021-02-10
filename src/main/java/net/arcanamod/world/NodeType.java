@@ -9,6 +9,7 @@ import net.arcanamod.util.GogglePriority;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.IWorld;
 
 import java.util.*;
@@ -67,7 +68,7 @@ public abstract class NodeType{
 		// These are random numbers I pulled out of the void, please adjust as is reasonable
 		
 		if(node.timeUntilRecharge <= 0){
-			node.timeUntilRecharge =rechargeTime(world, nodes, node);
+			node.timeUntilRecharge = rechargeTime(world, nodes, node);
 			// are we below our cap? if so, charge
 			if(node.getAspects().getHolders().stream().mapToInt(IAspectHolder::getCurrentVis).sum() < rechargeCap(world, nodes, node)){
 				int toCharge = rechargePower(world, nodes, node) + world.getRandom().nextInt(3) - 1;

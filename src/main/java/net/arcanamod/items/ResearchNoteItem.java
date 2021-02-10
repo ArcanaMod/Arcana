@@ -52,7 +52,8 @@ public class ResearchNoteItem extends Item{
 					ResourceLocation research = new ResourceLocation(compound.getString("research"));
 					ResearchEntry entry = ResearchBooks.getEntry(research);
 					// and that entry only has one requirement,
-					if(entry.sections().get(from.entryStage(entry)).getRequirements().size() == 1)
+					int stage = from.entryStage(entry);
+					if(stage < entry.sections().size() && entry.sections().get(stage).getRequirements().size() == 1)
 						// continue straight away.
 						from.advanceEntry(entry);
 					// display a toast

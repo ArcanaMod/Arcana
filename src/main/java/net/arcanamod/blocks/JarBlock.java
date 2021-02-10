@@ -7,7 +7,6 @@ import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -28,6 +27,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -39,6 +40,8 @@ import java.util.List;
 public class JarBlock extends Block{
 	public static final BooleanProperty UP = BooleanProperty.create("up");
 	private Type type;
+
+	Logger LOGGER = LogManager.getLogger();
 	
 	public JarBlock(Properties properties, Type type){
 		super(properties);
@@ -97,22 +100,29 @@ public class JarBlock extends Block{
 
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (player.getHeldItem(handIn).getItem() == ArcanaItems.LABEL.get())
-			((JarTileEntity)worldIn.getTileEntity(pos)).label = getYaw(player);
+		if (player.getHeldItem(handIn).getItem() == ArcanaItems.LABEL.get()) {
+			((JarTileEntity) worldIn.getTileEntity(pos)).label = getYaw(player);
+			LOGGER.debug(getYaw(player));
+		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 	}
 
 	public static Direction getYaw(PlayerEntity player) {
-		float yaw = player.getRotationYawHead();
-		yaw = (yaw % 360 + 360) % 360; // true modulo, as javas modulo is weird for negative values
-		if (yaw > 135 || yaw < -135) {
-			return Direction.NORTH;
-		} else if (yaw < -45) {
-			return Direction.EAST;
-		} else if (yaw > 45) {
-			return Direction.WEST;
-		} else {
-			return Direction.SOUTH;
+		int yaw = (int)player.rotationYaw;
+		if (yaw<0)              //due to the yaw running a -360 to positive 360
+			yaw+=360;    //not sure why it's that way
+		yaw+=22;    //centers coordinates you may want to drop this line
+		yaw%=360;  //and this one if you want a strict interpretation of the zones
+		int facing = yaw/45;  //  360degrees divided by 45 == 8 zones
+		switch (facing){
+			case 0: case 1:
+				return Direction.NORTH;
+			case 2: case 3:
+				return Direction.EAST;
+			case 4: case 5:
+				return Direction.SOUTH;
+			default:
+				return Direction.WEST;
 		}
 	}
 
@@ -156,6 +166,8 @@ public class JarBlock extends Block{
 	public enum Type{
 		BASIC,
 		SECURED,
-		VOID
+		VOID,
+		VACUUM,
+		PRESSURE
 	}
 }

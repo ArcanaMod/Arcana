@@ -1,6 +1,7 @@
 package net.arcanamod.items;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.ArcanaSounds;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
@@ -21,6 +22,7 @@ import net.minecraft.item.Item.Properties;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,7 +41,10 @@ import static net.arcanamod.util.annotations.GIM.Type.ITEM;
 public class ArcanaItems{
 	
 	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MODID);
-	
+
+	//Music discs
+	public static final RegistryObject<Item> MUSIC_DISC_MAIN = ITEMS.register("music_disc_main", () -> new ArcanaMusicDiscItem(1, ArcanaSounds.Impl.disc_arcana_theme, new Properties().maxStackSize(1).group(Arcana.ITEMS)));
+
 	// Arcanium
 	public static final RegistryObject<Item> ARCANIUM_SWORD = ITEMS.register("arcanium_sword", () -> new SwordItem(ArcanaToolTiers.ARCANIUM, 3, -2.4f, new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> ARCANIUM_SHOVEL = ITEMS.register("arcanium_shovel", () -> new ShovelItem(ArcanaToolTiers.ARCANIUM, 1.5f, -3, new Properties().group(Arcana.ITEMS)));
@@ -80,6 +85,7 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> SCRIBBLED_NOTES_COMPLETE = ITEMS.register("scribbled_notes_complete", () -> new ScribbledNotesCompleteItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	public static final RegistryObject<Item> SCRIBBLED_NOTES = ITEMS.register("scribbled_notes", () -> new ScribbledNoteItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	public static final RegistryObject<Item> TAINT_IN_A_BOTTLE = ITEMS.register("taint_in_a_bottle", () -> new TaintBottleItem(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> FLUX_METER = ITEMS.register("flux_meter", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	
 	// Books
 	public static final RegistryObject<Item> ARCANUM = ITEMS.register("arcanum", () -> new ResearchBookItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), new ResourceLocation(MODID, "arcanum")));
@@ -162,7 +168,6 @@ public class ArcanaItems{
 	@GIM(ITEM) public static final RegistryObject<Item> RESEARCH_TABLE_ITEM = ITEMS.register("research_table_item", () -> new BlockItem(ArcanaBlocks.RESEARCH_TABLE.get(), new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	@GIM(ITEM) public static final RegistryObject<Item> FOCI_FORGE_ITEM = ITEMS.register("foci_forge_item", () -> new BlockItem(ArcanaBlocks.FOCI_FORGE.get(), new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 
-	// Creative Only?
-	public static final RegistryObject<Item> FLUX_METER = ITEMS.register("flux_meter", () -> new Item(new Properties().group(Arcana.ITEMS).rarity(Rarity.EPIC)));
+	// Creative Only
 	public static final RegistryObject<Item> CHEATERS_ARCANUM = ITEMS.register("cheaters_arcanum", () -> new CheatersResearchBookItem(new Properties().group(Arcana.ITEMS).maxStackSize(1).rarity(Rarity.EPIC), new ResourceLocation(MODID, "arcanum")));
 }

@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.Arrays;
@@ -36,7 +35,7 @@ public class PuzzleRequirementRenderer implements RequirementRenderer<PuzzleRequ
 				return Arrays.asList(new TranslationTextComponent(puzzleDesc), new TranslationTextComponent("requirement.puzzle.complete"));
 			return Arrays.asList(new TranslationTextComponent(puzzleDesc), new TranslationTextComponent("requirement.puzzle.get_note.1"), new TranslationTextComponent("requirement.puzzle.get_note.2"));
 		}else
-			return Collections.singletonList(new StringTextComponent(getFrom(requirement).getDesc()));
+			return Collections.singletonList(new TranslationTextComponent(getFrom(requirement).getDesc()));
 	}
 	
 	private Puzzle getFrom(PuzzleRequirement pr){

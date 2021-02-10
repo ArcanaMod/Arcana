@@ -1,6 +1,28 @@
 {
   "entries": [
     {
+      "key": "arcana:root",
+      "name": "research.arcana.root",
+      "desc": "research.arcana.root.desc",
+      "icons": [
+        "arcana:arcanum"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [],
+      "meta": [
+        "spiky_base",
+        "purple_base"
+      ],
+      "x": 0,
+      "y": 0,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.root.text"
+        }
+      ]
+    },
+    {
       "key": "arcana:aspects",
       "name": "research.arcana.aspects",
       "icons": [
@@ -12,18 +34,23 @@
         "arcana:aspect_chaos"
       ],
       "category": "arcana:fundamentals",
-      "parents": [],
+      "parents": [
+        "&arcana:root"
+      ],
       "meta": [
-        "root",
         "spiky_base",
         "purple_base"
       ],
       "x": 0,
-      "y": 1,
+      "y": 4,
       "sections": [
         {
           "type": "string",
           "content": "research.arcana.aspects.text"
+        },
+        {
+          "type": "image",
+          "content": "arcana:textures/research/elements_diagram.png"
         }
       ]
     },
@@ -36,13 +63,12 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:aspects"
+        "&arcana:aspects"
       ],
       "meta": [
-        "round_base",
-        "reverse"
+        "round_base"
       ],
-      "x": 1,
+      "x": 2,
       "y": 2,
       "sections": [
         {
@@ -50,8 +76,8 @@
           "content": "research.arcana.wandcraft.stage.1"
         },
         {
-          "type": "string",
-          "content": "research.arcana.wandcraft.stage.2"
+          "type": "crafting",
+          "content": "arcana:iron_cap"
         }
       ]
     },
@@ -69,8 +95,8 @@
       "meta": [
         "round_base"
       ],
-      "x": 2,
-      "y": 1,
+      "x": 4,
+      "y": 0,
       "sections": [
         {
           "type": "string",
@@ -82,6 +108,10 @@
         {
           "type": "string",
           "content": "research.arcana.arcane_crafting.stage.2"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/goggles_of_revealing"
         }
       ]
     },
@@ -100,8 +130,8 @@
         "purple_base",
         "reverse"
       ],
-      "x": 1,
-      "y": 0,
+      "x": 2,
+      "y": -2,
       "sections": [
         {
           "type": "string",
@@ -135,7 +165,7 @@
         "reverse"
       ],
       "x": 0,
-      "y": -1,
+      "y": -4,
       "sections": [
         {
           "type": "string",
@@ -183,12 +213,12 @@
         "&arcana:aspect_collection"
       ],
       "meta": [
-        "round_base",
+        "hexagon_base",
         "hidden",
         "reverse"
       ],
-      "x": 0,
-      "y": -3,
+      "x": -2,
+      "y": -6,
       "sections": [
         {
           "type": "string",
@@ -223,7 +253,7 @@
       ],
       "meta": [],
       "x": 4,
-      "y": -1,
+      "y": -4,
       "sections": [
         {
           "type": "string",
@@ -262,12 +292,10 @@
         "arcana:aspect_collection"
       ],
       "meta": [
-        "hexagon_base",
-        "purple_base",
         "reverse"
       ],
-      "x": -1,
-      "y": -2,
+      "x": 2,
+      "y": -6,
       "sections": [
         {
           "type": "string",
@@ -288,15 +316,11 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:aspect_collection"
+        "arcana:crystal_farming"
       ],
-      "meta": [
-        "hexagon_base",
-        "purple_base",
-        "reverse"
-      ],
-      "x": 1,
-      "y": -2,
+      "meta": [],
+      "x": -5,
+      "y": -4,
       "sections": [
         {
           "type": "string",
@@ -323,8 +347,8 @@
         "square_base",
         "purple_base"
       ],
-      "x": -1,
-      "y": 0,
+      "x": -2,
+      "y": -2,
       "sections": [
         {
           "type": "string",
@@ -360,33 +384,6 @@
       ]
     },
     {
-      "key": "arcana:fieldwork",
-      "name": "research.arcana.fieldwork",
-      "icons": [
-        "arcana:item/research_monocle.png"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [
-        "arcana:research"
-      ],
-      "meta": [
-        "hexagon_base",
-        "purple_base"
-      ],
-      "x": -2,
-      "y": -1,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.fieldwork.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.fieldwork.stage.2"
-        }
-      ]
-    },
-    {
       "key": "arcana:research_expertise",
       "name": "research.arcana.research_expertise",
       "desc": "research.arcana.research_expertise.desc",
@@ -400,12 +397,15 @@
       "meta": [
         "round_base"
       ],
-      "x": -2,
-      "y": 1,
+      "x": -4,
+      "y": 0,
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.research_expertise.stage.1"
+          "content": "research.arcana.research_expertise.stage.1",
+          "requirements": [
+            "6*arcana::puzzles_completed", "10*arcana::xp"
+          ]
         },
         {
           "type": "string",
@@ -426,9 +426,9 @@
       ],
       "meta": [
         "round_base",
-        "research"
+        "reverse"
       ],
-      "x": -1,
+      "x": -2,
       "y": 2,
       "sections": [
         {
@@ -438,35 +438,6 @@
         {
           "type": "string",
           "content": "research.arcana.research_mastery.stage.2"
-        }
-      ]
-    },
-    {
-      "key": "arcana:archaeology",
-      "name": "research.arcana.archaeology",
-      "desc": "research.arcana.archaeology.desc",
-      "icons": [
-        "arcana:research/journal.png"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [
-        "arcana:research_mastery"
-      ],
-      "meta": [
-        "hexagon_base",
-        "purple_base",
-        "research"
-      ],
-      "x": 0,
-      "y": 3,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.archaeology.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.archaeology.stage.2"
         }
       ]
     },
@@ -484,23 +455,93 @@
         "purple_base",
         "spiky_base"
       ],
-      "x": 3,
-      "y": -2,
+      "x": 6,
+      "y": -6,
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.flux.flux_info",
+          "content": "research.arcana.flux.stage.1",
           "requirements": [
-            "arcana:tainted_flower"
+            "arcana::puzzle{arcana:flux_build_research}"
           ]
         },
         {
           "type": "string",
-          "content": "research.arcana.flux.taint_info"
+          "content": "research.arcana.flux.stage.2"
+        }
+      ]
+    },
+    {
+      "key": "arcana:flux_meter",
+      "name": "research.arcana.flux_meter",
+      "icons": [
+        "arcana:flux_meter"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:flux",
+        "arcana:arcanium"
+      ],
+      "meta": [
+        "hexagon_base"
+      ],
+      "x": 8,
+      "y": -4,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.flux_meter.text"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/flux_meter"
+        }
+      ]
+    },
+    {
+      "key": "arcana:crystal_farming",
+      "name": "research.arcana.crystal_farming",
+      "desc": "research.arcana.crystal_farming.desc",
+      "icons": [
+        "arcana:air_cluster_seed",
+        "arcana:air_cluster",
+        "arcana:earth_cluster_seed",
+        "arcana:earth_cluster",
+        "arcana:fire_cluster_seed",
+        "arcana:fire_cluster",
+        "arcana:water_cluster_seed",
+        "arcana:water_cluster",
+        "arcana:order_cluster_seed",
+        "arcana:order_cluster",
+        "arcana:chaos_cluster_seed",
+        "arcana:chaos_cluster"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "~arcana:research"
+      ],
+      "meta": [],
+      "x": -5,
+      "y": -6,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.crystal_farming.stage.1",
+          "requirements": [
+            "arcana::puzzle{arcana:crystal_farming_puzzle}"
+          ]
         },
         {
           "type": "string",
-          "content": "research.arcana.flux.warp_info"
+          "content": "research.arcana.crystal_farming.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/cluster_seeds/air_cluster_seed"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/clusters/air_cluster"
         }
       ]
     }
@@ -526,6 +567,26 @@
         "arcana:fire",
         "arcana:air",
         "arcana:earth"
+      ]
+    },
+    {
+      "key": "arcana:flux_build_research",
+      "type": "fieldwork",
+      "desc": "puzzle.arcana.flux_build"
+    },
+    {
+      "key": "arcana:crystal_farming_puzzle",
+      "type": "chemistry",
+      "desc": "puzzle.arcana.crystal_farming",
+      "nodes": [
+        "arcana:air",
+        "arcana:earth",
+        "arcana:fire",
+        "arcana:crystal",
+        "arcana:water",
+        "arcana:order",
+        "arcana:chaos",
+        "arcana:aura"
       ]
     }
   ]

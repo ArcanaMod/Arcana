@@ -51,8 +51,6 @@ public abstract class EntrySection{
 	public static void init(){
 		factories.put(StringSection.TYPE, StringSection::new);
 		deserializers.put(StringSection.TYPE, nbt -> new StringSection(nbt.getString("text")));
-		factories.put(GuessworkSection.TYPE, GuessworkSection::new);
-		deserializers.put(GuessworkSection.TYPE, nbt -> new GuessworkSection(nbt.getString("guesswork")));
 		factories.put(CraftingSection.TYPE, CraftingSection::new);
 		deserializers.put(CraftingSection.TYPE, nbt -> new CraftingSection(nbt.getString("recipe")));
 		factories.put(SmeltingSection.TYPE, SmeltingSection::new);
@@ -61,6 +59,8 @@ public abstract class EntrySection{
 		deserializers.put(AlchemySection.TYPE, nbt -> new AlchemySection(nbt.getString("recipe")));
 		factories.put(ArcaneCraftingSection.TYPE, ArcaneCraftingSection::new);
 		deserializers.put(ArcaneCraftingSection.TYPE, nbt -> new ArcaneCraftingSection(nbt.getString("recipe")));
+		factories.put(ImageSection.TYPE, ImageSection::new);
+		deserializers.put(ImageSection.TYPE, nbt -> new ImageSection(nbt.getString("image")));
 	}
 	
 	// instance stuff

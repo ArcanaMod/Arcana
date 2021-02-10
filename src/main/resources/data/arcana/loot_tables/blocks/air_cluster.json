@@ -54,11 +54,6 @@
                   }
                 },
                 {
-                  "function": "minecraft:apply_bonus",
-                  "enchantment": "minecraft:fortune",
-                  "formula": "minecraft:ore_drops"
-                },
-                {
                   "function": "minecraft:explosion_decay"
                 }
               ],

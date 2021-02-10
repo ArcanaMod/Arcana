@@ -74,36 +74,14 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<PressurePlateBlock> MOSSY_DUNGEON_BRICKS_PRESSURE_PLATE = BLOCKS.register("mossy_dungeon_bricks_pressure_plate", () -> new APressurePlateBlock(Sensitivity.MOBS, create(ROCK).hardnessAndResistance(.5f).doesNotBlockMovement()));
 	@GLT public static final RegistryObject<WallBlock> MOSSY_DUNGEON_BRICKS_WALL = BLOCKS.register("mossy_dungeon_bricks_wall", () -> new WallBlock(from(MOSSY_DUNGEON_BRICKS.get())));
 
-	//Pridestone
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_BRICKS = BLOCKS.register("pridestone_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_SMALL_BRICKS = BLOCKS.register("pridestone_small_bricks", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT public static final RegistryObject<Block> PRIDESTONE_PILLAR = BLOCKS.register("pridestone_pillar", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT public static final RegistryObject<Block> PRIDESTONE_PILLAR_COAL = BLOCKS.register("pridestone_pillar_coal", () -> new PillarBlock(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE = BLOCKS.register("pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> SMOOTH_PRIDESTONE = BLOCKS.register("smooth_pridestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> PRIDESTONE_TILE = BLOCKS.register("pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> SMOOTH_PRIDESTONE_TILE = BLOCKS.register("smooth_pridestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> WET_PRIDESTONE = BLOCKS.register("wet_pridestone", () -> new Block(create(ROCK).sound(SoundType.WET_GRASS).hardnessAndResistance(0.4F, 2.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> WET_SMOOTH_PRIDESTONE = BLOCKS.register("wet_smooth_pridestone", () -> new Block(create(ROCK).sound(SoundType.WET_GRASS).hardnessAndResistance(0.4F, 2.0F)));
-
-	//Prideful Things
-	@GLT public static final RegistryObject<Block> PRIDEFUL_GOLD_PILLAR = BLOCKS.register("prideful_gold_pillar", () -> new PillarBlock(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> PRIDECLAY = BLOCKS.register("prideclay", () -> new Block(create(CLAY).sound(SoundType.SAND).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> GILDED_PRIDECLAY = BLOCKS.register("gilded_prideclay", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> CARVED_PRIDEFUL_GOLD_BLOCK = BLOCKS.register("carved_prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> CHISELED_PRIDEFUL_GOLD_BLOCK = BLOCKS.register("chiseled_prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> PRIDEFUL_GOLD_BLOCK = BLOCKS.register("prideful_gold_block", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> PRIDEFUL_GOLD_TILE = BLOCKS.register("prideful_gold_tile", () -> new Block(create(IRON).sound(SoundType.METAL).hardnessAndResistance(4.0F, 8.0F)));
-
-	//Limestone
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> LIMESTONE_TILE = BLOCKS.register("limestone_tile", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> ROUGH_LIMESTONE = BLOCKS.register("rough_limestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> SMOOTH_LIMESTONE = BLOCKS.register("smooth_limestone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
-
+	// Alchemical Glass
+	public static final RegistryObject<Block> HARDENED_GLASS = BLOCKS.register("hardened_glass", () -> new GlassBlock(create(GLASS).hardnessAndResistance(5, 1200).sound(SoundType.GLASS).notSolid()));
+	public static final RegistryObject<Block> SMOKEY_GLASS = BLOCKS.register("smokey_glass", () -> new Block(create(GLASS).hardnessAndResistance(.3f).sound(SoundType.GLASS).notSolid()));
+	public static final RegistryObject<Block> LUMINIFEROUS_GLASS = BLOCKS.register("luminiferous_glass", () -> new GlassBlock(create(GLASS).hardnessAndResistance(.3f).sound(SoundType.GLASS).notSolid().lightValue(15)));
+	
 	// Functional
 	public static final RegistryObject<Block> AMBER_ORE = BLOCKS.register("amber_ore", () -> new Block(create(ROCK).harvestLevel(1).hardnessAndResistance(3.0F, 3.0F)));
 	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> SILVER_ORE = BLOCKS.register("silver_ore", () -> new Block(create(ROCK).hardnessAndResistance(3.0F, 3.0F)));
-	//@GLT @GIM(GIM.Type.BLOCK_REF) public static final RegistryObject<Block> CINNABAR_ORE = BLOCKS.register("cinnabar_ore", () -> new Block(create(ROCK).hardnessAndResistance(3.0F, 3.0F)));
 	@GLT public static final RegistryObject<Block> INFUSION_ARCANE_STONE = BLOCKS.register("infusion_arcane_stone", () -> new Block(create(ROCK).hardnessAndResistance(2.0F, 6.0F)));
 	public static final RegistryObject<Block> MAGICAL_GRASS = BLOCKS.register("magical_grass", () -> new Block(from(Blocks.GRASS_BLOCK)));
 	@GLT public static final RegistryObject<Block> TABLE = BLOCKS.register("table", () -> new WaterloggableBlock(create(WOOD).hardnessAndResistance(2).notSolid()));
@@ -118,6 +96,9 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> JAR = BLOCKS.register("jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.25f), JarBlock.Type.BASIC));
 	public static final RegistryObject<Block> SECURE_JAR = BLOCKS.register("secure_jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.3f), JarBlock.Type.SECURED));
 	public static final RegistryObject<Block> VOID_JAR = BLOCKS.register("void_jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.3f), JarBlock.Type.VOID));
+	public static final RegistryObject<Block> VACUUM_JAR = BLOCKS.register("vacuum_jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.3f), JarBlock.Type.VACUUM));
+	public static final RegistryObject<Block> PRESSURE_JAR = BLOCKS.register("pressure_jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.3f), JarBlock.Type.PRESSURE));
+	
 	public static final RegistryObject<Block> ASPECT_BOOKSHELF = BLOCKS.register("aspect_bookshelf", () -> new AspectBookshelfBlock(create(WOOD).hardnessAndResistance(6)));
 	@GLT public static final RegistryObject<Block> RESEARCH_TABLE = BLOCKS.register("research_table", () -> new ResearchTableCoreBlock(create(WOOD).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> RESEARCH_TABLE_COMPONENT = BLOCKS.register("research_table_component", () -> new ResearchTableComponentBlock(create(WOOD).hardnessAndResistance(3).notSolid()));
@@ -159,7 +140,11 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<Block> DAIR_BUTTON = BLOCKS.register("dair_button", () -> new AWoodButtonBlock(create(MISCELLANEOUS).doesNotBlockMovement().hardnessAndResistance(0.5F).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<FenceBlock> DAIR_FENCE = BLOCKS.register("dair_fence", () -> new FenceBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<FenceGateBlock> DAIR_FENCE_GATE = BLOCKS.register("dair_fence_gate", () -> new FenceGateBlock(create(WOOD).hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD)));
-	
+	//@GLT public static final RegistryObject<Block> DAIR_WOOD = BLOCKS.register("dair_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	//@GLT public static final RegistryObject<Block> STRIPPED_DAIR_LOG = BLOCKS.register("stripped_dair_log", () -> new LogBlock(MaterialColor.BROWN, create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	//@GLT public static final RegistryObject<Block> STRIPPED_DAIR_WOOD = BLOCKS.register("stripped_dair_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+
+
 	public static final RegistryObject<Block> TAINTED_DAIR_LEAVES = BLOCKS.register("tainted_dair_leaves", () -> taintedOf(ArcanaBlocks.DAIR_LEAVES.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_DAIR_LOG = BLOCKS.register("tainted_dair_log", () -> taintedOf(ArcanaBlocks.DAIR_LOG.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_DAIR_PLANKS = BLOCKS.register("tainted_dair_planks", () -> taintedOf(ArcanaBlocks.DAIR_PLANKS.get()));
@@ -272,18 +257,18 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<Block> SILVER_BLOCK = BLOCKS.register("silver_block", () -> new Block(create(IRON).hardnessAndResistance(6).sound(SoundType.METAL)));
 	
 	// Crystal Clusters
-	public static final RegistryObject<Block> AIR_CLUSTER = BLOCKS.register("air_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.AIR));
-	public static final RegistryObject<Block> EARTH_CLUSTER = BLOCKS.register("earth_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.EARTH));
-	public static final RegistryObject<Block> FIRE_CLUSTER = BLOCKS.register("fire_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.FIRE));
-	public static final RegistryObject<Block> WATER_CLUSTER = BLOCKS.register("water_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.WATER));
-	public static final RegistryObject<Block> ORDER_CLUSTER = BLOCKS.register("order_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.ORDER));
-	public static final RegistryObject<Block> CHAOS_CLUSTER = BLOCKS.register("chaos_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(SoundType.GLASS).tickRandomly(), Aspects.CHAOS));
-	public static final RegistryObject<Block> WATER_CRYSTAL_FRAGMENTS = BLOCKS.register("water_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(SoundType.GLASS), Aspects.WATER));
-	public static final RegistryObject<Block> EARTH_CRYSTAL_FRAGMENTS = BLOCKS.register("earth_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(SoundType.GLASS), Aspects.WATER));
-	public static final RegistryObject<Block> FIRE_CRYSTAL_FRAGMENTS = BLOCKS.register("fire_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(SoundType.GLASS), Aspects.WATER));
-	public static final RegistryObject<Block> AIR_CRYSTAL_FRAGMENTS = BLOCKS.register("air_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(SoundType.GLASS), Aspects.WATER));
-	public static final RegistryObject<Block> ORDER_CRYSTAL_FRAGMENTS = BLOCKS.register("order_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(SoundType.GLASS), Aspects.WATER));
-	public static final RegistryObject<Block> CHAOS_CRYSTAL_FRAGMENTS = BLOCKS.register("chaos_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(SoundType.GLASS), Aspects.WATER));
+	public static final RegistryObject<Block> AIR_CLUSTER = BLOCKS.register("air_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(ArcanaSounds.CRYSTAL).tickRandomly(), Aspects.AIR));
+	public static final RegistryObject<Block> EARTH_CLUSTER = BLOCKS.register("earth_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(ArcanaSounds.CRYSTAL).tickRandomly(), Aspects.EARTH));
+	public static final RegistryObject<Block> FIRE_CLUSTER = BLOCKS.register("fire_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(ArcanaSounds.CRYSTAL).tickRandomly(), Aspects.FIRE));
+	public static final RegistryObject<Block> WATER_CLUSTER = BLOCKS.register("water_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(ArcanaSounds.CRYSTAL).tickRandomly(), Aspects.WATER));
+	public static final RegistryObject<Block> ORDER_CLUSTER = BLOCKS.register("order_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(ArcanaSounds.CRYSTAL).tickRandomly(), Aspects.ORDER));
+	public static final RegistryObject<Block> CHAOS_CLUSTER = BLOCKS.register("chaos_cluster", () -> new CrystalClusterBlock(create(GLASS).hardnessAndResistance(1).notSolid().doesNotBlockMovement().lightValue(3).sound(ArcanaSounds.CRYSTAL).tickRandomly(), Aspects.CHAOS));
+	public static final RegistryObject<Block> WATER_CRYSTAL_FRAGMENTS = BLOCKS.register("water_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(ArcanaSounds.CRYSTAL), Aspects.WATER));
+	public static final RegistryObject<Block> EARTH_CRYSTAL_FRAGMENTS = BLOCKS.register("earth_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(ArcanaSounds.CRYSTAL), Aspects.WATER));
+	public static final RegistryObject<Block> FIRE_CRYSTAL_FRAGMENTS = BLOCKS.register("fire_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(ArcanaSounds.CRYSTAL), Aspects.WATER));
+	public static final RegistryObject<Block> AIR_CRYSTAL_FRAGMENTS = BLOCKS.register("air_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(ArcanaSounds.CRYSTAL), Aspects.WATER));
+	public static final RegistryObject<Block> ORDER_CRYSTAL_FRAGMENTS = BLOCKS.register("order_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(ArcanaSounds.CRYSTAL), Aspects.WATER));
+	public static final RegistryObject<Block> CHAOS_CRYSTAL_FRAGMENTS = BLOCKS.register("chaos_crystal_fragments", () -> new CrystalFragmentBlock(create(GLASS).hardnessAndResistance(1).notSolid().lightValue(2).sound(ArcanaSounds.CRYSTAL), Aspects.WATER));
 
 	//Misc Tainted Blocks
 	//public static final RegistryObject<Block> TAINTED_DESTROYED_ORE = BLOCKS.register("tainted_destroyed_ore", () -> Taint.taintedOf(Blocks.STONE_BRICKS));

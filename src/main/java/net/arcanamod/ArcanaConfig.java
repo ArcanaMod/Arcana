@@ -131,6 +131,10 @@ public class ArcanaConfig{
 				.comment("The chance of a pure aura node generating with a silverwood tree, out of 100.", "50 by default.")
 				.define("SilverwoodNodeChance", 50);
 		
+		FLUX_RESEARCH_REQUIREMENT = COMMON_BUILDER
+				.comment("The amount of flux required to advance the flux research.", "20 by default.")
+				.define("FluxResearchRequirement", 50);
+		
 		COMMON_BUILDER.pop();
 		
 		
@@ -219,6 +223,8 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> TAINT_SPREAD_TRIES; // 5
 	
 	public static ConfigValue<Integer> SILVERWOOD_NODE_CHANCE; // 50
+	
+	public static ConfigValue<Integer> FLUX_RESEARCH_REQUIREMENT; // 20
 	
 	// Client
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1

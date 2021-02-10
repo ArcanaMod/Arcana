@@ -1,0 +1,31 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    " g ",
+    "ata",
+    " A "
+  ],
+  "key": {
+    "a": {
+      "tag": "forge:ingots/arcanium"
+    },
+    "g": {
+      "tag": "forge:glass_panes"
+    },
+    "t": {
+      "item": "arcana:taint_crystal"
+    },
+    "A": {
+      "item": "arcana:amber"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:order",
+      "amount": 10
+    }
+  ],
+  "result": {
+    "item": "arcana:flux_meter"
+  }
+}
