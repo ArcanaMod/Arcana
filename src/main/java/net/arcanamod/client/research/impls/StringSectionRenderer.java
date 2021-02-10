@@ -29,10 +29,11 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 		lines = lines.subList(pageIndex * linesPerPage, Math.min((pageIndex + 1) * linesPerPage, lines.size()));
 		
 		int x = right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X;
-		RenderSystem.scalef(TEXT_SCALING, TEXT_SCALING, 1f);
+		RenderSystem.pushMatrix();
+		RenderSystem.scalef(TEXT_SCALING, TEXT_SCALING, 1);
 		for(int i = 0; i < lines.size(); i++)
 			fr().drawString(lines.get(i), ((int)((screenWidth - 256) / 2f) + x) / TEXT_SCALING, ((int)((screenHeight - 181) / 2f) + ResearchEntryScreen.PAGE_Y + i * (10 * TEXT_SCALING) + HEIGHT_OFFSET) / TEXT_SCALING, 0x383838);
-		RenderSystem.scalef(1f / TEXT_SCALING, 1f / TEXT_SCALING, 1f);
+		RenderSystem.popMatrix();
 	}
 	
 	public void renderAfter(StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){}
