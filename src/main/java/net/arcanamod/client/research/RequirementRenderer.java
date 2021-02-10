@@ -21,6 +21,7 @@ public interface RequirementRenderer<T extends Requirement>{
 		map.put(XpRequirement.TYPE, new XpRequirementRenderer());
 		map.put(PuzzleRequirement.TYPE, new PuzzleRequirementRenderer());
 		map.put(ResearchCompletedRequirement.TYPE, new ResearchCompletedRequirementRenderer());
+		map.put(PuzzlesCompletedRequirement.TYPE, new PuzzlesCompletedRequirementRenderer());
 	}
 	
 	static <T extends Requirement> RequirementRenderer<T> get(String type){

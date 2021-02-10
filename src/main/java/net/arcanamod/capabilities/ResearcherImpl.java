@@ -106,6 +106,10 @@ public class ResearcherImpl implements Researcher{
 			pins.remove(entry);
 	}
 	
+	public int getPuzzlesCompleted(){
+		return completePuzzles.size();
+	}
+	
 	public void setPlayer(PlayerEntity player){
 		this.player = player;
 	}

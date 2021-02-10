@@ -14,8 +14,8 @@ import net.minecraft.util.math.MathHelper;
 import java.util.List;
 
 public class ArcanumModel extends Model {
-	private final ModelRenderer coverRight = (new ModelRenderer(48, 48, 27, 21)).addBox(-4.0F, -5.0F, 0F, 9.0F, 12.0F, 1.0F);
-	private final ModelRenderer coverLeft = (new ModelRenderer(48, 48, 27, 33)).addBox(-4.0F, -4.0F, 0.25F, 9.0F, 12.0F, 1.0F);
+	private final ModelRenderer coverRight = (new ModelRenderer(48, 48, 27, 21)).addBox(-4.0F, -4.0F, -1F, 9.0F, 12.0F, 1.0F);
+	private final ModelRenderer coverLeft = (new ModelRenderer(48, 48, 27, 33)).addBox(-4.0F, -4.0F, -5F, 9.0F, 12.0F, 1.0F);
 	//private final ModelRenderer bookSpine = (new ModelRenderer(48, 48, 31, 9)).addBox(4.0F, -4.0F, -1.0F, 1.0F, 12.0F, 2.0F);
 	private final ModelRenderer pagesRight;
 	private final ModelRenderer pagesLeft;
@@ -51,7 +51,7 @@ public class ArcanumModel extends Model {
 	}
 
 	public void func_228247_a_(float p_228247_1_, float p_228247_2_, float p_228247_3_, float p_228247_4_) {
-		float f = (MathHelper.sin(p_228247_1_ * 0.02F) * 0.1F + 1.25F) * p_228247_4_;
+		float f = (MathHelper.sin(p_228247_1_ * 0.02F) * 0.1F + 0.95F) * p_228247_4_;
 		this.coverRight.rotateAngleY = (float)Math.PI + f;
 		this.coverLeft.rotateAngleY = -f;
 		this.pagesRight.rotateAngleY = f;

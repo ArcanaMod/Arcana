@@ -33,7 +33,7 @@ public class PillarBlock extends Block {
 
 	@Override
 	public boolean isFlammable(BlockState state, IBlockReader world, BlockPos pos, Direction face) {
-		return state.getBlock().equals(ArcanaBlocks.PRIDESTONE_PILLAR_COAL.get());
+		return false;
 	}
 
 	@Override

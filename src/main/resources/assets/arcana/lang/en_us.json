@@ -712,8 +712,9 @@
     "requirement.puzzle.get_note.2": "Requires scribing tools and paper",
     "requirement.puzzle.complete": "Already complete",
     "requirement.tag.accepts_any": "Any %s",
-
     "requirement.research_completed": "Complete the missing research",
+    "requirement.puzzles_completed": "Complete %s puzzles",
+    "requirement.puzzles_completed.progress": "%s/%s completed",
 
     "puzzle.arcana.flux_build": "Taste the \"flux\" for yourself",
     "puzzle.arcana.bottled_taint": "Try to understand taint",
@@ -788,7 +789,7 @@
     "research.arcana.aspect_crystallization": "Aspect Crystallization",
     "research.arcana.aspect_crystallization.desc": "Grasp the immaterial",
     "research.arcana.aspect_crystallization.stage.1": "I have isolated aspects into their purest form. Many applications of magic, however, require a more stable, solid form - aspect crystals. It should not be difficult to crystallize essentia, given what I now know.",
-    "research.arcana.aspect_crystallization.stage.2": "By [TODO: lore], the Aspect Crystallizer (patent pending) is capable of solidifying essentia into crystals, given a crystal catalyst of quartz.",
+    "research.arcana.aspect_crystallization.stage.2": "By compressing essentia around a crystal base, the Aspect Crystallizer (patent pending) is capable of solidifying essentia into crystals, given a crystal catalyst of quartz.",
 
     "research.arcana.research": "Research",
     "research.arcana.research.desc": "Knowledge is power",
@@ -803,6 +804,8 @@
 
     "research.arcana.research_expertise": "Research Expertise",
     "research.arcana.research_expertise.desc": "Improving my improvements",
+    "research.arcana.research_expertise.stage.1": "Performing more research will teach me more about the research process itself.\n\nWith a little practical experience, I should be able to simplify the process, and offset the increasing difficulty of these puzzles.",
+    "research.arcana.research_expertise.stage.2": "I'm getting better at this.\n\nHovering over an aspect in the research table and holding shift will now display what the aspect is made up of.",
 
     "research.arcana.research_mastery": "Research Mastery",
     "research.arcana.research_mastery.desc": "§5You can never know all the facts. Only I can.§5",
