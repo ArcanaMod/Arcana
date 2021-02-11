@@ -835,6 +835,9 @@
     "research.arcana.purification.stage.2": "This is certainly one way of doing it.\n\nBy applying ordo and perditio together, the input ore is crushed up and separated, with some crystallo required to maintain the metal's structure.\n\nThis is not a perfect method, some metal is still wasted. That's to be expected from my first attempt, I guess.\n\nNow, I'd quite like to apply this method to other metals. Hopefully, there won't be any terrible surprises down the line.",
     "research.arcana.purification.stage.3": "Gold and silver can be purified and cast into ingots in exactly the same way as iron can. Their reactivity didn't seem to make any difference to the process.",
 
+    "research.arcana.shortcut_transmutation": "Transmutation Shortcut",
+    "research.arcana.shortcut_transmutation.text": "Extending my transmutation knowledge to purified metal turned out to be surprisingly trivial.\n\nAll transmutation recipes work on purified metal for the same cost as the metal itself.",
+
     "research.arcana.alchemical_glass": "Alchemical Glass",
     "research.arcana.alchemical_glass.desc": "Advancing my material knowledge",
     "research.arcana.alchemical_glass.stage.1": "Glass is a wonderful substance. Neutral and strong, capable of containing a vast array of mundane reagents and materials - and transparent too, allowing full view of any reactions, and making it useful for home decor.\n\nNow that I have alchemy, I should be able to improve upon this further, and produce materials even better suited for decoration and sciences alike. Perhaps glass that's a little less brittle would be nice...",

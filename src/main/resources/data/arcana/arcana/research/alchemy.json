@@ -182,6 +182,43 @@
       ]
     },
     {
+      "key": "arcana:shortcut_transmutation",
+      "name": "research.arcana.shortcut_transmutation",
+      "icons": [
+        "arcana:purified_iron",
+        "arcana:purified_gold",
+        "arcana:purified_silver"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "arcana:transmutation",
+        "arcana:purification"
+      ],
+      "meta": [
+        "hexagon_base"
+      ],
+      "x": 0,
+      "y": 2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.shortcut_transmutation.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/purified_silver_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/purified_gold_by_transmutation"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/purified_iron_by_transmutation"
+        }
+      ]
+    },
+    {
       "key": "arcana:alchemical_glass",
       "name": "research.arcana.alchemical_glass",
       "desc": "research.arcana.alchemical_glass.desc",
