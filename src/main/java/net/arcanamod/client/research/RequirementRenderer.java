@@ -35,4 +35,8 @@ public interface RequirementRenderer<T extends Requirement>{
 	void render(int x, int y, T requirement, int ticks, float partialTicks, PlayerEntity player);
 	
 	List<ITextComponent> tooltip(T requirement, PlayerEntity player);
+	
+	default boolean shouldDrawTickOrCross(T requirement, int amount){
+		return amount == 1;
+	}
 }

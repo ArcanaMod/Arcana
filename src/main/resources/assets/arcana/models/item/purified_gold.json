@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "arcana:item/alchemical_iron"
+    "layer0": "arcana:item/purified_gold"
   }
 }

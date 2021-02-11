@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "arcana:silver_native_cluster"
+    "item": "arcana:purified_silver"
   },
   "result": {
     "item": "arcana:silver_ingot",

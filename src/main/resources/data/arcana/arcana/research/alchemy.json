@@ -143,7 +143,12 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.purification.stage.1"
+          "content": "research.arcana.purification.stage.1",
+          "requirements": [
+            "2*minecraft:iron_ore",
+            "arcana:nitor",
+            "arcana::puzzle{arcana:iron_purification_puzzle}"
+          ]
         },
         {
           "type": "string",
@@ -151,19 +156,28 @@
         },
         {
           "type": "alchemy",
-          "content": "arcana:alchemy/iron_native_cluster"
-        },
-        {
-          "type": "alchemy",
-          "content": "arcana:alchemy/silver_native_cluster"
-        },
-        {
-          "type": "alchemy",
-          "content": "arcana:alchemy/gold_native_cluster"
+          "content": "arcana:alchemy/purified_iron"
         },
         {
           "type": "smelting",
-          "content": "arcana:iron_ingot_from_native_cluster_by_smelting"
+          "content": "arcana:iron_ingot_from_purified_by_smelting",
+          "requirements": [
+            "2*minecraft:gold_ore",
+            "2*arcana:silver_ore",
+            "arcana::puzzle{arcana:further_purification_puzzle}"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.purification.stage.3"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/purified_silver"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/purified_gold"
         }
       ]
     },
@@ -632,6 +646,28 @@
         "arcana:metal",
         "arcana:energy",
         "arcana:tool"
+      ]
+    },
+    {
+      "key": "arcana:iron_purification_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:metal",
+        "arcana:order",
+        "arcana:crystal",
+        "arcana:order",
+        "arcana:fire"
+      ]
+    },
+    {
+      "key": "arcana:further_purification_puzzle",
+      "type": "chemistry",
+      "nodes": [
+        "arcana:metal",
+        "arcana:order",
+        "arcana:greed",
+        "arcana:order",
+        "arcana:imprison"
       ]
     }
   ]

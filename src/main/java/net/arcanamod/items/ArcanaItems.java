@@ -105,9 +105,10 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> SILVERWOOD_STICK = ITEMS.register("silverwood_stick", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> AMBER = ITEMS.register("amber", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
-	@GIM(ITEM) public static final RegistryObject<Item> IRON_NATIVE_CLUSTER = ITEMS.register("iron_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
-	@GIM(ITEM) public static final RegistryObject<Item> GOLD_NATIVE_CLUSTER = ITEMS.register("gold_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
-	@GIM(ITEM) public static final RegistryObject<Item> SILVER_NATIVE_CLUSTER = ITEMS.register("silver_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> PURIFIED_IRON = ITEMS.register("purified_iron", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> PURIFIED_GOLD = ITEMS.register("purified_gold", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> PURIFIED_SILVER = ITEMS.register("purified_silver", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> ALTERED_IRON = ITEMS.register("altered_iron", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	// copper, tin, lead, etc... clusters
 	
 	// Goggles

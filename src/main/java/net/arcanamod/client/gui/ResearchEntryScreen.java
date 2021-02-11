@@ -93,7 +93,7 @@ public class ResearchEntryScreen extends Screen{
 			for(int i = 0, size = requirements.size(); i < size; i++){
 				Requirement requirement = requirements.get(i);
 				renderer(requirement).render(baseX + i * reqWidth + 2, y, requirement, getMinecraft().player.ticksExisted, partialTicks, getMinecraft().player);
-				renderAmount(baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfied(getMinecraft().player));
+				renderAmount(requirement, baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfied(getMinecraft().player));
 			}
 			// Show tooltips
 			for(int i = 0, size = requirements.size(); i < size; i++)
@@ -298,8 +298,8 @@ public class ResearchEntryScreen extends Screen{
 		return RequirementRenderer.get(requirement);
 	}
 	
-	private void renderAmount(int x, int y, int amount, boolean complete){
-		if(amount == 1 || amount == 0){
+	private void renderAmount(Requirement requirement, int x, int y, int amount, boolean complete){
+		if(renderer(requirement).shouldDrawTickOrCross(requirement, amount)){
 			//display tick or cross
 			getMinecraft().getTextureManager().bindTexture(bg);
 			RenderSystem.color4f(1f, 1f, 1f, 1f);
