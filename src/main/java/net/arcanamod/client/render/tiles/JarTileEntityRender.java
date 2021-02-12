@@ -20,6 +20,7 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
+import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -76,14 +77,15 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 				case NORTH:
 					q = new Quaternion(0,-90,0,true);
 					xt = 0.445f;
-					zt = -1.445f;
-					xta = 0.25f;
+					zt = -1.270f;
+					xta = -0.02f;
+					yta = -0.5f;
 					zta = 0.5f;
 					break;
 				case SOUTH:
 					q = new Quaternion(0,90,0,true);
 					xt = -2.05f;
-					zt = 1.045f;
+					zt = 0.845f;
 					xta = -0.02f;
 					yta = -0.90f;
 					zta = 0.1f;
@@ -91,7 +93,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 				case WEST:
 					q = new Quaternion(0,0,0,true);
 					xt = .445f;
-					zt = 1f;
+					zt = 0.85f;
 					xta = -0.02f;
 					yta = -0.90f;
 					zta = 0.1f;
@@ -99,7 +101,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 				case EAST:
 					q = new Quaternion(0,180,0,true);
 					xt = -2.045f;
-					zt = -1.5f;
+					zt = -1.75f;
 					xta = -0.02f;
 					yta = -0.90f;
 					zta = 0.1f;
@@ -120,7 +122,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			//Logger _LOGGER = LogManager.getLogger();
 			//_LOGGER.debug(label);
 
-			q = new Quaternion(-15,0,0,true);
+			q = new Quaternion(tileEntity.labelRotation,0,0,true);
 			matrixStack.rotate(q);
 
 			add(label_builder, matrixStack, Color.WHITE, 0, 1, 0, label.getMinU(), label.getMaxV());
@@ -148,7 +150,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			matrixStack.scale(scale, scale, scale);
 			matrixStack.translate(.5, .5, .5);
 
-			Color c = new Color(aspectColor.getRGB()+0x80000000);
+			Color c = new Color(aspectColor.getRGB()-0x80000000);
 			
 			// top
 			add(builder, matrixStack, c, 0, visHeight, 1, spriteTop.getMinU(), spriteTop.getMaxV());
