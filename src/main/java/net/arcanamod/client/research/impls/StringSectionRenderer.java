@@ -25,7 +25,7 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 	}
 	
 	public void render(StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
-		List<String> lines = fr().listFormattedStringToWidth(getTranslatedText(section).replace("\\n", "\n"), (int)(ResearchEntryScreen.PAGE_WIDTH / TEXT_SCALING));
+		List<String> lines = fr().listFormattedStringToWidth(getTranslatedText(section), (int)(ResearchEntryScreen.PAGE_WIDTH / TEXT_SCALING));
 		lines = lines.subList(pageIndex * linesPerPage, Math.min((pageIndex + 1) * linesPerPage, lines.size()));
 		
 		int x = right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X;

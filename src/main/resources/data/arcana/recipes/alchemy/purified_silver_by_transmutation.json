@@ -1,0 +1,26 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "arcana:purified_iron"
+  },
+  "out": {
+    "item": "arcana:purified_silver"
+  },
+  "aspects": [
+    {
+      "aspect": "exchange",
+      "amount": 3
+    },
+    {
+      "aspect": "ice",
+      "amount": 1
+    },
+    {
+      "aspect": "imprison",
+      "amount": 1
+    }
+  ],
+  "research": [
+    "arcana:shortcut_transmutation"
+  ]
+}
