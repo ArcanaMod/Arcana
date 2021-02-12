@@ -461,6 +461,12 @@
     "item.arcana.music_disc_green_sleeves": "Music Disc",
     "item.arcana.music_disc_green_sleeves.desc": "Yelldow - Green Sleeves",
 
+    "_comment": "Food",
+    "item.arcana.raw_dog_meat": "Dog Meat",
+    "item.arcana.cooked_dog_meat": "Cooked Dog Meat",
+    "item.arcana.raw_cat_meat": "Cat Meat",
+    "item.arcana.cooked_cat_meat": "Cooked Cat Meat",
+
     "_comment": "Functional",
     "block.arcana.research_table": "Research Table",
     "block.arcana.foci_forge": "Foci Forge",
