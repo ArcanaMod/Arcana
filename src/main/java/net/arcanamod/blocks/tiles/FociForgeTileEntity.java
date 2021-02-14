@@ -7,6 +7,7 @@ import net.arcanamod.aspects.AspectHandlerCapability;
 import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.systems.spell.Spell;
+import net.arcanamod.systems.spell.SpellState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -30,6 +31,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class FociForgeTileEntity extends LockableTileEntity{
 
 	public Spell currentSpell = null;
+	public SpellState spellState = new SpellState();
 	public boolean spellModified = false;
 	public FociForgeTileEntity(){
 		super(ArcanaTiles.FOCI_FORGE_TE.get());
@@ -50,7 +52,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		}
 
 		if (compound.contains("spell")) {
-			currentSpell = Spell.getSerializer().deserializeNBT(compound);
+			currentSpell = Spell.fromNBT(compound);
 		} else {
 			currentSpell = null;
 		}
@@ -61,7 +63,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		super.write(compound);
 		compound.put("items", items.serializeNBT());
 		if (currentSpell != null) {
-			Spell.getSerializer().serializeNBT(currentSpell, compound);
+			currentSpell.toNBT(compound);
 		}
 		return compound;
 	}

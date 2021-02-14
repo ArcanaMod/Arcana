@@ -38,14 +38,6 @@ public class Spell implements ISpell {
 	private static Logger logger = LogManager.getLogger();
 
 	/**
-	 * Create new Spell serializer that can be used to deserialize or serialize spell.
-	 * @return Spell serializer.
-	 */
-	public static Serializer getSerializer() {
-		return new Spell.Serializer();
-	}
-
-	/**
 	 * Run Spell.
 	 * Goes trough all spell modules and executes {@link ICast}.
 	 * @param spell Spell to run.
@@ -90,63 +82,31 @@ public class Spell implements ISpell {
 		return Logic.blendAndGetColor(mainModule, 0x000000);
 	}
 
+	/**
+	 * Spell NBT to Spell Object
+	 * @param compound Spell NBT
+	 * @return Deserialized Spell
+	 */
+	public static Spell fromNBT(CompoundNBT compound){
+		Spell spell = new Spell();
+		spell.mainModule = new StartCircle();
+		if (compound.get("spell") != null) {
+			spell.mainModule = SpellModule.fromNBT(compound.getCompound("spell"), 0);
+		}
+		return spell;
+	}
+
+	/**
+	 * Spell to Spell NBT
+	 * @param compound Existing CompoundNBT or new.
+	 * @return Serialized Spell
+	 */
+	public CompoundNBT toNBT(CompoundNBT compound){
+		compound.put("spell", mainModule.toNBT(new CompoundNBT(), 0));
+		return compound;
+	}
+
 	public static class Serializer{
-		/**
-		 * Spell to Spell NBT
-		 * @param spell Spell to NBT serialize
-		 * @param compound Existing CompoundNBT or new.
-		 * @return Serialized Spell
-		 */
-		public CompoundNBT serializeNBT(Spell spell, CompoundNBT compound){
-			compound.put("spell",serialize(spell.mainModule, new CompoundNBT(), new ListNBT(), 0));
-			return compound;
-		}
-
-		/**
-		 * Spell NBT to Spell Object
-		 * @param compound Spell NBT
-		 * @return Deserialized Spell
-		 */
-		public Spell deserializeNBT(CompoundNBT compound){
-			Spell spell = new Spell();
-			spell.mainModule = new StartCircle();
-			if (compound.get("spell") != null)
-				spell.mainModule.bindModule(deserialize(spell.mainModule, (CompoundNBT) compound.get("spell"), 0));
-			return spell;
-		}
-
-		private CompoundNBT serialize(SpellModule toSerialize, CompoundNBT prevModule, ListNBT prevBound, int deepness) {
-			ListNBT boundList = new ListNBT();
-			CompoundNBT moduleNBT = new CompoundNBT();
-			for (SpellModule module : toSerialize.getBoundModules()) {
-				if (module!=null) {
-					moduleNBT = new CompoundNBT();
-					boundList = new ListNBT();
-					moduleNBT.putString("name", module.getName());
-					moduleNBT.put("data", module.toNBT());
-					prevBound.add(moduleNBT);
-					serialize(module, moduleNBT, boundList, ++deepness);
-				}
-			}
-			prevModule.put("bound",prevBound);
-			return moduleNBT;
-		}
-
-		private SpellModule deserialize(SpellModule toDeserialize, CompoundNBT spellNBT, int deepness) {
-			SpellModule createdModule = null;
-			if (!spellNBT.getString("name").equals(""))
-				createdModule = SpellModule.fromNBT(spellNBT);
-
-			if (spellNBT.get("bound") != null && createdModule != null) {
-				for (INBT inbt : ((ListNBT) Objects.requireNonNull(spellNBT.get("bound")))) {
-					if (inbt instanceof CompoundNBT) {
-						CompoundNBT compound = ((CompoundNBT) inbt);
-						createdModule.bindModule(deserialize(toDeserialize, compound, ++deepness));
-					}
-				}
-			}
-			return createdModule;
-		}
 	}
 
 	private static class Logic {

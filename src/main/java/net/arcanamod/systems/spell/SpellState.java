@@ -8,6 +8,8 @@ import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.StartSpellModule;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -33,8 +35,8 @@ public class SpellState {
     private float x = 0;
     private float y = 0;
     public boolean active = false;
-    public SpellModule activeModule = null;
-    public SpellModule mainModule = null;
+    public Spell currentSpell = null;
+    public SpellModule activeModule = null; // unused on server
     public List<SpellModule> isolated = new LinkedList<>();
     public Map<UUID, SpellModule> floating = new HashMap<>();
 
@@ -58,8 +60,8 @@ public class SpellState {
             // deselection logic
             activeModule = null;
         } else {
-            if ((mainModule == null && !Module.isAssignableFrom(StartSpellModule.class))
-                || mainModule != null && Module.isAssignableFrom(StartSpellModule.class)) {
+            if ((currentSpell == null && !Module.isAssignableFrom(StartSpellModule.class))
+                || currentSpell != null && Module.isAssignableFrom(StartSpellModule.class)) {
 
                 try {
                     activeModule = Module.getConstructor().newInstance();
@@ -101,7 +103,7 @@ public class SpellState {
     }
 
     private Stream<SpellModule> getPlacedModules() {
-        Stream<SpellModule> stream = getBoundRecurse(mainModule);
+        Stream<SpellModule> stream = getBoundRecurse(currentSpell.mainModule);
         for (SpellModule module : isolated) {
             stream = Stream.concat(stream, getBoundRecurse(module));
         }
@@ -115,8 +117,8 @@ public class SpellState {
 
     public Stream<SpellModule> getCollidingModules(int x, int y, SpellModule module) {
         return getPlacedModules()
-                .filter(other -> module != other)
-                .filter(other -> other.collidesWith(module));
+            .filter(other -> module != other)
+            .filter(other -> other.collidesWith(module));
     }
 
     private boolean canPlace(int x, int y, SpellModule module) {
@@ -236,7 +238,7 @@ public class SpellState {
         Minecraft mc = Minecraft.getInstance();
 
         mc.getTextureManager().bindTexture(FociForgeScreen.BG);
-        if (mainModule != null) {
+        if (currentSpell.mainModule != null) {
             // Start point
 
             for (int i = 1; i < 9; i++) {
@@ -266,7 +268,7 @@ public class SpellState {
         GL11.glScissor((int)(gui_scale * spellLeft), (int)(gui_scale * (spellTop + 85)), (int)(gui_scale * width), (int)(gui_scale * height));
 
         // draw background
-        int bg_texX = (mainModule == null ? 16 : 0);
+        int bg_texX = (currentSpell.mainModule == null ? 16 : 0);
         float start_x = getTopLeftBackgroundLocation(this.x);
         float start_y = getTopLeftBackgroundLocation(this.y);
         for (float bg_x = start_x; bg_x < width + 16; bg_x += 16) {
@@ -276,8 +278,8 @@ public class SpellState {
         }
 
         Queue<Pair<SpellModule, SpellModule>> renderQueue = new LinkedList<>();
-        if (mainModule != null) {
-            renderQueue.add(new Pair<>(null, mainModule));
+        if (currentSpell.mainModule != null) {
+            renderQueue.add(new Pair<>(null, currentSpell.mainModule));
         }
         for (SpellModule floater : isolated) {
            renderQueue.add(new Pair<>(null, floater));

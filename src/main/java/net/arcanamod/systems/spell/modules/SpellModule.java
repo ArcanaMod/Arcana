@@ -12,6 +12,8 @@ import net.arcanamod.systems.spell.modules.circle.SingleModifierCircle;
 import net.arcanamod.systems.spell.modules.core.*;
 import net.arcanamod.util.Pair;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
@@ -20,6 +22,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class SpellModule {
 	public static HashMap<String, Class<? extends SpellModule>> modules = Maps.newHashMap();
@@ -30,40 +33,66 @@ public abstract class SpellModule {
 
 	public static final ResourceLocation SPELL_MODULES = new ResourceLocation(Arcana.MODID, "textures/gui/container/foci_forge_minigame.png");
 
-	public static SpellModule fromNBT(CompoundNBT spellNBT) {
+	public static SpellModule fromNBT(CompoundNBT spellNBT, int deepness) {
 		Constructor<?> constructor;
-		SpellModule createdModule;
-		try {
-			constructor = modules.get(spellNBT.getString("name")).getConstructor();
-			createdModule = (SpellModule) constructor.newInstance();
-		} catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-			e.printStackTrace();
-			return null;
+		SpellModule createdModule = null;
+		if (spellNBT.contains("name")) {
+			try {
+				constructor = modules.get(spellNBT.getString("name")).getConstructor();
+				createdModule = (SpellModule) constructor.newInstance();
+			} catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+				e.printStackTrace();
+				return null;
+			}
+			// get may return null. getCompound will not.
+			if (!spellNBT.contains("data")) {
+				createdModule = null;
+			} else {
+				CompoundNBT data = spellNBT.getCompound("data");
+				createdModule.x = data.getInt("x");
+				createdModule.y = data.getInt("y");
+				if (createdModule instanceof CommentBlock)
+					((CommentBlock)createdModule).comment = data.getString("comment");
+				if (createdModule instanceof CastCircle)
+					((CastCircle)createdModule).cast = Casts.castMap.get(new ResourceLocation(data.getString("cast")));
+				if (createdModule instanceof CastMethod)
+					((CastMethod)createdModule).aspect = AspectUtils.deserializeAspect(data,"aspect");
+				if (createdModule instanceof CastMethodSin)
+					((CastMethodSin)createdModule).aspect = AspectUtils.deserializeAspect(data,"aspect");
+				if (createdModule instanceof SingleModifierCircle)
+					((SingleModifierCircle)createdModule).aspect = AspectUtils.deserializeAspect(data,"aspect");
+				if (createdModule instanceof SinModifierCircle)
+					((SinModifierCircle)createdModule).aspect = AspectUtils.deserializeAspect(data,"aspect");
+				if (createdModule instanceof DoubleModifierCircle) {
+					((DoubleModifierCircle) createdModule).firstAspect = AspectUtils.deserializeAspect(data, "firstAspect");
+					((DoubleModifierCircle) createdModule).secondAspect = AspectUtils.deserializeAspect(data, "secondAspect");
+				}
+			}
 		}
-		CompoundNBT data = (CompoundNBT)spellNBT.get("data");
-		if (data == null) {
-			createdModule = null;
-		} else {
-			createdModule.x = data.getInt("x");
-			createdModule.y = data.getInt("y");
-			if (createdModule instanceof CommentBlock)
-				((CommentBlock)createdModule).comment = data.getString("comment");
-			if (createdModule instanceof CastCircle)
-				((CastCircle)createdModule).cast = Casts.castMap.get(new ResourceLocation(data.getString("cast")));
-			if (createdModule instanceof CastMethod)
-				((CastMethod)createdModule).aspect = AspectUtils.deserializeAspect(data,"aspect");
-			if (createdModule instanceof CastMethodSin)
-				((CastMethodSin)createdModule).aspect = AspectUtils.deserializeAspect(data,"aspect");
-			if (createdModule instanceof SingleModifierCircle)
-				((SingleModifierCircle)createdModule).aspect = AspectUtils.deserializeAspect(data,"aspect");
-			if (createdModule instanceof SinModifierCircle)
-				((SinModifierCircle)createdModule).aspect = AspectUtils.deserializeAspect(data,"aspect");
-			if (createdModule instanceof DoubleModifierCircle) {
-				((DoubleModifierCircle) createdModule).firstAspect = AspectUtils.deserializeAspect(data, "firstAspect");
-				((DoubleModifierCircle) createdModule).secondAspect = AspectUtils.deserializeAspect(data, "secondAspect");
+		if (createdModule != null && spellNBT.contains("bound")) {
+			for (INBT inbt : ((ListNBT) Objects.requireNonNull(spellNBT.get("bound")))) {
+				if (inbt instanceof CompoundNBT) {
+					CompoundNBT compound = ((CompoundNBT) inbt);
+					createdModule.bindModule(SpellModule.fromNBT(compound, ++deepness));
+				}
 			}
 		}
 		return createdModule;
+	}
+
+	public CompoundNBT toNBT(CompoundNBT compound, int deepness) {
+		compound.putString("name", getName());
+		compound.put("data", toNBT());
+		ListNBT boundNBT = new ListNBT();
+		for (SpellModule module : getBoundModules()) {
+			if (module != null) {
+				CompoundNBT moduleNBT = new CompoundNBT();
+				module.toNBT(moduleNBT, ++deepness);
+				boundNBT.add(moduleNBT);
+			}
+		}
+		compound.put("bound",boundNBT);
+		return compound;
 	}
 
 	public abstract String getName();
@@ -166,4 +195,5 @@ public abstract class SpellModule {
 		registerModule("connector", Connector.class, 7);
 		registerModule("comment", CommentBlock.class, 8);
 	}
+
 }

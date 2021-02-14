@@ -46,7 +46,6 @@ public class FociForgeContainer extends AspectContainer {
     public FociForgeTileEntity te;
     public List<AspectSlot> scrollableSlots = new ArrayList<>();
     public List<Slot> fociSlots = new ArrayList<>();
-    public SpellState spellState = new SpellState();
 
     PlayerEntity lastClickPlayer;
 
@@ -120,7 +119,7 @@ public class FociForgeContainer extends AspectContainer {
             } else if (te.focus().getItem() == ArcanaItems.FOCUS_PARTS.get()) {
                 te.replaceSpell(new Spell());
             } else if (te.focus().getItem() == ArcanaItems.DEFAULT_FOCUS.get()) {
-                te.replaceSpell(Spell.getSerializer().deserializeNBT(te.focus().getOrCreateTag()));
+                te.replaceSpell(Spell.fromNBT(te.focus().getOrCreateTag()));
             }
         }
     }
