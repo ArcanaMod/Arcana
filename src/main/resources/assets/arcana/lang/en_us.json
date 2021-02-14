@@ -842,7 +842,10 @@
     "research.arcana.purification.stage.3": "Gold and silver can be purified and cast into ingots in exactly the same way as iron can. Their reactivity didn't seem to make any difference to the process.",
 
     "research.arcana.shortcut_transmutation": "Transmutation Shortcut",
-    "research.arcana.shortcut_transmutation.text": "Extending my transmutation knowledge to purified metal turned out to be surprisingly trivial.\n\nAll transmutation recipes work on purified metal for the same cost as the metal itself.",
+    "research.arcana.shortcut_transmutation.text": "Extending my transmutation knowledge to purified metal turned out to be surprisingly trivial.\n\nAll transmutation recipes work on purified metal for the same cost as a single metal ingot.",
+
+    "research.arcana.shortcut_metallurgy": "Metallurgy Shortcut",
+    "research.arcana.shortcut_metallurgy.text": "Extending my metallurgy knowledge to purified metal turned out to be surprisingly trivial.\n\nPurified Iron can be converted into Altered Iron, which can be smelted into two Arcanium ingots, for the same cost as a single Arcanium ingot.",
 
     "research.arcana.alchemical_glass": "Alchemical Glass",
     "research.arcana.alchemical_glass.desc": "Advancing my material knowledge",

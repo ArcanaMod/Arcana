@@ -32,10 +32,7 @@
       "parents": [
         "arcana:alchemy_root"
       ],
-      "meta": [
-        ""
-      ],
-      "x": 4,
+      "x": 5,
       "y": 0,
       "sections": [
         {
@@ -81,8 +78,6 @@
       "category": "arcana:alchemy",
       "parents": [
         "arcana:alchemy_root"
-      ],
-      "meta": [
       ],
       "x": -2,
       "y": 2,
@@ -215,6 +210,37 @@
         {
           "type": "alchemy",
           "content": "arcana:alchemy/purified_iron_by_transmutation"
+        }
+      ]
+    },
+    {
+      "key": "arcana:shortcut_metallurgy",
+      "name": "research.arcana.shortcut_metallurgy",
+      "icons": [
+        "arcana:altered_iron"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [
+        "/arcana:arcanium",
+        "arcana:purification"
+      ],
+      "meta": [
+        "hexagon_base"
+      ],
+      "x": 4,
+      "y": 2,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.shortcut_metallurgy.text"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/altered_iron"
+        },
+        {
+          "type": "smelting",
+          "content": "arcana:arcanium_ingot_from_altered_by_smelting"
         }
       ]
     },

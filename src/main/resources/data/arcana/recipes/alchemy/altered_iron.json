@@ -12,5 +12,7 @@
       "amount": 6
     }
   ],
-  "research": []
+  "research": [
+    "arcana:shortcut_metallurgy"
+  ]
 }
