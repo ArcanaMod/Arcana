@@ -7,6 +7,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 
+import java.util.UUID;
+
 // Temporary class
 public class TemporaryEmptyCast implements ICast {
 
@@ -19,8 +21,8 @@ public class TemporaryEmptyCast implements ICast {
 	public int getSpellDuration() {
 		return 0;
 	}
-	
-	public void use(PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, Action action){
+
+	public void use(UUID uuid, PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, Action action){
 	
 	}
 	

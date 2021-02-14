@@ -44,7 +44,7 @@ public class BookRenderer {
 		try {
 			renderFirstPersonItem(mc.player, evt.getPartialTicks(), evt.getInterpolatedPitch(), evt.getHand(), evt.getSwingProgress(), evt.getItemStack(), evt.getEquipProgress(), evt.getMatrixStack(), evt.getBuffers(), evt.getLight());
 		} catch (Throwable throwable) {
-			LOGGER.warn("Failed to render lexicon", throwable);
+			LOGGER.warn("Failed to render book", throwable);
 		}
 	}
 
