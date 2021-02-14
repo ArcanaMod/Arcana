@@ -11,6 +11,7 @@ import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.spell.Spell;
+import net.arcanamod.systems.spell.SpellState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -45,6 +46,7 @@ public class FociForgeContainer extends AspectContainer {
     public FociForgeTileEntity te;
     public List<AspectSlot> scrollableSlots = new ArrayList<>();
     public List<Slot> fociSlots = new ArrayList<>();
+    public SpellState spellState = new SpellState();
 
     PlayerEntity lastClickPlayer;
 

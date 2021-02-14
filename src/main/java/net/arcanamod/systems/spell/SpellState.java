@@ -11,10 +11,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nullable;
+import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.List;
-import java.util.Queue;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /// HEAVY IN PROGRESS
 /// This and FociForgeScreen are in progress
@@ -23,8 +26,8 @@ public class SpellState {
 
     private static final ResourceLocation SPELL_RESOURCES = new ResourceLocation(Arcana.MODID, "textures/gui/container/foci_forge_minigame.png");
 
-    private static float MIN_BOUND = -2048;
-    private static float MAX_BOUND = 2047;
+    private static final float MIN_BOUND = -2048;
+    private static final float MAX_BOUND = 2047;
 
 
     private float x = 0;
@@ -32,7 +35,8 @@ public class SpellState {
     public boolean active = false;
     public SpellModule activeModule = null;
     public SpellModule mainModule = null;
-    public List<SpellModule> floaters = new LinkedList<>();
+    public List<SpellModule> isolated = new LinkedList<>();
+    public Map<UUID, SpellModule> floating = new HashMap<>();
 
     private void move(float x, float y) {
         this.x = Math.min(Math.max(MIN_BOUND, this.x + x), MAX_BOUND);
@@ -82,11 +86,151 @@ public class SpellState {
         if (activeModule != null) {
             boolean validPlacement = activeModule.mouseUpPlacement(this, (int)x, (int)y);
             if (validPlacement) {
-                floaters.add(activeModule);
+                isolated.add(activeModule);
             }
             activeModule = null;
         }
     }
+
+    private Stream<SpellModule> getBoundRecurse(SpellModule module) {
+        if (module == null) {
+            return Stream.empty();
+        } else {
+            return Stream.concat(Stream.of(module), module.getBoundModules().stream());
+        }
+    }
+
+    private Stream<SpellModule> getPlacedModules() {
+        Stream<SpellModule> stream = getBoundRecurse(mainModule);
+        for (SpellModule module : isolated) {
+            stream = Stream.concat(stream, getBoundRecurse(module));
+        }
+        return stream;
+    }
+
+    @Nullable
+    private SpellModule getModuleAt(int x, int y) {
+        return getPlacedModules().filter(module -> module.withinBounds(x, y)).findFirst().orElse(null);
+    }
+
+    public Stream<SpellModule> getCollidingModules(int x, int y, SpellModule module) {
+        return getPlacedModules()
+                .filter(other -> module != other)
+                .filter(other -> other.collidesWith(module));
+    }
+
+    private boolean canPlace(int x, int y, SpellModule module) {
+        boolean valid = true;
+        SpellModule collision = getCollidingModules(x, y, module).findFirst().orElse(null);
+        if (collision != null) {
+            List<SpellModule> special = getCollidingModules(x, y, module)
+                .filter(collide -> module.getSpecialPoint(collide) == null)
+                .limit(2)
+                .collect(Collectors.toList());
+            if (special.size() == 0) {
+                valid = false;
+            } else {
+                SpellModule specialMain;
+                if (special.size() == 1) {
+                    specialMain = special.get(0);
+                } else {
+                    // ignore previous result: get module underneath cursor
+                    specialMain = getModuleAt(x, y);
+                    if (specialMain == null || !specialMain.canConnectSpecial(module)) {
+                        valid = false;
+                    }
+                }
+
+                // check if a potential special placement candidate exists
+                if (valid) {
+                    Point specialPoint = specialMain.getSpecialPoint(module);
+                    List<SpellModule> specialCollisions = getCollidingModules(specialPoint.x, specialPoint.y, module)
+                        .limit(2)
+                        .collect(Collectors.toList());
+                    if (specialCollisions.size() > 1
+                        || (specialCollisions.size() == 1
+                            && specialCollisions.get(0) != specialMain)) {
+                        valid = false;
+                    }
+                }
+            }
+        }
+
+        return valid;
+    }
+
+    public boolean isValidDeletion(SpellModule module) {
+        return false;
+    }
+
+    public void place(int x, int y, SpellModule module, boolean isRemote) {
+        if(module != null && canPlace(x, y, module)) {
+            if (isRemote) {
+                // send action to server
+                // manage client-side state
+            }
+            // place module
+        }
+    }
+
+    public void raise(int x, int y, boolean isRemote) {
+        SpellModule raising = getModuleAt(x, y);
+        if (raising != null && raising.canRaise(this)) {
+            if (isRemote) {
+                // send action to server
+                // manage client-side state
+            }
+            // raise module
+        }
+    }
+
+    public void lower(int x, int y, int newX, int newY, boolean isRemote) {
+        SpellModule lowering = getModuleAt(x, y);
+
+        if (lowering != null && canPlace(x, y, lowering)) {
+            if (x == newX && y == newY) {
+                // send action to server
+                // manage client-side state
+            }
+            // lower module
+        }
+    }
+
+    public void connect(SpellModule a, SpellModule b, boolean isRemote) {
+        if (a != null && b != null && a.canConnect(b)) {
+            if (isRemote) {
+                // send action to server
+                // manage client-side state
+            }
+            // connect the modules
+        }
+    }
+
+    public void delete(int x, int y, boolean isRemote) {
+        SpellModule deleting = getModuleAt(x, y);
+        if (isValidDeletion(deleting)) {
+            if (isRemote) {
+                // send action to server
+                // manage client-side state
+            }
+            // delete module
+        }
+    }
+
+    public void assign(int x, int y, Aspect aspect, boolean isRemote) {
+        SpellModule assigning = getModuleAt(x, y);
+        if (assigning != null && assigning.canAssign(x, y, aspect)) {
+            if (isRemote) {
+                // send action to server
+                // manage client-side state
+            }
+            // assign aspect to module
+        }
+    }
+
+
+
+
 
     public void render(int guiLeft, int guiTop, int spellLeft, int spellTop, int width, int height, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
@@ -135,7 +279,7 @@ public class SpellState {
         if (mainModule != null) {
             renderQueue.add(new Pair<>(null, mainModule));
         }
-        for (SpellModule floater : floaters) {
+        for (SpellModule floater : isolated) {
            renderQueue.add(new Pair<>(null, floater));
         }
 

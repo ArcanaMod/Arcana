@@ -5,12 +5,11 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.FociForgeTileEntity;
-import net.arcanamod.client.forge.SpellRenderer;
+import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.FocusItem;
-import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -55,7 +54,6 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 
 
 	TextFieldWidget searchWidget;
-	SpellRenderer spellRenderer = new SpellRenderer();
 
 	public FociForgeScreen(FociForgeContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
@@ -71,22 +69,11 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
 		searchWidget.render(mouseX, mouseY, partialTicks);
-		spellRenderer.render(te.currentSpell, guiLeft + SPELL_X, guiTop + SPELL_Y, SPELL_WIDTH, SPELL_HEIGHT);
 		minecraft.getTextureManager().bindTexture(BG);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + ASPECT_SCROLL_X, guiTop + ASPECT_SCROLL_Y + (int)(ASPECT_SCROLL_HEIGHT * aspectScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + FOCI_SCROLL_X, guiTop + FOCI_SCROLL_Y + (int)(FOCI_SCROLL_HEIGHT * fociScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
-		if (te.currentSpell != null) {
-			for (int i = 0; i < 9; i++) {
-				UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + MODULE_X + MODULE_DELTA * i, guiTop + MODULE_Y, 32 * i, 313, 32, 32, 397, 397);
-			}
-		}
-		if (spellRenderer.currentModule >= 0) {
-			GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
-			UiUtil.drawModalRectWithCustomSizedTexture(mouseX - 16, mouseY - 16, 32 * spellRenderer.currentModule, 313, 32, 32, 397, 397);
-			GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		}
-
+		aspectContainer.spellState.render(guiLeft, guiTop,guiLeft + SPELL_X, guiTop + SPELL_Y, SPELL_WIDTH, SPELL_HEIGHT, mouseX, mouseY);
 	}
 
 	@Override
@@ -114,18 +101,21 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		double guiY = y - guiTop;
 
 		if (button == 0) {
+			boolean withinSpellBounds = guiX > SPELL_X && guiX < SPELL_X + SPELL_WIDTH
+										&& guiY > SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT;
+
 			if (guiX >= ASPECT_SCROLL_X && guiX < ASPECT_SCROLL_X + SCROLL_WIDTH
 				&& guiY >= ASPECT_SCROLL_Y && guiY < ASPECT_SCROLL_X + ASPECT_SCROLL_HEIGHT) {
 				isScrollingAspect = true;
 			} else if (guiX >= FOCI_SCROLL_X && guiX < FOCI_SCROLL_X + SCROLL_WIDTH
 						&& guiY >= FOCI_SCROLL_Y && guiY < FOCI_SCROLL_X + FOCI_SCROLL_HEIGHT) {
 				isScrollingFoci = true;
+			} else if (withinSpellBounds) {
+				aspectContainer.spellState.mouseDownPlacement(guiX - SPELL_X, guiY - SPELL_Y, button, aspectContainer.getHeldAspect());
+				spellHasFocus = true;
+			} else {
+				aspectContainer.spellState.moduleSelected(-1);
 			}
-		}
-		if (guiX > SPELL_X && guiX < SPELL_X + SPELL_WIDTH
-			&& guiY > SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT) {
-			spellRenderer.mouseClicked(guiX - SPELL_X, guiY - SPELL_Y, button);
-			spellHasFocus = true;
 		}
 
 		return super.mouseClicked(x, y, button);
@@ -135,40 +125,37 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	public boolean mouseDragged(double x, double y, int button, double move_x, double move_y) {
 		double guiX = x - guiLeft;
 		double guiY = y - guiTop;
-		if (isScrollingAspect) {
-			this.aspectScroll = (float)((guiY - ASPECT_SCROLL_Y - 7.5F) / (ASPECT_SCROLL_HEIGHT));
-			this.aspectScroll = MathHelper.clamp(this.aspectScroll, 0.0F, 1.0F);
-			scrollAspectTo(this.aspectScroll);
-			return true;
-		} else if (isScrollingFoci) {
-			this.fociScroll = (float) ((guiY - FOCI_SCROLL_Y - 7.5F) / (FOCI_SCROLL_HEIGHT));
-			this.fociScroll = MathHelper.clamp(this.fociScroll, 0.0F, 1.0F);
-			scrollFociTo(this.fociScroll);
-			return true;
-		} else if (spellHasFocus) {
-			spellRenderer.mouseDragged(guiX - SPELL_X, guiY - SPELL_Y, button, move_x, move_y);
-			return true;
-		} else {
-			return super.mouseDragged(x, y, button, move_x, move_y);
+		if (button == 0) {
+			if (isScrollingAspect) {
+				this.aspectScroll = (float)((guiY - ASPECT_SCROLL_Y - 7.5F) / (ASPECT_SCROLL_HEIGHT));
+				this.aspectScroll = MathHelper.clamp(this.aspectScroll, 0.0F, 1.0F);
+				scrollAspectTo(this.aspectScroll);
+				return true;
+			} else if (isScrollingFoci) {
+				this.fociScroll = (float) ((guiY - FOCI_SCROLL_Y - 7.5F) / (FOCI_SCROLL_HEIGHT));
+				this.fociScroll = MathHelper.clamp(this.fociScroll, 0.0F, 1.0F);
+				scrollFociTo(this.fociScroll);
+				return true;
+			} else if (spellHasFocus) {
+				aspectContainer.spellState.drag(guiX - SPELL_X, guiY - SPELL_Y, button, move_x, move_y);
+				return true;
+			}
 		}
+		return super.mouseDragged(x, y, button, move_x, move_y);
 	}
 
 	@Override
 	public boolean mouseReleased(double x, double y, int button) {
-		Arcana.logger.debug("Before: " + spellRenderer.currentModule);
-
 		double guiX = x - guiLeft;
 		double guiY = y - guiTop;
 		if (button == 0) {
 			isScrollingAspect = false;
 			isScrollingFoci = false;
-		}
-		if (spellHasFocus) {
-			spellRenderer.mouseReleased(guiX - SPELL_X, guiY - SPELL_Y, button);
-			spellHasFocus = false;
-		}
-		if (te.currentSpell != null) {
-			if (spellRenderer.currentModule < 0) {
+			if (spellHasFocus) {
+				aspectContainer.spellState.mouseUpPlacement(guiX - SPELL_X, guiY - SPELL_Y, button, aspectContainer.getHeldAspect());
+				spellHasFocus = false;
+			}
+			if (te.currentSpell != null) {
 				for (int i = 0; i < 9; i++) {
 					int startX = MODULE_X + MODULE_DELTA * i;
 					int startY = MODULE_Y;
@@ -176,20 +163,13 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 					int endY = startY + 32;
 					if (guiX >= startX && guiX < endX
 							&& guiY >= startY && guiY < endY) {
-						spellRenderer.currentModule = i;
+						aspectContainer.spellState.moduleSelected(i);
+						break;
 					}
-				}
-			} else {
-				if (guiX >= SPELL_X && guiX < SPELL_X + SPELL_WIDTH
-						&& guiY >= SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT) {
-					spellRenderer.mouseReleased(guiX - SPELL_X, guiY - SPELL_Y, button);
-				} else {
-					spellRenderer.currentModule = -1;
 				}
 			}
 		}
 
-		Arcana.logger.debug("After: " + spellRenderer.currentModule);
 		return super.mouseReleased(x, y, button);
 	}
 
