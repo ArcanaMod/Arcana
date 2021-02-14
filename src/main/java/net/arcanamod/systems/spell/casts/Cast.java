@@ -23,6 +23,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -35,6 +37,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static net.arcanamod.aspects.Aspects.*;
@@ -67,7 +70,7 @@ public abstract class Cast implements ICast {
 	}
 
 	@Override
-	public void use(PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, ICast.Action action){
+	public void use(UUID spellUUID, PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, ICast.Action action){
 		if (action == ICast.Action.USE) {
 			if (cast.getFirst() == AIR) {
 				/*
@@ -206,7 +209,7 @@ public abstract class Cast implements ICast {
 					}
 				} else if (cast.getSecond() == SLOTH) {
 					// it takes a few seconds for the spell to cast
-					DelayedCastManager.delayedCasts.add(new DelayedCast(t -> useOnBlock(player, player.world, pos),delay));
+					DelayedCast.delayedCasts.add(new DelayedCast.Impl(t -> useOnBlock(player, player.world, pos),delay));
 
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby blocks ~5
@@ -237,6 +240,7 @@ public abstract class Cast implements ICast {
 				/*
 				- Targets self
 				 */
+				int delay = 2000;
 				int maxDistance = 8;
 
 				if (cast.getSecond() == ENVY) {
@@ -285,7 +289,10 @@ public abstract class Cast implements ICast {
 						useOnEntity(player, target);
 				} else if (cast.getSecond() == WRATH) {
 					// becomes toggalable giving the player a faint glow and repeasts the spell every few seconds
-					// TODO: Implement this.
+					player.addPotionEffect(new EffectInstance(Effects.GLOWING,10,1));
+					if (ToggleableCast.toggleableCasts.contains(Pair.of(spellUUID,new ToggleableCast.Impl(t -> useOnPlayer(player),delay))))
+						ToggleableCast.toggleableCasts.remove(Pair.of(spellUUID,new ToggleableCast.Impl(t -> useOnPlayer(player),delay)));
+					ToggleableCast.toggleableCasts.add(Pair.of(spellUUID, new ToggleableCast.Impl(t -> useOnPlayer(player),delay)));
 				} else {
 					// Default ORDER SPELL
 					useOnPlayer(player);
