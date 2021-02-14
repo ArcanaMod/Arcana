@@ -2,6 +2,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "arcana:item/dog_meat_cooked"
+    "layer0": "arcana:item/cooked_dog_meat"
   }
 }

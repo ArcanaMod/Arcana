@@ -32,4 +32,8 @@ public class ItemRequirementRenderer implements RequirementRenderer<ItemRequirem
 			tooltip.set(0, new TranslationTextComponent("requirement.item.have", tooltip.get(0)));
 		return tooltip;
 	}
+	
+	public boolean shouldDrawTickOrCross(ItemRequirement requirement, int amount){
+		return amount == 0;
+	}
 }

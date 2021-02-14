@@ -22,10 +22,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static net.arcanamod.util.Pair.of;
 
@@ -33,7 +30,17 @@ import static net.arcanamod.util.Pair.of;
  * Spell is made of SpellModules that are bound together.
  */
 public class Spell implements ISpell {
-	public SpellModule mainModule = null;
+	public SpellModule mainModule;
+	public UUID spellUUID;
+
+	public Spell(SpellModule beginModule){
+		mainModule = beginModule;
+		spellUUID = UUID.randomUUID();
+	}
+
+	public SpellModule getBeginModule() {
+		return mainModule;
+	}
 
 	private static Logger logger = LogManager.getLogger();
 
@@ -55,7 +62,7 @@ public class Spell implements ISpell {
 	 */
 	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
 		for (SpellModule module : spell.mainModule.getBoundModules()) {
-			Logic.runSpellModule(module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
+			Logic.runSpellModule(spell, module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
 		}
 	}
 
@@ -108,8 +115,7 @@ public class Spell implements ISpell {
 		 * @return Deserialized Spell
 		 */
 		public Spell deserializeNBT(CompoundNBT compound){
-			Spell spell = new Spell();
-			spell.mainModule = new StartCircle();
+			Spell spell = new Spell(new StartCircle());
 			if (compound.get("spell") != null)
 				spell.mainModule.bindModule(deserialize(spell.mainModule, (CompoundNBT) compound.get("spell"), 0));
 			return spell;
@@ -176,7 +182,7 @@ public class Spell implements ISpell {
 		/**
 		 * Run spell Recursion.
 		 */
-		private static SpellModule runSpellModule(SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
+		private static SpellModule runSpellModule(Spell spell, SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
 												  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
 			SpellModule mod = null;
 			if (toUnbound.getBoundModules().size() > 0){
@@ -188,12 +194,12 @@ public class Spell implements ISpell {
 							castMethodsAspects.get(castMethodsAspects.size()-1).setSecond(((CastMethodSin) module).aspect);
 					} else if (module instanceof CastCircle)
 						casts.add(((CastCircle) module).cast);
-					mod = runSpellModule(module, caster, sender, action, castMethodsAspects, casts);
+					mod = runSpellModule(spell, module, caster, sender, action, castMethodsAspects, casts);
 				}
 			}else{
 				for (ICast cast : casts){
 					for (Pair<Aspect,Aspect> castMethodsAspect : castMethodsAspects)
-						cast.use(caster,sender,castMethodsAspect,action);
+						cast.use(spell.spellUUID, caster, sender, castMethodsAspect, action);
 				}
 			}
 			return mod;
@@ -246,7 +252,6 @@ public class Spell implements ISpell {
 		 * @return a basic Spell
 		 */
 		public static Spell createBasicSpell(){
-			Spell spell = new Spell();
 			Connector startToCastMethod_connector = new Connector();
 			Connector castMethodToCastCircle_connector = new Connector();
 			DoubleModifierCircle doubleModifierCircle = new DoubleModifierCircle();
@@ -265,7 +270,7 @@ public class Spell implements ISpell {
 			castMethod.aspect = Aspects.FIRE;
 			castMethod.bindModule(sinMethod);
 			startToCastMethod_connector.bindModule(castMethod);
-			spell.mainModule = new StartCircle();
+			Spell spell = new Spell(new StartCircle());
 			spell.mainModule.bindModule(startToCastMethod_connector);
 			return spell;
 		}
@@ -275,9 +280,6 @@ public class Spell implements ISpell {
 		 * @return a basic Spell
 		 */
 		public static Spell createAdvancedSpell(){
-			// Create spell
-			Spell spell = new Spell();
-
 			// Create connectors
 			Connector startToCastMethod_connector = new Connector();
 			Connector castMethodToCastCircle0_connector = new Connector();
@@ -322,8 +324,10 @@ public class Spell implements ISpell {
 			// Bind "startToCastMethod_connector" to "castMethod"
 			startToCastMethod_connector.bindModule(castMethod);
 
+			// Create spell
+			Spell spell = new Spell(new StartCircle());
+
 			// Create mainModule and bind modules to mainModule
-			spell.mainModule = new StartCircle();
 			spell.mainModule.bindModule(startToCastMethod_connector);
 
 			// Return spell
@@ -335,7 +339,6 @@ public class Spell implements ISpell {
 		 * @return a basic Spell
 		 */
 		public static Spell createDebugSpell(){
-			Spell spell = new Spell();
 			CastCircle castCircle0 = new CastCircle();
 			CastCircle castCircle1 = new CastCircle();
 
@@ -345,7 +348,9 @@ public class Spell implements ISpell {
 			castMethod.aspect = Aspects.EARTH;
 			castMethod.bindModule(castCircle0);
 			castMethod.bindModule(castCircle1);
-			spell.mainModule = new StartCircle();
+
+			Spell spell = new Spell(new StartCircle());
+
 			spell.mainModule.bindModule(castMethod);
 			return spell;
 		}

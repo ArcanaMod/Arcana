@@ -20,6 +20,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
+import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
@@ -27,6 +28,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	private final JarBlock.Type jarType;
 	public AspectBattery vis = new AspectBattery(1, 100);
 	public Direction label = null;
+	public float labelRotation;
 	private double lastVis;
 	
 	private double clientVis;
@@ -38,6 +40,9 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		super(ArcanaTiles.JAR_TE.get());
 		this.jarType = type;
 		vis.getHolder(0).setIgnoreFullness(type == JarBlock.Type.VOID);
+
+		Random rand = world != null ? world.rand : new Random();
+		labelRotation = (rand.nextInt(400)-200)/10f;
 	}
 	
 	/**
@@ -125,7 +130,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	public void handleUpdateTag(CompoundNBT tag){
 		this.read(tag);
 	}
-	
+
 	@Override
 	public boolean isVisShareable(){
 		return true;

@@ -1,0 +1,18 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "arcana:purified_iron"
+  },
+  "out": {
+    "item": "arcana:altered_iron"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 6
+    }
+  ],
+  "research": [
+    "arcana:shortcut_metallurgy"
+  ]
+}

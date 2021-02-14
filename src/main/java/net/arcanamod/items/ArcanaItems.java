@@ -105,9 +105,10 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> SILVERWOOD_STICK = ITEMS.register("silverwood_stick", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> AMBER = ITEMS.register("amber", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
-	@GIM(ITEM) public static final RegistryObject<Item> IRON_NATIVE_CLUSTER = ITEMS.register("iron_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
-	@GIM(ITEM) public static final RegistryObject<Item> GOLD_NATIVE_CLUSTER = ITEMS.register("gold_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
-	@GIM(ITEM) public static final RegistryObject<Item> SILVER_NATIVE_CLUSTER = ITEMS.register("silver_native_cluster", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> PURIFIED_IRON = ITEMS.register("purified_iron", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> PURIFIED_GOLD = ITEMS.register("purified_gold", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> PURIFIED_SILVER = ITEMS.register("purified_silver", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	public static final RegistryObject<Item> ALTERED_IRON = ITEMS.register("altered_iron", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	// copper, tin, lead, etc... clusters
 	
 	// Goggles
@@ -168,6 +169,12 @@ public class ArcanaItems{
 	// Multiblock Items
 	@GIM(ITEM) public static final RegistryObject<Item> RESEARCH_TABLE_ITEM = ITEMS.register("research_table_item", () -> new BlockItem(ArcanaBlocks.RESEARCH_TABLE.get(), new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	@GIM(ITEM) public static final RegistryObject<Item> FOCI_FORGE_ITEM = ITEMS.register("foci_forge_item", () -> new BlockItem(ArcanaBlocks.FOCI_FORGE.get(), new Properties().group(Arcana.ITEMS).maxStackSize(1)));
+
+	//Food
+	public static final RegistryObject<Item> RAW_DOG_MEAT = ITEMS.register("raw_dog_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(7).saturation(0.6f).build())));
+	public static final RegistryObject<Item> RAW_CAT_MEAT = ITEMS.register("raw_cat_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(5).saturation(0.4f).build())));
+	public static final RegistryObject<Item> COOKED_DOG_MEAT = ITEMS.register("cooked_dog_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(2).saturation(0.2f).build())));
+	public static final RegistryObject<Item> COOKED_CAT_MEAT = ITEMS.register("cooked_cat_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(1).saturation(0.1f).build())));
 
 	// Creative Only
 	public static final RegistryObject<Item> CHEATERS_ARCANUM = ITEMS.register("cheaters_arcanum", () -> new CheatersResearchBookItem(new Properties().group(Arcana.ITEMS).maxStackSize(1).rarity(Rarity.EPIC), new ResourceLocation(MODID, "arcanum")));

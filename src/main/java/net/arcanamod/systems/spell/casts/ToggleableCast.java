@@ -1,11 +1,14 @@
 package net.arcanamod.systems.spell.casts;
 
+import net.arcanamod.util.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.function.Consumer;
 
-public class DelayedCast {
-	public static List<DelayedCast.Impl> delayedCasts = new ArrayList<>();
+public class ToggleableCast {
+	public static List<Pair<UUID, ToggleableCast.Impl>> toggleableCasts = new ArrayList<>();
 
 	public static class Impl {
 		public Consumer<Integer> spellEvent;

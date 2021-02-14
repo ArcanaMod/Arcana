@@ -110,9 +110,10 @@
     "item.arcana.amber": "Amber",
     "item.arcana.quicksilver": "Quicksilver",
 
-    "item.arcana.iron_native_cluster": "Iron Native Cluster",
-    "item.arcana.gold_native_cluster": "Gold Native Cluster",
-    "item.arcana.silver_native_cluster": "Silver Native Cluster",
+    "item.arcana.purified_iron": "Purified Iron",
+    "item.arcana.purified_gold": "Purified Gold",
+    "item.arcana.purified_silver": "Purified Silver",
+    "item.arcana.altered_iron": "Altered Iron",
 
     "item.arcana.research_note": "Research Note",
     "item.arcana.research_note_complete": "Complete Research Note",
@@ -459,6 +460,12 @@
     "item.arcana.music_disc_main.desc": "Yelldow - Arcana Theme",
     "item.arcana.music_disc_green_sleeves": "Music Disc",
     "item.arcana.music_disc_green_sleeves.desc": "Yelldow - Green Sleeves",
+
+    "_comment": "Food",
+    "item.arcana.raw_dog_meat": "Dog Meat",
+    "item.arcana.cooked_dog_meat": "Cooked Dog Meat",
+    "item.arcana.raw_cat_meat": "Cat Meat",
+    "item.arcana.cooked_cat_meat": "Cooked Cat Meat",
 
     "_comment": "Functional",
     "block.arcana.research_table": "Research Table",
@@ -830,9 +837,15 @@
     "research.arcana.transmutation.stage.4": "The transmutations form a loop, with Iron transforming into Silver, Silver into Gold, and Gold into Iron, which could be useful given a particular need for iron. Maybe if I was into the mundane sciences.\n\nSomething slightly more interesting is that all of these transmutations can also be performed in block form.",
 
     "research.arcana.purification": "Metal Purification",
-    "research.arcana.purification.desc": "Technology 101",
-    "research.arcana.purification.stage.1": "[metal ore -> native cluster]",
-    "research.arcana.purification.stage.2": "[just do the goddamn recipes]",
+    "research.arcana.purification.stage.1": "Simply baking ores and waiting for the metal to melt out is an incredibly inefficient process. Crushing the ores and processing them beforehand would, no doubt, be a more efficient use of ore, but take twice as much time melting and casting into shape. I have a better idea.\n\nWith alchemy, it should be possible for me to melt away all of the stone and impurities, and leave behind a pure structure of metal to be melted into ingots all at once. I just need to figure out how...",
+    "research.arcana.purification.stage.2": "This is certainly one way of doing it.\n\nBy applying ordo and perditio together, the input ore is crushed up and separated, with some crystallo required to maintain the metal's structure.\n\nThis is not a perfect method, some metal is still wasted. That's to be expected from my first attempt, I guess.\n\nNow, I'd quite like to apply this method to other metals. Hopefully, there won't be any terrible surprises down the line.",
+    "research.arcana.purification.stage.3": "Gold and silver can be purified and cast into ingots in exactly the same way as iron can. Their reactivity didn't seem to make any difference to the process.",
+
+    "research.arcana.shortcut_transmutation": "Transmutation Shortcut",
+    "research.arcana.shortcut_transmutation.text": "Extending my transmutation knowledge to purified metal turned out to be surprisingly trivial.\n\nAll transmutation recipes work on purified metal for the same cost as a single metal ingot.",
+
+    "research.arcana.shortcut_metallurgy": "Metallurgy Shortcut",
+    "research.arcana.shortcut_metallurgy.text": "Extending my metallurgy knowledge to purified metal turned out to be surprisingly trivial.\n\nPurified Iron can be converted into Altered Iron, which can be smelted into two Arcanium ingots, for the same cost as a single Arcanium ingot.",
 
     "research.arcana.alchemical_glass": "Alchemical Glass",
     "research.arcana.alchemical_glass.desc": "Advancing my material knowledge",

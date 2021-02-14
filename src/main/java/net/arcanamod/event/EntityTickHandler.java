@@ -13,7 +13,7 @@ import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.casts.DelayedCast;
-import net.arcanamod.systems.spell.casts.DelayedCastManager;
+import net.arcanamod.systems.spell.casts.ToggleableCast;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.util.LocalAxis;
@@ -72,15 +72,23 @@ public class EntityTickHandler{
 				serverPlayerEntity.sendStatusMessage(status, false);
 			}
 			
-			List<DelayedCast> spellsScheduledToDeletion = new ArrayList<>();
-			DelayedCastManager.delayedCasts.forEach(delayedCast -> {
+			List<DelayedCast.Impl> spellsScheduledToDeletion = new ArrayList<>();
+			DelayedCast.delayedCasts.forEach(delayedCast -> {
 				if(delayedCast.ticks >= delayedCast.ticksPassed){
 					delayedCast.spellEvent.accept(0);
 					spellsScheduledToDeletion.add(delayedCast);
 				}else
 					delayedCast.ticksPassed++;
 			});
-			DelayedCastManager.delayedCasts.removeAll(spellsScheduledToDeletion);
+			DelayedCast.delayedCasts.removeAll(spellsScheduledToDeletion);
+
+			ToggleableCast.toggleableCasts.forEach(toggleableCast -> {
+				if(toggleableCast.getSecond().ticks >= toggleableCast.getSecond().ticksPassed){
+					toggleableCast.getSecond().spellEvent.accept(0);
+					toggleableCast.getSecond().ticksPassed = 0;
+				}else
+					toggleableCast.getSecond().ticksPassed++;
+			});
 		}
 		
 		// Render aspect particles

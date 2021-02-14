@@ -45,4 +45,8 @@ public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRe
 		tooltip.add(new TranslationTextComponent("requirement.tag.accepts_any", requirement.getTag().getId().toString()).applyTextStyle(TextFormatting.DARK_GRAY));
 		return tooltip;
 	}
+	
+	public boolean shouldDrawTickOrCross(ItemTagRequirement requirement, int amount){
+		return amount == 0;
+	}
 }

@@ -1,10 +1,10 @@
 {
   "type": "arcana:alchemy",
   "in": {
-    "tag": "forge:ores/silver"
+    "tag": "forge:ores/iron"
   },
   "out": {
-    "item": "arcana:silver_native_cluster"
+    "item": "arcana:purified_iron"
   },
   "aspects": [
     {
@@ -19,5 +19,8 @@
       "aspect": "crystal",
       "amount": 1
     }
+  ],
+  "research": [
+    "arcana:purification@1"
   ]
 }
