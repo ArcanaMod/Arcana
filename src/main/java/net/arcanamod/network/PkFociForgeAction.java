@@ -62,7 +62,7 @@ public class PkFociForgeAction {
             ServerPlayerEntity spe = supplier.get().getSender();
             if (spe.openContainer.windowId == msg.windowId){
                 FociForgeContainer container = (FociForgeContainer)spe.openContainer;
-                SpellState state = container.spellState;
+                SpellState state = container.te.spellState;
                 switch (msg.action) {
                     case PLACE:
                         break;

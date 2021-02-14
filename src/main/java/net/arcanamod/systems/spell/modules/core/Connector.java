@@ -4,6 +4,7 @@ import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.nbt.CompoundNBT;
 
 public class Connector extends SpellModule {
+	public boolean startMarked = false;
 	@Override
 	public String getName() {
 		return "connector";

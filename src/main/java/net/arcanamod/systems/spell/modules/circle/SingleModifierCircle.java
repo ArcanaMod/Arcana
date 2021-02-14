@@ -17,6 +17,8 @@ public class SingleModifierCircle extends CircleSpellModule{
 	public CompoundNBT toNBT(){
 		CompoundNBT compound = new CompoundNBT();
 		compound.putString("aspect", aspect.toResourceLocation().toString());
+		compound.putInt("x", x);
+		compound.putInt("y", y);
 		return compound;
 	}
 }

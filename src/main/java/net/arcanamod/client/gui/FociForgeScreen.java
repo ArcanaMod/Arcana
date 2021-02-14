@@ -5,11 +5,11 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.FociForgeTileEntity;
-import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.FocusItem;
+import net.arcanamod.systems.spell.SpellState;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
@@ -26,10 +26,6 @@ import static net.arcanamod.containers.FociForgeContainer.ASPECT_V_COUNT;
 public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	public static final int WIDTH = 397;
 	public static final int HEIGHT = 283;
-
-	public static final int MODULE_X = 9;
-	public static final int MODULE_Y = 169;
-	public static final int MODULE_DELTA = 35;
 
 	public static final int SPELL_X = 119;
 	public static final int SPELL_Y = 32;
@@ -73,7 +69,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + ASPECT_SCROLL_X, guiTop + ASPECT_SCROLL_Y + (int)(ASPECT_SCROLL_HEIGHT * aspectScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
 		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + FOCI_SCROLL_X, guiTop + FOCI_SCROLL_Y + (int)(FOCI_SCROLL_HEIGHT * fociScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
-		aspectContainer.spellState.render(guiLeft, guiTop,guiLeft + SPELL_X, guiTop + SPELL_Y, SPELL_WIDTH, SPELL_HEIGHT, mouseX, mouseY);
+		te.spellState.render(guiLeft, guiTop,guiLeft + SPELL_X, guiTop + SPELL_Y, SPELL_WIDTH, SPELL_HEIGHT, mouseX, mouseY);
 	}
 
 	@Override
@@ -101,21 +97,17 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		double guiY = y - guiTop;
 
 		if (button == 0) {
-			boolean withinSpellBounds = guiX > SPELL_X && guiX < SPELL_X + SPELL_WIDTH
-										&& guiY > SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT;
-
 			if (guiX >= ASPECT_SCROLL_X && guiX < ASPECT_SCROLL_X + SCROLL_WIDTH
 				&& guiY >= ASPECT_SCROLL_Y && guiY < ASPECT_SCROLL_X + ASPECT_SCROLL_HEIGHT) {
 				isScrollingAspect = true;
 			} else if (guiX >= FOCI_SCROLL_X && guiX < FOCI_SCROLL_X + SCROLL_WIDTH
 						&& guiY >= FOCI_SCROLL_Y && guiY < FOCI_SCROLL_X + FOCI_SCROLL_HEIGHT) {
 				isScrollingFoci = true;
-			} else if (withinSpellBounds) {
-				aspectContainer.spellState.mouseDownPlacement(guiX - SPELL_X, guiY - SPELL_Y, button, aspectContainer.getHeldAspect());
+			} else if (guiX > SPELL_X && guiX < SPELL_X + SPELL_WIDTH
+						&& guiY > SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT) {
 				spellHasFocus = true;
-			} else {
-				aspectContainer.spellState.moduleSelected(-1);
 			}
+			te.spellState.mouseDown((int)(guiX - SPELL_X), (int)(guiY - SPELL_Y), button, aspectContainer.getHeldAspect());
 		}
 
 		return super.mouseClicked(x, y, button);
@@ -137,7 +129,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 				scrollFociTo(this.fociScroll);
 				return true;
 			} else if (spellHasFocus) {
-				aspectContainer.spellState.drag(guiX - SPELL_X, guiY - SPELL_Y, button, move_x, move_y);
+				te.spellState.drag((int)(guiX - SPELL_X), (int)(guiY - SPELL_Y), button, move_x, move_y);
 				return true;
 			}
 		}
@@ -151,23 +143,8 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		if (button == 0) {
 			isScrollingAspect = false;
 			isScrollingFoci = false;
-			if (spellHasFocus) {
-				aspectContainer.spellState.mouseUpPlacement(guiX - SPELL_X, guiY - SPELL_Y, button, aspectContainer.getHeldAspect());
-				spellHasFocus = false;
-			}
-			if (te.currentSpell != null) {
-				for (int i = 0; i < 9; i++) {
-					int startX = MODULE_X + MODULE_DELTA * i;
-					int startY = MODULE_Y;
-					int endX = startX + 32;
-					int endY = startY + 32;
-					if (guiX >= startX && guiX < endX
-							&& guiY >= startY && guiY < endY) {
-						aspectContainer.spellState.moduleSelected(i);
-						break;
-					}
-				}
-			}
+			spellHasFocus = false;
+			te.spellState.mouseUp((int)(guiX - SPELL_X), (int)(guiY - SPELL_Y), button, aspectContainer.getHeldAspect());
 		}
 
 		return super.mouseReleased(x, y, button);

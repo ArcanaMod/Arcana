@@ -22,9 +22,13 @@ public class CastCircle extends SpellModule {
 	@Override
 	public CompoundNBT toNBT(){
 		CompoundNBT compound = new CompoundNBT();
-		if (cast instanceof Cast)
-			compound.putString("cast", ((Cast)cast).getId().toString());
-		else compound.putString("cast", cast.getSpellAspect().toResourceLocation().toString());
+		if (cast instanceof Cast) {
+			compound.putString("cast", ((Cast) cast).getId().toString());
+		} else {
+			compound.putString("cast", cast.getSpellAspect().toResourceLocation().toString());
+		}
+		compound.putInt("x", x);
+		compound.putInt("y", y);
 		return compound;
 	}
 }

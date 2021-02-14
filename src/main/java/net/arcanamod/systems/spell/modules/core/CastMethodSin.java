@@ -1,7 +1,7 @@
 package net.arcanamod.systems.spell.modules.core;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.nbt.CompoundNBT;
 
@@ -27,6 +27,15 @@ public class CastMethodSin extends SpellModule {
 	public CompoundNBT toNBT(){
 		CompoundNBT compound = new CompoundNBT();
 		compound.putString("aspect", aspect.toResourceLocation().toString());
+		compound.putInt("x", x);
+		compound.putInt("y", y);
 		return compound;
+	}
+
+	@Override
+	public boolean mouseUp(SpellState spellState, int x, int y) {
+
+
+		return false;
 	}
 }

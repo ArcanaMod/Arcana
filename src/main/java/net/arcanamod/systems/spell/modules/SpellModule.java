@@ -30,6 +30,7 @@ public abstract class SpellModule {
 
 	private List<SpellModule> bound = new ArrayList<>();
 	public int x = 0, y = 0;
+	public boolean unplaced = false;
 
 	public static final ResourceLocation SPELL_MODULES = new ResourceLocation(Arcana.MODID, "textures/gui/container/foci_forge_minigame.png");
 
@@ -168,10 +169,10 @@ public abstract class SpellModule {
 	}
 
 	// Called when pressing the mouse button over the design area while holding a module
-	public void mouseDownPlacement(int x, int y) { }
+	public boolean mouseDown(int x, int y) { return false; }
 
 	// Called when releasing the mouse button over the design area while holding a module
-	public boolean mouseUpPlacement(SpellState spellState, int x, int y) { return false; }
+	public boolean mouseUp(SpellState spellState, int x, int y) { return false; }
 
 	// Called when rendering under the mouse with 50% transparency
 	public void renderUnderMouse(int x, int y) { }
