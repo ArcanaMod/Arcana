@@ -96,6 +96,23 @@ public abstract class SpellModule {
 		return compound;
 	}
 
+	public SpellModule findParent(SpellModule spellRoot) {
+		SpellModule parent = null;
+		for (SpellModule bound : spellRoot.getBoundModules()) {
+			if (this == bound) {
+				parent = spellRoot;
+				break;
+			} else {
+				SpellModule recurse = findParent(bound);
+				if (recurse != null) {
+					parent = recurse;
+					break;
+				}
+			}
+		}
+		return parent;
+	}
+
 	public abstract String getName();
 
 	public int getOutputAmount(){
@@ -131,6 +148,10 @@ public abstract class SpellModule {
 
 	public boolean canAssign(int x, int y, Aspect aspect) {
 		return false;
+	}
+
+	public void assign(int x, int y, Aspect aspect) {
+
 	}
 
 	public boolean canRaise(SpellState state) {

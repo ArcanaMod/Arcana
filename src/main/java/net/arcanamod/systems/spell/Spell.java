@@ -106,9 +106,6 @@ public class Spell implements ISpell {
 		return compound;
 	}
 
-	public static class Serializer{
-	}
-
 	private static class Logic {
 		private static SpellModule updateSpellStatusBarRecursive(SpellModule toUnbound, PlayerEntity player,
 																 List<Pair<Aspect,Aspect>> castMethodsAspects) {

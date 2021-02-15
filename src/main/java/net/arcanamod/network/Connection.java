@@ -3,6 +3,7 @@ package net.arcanamod.network;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.systems.spell.SpellState;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
@@ -37,6 +38,7 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkSyncPlayerFlux.class, PkSyncPlayerFlux::encode, PkSyncPlayerFlux::decode, PkSyncPlayerFlux::handle);
 		INSTANCE.registerMessage(id++, PkSwapFocus.class, PkSwapFocus::encode, PkSwapFocus::decode, PkSwapFocus::handle);
 		INSTANCE.registerMessage(id++, PkFociForgeAction.class, PkFociForgeAction::encode, PkFociForgeAction::decode, PkFociForgeAction::handle);
+		INSTANCE.registerMessage(id++, PkFociForgeReset.class, PkFociForgeReset::encode, PkFociForgeReset::decode, PkFociForgeReset::handle);
 	}
 	
 	public static void sendTo(Object packet, ServerPlayerEntity target){
@@ -77,5 +79,9 @@ public class Connection{
 
 	public static void sendFociForgeAction(int windowId, PkFociForgeAction.Type action, int ax, int ay, int bx, int by, int sequence, Aspect aspect){
 		INSTANCE.sendToServer(new PkFociForgeAction(windowId, action, ax, ay, bx, by, sequence, aspect));
+	}
+
+	public static void sendClientFociForgeReset(int windowId, SpellState state, int sequence, ServerPlayerEntity target){
+		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkFociForgeReset(windowId, state, sequence));
 	}
 }

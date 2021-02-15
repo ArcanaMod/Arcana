@@ -2,8 +2,11 @@ package net.arcanamod.systems.spell;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.FociForgeScreen;
 import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.network.Connection;
+import net.arcanamod.network.PkFociForgeAction;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.StartSpellModule;
 import net.arcanamod.systems.spell.modules.core.Connector;
@@ -39,14 +42,16 @@ public class SpellState {
     private static final float MIN_BOUND = -2048;
     private static final float MAX_BOUND = 2047;
 
-
     private float x = 0;
     private float y = 0;
-    private boolean dragging = false;
+    private boolean blockDragging = false;
+    public int sequence = 0;
+
     public boolean active = false;
     public SpellModule mainModule = null;
     public SpellModule activeModule = null; // unused on server
-    public List<SpellModule> isolated = new LinkedList<>();
+    public int activeModuleIndex = -1;
+    public Set<SpellModule> isolated = new HashSet<>();
     public Map<SpellModule, UUID> floating = new HashMap<>(); // managed by server
 
     private void move(float x, float y) {
@@ -63,23 +68,30 @@ public class SpellState {
         }
     }
 
-    public void selectModule(int i) {
+    private SpellModule moduleFromIndex(int i) {
+        SpellModule ret = null;
         Class<? extends SpellModule> Module = SpellModule.byIndex.get(i);
-        if (Module == null) {
-            // deselection logic
-            activeModule = null;
-        } else {
+        if (Module != null) {
             if ((mainModule == null && !Module.isAssignableFrom(StartSpellModule.class))
-                || mainModule != null && Module.isAssignableFrom(StartSpellModule.class)) {
+                    || mainModule != null && Module.isAssignableFrom(StartSpellModule.class)) {
 
                 try {
-                    activeModule = Module.getConstructor().newInstance();
-                    activeModule.unplaced = true;
+                    ret = Module.getConstructor().newInstance();
                 } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
             }
         }
+        return ret;
+    }
+
+    public void selectModule(int i) {
+        SpellModule newModule = moduleFromIndex(i);
+        if (newModule != null) {
+            newModule.unplaced = true;
+        }
+        activeModule = newModule;
+        activeModuleIndex = i;
     }
 
     // Called on mouse down anywhere in the gui
@@ -88,18 +100,14 @@ public class SpellState {
         // - initiate a module placement (or not)
         // - raise a module
         if (activeModule != null) {
-            boolean set = activeModule.mouseDown((int)x, (int)y);
-            if (set) {
-
-            }
+            blockDragging = activeModule.mouseDown(x, y);
         }
     }
 
     // Called when mouse down starts in the gui and mouse is dragged
     public void drag(int x, int y, int button, double move_x, double move_y) {
         // TODO: delegate some functionality to the module
-        dragging = true;
-        if (activeModule == null) {
+        if (!blockDragging && activeModule == null) {
             move((float)move_x, (float)move_y);
         }
     }
@@ -142,20 +150,20 @@ public class SpellState {
                             activeModule.y = under.y;
                             connector.startMarked = true;
                         } else {
-                            connect(getModuleAt(activeModule.x, activeModule.y), under, true);
+                            connect(activeModule.x, activeModule.y, under.x, under.y, true);
                             activeModule = null;
                         }
                     }
                 // place module
                 } else if (activeModule.unplaced) {
-                    place(x, y, activeModule, true);
+                    place(x, y, activeModuleIndex, true);
                 // lower module
                 } else if (floating.containsKey(activeModule)) {
-                    lower(activeModule.x, activeModule.y, x, y, true);
+                    lower(activeModule.x, activeModule.y, x, y, Minecraft.getInstance().player.getUniqueID(), true);
                 }
             // raise module
             } else if (under != null) {
-                raise(x, y, true);
+                raise(x, y, Minecraft.getInstance().player.getUniqueID(), true);
             }
         } else if (activeModule != null && floating.containsKey(activeModule)) {
             delete(activeModule.x, activeModule.y, true);
@@ -197,7 +205,7 @@ public class SpellState {
         SpellModule collision = getCollidingModules(x, y, module).findFirst().orElse(null);
         if (collision != null) {
             List<SpellModule> special = getCollidingModules(x, y, module)
-                .filter(collide -> module.getSpecialPoint(collide) == null)
+                .filter(collide -> module.getSpecialPoint(collide) != null)
                 .limit(2)
                 .collect(Collectors.toList());
             if (special.size() == 0) {
@@ -236,74 +244,185 @@ public class SpellState {
         return false;
     }
 
-    public void place(int x, int y, SpellModule module, boolean isRemote) {
-        if(module != null && canPlace(x, y, module)) {
+    public boolean place(int x, int y, int moduleIndex, boolean isRemote) {
+        boolean result = false;
+        SpellModule newModule = moduleFromIndex(moduleIndex);
+        if (newModule != null && canPlace(x, y, newModule)) {
             if (isRemote) {
-                // send action to server
-                // manage client-side state
+                Connection.sendFociForgeAction(Minecraft.getInstance().player.openContainer.windowId,
+                        PkFociForgeAction.Type.PLACE,
+                        x, y, moduleIndex, -1,
+                        sequence,
+                        Aspects.EMPTY);
+                sequence++;
+                if (newModule instanceof StartSpellModule) {
+                    this.x = 0;
+                    this.y = 0;
+                    move(- (int)(FociForgeScreen.SPELL_WIDTH / 2), - (int)(FociForgeScreen.SPELL_HEIGHT / 2));
+                }
             }
             // place module
+            newModule.unplaced = false;
+            if (newModule instanceof StartSpellModule) {
+                newModule.x = 0;
+                newModule.y = 0;
+                mainModule = newModule;
+            } else {
+                // TODO: Break this logic out of canPlace and call it separately
+                SpellModule collision = getCollidingModules(x, y, newModule).findFirst().orElse(null);
+                if (collision != null) {
+                    List<SpellModule> special = getCollidingModules(x, y, newModule)
+                            .filter(collide -> newModule.getSpecialPoint(collide) != null)
+                            .limit(2)
+                            .collect(Collectors.toList());
+                    SpellModule specialMain;
+                    // By the previous canPlace check, this will be valid.
+                    if (special.size() == 1) {
+                        specialMain = special.get(0);
+                    } else {
+                        specialMain = getModuleAt(x, y);
+                    }
+                    Point realPlacement = specialMain.getSpecialPoint(newModule);
+                    x = realPlacement.x;
+                    y = realPlacement.y;
+                }
+                newModule.x = x;
+                newModule.y = y;
+                isolated.add(newModule);
+            }
+            result = true;
         }
+        return result;
     }
 
-    public void raise(int x, int y, boolean isRemote) {
+    public boolean raise(int x, int y, UUID uuid, boolean isRemote) {
+        boolean result = false;
         SpellModule raising = getModuleAt(x, y);
         if (raising != null && raising.canRaise(this)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
+                Connection.sendFociForgeAction(Minecraft.getInstance().player.openContainer.windowId,
+                        PkFociForgeAction.Type.RAISE,
+                        x, y, -1, -1,
+                        sequence,
+                        Aspects.EMPTY);
+                sequence++;
             }
             // raise module
+            floating.put(raising, uuid);
+            result = true;
         }
+        return result;
     }
 
-    public void lower(int x, int y, int newX, int newY, boolean isRemote) {
-        SpellModule lowering = getModuleAt(x, y);
-
-        if (lowering != null && canPlace(x, y, lowering)) {
-            if (x == newX && y == newY) {
+    public boolean lower(int from_x, int from_y, int to_x, int to_y, UUID uuid, boolean isRemote) {
+        boolean result = false;
+        SpellModule lowering = getModuleAt(from_x, from_y);
+        UUID user = floating.get(lowering);
+        if (lowering != null && user != null && user.equals(uuid) && canPlace(from_x, from_y, lowering)) {
+            if (isRemote) {
                 // send action to server
                 // manage client-side state
+                Connection.sendFociForgeAction(Minecraft.getInstance().player.openContainer.windowId,
+                        PkFociForgeAction.Type.LOWER,
+                        from_x, from_y, to_x, to_y,
+                        sequence,
+                        Aspects.EMPTY);
+                sequence++;
             }
             // lower module
+            lowering.x = to_x;
+            lowering.y = to_y;
+            floating.remove(lowering);
+            result = true;
         }
+        return result;
     }
 
-    public void connect(SpellModule a, SpellModule b, boolean isRemote) {
-        if (a != null && b != null && a.canConnect(b)) {
+    public boolean connect(int from_x, int from_y, int to_x, int to_y, boolean isRemote) {
+        boolean result = false;
+        SpellModule root = getModuleAt(from_x, from_y);
+        SpellModule bound = getModuleAt(to_x, to_y);
+        if (root != null && bound != null && root.canConnect(bound)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
+                Connection.sendFociForgeAction(Minecraft.getInstance().player.openContainer.windowId,
+                        PkFociForgeAction.Type.CONNECT,
+                        from_x, from_y, to_x, to_y,
+                        sequence,
+                        Aspects.EMPTY);
+                sequence++;
             }
             // connect the modules
+            root.bindModule(bound);
+            if (isolated.contains(bound)) {
+                isolated.remove((bound));
+            }
+            result = true;
         }
+        return result;
     }
 
-    public void delete(int x, int y, boolean isRemote) {
+    public boolean delete(int x, int y, boolean isRemote) {
+        boolean result = false;
         SpellModule deleting = getModuleAt(x, y);
-        if (isValidDeletion(deleting)) {
+        if (deleting != null && isValidDeletion(deleting)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
+                Connection.sendFociForgeAction(Minecraft.getInstance().player.openContainer.windowId,
+                        PkFociForgeAction.Type.DELETE,
+                        x, y, -1, -1,
+                        sequence,
+                        Aspects.EMPTY);
+                sequence++;
             }
             // delete module
+            SpellModule parent = deleting.findParent(mainModule);
+            if (parent == null) {
+                for (SpellModule iso : isolated) {
+                    parent = deleting.findParent(iso);
+                    if (parent != null) {
+                        break;
+                    }
+                }
+            }
+            if (parent != null) {
+                parent.unbindModule(deleting);
+            }
+            for (SpellModule bound : deleting.getBoundModules()) {
+                if (bound != null) {
+                    deleting.unbindModule(bound);
+                    isolated.add(bound);
+                }
+            }
+            result = true;
         }
+        return result;
     }
 
-    public void assign(int x, int y, Aspect aspect, boolean isRemote) {
+    public boolean assign(int x, int y, Aspect aspect, boolean isRemote) {
+        boolean result = false;
         SpellModule assigning = getModuleAt(x, y);
         if (assigning != null && assigning.canAssign(x, y, aspect)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
+                Connection.sendFociForgeAction(Minecraft.getInstance().player.openContainer.windowId,
+                        PkFociForgeAction.Type.ASSIGN,
+                        x, y, -1 ,-1,
+                        sequence,
+                        Aspects.EMPTY);
+                sequence++;
             }
             // assign aspect to module
+            assigning.assign(x, y, aspect);
+            result = true;
         }
+        return result;
     }
-
-
-
-
 
     public void render(int guiLeft, int guiTop, int spellLeft, int spellTop, int width, int height, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();

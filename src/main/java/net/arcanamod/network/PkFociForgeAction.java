@@ -14,8 +14,6 @@ import java.util.function.Supplier;
 
 public class PkFociForgeAction {
 
-    public static final Logger LOGGER = LogManager.getLogger();
-
     int windowId;
     Type action;
     int ax, ay;
@@ -30,6 +28,7 @@ public class PkFociForgeAction {
         this.ay = ay;
         this.bx = bx;
         this.by = by;
+        this.sequence = sequence;
         this.aspect = aspect;
     }
 
@@ -60,22 +59,39 @@ public class PkFociForgeAction {
     public static void handle(PkFociForgeAction msg, Supplier<NetworkEvent.Context> supplier){
         supplier.get().enqueueWork(() -> {
             ServerPlayerEntity spe = supplier.get().getSender();
-            if (spe.openContainer.windowId == msg.windowId){
+            if (spe.currentWindowId == msg.windowId) {
                 FociForgeContainer container = (FociForgeContainer)spe.openContainer;
                 SpellState state = container.te.spellState;
-                switch (msg.action) {
-                    case PLACE:
-                        break;
-                    case RAISE:
-                        break;
-                    case LOWER:
-                        break;
-                    case CONNECT:
-                        break;
-                    case DELETE:
-                        break;
-                    case ASSIGN:
-                        break;
+                boolean valid = false;
+                if (msg.sequence == state.sequence) {
+                    switch (msg.action) {
+                        case PLACE:
+                            valid = state.place(msg.ax, msg.ay, msg.bx, false);
+                            break;
+                        case RAISE:
+                            valid = state.raise(msg.ax, msg.ay, spe.getUniqueID(), false);
+                            break;
+                        case LOWER:
+                            valid = state.lower(msg.ax, msg.ay, msg.bx, msg.by, spe.getUniqueID(), false);
+                            break;
+                        case CONNECT:
+                            valid = state.connect(msg.ax, msg.ay, msg.bx, msg.by, false);
+                            break;
+                        case DELETE:
+                            valid = state.delete(msg.ax, msg.ay, false);
+                            break;
+                        case ASSIGN:
+                            valid = state.assign(msg.ax, msg.ay, msg.aspect, false);
+                            break;
+                        case RETRIEVE:
+                            // intentionally trigger state resend request
+                            break;
+                    }
+                }
+                if (valid) {
+                    Connection.sendClientFociForgeReset(spe.currentWindowId, state, state.sequence, spe);
+                } else {
+                    state.sequence++;
                 }
             }
         });
@@ -88,6 +104,7 @@ public class PkFociForgeAction {
         LOWER,
         CONNECT,
         DELETE,
-        ASSIGN
+        ASSIGN,
+        RETRIEVE
     }
 }
