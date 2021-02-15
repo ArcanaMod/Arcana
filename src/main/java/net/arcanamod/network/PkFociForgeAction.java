@@ -89,9 +89,10 @@ public class PkFociForgeAction {
                     }
                 }
                 if (valid) {
-                    Connection.sendClientFociForgeReset(spe.currentWindowId, state, state.sequence, spe);
-                } else {
                     state.sequence++;
+                    container.te.markDirty();
+                } else {
+                    Connection.sendClientFociForgeReset(spe.currentWindowId, state, state.sequence, spe);
                 }
             }
         });

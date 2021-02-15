@@ -13,7 +13,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -42,11 +41,11 @@ public class ExchangeCast extends Cast {
 	}
 
 	public int getMiningLevel(){
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 2);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"firstModifier"), 2);
 	}
 
 	public int getSize(){
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 1);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"secondModifier"), 1);
 	}
 
 	@Override

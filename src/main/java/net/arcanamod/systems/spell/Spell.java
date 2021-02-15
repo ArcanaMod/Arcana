@@ -13,8 +13,6 @@ import net.arcanamod.systems.spell.modules.core.*;
 import net.arcanamod.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -24,7 +22,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 import static net.arcanamod.util.Pair.of;
@@ -89,9 +86,8 @@ public class Spell implements ISpell {
 	 */
 	public static Spell fromNBT(CompoundNBT compound){
 		Spell spell = new Spell();
-		spell.mainModule = new StartCircle();
 		if (compound.get("spell") != null) {
-			spell.mainModule = SpellModule.fromNBT(compound.getCompound("spell"), 0);
+			spell.mainModule = SpellModule.fromNBTFull(compound.getCompound("spell"), 0);
 		}
 		return spell;
 	}
@@ -102,7 +98,9 @@ public class Spell implements ISpell {
 	 * @return Serialized Spell
 	 */
 	public CompoundNBT toNBT(CompoundNBT compound){
-		compound.put("spell", mainModule.toNBT(new CompoundNBT(), 0));
+		if (mainModule != null) {
+			compound.put("spell", mainModule.toNBTFull(new CompoundNBT(), 0));
+		}
 		return compound;
 	}
 
@@ -156,7 +154,7 @@ public class Spell implements ISpell {
 		}
 
 		private static int blendAndGetColor(SpellModule toUnbound, int color){
-			if (toUnbound.getBoundModules().size() > 0){
+			if (toUnbound != null && toUnbound.getBoundModules().size() > 0){
 				for (SpellModule module : toUnbound.getBoundModules()) {
 					if (module instanceof CastCircle)
 						if (color != 0x000000)
@@ -169,7 +167,7 @@ public class Spell implements ISpell {
 		}
 
 		public static SpellCosts getSpellCost(SpellModule toUnbound, SpellCosts cost) {
-			if (toUnbound.getBoundModules().size() > 0){
+			if (toUnbound != null && toUnbound.getBoundModules().size() > 0){
 				for (SpellModule module : toUnbound.getBoundModules()) {
 					if (module instanceof CastMethod) {
 						Aspect aspect = ((CastMethod)module).aspect;

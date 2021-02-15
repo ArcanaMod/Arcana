@@ -45,14 +45,21 @@ public class SpellState {
     private float x = 0;
     private float y = 0;
     private boolean blockDragging = false;
-    public int sequence = 0;
 
+    public int sequence = 0;
+    public boolean spellModified = false;
     public boolean active = false;
-    public SpellModule mainModule = null;
+    public Spell currentSpell = null;
     public SpellModule activeModule = null; // unused on server
     public int activeModuleIndex = -1;
     public Set<SpellModule> isolated = new HashSet<>();
     public Map<SpellModule, UUID> floating = new HashMap<>(); // managed by server
+
+    public void replaceSpell(Spell spell) {
+        // ez pz copy function
+        currentSpell = Spell.fromNBT(spell.toNBT(new CompoundNBT()));
+        spellModified = false;
+    }
 
     private void move(float x, float y) {
         this.x = Math.min(Math.max(MIN_BOUND, this.x + x), MAX_BOUND);
@@ -72,8 +79,8 @@ public class SpellState {
         SpellModule ret = null;
         Class<? extends SpellModule> Module = SpellModule.byIndex.get(i);
         if (Module != null) {
-            if ((mainModule == null && !Module.isAssignableFrom(StartSpellModule.class))
-                    || mainModule != null && Module.isAssignableFrom(StartSpellModule.class)) {
+            if ((currentSpell.mainModule == null && Module.isAssignableFrom(StartSpellModule.class))
+                    || (currentSpell.mainModule != null && !Module.isAssignableFrom(StartSpellModule.class))) {
 
                 try {
                     ret = Module.getConstructor().newInstance();
@@ -138,7 +145,10 @@ public class SpellState {
             SpellModule under = getModuleAt(x, y);
             // assign aspect
             if (currentAspect != null) {
-                assign(x, y, currentAspect, true);
+                boolean success = assign(x, y, currentAspect, true);
+                if (success) {
+                    currentAspect = Aspects.EMPTY;
+                }
             } else if (activeModule != null) {
                 // mark connection
                 // TODO: Should this be hardcoded? Connections aren't truly a module
@@ -150,23 +160,37 @@ public class SpellState {
                             activeModule.y = under.y;
                             connector.startMarked = true;
                         } else {
-                            connect(activeModule.x, activeModule.y, under.x, under.y, true);
-                            activeModule = null;
+                            boolean success = connect(activeModule.x, activeModule.y, under.x, under.y, true);
+                            if (success) {
+                                activeModule = null;
+                            }
                         }
                     }
                 // place module
                 } else if (activeModule.unplaced) {
-                    place(x, y, activeModuleIndex, true);
+                    boolean success = place(x, y, activeModuleIndex, true);
+                    if (success) {
+                        activeModule = null;
+                    }
                 // lower module
                 } else if (floating.containsKey(activeModule)) {
-                    lower(activeModule.x, activeModule.y, x, y, Minecraft.getInstance().player.getUniqueID(), true);
+                    boolean success = lower(activeModule.x, activeModule.y, x, y, Minecraft.getInstance().player.getUniqueID(), true);
+                    if (success) {
+                        activeModule = null;
+                    }
                 }
             // raise module
             } else if (under != null) {
-                raise(x, y, Minecraft.getInstance().player.getUniqueID(), true);
+                boolean success = raise(x, y, Minecraft.getInstance().player.getUniqueID(), true);
+                if (success) {
+                    activeModule = under;
+                }
             }
         } else if (activeModule != null && floating.containsKey(activeModule)) {
-            delete(activeModule.x, activeModule.y, true);
+            boolean success = delete(activeModule.x, activeModule.y, true);
+            if (success) {
+                activeModule = null;
+            }
         // select out of bounds, active module not raised. Just remove the active module.
         } else {
             activeModule = null;
@@ -182,7 +206,7 @@ public class SpellState {
     }
 
     private Stream<SpellModule> getPlacedModules() {
-        Stream<SpellModule> stream = getBoundRecurse(mainModule);
+        Stream<SpellModule> stream = getBoundRecurse(currentSpell.mainModule);
         for (SpellModule module : isolated) {
             stream = Stream.concat(stream, getBoundRecurse(module));
         }
@@ -266,7 +290,9 @@ public class SpellState {
             if (newModule instanceof StartSpellModule) {
                 newModule.x = 0;
                 newModule.y = 0;
-                mainModule = newModule;
+                this.x = x - this.x;
+                this.y = y - this.y;
+                currentSpell.mainModule = newModule;
             } else {
                 // TODO: Break this logic out of canPlace and call it separately
                 SpellModule collision = getCollidingModules(x, y, newModule).findFirst().orElse(null);
@@ -290,6 +316,7 @@ public class SpellState {
                 newModule.y = y;
                 isolated.add(newModule);
             }
+            spellModified = true;
             result = true;
         }
         return result;
@@ -335,6 +362,7 @@ public class SpellState {
             lowering.x = to_x;
             lowering.y = to_y;
             floating.remove(lowering);
+            spellModified = true;
             result = true;
         }
         return result;
@@ -360,6 +388,7 @@ public class SpellState {
             if (isolated.contains(bound)) {
                 isolated.remove((bound));
             }
+            spellModified = true;
             result = true;
         }
         return result;
@@ -380,7 +409,7 @@ public class SpellState {
                 sequence++;
             }
             // delete module
-            SpellModule parent = deleting.findParent(mainModule);
+            SpellModule parent = deleting.findParent(currentSpell.mainModule);
             if (parent == null) {
                 for (SpellModule iso : isolated) {
                     parent = deleting.findParent(iso);
@@ -398,6 +427,7 @@ public class SpellState {
                     isolated.add(bound);
                 }
             }
+            spellModified = true;
             result = true;
         }
         return result;
@@ -419,6 +449,7 @@ public class SpellState {
             }
             // assign aspect to module
             assigning.assign(x, y, aspect);
+            spellModified = true;
             result = true;
         }
         return result;
@@ -427,29 +458,7 @@ public class SpellState {
     public void render(int guiLeft, int guiTop, int spellLeft, int spellTop, int width, int height, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
 
-        mc.getTextureManager().bindTexture(FociForgeScreen.BG);
-        if (mainModule != null) {
-            // Start point
-
-            for (int i = 1; i < 9; i++) {
-                UiUtil.drawModalRectWithCustomSizedTexture(
-                        guiLeft + FociForgeScreen.SPELL_X + TRAY_X + TRAY_DELTA * i,
-                        guiTop + FociForgeScreen.SPELL_Y + TRAY_Y,
-                        32 * i, 313, 32, 32, 397, 397);
-            }
-        }
-
         mc.getTextureManager().bindTexture(SPELL_RESOURCES);
-        // Render selected module under mouse cursor
-        if (activeModule != null) {
-            GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
-            activeModule.renderUnderMouse(mouseX, mouseY);
-            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-        }
-
-        GL11.glPushMatrix();
-        // move 0, 0 to spell window
-        GL11.glTranslatef(spellLeft, spellTop, 0);
 
         // Scissors test: In this section, rendering outside this window does nothing.
         double gui_scale = mc.getMainWindow().getGuiScaleFactor();
@@ -457,8 +466,11 @@ public class SpellState {
         // TODO: De-magic '85' because I don't know what it is
         GL11.glScissor((int)(gui_scale * spellLeft), (int)(gui_scale * (spellTop + 85)), (int)(gui_scale * width), (int)(gui_scale * height));
 
+        GL11.glPushMatrix();
+        // move 0, 0 to spell window
+        GL11.glTranslatef(spellLeft, spellTop, 0);
         // draw background
-        int bg_texX = (mainModule == null ? 16 : 0);
+        int bg_texX = (currentSpell == null ? 16 : 0);
         float start_x = getTopLeftBackgroundLocation(this.x);
         float start_y = getTopLeftBackgroundLocation(this.y);
         for (float bg_x = start_x; bg_x < width + 16; bg_x += 16) {
@@ -467,9 +479,12 @@ public class SpellState {
             }
         }
 
+        // render according to background
+        GL11.glTranslatef(x, y, 0);
+
         Queue<Pair<SpellModule, SpellModule>> renderQueue = new LinkedList<>();
-        if (mainModule != null) {
-            renderQueue.add(new Pair<>(null, mainModule));
+        if (currentSpell.mainModule != null) {
+            renderQueue.add(new Pair<>(null, currentSpell.mainModule));
         }
         for (SpellModule floater : isolated) {
            renderQueue.add(new Pair<>(null, floater));
@@ -499,19 +514,38 @@ public class SpellState {
             }
         }
 
-        GL11.glDisable(GL11.GL_SCISSOR_TEST);
         GL11.glPopMatrix();
+        GL11.glDisable(GL11.GL_SCISSOR_TEST);
+
+        // Render selected module under mouse cursor
+        if (activeModule != null) {
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
+            activeModule.renderUnderMouse(mouseX, mouseY);
+            GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+        }
+
+        mc.getTextureManager().bindTexture(FociForgeScreen.BG);
+        if (currentSpell != null) {
+            // Start point
+
+            for (int i = 0; i < 9; i++) {
+                UiUtil.drawModalRectWithCustomSizedTexture(
+                        guiLeft + FociForgeScreen.SPELL_X + TRAY_X + TRAY_DELTA * i,
+                        guiTop + FociForgeScreen.SPELL_Y + TRAY_Y,
+                        32 * i, 313, 32, 32, 397, 397);
+            }
+        }
     }
 
     public static SpellState fromNBT(CompoundNBT compound) {
         SpellState state = new SpellState();
         if (compound.contains("mainmodule")) {
-            state.mainModule = SpellModule.fromNBT((CompoundNBT)compound.get("mainmodule"), 0);
+            state.currentSpell.mainModule = SpellModule.fromNBTFull((CompoundNBT)compound.get("mainmodule"), 0);
         }
         if (compound.contains("isolated")) {
             ListNBT isolatedList = (ListNBT)compound.get("isolated");
             for (INBT iso : isolatedList) {
-                state.isolated.add(SpellModule.fromNBT((CompoundNBT)iso, 0));
+                state.isolated.add(SpellModule.fromNBTFull((CompoundNBT)iso, 0));
             }
         }
         if (compound.contains("floating")) {
@@ -529,13 +563,16 @@ public class SpellState {
                 }
             }
         }
+        if (compound.contains("modified")) {
+            state.spellModified = compound.getBoolean("modified");
+        }
         return state;
     }
 
     public CompoundNBT toNBT(CompoundNBT compound) {
         ListNBT isolatedNBT = new ListNBT();
         for (SpellModule iso : isolated) {
-            isolatedNBT.add(iso.toNBT(new CompoundNBT(), 0));
+            isolatedNBT.add(iso.toNBTFull(new CompoundNBT(), 0));
         }
         ListNBT floatingNBT = new ListNBT();
         for (Map.Entry<SpellModule, UUID> flo : floating.entrySet()) {
@@ -545,9 +582,12 @@ public class SpellState {
             floNBT.putUniqueId("id", flo.getValue());
             floatingNBT.add(floNBT);
         }
-        compound.put("mainmodule", mainModule.toNBT(new CompoundNBT(), 0));
+        if (currentSpell.mainModule != null) {
+            compound.put("mainmodule", currentSpell.mainModule.toNBTFull(new CompoundNBT(), 0));
+        }
         compound.put("isolated", isolatedNBT);
         compound.put("floating", floatingNBT);
+        compound.putBoolean("modified", spellModified);
         return compound;
     }
 }

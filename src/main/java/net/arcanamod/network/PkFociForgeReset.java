@@ -54,13 +54,4 @@ public class PkFociForgeReset {
         });
         supplier.get().setPacketHandled(true);
     }
-
-    public enum Type {
-        PLACE,
-        RAISE,
-        LOWER,
-        CONNECT,
-        DELETE,
-        ASSIGN
-    }
 }

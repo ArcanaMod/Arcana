@@ -113,10 +113,8 @@ public class FociForgeContainer extends AspectContainer {
     private void onFociSlotChange() {
         // if spell changed, keep it until saved or discarded
         // else replace current spell with nothing/new spell
-        if (!te.spellModified) {
-            if (te.focus() == ItemStack.EMPTY) {
-                te.replaceSpell(null);
-            } else if (te.focus().getItem() == ArcanaItems.FOCUS_PARTS.get()) {
+        if (!te.spellState.spellModified) {
+            if (te.focus() == ItemStack.EMPTY || te.focus().getItem() == ArcanaItems.FOCUS_PARTS.get()) {
                 te.replaceSpell(new Spell());
             } else if (te.focus().getItem() == ArcanaItems.DEFAULT_FOCUS.get()) {
                 te.replaceSpell(Spell.fromNBT(te.focus().getOrCreateTag()));

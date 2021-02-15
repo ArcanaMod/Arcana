@@ -95,8 +95,12 @@ public class AspectUtils {
 		return I18n.format("aspect." + aspect.name().toLowerCase());
 	}
 
-	public static Aspect deserializeAspect(CompoundNBT compound, String deserializableAspect){
-		return Aspect.fromResourceLocation(new ResourceLocation(compound.getString(deserializableAspect)));
+	public static void putAspect(CompoundNBT compound, String key, Aspect aspect){
+		compound.putString(key, aspect.toResourceLocation().toString());
+	}
+
+	public static Aspect getAspect(CompoundNBT compound, String key){
+		return Aspect.fromResourceLocation(new ResourceLocation(compound.getString(key)));
 	}
 
 	public static String aspectHandlerToJson(IAspectHandler handler) {

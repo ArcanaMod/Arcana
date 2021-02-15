@@ -13,7 +13,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
@@ -40,11 +39,11 @@ public class ArmourCast extends Cast {
 	}
 
 	public int getWardingDuration() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 10);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"firstModifier"), 10);
 	}
 
 	public int getAmplifier() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 1);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"secondModifier"), 1);
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
@@ -44,15 +43,15 @@ public class MiningCast extends Cast {
 	}
 
 	public int getMiningLevel() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 2);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"firstModifier"), 2);
 	}
 
 	public int getExplosivePower() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 0);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"secondModifier"), 0);
 	}
 
 	public int getFortune() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"sinModifier"), 0);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"sinModifier"), 0);
 	}
 
 	@Override

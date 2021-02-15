@@ -32,7 +32,6 @@ public class FociForgeTileEntity extends LockableTileEntity{
 
 	public Spell currentSpell = null;
 	public SpellState spellState = new SpellState();
-	public boolean spellModified = false;
 	public FociForgeTileEntity(){
 		super(ArcanaTiles.FOCI_FORGE_TE.get());
 	}
@@ -50,11 +49,8 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		if (compound.contains("items")) {
 			items.deserializeNBT(compound.getCompound("items"));
 		}
-
-		if (compound.contains("spell")) {
-			currentSpell = Spell.fromNBT(compound);
-		} else {
-			currentSpell = null;
+		if (compound.contains("spellstate")) {
+			spellState = SpellState.fromNBT(compound);
 		}
 	}
 
@@ -62,9 +58,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	public CompoundNBT write(CompoundNBT compound){
 		super.write(compound);
 		compound.put("items", items.serializeNBT());
-		if (currentSpell != null) {
-			currentSpell.toNBT(compound);
-		}
+		compound.put("spellstate", spellState.toNBT(compound));
 		return compound;
 	}
 	
@@ -162,9 +156,9 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		}
 	}
 
-	public void replaceSpell(@Nullable Spell newSpell) {
+	public void replaceSpell(@Nonnull Spell newSpell) {
 		currentSpell = newSpell;
-		spellModified = false;
+		spellState.replaceSpell(currentSpell);
 		markDirty();
 	}
 }

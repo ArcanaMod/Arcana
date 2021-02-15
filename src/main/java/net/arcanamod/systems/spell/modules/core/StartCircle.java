@@ -4,7 +4,6 @@ import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.StartSpellModule;
-import net.minecraft.nbt.CompoundNBT;
 
 public class StartCircle extends SpellModule implements StartSpellModule {
 
@@ -19,10 +18,27 @@ public class StartCircle extends SpellModule implements StartSpellModule {
 	}
 
 	@Override
-	public CompoundNBT toNBT() {
-		CompoundNBT compound = new CompoundNBT();
-		compound.putInt("x", x);
-		compound.putInt("y", y);
-		return compound;
+	public boolean canRaise(SpellState state) {
+		return state.currentSpell.mainModule == this && getBoundModules().size() == 0;
+	}
+
+	@Override
+	public int getHeight() {
+		return 32;
+	}
+
+	@Override
+	public int getWidth() {
+		return 32;
+	}
+
+	@Override
+	public void renderUnderMouse(int mouseX, int mouseY) {
+		UiUtil.drawTexturedModalRect(mouseX - 16, mouseY - 16, 0, 16, 32, 32);
+	}
+
+	@Override
+	public void renderInMinigame(int mouseX, int mouseY) {
+		UiUtil.drawTexturedModalRect(this.x - 16, this.y - 16, 0, 16, 32, 32);
 	}
 }
