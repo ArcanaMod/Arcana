@@ -9,6 +9,9 @@ import net.arcanamod.systems.spell.modules.StartSpellModule;
 import net.arcanamod.systems.spell.modules.core.Connector;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -379,5 +382,53 @@ public class SpellState {
 
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
         GL11.glPopMatrix();
+    }
+
+    public static SpellState fromNBT(CompoundNBT compound) {
+        SpellState state = new SpellState();
+        if (compound.contains("mainmodule")) {
+            state.mainModule = SpellModule.fromNBT((CompoundNBT)compound.get("mainmodule"), 0);
+        }
+        if (compound.contains("isolated")) {
+            ListNBT isolatedList = (ListNBT)compound.get("isolated");
+            for (INBT iso : isolatedList) {
+                state.isolated.add(SpellModule.fromNBT((CompoundNBT)iso, 0));
+            }
+        }
+        if (compound.contains("floating")) {
+            ListNBT floatingList = (ListNBT)compound.get("isolated");
+            for (INBT flo : floatingList) {
+                CompoundNBT floGet = (CompoundNBT)flo;
+                if (floGet.contains("x") && floGet.contains("y") && floGet.contains("id")) {
+                    int x = floGet.getInt("x");
+                    int y = floGet.getInt("y");
+                    UUID id = floGet.getUniqueId("id");
+                    SpellModule found = state.getModuleAt(x, y);
+                    if (found != null) {
+                        state.floating.put(found, id);
+                    }
+                }
+            }
+        }
+        return state;
+    }
+
+    public CompoundNBT toNBT(CompoundNBT compound) {
+        ListNBT isolatedNBT = new ListNBT();
+        for (SpellModule iso : isolated) {
+            isolatedNBT.add(iso.toNBT(new CompoundNBT(), 0));
+        }
+        ListNBT floatingNBT = new ListNBT();
+        for (Map.Entry<SpellModule, UUID> flo : floating.entrySet()) {
+            CompoundNBT floNBT = new CompoundNBT();
+            floNBT.putInt("x", flo.getKey().x);
+            floNBT.putInt("y", flo.getKey().y);
+            floNBT.putUniqueId("id", flo.getValue());
+            floatingNBT.add(floNBT);
+        }
+        compound.put("mainmodule", mainModule.toNBT(new CompoundNBT(), 0));
+        compound.put("isolated", isolatedNBT);
+        compound.put("floating", floatingNBT);
+        return compound;
     }
 }
