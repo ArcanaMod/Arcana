@@ -79,14 +79,14 @@ public class SpellState {
         SpellModule ret = null;
         Class<? extends SpellModule> Module = SpellModule.byIndex.get(i);
         if (Module != null) {
-            if ((currentSpell.mainModule == null && Module.isAssignableFrom(StartSpellModule.class))
-                    || (currentSpell.mainModule != null && !Module.isAssignableFrom(StartSpellModule.class))) {
-
-                try {
-                    ret = Module.getConstructor().newInstance();
-                } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-                    e.printStackTrace();
-                }
+            try {
+                ret = Module.getConstructor().newInstance();
+            } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+            if ((currentSpell.mainModule == null && !(ret instanceof StartSpellModule))
+                || (currentSpell.mainModule != null && (ret instanceof StartSpellModule))) {
+                ret = null;
             }
         }
         return ret;
@@ -279,19 +279,14 @@ public class SpellState {
                         sequence,
                         Aspects.EMPTY);
                 sequence++;
-                if (newModule instanceof StartSpellModule) {
-                    this.x = 0;
-                    this.y = 0;
-                    move(- (int)(FociForgeScreen.SPELL_WIDTH / 2), - (int)(FociForgeScreen.SPELL_HEIGHT / 2));
-                }
             }
             // place module
             newModule.unplaced = false;
             if (newModule instanceof StartSpellModule) {
                 newModule.x = 0;
                 newModule.y = 0;
-                this.x = x - this.x;
-                this.y = y - this.y;
+                this.x = -x;
+                this.y = -y;
                 currentSpell.mainModule = newModule;
             } else {
                 // TODO: Break this logic out of canPlace and call it separately
@@ -539,8 +534,8 @@ public class SpellState {
 
     public static SpellState fromNBT(CompoundNBT compound) {
         SpellState state = new SpellState();
-        if (compound.contains("mainmodule")) {
-            state.currentSpell.mainModule = SpellModule.fromNBTFull((CompoundNBT)compound.get("mainmodule"), 0);
+        if (compound.contains("spell")) {
+            state.currentSpell = Spell.fromNBT(compound);
         }
         if (compound.contains("isolated")) {
             ListNBT isolatedList = (ListNBT)compound.get("isolated");
@@ -582,8 +577,8 @@ public class SpellState {
             floNBT.putUniqueId("id", flo.getValue());
             floatingNBT.add(floNBT);
         }
-        if (currentSpell.mainModule != null) {
-            compound.put("mainmodule", currentSpell.mainModule.toNBTFull(new CompoundNBT(), 0));
+        if (currentSpell != null) {
+            currentSpell.toNBT(compound);
         }
         compound.put("isolated", isolatedNBT);
         compound.put("floating", floatingNBT);
