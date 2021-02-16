@@ -3,7 +3,9 @@ package net.arcanamod.systems.spell.modules.core;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.Arrays;
@@ -64,5 +66,21 @@ public class CastMethodSin extends SpellModule {
 	@Override
 	public int getWidth() {
 		return 46;
+	}
+
+	@Override
+	public void renderUnderMouse(int mouseX, int mouseY) {
+		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 153, 54, getWidth(), getHeight());
+		UiUtil.drawTexturedModalRect(mouseX + 4, mouseY - 6, 64, 0, 16, 16);
+	}
+
+	@Override
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
+		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 153, 54, getWidth(), getHeight());
+		if (aspect == Aspects.EMPTY) {
+			UiUtil.drawTexturedModalRect(x + 4, y - 6, 64, 0, 16, 16);
+		} else {
+			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x + 4, y - 6);
+		}
 	}
 }

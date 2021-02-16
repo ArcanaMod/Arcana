@@ -3,8 +3,10 @@ package net.arcanamod.systems.spell.modules.circle;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.modules.CircleSpellModule;
 import net.arcanamod.systems.spell.modules.SpellModule;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.awt.*;
@@ -33,7 +35,14 @@ public class SingleModifierCircle extends CircleSpellModule{
 
 	@Override
 	public boolean canConnectSpecial(SpellModule connectingModule) {
-		return (connectingModule instanceof SinModifierCircle);
+		boolean alreadyConnected = false;
+		for (SpellModule module : getBoundModules()) {
+			if (module != connectingModule && module instanceof SinModifierCircle) {
+				alreadyConnected = true;
+				break;
+			}
+		}
+		return (!alreadyConnected && connectingModule instanceof SinModifierCircle);
 	}
 
 	@Override
@@ -64,11 +73,27 @@ public class SingleModifierCircle extends CircleSpellModule{
 
 	@Override
 	public int getHeight() {
-		return 72;
+		return 80;
 	}
 
 	@Override
 	public int getWidth() {
-		return 72;
+		return 80;
+	}
+
+	@Override
+	public void renderUnderMouse(int mouseX, int mouseY) {
+		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 48, getWidth(), getHeight());
+		UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 35, 48, 0, 16, 16);
+	}
+
+	@Override
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
+		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 48, getWidth(), getHeight());
+		if (aspect == Aspects.EMPTY) {
+			UiUtil.drawTexturedModalRect(x - 8, y - 35, 48, 0, 16, 16);
+		} else {
+			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x - 8, y - 35);
+		}
 	}
 }

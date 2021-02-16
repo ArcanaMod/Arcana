@@ -50,7 +50,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 			items.deserializeNBT(compound.getCompound("items"));
 		}
 		if (compound.contains("spellstate")) {
-			spellState = SpellState.fromNBT(compound);
+			spellState = SpellState.fromNBT(compound.getCompound("spellstate"));
 		}
 	}
 
@@ -58,7 +58,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	public CompoundNBT write(CompoundNBT compound){
 		super.write(compound);
 		compound.put("items", items.serializeNBT());
-		compound.put("spellstate", spellState.toNBT(compound));
+		compound.put("spellstate", spellState.toNBT(new CompoundNBT()));
 		return compound;
 	}
 	

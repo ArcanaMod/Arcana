@@ -1,7 +1,9 @@
 package net.arcanamod.systems.spell.modules.core;
 
+import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.SpellModule;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 
 public class Connector extends SpellModule {
@@ -24,5 +26,15 @@ public class Connector extends SpellModule {
 	@Override
 	public int getOutputAmount() {
 		return 1;
+	}
+
+	@Override
+	public void renderUnderMouse(int mouseX, int mouseY) {
+		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 16, getWidth(), getHeight());
+	}
+
+	@Override
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
+		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 0, 16, getWidth(), getHeight());
 	}
 }

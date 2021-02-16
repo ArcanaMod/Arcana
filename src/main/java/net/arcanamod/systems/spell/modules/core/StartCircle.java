@@ -4,6 +4,7 @@ import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.StartSpellModule;
+import net.minecraft.client.renderer.ItemRenderer;
 
 public class StartCircle extends SpellModule implements StartSpellModule {
 
@@ -34,11 +35,11 @@ public class StartCircle extends SpellModule implements StartSpellModule {
 
 	@Override
 	public void renderUnderMouse(int mouseX, int mouseY) {
-		UiUtil.drawTexturedModalRect(mouseX - 16, mouseY - 16, 0, 16, 32, 32);
+		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 16, getWidth(), getHeight());
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY) {
-		UiUtil.drawTexturedModalRect(this.x - 16, this.y - 16, 0, 16, 32, 32);
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
+		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 0, 16, getWidth(), getHeight());
 	}
 }

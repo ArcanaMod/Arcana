@@ -3,13 +3,11 @@ package net.arcanamod.systems.spell.modules;
 import com.google.common.collect.Maps;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.systems.spell.SpellState;
-import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
-import net.arcanamod.systems.spell.modules.circle.SinModifierCircle;
 import net.arcanamod.systems.spell.modules.circle.SingleModifierCircle;
 import net.arcanamod.systems.spell.modules.core.*;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
@@ -183,7 +181,7 @@ public abstract class SpellModule {
 	public void renderUnderMouse(int x, int y) { }
 
 	// Called when rendering the module in the spell region
-	public void renderInMinigame(int mouseX, int mouseY) { }
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) { }
 
 	private static void registerModule(String id, Class<? extends SpellModule> clazz, int index) {
 		modules.put(id, clazz);

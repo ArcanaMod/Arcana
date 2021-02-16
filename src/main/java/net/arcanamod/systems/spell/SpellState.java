@@ -84,8 +84,9 @@ public class SpellState {
             } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
             }
-            if ((currentSpell.mainModule == null && !(ret instanceof StartSpellModule))
-                || (currentSpell.mainModule != null && (ret instanceof StartSpellModule))) {
+            if (currentSpell != null
+                && ((currentSpell.mainModule == null && !(ret instanceof StartSpellModule))
+                    || (currentSpell.mainModule != null && (ret instanceof StartSpellModule)))) {
                 ret = null;
             }
         }
@@ -486,21 +487,22 @@ public class SpellState {
         }
 
         while(!renderQueue.isEmpty()) {
+            mc.getTextureManager().bindTexture(SPELL_RESOURCES);
             Pair<SpellModule, SpellModule> next = renderQueue.remove();
             SpellModule root = next.getFirst();
             SpellModule base = next.getSecond();
-            if (root != null) {
+            if (root != null && !root.canConnectSpecial(base)) {
                 // render connector
             }
             if (!floating.containsKey(base)) {
-                base.renderInMinigame(mouseX, mouseY);
+                base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
             } else if (floating.get(base) != mc.player.getUniqueID()) {
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, .75f);
-                base.renderInMinigame(mouseX, mouseY);
+                base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             } else { // current player is floating module
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, .25f);
-                base.renderInMinigame(mouseX, mouseY);
+                base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
                 GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             }
 
@@ -512,6 +514,7 @@ public class SpellState {
         GL11.glPopMatrix();
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
 
+        mc.getTextureManager().bindTexture(SPELL_RESOURCES);
         // Render selected module under mouse cursor
         if (activeModule != null) {
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
@@ -521,8 +524,6 @@ public class SpellState {
 
         mc.getTextureManager().bindTexture(FociForgeScreen.BG);
         if (currentSpell != null) {
-            // Start point
-
             for (int i = 0; i < 9; i++) {
                 UiUtil.drawModalRectWithCustomSizedTexture(
                         guiLeft + FociForgeScreen.SPELL_X + TRAY_X + TRAY_DELTA * i,

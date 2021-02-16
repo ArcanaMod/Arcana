@@ -3,13 +3,16 @@ package net.arcanamod.systems.spell.modules.core;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.modules.CircleSpellModule;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
+import net.arcanamod.systems.spell.modules.circle.SinModifierCircle;
 import net.arcanamod.systems.spell.modules.circle.SingleModifierCircle;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
@@ -48,8 +51,18 @@ public class CastCircle extends SpellModule {
 
 	@Override
 	public boolean canConnectSpecial(SpellModule connectingModule) {
-		return (connectingModule instanceof SingleModifierCircle
-				|| connectingModule instanceof DoubleModifierCircle);
+		boolean alreadyConnected = false;
+		for (SpellModule module : getBoundModules()) {
+			if (module != connectingModule
+					&& (connectingModule instanceof SingleModifierCircle
+						|| connectingModule instanceof DoubleModifierCircle)) {
+				alreadyConnected = true;
+				break;
+			}
+		}
+		return (!alreadyConnected
+				&& (connectingModule instanceof SingleModifierCircle
+					|| connectingModule instanceof DoubleModifierCircle));
 	}
 
 	@Override
@@ -80,11 +93,27 @@ public class CastCircle extends SpellModule {
 
 	@Override
 	public int getHeight() {
-		return 36;
+		return 32;
 	}
 
 	@Override
 	public int getWidth() {
-		return 36;
+		return 32;
+	}
+
+	@Override
+	public void renderUnderMouse(int mouseX, int mouseY) {
+		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 32, 16, getWidth(), getHeight());
+		UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 8, 32, 0, 16, 16);
+	}
+
+	@Override
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
+		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 32, 16, getWidth(), getHeight());
+		if (cast == null) {
+			UiUtil.drawTexturedModalRect(x - 8, y - 8, 32, 0, 16, 16);
+		} else {
+			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(cast.getSpellAspect()), x - 8, y - 8);
+		}
 	}
 }

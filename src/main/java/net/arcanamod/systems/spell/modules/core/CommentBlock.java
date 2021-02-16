@@ -1,10 +1,9 @@
 package net.arcanamod.systems.spell.modules.core;
 
 import com.mojang.blaze3d.platform.GlStateManager;
-import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 import org.lwjgl.opengl.GL11;
 
@@ -72,16 +71,13 @@ public class CommentBlock extends SpellModule {
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY) {
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
 		int left = Math.min(x, startX);
 		int top = Math.min(y, startY);
 
-		Minecraft.getInstance().getTextureManager().bindTexture(SPELL_MODULES);
 		GlStateManager.enableBlend();
 		GL11.glColor4f(1, 1, 1, 0.5f);
 		UiUtil.drawModalRectWithCustomSizedTexture(left, top, 128, 0, getWidth(), getHeight(), 48, 48);
 		GL11.glColor4f(1, 1, 1, 1.0f);
-
-		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 	}
 }
