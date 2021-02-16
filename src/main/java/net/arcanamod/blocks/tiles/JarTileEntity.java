@@ -42,7 +42,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		vis.getHolder(0).setIgnoreFullness(type == JarBlock.Type.VOID);
 
 		Random rand = world != null ? world.rand : new Random();
-		labelRotation = (rand.nextInt(400)-200)/10f;
+		labelRotation = (rand.nextInt(300)-150)/10f;
 	}
 	
 	/**
@@ -59,12 +59,14 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		super.read(compound);
 		vis.deserializeNBT(compound.getCompound("aspects"));
 		clientVis = vis.getHolder(0).getCurrentVis();
+		label = Direction.byIndex(compound.getInt("label"));
 	}
 	
 	@Override
 	public CompoundNBT write(CompoundNBT compound){
 		CompoundNBT aspectsNbt = vis.serializeNBT();
 		compound.put("aspects", aspectsNbt);
+		compound.putInt("label",label.getIndex());
 		return super.write(compound);
 	}
 	

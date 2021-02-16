@@ -34,11 +34,11 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 		super(p_i226006_1_);
 	}
 	
-	private void add(IVertexBuilder renderer, MatrixStack stack, Color color, float x, float y, float z, float u, float v){
+	private void add(IVertexBuilder renderer, MatrixStack stack, Color color, float x, float y, float z, float u, float v, int lightmap){
 		renderer.pos(stack.getLast().getMatrix(), x, y, z)
 				.color(color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f)
 				.tex(u, v)
-				.lightmap(0, 240)
+				.lightmap(lightmap)
 				.normal(1, 0, 0)
 				.endVertex();
 	}
@@ -124,11 +124,12 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 
 			q = new Quaternion(tileEntity.labelRotation,0,0,true);
 			matrixStack.rotate(q);
+			matrixStack.translate(0,0,-(tileEntity.labelRotation/200f));
 
-			add(label_builder, matrixStack, Color.WHITE, 0, 1, 0, label.getMinU(), label.getMaxV());
-			add(label_builder, matrixStack, Color.WHITE, 0, 0, 0, label.getMaxU(), label.getMaxV());
-			add(label_builder, matrixStack, Color.WHITE, 0, 0, 1, label.getMaxU(), label.getMinV());
-			add(label_builder, matrixStack, Color.WHITE, 0, 1, 1, label.getMinU(), label.getMinV());
+			add(label_builder, matrixStack, Color.WHITE, 0, 1, 0, label.getMinU(), label.getMaxV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 0, 0, label.getMaxU(), label.getMaxV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 0, 1, label.getMaxU(), label.getMinV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 1, 1, label.getMinU(), label.getMinV(), combinedLight);
 
 			q = new Quaternion(-90,0,0,true);
 			matrixStack.rotate(q);
@@ -137,10 +138,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			scale = 0.8f;
 			matrixStack.scale(scale, scale, scale);
 			matrixStack.translate(-.02, -.02, -.02);
-			add(label_builder, matrixStack, Color.WHITE, 0, 1, 0, aspect.getMinU(), aspect.getMaxV());
-			add(label_builder, matrixStack, Color.WHITE, 0, 0, 0, aspect.getMaxU(), aspect.getMaxV());
-			add(label_builder, matrixStack, Color.WHITE, 0, 0, 1, aspect.getMaxU(), aspect.getMinV());
-			add(label_builder, matrixStack, Color.WHITE, 0, 1, 1, aspect.getMinU(), aspect.getMinV());
+			add(label_builder, matrixStack, Color.WHITE, 0, 1, 0, aspect.getMinU(), aspect.getMaxV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 0, 0, aspect.getMaxU(), aspect.getMaxV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 0, 1, aspect.getMaxU(), aspect.getMinV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 1, 1, aspect.getMinU(), aspect.getMinV(), combinedLight);
 			matrixStack.pop();
 		}
 
@@ -153,40 +154,40 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			Color c = new Color(aspectColor.getRGB()-0x80000000);
 			
 			// top
-			add(builder, matrixStack, c, 0, visHeight, 1, spriteTop.getMinU(), spriteTop.getMaxV());
-			add(builder, matrixStack, c, 1, visHeight, 1, spriteTop.getMaxU(), spriteTop.getMaxV());
-			add(builder, matrixStack, c, 1, visHeight, 0, spriteTop.getMaxU(), spriteTop.getMinV());
-			add(builder, matrixStack, c, 0, visHeight, 0, spriteTop.getMinU(), spriteTop.getMinV());
+			add(builder, matrixStack, c, 0, visHeight, 1, spriteTop.getMinU(), spriteTop.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 1, visHeight, 1, spriteTop.getMaxU(), spriteTop.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 1, visHeight, 0, spriteTop.getMaxU(), spriteTop.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 0, visHeight, 0, spriteTop.getMinU(), spriteTop.getMinV(), combinedLight);
 			
 			// bottom
-			add(builder, matrixStack, c, 1, visBase, 1, spriteTop.getMaxU(), spriteTop.getMaxV());
-			add(builder, matrixStack, c, 0, visBase, 1, spriteTop.getMinU(), spriteTop.getMaxV());
-			add(builder, matrixStack, c, 0, visBase, 0, spriteTop.getMinU(), spriteTop.getMinV());
-			add(builder, matrixStack, c, 1, visBase, 0, spriteTop.getMaxU(), spriteTop.getMinV());
+			add(builder, matrixStack, c, 1, visBase, 1, spriteTop.getMaxU(), spriteTop.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 0, visBase, 1, spriteTop.getMinU(), spriteTop.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 0, visBase, 0, spriteTop.getMinU(), spriteTop.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 1, visBase, 0, spriteTop.getMaxU(), spriteTop.getMinV(), combinedLight);
 			
 			// east (+X) face
-			add(builder, matrixStack, c, 1, visHeight, 0, spriteSide.getMinU(), spriteSide.getMinV());
-			add(builder, matrixStack, c, 1, visHeight, 1, spriteSide.getMaxU(), spriteSide.getMinV());
-			add(builder, matrixStack, c, 1, visBase, 1, spriteSide.getMaxU(), spriteSide.getMaxV());
-			add(builder, matrixStack, c, 1, visBase, 0, spriteSide.getMinU(), spriteSide.getMaxV());
+			add(builder, matrixStack, c, 1, visHeight, 0, spriteSide.getMinU(), spriteSide.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 1, visHeight, 1, spriteSide.getMaxU(), spriteSide.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 1, visBase, 1, spriteSide.getMaxU(), spriteSide.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 1, visBase, 0, spriteSide.getMinU(), spriteSide.getMaxV(), combinedLight);
 			
 			// west (-X) face
-			add(builder, matrixStack, c, 0, visHeight, 0, spriteSide.getMinU(), spriteSide.getMinV());
-			add(builder, matrixStack, c, 0, visBase, 0, spriteSide.getMinU(), spriteSide.getMaxV());
-			add(builder, matrixStack, c, 0, visBase, 1, spriteSide.getMaxU(), spriteSide.getMaxV());
-			add(builder, matrixStack, c, 0, visHeight, 1, spriteSide.getMaxU(), spriteSide.getMinV());
+			add(builder, matrixStack, c, 0, visHeight, 0, spriteSide.getMinU(), spriteSide.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 0, visBase, 0, spriteSide.getMinU(), spriteSide.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 0, visBase, 1, spriteSide.getMaxU(), spriteSide.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 0, visHeight, 1, spriteSide.getMaxU(), spriteSide.getMinV(), combinedLight);
 			
 			// north (-Z) face
-			add(builder, matrixStack, c, 1, visBase, 0, spriteSide.getMaxU(), spriteSide.getMaxV());
-			add(builder, matrixStack, c, 0, visBase, 0, spriteSide.getMinU(), spriteSide.getMaxV());
-			add(builder, matrixStack, c, 0, visHeight, 0, spriteSide.getMinU(), spriteSide.getMinV());
-			add(builder, matrixStack, c, 1, visHeight, 0, spriteSide.getMaxU(), spriteSide.getMinV());
+			add(builder, matrixStack, c, 1, visBase, 0, spriteSide.getMaxU(), spriteSide.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 0, visBase, 0, spriteSide.getMinU(), spriteSide.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 0, visHeight, 0, spriteSide.getMinU(), spriteSide.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 1, visHeight, 0, spriteSide.getMaxU(), spriteSide.getMinV(), combinedLight);
 			
 			// north (+Z) face
-			add(builder, matrixStack, c, 0, visBase, 1, spriteSide.getMinU(), spriteSide.getMaxV());
-			add(builder, matrixStack, c, 1, visBase, 1, spriteSide.getMaxU(), spriteSide.getMaxV());
-			add(builder, matrixStack, c, 1, visHeight, 1, spriteSide.getMaxU(), spriteSide.getMinV());
-			add(builder, matrixStack, c, 0, visHeight, 1, spriteSide.getMinU(), spriteSide.getMinV());
+			add(builder, matrixStack, c, 0, visBase, 1, spriteSide.getMinU(), spriteSide.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 1, visBase, 1, spriteSide.getMaxU(), spriteSide.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 1, visHeight, 1, spriteSide.getMaxU(), spriteSide.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 0, visHeight, 1, spriteSide.getMinU(), spriteSide.getMinV(), combinedLight);
 			
 			matrixStack.pop();
 		}
