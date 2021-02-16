@@ -59,14 +59,16 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		super.read(compound);
 		vis.deserializeNBT(compound.getCompound("aspects"));
 		clientVis = vis.getHolder(0).getCurrentVis();
-		label = Direction.byIndex(compound.getInt("label"));
+		if (compound.contains("label"))
+			label = Direction.byIndex(compound.getInt("label"));
 	}
 	
 	@Override
 	public CompoundNBT write(CompoundNBT compound){
 		CompoundNBT aspectsNbt = vis.serializeNBT();
 		compound.put("aspects", aspectsNbt);
-		compound.putInt("label",label.getIndex());
+		if (label != null)
+			compound.putInt("label",label.getIndex());
 		return super.write(compound);
 	}
 	
