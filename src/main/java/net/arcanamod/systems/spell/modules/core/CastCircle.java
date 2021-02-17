@@ -4,6 +4,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
@@ -101,6 +102,11 @@ public class CastCircle extends SpellModule {
 	@Override
 	public int getWidth() {
 		return 32;
+	}
+
+	@Override
+	public boolean canRaise(SpellState state) {
+		return getBoundModules().stream().noneMatch(bound -> bound instanceof CircleSpellModule);
 	}
 
 	@Override

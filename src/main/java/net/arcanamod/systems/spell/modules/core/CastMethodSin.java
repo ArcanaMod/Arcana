@@ -71,16 +71,16 @@ public class CastMethodSin extends SpellModule {
 	@Override
 	public void renderUnderMouse(int mouseX, int mouseY) {
 		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 153, 54, getWidth(), getHeight());
-		UiUtil.drawTexturedModalRect(mouseX + 4, mouseY - 6, 64, 0, 16, 16);
+		UiUtil.drawTexturedModalRect(mouseX - 3, mouseY - 8, 64, 0, 16, 16);
 	}
 
 	@Override
 	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
 		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 153, 54, getWidth(), getHeight());
 		if (aspect == Aspects.EMPTY) {
-			UiUtil.drawTexturedModalRect(x + 4, y - 6, 64, 0, 16, 16);
+			UiUtil.drawTexturedModalRect(x - 3, y - 8, 64, 0, 16, 16);
 		} else {
-			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x + 4, y - 6);
+			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x - 3, y - 8);
 		}
 	}
 }

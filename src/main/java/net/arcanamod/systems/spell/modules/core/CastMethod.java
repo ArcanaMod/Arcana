@@ -41,7 +41,7 @@ public class CastMethod extends SpellModule {
 	public boolean canConnectSpecial(SpellModule connectingModule) {
 		boolean alreadyConnected = false;
 		for (SpellModule module : getBoundModules()) {
-			if (module != connectingModule && module instanceof CastMethodSin) {
+			if (module != connectingModule && connectingModule instanceof CastMethodSin) {
 				alreadyConnected = true;
 				break;
 			}

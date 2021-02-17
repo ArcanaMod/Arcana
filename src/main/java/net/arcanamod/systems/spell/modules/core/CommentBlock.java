@@ -75,9 +75,6 @@ public class CommentBlock extends SpellModule {
 		int left = Math.min(x, startX);
 		int top = Math.min(y, startY);
 
-		GlStateManager.enableBlend();
-		GL11.glColor4f(1, 1, 1, 0.5f);
 		UiUtil.drawModalRectWithCustomSizedTexture(left, top, 128, 0, getWidth(), getHeight(), 48, 48);
-		GL11.glColor4f(1, 1, 1, 1.0f);
 	}
 }

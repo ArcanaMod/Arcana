@@ -4,6 +4,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.CircleSpellModule;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -88,6 +89,11 @@ public class DoubleModifierCircle extends CircleSpellModule {
 	@Override
 	public int getWidth() {
 		return 80;
+	}
+
+	@Override
+	public boolean canRaise(SpellState state) {
+		return getBoundModules().stream().noneMatch(bound -> bound instanceof CircleSpellModule);
 	}
 
 	@Override

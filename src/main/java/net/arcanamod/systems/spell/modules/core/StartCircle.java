@@ -20,7 +20,9 @@ public class StartCircle extends SpellModule implements StartSpellModule {
 
 	@Override
 	public boolean canRaise(SpellState state) {
-		return state.currentSpell.mainModule == this && getBoundModules().size() == 0;
+		return state.currentSpell.mainModule == this
+				&& state.isolated.size() == 0
+				&& getBoundModules().size() == 0;
 	}
 
 	@Override
