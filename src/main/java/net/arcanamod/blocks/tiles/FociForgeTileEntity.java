@@ -13,7 +13,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.text.ITextComponent;
@@ -51,6 +53,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		}
 		if (compound.contains("spellstate")) {
 			spellState = SpellState.fromNBT(compound.getCompound("spellstate"));
+			spellState.sequence = 0;
 		}
 	}
 
@@ -60,6 +63,23 @@ public class FociForgeTileEntity extends LockableTileEntity{
 		compound.put("items", items.serializeNBT());
 		compound.put("spellstate", spellState.toNBT(new CompoundNBT()));
 		return compound;
+	}
+
+	@Override
+	public CompoundNBT getUpdateTag() {
+		return write(new CompoundNBT());
+	}
+
+	// Pair functions
+	@Override
+	public SUpdateTileEntityPacket getUpdatePacket() {
+		CompoundNBT nbt = this.write(new CompoundNBT());
+		return new SUpdateTileEntityPacket(this.getPos(), 0, nbt);
+	}
+
+	@Override
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket packet) {
+		this.read(packet.getNbtCompound());
 	}
 	
 	@Override

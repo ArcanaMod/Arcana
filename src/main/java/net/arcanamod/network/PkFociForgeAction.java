@@ -83,16 +83,11 @@ public class PkFociForgeAction {
                         case ASSIGN:
                             valid = state.assign(msg.ax, msg.ay, msg.aspect, false);
                             break;
-                        case RETRIEVE:
-                            // intentionally trigger state resend request
-                            break;
                     }
                 }
                 if (valid) {
                     state.sequence++;
                     container.te.markDirty();
-                } else {
-                    Connection.sendClientFociForgeReset(spe.currentWindowId, state, state.sequence, spe);
                 }
             }
         });
@@ -105,7 +100,6 @@ public class PkFociForgeAction {
         LOWER,
         CONNECT,
         DELETE,
-        ASSIGN,
-        RETRIEVE
+        ASSIGN
     }
 }

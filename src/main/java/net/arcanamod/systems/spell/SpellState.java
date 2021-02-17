@@ -66,8 +66,8 @@ public class SpellState {
         this.y = Math.min(Math.max(MIN_BOUND, this.y + y), MAX_BOUND);
     }
 
-    // Return x mod 16 where -16 <= ret <= 0
-    private static float getTopLeftBackgroundLocation(float val) {
+    // Return (imperfect) x mod 16 where -16 <= ret <= 0
+    private static float getNegativeMod16(float val) {
         if (val < 0) {
             return val % 16;
         } else {
@@ -131,6 +131,8 @@ public class SpellState {
         // - lower a floated module
         // - delete a module (drop outside of board)
 
+        int spellX = x - (int)this.x;
+        int spellY = y - (int)this.y;
         // select a new module (clientside)
         int moduleCount = SpellModule.byIndex.size();
         if ((activeModule == null || activeModule.unplaced)
@@ -143,10 +145,10 @@ public class SpellState {
                 }
             }
         } else if (x >= 0 && x <= FociForgeScreen.SPELL_WIDTH && y >= 0 && y <= FociForgeScreen.SPELL_HEIGHT) {
-            SpellModule under = getModuleAt(x, y);
+            SpellModule under = getModuleAt(spellX, spellY);
             // assign aspect
             if (currentAspect != null) {
-                boolean success = assign(x, y, currentAspect, true);
+                boolean success = assign(spellX, spellY, currentAspect, true);
                 if (success) {
                     currentAspect = Aspects.EMPTY;
                 }
@@ -169,20 +171,20 @@ public class SpellState {
                     }
                 // place module
                 } else if (activeModule.unplaced) {
-                    boolean success = place(x, y, activeModuleIndex, true);
+                    boolean success = place(spellX, spellY, activeModuleIndex, true);
                     if (success) {
                         activeModule = null;
                     }
                 // lower module
                 } else if (floating.containsKey(activeModule)) {
-                    boolean success = lower(activeModule.x, activeModule.y, x, y, Minecraft.getInstance().player.getUniqueID(), true);
+                    boolean success = lower(activeModule.x, activeModule.y, spellX, spellY, Minecraft.getInstance().player.getUniqueID(), true);
                     if (success) {
                         activeModule = null;
                     }
                 }
             // raise module
             } else if (under != null) {
-                boolean success = raise(x, y, Minecraft.getInstance().player.getUniqueID(), true);
+                boolean success = raise(spellX, spellY, Minecraft.getInstance().player.getUniqueID(), true);
                 if (success) {
                     activeModule = under;
                 }
@@ -207,9 +209,12 @@ public class SpellState {
     }
 
     private Stream<SpellModule> getPlacedModules() {
-        Stream<SpellModule> stream = getBoundRecurse(currentSpell.mainModule);
-        for (SpellModule module : isolated) {
-            stream = Stream.concat(stream, getBoundRecurse(module));
+        Stream<SpellModule> stream = Stream.empty();
+        if (currentSpell.mainModule != null) {
+            getBoundRecurse(currentSpell.mainModule);
+            for (SpellModule module : isolated) {
+                stream = Stream.concat(stream, getBoundRecurse(module));
+            }
         }
         return stream;
     }
@@ -222,7 +227,7 @@ public class SpellState {
     public Stream<SpellModule> getCollidingModules(int x, int y, SpellModule module) {
         return getPlacedModules()
             .filter(other -> module != other)
-            .filter(other -> other.collidesWith(module));
+            .filter(other -> other.collidesWith(x, y, module));
     }
 
     private boolean canPlace(int x, int y, SpellModule module) {
@@ -284,10 +289,13 @@ public class SpellState {
             // place module
             newModule.unplaced = false;
             if (newModule instanceof StartSpellModule) {
+                // move start to near center (keep background static), move screen to match
+                int realX = (int)getNegativeMod16(x);
+                int realY = (int)getNegativeMod16(y);
                 newModule.x = 0;
                 newModule.y = 0;
-                this.x = -x;
-                this.y = -y;
+                this.x = x;
+                this.y = y;
                 currentSpell.mainModule = newModule;
             } else {
                 // TODO: Break this logic out of canPlace and call it separately
@@ -343,7 +351,7 @@ public class SpellState {
         boolean result = false;
         SpellModule lowering = getModuleAt(from_x, from_y);
         UUID user = floating.get(lowering);
-        if (lowering != null && user != null && user.equals(uuid) && canPlace(from_x, from_y, lowering)) {
+        if (lowering != null && user != null && user.equals(uuid) && canPlace(to_x, to_y, lowering)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
@@ -467,49 +475,53 @@ public class SpellState {
         GL11.glTranslatef(spellLeft, spellTop, 0);
         // draw background
         int bg_texX = (currentSpell == null ? 16 : 0);
-        float start_x = getTopLeftBackgroundLocation(this.x);
-        float start_y = getTopLeftBackgroundLocation(this.y);
+        float start_x = getNegativeMod16(this.x);
+        float start_y = getNegativeMod16(this.y);
         for (float bg_x = start_x; bg_x < width + 16; bg_x += 16) {
             for (float bg_y = start_y; bg_y < height + 16; bg_y += 16) {
                 UiUtil.drawTexturedModalRect((int)Math.floor(bg_x), (int)Math.floor(bg_y), bg_texX, 0, 16, 16);
             }
         }
 
-        // render according to background
-        GL11.glTranslatef(x, y, 0);
 
-        Queue<Pair<SpellModule, SpellModule>> renderQueue = new LinkedList<>();
-        if (currentSpell.mainModule != null) {
-            renderQueue.add(new Pair<>(null, currentSpell.mainModule));
-        }
-        for (SpellModule floater : isolated) {
-           renderQueue.add(new Pair<>(null, floater));
-        }
+        if (currentSpell != null) {
+            // render according to background
+            GL11.glTranslatef(x, y, 0);
 
-        while(!renderQueue.isEmpty()) {
-            mc.getTextureManager().bindTexture(SPELL_RESOURCES);
-            Pair<SpellModule, SpellModule> next = renderQueue.remove();
-            SpellModule root = next.getFirst();
-            SpellModule base = next.getSecond();
-            if (root != null && !root.canConnectSpecial(base)) {
-                // render connector
+            Queue<Pair<SpellModule, SpellModule>> renderQueue = new LinkedList<>();
+            if (currentSpell.mainModule != null) {
+                renderQueue.add(new Pair<>(null, currentSpell.mainModule));
             }
-            if (!floating.containsKey(base)) {
-                base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
-            } else if (floating.get(base) != mc.player.getUniqueID()) {
-                GL11.glColor4f(1.0f, 1.0f, 1.0f, .75f);
-                base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
-                GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-            } else { // current player is floating module
-                GL11.glColor4f(1.0f, 1.0f, 1.0f, .25f);
-                base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
-                GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            for (SpellModule floater : isolated) {
+                renderQueue.add(new Pair<>(null, floater));
             }
 
-            for (SpellModule bound : base.getBoundModules()) {
-                renderQueue.add(new Pair<>(base, bound));
+            while(!renderQueue.isEmpty()) {
+                mc.getTextureManager().bindTexture(SPELL_RESOURCES);
+                Pair<SpellModule, SpellModule> next = renderQueue.remove();
+                SpellModule root = next.getFirst();
+                SpellModule base = next.getSecond();
+                if (root != null && !root.canConnectSpecial(base)) {
+                    // render connector
+                }
+                if (!floating.containsKey(base)) {
+                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
+                } else if (floating.get(base) != mc.player.getUniqueID()) {
+                    GL11.glColor4f(1.0f, 1.0f, 1.0f, .75f);
+                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
+                    GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                } else { // current player is floating module
+                    GL11.glColor4f(1.0f, 1.0f, 1.0f, .25f);
+                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
+                    GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+                }
+
+                for (SpellModule bound : base.getBoundModules()) {
+                    renderQueue.add(new Pair<>(base, bound));
+                }
             }
         }
+
 
         GL11.glPopMatrix();
         GL11.glDisable(GL11.GL_SCISSOR_TEST);
@@ -520,6 +532,7 @@ public class SpellState {
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 0.5f);
             activeModule.renderUnderMouse(mouseX, mouseY);
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+            Arcana.logger.debug(x + " | " + y + " : " + mouseX + " | " + mouseY);
         }
 
         mc.getTextureManager().bindTexture(FociForgeScreen.BG);

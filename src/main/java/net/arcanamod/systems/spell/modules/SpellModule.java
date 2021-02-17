@@ -137,12 +137,12 @@ public abstract class SpellModule {
 				&& -getHeight() / 2 <= relY && relY <= getHeight() / 2);
 	}
 
-	public boolean collidesWith(SpellModule other) {
+	public boolean collidesWith(int x, int y, SpellModule other) {
 		// Rectangle intersection detection (ignoring edges)
-		return (other.x + other.getWidth() / 2 >= x - getWidth() / 2
-				&& other.y + other.getHeight() / 2 <= y - getHeight() / 2
-				&& other.x - other.getWidth() / 2 >= x + getWidth() / 2
-				&& other.y - other.getHeight() / 2 <= y + getHeight() / 2);
+		return ( x - other.getWidth() / 2 <= this.x + getWidth() / 2
+				&& y - other.getHeight() / 2 <= this.y + getHeight() / 2
+				&& x + other.getWidth() / 2 >= this.x - getWidth() / 2
+				&& y + other.getHeight() / 2 >= this.y - getHeight() / 2);
 	}
 
 	// Foci Forge manipulation methods
