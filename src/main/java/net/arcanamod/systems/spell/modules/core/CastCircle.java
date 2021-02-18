@@ -11,14 +11,12 @@ import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.modules.CircleSpellModule;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
-import net.arcanamod.systems.spell.modules.circle.SinModifierCircle;
 import net.arcanamod.systems.spell.modules.circle.SingleModifierCircle;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class CastCircle extends SpellModule {
 	public ICast cast = null;
@@ -84,7 +82,7 @@ public class CastCircle extends SpellModule {
 
 		return (relX >= -8 && relX < 8
 				&& relY >= -8 && relY < 8
-				&& Aspects.getWithoutEmpty().contains(aspect));
+				&& Aspects.getAll().contains(aspect));
 	}
 
 	@Override
@@ -110,18 +108,24 @@ public class CastCircle extends SpellModule {
 	}
 
 	@Override
-	public void renderUnderMouse(int mouseX, int mouseY) {
+	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
 		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 32, 16, getWidth(), getHeight());
-		UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 8, 32, 0, 16, 16);
+		if (!floating || cast == null) {
+			UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 8, 32, 0, 16, 16);
+		} else {
+			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(cast.getSpellAspect()), mouseX - 8, mouseY - 8);
+		}
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
 		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 32, 16, getWidth(), getHeight());
-		if (cast == null) {
-			UiUtil.drawTexturedModalRect(x - 8, y - 8, 32, 0, 16, 16);
-		} else {
-			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(cast.getSpellAspect()), x - 8, y - 8);
+		if (!floating) {
+			if (cast == null) {
+				UiUtil.drawTexturedModalRect(x - 8, y - 8, 32, 0, 16, 16);
+			} else {
+				itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(cast.getSpellAspect()), x - 8, y - 8);
+			}
 		}
 	}
 }

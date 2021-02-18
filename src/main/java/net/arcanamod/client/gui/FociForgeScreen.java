@@ -13,6 +13,7 @@ import net.arcanamod.systems.spell.SpellState;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.AirItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -136,15 +137,25 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		return super.mouseDragged(x, y, button, move_x, move_y);
 	}
 
+	// TODO: Move selection logic to rising edge trigger (mouseDown)
 	@Override
 	public boolean mouseReleased(double x, double y, int button) {
 		double guiX = x - guiLeft;
 		double guiY = y - guiTop;
+		ItemStack heldItem = Arcana.proxy.getPlayerOnClient().inventory.getItemStack();
 		if (button == 0) {
 			isScrollingAspect = false;
 			isScrollingFoci = false;
 			spellHasFocus = false;
-			te.spellState.mouseUp((int)(guiX - SPELL_X), (int)(guiY - SPELL_Y), button, aspectContainer.getHeldAspect());
+			boolean success = te.spellState.mouseUp((int)(guiX - SPELL_X), (int)(guiY - SPELL_Y), button, aspectContainer.getHeldAspect(), heldItem);
+			if (success) {
+				aspectContainer.setHeldAspect(null);
+			}
+		} else if (button == 1) {
+			boolean success = te.spellState.mouseUp((int)(guiX - SPELL_X), (int)(guiY - SPELL_Y), button, aspectContainer.getHeldAspect(), heldItem);
+			if (success) {
+				aspectContainer.setHeldAspect(null);
+			}
 		}
 
 		return super.mouseReleased(x, y, button);
@@ -165,6 +176,18 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 			scrollFociTo(this.fociScroll);
 		}
 		return true;
+	}
+
+	// required for onClose to be called
+	@Override
+	public boolean shouldCloseOnEsc() {
+		return true;
+	}
+
+	@Override
+	public void onClose() {
+		te.spellState.exitGui();
+		super.onClose();
 	}
 
 	public void scrollAspectTo(float pos) {

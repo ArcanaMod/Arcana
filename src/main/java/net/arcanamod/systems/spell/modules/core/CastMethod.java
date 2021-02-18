@@ -65,7 +65,8 @@ public class CastMethod extends SpellModule {
 
 		return (relX >= -8 && relX < 8
 				&& relY >= -8 && relY < 8
-				&& Arrays.asList(AspectUtils.primalAspects).contains(aspect));
+				&& (aspect == Aspects.EMPTY
+					|| Arrays.asList(AspectUtils.primalAspects).contains(aspect)));
 	}
 
 	@Override
@@ -86,18 +87,24 @@ public class CastMethod extends SpellModule {
 	}
 
 	@Override
-	public void renderUnderMouse(int mouseX, int mouseY) {
+	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
 		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 94, 54, getWidth(), getHeight());
-		UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 8, 48, 0, 16, 16);
+		if (!floating || aspect == Aspects.EMPTY) {
+			UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 8, 48, 0, 16, 16);
+		} else {
+			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), mouseX - 8, mouseY - 8);
+		}
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
 		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 94, 54, getWidth(), getHeight());
-		if (aspect == Aspects.EMPTY) {
-			UiUtil.drawTexturedModalRect(x - 8, y - 8, 48, 0, 16, 16);
-		} else {
-			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x - 8, y - 8);
+		if (!floating) {
+			if (aspect == Aspects.EMPTY) {
+				UiUtil.drawTexturedModalRect(x - 8, y - 8, 48, 0, 16, 16);
+			} else {
+				itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x - 8, y - 8);
+			}
 		}
 	}
 }

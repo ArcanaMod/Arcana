@@ -38,7 +38,8 @@ public class SinModifierCircle extends CircleSpellModule {
 
 		return (relX >= 39 && relX < 55
 				&& relY >= -8 && relY < 8
-				&& Arrays.asList(AspectUtils.sinAspects).contains(aspect));
+				&& (aspect == Aspects.EMPTY
+					|| Arrays.asList(AspectUtils.sinAspects).contains(aspect)));
 	}
 
 	@Override
@@ -59,18 +60,24 @@ public class SinModifierCircle extends CircleSpellModule {
 	}
 
 	@Override
-	public void renderUnderMouse(int mouseX, int mouseY) {
+	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
 		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 128, getWidth(), getHeight());
-		UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 55, 64, 0, 16, 16);
+		if (!floating || aspect == Aspects.EMPTY) {
+			UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 55, 64, 0, 16, 16);
+		} else {
+			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), mouseX - 8, mouseY - 55);
+		}
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
-		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 128, getWidth(), getHeight());
-		if (aspect == Aspects.EMPTY) {
-			UiUtil.drawTexturedModalRect(x - 8, y - 55, 64, 0, 16, 16);
-		} else {
-			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x - 8, y - 55);
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
+		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 0, 128, getWidth(), getHeight());
+		if (!floating) {
+			if (aspect == Aspects.EMPTY) {
+				UiUtil.drawTexturedModalRect(x - 8, y - 55, 64, 0, 16, 16);
+			} else {
+				itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x - 8, y - 55);
+			}
 		}
 	}
 }

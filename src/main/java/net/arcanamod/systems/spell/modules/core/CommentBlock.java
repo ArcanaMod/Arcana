@@ -1,11 +1,9 @@
 package net.arcanamod.systems.spell.modules.core;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
-import org.lwjgl.opengl.GL11;
 
 public class CommentBlock extends SpellModule {
 
@@ -66,12 +64,12 @@ public class CommentBlock extends SpellModule {
 
 
 	@Override
-	public void renderUnderMouse(int x, int y) {
+	public void renderUnderMouse(int x, int y, ItemRenderer itemRenderer, boolean floating) {
 		UiUtil.drawTexturedModalRect(x, y, 176, 0, 16, 16);
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) {
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
 		int left = Math.min(x, startX);
 		int top = Math.min(y, startY);
 

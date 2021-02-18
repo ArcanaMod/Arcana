@@ -1,5 +1,7 @@
 package net.arcanamod.systems.spell;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
@@ -13,6 +15,7 @@ import net.arcanamod.systems.spell.modules.StartSpellModule;
 import net.arcanamod.systems.spell.modules.core.Connector;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
@@ -51,11 +54,11 @@ public class SpellState {
     public int sequence = 0;
     public boolean spellModified = false;
     public boolean active = false;
-    public Spell currentSpell = null;
+    public Spell currentSpell = new Spell();
     public SpellModule activeModule = null; // unused on server
     public int activeModuleIndex = -1;
     public Set<SpellModule> isolated = new HashSet<>();
-    public Map<SpellModule, UUID> floating = new HashMap<>(); // managed by server
+    public BiMap<SpellModule, UUID> floating = HashBiMap.create(); // managed by server
 
     public void replaceSpell(Spell spell) {
         // ez pz copy function
@@ -66,6 +69,7 @@ public class SpellState {
     private void move(float x, float y) {
         this.x = Math.min(Math.max(MIN_BOUND, this.x + x), MAX_BOUND);
         this.y = Math.min(Math.max(MIN_BOUND, this.y + y), MAX_BOUND);
+        dragging = true;
     }
 
     // Return (imperfect) x mod 16 where -16 <= ret <= 0
@@ -86,6 +90,8 @@ public class SpellState {
             } catch (InstantiationException | NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 e.printStackTrace();
             }
+            // if sun, no sun
+            // if no sun, only sun
             if (currentSpell != null
                 && ((currentSpell.mainModule == null && !(ret instanceof StartSpellModule))
                     || (currentSpell.mainModule != null && (ret instanceof StartSpellModule)))) {
@@ -111,7 +117,8 @@ public class SpellState {
         // - raise a module
         if (activeModule != null) {
             blockDragging = activeModule.mouseDown(x, y);
-            dragging = true;
+        } else {
+            blockDragging = false;
         }
     }
 
@@ -120,91 +127,121 @@ public class SpellState {
         // TODO: delegate some functionality to the module
         if (!blockDragging && activeModule == null) {
             move((float)move_x, (float)move_y);
-
+            dragging = true;
         }
     }
 
     // Called on mouse up anywhere in the gui
-    public void mouseUp(int x, int y, int button, Aspect currentAspect) {
-        //if (!dragging) {
-            // What you can do with mouse-up:
-            // - select a new module
-            // - assign an aspect to a module
-            // - mark connection point and connect modules
-            // - place a new module
-            // - raise a module
-            // - lower a floated module
-            // - delete a module (drop outside of board)
-
-            int spellX = x - (int)this.x;
-            int spellY = y - (int)this.y;
-            // select a new module (clientside)
-            int moduleCount = SpellModule.byIndex.size();
-            if ((activeModule == null || activeModule.unplaced)
-                    && x >= TRAY_X && x <= TRAY_X + (moduleCount - 1) * TRAY_DELTA + TRAY_SIZE
-                    && y >= TRAY_Y && y <= TRAY_Y + TRAY_SIZE) {
-                for (int i = 0; i < moduleCount; i++) {
-                    if (x >= TRAY_X + i * TRAY_DELTA && x <= TRAY_X + i * TRAY_DELTA + TRAY_SIZE) {
-                        selectModule(i);
-                        break;
-                    }
-                }
-            } else if (x >= 0 && x <= FociForgeScreen.SPELL_WIDTH && y >= 0 && y <= FociForgeScreen.SPELL_HEIGHT) {
-                SpellModule under = getModuleAt(spellX, spellY);
-                // assign aspect
-                if (currentAspect != null) {
-                    boolean success = assign(spellX, spellY, currentAspect, true);
-                    if (success) {
-                        currentAspect = Aspects.EMPTY;
-                    }
-                } else if (activeModule != null) {
-                    // mark connection
-                    // TODO: Should this be hardcoded? Connections aren't truly a module
-                    if (activeModule instanceof Connector) {
-                        if (under != null) {
-                            Connector connector = (Connector) activeModule;
-                            if (!connector.startMarked) {
-                                activeModule.x = under.x;
-                                activeModule.y = under.y;
-                                connector.startMarked = true;
-                            } else {
-                                boolean success = connect(activeModule.x, activeModule.y, under.x, under.y, true);
+    public boolean mouseUp(int x, int y, int button, Aspect currentAspect, ItemStack heldItem) {
+        boolean success = false;
+        int spellX = x - (int)this.x;
+        int spellY = y - (int)this.y;
+        // prevent interaction if holding an item
+        if (heldItem.isEmpty()) {
+            if (button == 0) {
+                if (!dragging) {
+                    // What you can do with mouse-up:
+                    // - select a new module
+                    // - assign an aspect to a module
+                    // - mark connection point and connect modules
+                    // - place a new module
+                    // - raise a module
+                    // - lower a floated module
+                    // - delete a module (drop outside of board)
+                    // select a new module (clientside)
+                    int moduleCount = SpellModule.byIndex.size();
+                    if ((activeModule == null || activeModule.unplaced)
+                            && x >= TRAY_X && x <= TRAY_X + (moduleCount - 1) * TRAY_DELTA + TRAY_SIZE
+                            && y >= TRAY_Y && y <= TRAY_Y + TRAY_SIZE) {
+                        for (int i = 0; i < moduleCount; i++) {
+                            if (x >= TRAY_X + i * TRAY_DELTA && x <= TRAY_X + i * TRAY_DELTA + TRAY_SIZE) {
+                                selectModule(i);
+                                break;
+                            }
+                        }
+                        success = true;
+                    } else if (x >= 0 && x <= FociForgeScreen.SPELL_WIDTH && y >= 0 && y <= FociForgeScreen.SPELL_HEIGHT) {
+                        SpellModule under = getModuleAt(spellX, spellY);
+                        // assign aspect
+                        if (currentAspect != null) {
+                            success = assign(spellX, spellY, currentAspect, true);
+                            if (success) {
+                                currentAspect = Aspects.EMPTY;
+                            }
+                        } else if (activeModule != null) {
+                            // mark connection
+                            // TODO: Should this be hardcoded? Connections aren't truly a module
+                            if (activeModule instanceof Connector) {
+                                if (under != null) {
+                                    Connector connector = (Connector) activeModule;
+                                    if (!connector.startMarked) {
+                                        activeModule.x = under.x;
+                                        activeModule.y = under.y;
+                                        connector.startMarked = true;
+                                        success = true;
+                                    } else {
+                                        success = connect(activeModule.x, activeModule.y, under.x, under.y, true);
+                                        if (success) {
+                                            activeModule = null;
+                                        }
+                                    }
+                                }
+                                // place module
+                            } else if (activeModule.unplaced) {
+                                success = place(spellX, spellY, activeModuleIndex, true);
+                                if (success) {
+                                    activeModule = null;
+                                }
+                                // lower module
+                            } else if (floating.containsKey(activeModule)) {
+                                success = lower(activeModule.x, activeModule.y, spellX, spellY, Minecraft.getInstance().player.getUniqueID(), true);
                                 if (success) {
                                     activeModule = null;
                                 }
                             }
+                            // raise module
+                        } else if (under != null) {
+                            success = raise(spellX, spellY, Minecraft.getInstance().player.getUniqueID(), true);
+                            if (success) {
+                                activeModule = under;
+                            }
                         }
-                    // place module
-                    } else if (activeModule.unplaced) {
-                        boolean success = place(spellX, spellY, activeModuleIndex, true);
+                    } else if (activeModule != null && floating.containsKey(activeModule)) {
+                        success = delete(activeModule.x, activeModule.y, true);
                         if (success) {
                             activeModule = null;
                         }
-                    // lower module
-                    } else if (floating.containsKey(activeModule)) {
-                        boolean success = lower(activeModule.x, activeModule.y, spellX, spellY, Minecraft.getInstance().player.getUniqueID(), true);
+                        // select out of bounds, active module not raised. Just remove the active module.
+                    } else {
+                        activeModule = null;
+                        success = false;
+                    }
+                }
+                dragging = false;
+                blockDragging = false;
+            } else if (button == 1) {
+                if (activeModule != null) {
+                    if (activeModule.unplaced) {
+                        // clear unplaced template
+                        activeModule = null;
+                        success = true;
+                    } else {
+                        // lower lifted module
+                        success = lower(activeModule.x, activeModule.y, activeModule.x, activeModule.y, Minecraft.getInstance().player.getUniqueID(), true);
                         if (success) {
                             activeModule = null;
                         }
                     }
-                // raise module
-                } else if (under != null) {
-                    boolean success = raise(spellX, spellY, Minecraft.getInstance().player.getUniqueID(), true);
-                    if (success) {
-                        activeModule = under;
-                    }
+                } else {
+                    // attempt to remove aspect from module
+                    success = assign(spellX, spellY, Aspects.EMPTY, true);
+                    // if something happened, don't touch held aspect
+                    // if nothing happened, get rid of aspect
+                    success = !success;
                 }
-            } else if (activeModule != null && floating.containsKey(activeModule)) {
-                boolean success = delete(activeModule.x, activeModule.y, true);
-                if (success) {
-                    activeModule = null;
-                }
-            // select out of bounds, active module not raised. Just remove the active module.
-            } else {
-                activeModule = null;
             }
-        //}
-        dragging = false;
+        }
+        return success;
     }
 
     private Stream<SpellModule> getBoundRecurse(SpellModule module) {
@@ -217,7 +254,7 @@ public class SpellState {
 
     private Stream<SpellModule> getPlacedModules() {
         Stream<SpellModule> stream = Stream.empty();
-        if (currentSpell.mainModule != null) {
+        if (currentSpell != null && currentSpell.mainModule != null) {
             stream = getBoundRecurse(currentSpell.mainModule);
             for (SpellModule module : isolated) {
                 stream = Stream.concat(stream, getBoundRecurse(module));
@@ -237,48 +274,47 @@ public class SpellState {
             .filter(other -> other.collidesWith(x, y, module));
     }
 
-    private boolean canPlace(int x, int y, SpellModule module) {
-        boolean valid = true;
+    private Point getPlacementPoint(int x, int y, SpellModule module) {
+        Point location = null;
         SpellModule collision = getCollidingModules(x, y, module).findFirst().orElse(null);
-        if (collision != null) {
+        if (collision == null) {
+            location = new Point(x, y);
+        } else {
             List<SpellModule> special = getCollidingModules(x, y, module)
-                .filter(collide -> collide.canConnectSpecial(module))
-                .limit(2)
-                .collect(Collectors.toList());
-            if (special.size() == 0) {
-                valid = false;
-            } else {
+                    .filter(collide -> collide.canConnectSpecial(module))
+                    .limit(2)
+                    .collect(Collectors.toList());
+            if (special.size() > 0) {
                 SpellModule specialMain;
                 if (special.size() == 1) {
                     specialMain = special.get(0);
                 } else {
                     // ignore previous result: get module underneath cursor
                     specialMain = getModuleAt(x, y);
-                    if (specialMain == null) {
-                        valid = false;
-                    }
                 }
 
                 // check if a potential special placement candidate exists
-                if (valid) {
-                    if (!specialMain.canConnectSpecial(module)) {
-                        valid = false;
-                    } else {
+                if (specialMain != null) {
+                    if (specialMain.canConnectSpecial(module)) {
                         Point specialPoint = specialMain.getSpecialPoint(module);
                         List<SpellModule> specialCollisions = getCollidingModules(specialPoint.x, specialPoint.y, module)
                                 .limit(2)
                                 .collect(Collectors.toList());
-                        if (specialCollisions.size() > 1
+                        if (specialCollisions.size() == 0
                                 || (specialCollisions.size() == 1
-                                && specialCollisions.get(0) != specialMain)) {
-                            valid = false;
+                                    && specialCollisions.get(0) == specialMain)) {
+                            location = specialPoint;
                         }
                     }
                 }
             }
         }
 
-        return valid;
+        return location;
+    }
+
+    private boolean canPlace(int x, int y, SpellModule module) {
+        return (getPlacementPoint(x, y, module) != null);
     }
 
     // Assumes module is raised
@@ -301,35 +337,15 @@ public class SpellState {
             // place module
             newModule.unplaced = false;
             if (newModule instanceof StartSpellModule) {
-                // move start to near center (keep background static), move screen to match
-                int realX = (int)getNegativeMod16(x);
-                int realY = (int)getNegativeMod16(y);
                 newModule.x = 0;
                 newModule.y = 0;
                 this.x = x;
                 this.y = y;
                 currentSpell.mainModule = newModule;
             } else {
-                // TODO: Break this logic out of canPlace and call it separately
-                SpellModule collision = getCollidingModules(x, y, newModule).findFirst().orElse(null);
-                if (collision != null) {
-                    List<SpellModule> special = getCollidingModules(x, y, newModule)
-                            .filter(collide -> collide.canConnectSpecial(newModule))
-                            .limit(2)
-                            .collect(Collectors.toList());
-                    SpellModule specialMain;
-                    // By the previous canPlace check, this will be valid.
-                    if (special.size() == 1) {
-                        specialMain = special.get(0);
-                    } else {
-                        specialMain = getModuleAt(x, y);
-                    }
-                    Point realPlacement = specialMain.getSpecialPoint(newModule);
-                    x = realPlacement.x;
-                    y = realPlacement.y;
-                }
-                newModule.x = x;
-                newModule.y = y;
+                Point realPlacement = getPlacementPoint(x, y, newModule);
+                newModule.x = realPlacement.x;
+                newModule.y = realPlacement.y;
                 isolated.add(newModule);
             }
             spellModified = true;
@@ -341,7 +357,7 @@ public class SpellState {
     public boolean raise(int x, int y, UUID uuid, boolean isRemote) {
         boolean result = false;
         SpellModule raising = getModuleAt(x, y);
-        if (raising != null && raising.canRaise(this)) {
+        if (raising != null && !floating.containsValue(uuid) && raising.canRaise(this)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
@@ -375,8 +391,9 @@ public class SpellState {
                 sequence++;
             }
             // lower module
-            lowering.x = to_x;
-            lowering.y = to_y;
+            Point realPlacement = getPlacementPoint(to_x, to_y, lowering);
+            lowering.x = realPlacement.x;
+            lowering.y = realPlacement.y;
             floating.remove(lowering);
             spellModified = true;
             result = true;
@@ -479,6 +496,15 @@ public class SpellState {
         return result;
     }
 
+    public void exitGui() {
+        UUID client = Arcana.proxy.getPlayerOnClient().getUniqueID();
+        if (floating.containsValue(client)) {
+            SpellModule raised = floating.inverse().get(client);
+            lower(raised.x, raised.y, raised.x, raised.y, client, true);
+        }
+        activeModule = null;
+    }
+
     public void render(int guiLeft, int guiTop, int spellLeft, int spellTop, int width, int height, int mouseX, int mouseY) {
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(SPELL_RESOURCES);
@@ -524,14 +550,14 @@ public class SpellState {
                     // render connector
                 }
                 if (!floating.containsKey(base)) {
-                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
+                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), false);
                 } else if (floating.get(base) != mc.player.getUniqueID()) {
                     RenderSystem.color4f(1.0f, 1.0f, 1.0f, .75f);
-                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
+                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), true);
                     RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
                 } else { // current player is floating module
                     RenderSystem.color4f(1.0f, 1.0f, 1.0f, .25f);
-                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer());
+                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), true);
                     RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
                 }
 
@@ -549,7 +575,7 @@ public class SpellState {
         // Render selected module under mouse cursor
         if (activeModule != null) {
             RenderSystem.color4f(1.0f, 1.0f, 1.0f, 0.5f);
-            activeModule.renderUnderMouse(mouseX, mouseY);
+            activeModule.renderUnderMouse(mouseX, mouseY, mc.getItemRenderer(), (!activeModule.unplaced));
             RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
@@ -568,6 +594,10 @@ public class SpellState {
         SpellState state = new SpellState();
         if (compound.contains("spell")) {
             state.currentSpell = Spell.fromNBT(compound);
+            if (state.currentSpell.mainModule != null) {
+                state.x = 32 - state.currentSpell.mainModule.x;
+                state.y = 32 - state.currentSpell.mainModule.y;
+            }
         }
         if (compound.contains("isolated")) {
             ListNBT isolatedList = (ListNBT)compound.get("isolated");

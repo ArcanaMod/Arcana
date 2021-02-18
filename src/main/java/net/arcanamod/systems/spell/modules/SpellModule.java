@@ -5,6 +5,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
+import net.arcanamod.systems.spell.modules.circle.SinModifierCircle;
 import net.arcanamod.systems.spell.modules.circle.SingleModifierCircle;
 import net.arcanamod.systems.spell.modules.core.*;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -151,8 +152,7 @@ public abstract class SpellModule {
 		return false;
 	}
 
-	public void assign(int x, int y, Aspect aspect) {
-	}
+	public void assign(int x, int y, Aspect aspect) { }
 
 	public boolean canRaise(SpellState state) {
 		return true;
@@ -175,13 +175,17 @@ public abstract class SpellModule {
 	}
 
 	// Called when pressing the mouse button over the design area while holding a module
+	// Returns true if dragging the active module should override (disable) dragging the GUI
 	public boolean mouseDown(int x, int y) { return false; }
 
-	// Called when rendering under the mouse with 50% transparency
-	public void renderUnderMouse(int x, int y) { }
+	// Called when rendering a new module under the mouse
+	public void renderPlacement(int x, int y, ItemRenderer itemRenderer, boolean floating) { }
+
+	// Called when rendering a floating module under the mouse
+	public void renderUnderMouse(int x, int y, ItemRenderer itemRenderer, boolean floating) { }
 
 	// Called when rendering the module in the spell region
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer) { }
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) { }
 
 	private static void registerModule(String id, Class<? extends SpellModule> clazz, int index) {
 		modules.put(id, clazz);
@@ -193,7 +197,7 @@ public abstract class SpellModule {
 		registerModule("cast_circle", CastCircle.class, 1);
 		registerModule("single_modifier_circle", SingleModifierCircle.class, 2);
 		registerModule("double_modifier_circle", DoubleModifierCircle.class, 3);
-		registerModule("sin_modifier_circle", SingleModifierCircle.class, 4);
+		registerModule("sin_modifier_circle", SinModifierCircle.class, 4);
 		registerModule("cast_method", CastMethod.class, 5);
 		registerModule("cast_method_sin", CastMethodSin.class, 6);
 		registerModule("connector", Connector.class, 7);
