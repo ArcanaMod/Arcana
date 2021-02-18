@@ -17,16 +17,16 @@ If you can't build the mod from source, you shouldn't be playing with it. We won
 
 ###The Team:
 
-Alphalilly
-Luna
-Falkor
-IbanPlay
-Mozaran
-Gilded Turtle
-Yelldow
-ShadowEye
-Pop
-Prefex
+Alphalilly,
+Luna,
+Falkor,
+IbanPlay,
+Mozaran,
+Gilded Turtle,
+Yelldow,
+ShadowEye,
+Pop,
+Prefex,
 PkAnti
 
 ###Contibutors:
