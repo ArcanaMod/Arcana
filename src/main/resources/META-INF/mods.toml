@@ -31,19 +31,15 @@ displayName="Arcana" #mandatory
 description='''
 Magic.
 '''
-# A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
+# Forge dependency
 [[dependencies.arcana]] #optional
-    # the modid of the dependency
-    modId="forge" #mandatory
-    # Does this dependency have to exist - if not, ordering below must be specified
-    mandatory=true #mandatory
-    # The version range of the dependency
-    versionRange="[31,)" #mandatory
-    # An ordering relationship for the dependency - BEFORE or AFTER required if the relationship is not mandatory
+    modId="forge"
+    mandatory=true
+    versionRange="[31,)"
     ordering="NONE"
-    # Side this dependency is applied on - BOTH, CLIENT or SERVER
     side="BOTH"
-# Here's another dependency
+
+# MC dependency
 [[dependencies.arcana]]
     modId="minecraft"
     mandatory=true
