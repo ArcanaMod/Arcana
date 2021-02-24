@@ -1,14 +1,16 @@
 {
     "_comment": "Test",
-    "block.arcana.aspect_tester": "Advanced New Aspect Handler Tester Block For No Reason (ANAHTBFNR)",
+    "block.arcana.aspect_tester": "Advanced New Aspect Handler Tester Block For No Reason (Unused)",
 
     "_comment": "Creative Tabs",
     "itemGroup.arcana": "Arcana",
     "itemGroup.taint": "Tainted Blocks",
-    "itemGroup.aspects": "Aspects",
 
     "_comment": "Effects",
     "effect.arcana.tainted": "Tainted",
+    "effect.arcana.frozen": "Frozen",
+    "effect.arcana.warding": "Warding",
+    "effect.arcana.victus": "Life Infused",
 
     "_comment": "Subtitles",
     "arcana.sounds.spell_cast": "Spell Cast",
@@ -19,7 +21,13 @@
     "item.arcana.tainted_goo_bucket": "Tainted Goo Bucket",
     "item.arcana.taint_in_a_bottle": "Taint in a Bottle",
 
-    "_comment": "Wands",
+    "item.arcana.greatwood_wand_core": "Greatwood Wand Core",
+    "item.arcana.tainted_wand_core": "Tainted Wand Core",
+    "item.arcana.dair_wand_core": "Dair Wand Core",
+    "item.arcana.hawthorn_wand_core": "Hawthorn Wand Core",
+    "item.arcana.silverwood_wand_core": "Silverwood Wand Core",
+    "item.arcana.arcanium_wand_core": "Arcanium Wand Core",
+
     "item.arcana.error_wand": "%s Errorred Wand",
     "item.arcana.wood_wand": "%s Wooden Wand",
     "item.arcana.greatwood_wand": "%s Greatwood Wand",
@@ -28,11 +36,6 @@
     "item.arcana.hawthorn_wand": "%s Hawthorn Wand",
     "item.arcana.arcanium_wand": "%s Arcanium Wand",
     "item.arcana.silverwood_wand": "%s Silverwood Wand",
-
-    "item.arcana.arcanum": "Arcanum",
-    "item.arcana.illustrious_grimoire": "Illustrious Grimoire",
-    "item.arcana.tainted_codex": "Tainted Codex",
-    "item.arcana.crimson_rites": "Crimson Rites",
 
     "item.arcana.focus_parts": "Focus Parts",
     "item.arcana.focus": "Wand Focus",
@@ -51,16 +54,12 @@
     "item.arcana.void_cap.prefix": "Void Capped",
     "item.arcana.copper_cap.prefix": "Copper Capped",
     "item.arcana.silver_cap.prefix": "Silver Capped",
-    "item.arcana.manasteel_cap.prefix": "Manasteel Capped",
-    "item.arcana.elementium_cap.prefix": "Elementium Capped",
-    "item.arcana.terrasteel_cap.prefix": "Terrasteel Capped",
 
-    "item.arcana.greatwood_wand_core": "Greatwood Wand Core",
-    "item.arcana.tainted_wand_core": "Tainted Wand Core",
-    "item.arcana.dair_wand_core": "Dair Wand Core",
-    "item.arcana.hawthorn_wand_core": "Hawthorn Wand Core",
-    "item.arcana.silverwood_wand_core": "Silverwood Wand Core",
-    "item.arcana.arcanium_wand_core": "Arcanium Wand Core",
+    "_comment": "Books",
+    "item.arcana.arcanum": "Arcanum",
+    "item.arcana.illustrious_grimoire": "Illustrious Grimoire",
+    "item.arcana.tainted_codex": "Tainted Codex",
+    "item.arcana.crimson_rites": "Crimson Rites",
 
     "_comment": "Armor & Goggles",
     "item.arcana.arcanium_helmet": "Arcanium Mask",
@@ -77,15 +76,13 @@
     "item.arcana.void_metal_boots": "Void Metal Boots",
     "item.arcana.goggles_of_revealing": "Goggles Of Revealing",
 
-    "_comment": "Shields",
-    "item.arcana.arcanium_shield": "Arcanium Shield",
-
     "_comment": "Tools & Weapons",
     "item.arcana.arcanium_sword": "Arcanium Sword",
     "item.arcana.arcanium_pickaxe": "Arcanium Pickaxe",
     "item.arcana.arcanium_axe": "Arcanium Axe",
     "item.arcana.arcanium_shovel": "Arcanium Shovel",
     "item.arcana.arcanium_hoe": "Arcanium Hoe",
+    "item.arcana.arcanium_shield": "Arcanium Shield",
 
     "item.arcana.silver_sword": "Silver Sword",
     "item.arcana.silver_pickaxe": "Silver Pickaxe",
@@ -98,6 +95,8 @@
     "item.arcana.void_metal_axe": "Void Metal Axe",
     "item.arcana.void_metal_shovel": "Void Metal Shovel",
     "item.arcana.void_metal_hoe": "Void Metal Hoe",
+
+    "item.arcana.flux_meter": "Flux Meter",
 
     "_comment": "Materials",
     "item.arcana.thaumium_ingot": "Thaumium Ingot",
@@ -138,12 +137,12 @@
     "item.arcana.tainted_snowball": "Tainted Snowball",
 
     "_comment": "Creative Only",
-    "item.arcana.flux_meter": "Flux Meter",
     "item.arcana.cheaters_arcanum": "Cheaters Arcanum",
     "item.arcana.cheaters_arcanum.desc": "For the lazy",
 
     "_comment": "Arcana aspects",
     "aspect.any": "Any",
+    "aspect.any.desc": "Any",
     "aspect.air": "Aer",
     "aspect.air.desc": "Air",
     "aspect.armour": "Tutamen",
@@ -318,29 +317,6 @@
     "block.arcana.see_no_evil_statue": "See No Evil Statue",
     "block.arcana.hear_no_evil_statue": "Hear No Evil Statue",
     "block.arcana.speak_no_evil_statue": "Speak No Evil Statue",
-
-    "block.arcana.pridestone_bricks": "Pridestone Bricks",
-    "block.arcana.pridestone_small_bricks": "Small Pridestone Bricks",
-    "block.arcana.pridestone_pillar": "Pridestone Pillar",
-    "block.arcana.pridestone_pillar_coal": "Coal Filled Pridestone Pillar",
-    "block.arcana.pridestone": "Pridestone",
-    "block.arcana.smooth_pridestone": "Smooth Pridestone",
-    "block.arcana.pridestone_tile": "Pridestone Tile",
-    "block.arcana.smooth_pridestone_tile": "Smooth Pridestone Tile",
-    "block.arcana.wet_pridestone": "Wet Pridestone",
-    "block.arcana.wet_smooth_pridestone": "Wet Smooth Pridestone",
-
-    "block.arcana.prideful_gold_pillar": "Prideful Gold Pillar",
-    "block.arcana.prideclay": "Prideclay",
-    "block.arcana.gilded_prideclay": "Gilded Prideclay",
-    "block.arcana.carved_prideful_gold_block": "Carved Prideful Gold Block",
-    "block.arcana.chiseled_prideful_gold_block": "Chiseled Prideful Gold Block",
-    "block.arcana.prideful_gold_block": "Prideful Gold Block",
-    "block.arcana.prideful_gold_tile": "Prideful Gold Tile",
-
-    "block.arcana.rough_limestone": "Rough Limestone",
-    "block.arcana.smooth_limestone": "Smooth Limestone",
-    "block.arcana.limestone_tile": "Limestone Tile",
 
     "block.arcana.hardened_glass": "Hardened Glass",
     "block.arcana.smokey_glass": "Smokey Glass",
@@ -687,8 +663,8 @@
     "_comment": "Tooltips and statuses",
     "tooltip.contains_aspect": "%s x%s",
     "tooltip.arcana.spell": "Spell: %s§r (%s)",
-    "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration. Maybe you should look at those notes again.",
-    "status.arcana.null_spell": "Null or invalid spell!",
+    "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration.\nMaybe you should look at those notes again.",
+    "status.arcana.null_spell": "Null spell!",
     "status.arcana.invalid_spell": "Invalid spell!",
     "status.arcana.selection_mode": "Selection Mode",
 
@@ -700,12 +676,7 @@
     "researchTable.ink_needed": "Scribing tools required!",
     "researchTable.ink_refill_needed": "Refill scribing tools!",
     "researchTable.search": "Search...",
-    "scribbledNote.text": "Listen to the tears between worlds, they speak of untold power that can shape the world.",
-    "devtools.more": "More...",
-    "devtools.screen": "Developer Tools",
-    "devtools.arcana_book_editmode": "Edit Arcanum",
-    "devtools.arcana": "Arcana Tools",
-    "devtools.mojang": "Mojang Tools",
+    "scribbledNote.text": "Listen to the tears between worlds,\nthey speak of untold power that can shape the world.",
     "container.arcane_workbench": "Arcane Crafting",
     "container.aspect_crystallizer": "Aspect Crystallizer",
     "key.categories.mod.arcana": "Arcana",
@@ -718,7 +689,7 @@
     "requirement.guesswork": "Guess the Recipe",
     "requirement.chemistry": "Complete the Chemistry",
     "requirement.experience": "%sx Experience Levels",
-    "requirement.fieldwork": "Do ???",
+    "requirement.fieldwork": "<Fieldwork names should be specified>",
     "requirement.item.have": "Have: %s",
     "requirement.item.num": "%sx %s",
     "requirement.puzzle.get_note.1": "Click to get research note",
@@ -902,43 +873,6 @@
     "research.arcana.scepters": "Staffs",
     "research.arcana.gauntlets": "Gauntlets",
     "research.arcana.wip": "actual content coming... when its implemented. same for icon.",
-
-    "_comment": "Info Entries",
-
-    "research.arcana.willow_tree": "Willow Tree",
-    "research.arcana.willow_tree.stage.1": "Willow trees are relatively abundant among the world. Historically, Thaumaturges have used it to create wand cores. I would like to do the same, and hopefully find more uses for the wood.",
-    "research.arcana.willow_tree.stage.2": "Creating a wand core from willow wood proves to be more difficult than initially anticipated. (TODO: further research)",
-
-    "research.arcana.amber": "Amber",
-    "research.arcana.amber.stage.1": "Amber ore can be found abundantly near the surface, and has preservative properties. Perhaps these could be applied to magic?",
-    "research.arcana.amber.stage.2": "The makeup of amber makes it useful for storing aspects and preventing them from causing unwanted effects in-world. Unfortunately, it's rather difficult to integrate into magical devices.",
-
-    "research.arcana.dair_tree": "Dair Tree",
-    "research.arcana.dair_tree.desc": "Eerie Wood",
-    "research.arcana.dair_tree.stage.1": "Dair trees are common in many parts of the world, and have some convenient magical properties. Less convenient, however, are the spirits that often dwell within them, which may become hostile at an attempt to harvest their wood. Still, I should collect some for study purposes - they may make a sturdy wand core yet. Dair trees are rather large, so I hope they don't mind too much.",
-    "research.arcana.dair_tree.stage.2": "Dair wood can be quite simply shaped into a wand core, similar to hawthorn in power. It stores slightly less vis than a greatwood core, but can support more powerful caps.",
-
-    "research.arcana.hawthorn_tree": "Hawthorn Tree",
-    "research.arcana.hawthorn_tree.stage.1": "Hawthorn trees, native to magical forests, have been historically relevant among many devices for its mystical power. I should get my hand on some sooner rather than later.",
-    "research.arcana.hawthorn_tree.stage.2": "Just as expected, magic comes quite easily to hawthorn wood. An easy application of it is a strong wand core, able to support powerful caps and store plenty of vis.",
-
-    "research.arcana.greatwood_tree": "Greatwood Tree",
-    "research.arcana.greatwood_tree.stage.1": "Greatwood trees are massive, even compared to other large trees. They have a great (wink) capacity for vis, and their wood is applicable in a number of magical devices. Their size makes them relatively cheap, too.",
-    "research.arcana.greatwood_tree.stage.2": "A wand core made from greatwood can store plenty of vis. (TODO: ?????)",
-
-    "research.arcana.silverwood_tree": "Silverwood Tree",
-    "research.arcana.silverwood_tree.stage.1": "Protectors of magical forests, Silverwood trees are deeply valuable for their purifying properties. They help shelter denizens of magical forests from dark magic and pollution. Such effects would be invaluable for controlling magic and protecting against taint.",
-    "research.arcana.silverwood_tree.stage.2": "The wood is strong, and resistant to harmful effects, even disconnected to the plant. Creating a wand core from it will take much more work, but there are some clear short term uses for this in purifying and filtering aspects.",
-
-    "research.arcana.eucalyptus_tree": "Eucalyptus Tree",
-    "research.arcana.eucalyptus_tree.desc": "Bubblegum doesn't grow on trees",
-    "research.arcana.eucalyptus_tree.stage.1": "Eucalyptus trees can be found occasionally, and besides their attractive wood, and the cute creatures that call them home, they aren't known for any magical properties. Still, a sample would be useful.",
-    "research.arcana.eucalyptus_tree.stage.2": "Nothing particularly interesting to note. It looks good; that's all I can say.",
-
-    "research.arcana.silver": "Silver",
-    "research.arcana.silver.desc": "Bang! and the taint is gone!",
-    "research.arcana.silver.stage.1": "Silver is mundane. I say that partially because it doesn't have any intrinsic magical properties - I say that also because it deflects and repels magic. It's been historically quite useful for cleaning up magical mishaps and containing magic nicely - I will *absolutely* want some of that.",
-    "research.arcana.silver.stage.2": "Silver is also rather malleable. Easy to make into tools - which keep the magic-repellent properties - and armour - which keep the magic-deflecting properties - which can help clean up taint much faster. Silver tools mine tainted blocks twice as fast as other tools, on top of having near-gold base mining speed. This also gives them... lacking durability, more on-par with stone than anything I would use regularly.",
 
     "_comment": "Messages",
     "message.arcana.disabled": "This book is currently disabled.",
