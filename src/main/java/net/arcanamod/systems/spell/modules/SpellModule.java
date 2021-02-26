@@ -1,7 +1,6 @@
 package net.arcanamod.systems.spell.modules;
 
 import com.google.common.collect.Maps;
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
@@ -12,7 +11,6 @@ import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ResourceLocation;
 
 import java.awt.*;
 import java.lang.reflect.Constructor;
@@ -26,12 +24,13 @@ public abstract class SpellModule {
 	public static HashMap<String, Class<? extends SpellModule>> modules = Maps.newHashMap();
 	public static HashMap<Integer, Class<? extends SpellModule>> byIndex = Maps.newHashMap();
 
-	private List<SpellModule> bound = new ArrayList<>();
+	public List<SpellModule> bound = new ArrayList<>();
+	public List<SpellModule> boundSpecial = new ArrayList<>();
+	public SpellModule parent = null;
 	public int x = 0, y = 0;
 	public boolean unplaced = false;
 
-	public static final ResourceLocation SPELL_MODULES = new ResourceLocation(Arcana.MODID, "textures/gui/container/foci_forge_minigame.png");
-
+	// Generates a SpellModule from NBT, including all of its bound modules.
 	public static SpellModule fromNBTFull(CompoundNBT spellNBT, int deepness) {
 		Constructor<?> constructor;
 		SpellModule createdModule = null;
@@ -55,18 +54,22 @@ public abstract class SpellModule {
 			for (INBT inbt : ((ListNBT) Objects.requireNonNull(spellNBT.get("bound")))) {
 				if (inbt instanceof CompoundNBT) {
 					CompoundNBT compound = ((CompoundNBT) inbt);
-					createdModule.bindModule(SpellModule.fromNBTFull(compound, ++deepness));
+					SpellModule next = SpellModule.fromNBTFull(compound, ++deepness);
+					if (next != null) {
+						next.setParent(createdModule);
+					}
 				}
 			}
 		}
 		return createdModule;
 	}
 
+	// Generates a CompoundNBT representing this module, including bound modules.
 	public CompoundNBT toNBTFull(CompoundNBT compound, int deepness) {
 		compound.putString("name", getName());
 		compound.put("data", toNBT(new CompoundNBT()));
 		ListNBT boundNBT = new ListNBT();
-		for (SpellModule module : getBoundModules()) {
+		for (SpellModule module : bound) {
 			if (module != null) {
 				CompoundNBT moduleNBT = new CompoundNBT();
 				module.toNBTFull(moduleNBT, ++deepness);
@@ -77,60 +80,129 @@ public abstract class SpellModule {
 		return compound;
 	}
 
-	public SpellModule findParent(SpellModule spellRoot) {
-		SpellModule parent = null;
-		for (SpellModule bound : spellRoot.getBoundModules()) {
-			if (this == bound) {
-				parent = spellRoot;
+	public boolean isStartModule() {
+		return false;
+	}
+
+	public boolean isCircleModule() {
+		return false;
+	}
+
+	// Returns true if spellRoot is an ancestor of this module.
+	public boolean isChildOf(SpellModule spellRoot) {
+		SpellModule parent = this.parent;
+		boolean found = false;
+		while (parent != null) {
+			parent = parent.parent;
+			if (parent == spellRoot) {
+				found = true;
 				break;
-			} else {
-				SpellModule recurse = findParent(bound);
-				if (recurse != null) {
-					parent = recurse;
-					break;
-				}
 			}
 		}
-		return parent;
+		return found;
 	}
 
 	public abstract String getName();
 
+	// Returns the maximum amount of modules that this module can connect to.
 	public int getOutputAmount(){
-		return 5;
+		return 4;
 	}
 
+	// Returns the maximum amount of modules that can connect to this module.
 	public int getInputAmount(){
-		return 5;
+		return 1;
 	}
 
-	public abstract boolean canConnect(SpellModule connectingModule);
+	// Returns true if a connection can be formed from this to connectingModule.
+	// If special is true, the connection will check if th
+	// Modules should override getConnectionStart, getConnectionEnd and/or canConnectSpecial instead
+	public boolean canConnect(SpellModule connectingModule, boolean special) {
+		SpellModule start = this.getConnectionStart();
+		SpellModule end = connectingModule.getConnectionEnd(special);
+		if (special) {
+			return (start != null
+					&& end != null
+					&& start != end
+					&& canConnectSpecial(end));
+		} else {
+			return (start != null
+					&& end != null
+					&& start != end
+					&& bound.size() < this.getOutputAmount());
+		}
+	}
 
-	// addModule
+	// Returns true if connectingModule has an alternate connection point.
+	public boolean canConnectSpecial(SpellModule connectingModule) {
+		return boundSpecial.contains(connectingModule);
+	}
+
+	// Returns an alternate connection point for module.
+	public Point getSpecialPoint(SpellModule module) {
+		return null;
+	}
+
+	// Returns module to direct connection start points. May be null if connections are not accepted.
+	public SpellModule getConnectionStart() {
+		if (bound.size() < getOutputAmount()) {
+			return this;
+		} else {
+			return null;
+		}
+	}
+
+	// Returns module to direct connection end points. May be null if connections are not accepted.
+	public SpellModule getConnectionEnd(boolean special) {
+		if (parent == null || special) {
+			return this;
+		} else {
+			return null;
+		}
+	}
+
+	// Sets the parent module and manages binding properties.
+	public void setParent(SpellModule parentNew) {
+		if (parent != null) {
+			parent.unbindModule(this);
+		}
+		if (parentNew != null) {
+			parentNew.bindModule(this);
+		}
+	}
+
+	// Binds module to this, forming a connection. SpellState functions should use setParent.
 	public void bindModule(SpellModule module){
 		bound.add(module);
+		module.parent = this;
+		if (canConnectSpecial(module)) {
+			boundSpecial.add(module);
+		}
 	}
 
-	// removeModule
+	// Unbinds an existing module, severing its connection. SpellState functions should use setParent.
 	public void unbindModule(SpellModule module){
-		bound.remove(module);
+		if (module != null) {
+			module.parent = null;
+			bound.remove(module);
+			boundSpecial.remove(module);
+		}
 	}
 
-	public List<SpellModule> getBoundModules(){
-		return bound;
-	}
-
+	// Fills this module with values from a CompoundNBT
 	public void fromNBT(CompoundNBT compound) {
 		x = compound.getInt("x");
 		y = compound.getInt("y");
 	}
 
+	// Writes the values of this module to the input CompoundNBT and returns it.
 	public CompoundNBT toNBT(CompoundNBT compound) {
 		compound.putInt("x", x);
 		compound.putInt("y", y);
 		return compound;
 	}
 
+	// Returns true if the (x,y) coordinate passed is within this module's bounds.
 	public boolean withinBounds(int x, int y) {
 		int relX = this.x - x;
 		int relY = this.y - y;
@@ -138,6 +210,7 @@ public abstract class SpellModule {
 				&& -getHeight() / 2 <= relY && relY <= getHeight() / 2);
 	}
 
+	// Returns true if module other at (x,y) will collide with this module.
 	public boolean collidesWith(int x, int y, SpellModule other) {
 		// Rectangle intersection detection (ignoring edges)
 		return ( x - other.getWidth() / 2 <= this.x + getWidth() / 2
@@ -146,47 +219,52 @@ public abstract class SpellModule {
 				&& y + other.getHeight() / 2 >= this.y - getHeight() / 2);
 	}
 
-	// Foci Forge manipulation methods
-
+	// Returns true if aspect can be assigned to this module at (x,y).
 	public boolean canAssign(int x, int y, Aspect aspect) {
 		return false;
 	}
 
+	// Assigns aspect to the slot at (x,y).
 	public void assign(int x, int y, Aspect aspect) { }
 
+	// Returns true if this module may be raised on the SpellState board
 	public boolean canRaise(SpellState state) {
-		return true;
+		if (this.isStartModule()) {
+			return state.isolated.size() == 0 && bound.size() == 0 && boundSpecial.size() == 0;
+		} else {
+			return state.currentSpell != null && state.currentSpell.mainModule != null;
+		}
 	}
 
-	public boolean canConnectSpecial(SpellModule connectingModule) {
-		return false;
-	}
+	// Returns the module's height on the grid.
+	// TODO: Maybe separate this from the render dimensions
+	public abstract int getHeight();
 
-	public Point getSpecialPoint(SpellModule module) {
-		return null;
-	}
+	// Returns the module's width on the grid.
+	// TODO: Maybe separate this from the render dimensions
+	public abstract int getWidth();
 
-	public int getHeight() {
-		return 0;
-	}
-
-	public int getWidth() {
-		return 0;
-	}
-
-	// Called when pressing the mouse button over the design area while holding a module
+	// Initiates a mouseDown command from the client.
 	// Returns true if dragging the active module should override (disable) dragging the GUI
 	public boolean mouseDown(int x, int y) { return false; }
 
-	// Called when rendering a new module under the mouse
-	public void renderPlacement(int x, int y, ItemRenderer itemRenderer, boolean floating) { }
-
-	// Called when rendering a floating module under the mouse
+	// Called when rendering a floating module under the mouse.
 	public void renderUnderMouse(int x, int y, ItemRenderer itemRenderer, boolean floating) { }
 
-	// Called when rendering the module in the spell region
+	// Renders the module as a member of the SpellState board.
 	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) { }
 
+	// Returns location where connections from this module should start.
+	public Point getConnectionRenderStart() {
+		return new Point(this.x, this.y);
+	}
+
+	// Returns location where connections to this module should end.
+	public Point getConnectionRenderEnd() {
+		return new Point(this.x, this.y);
+	}
+
+	// Registers a class with the global SpellModule maps.
 	private static void registerModule(String id, Class<? extends SpellModule> clazz, int index) {
 		modules.put(id, clazz);
 		byIndex.put(index, clazz);

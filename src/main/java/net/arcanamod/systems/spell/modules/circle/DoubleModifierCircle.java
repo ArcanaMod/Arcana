@@ -4,8 +4,6 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.UiUtil;
-import net.arcanamod.systems.spell.SpellState;
-import net.arcanamod.systems.spell.modules.CircleSpellModule;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,9 +11,14 @@ import net.minecraft.nbt.CompoundNBT;
 import java.awt.*;
 import java.util.Arrays;
 
-public class DoubleModifierCircle extends CircleSpellModule {
+public class DoubleModifierCircle extends SpellModule {
 	public Aspect firstAspect = Aspects.EMPTY;
 	public Aspect secondAspect = Aspects.EMPTY;
+
+	@Override
+	public boolean isCircleModule() {
+		return true;
+	}
 
 	@Override
 	public String getName() {
@@ -40,7 +43,7 @@ public class DoubleModifierCircle extends CircleSpellModule {
 	@Override
 	public boolean canConnectSpecial(SpellModule connectingModule) {
 		boolean alreadyConnected = false;
-		for (SpellModule module : getBoundModules()) {
+		for (SpellModule module : boundSpecial) {
 			if (module != connectingModule && module instanceof SinModifierCircle) {
 				alreadyConnected = true;
 				break;
@@ -56,6 +59,17 @@ public class DoubleModifierCircle extends CircleSpellModule {
 			ret = new Point(x, y);
 		}
 		return ret;
+	}
+
+	@Override
+	public SpellModule getConnectionEnd(boolean special) {
+		if (parent != null) {
+			return parent.getConnectionEnd(special);
+		} else if (special) {
+			return this;
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -90,11 +104,6 @@ public class DoubleModifierCircle extends CircleSpellModule {
 	@Override
 	public int getWidth() {
 		return 80;
-	}
-
-	@Override
-	public boolean canRaise(SpellState state) {
-		return getBoundModules().stream().noneMatch(bound -> bound instanceof CircleSpellModule);
 	}
 
 	@Override

@@ -4,14 +4,19 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.UiUtil;
-import net.arcanamod.systems.spell.modules.CircleSpellModule;
+import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
 
 import java.util.Arrays;
 
-public class SinModifierCircle extends CircleSpellModule {
+public class SinModifierCircle extends SpellModule {
 	public Aspect aspect = Aspects.EMPTY;
+
+	@Override
+	public boolean isCircleModule() {
+		return true;
+	}
 
 	@Override
 	public String getName() {
@@ -29,6 +34,17 @@ public class SinModifierCircle extends CircleSpellModule {
 		super.toNBT(compound);
 		AspectUtils.putAspect(compound, "aspect", aspect);
 		return compound;
+	}
+
+	@Override
+	public SpellModule getConnectionEnd(boolean special) {
+		if (parent != null) {
+			return parent.getConnectionEnd(special);
+		} else if (special) {
+			return this;
+		} else {
+			return null;
+		}
 	}
 
 	@Override

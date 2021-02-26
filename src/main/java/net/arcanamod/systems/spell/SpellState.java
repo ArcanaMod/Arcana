@@ -11,7 +11,6 @@ import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkFociForgeAction;
 import net.arcanamod.systems.spell.modules.SpellModule;
-import net.arcanamod.systems.spell.modules.StartSpellModule;
 import net.arcanamod.systems.spell.modules.core.Connector;
 import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
@@ -22,6 +21,7 @@ import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
 import java.lang.reflect.InvocationTargetException;
@@ -92,9 +92,9 @@ public class SpellState {
             }
             // if sun, no sun
             // if no sun, only sun
-            if (currentSpell != null
-                && ((currentSpell.mainModule == null && !(ret instanceof StartSpellModule))
-                    || (currentSpell.mainModule != null && (ret instanceof StartSpellModule)))) {
+            if (ret != null && currentSpell != null
+                && ((currentSpell.mainModule == null && !ret.isStartModule())
+                    || (currentSpell.mainModule != null && ret.isStartModule()))) {
                 ret = null;
             }
         }
@@ -174,13 +174,15 @@ public class SpellState {
                             if (activeModule instanceof Connector) {
                                 if (under != null) {
                                     Connector connector = (Connector) activeModule;
-                                    if (!connector.startMarked) {
-                                        activeModule.x = under.x;
-                                        activeModule.y = under.y;
+                                    if (!connector.startMarked && under.getConnectionStart() != null) {
+                                        SpellModule realUnder = under.getConnectionStart();
+                                        activeModule.x = realUnder.x;
+                                        activeModule.y = realUnder.y;
                                         connector.startMarked = true;
                                         success = true;
-                                    } else {
-                                        success = connect(activeModule.x, activeModule.y, under.x, under.y, true);
+                                    } else if (connector.startMarked && under.getConnectionEnd(false) != null) {
+                                        SpellModule realUnder = under.getConnectionEnd(false);
+                                        success = connect(activeModule.x, activeModule.y, realUnder.x, realUnder.y, true);
                                         if (success) {
                                             activeModule = null;
                                         }
@@ -207,7 +209,8 @@ public class SpellState {
                             }
                         }
                     } else if (activeModule != null && floating.containsKey(activeModule)) {
-                        success = delete(activeModule.x, activeModule.y, true);
+                        // delete module
+                        success = delete(activeModule.x, activeModule.y, Minecraft.getInstance().player.getUniqueID(),true);
                         if (success) {
                             activeModule = null;
                         }
@@ -244,28 +247,47 @@ public class SpellState {
         return success;
     }
 
-    private Stream<SpellModule> getBoundRecurse(SpellModule module) {
-        if (module == null) {
-            return Stream.empty();
-        } else {
-            return Stream.concat(Stream.of(module), module.getBoundModules().stream());
+    // Adds all bound modules recursively to a builder.
+    // Guarantees no null values are added.
+    private void addBoundRecurse(SpellModule module, @Nonnull Stream.Builder<SpellModule> builder) {
+        if (module != null) {
+            builder.add(module);
+            for (SpellModule bound : module.bound) {
+                addBoundRecurse(bound, builder);
+            }
+            for (SpellModule bound : module.boundSpecial) {
+                addBoundRecurse(bound, builder);
+            }
         }
     }
 
     private Stream<SpellModule> getPlacedModules() {
-        Stream<SpellModule> stream = Stream.empty();
+        Stream.Builder<SpellModule> builder = Stream.builder();
+        // requires spell to be initialized
         if (currentSpell != null && currentSpell.mainModule != null) {
-            stream = getBoundRecurse(currentSpell.mainModule);
+            addBoundRecurse(currentSpell.mainModule, builder);
             for (SpellModule module : isolated) {
-                stream = Stream.concat(stream, getBoundRecurse(module));
+                addBoundRecurse(module, builder);
             }
         }
-        return stream;
+        return builder.build();
+    }
+
+    @Nullable
+    private SpellModule getModuleRaised(int x, int y, UUID uuid) {
+        return getPlacedModules()
+                .filter(module -> module.withinBounds(x, y))
+                .filter(module -> floating.containsKey(module))
+                .filter(module -> floating.get(module) == uuid)
+                .findFirst().orElse(null);
     }
 
     @Nullable
     private SpellModule getModuleAt(int x, int y) {
-        return getPlacedModules().filter(module -> module.withinBounds(x, y)).findFirst().orElse(null);
+        return getPlacedModules()
+                .filter(module -> module.withinBounds(x, y))
+                .findFirst()
+                .orElse(null);
     }
 
     public Stream<SpellModule> getCollidingModules(int x, int y, SpellModule module) {
@@ -274,35 +296,55 @@ public class SpellState {
             .filter(other -> other.collidesWith(x, y, module));
     }
 
-    private Point getPlacementPoint(int x, int y, SpellModule module) {
+    public Stream<SpellModule> getCollidingSpecialTails(int x, int y, SpellModule module) {
+        Set<SpellModule> cores = new HashSet<>();
+        getCollidingModules(x, y, module).forEach(collision -> {
+            Queue<SpellModule> tail = new ArrayDeque<>();
+            tail.add(collision);
+            while (!tail.isEmpty()) {
+                SpellModule next = tail.remove();
+                if (next.canConnectSpecial(module)) {
+                    cores.add(next);
+                }
+                if (next.parent != null && next.parent.boundSpecial.contains(next)) {
+                    tail.add(next.parent);
+                }
+            }
+        });
+        return cores.stream();
+    }
+
+    private Pair<Point, SpellModule> getPlacementPoint(int x, int y, SpellModule module) {
         Point location = null;
+        SpellModule specialParent = null;
         SpellModule collision = getCollidingModules(x, y, module).findFirst().orElse(null);
         if (collision == null) {
             location = new Point(x, y);
         } else {
-            List<SpellModule> special = getCollidingModules(x, y, module)
+            // Redo the check but search for special connections
+            List<SpellModule> special = getCollidingSpecialTails(x, y, module)
                     .filter(collide -> collide.canConnectSpecial(module))
                     .limit(2)
                     .collect(Collectors.toList());
             if (special.size() > 0) {
-                SpellModule specialMain;
                 if (special.size() == 1) {
-                    specialMain = special.get(0);
+                    specialParent = special.get(0);
                 } else {
-                    // ignore previous result: get module underneath cursor
-                    specialMain = getModuleAt(x, y);
+                    // ignore previous result, get module underneath cursor
+                    specialParent = getModuleAt(x, y);
                 }
 
                 // check if a potential special placement candidate exists
-                if (specialMain != null) {
-                    if (specialMain.canConnectSpecial(module)) {
-                        Point specialPoint = specialMain.getSpecialPoint(module);
-                        List<SpellModule> specialCollisions = getCollidingModules(specialPoint.x, specialPoint.y, module)
+                if (specialParent != null) {
+                    if (specialParent.canConnectSpecial(module)) {
+                        Point specialPoint = specialParent.getSpecialPoint(module);
+                        // Check if any modules collide here
+                        List<SpellModule> specialCollisions = getCollidingSpecialTails(specialPoint.x, specialPoint.y, module)
                                 .limit(2)
                                 .collect(Collectors.toList());
                         if (specialCollisions.size() == 0
                                 || (specialCollisions.size() == 1
-                                    && specialCollisions.get(0) == specialMain)) {
+                                    && specialCollisions.get(0) == specialParent)) {
                             location = specialPoint;
                         }
                     }
@@ -310,11 +352,12 @@ public class SpellState {
             }
         }
 
-        return location;
+        return new Pair<>(location, specialParent);
     }
 
     private boolean canPlace(int x, int y, SpellModule module) {
-        return (getPlacementPoint(x, y, module) != null);
+        Pair<Point, SpellModule> point = getPlacementPoint(x, y, module);
+        return (point.getFirst() != null);
     }
 
     // Assumes module is raised
@@ -336,14 +379,16 @@ public class SpellState {
             }
             // place module
             newModule.unplaced = false;
-            if (newModule instanceof StartSpellModule) {
+            if (newModule.isStartModule()) {
                 newModule.x = 0;
                 newModule.y = 0;
                 this.x = x;
                 this.y = y;
                 currentSpell.mainModule = newModule;
             } else {
-                Point realPlacement = getPlacementPoint(x, y, newModule);
+                Pair<Point, SpellModule> placement = getPlacementPoint(x, y, newModule);
+                Point realPlacement = placement.getFirst();
+                SpellModule specialParent = placement.getSecond();
                 newModule.x = realPlacement.x;
                 newModule.y = realPlacement.y;
                 isolated.add(newModule);
@@ -377,7 +422,7 @@ public class SpellState {
 
     public boolean lower(int from_x, int from_y, int to_x, int to_y, UUID uuid, boolean isRemote) {
         boolean result = false;
-        SpellModule lowering = getModuleAt(from_x, from_y);
+        SpellModule lowering = getModuleRaised(from_x, from_y, uuid);
         UUID user = floating.get(lowering);
         if (lowering != null && user != null && user.equals(uuid) && canPlace(to_x, to_y, lowering)) {
             if (isRemote) {
@@ -391,10 +436,15 @@ public class SpellState {
                 sequence++;
             }
             // lower module
-            Point realPlacement = getPlacementPoint(to_x, to_y, lowering);
+            Pair<Point, SpellModule> placement = getPlacementPoint(to_x, to_y, lowering);
+            Point realPlacement = placement.getFirst();
+            SpellModule specialParent = placement.getSecond();
             lowering.x = realPlacement.x;
             lowering.y = realPlacement.y;
             floating.remove(lowering);
+            // new special connection and parent
+            lowering.setParent(specialParent);
+
             spellModified = true;
             result = true;
         }
@@ -405,7 +455,7 @@ public class SpellState {
         boolean result = false;
         SpellModule root = getModuleAt(from_x, from_y);
         SpellModule bound = getModuleAt(to_x, to_y);
-        if (root != null && bound != null && root.canConnect(bound)) {
+        if (root != null && bound != null &&    root.canConnect(bound, false)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
@@ -417,7 +467,7 @@ public class SpellState {
                 sequence++;
             }
             // connect the modules
-            root.bindModule(bound);
+            bound.setParent(root);
             if (isolated.contains(bound)) {
                 isolated.remove((bound));
             }
@@ -427,9 +477,9 @@ public class SpellState {
         return result;
     }
 
-    public boolean delete(int x, int y, boolean isRemote) {
+    public boolean delete(int x, int y, UUID uuid, boolean isRemote) {
         boolean result = false;
-        SpellModule deleting = getModuleAt(x, y);
+        SpellModule deleting = getModuleRaised(x, y, uuid);
         if (deleting != null && canDelete(deleting)) {
             if (isRemote) {
                 // send action to server
@@ -447,27 +497,16 @@ public class SpellState {
                 currentSpell.mainModule = null;
             } else if (isolated.contains(deleting)) {
                 isolated.remove(deleting);
-            } else {
-                SpellModule parent = deleting.findParent(currentSpell.mainModule);
-                if (parent == null) {
-                    for (SpellModule iso : isolated) {
-                        parent = deleting.findParent(iso);
-                        if (parent != null) {
-                            break;
-                        }
-                    }
-                }
-                if (parent != null) {
-                    parent.unbindModule(deleting);
-                }
             }
-            for (SpellModule bound : deleting.getBoundModules()) {
-                if (bound != null) {
-                    deleting.unbindModule(bound);
-                    isolated.add(bound);
-                }
+            List<SpellModule> toUnbind = new ArrayList<>();
+            toUnbind.addAll(deleting.bound);
+            toUnbind.addAll(deleting.boundSpecial);
+            for (SpellModule bound : toUnbind) {
+                bound.setParent(null);
+                isolated.add(bound);
             }
             floating.remove(deleting);
+            deleting.setParent(null);
             spellModified = true;
             result = true;
         }
@@ -530,39 +569,75 @@ public class SpellState {
 
 
         if (currentSpell != null) {
-            // render according to background
+            // render starting at board location
             RenderSystem.translatef(x, y, 0);
 
-            Queue<Pair<SpellModule, SpellModule>> renderQueue = new LinkedList<>();
+            Queue<Pair<SpellModule, SpellModule>> moduleQueue = new LinkedList<>();
+            Queue<Pair<SpellModule, SpellModule>> connectQueue = new LinkedList<>();
+            Queue<SpellModule> renderQueue = new LinkedList<>();
+
             if (currentSpell.mainModule != null) {
-                renderQueue.add(new Pair<>(null, currentSpell.mainModule));
+                moduleQueue.add(new Pair<>(null, currentSpell.mainModule));
             }
             for (SpellModule floater : isolated) {
-                renderQueue.add(new Pair<>(null, floater));
+                if (floater != null) {
+                    moduleQueue.add(new Pair<>(null, floater));
+                }
+            }
+            while(!moduleQueue.isEmpty()) {
+                Pair<SpellModule, SpellModule> next = moduleQueue.remove();
+                SpellModule root = next.getFirst();
+                SpellModule base = next.getSecond();
+                if (root != null && !root.canConnectSpecial(base)) {
+                    connectQueue.add(next);
+                }
+                renderQueue.add(base);
+                for (SpellModule bound : base.bound) {
+                    if (bound != null) {
+                        moduleQueue.add(new Pair<>(base, bound));
+                    }
+                }
+                for (SpellModule bound : base.boundSpecial) {
+                    if (bound != null) {
+                        moduleQueue.add(new Pair<>(base, bound));
+                    }
+                }
+            }
+
+            while(!connectQueue.isEmpty()) {
+                mc.getTextureManager().bindTexture(SPELL_RESOURCES);
+                Pair<SpellModule, SpellModule> next = connectQueue.remove();
+                SpellModule root = next.getFirst();
+                SpellModule base = next.getSecond();
+
+                RenderSystem.pushMatrix();
+                Point rootPoint = root.getConnectionRenderStart();
+                Point basePoint = base.getConnectionRenderEnd();
+                double distance = Math.sqrt(Math.pow(rootPoint.x - basePoint.x, 2) + Math.pow(rootPoint.y - basePoint.y, 2));
+                // render connector with 0,0 at root
+                RenderSystem.translatef(rootPoint.x, rootPoint.y, 0);
+                // sprite rendered from (0,0) to (x, 0), so we rotate the matrix to draw accordingly
+                float angle = (float)(Math.atan2(basePoint.y - rootPoint.y, basePoint.x - rootPoint.x) * 180 / Math.PI);
+                RenderSystem.rotatef(angle, 0, 0, 1);
+                UiUtil.drawTexturedModalRect(-8, -8, 176, 16, 16, 16);
+                UiUtil.drawTexturedModalRect((int)distance - 8, -8, 208, 16, 16, 16);
+                if (distance > 16) {
+                    RenderSystem.translatef(8,0,0);
+                    RenderSystem.scalef(((float)distance - 16.0f) / 16.0f,1,  1);
+                    UiUtil.drawTexturedModalRect(0, -8, 192, 16, 16, 16);
+                }
+                RenderSystem.popMatrix();
             }
 
             while(!renderQueue.isEmpty()) {
                 mc.getTextureManager().bindTexture(SPELL_RESOURCES);
-                Pair<SpellModule, SpellModule> next = renderQueue.remove();
-                SpellModule root = next.getFirst();
-                SpellModule base = next.getSecond();
-                if (root != null && !root.canConnectSpecial(base)) {
-                    // render connector
-                }
-                if (!floating.containsKey(base)) {
-                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), false);
-                } else if (floating.get(base) != mc.player.getUniqueID()) {
-                    RenderSystem.color4f(1.0f, 1.0f, 1.0f, .75f);
-                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), true);
-                    RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+                SpellModule next = renderQueue.remove();
+                if (!floating.containsKey(next)) {
+                    next.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), false);
                 } else { // current player is floating module
-                    RenderSystem.color4f(1.0f, 1.0f, 1.0f, .25f);
-                    base.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), true);
+                    RenderSystem.color4f(1.0f, 1.0f, 1.0f, .75f);
+                    next.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), true);
                     RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-                }
-
-                for (SpellModule bound : base.getBoundModules()) {
-                    renderQueue.add(new Pair<>(base, bound));
                 }
             }
         }
@@ -574,9 +649,7 @@ public class SpellState {
         mc.getTextureManager().bindTexture(SPELL_RESOURCES);
         // Render selected module under mouse cursor
         if (activeModule != null) {
-            RenderSystem.color4f(1.0f, 1.0f, 1.0f, 0.5f);
             activeModule.renderUnderMouse(mouseX, mouseY, mc.getItemRenderer(), (!activeModule.unplaced));
-            RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
         }
 
         mc.getTextureManager().bindTexture(FociForgeScreen.BG);

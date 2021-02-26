@@ -78,7 +78,7 @@ public class PkFociForgeAction {
                             valid = state.connect(msg.ax, msg.ay, msg.bx, msg.by, false);
                             break;
                         case DELETE:
-                            valid = state.delete(msg.ax, msg.ay, false);
+                            valid = state.delete(msg.ax, msg.ay, spe.getUniqueID(), false);
                             break;
                         case ASSIGN:
                             valid = state.assign(msg.ax, msg.ay, msg.aspect, false);

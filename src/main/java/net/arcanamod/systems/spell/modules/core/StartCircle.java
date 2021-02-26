@@ -3,10 +3,14 @@ package net.arcanamod.systems.spell.modules.core;
 import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
-import net.arcanamod.systems.spell.modules.StartSpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
 
-public class StartCircle extends SpellModule implements StartSpellModule {
+public class StartCircle extends SpellModule {
+
+	@Override
+	public boolean isStartModule() {
+		return true;
+	}
 
 	@Override
 	public String getName() {
@@ -14,15 +18,9 @@ public class StartCircle extends SpellModule implements StartSpellModule {
 	}
 
 	@Override
-	public boolean canConnect(SpellModule connectingModule) {
-		return true;
-	}
-
-	@Override
 	public boolean canRaise(SpellState state) {
 		return state.currentSpell.mainModule == this
-				&& state.isolated.size() == 0
-				&& getBoundModules().size() == 0;
+				&& super.canRaise(state);
 	}
 
 	@Override

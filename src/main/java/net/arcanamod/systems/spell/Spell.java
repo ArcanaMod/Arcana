@@ -43,7 +43,7 @@ public class Spell implements ISpell {
 	 * @param action Spell use Action.
 	 */
 	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
-		for (SpellModule module : spell.mainModule.getBoundModules()) {
+		for (SpellModule module : spell.mainModule.bound) {
 			Logic.runSpellModule(module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
 		}
 	}
@@ -52,7 +52,7 @@ public class Spell implements ISpell {
 		if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof WandItem) {
 			if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)) != Focus.NO_FOCUS) {
 				if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
-					for (SpellModule module : WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.getBoundModules()) {
+					for (SpellModule module : WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.bound) {
 						Logic.updateSpellStatusBarRecursive(module, player, new ArrayList<>());
 					}
 				}
@@ -107,8 +107,8 @@ public class Spell implements ISpell {
 	private static class Logic {
 		private static SpellModule updateSpellStatusBarRecursive(SpellModule toUnbound, PlayerEntity player,
 																 List<Pair<Aspect,Aspect>> castMethodsAspects) {
-			if (toUnbound.getBoundModules().size() > 0){
-				for (SpellModule module : toUnbound.getBoundModules()) {
+			if (toUnbound.bound.size() > 0){
+				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastMethod)
 						castMethodsAspects.add(of(((CastMethod) module).aspect, Aspects.EMPTY));
 					else if (module instanceof CastMethodSin) {
@@ -134,8 +134,8 @@ public class Spell implements ISpell {
 		private static SpellModule runSpellModule(SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
 												  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
 			SpellModule mod = null;
-			if (toUnbound.getBoundModules().size() > 0){
-				for (SpellModule module : toUnbound.getBoundModules()) {
+			if (toUnbound.bound.size() > 0){
+				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastMethod)
 						castMethodsAspects.add(of(((CastMethod) module).aspect,Aspects.EMPTY));
 					else if (module instanceof CastMethodSin) {
@@ -154,8 +154,8 @@ public class Spell implements ISpell {
 		}
 
 		private static int blendAndGetColor(SpellModule toUnbound, int color){
-			if (toUnbound != null && toUnbound.getBoundModules().size() > 0){
-				for (SpellModule module : toUnbound.getBoundModules()) {
+			if (toUnbound != null && toUnbound.bound.size() > 0){
+				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastCircle)
 						if (color != 0x000000)
 							color = UiUtil.blend(((CastCircle)module).cast.getSpellAspect().getColorRange().get(3),color,0.5f);
@@ -167,8 +167,8 @@ public class Spell implements ISpell {
 		}
 
 		public static SpellCosts getSpellCost(SpellModule toUnbound, SpellCosts cost) {
-			if (toUnbound != null && toUnbound.getBoundModules().size() > 0){
-				for (SpellModule module : toUnbound.getBoundModules()) {
+			if (toUnbound != null && toUnbound.bound.size() > 0){
+				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastMethod) {
 						Aspect aspect = ((CastMethod)module).aspect;
 						if (aspect==Aspects.EARTH)

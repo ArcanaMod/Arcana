@@ -20,11 +20,6 @@ public class CastMethod extends SpellModule {
 	}
 
 	@Override
-	public boolean canConnect(SpellModule connectingModule) {
-		return true;
-	}
-
-	@Override
 	public void fromNBT(CompoundNBT compound) {
 		super.fromNBT(compound);
 		aspect = AspectUtils.getAspect(compound, "aspect");
@@ -38,15 +33,22 @@ public class CastMethod extends SpellModule {
 	}
 
 	@Override
+	public int getOutputAmount(){
+		return 4;
+	}
+
+	@Override
+	public boolean canConnect(SpellModule module, boolean special) {
+		return (super.canConnect(module, special)
+				&& (!special
+					|| (module instanceof CastMethodSin
+		 				&& this.boundSpecial.size() == 0)));
+	}
+
+	@Override
 	public boolean canConnectSpecial(SpellModule connectingModule) {
-		boolean alreadyConnected = false;
-		for (SpellModule module : getBoundModules()) {
-			if (module != connectingModule && connectingModule instanceof CastMethodSin) {
-				alreadyConnected = true;
-				break;
-			}
-		}
-		return (!alreadyConnected && connectingModule instanceof CastMethodSin);
+		return (boundSpecial.contains(connectingModule)
+				|| (boundSpecial.size() == 0 && connectingModule instanceof CastMethodSin));
 	}
 
 	@Override
@@ -107,4 +109,15 @@ public class CastMethod extends SpellModule {
 			}
 		}
 	}
+
+	@Override
+	public Point getConnectionRenderStart() {
+		SpellModule sin = boundSpecial.stream().filter(module -> module instanceof CastMethodSin).findFirst().orElse(null);
+		if (sin != null) {
+			return new Point(x + 36, y);
+		} else {
+			return new Point(this.x, this.y);
+		}
+	}
+
 }

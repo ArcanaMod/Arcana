@@ -21,14 +21,15 @@ public class CommentBlock extends SpellModule {
 		return 0;
 	}
 
-	@Override
-	public boolean canConnect(SpellModule connectingModule) {
-		return false;
-	}
 
 	@Override
 	public int getOutputAmount() {
 		return 0;
+	}
+
+	@Override
+	public boolean canConnect(SpellModule connectingModule, boolean special) {
+		return false;
 	}
 
 	@Override

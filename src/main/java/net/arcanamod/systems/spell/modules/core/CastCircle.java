@@ -8,9 +8,9 @@ import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
-import net.arcanamod.systems.spell.modules.CircleSpellModule;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
+import net.arcanamod.systems.spell.modules.circle.SinModifierCircle;
 import net.arcanamod.systems.spell.modules.circle.SingleModifierCircle;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
@@ -27,7 +27,7 @@ public class CastCircle extends SpellModule {
 	}
 
 	@Override
-	public boolean canConnect(SpellModule connectingModule) {
+	public boolean canConnect(SpellModule connectingModule, boolean special) {
 		return true;
 	}
 
@@ -52,18 +52,19 @@ public class CastCircle extends SpellModule {
 
 	@Override
 	public boolean canConnectSpecial(SpellModule connectingModule) {
-		boolean alreadyConnected = false;
-		for (SpellModule module : getBoundModules()) {
-			if (module != connectingModule
-					&& (connectingModule instanceof SingleModifierCircle
-						|| connectingModule instanceof DoubleModifierCircle)) {
-				alreadyConnected = true;
-				break;
-			}
+		if (connectingModule instanceof SinModifierCircle) {
+			return boundSpecial.stream()
+					.filter(module -> module != connectingModule)
+					.noneMatch(module -> module instanceof SinModifierCircle);
+		} else if (connectingModule instanceof SingleModifierCircle
+					|| connectingModule instanceof DoubleModifierCircle) {
+			return boundSpecial.stream()
+					.filter(module -> module != connectingModule)
+					.noneMatch(module -> module instanceof SingleModifierCircle
+								|| module instanceof DoubleModifierCircle);
+		} else {
+			return false;
 		}
-		return (!alreadyConnected
-				&& (connectingModule instanceof SingleModifierCircle
-					|| connectingModule instanceof DoubleModifierCircle));
 	}
 
 	@Override
@@ -104,7 +105,7 @@ public class CastCircle extends SpellModule {
 
 	@Override
 	public boolean canRaise(SpellState state) {
-		return getBoundModules().stream().noneMatch(bound -> bound instanceof CircleSpellModule);
+		return boundSpecial.stream().noneMatch(SpellModule::isCircleModule);
 	}
 
 	@Override

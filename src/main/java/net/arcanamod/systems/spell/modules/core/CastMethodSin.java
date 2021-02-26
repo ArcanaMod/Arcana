@@ -24,8 +24,23 @@ public class CastMethodSin extends SpellModule {
 	}
 
 	@Override
-	public boolean canConnect(SpellModule connectingModule) {
-		return connectingModule instanceof CastMethod;
+	public SpellModule getConnectionStart() {
+		if (parent != null) {
+			return parent.getConnectionStart();
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public SpellModule getConnectionEnd(boolean special) {
+		if (parent != null) {
+			return parent.getConnectionEnd(special);
+		} else if (special) {
+			return this;
+		} else {
+			return null;
+		}
 	}
 
 	@Override

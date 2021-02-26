@@ -1,8 +1,10 @@
 package net.arcanamod.systems.spell.modules.core;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
+import org.lwjgl.opengl.GL11;
 
 public class Connector extends SpellModule {
 	public boolean startMarked = false;
@@ -17,7 +19,7 @@ public class Connector extends SpellModule {
 	}
 
 	@Override
-	public boolean canConnect(SpellModule connectingModule) {
+	public boolean canConnect(SpellModule connectingModule, boolean special) {
 		return true;
 	}
 
@@ -27,12 +29,17 @@ public class Connector extends SpellModule {
 	}
 
 	@Override
-	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
-		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 16, getWidth(), getHeight());
+	public int getWidth() {
+		return 16;
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
-		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 0, 16, getWidth(), getHeight());
+	public int getHeight() {
+		return 16;
+	}
+
+	@Override
+	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
+		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 208, 0, getWidth(), getHeight());
 	}
 }

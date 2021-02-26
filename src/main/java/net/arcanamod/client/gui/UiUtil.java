@@ -192,6 +192,11 @@ public final class UiUtil{
 		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
 		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
 	}
+
+	public static void drawModalRectWithScaledTexture(int x, int y, int width, int height, float texX, float texY, int textureWidth, int textureHeight){
+		int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
+		AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
+	}
 	
 	public static void drawTexturedModalRect(int x, int y, float texX, float texY, int width, int height){
 		drawModalRectWithCustomSizedTexture(x, y, texX, texY, width, height, 256, 256);
