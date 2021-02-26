@@ -8,6 +8,7 @@ import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
@@ -106,6 +107,30 @@ public class JarBlock extends Block{
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 	}
+
+	@Override
+	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+		if (te instanceof JarTileEntity) {
+			JarTileEntity jte = (JarTileEntity)te;
+			if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() == 0)
+				spawnDrops(state, worldIn, pos, te, player, stack);
+		}
+	}
+
+	@Override
+	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
+		TileEntity te = worldIn.getTileEntity(pos);
+		if (te instanceof JarTileEntity) {
+			JarTileEntity jte = (JarTileEntity)te;
+			if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() != 0){
+				ItemEntity itementity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), getItem(worldIn, pos, state));
+				itementity.setDefaultPickupDelay();
+				worldIn.addEntity(itementity);
+			}
+		}
+		super.onBlockHarvested(worldIn, pos, state, player);
+	}
+
 
 	public static Direction getYaw(PlayerEntity player) {
 		int yaw = (int)player.rotationYaw;

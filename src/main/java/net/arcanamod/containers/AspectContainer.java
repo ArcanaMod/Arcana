@@ -94,8 +94,21 @@ public abstract class AspectContainer extends Container{
 	
 	public void onContainerClosed(@Nonnull PlayerEntity player){
 		super.onContainerClosed(player);
-		if(shouldReturnAspectsOnClose())
+		//quick fix for disappearing aspects from closing research screen while holding any amount of an aspect
+		if (heldCount != 0 ) {
+			for(AspectSlot slot : aspectSlots) {
+				if (slot.getAspect() == heldAspect) {
+					while(heldCount > 0) {
+						heldCount = slot.insert(heldAspect, heldCount, false);
+					}
+					break;
+				}
+			}
+		}
+		//uncertain whether implementation should be here or somewhere else
+		if(shouldReturnAspectsOnClose()) {
 			aspectSlots.forEach(AspectSlot::onClose);
+		}
 	}
 	
 	public boolean shouldReturnAspectsOnClose(){
