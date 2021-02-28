@@ -231,7 +231,7 @@ public abstract class SpellModule {
 
 	// Returns true if this module may be raised on the SpellState board
 	public boolean canRaise(SpellState state) {
-		return true;
+		return boundSpecial.isEmpty();
 	}
 
 	// Returns the module's height on the grid.

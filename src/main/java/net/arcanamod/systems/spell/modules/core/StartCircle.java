@@ -30,9 +30,8 @@ public class StartCircle extends SpellModule {
 	@Override
 	public boolean canRaise(SpellState state) {
 		return super.canRaise(state)
-				&& state.isolated.size() == 0
-				&& bound.size() == 0
-				&& boundSpecial.size() == 0;
+				&& state.isolated.isEmpty()
+				&& bound.isEmpty();
 	}
 
 	@Override

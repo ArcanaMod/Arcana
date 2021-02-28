@@ -99,11 +99,6 @@ public class CastCircle extends SpellModule {
 	}
 
 	@Override
-	public boolean canRaise(SpellState state) {
-		return boundSpecial.stream().noneMatch(SpellModule::isCircleModule);
-	}
-
-	@Override
 	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
 		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 32, 16, getWidth(), getHeight());
 		if (!floating || cast == null) {
