@@ -46,7 +46,7 @@ public class ResearchBooks{
 	}
 	
 	public static Stream<ResearchEntry> streamChildrenOf(ResearchEntry parent){
-		return streamEntries().filter(x -> x.parents().contains(parent.key()));
+		return streamEntries().filter(x -> x.parents().stream().anyMatch(it -> it.entry.equals(parent.key())));
 	}
 	
 	public static List<ResearchEntry> getChildrenOf(ResearchEntry parent){

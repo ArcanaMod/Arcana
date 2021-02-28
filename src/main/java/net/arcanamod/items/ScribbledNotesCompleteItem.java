@@ -20,7 +20,7 @@ import static net.arcanamod.Arcana.arcLoc;
 @MethodsReturnNonnullByDefault
 public class ScribbledNotesCompleteItem extends Item{
     
-    private static final ResourceLocation ROOT = arcLoc("aspects");
+    private static final ResourceLocation ROOT = arcLoc("root");
     
     public ScribbledNotesCompleteItem(Properties properties){
         super(properties);
@@ -39,7 +39,7 @@ public class ScribbledNotesCompleteItem extends Item{
         else
             player.setItemStackToSlot(EquipmentSlotType.OFFHAND, ItemStack.EMPTY);
         player.addItemStackToInventory(new ItemStack(ArcanaItems.ARCANUM.get()));
-        Researcher.getFrom(player).completeEntry(ResearchBooks.getEntry(ROOT));
+        Researcher.getFrom(player).advanceEntry(ResearchBooks.getEntry(ROOT));
         return super.onItemRightClick(world, player, hand);
     }
 }
