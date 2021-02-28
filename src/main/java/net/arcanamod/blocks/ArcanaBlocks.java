@@ -11,11 +11,13 @@ import net.arcanamod.blocks.multiblocks.research_table.ResearchTableCoreBlock;
 import net.arcanamod.blocks.multiblocks.taint_scrubber.BoosterTaintScrubberExtensionBlock;
 import net.arcanamod.blocks.multiblocks.taint_scrubber.TaintScrubberBlock;
 import net.arcanamod.blocks.multiblocks.taint_scrubber.TaintScrubberExtensionBlock;
+import net.arcanamod.blocks.tainted.TaintedSaplingBlock;
 import net.arcanamod.util.annotations.GIM;
 import net.arcanamod.util.annotations.GLT;
-import net.arcanamod.worldgen.DummyTree;
-import net.arcanamod.worldgen.GreatwoodTree;
-import net.arcanamod.worldgen.SilverwoodTree;
+import net.arcanamod.worldgen.trees.DummyTree;
+import net.arcanamod.worldgen.trees.GreatwoodTree;
+import net.arcanamod.worldgen.trees.SilverwoodTree;
+import net.arcanamod.worldgen.trees.TaintedGreatwoodTree;
 import net.minecraft.block.*;
 import net.minecraft.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.block.material.Material;
@@ -189,7 +191,7 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_GREATWOOD_LEAVES = BLOCKS.register("tainted_greatwood_leaves", () -> taintedOf(ArcanaBlocks.GREATWOOD_LEAVES.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_GREATWOOD_LOG = BLOCKS.register("tainted_greatwood_log", () -> taintedOf(ArcanaBlocks.GREATWOOD_LOG.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_GREATWOOD_PLANKS = BLOCKS.register("tainted_greatwood_planks", () -> taintedOf(ArcanaBlocks.GREATWOOD_PLANKS.get()));
-	@GLT public static final RegistryObject<Block> TAINTED_GREATWOOD_SAPLING = BLOCKS.register("tainted_greatwood_sapling", () -> taintedOf(ArcanaBlocks.GREATWOOD_SAPLING.get()));
+	@GLT public static final RegistryObject<SaplingBlock> TAINTED_GREATWOOD_SAPLING = BLOCKS.register("tainted_greatwood_sapling", () -> new TaintedSaplingBlock(GREATWOOD_SAPLING.get(), new TaintedGreatwoodTree(), create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.PLANT)));
 	@GLT public static final RegistryObject<Block> TAINTED_GREATWOOD_SLAB = BLOCKS.register("tainted_greatwood_slab", () -> taintedOf(ArcanaBlocks.GREATWOOD_SLAB.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_GREATWOOD_STAIRS = BLOCKS.register("tainted_greatwood_stairs", () -> taintedOf(ArcanaBlocks.GREATWOOD_STAIRS.get()));
 	

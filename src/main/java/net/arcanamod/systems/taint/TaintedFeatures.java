@@ -2,11 +2,11 @@ package net.arcanamod.systems.taint;
 
 import com.google.common.collect.ImmutableList;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.LogBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
-import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.feature.HugeTreeFeatureConfig;
+import net.minecraft.world.gen.feature.TreeFeatureConfig;
 import net.minecraft.world.gen.foliageplacer.AcaciaFoliagePlacer;
 import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
 import net.minecraft.world.gen.foliageplacer.SpruceFoliagePlacer;
@@ -14,6 +14,7 @@ import net.minecraft.world.gen.treedecorator.AlterGroundTreeDecorator;
 import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator;
 
 public class TaintedFeatures {
+	// TODO: put this all into ArcanaFeatures with other feature configs and register with registry events
 	public static class Config {
 
 		public static final TreeFeatureConfig FANCY_TREE_WITH_MORE_BEEHIVES_CONFIG = (

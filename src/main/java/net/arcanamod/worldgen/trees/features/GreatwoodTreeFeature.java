@@ -1,4 +1,4 @@
-package net.arcanamod.worldgen;
+package net.arcanamod.worldgen.trees.features;
 
 import com.mojang.datafixers.Dynamic;
 import net.arcanamod.util.Pair;

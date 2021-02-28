@@ -1,6 +1,8 @@
 package net.arcanamod.worldgen;
 
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.worldgen.trees.features.GreatwoodTreeFeature;
+import net.arcanamod.worldgen.trees.features.SilverwoodTreeFeature;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
@@ -25,6 +27,7 @@ public class ArcanaFeatures{
 	// have to delay populating it until block registry is done because forge thonk
 	public static TreeFeatureConfig SILVERWOOD_TREE_CONFIG;
 	public static HugeTreeFeatureConfig GREATWOOD_TREE_CONFIG;
+	public static HugeTreeFeatureConfig TAINTED_GREATWOOD_TREE_CONFIG;
 	
 	// features have to exist first because forge is stupid and insists on registering biomes first
 	public static Feature<NoFeatureConfig> NODE = new NodeFeature(NoFeatureConfig::deserialize);
@@ -38,10 +41,11 @@ public class ArcanaFeatures{
 	
 	public static void addMagicalForestTrees(Biome biome){
 		// blocks must be registered first, but these configs have to be made at biome time, not feature time
-		if(SILVERWOOD_TREE_CONFIG == null)
+		if(SILVERWOOD_TREE_CONFIG == null){
 			SILVERWOOD_TREE_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(3, 1)).heightRandA(2).heightRandB(2).baseHeight(10).build();
-		if(GREATWOOD_TREE_CONFIG == null)
 			GREATWOOD_TREE_CONFIG = new HugeTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.GREATWOOD_LEAVES.get().getDefaultState())).setSapling(ArcanaBlocks.GREATWOOD_SAPLING.get()).baseHeight(18).build();
+			TAINTED_GREATWOOD_TREE_CONFIG = new HugeTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LEAVES.get().getDefaultState())).setSapling(ArcanaBlocks.TAINTED_GREATWOOD_SAPLING.get()).baseHeight(18).build();
+		}
 		
 		biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, SILVERWOOD_TREE.withConfiguration(SILVERWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(0, 0.04f, 1))));
 		biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, GREATWOOD_TREE.withConfiguration(GREATWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(0, 0.1f, 1))));

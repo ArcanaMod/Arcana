@@ -1,4 +1,4 @@
-package net.arcanamod.worldgen;
+package net.arcanamod.worldgen.trees;
 
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
