@@ -202,11 +202,11 @@ public class ResearchEntryScreen extends Screen{
 		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) < entry.sections().size() && entry.sections().get(r.entryStage(entry)).getRequirements().size() > 0){
 			List<Requirement> requirements = entry.sections().get(r.entryStage(entry)).getRequirements();
-			final int y = (height - 181) / 2 + 190;
-			final int reqWidth = 20;
-			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
+			final int y = (height - 181) / 2 + 180;
+			final int reqSize = 20;
+			final int baseX = (width / 2) - (reqSize * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++)
-				if(mouseX >= 20 * i + baseX + 2 && mouseX <= 20 * i + baseX + 18 && mouseY >= y && mouseY <= y + 18)
+				if(mouseX >= reqSize * i + baseX && mouseX <= reqSize * i + baseX + reqSize && mouseY >= y && mouseY <= y + reqSize)
 					return requirements.get(i).onClick(entry, getMinecraft().player);
 		}
 		if(totalLength() > index){
