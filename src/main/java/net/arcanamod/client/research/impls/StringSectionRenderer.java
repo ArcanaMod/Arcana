@@ -3,6 +3,7 @@ package net.arcanamod.client.research.impls;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.EntrySectionRenderer;
+import net.arcanamod.client.research.FormattingHelper;
 import net.arcanamod.systems.research.impls.StringSection;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +18,8 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 	private static int linesPerPage = (ResearchEntryScreen.PAGE_HEIGHT / (int)(10 * TEXT_SCALING)) + 1;
 	
 	public String getTranslatedText(StringSection section){
-		return I18n.format(section.getText());
+		// TODO: make this only run when needed
+		return FormattingHelper.process(I18n.format(section.getText()));
 	}
 	
 	public int span(StringSection section, PlayerEntity player){

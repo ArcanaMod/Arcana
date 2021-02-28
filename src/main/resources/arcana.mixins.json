@@ -4,6 +4,7 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "arcana.refmap.json",
   "mixins": [
+    "ModContainerAccessor"
   ],
   "client": [
     "AccessorFirstPersonRenderer",
