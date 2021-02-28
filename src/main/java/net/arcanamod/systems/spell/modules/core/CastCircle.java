@@ -27,11 +27,6 @@ public class CastCircle extends SpellModule {
 	}
 
 	@Override
-	public boolean canConnect(SpellModule connectingModule, boolean special) {
-		return true;
-	}
-
-	@Override
 	public void fromNBT(CompoundNBT compound) {
 		super.fromNBT(compound);
 		cast = Casts.castMap.get(new ResourceLocation(compound.getString("cast")));

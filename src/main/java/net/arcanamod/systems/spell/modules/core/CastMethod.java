@@ -4,6 +4,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
@@ -48,7 +49,7 @@ public class CastMethod extends SpellModule {
 	@Override
 	public boolean canConnectSpecial(SpellModule connectingModule) {
 		return (boundSpecial.contains(connectingModule)
-				|| (boundSpecial.size() == 0 && connectingModule instanceof CastMethodSin));
+				|| (boundSpecial.size() == 0 && connectingModule.isCastModifier()));
 	}
 
 	@Override
@@ -86,6 +87,11 @@ public class CastMethod extends SpellModule {
 	@Override
 	public int getWidth() {
 		return 36;
+	}
+
+	@Override
+	public boolean canRaise(SpellState state) {
+		return boundSpecial.stream().noneMatch(SpellModule::isCastModifier);
 	}
 
 	@Override

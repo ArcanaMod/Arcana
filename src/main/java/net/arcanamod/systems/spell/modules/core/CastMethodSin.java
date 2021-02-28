@@ -14,6 +14,11 @@ public class CastMethodSin extends SpellModule {
 	public Aspect aspect = Aspects.EMPTY;
 
 	@Override
+	public boolean isCastModifier() {
+		return true;
+	}
+
+	@Override
 	public String getName() {
 		return "cast_method_sin";
 	}

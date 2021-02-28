@@ -42,4 +42,11 @@ public class Connector extends SpellModule {
 	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
 		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 208, 0, getWidth(), getHeight());
 	}
+
+	@Override
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
+		if (startMarked) {
+			UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 192, 0, getWidth(), getHeight());
+		}
+	}
 }

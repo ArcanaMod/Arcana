@@ -18,9 +18,21 @@ public class StartCircle extends SpellModule {
 	}
 
 	@Override
+	public int getInputAmount(){
+		return 0;
+	}
+
+	@Override
+	public int getOutputAmount(){
+		return 5;
+	}
+
+	@Override
 	public boolean canRaise(SpellState state) {
-		return state.currentSpell.mainModule == this
-				&& super.canRaise(state);
+		return super.canRaise(state)
+				&& state.isolated.size() == 0
+				&& bound.size() == 0
+				&& boundSpecial.size() == 0;
 	}
 
 	@Override

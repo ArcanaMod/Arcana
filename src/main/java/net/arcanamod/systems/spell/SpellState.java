@@ -181,8 +181,7 @@ public class SpellState {
                                         connector.startMarked = true;
                                         success = true;
                                     } else if (connector.startMarked && under.getConnectionEnd(false) != null) {
-                                        SpellModule realUnder = under.getConnectionEnd(false);
-                                        success = connect(activeModule.x, activeModule.y, realUnder.x, realUnder.y, true);
+                                        success = connect(activeModule.x, activeModule.y, under.x, under.y, true);
                                         if (success) {
                                             activeModule = null;
                                         }
@@ -275,9 +274,8 @@ public class SpellState {
 
     @Nullable
     private SpellModule getModuleRaised(int x, int y, UUID uuid) {
-        return getPlacedModules()
+        return floating.keySet().stream()
                 .filter(module -> module.withinBounds(x, y))
-                .filter(module -> floating.containsKey(module))
                 .filter(module -> floating.get(module) == uuid)
                 .findFirst().orElse(null);
     }
@@ -391,7 +389,11 @@ public class SpellState {
                 SpellModule specialParent = placement.getSecond();
                 newModule.x = realPlacement.x;
                 newModule.y = realPlacement.y;
-                isolated.add(newModule);
+                if (specialParent == null) {
+                    isolated.add(newModule);
+                } else {
+                    newModule.setParent(specialParent);
+                }
             }
             spellModified = true;
             result = true;
@@ -423,8 +425,7 @@ public class SpellState {
     public boolean lower(int from_x, int from_y, int to_x, int to_y, UUID uuid, boolean isRemote) {
         boolean result = false;
         SpellModule lowering = getModuleRaised(from_x, from_y, uuid);
-        UUID user = floating.get(lowering);
-        if (lowering != null && user != null && user.equals(uuid) && canPlace(to_x, to_y, lowering)) {
+        if (lowering != null && canPlace(to_x, to_y, lowering)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
@@ -443,8 +444,14 @@ public class SpellState {
             lowering.y = realPlacement.y;
             floating.remove(lowering);
             // new special connection and parent
-            lowering.setParent(specialParent);
-
+            if (lowering.parent == null || lowering.parent.boundSpecial.contains(lowering)) {
+                lowering.setParent(specialParent);
+            }
+            if (lowering.parent == null) {
+                isolated.add(lowering);
+            } else {
+                isolated.remove(lowering);
+            }
             spellModified = true;
             result = true;
         }
@@ -455,7 +462,7 @@ public class SpellState {
         boolean result = false;
         SpellModule root = getModuleAt(from_x, from_y);
         SpellModule bound = getModuleAt(to_x, to_y);
-        if (root != null && bound != null &&    root.canConnect(bound, false)) {
+        if (root != null && bound != null && root.canConnect(bound, false)) {
             if (isRemote) {
                 // send action to server
                 // manage client-side state
@@ -466,10 +473,12 @@ public class SpellState {
                         Aspects.EMPTY);
                 sequence++;
             }
+            SpellModule start = root.getConnectionStart();
+            SpellModule end = bound.getConnectionEnd(false);
             // connect the modules
-            bound.setParent(root);
-            if (isolated.contains(bound)) {
-                isolated.remove((bound));
+            end.setParent(start);
+            if (isolated.contains(end)) {
+                isolated.remove((end));
             }
             spellModified = true;
             result = true;
@@ -642,6 +651,9 @@ public class SpellState {
             }
         }
 
+        if (activeModule instanceof Connector) {
+            activeModule.renderInMinigame(mouseX, mouseY, mc.getItemRenderer(), (!activeModule.unplaced));
+        }
 
         RenderSystem.popMatrix();
         GL11.glDisable(GL11.GL_SCISSOR_TEST);

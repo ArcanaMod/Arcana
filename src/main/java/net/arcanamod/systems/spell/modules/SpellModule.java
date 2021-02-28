@@ -88,6 +88,10 @@ public abstract class SpellModule {
 		return false;
 	}
 
+	public boolean isCastModifier() {
+		return false;
+	}
+
 	// Returns true if spellRoot is an ancestor of this module.
 	public boolean isChildOf(SpellModule spellRoot) {
 		SpellModule parent = this.parent;
@@ -104,14 +108,14 @@ public abstract class SpellModule {
 
 	public abstract String getName();
 
-	// Returns the maximum amount of modules that this module can connect to.
-	public int getOutputAmount(){
-		return 4;
-	}
-
 	// Returns the maximum amount of modules that can connect to this module.
 	public int getInputAmount(){
 		return 1;
+	}
+
+	// Returns the maximum amount of modules that this module can connect to.
+	public int getOutputAmount(){
+		return 4;
 	}
 
 	// Returns true if a connection can be formed from this to connectingModule.
@@ -120,16 +124,14 @@ public abstract class SpellModule {
 	public boolean canConnect(SpellModule connectingModule, boolean special) {
 		SpellModule start = this.getConnectionStart();
 		SpellModule end = connectingModule.getConnectionEnd(special);
-		if (special) {
-			return (start != null
-					&& end != null
-					&& start != end
-					&& canConnectSpecial(end));
+		if (start == null || end == null || start == end) {
+			return false;
+		} else if (special) {
+			return canConnectSpecial(end);
 		} else {
-			return (start != null
-					&& end != null
-					&& start != end
-					&& bound.size() < this.getOutputAmount());
+			// Note: This assumes max 1 parent
+			return bound.size() < start.getOutputAmount()
+					&& end.parent == null && end.getInputAmount() > 0;
 		}
 	}
 
@@ -229,11 +231,7 @@ public abstract class SpellModule {
 
 	// Returns true if this module may be raised on the SpellState board
 	public boolean canRaise(SpellState state) {
-		if (this.isStartModule()) {
-			return state.isolated.size() == 0 && bound.size() == 0 && boundSpecial.size() == 0;
-		} else {
-			return state.currentSpell != null && state.currentSpell.mainModule != null;
-		}
+		return true;
 	}
 
 	// Returns the module's height on the grid.
