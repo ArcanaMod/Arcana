@@ -53,11 +53,11 @@ public class ScepterItem extends MagicDeviceItem{
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items){
 		if(isInGroup(group)){
 			// iron/wooden, silver/dair, gold/greatwood, thaumium/silverwood, void/arcanium
-			items.add(withCapAndCoreForCt("iron_cap", "wood_scepter"));
-			items.add(withCapAndCoreForCt("silver_cap", "dair_scepter"));
-			items.add(withCapAndCoreForCt("gold_cap", "greatwood_scepter"));
-			items.add(withCapAndCoreForCt("thaumium_cap", "silverwood_scepter"));
-			items.add(withCapAndCoreForCt("void_cap", "arcanium_scepter"));
+			items.add(withCapAndCoreForCt("iron_cap", "wood_wand"));
+			items.add(withCapAndCoreForCt("silver_cap", "dair_wand"));
+			items.add(withCapAndCoreForCt("gold_cap", "greatwood_wand"));
+			items.add(withCapAndCoreForCt("thaumium_cap", "silverwood_wand"));
+			items.add(withCapAndCoreForCt("void_cap", "arcanium_wand"));
 		}
 	}
 
@@ -65,7 +65,7 @@ public class ScepterItem extends MagicDeviceItem{
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putString("cap", "arcana:" + cap);
 		nbt.putString("core", "arcana:" + core);
-		ItemStack stack = new ItemStack(ArcanaItems.WAND.get(), 1);
+		ItemStack stack = new ItemStack(ArcanaItems.SCEPTER.get(), 1);
 		stack.setTag(nbt);
 		return stack;
 	}
@@ -82,6 +82,6 @@ public class ScepterItem extends MagicDeviceItem{
 
 	@Override
 	public String getDeviceName() {
-		return "scepters";
+		return "Scepter";
 	}
 }

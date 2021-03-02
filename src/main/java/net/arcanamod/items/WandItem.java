@@ -69,7 +69,7 @@ public class WandItem extends MagicDeviceItem{
 
 	@Override
 	public String getDeviceName() {
-		return "wand";
+		return "Wand";
 	}
 
 	public ActionResultType onItemUse(ItemUseContext context){

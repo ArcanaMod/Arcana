@@ -129,7 +129,7 @@ public abstract class MagicDeviceItem extends Item{
 	}
 
 	public ITextComponent getDisplayName(ItemStack stack){
-		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey()));
+		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey())).appendText(" "+getDeviceName());
 	}
 
 	public boolean canSwapFocus(){
