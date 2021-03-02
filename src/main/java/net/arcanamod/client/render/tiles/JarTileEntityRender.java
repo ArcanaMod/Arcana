@@ -118,10 +118,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			matrixStack.scale(scale, scale, scale);
 			matrixStack.rotate(q);
 			matrixStack.translate(xt, .5f, zt);
-
-			//Logger _LOGGER = LogManager.getLogger();
-			//_LOGGER.debug(label);
-
+			
 			q = new Quaternion(tileEntity.labelRotation,0,0,true);
 			matrixStack.rotate(q);
 			matrixStack.translate(0,0,-(tileEntity.labelRotation/200f));

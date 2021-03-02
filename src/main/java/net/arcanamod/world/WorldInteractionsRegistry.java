@@ -41,7 +41,6 @@ public class WorldInteractionsRegistry extends JsonReloadListener {
 				if (element.getAsJsonObject().has("cover")) {
 					cover = element.getAsJsonObject().get("cover").getAsString();
 				}
-				LOGGER.info("Added freezable block:" + from);
 
 				freezable.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(from)),
 						Pair.of(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(to)),

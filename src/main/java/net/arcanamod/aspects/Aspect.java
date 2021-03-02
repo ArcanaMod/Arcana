@@ -50,18 +50,20 @@ public class Aspect {
 		return "Aspect: "+aspectName+" ("+id+")";
 	}
 
-	public ResourceLocation getVisMeterTexture() {
+	public ResourceLocation getVisMeterTexture(){
 		// only valid for primals
 		return new ResourceLocation(Arcana.MODID, "textures/gui/hud/wand/vis/" + aspectName + ".png");
 	}
 
 	// Static Methods
 
-	public static Aspect create(String name, ColorRange colors, Consumer<Object> aspectTickConsumer) {
+	public static Aspect create(String name, ColorRange colors, Consumer<Object> aspectTickConsumer){
 		Aspect aspect = new Aspect(name, colors,aspectTickConsumer);
 		Aspects.ASPECTS.put(ArcanaVariables.arcLoc(name),aspect);
-		if (!ArcanaVariables.test)
-			logger.info("Arcana: Added new aspect '"+name+"'");
+		if (!ArcanaVariables.test) {
+			logger.info("Arcana: Added new aspect '" + name + "'");
+			net.minecraftforge.fml.StartupMessageManager.addModMessage("Arcana: Added \""+name+"\" aspect");
+		}
 		return aspect;
 	}
 

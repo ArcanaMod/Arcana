@@ -103,7 +103,6 @@ public class JarBlock extends Block{
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		if (player.getHeldItem(handIn).getItem() == ArcanaItems.LABEL.get()) {
 			((JarTileEntity) worldIn.getTileEntity(pos)).label = getYaw(player);
-			LOGGER.debug(getYaw(player));
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 	}

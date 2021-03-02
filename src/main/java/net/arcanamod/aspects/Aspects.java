@@ -185,5 +185,7 @@ public class Aspects {
 				.findAny().orElse(Aspects.EMPTY);
 	}
 
-	public static void init() {}
+	public static void init() {
+		net.minecraftforge.fml.StartupMessageManager.addModMessage("Arcana: Aspect registration completed");
+	}
 }

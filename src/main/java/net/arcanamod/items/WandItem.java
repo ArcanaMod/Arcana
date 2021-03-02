@@ -51,56 +51,27 @@ import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class WandItem extends Item{
+public class WandItem extends MagicDeviceItem{
 	
 	public WandItem(Properties properties){
 		super(properties);
 	}
-	
-	public static Cap getCap(ItemStack stack){
-		String cap = stack.getOrCreateTag().getString("cap");
-		return Cap.getCapOrError(new ResourceLocation(cap));
+
+	@Override
+	public boolean canCraft() {
+		return true;
 	}
-	
-	public static Focus getFocus(ItemStack stack){
-		int focus = stack.getOrCreateTag().getInt("focus");
-		return Focus.getFocusById(focus).orElse(Focus.NO_FOCUS);
+
+	@Override
+	public boolean canUseSpells() {
+		return true;
 	}
-	
-	public static Core getCore(ItemStack stack){
-		String core = stack.getOrCreateTag().getString("core");
-		return Core.getCoreOrError(new ResourceLocation(core));
+
+	@Override
+	public String getDeviceName() {
+		return "wand";
 	}
-	
-	public static CompoundNBT getFocusData(ItemStack stack){
-		return stack.getOrCreateChildTag("focusData");
-	}
-	
-	public static Optional<ItemStack> getFocusStack(ItemStack stack){
-		return getFocus(stack).getAssociatedItem().map(ItemStack::new).map(stack1 -> {
-			stack1.setTag(getFocusData(stack));
-			return stack1;
-		});
-	}
-	
-	public static void setFocusFromStack(ItemStack wand, ItemStack focus){
-		if(focus.getItem() instanceof FocusItem){
-			wand.getOrCreateTag().put("focusData", focus.getOrCreateTag());
-			wand.getOrCreateTag().putInt("focus", Focus.FOCI.indexOf(focus.getItem()));
-		}else{
-			wand.getOrCreateTag().put("focusData", new CompoundNBT());
-			wand.getOrCreateTag().putInt("focus", 0);
-		}
-	}
-	
-	@Nullable
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
-		AspectBattery battery = new AspectBattery(6, 0);
-		for(Aspect aspect : AspectUtils.primalAspects)
-			battery.createCell(new AspectCell(getCore(stack).maxVis(), aspect));
-		return battery;
-	}
-	
+
 	public ActionResultType onItemUse(ItemUseContext context){
 		return convert(context.getWorld(), context.getPos(), context.getPlayer());
 	}
@@ -169,54 +140,13 @@ public class WandItem extends Item{
 		return 72000;
 	}
 	
-	public void onUsingTick(ItemStack stack, LivingEntity player, int count){
-		World world = player.world;
-		AuraView view = AuraView.SIDED_FACTORY.apply(world);
-		Optional<Node> nodeOptional = view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player);
-		if(nodeOptional.isPresent()){
-			final int ASPECT_DRAIN_AMOUNT = 2;
-			final int ASPECT_DRAIN_WAIT = 3;
-			// drain
-			IAspectHandler wandHolder = IAspectHandler.getFrom(stack);
-			// TODO: non-destructive node draining?
-			// with research, of course
-			if(wandHolder != null)
-				if(world.getGameTime() % (ASPECT_DRAIN_WAIT + 1 + world.rand.nextInt(3)) == 0){
-					Node node = nodeOptional.get();
-					IAspectHandler aspects = node.getAspects();
-					IAspectHolder holder = aspects.getHolder(world.rand.nextInt(aspects.getHoldersAmount()));
-					Aspect aspect = holder.getContainedAspect();
-					boolean moved = holder.getCurrentVis() > 0;
-					VisUtils.moveAspects(holder, wandHolder, ASPECT_DRAIN_AMOUNT + world.rand.nextInt(1));
-					if(moved){
-						// spawn aspect helix particles
-						Vec3d nodePos = new Vec3d(node.getX(), node.getY(), node.getZ());
-						Vec3d playerPos = player.getEyePosition(1);
-						Vec3d diff = nodePos.subtract(playerPos);
-						Vec3d direction = diff.normalize().mul(-1, -1, -1);
-						int life = (int)Math.ceil(diff.length() / .05f);
-						world.addParticle(new AspectHelixParticleData(aspect, life, world.rand.nextInt(180), direction), nodePos.x, nodePos.y, nodePos.z, 0, 0, 0);
-					}
-				}
-		}else
-			player.stopActiveHand();
-		//world.addParticle(new AspectHelixParticleData(Aspects.EXCHANGE, 450, world.rand.nextInt(180), player.getLookVec()), player.getPosX(), player.getPosYEye(), player.getPosZ(), 0, 0, 0);
-	}
-	
-	public ITextComponent getDisplayName(ItemStack stack){
-		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey()));
-	}
-	
-	public boolean canSwapFocus(){
-		return true;
-	}
-	
 	public void fillItemGroup(ItemGroup group, NonNullList<ItemStack> items){
 		if(isInGroup(group)){
 			// iron/wooden, silver/dair, gold/greatwood, thaumium/silverwood, void/arcanium
 			items.add(withCapAndCoreForCt("iron_cap", "wood_wand"));
 			items.add(withCapAndCoreForCt("silver_cap", "dair_wand"));
 			items.add(withCapAndCoreForCt("gold_cap", "greatwood_wand"));
+			items.add(withCapAndCoreForCt("thaumium_cap", "silverwood_wand"));
 			items.add(withCapAndCoreForCt("void_cap", "arcanium_wand"));
 		}
 	}
@@ -228,23 +158,6 @@ public class WandItem extends Item{
 		ItemStack stack = new ItemStack(ArcanaItems.WAND.get(), 1);
 		stack.setTag(nbt);
 		return stack;
-	}
-	
-	public static ItemStack withCapAndCore(String cap, String core){
-		CompoundNBT nbt = new CompoundNBT();
-		nbt.putString("cap", cap);
-		nbt.putString("core", core);
-		ItemStack stack = new ItemStack(ArcanaItems.WAND.get(), 1);
-		stack.setTag(nbt);
-		return stack;
-	}
-	
-	public static ItemStack withCapAndCore(ResourceLocation cap, ResourceLocation core){
-		return withCapAndCore(cap.toString(), core.toString());
-	}
-	
-	public static ItemStack withCapAndCore(Cap cap, Core core){
-		return withCapAndCore(cap.getId(), core.getId());
 	}
 	
 	@OnlyIn(Dist.CLIENT)

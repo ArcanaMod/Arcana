@@ -129,6 +129,7 @@ public class Arcana{
 		TaintTrackableCapability.init();
 		Puzzle.init();
 		Taint.init();
+		net.minecraftforge.fml.StartupMessageManager.addModMessage("Arcana: Research registration completed");
 		
 		proxy.preInit(event);
 

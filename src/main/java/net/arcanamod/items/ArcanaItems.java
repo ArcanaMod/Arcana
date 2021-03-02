@@ -2,6 +2,8 @@ package net.arcanamod.items;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
@@ -13,6 +15,7 @@ import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.CoreItem;
 import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.items.tools.*;
+import net.arcanamod.systems.spell.MDModifier;
 import net.arcanamod.util.GogglePriority;
 import net.arcanamod.util.annotations.GIM;
 import net.minecraft.fluid.Fluids;
@@ -22,10 +25,12 @@ import net.minecraft.item.Item.Properties;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 import static net.arcanamod.Arcana.MODID;
 import static net.arcanamod.Arcana.arcLoc;
@@ -136,15 +141,16 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> FOCUS_PARTS = ITEMS.register("focus_parts", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
 	// Cores
-	public static final Core.Impl WOOD_WAND_CORE = new Core.Impl(25, 1, arcLoc("wood_wand"));
-	public static final RegistryObject<CoreItem> GREATWOOD_WAND_CORE = ITEMS.register("greatwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 35, 2, arcLoc("greatwood_wand")));
-	public static final RegistryObject<CoreItem> TAINTED_WAND_CORE = ITEMS.register("tainted_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 45, 2, arcLoc("tainted_wand")));
-	public static final RegistryObject<CoreItem> DAIR_WAND_CORE = ITEMS.register("dair_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 30, 3, arcLoc("dair_wand")));
-	public static final RegistryObject<CoreItem> HAWTHORN_WAND_CORE = ITEMS.register("hawthorn_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 40, 3, arcLoc("hawthorn_wand")));
-	public static final RegistryObject<CoreItem> SILVERWOOD_WAND_CORE = ITEMS.register("silverwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 40, 4, arcLoc("silverwood_wand")));
-	public static final RegistryObject<CoreItem> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 50, 4, arcLoc("arcanium_wand")));
+	public static final Core.Impl WOOD_WAND_CORE = new Core.Impl(5,1, 1, arcLoc("wood_wand"));
+	public static final RegistryObject<CoreItem> GREATWOOD_WAND_CORE = ITEMS.register("greatwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 25,3, 2, arcLoc("greatwood_wand"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,5)).collect(Collectors.toList()))));
+	public static final RegistryObject<CoreItem> TAINTED_WAND_CORE = ITEMS.register("tainted_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 200,30, 2, arcLoc("tainted_wand"), new MDModifier.Warping()));
+	public static final RegistryObject<CoreItem> DAIR_WAND_CORE = ITEMS.register("dair_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 10,1, 3, arcLoc("dair_wand"), new MDModifier.Empty()));
+	public static final RegistryObject<CoreItem> HAWTHORN_WAND_CORE = ITEMS.register("hawthorn_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 15,1, 3, arcLoc("hawthorn_wand"), new MDModifier.Empty()));
+	public static final RegistryObject<CoreItem> SILVERWOOD_WAND_CORE = ITEMS.register("silverwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 100,5, 4, arcLoc("silverwood_wand"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,10)).collect(Collectors.toList()))));
+	public static final RegistryObject<CoreItem> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 150,10, 4, arcLoc("arcanium_wand"), new MDModifier.Empty()));
 	
 	public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new WandItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
+	public static final RegistryObject<Item> SCEPTER = ITEMS.register("scepter", () -> new ScepterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	
 	// Tainted Items
 	public static final RegistryObject<Item> TAINTED_MELON_SLICE = ITEMS.register("tainted_melon_slice", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(1).saturation(0.6f).effect(() -> new EffectInstance(ArcanaEffects.TAINTED.get(), 600, 0), 1f).build())));

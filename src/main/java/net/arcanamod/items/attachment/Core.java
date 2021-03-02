@@ -18,7 +18,7 @@ public interface Core{
 	
 	Map<ResourceLocation, Core> CORES = new LinkedHashMap<>();
 	
-	Impl ERROR_WAND_CORE = new Impl(0, 0, Arcana.arcLoc("error_wand"));
+	Impl ERROR_WAND_CORE = new Impl(0,0, 0, Arcana.arcLoc("error_wand"));
 	
 	static Optional<Core> getCoreById(ResourceLocation id){
 		return Optional.ofNullable(CORES.getOrDefault(id, null));
@@ -52,11 +52,12 @@ public interface Core{
 	
 	class Impl implements Core{
 		
-		int maxVis, level;
+		int maxVis, level, difficulty;
 		ResourceLocation id;
 		
-		public Impl(int maxVis, int level, ResourceLocation id){
+		public Impl(int maxVis, int difficulty, int level, ResourceLocation id){
 			this.maxVis = maxVis;
+			this.difficulty = difficulty;
 			this.level = level;
 			this.id = id;
 			CORES.put(getId(), this);
