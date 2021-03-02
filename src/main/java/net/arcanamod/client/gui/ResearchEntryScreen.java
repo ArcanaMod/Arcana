@@ -35,7 +35,7 @@ import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public class ResearchEntryScreen extends Screen{
 	
-	ResourceLocation bg;
+	public ResourceLocation bg;
 	ResearchEntry entry;
 	int index;
 	Screen parentScreen;

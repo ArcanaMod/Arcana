@@ -173,6 +173,9 @@ public class ArcanaConfig{
 		NO_JAR_ANIMATION = CLIENT_BUILDER
 				.comment("Whether the warded jar's filling animation should be disabled.", "False by default.")
 				.define("NoJarAnimation", false);
+		ENTRY_TITLES = CLIENT_BUILDER
+				.comment("Whether research entry titles should be added to the start of entries.", "True by default.")
+				.define("EntryTitles", true);
 		CLIENT_BUILDER.pop();
 	}
 	
@@ -238,4 +241,5 @@ public class ArcanaConfig{
 	public static ConfigValue<Boolean> BLOCK_HUDS_TOP; // true
 	public static ConfigValue<Double> JAR_ANIMATION_SPEED; // 1
 	public static ConfigValue<Boolean> NO_JAR_ANIMATION; // false
+	public static ConfigValue<Boolean> ENTRY_TITLES; // true
 }
