@@ -39,7 +39,7 @@ public class ResearcherImpl implements Researcher{
 		MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
 		// if this research is being completed,
 		// advance all children too, but only if they have no requirements on their first stage
-		if(entryStage(entry) == entry.sections().size())
+		if(entryStage(entry) >= entry.sections().size())
 			ResearchBooks.streamChildrenOf(entry).filter(x -> x.sections().get(0).getRequirements().isEmpty()).filter(x -> entryStage(x) == 0).forEach(this::advanceEntry);
 	}
 	
