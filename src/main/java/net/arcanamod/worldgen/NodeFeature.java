@@ -70,7 +70,7 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 				BlockPos.Mutable pointer = new BlockPos.Mutable(pos);
 				for(int i = 0; i < 40 && successes < (rand.nextInt(5) + 6); i++){
 					// Pick a random block from the ground
-					pointer.move(rand.nextInt(7) - 3, rand.nextInt(5) - 2, rand.nextInt(7) - 3);
+					pointer.setPos(pos).move(rand.nextInt(7) - rand.nextInt(7), rand.nextInt(5) - rand.nextInt(5), rand.nextInt(7) - rand.nextInt(7));
 					if(newWorld.getBlockState(pointer).isAir() || newWorld.getBlockState(pointer).getMaterial().isReplaceable()){
 						// If it has at least one open side,
 						for(Direction value : Direction.values())
