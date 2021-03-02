@@ -61,6 +61,8 @@ public abstract class EntrySection{
 		deserializers.put(ArcaneCraftingSection.TYPE, nbt -> new ArcaneCraftingSection(nbt.getString("recipe")));
 		factories.put(ImageSection.TYPE, ImageSection::new);
 		deserializers.put(ImageSection.TYPE, nbt -> new ImageSection(nbt.getString("image")));
+		factories.put(AspectCombosSection.TYPE, __ -> new AspectCombosSection());
+		deserializers.put(AspectCombosSection.TYPE, __ -> new AspectCombosSection());
 	}
 	
 	// instance stuff

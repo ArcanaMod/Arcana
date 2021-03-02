@@ -154,7 +154,9 @@ public class Aspects {
 		COMBINATIONS.put(of(HUMAN, FABRIC), PRIDE);
 		COMBINATIONS.put(of(HUMAN, METAL), GREED);
 	}
-
+	
+	public static final List<Pair<Aspect, Aspect>> COMBOS_AS_LIST = new ArrayList<>(COMBINATIONS.keySet());
+	
 	@Nullable
 	public static Aspect getCompound(Pair<Aspect, Aspect> components){
 		return Aspects.COMBINATIONS.containsKey(components) ? Aspects.COMBINATIONS.get(components) : Aspects.COMBINATIONS.getOrDefault(components.flip(), null);

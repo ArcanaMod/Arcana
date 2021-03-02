@@ -51,6 +51,10 @@
         {
           "type": "image",
           "content": "arcana:textures/research/elements_diagram.png"
+        },
+        {
+          "type": "aspect_combos",
+          "content": ""
         }
       ]
     },
