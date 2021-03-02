@@ -1,6 +1,7 @@
 package net.arcanamod.client.research;
 
 import net.arcanamod.ArcanaConfig;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.mixin.ModContainerAccessor;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.systems.research.ResearchEntry;
@@ -33,9 +34,11 @@ public class FormattingHelper{
 				String inlineSection = braces.group().substring(2, braces.group().length() - 1);
 				String[] parts = inlineSection.split(":");
 				String replaceWith = I18n.format("researchEntry.invalidInline", inlineSection);
-				if(parts[0].equals("config") && parts.length == 3){
+				String name = parts[0];
+				if(name.equals("config") && parts.length == 3)
 					replaceWith = inlineConfig(parts[1], parts[2]);
-				}//else if...
+				else if(name.equals("numOfAspects"))
+					replaceWith = String.valueOf(Aspects.getWithoutEmpty().size());
 				in = in.replace(braces.group(), replaceWith);
 			}
 		}
