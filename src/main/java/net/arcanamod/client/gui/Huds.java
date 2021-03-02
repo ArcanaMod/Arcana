@@ -8,7 +8,7 @@ import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.client.ClientAuraHandler;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.WandItem;
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.util.GogglePriority;
 import net.minecraft.client.Minecraft;
@@ -46,9 +46,9 @@ public final class Huds{
 
 			ItemStack wand = ItemStack.EMPTY;
 			ItemStack meter = ItemStack.EMPTY;
-			if (mainHand.getItem() instanceof WandItem) {
+			if (mainHand.getItem() instanceof MagicDeviceItem) {
 				wand = mainHand;
-			} else if (offHand.getItem() instanceof WandItem) {
+			} else if (offHand.getItem() instanceof MagicDeviceItem) {
 				wand = offHand;
 			}
 			if (mainHand.getItem().equals(ArcanaItems.FLUX_METER.get())) {
@@ -59,7 +59,7 @@ public final class Huds{
 
 			// wand GUI (high render priority)
 			if (wand != ItemStack.EMPTY) {
-				Core core = WandItem.getCore(wand);
+				Core core = MagicDeviceItem.getCore(wand);
 				IAspectHandler aspects = IAspectHandler.getFrom(wand);
 				if(aspects != null){
 					int offX = ArcanaConfig.WAND_HUD_X.get().intValue();
@@ -71,7 +71,7 @@ public final class Huds{
 					RenderSystem.scalef(scale,scale,2);
 					UiUtil.renderVisCore(core, baseX, baseY);
 					UiUtil.renderVisMeter(core, aspects, baseX, baseY);
-					WandItem.getFocusStack(wand).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
+					MagicDeviceItem.getFocusStack(wand).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
 					RenderSystem.popMatrix();
 				}
 			// flux meter GUI

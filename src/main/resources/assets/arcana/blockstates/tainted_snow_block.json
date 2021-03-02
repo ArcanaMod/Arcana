@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "arcana:block/tainted_snow_block"
+    }
+  }
+}

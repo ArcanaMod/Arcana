@@ -94,47 +94,6 @@ public class WandItem extends MagicDeviceItem{
 		}
 		return ActionResultType.PASS;
 	}
-	
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
-		// TODO: only do this if you're casting a spell
-		// first do node raycast check, and then check if you have a focus
-		ArcanaSounds.playSpellCastSound(player);
-		Focus focus = getFocus(player.getHeldItem(hand));
-		if(focus != Focus.NO_FOCUS){
-			Spell spell = focus.getSpell(player.getHeldItem(hand));
-			if(spell != null){
-				IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
-				// oh my god this code is terrible // YES, I know Xd.
-				// time for more VisUtils I guess
-				if(spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler,stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
-					spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)){
-					if (player.isCrouching())
-						Spell.runSpell(spell,player,player.getHeldItem(hand), ICast.Action.SPECIAL);
-					else
-						Spell.runSpell(spell,player,player.getHeldItem(hand), ICast.Action.USE);
-					// remove aspects from wand if spell successes.
-					for(AspectStack cost : spell.getSpellCosts().toList())
-						if (cost.getAspect()!=Aspects.EMPTY)
-							handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
-				}
-			}else
-				player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
-		}
-		AuraView view = AuraView.SIDED_FACTORY.apply(world);
-		ItemStack itemstack = player.getHeldItem(hand);
-		AtomicReference<ActionResult<ItemStack>> ret = new AtomicReference<>(ActionResult.resultConsume(itemstack));
-		view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player).ifPresent(node -> {
-			player.setActiveHand(hand);
-			ret.set(ActionResult.resultConsume(itemstack));
-		});
-		return ret.get();
-	}
-
-	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect) {
-		@Nullable IAspectHolder nullableHolder = handler.findAspectInHolders(aspect);
-		return nullableHolder != null ? nullableHolder : new AspectCell();
-	}
 
 	public int getUseDuration(ItemStack stack){
 		return 72000;

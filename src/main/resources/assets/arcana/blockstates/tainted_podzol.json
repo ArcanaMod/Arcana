@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "snowy=false": [
+      {
+        "model": "arcana:block/tainted_podzol"
+      },
+      {
+        "model": "arcana:block/tainted_podzol",
+        "y": 90
+      },
+      {
+        "model": "arcana:block/tainted_podzol",
+        "y": 180
+      },
+      {
+        "model": "arcana:block/tainted_podzol",
+        "y": 270
+      }
+    ],
+    "snowy=true": {
+      "model": "arcana:block/tainted_grass_block_snow"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 package net.arcanamod.containers.slots;
 
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.WandItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Container;
@@ -15,7 +16,7 @@ public class WandSlot extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return stack.getItem() instanceof WandItem;
+		return stack.getItem() instanceof MagicDeviceItem;
 	}
 
 	@Override

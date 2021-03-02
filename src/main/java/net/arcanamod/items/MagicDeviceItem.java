@@ -1,11 +1,14 @@
 package net.arcanamod.items;
 
+import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
 import net.arcanamod.client.render.aspects.AspectHelixParticleData;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.items.attachment.FocusItem;
+import net.arcanamod.systems.spell.Spell;
+import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.util.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
@@ -14,6 +17,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
@@ -23,6 +28,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class MagicDeviceItem extends Item{
 	public MagicDeviceItem(Properties properties) {
@@ -109,6 +115,49 @@ public abstract class MagicDeviceItem extends Item{
 		}else
 			player.stopActiveHand();
 		//world.addParticle(new AspectHelixParticleData(Aspects.EXCHANGE, 450, world.rand.nextInt(180), player.getLookVec()), player.getPosX(), player.getPosYEye(), player.getPosZ(), 0, 0, 0);
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+		// TODO: only do this if you're casting a spell
+		// first do node raycast check, and then check if you have a focus
+		if (canUseSpells()) {
+			ArcanaSounds.playSpellCastSound(player);
+			Focus focus = getFocus(player.getHeldItem(hand));
+			if (focus != Focus.NO_FOCUS) {
+				Spell spell = focus.getSpell(player.getHeldItem(hand));
+				if (spell != null) {
+					IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
+					// oh my god this code is terrible // YES, I know Xd.
+					// time for more VisUtils I guess
+					if (spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler, stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
+							spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)) {
+						if (player.isCrouching())
+							Spell.runSpell(spell, player, player.getHeldItem(hand), ICast.Action.SPECIAL);
+						else
+							Spell.runSpell(spell, player, player.getHeldItem(hand), ICast.Action.USE);
+						// remove aspects from wand if spell successes.
+						for (AspectStack cost : spell.getSpellCosts().toList())
+							if (cost.getAspect() != Aspects.EMPTY)
+								handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
+					}
+				} else
+					player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
+			}
+		}
+		AuraView view = AuraView.SIDED_FACTORY.apply(world);
+		ItemStack itemstack = player.getHeldItem(hand);
+		AtomicReference<ActionResult<ItemStack>> ret = new AtomicReference<>(ActionResult.resultConsume(itemstack));
+		view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player).ifPresent(node -> {
+			player.setActiveHand(hand);
+			ret.set(ActionResult.resultConsume(itemstack));
+		});
+		return ret.get();
+	}
+
+	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect) {
+		@Nullable IAspectHolder nullableHolder = handler.findAspectInHolders(aspect);
+		return nullableHolder != null ? nullableHolder : new AspectCell();
 	}
 
 	public static ItemStack withCapAndCore(String cap, String core){

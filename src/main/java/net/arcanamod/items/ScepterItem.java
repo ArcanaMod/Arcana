@@ -1,10 +1,14 @@
 package net.arcanamod.items;
 
+import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
+import net.arcanamod.systems.spell.Spell;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -16,9 +20,17 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ScepterItem extends MagicDeviceItem{
 	private static float scepter_mul = 2.5f;
@@ -61,6 +73,10 @@ public class ScepterItem extends MagicDeviceItem{
 		}
 	}
 
+	public int getUseDuration(ItemStack stack){
+		return 72000;
+	}
+
 	public static ItemStack withCapAndCoreForCt(String cap, String core){
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putString("cap", "arcana:" + cap);
@@ -68,6 +84,13 @@ public class ScepterItem extends MagicDeviceItem{
 		ItemStack stack = new ItemStack(ArcanaItems.SCEPTER.get(), 1);
 		stack.setTag(nbt);
 		return stack;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
+		super.addInformation(stack, world, tooltip, flag);
+		// Add info
+		tooltip.add(new TranslationTextComponent("tooltip.arcana.crafting_wand").applyTextStyle(TextFormatting.DARK_GREEN));
 	}
 
 	@Override

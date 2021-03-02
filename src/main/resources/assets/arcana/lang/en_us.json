@@ -663,6 +663,7 @@
     "_comment": "Tooltips and statuses",
     "tooltip.contains_aspect": "%s x%s",
     "tooltip.arcana.spell": "Spell: %s§r (%s)",
+    "tooltip.arcana.crafting_wand": "Crafting Wand",
     "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration.\nMaybe you should look at those notes again.",
     "status.arcana.null_spell": "Null spell!",
     "status.arcana.invalid_spell": "Invalid spell!",
