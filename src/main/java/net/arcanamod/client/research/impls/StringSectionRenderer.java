@@ -34,17 +34,28 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 		int x = right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X;
 		RenderSystem.pushMatrix();
 		RenderSystem.scalef(TEXT_SCALING, TEXT_SCALING, 1);
+		boolean paragraphCentred = false;
 		for(int i = 0; i < lines.size(); i++){
 			float lineX = ((int)((screenWidth - 256) / 2f) + x) / TEXT_SCALING;
 			float lineY = ((int)((screenHeight - 181) / 2f) + ResearchEntryScreen.PAGE_Y + i * (10 * TEXT_SCALING) + HEIGHT_OFFSET) / TEXT_SCALING;
-			if(lines.get(i).equals("{~sep}")){
+			String text = lines.get(i);
+			if(text.equals("{~sep}")){
+				paragraphCentred = false;
 				// always called from ResearchEntryScreen
 				// if we want to reuse renderers we'll make this a liiiiiittle better
 				mc().getTextureManager().bindTexture(((ResearchEntryScreen)(mc().currentScreen)).bg);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect((int)(lineX + (PAGE_WIDTH / TEXT_SCALING - 86) / (2)), (int)lineY + 3, 29, 184, 86, 3);
-			}else
-				fr().drawString(lines.get(i), lineX, lineY, 0x383838);
+			}else if(text.equals(""))
+				paragraphCentred = false;
+			else{
+				boolean startCentre = text.startsWith("{~c}");
+				if(startCentre){
+					paragraphCentred = true;
+					text = text.substring(4);
+				}
+				fr().drawString(text, lineX + (paragraphCentred ? (PAGE_WIDTH / TEXT_SCALING - fr().getStringWidth(text)) / 2 : 0), lineY, 0x383838);
+			}
 		}
 		RenderSystem.popMatrix();
 	}
