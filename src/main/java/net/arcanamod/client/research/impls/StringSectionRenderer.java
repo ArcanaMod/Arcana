@@ -1,11 +1,11 @@
 package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.FormattingHelper;
 import net.arcanamod.systems.research.impls.StringSection;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 
@@ -20,7 +20,7 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 	
 	public String getTranslatedText(StringSection section){
 		// TODO: make this only run when needed
-		return FormattingHelper.process(I18n.format(section.getText()).replace("{~sep}", "\n{~sep}\n"));
+		return FormattingHelper.process(I18n.format(section.getText()), section).replace("{~sep}", "\n{~sep}\n");
 	}
 	
 	public int span(StringSection section, PlayerEntity player){
