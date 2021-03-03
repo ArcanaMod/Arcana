@@ -148,7 +148,21 @@ public class ArcanaItems{
 	public static final RegistryObject<CoreItem> HAWTHORN_WAND_CORE = ITEMS.register("hawthorn_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 15,1, 3, arcLoc("hawthorn_wand"), new MDModifier.Empty()));
 	public static final RegistryObject<CoreItem> SILVERWOOD_WAND_CORE = ITEMS.register("silverwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 100,5, 4, arcLoc("silverwood_wand"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,10)).collect(Collectors.toList()))));
 	public static final RegistryObject<CoreItem> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 150,10, 4, arcLoc("arcanium_wand"), new MDModifier.Empty()));
-	
+
+	public static final RegistryObject<CoreItem> GREATWOOD_STAFF_CORE = ITEMS.register("greatwood_staff_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 25,3, 2, arcLoc("greatwood_staff"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,5)).collect(Collectors.toList()))));
+	public static final RegistryObject<CoreItem> TAINTED_STAFF_CORE = ITEMS.register("tainted_staff_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 200,30, 2, arcLoc("tainted_staff"), new MDModifier.Warping()));
+	public static final RegistryObject<CoreItem> DAIR_STAFF_CORE = ITEMS.register("dair_staff_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 10,1, 3, arcLoc("dair_staff"), new MDModifier.Empty()));
+	public static final RegistryObject<CoreItem> HAWTHORN_STAFF_CORE = ITEMS.register("hawthorn_staff_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 15,1, 3, arcLoc("hawthorn_staff"), new MDModifier.Empty()));
+	public static final RegistryObject<CoreItem> SILVERWOOD_STAFF_CORE = ITEMS.register("silverwood_staff_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 100,5, 4, arcLoc("silverwood_staff"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,10)).collect(Collectors.toList()))));
+	public static final RegistryObject<CoreItem> ARCANIUM_STAFF_CORE = ITEMS.register("arcanium_staff_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 150,10, 4, arcLoc("arcanium_staff"), new MDModifier.Empty()));
+
+	public static final RegistryObject<CoreItem> GREATWOOD_GAUNTLET_CORE = ITEMS.register("greatwood_gauntlet_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 25,3, 2, arcLoc("greatwood_gauntlet"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,5)).collect(Collectors.toList()))));
+	public static final RegistryObject<CoreItem> TAINTED_GAUNTLET_CORE = ITEMS.register("tainted_gauntlet_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 200,30, 2, arcLoc("tainted_gauntlet"), new MDModifier.Warping()));
+	public static final RegistryObject<CoreItem> DAIR_GAUNTLET_CORE = ITEMS.register("dair_gauntlet_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 10,1, 3, arcLoc("dair_gauntlet"), new MDModifier.Empty()));
+	public static final RegistryObject<CoreItem> HAWTHORN_GAUNTLET_CORE = ITEMS.register("hawthorn_gauntlet_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 15,1, 3, arcLoc("hawthorn_gauntlet"), new MDModifier.Empty()));
+	public static final RegistryObject<CoreItem> SILVERWOOD_GAUNTLET_CORE = ITEMS.register("silverwood_gauntlet_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 100,5, 4, arcLoc("silverwood_gauntlet"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,10)).collect(Collectors.toList()))));
+	public static final RegistryObject<CoreItem> ARCANIUM_GAUNTLET_CORE = ITEMS.register("arcanium_gauntlet_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 150,10, 4, arcLoc("arcanium_gauntlet"), new MDModifier.Empty()));
+
 	public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new WandItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	public static final RegistryObject<Item> SCEPTER = ITEMS.register("scepter", () -> new ScepterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	
