@@ -1,0 +1,22 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "tag": "minecraft:slime_ball"
+  },
+  "out": {
+    "item": "arcana:universal_binder"
+  },
+  "aspects": [
+    {
+      "aspect": "imprison",
+      "amount": 8
+    },
+    {
+      "aspect": "slime",
+      "amount": 1
+    }
+  ],
+  "research": [
+    "arcana:universal_binder@2"
+  ]
+}

@@ -20,6 +20,7 @@
     "item.arcana.scribbled_notes_complete": "Complete Scribbled Notes",
     "item.arcana.tainted_goo_bucket": "Tainted Goo Bucket",
     "item.arcana.taint_in_a_bottle": "Taint in a Bottle",
+    "item.arcana.label": "Label",
 
     "item.arcana.greatwood_wand_core": "Greatwood Wand Core",
     "item.arcana.tainted_wand_core": "Tainted Wand Core",
@@ -872,7 +873,7 @@
     "research.arcana.foci_intro.text": "The creation of meaningful effects from a wand requires focusing the vis properly.",
 
     "research.arcana.staffs": "Staffs",
-    "research.arcana.scepters": "Staffs",
+    "research.arcana.scepters": "Scepters",
     "research.arcana.gauntlets": "Gauntlets",
     "research.arcana.wip": "actual content coming... when its implemented. same for icon.",
 

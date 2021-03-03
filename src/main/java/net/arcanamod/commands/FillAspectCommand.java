@@ -6,8 +6,8 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import net.arcanamod.aspects.*;
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.PhialItem;
-import net.arcanamod.items.WandItem;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.command.arguments.EntityArgument;
@@ -48,7 +48,7 @@ public class FillAspectCommand {
 			ResourceLocation aspect_name = ResourceLocationArgument.getResourceLocation(ctx, "aspect");
 			int amount = IntegerArgumentType.getInteger(ctx, "amount");
 			if(vis != null){
-				if(is.getItem() instanceof WandItem || is.getItem() instanceof PhialItem){
+				if(is.getItem() instanceof MagicDeviceItem || is.getItem() instanceof PhialItem){
 					Aspect targettedStack = AspectUtils.getAspectByName(aspect_name.getPath());
 					if(targettedStack != null){
 						for (int i = 0; i < 6; i++) {

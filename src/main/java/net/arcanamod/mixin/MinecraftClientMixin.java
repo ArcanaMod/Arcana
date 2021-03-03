@@ -2,7 +2,7 @@ package net.arcanamod.mixin;
 
 import net.arcanamod.ClientProxy;
 import net.arcanamod.client.gui.SwapFocusScreen;
-import net.arcanamod.items.WandItem;
+import net.arcanamod.items.MagicDeviceItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
@@ -30,9 +30,11 @@ public abstract class MinecraftClientMixin{
 	private void processKeyBinds(CallbackInfo ci){
 		while(ClientProxy.SWAP_FOCUS_BINDING.isPressed())
 			for(Hand hand : Hand.values())
-				if(player.getHeldItem(hand).getItem() instanceof WandItem){
-					displayGuiScreen(new SwapFocusScreen(hand));
-					break;
+				if(player.getHeldItem(hand).getItem() instanceof MagicDeviceItem){
+					if (((MagicDeviceItem)player.getHeldItem(hand).getItem()).canUseSpells()) {
+						displayGuiScreen(new SwapFocusScreen(hand));
+						break;
+					}
 				}
 	}
 }

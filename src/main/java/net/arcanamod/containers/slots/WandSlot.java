@@ -1,9 +1,7 @@
 package net.arcanamod.containers.slots;
 
 import net.arcanamod.items.MagicDeviceItem;
-import net.arcanamod.items.WandItem;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
 

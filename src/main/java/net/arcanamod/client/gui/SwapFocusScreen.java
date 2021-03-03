@@ -1,7 +1,7 @@
 package net.arcanamod.client.gui;
 
 import net.arcanamod.ClientProxy;
-import net.arcanamod.items.WandItem;
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkSwapFocus;
@@ -31,9 +31,9 @@ public class SwapFocusScreen extends Screen{
 	public void render(int mouseX, int mouseY, float partialTicks){
 		super.render(mouseX, mouseY, partialTicks);
 		ItemStack wand = getMinecraft().player.getHeldItem(hand);
-		if(wand.getItem() instanceof WandItem && ((WandItem)wand.getItem()).canSwapFocus()){
+		if(wand.getItem() instanceof MagicDeviceItem && ((MagicDeviceItem)wand.getItem()).canSwapFocus()){
 			//display current focus
-			WandItem.getFocusStack(wand).ifPresent(stack -> getMinecraft().getItemRenderer().renderItemIntoGUI(stack, width / 2 - 8, height / 2 - 8));
+			MagicDeviceItem.getFocusStack(wand).ifPresent(stack -> getMinecraft().getItemRenderer().renderItemIntoGUI(stack, width / 2 - 8, height / 2 - 8));
 			//display all foci in the inventory
 			List<ItemStack> foci = getAllFociStacks();
 			int size = foci.size();

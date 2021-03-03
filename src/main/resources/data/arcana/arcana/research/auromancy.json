@@ -68,7 +68,7 @@
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/greatwood_wand_core"
+          "content": "arcana:arcane_crafting/hawthorn_wand_core"
         }
       ]
     },
@@ -91,7 +91,7 @@
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/greatwood_wand_core"
+          "content": "arcana:arcane_crafting/arcanium_wand_core"
         }
       ]
     },
@@ -114,7 +114,7 @@
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/greatwood_wand_core"
+          "content": "arcana:arcane_crafting/dair_wand_core"
         }
       ]
     },
@@ -139,7 +139,7 @@
         },
         {
           "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/greatwood_wand_core"
+          "content": "arcana:arcane_crafting/silverwood_wand_core"
         }
       ]
     },
@@ -197,7 +197,7 @@
       "key": "arcana:staffs",
       "name": "research.arcana.staffs",
       "icons": [
-        "arcana:hawthorn_wand_core"
+        "arcana:item/basicstaff.png"
       ],
       "category": "arcana:auromancy",
       "parents": [
@@ -216,7 +216,7 @@
       "key": "arcana:scepters",
       "name": "research.arcana.scepters",
       "icons": [
-        "arcana:thaumium_cap"
+        "arcana:item/basicscepter.png"
       ],
       "category": "arcana:auromancy",
       "parents": [

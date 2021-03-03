@@ -160,23 +160,6 @@ public abstract class MagicDeviceItem extends Item{
 		return nullableHolder != null ? nullableHolder : new AspectCell();
 	}
 
-	public static ItemStack withCapAndCore(String cap, String core){
-		CompoundNBT nbt = new CompoundNBT();
-		nbt.putString("cap", cap);
-		nbt.putString("core", core);
-		ItemStack stack = new ItemStack(ArcanaItems.WAND.get(), 1);
-		stack.setTag(nbt);
-		return stack;
-	}
-
-	public static ItemStack withCapAndCore(ResourceLocation cap, ResourceLocation core){
-		return withCapAndCore(cap.toString(), core.toString());
-	}
-
-	public static ItemStack withCapAndCore(Cap cap, Core core){
-		return withCapAndCore(cap.getId(), core.getId());
-	}
-
 	public ITextComponent getDisplayName(ItemStack stack){
 		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey())).appendText(" "+getDeviceName());
 	}

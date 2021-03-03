@@ -1,0 +1,29 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    " w",
+    "w "
+  ],
+  "key": {
+    "w": {
+      "item": "arcana:silverwood_planks"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:any",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 5
+    }
+  ],
+  "result": {
+    "item": "arcana:silverwood_wand_core"
+  }
+}

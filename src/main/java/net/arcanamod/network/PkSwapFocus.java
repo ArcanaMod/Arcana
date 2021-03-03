@@ -1,5 +1,6 @@
 package net.arcanamod.network;
 
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.items.attachment.FocusItem;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -39,14 +40,14 @@ public class PkSwapFocus{
 			if(msg.newFocusIndex >= 0){
 				// Set the wand focus of the wand
 				List<ItemStack> foci = getAllFociStacks(spe);
-				WandItem.getFocusStack(wandStack).ifPresent(spe.inventory::addItemStackToInventory);
+				MagicDeviceItem.getFocusStack(wandStack).ifPresent(spe.inventory::addItemStackToInventory);
 				ItemStack focus = foci.get(msg.newFocusIndex);
-				WandItem.setFocusFromStack(wandStack, focus);
+				MagicDeviceItem.setFocusFromStack(wandStack, focus);
 				// Remove the stack from the inventory
 				spe.inventory.clearMatchingItems(stack -> stack == focus, 1);
 			}else{
-				WandItem.getFocusStack(wandStack).ifPresent(spe.inventory::addItemStackToInventory);
-				WandItem.setFocusFromStack(wandStack, ItemStack.EMPTY);
+				MagicDeviceItem.getFocusStack(wandStack).ifPresent(spe.inventory::addItemStackToInventory);
+				MagicDeviceItem.setFocusFromStack(wandStack, ItemStack.EMPTY);
 			}
 		});
 		supplier.get().setPacketHandled(true);

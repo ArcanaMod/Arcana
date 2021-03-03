@@ -1,0 +1,29 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    " w",
+    "w "
+  ],
+  "key": {
+    "w": {
+      "item": "arcana:arcanium_ingot"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:any",
+      "amount": 5
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 10
+    },
+    {
+      "aspect": "arcana:chaos",
+      "amount": 10
+    }
+  ],
+  "result": {
+    "item": "arcana:arcanium_wand_core"
+  }
+}

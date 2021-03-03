@@ -3,7 +3,7 @@ package net.arcanamod.systems.spell;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.UiUtil;
-import net.arcanamod.items.WandItem;
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
@@ -57,7 +57,7 @@ public class Spell implements ISpell {
 	 * Goes trough all spell modules and executes {@link ICast}.
 	 * @param spell Spell to run.
 	 * @param caster Player that uses the Spell.
-	 * @param sender {@link net.minecraft.item.ItemStack} that {@link net.minecraft.item.Item} extends {@link WandItem}
+	 * @param sender {@link net.minecraft.item.ItemStack} that {@link net.minecraft.item.Item} extends {@link MagicDeviceItem}
 	 * @param action Spell use Action.
 	 */
 	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
@@ -67,10 +67,10 @@ public class Spell implements ISpell {
 	}
 
 	public static void updateSpellStatusBar(PlayerEntity player){
-		if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof WandItem) {
-			if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)) != Focus.NO_FOCUS) {
-				if (WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
-					for (SpellModule module : WandItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.getBoundModules()) {
+		if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof MagicDeviceItem) {
+			if (MagicDeviceItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)) != Focus.NO_FOCUS) {
+				if (MagicDeviceItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
+					for (SpellModule module : MagicDeviceItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.getBoundModules()) {
 						Logic.updateSpellStatusBarRecursive(module, player, new ArrayList<>());
 					}
 				}

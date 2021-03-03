@@ -3,6 +3,8 @@ package net.arcanamod.items;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
+import net.arcanamod.items.attachment.Cap;
+import net.arcanamod.items.attachment.Core;
 import net.arcanamod.systems.spell.Spell;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -15,10 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -37,6 +36,23 @@ public class ScepterItem extends MagicDeviceItem{
 
 	public ScepterItem(Properties properties) {
 		super(properties);
+	}
+
+	public static ItemStack withCapAndCore(String cap, String core){
+		CompoundNBT nbt = new CompoundNBT();
+		nbt.putString("cap", cap);
+		nbt.putString("core", core);
+		ItemStack stack = new ItemStack(ArcanaItems.WAND.get(), 1);
+		stack.setTag(nbt);
+		return stack;
+	}
+
+	public static ItemStack withCapAndCore(ResourceLocation cap, ResourceLocation core){
+		return withCapAndCore(cap.toString(), core.toString());
+	}
+
+	public static ItemStack withCapAndCore(Cap cap, Core core){
+		return withCapAndCore(cap.getId(), core.getId());
 	}
 
 	public ActionResultType onItemUse(ItemUseContext context){
