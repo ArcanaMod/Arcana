@@ -19,4 +19,5 @@ public class MDModifier {
 		}
 	}
 	public static class Creative extends MDModifier {}
+	public static class Mechanical extends MDModifier {}
 }
