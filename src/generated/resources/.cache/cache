@@ -180,6 +180,7 @@ f559582307e21aeb1db37bb438f12ae8e8464118 assets/arcana/models/block/willow_fence
 133157bc5cdcaf7ba425cc8327aae337d80253ce assets/arcana/models/block/willow_fence_post.json
 25d444b37c45feeda5698639794325dc27a1ca03 assets/arcana/models/block/willow_fence_side.json
 f53a84371b053faa8f71cd5289a4648bd38e5450 assets/arcana/models/item/air_crystal.json
+1eac574cc2ae56100685feaff3b0ef7eae765521 assets/arcana/models/item/amber_cap.json
 3883af7f98f4ab4b496ed2d1bf95bdb3f6e546cb assets/arcana/models/item/arcane_stone.json
 f16d9b3ef5db4cf3b8a71c4e4ed1d7e7af5c3ffb assets/arcana/models/item/arcane_stone_bricks.json
 6e88bb038911be71a73263c41947e463f966e769 assets/arcana/models/item/arcane_stone_bricks_pressure_plate.json
@@ -252,6 +253,7 @@ a52d6583fbf3b45aa9f9efb80a46a2a6f5f55fd2 assets/arcana/models/item/aspect_water.
 22a6d7cf2935caf7311e279408a05ac067454151 assets/arcana/models/item/aura_crystal.json
 5d2e83237bb2d8032bb9137481dcbb9b2e7c7be4 assets/arcana/models/item/bamboo_cap.json
 d06413c89d9b17c928b89aa9d3871fe946032de8 assets/arcana/models/item/beast_crystal.json
+6e99b8bbe3d810f87428643c86badf797fa5f0a0 assets/arcana/models/item/blaze_wand_core.json
 0ef79f5e6de799a4fbcbf9de89c2cdc6fd447d34 assets/arcana/models/item/chaos_crystal.json
 1738e266b1d02302a4406d196f2fa2f3ba4164a5 assets/arcana/models/item/clay_cap.json
 5e044118dd440a6d194bdb6efcc775e9162f0dfe assets/arcana/models/item/clay_wand_core.json
@@ -275,6 +277,7 @@ d1b7acdda269612bb5072e59e8f8a7c2e4b04ad5 assets/arcana/models/item/dungeon_brick
 869080cd6653c84c0f5cfcb392254ce8ab44ed9e assets/arcana/models/item/dungeon_bricks_stairs.json
 f92d77e448aa19a436cc5267ce32c90ab5af419b assets/arcana/models/item/dungeon_bricks_wall.json
 c4ce641ae8a2c3db146f7cadca8937ce51ade303 assets/arcana/models/item/earth_crystal.json
+6c6ef15b51b5b963abc0fad506fb5b25129d4022 assets/arcana/models/item/eldritch_cloth_cap.json
 1619df229c87fdc34d0fd854f71689b06d0f2970 assets/arcana/models/item/eldritch_crystal.json
 dc949d6834e0c1f57ffe6c09ceedb09c722e0d0f assets/arcana/models/item/ender_crystal.json
 e0988126fc91c80b6dc536ef3a2fd87bb939a486 assets/arcana/models/item/energy_crystal.json
@@ -294,16 +297,19 @@ e3dd25c5f8378055191a82988e79a3003aaa7296 assets/arcana/models/item/gluttony_crys
 ef0303128fbf40c2d47fe5155a45b4a7f58f240e assets/arcana/models/item/harvest_crystal.json
 fb9f9a1c7fae4af9c438a9e088b96ab11fcab671 assets/arcana/models/item/hawthorn_fence.json
 4022c1d49fa8877ab304fe2cefc7e11d7dd449c7 assets/arcana/models/item/hawthorn_fence_gate.json
+40a6c598b06961c5bcc47d91811cb798b49ae7a8 assets/arcana/models/item/honey_cap.json
 3cfb2d2107ae52c979bb4fb89a191be4ed339f78 assets/arcana/models/item/human_crystal.json
 e2699f2a7de6c7be9d17c94b12b8c364bbe610db assets/arcana/models/item/ice_crystal.json
 25044ac9e49b7a4be6b2ed56a615e9eba42d1c1a assets/arcana/models/item/imprison_crystal.json
 16fbcfe17dea10e29896122e339c26b2742ba2b0 assets/arcana/models/item/journey_crystal.json
 3bfe2a1fe5340e670e4023e6641eabc3b57b6554 assets/arcana/models/item/label.json
+e7a915f4ee836bc11f20e2f0d96106f5b2ef0f6d assets/arcana/models/item/leather_cap.json
 dae78e07d848ff75ec27730c9fbc5b1656ad9566 assets/arcana/models/item/life_crystal.json
 932d92f61ebdad9437c21bf9a0255bf81b9655f2 assets/arcana/models/item/light_crystal.json
 848f2361649bb65bb7cc3388bfe518986e3fcb30 assets/arcana/models/item/lust_crystal.json
 f870e28291810b722a7b9d470b1803cce7e04f3e assets/arcana/models/item/machine_crystal.json
 a989bd2ebdb1d19535aa00fc2d216c8518ba5006 assets/arcana/models/item/mana_crystal.json
+97905bb47c44c96cf3b6d022af93c6543c2c0637 assets/arcana/models/item/mechanical_cap.json
 d320f4cd2c5f1fe858ec9ae5c00ebaf0baee5027 assets/arcana/models/item/metal_crystal.json
 dd03d81606e90d6a7e1323cca6cb81a38093d69b assets/arcana/models/item/mind_crystal.json
 e981c821d0ca14bd052c9dcc9023c193f48eadf7 assets/arcana/models/item/mining_crystal.json
@@ -319,9 +325,11 @@ f45114b87bbc94588f93288bf443ed3e8269e2cf assets/arcana/models/item/overworld_cry
 96d93d46de792a9da712591f30d787ff92285a5c assets/arcana/models/item/plant_crystal.json
 31a3a577d62aa2097fef655ec3ab7b4830ad6aba assets/arcana/models/item/pride_crystal.json
 33a927f94a82101f7265f2ef2e6af6eb95db910e assets/arcana/models/item/prismarine_cap.json
+c810c3f15ee642cd483bd6c594912aaa4d055349 assets/arcana/models/item/quartz_cap.json
 f82efc1110b83c5dd9eb8d291f1853ddf4e43b6c assets/arcana/models/item/research_table_item.json
 2f905d276daaf5dd1906d5e1e981a4f8812975db assets/arcana/models/item/seeds_crystal.json
 6ebbc45ac8c0fcd460133eaad0520f6b273d2c30 assets/arcana/models/item/senses_crystal.json
+23f840278842cb5e295a2a5ff6681167494a5d3e assets/arcana/models/item/shulker_cap.json
 09247a485d925d84be754c9c84f35aa7c835abdc assets/arcana/models/item/silver_block.json
 7163cd0c5bb8d2e561a3738138df4b9d8bedfb78 assets/arcana/models/item/silver_ingot.json
 01e06f37f132ef0ea189ed3c9e4d579d6191329d assets/arcana/models/item/silver_ore.json
