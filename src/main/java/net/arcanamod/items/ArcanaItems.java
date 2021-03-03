@@ -4,6 +4,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
@@ -30,6 +31,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 import static net.arcanamod.Arcana.MODID;
@@ -136,6 +138,13 @@ public class ArcanaItems{
 	public static final RegistryObject<CapItem> VOID_CAP = ITEMS.register("void_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 75, 45, 3, arcLoc("void_cap")));
 	@GIM(ITEM) public static final RegistryObject<CapItem> PRISMARINE_CAP = ITEMS.register("prismarine_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("prismarine_cap")));
 	@GIM(ITEM) public static final RegistryObject<CapItem> BAMBOO_CAP = ITEMS.register("bamboo_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("bamboo_cap")));
+	@GIM(ITEM) public static final RegistryObject<CapItem> AMBER_CAP = ITEMS.register("amber_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("amber_cap")));
+	@GIM(ITEM) public static final RegistryObject<CapItem> QUARTZ_CAP = ITEMS.register("quartz_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("quartz_cap")));
+	@GIM(ITEM) public static final RegistryObject<CapItem> LEATHER_CAP = ITEMS.register("leather_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("leather_cap")));
+	@GIM(ITEM) public static final RegistryObject<CapItem> HONEY_CAP = ITEMS.register("honey_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("honey_cap")));
+	@GIM(ITEM) public static final RegistryObject<CapItem> SHULKER_CAP = ITEMS.register("shulker_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 0, 35, 2, arcLoc("shulker_cap")));
+	@GIM(ITEM) public static final RegistryObject<CapItem> MECHANICAL_CAP = ITEMS.register("mechanical_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 60, 40, 2, arcLoc("mechanical_cap")));
+	@GIM(ITEM) public static final RegistryObject<CapItem> ELDRITCH_CLOTH_CAP = ITEMS.register("eldritch_cloth_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 70, 50, 2, arcLoc("eldritch_cloth_cap")));
 	@GIM(ITEM) public static final RegistryObject<CapItem> CLAY_CAP = ITEMS.register("clay_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), Short.MAX_VALUE, Short.MAX_VALUE, -1, arcLoc("clay_cap")));
 	
 	// Foci
@@ -151,7 +160,8 @@ public class ArcanaItems{
 	public static final RegistryObject<CoreItem> HAWTHORN_WAND_CORE = ITEMS.register("hawthorn_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 15,1, 3, arcLoc("hawthorn_wand"), new MDModifier.Empty()));
 	public static final RegistryObject<CoreItem> SILVERWOOD_WAND_CORE = ITEMS.register("silverwood_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 100,5, 4, arcLoc("silverwood_wand"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,10)).collect(Collectors.toList()))));
 	public static final RegistryObject<CoreItem> ARCANIUM_WAND_CORE = ITEMS.register("arcanium_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 150,10, 4, arcLoc("arcanium_wand"), new MDModifier.Empty()));
-	@GIM(ITEM) public static final RegistryObject<CoreItem> CLAY_WAND_CORE = ITEMS.register("clay_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 150,10, -1, arcLoc("clay_wand"), new MDModifier.Creative()));
+	@GIM(ITEM) public static final RegistryObject<CoreItem> BLAZE_WAND_CORE = ITEMS.register("blaze_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 199,10, 2, arcLoc("blaze_wand"), new MDModifier.ReducedVis(Collections.singletonList(new AspectStack(Aspects.FIRE,20)))));
+	@GIM(ITEM) public static final RegistryObject<CoreItem> CLAY_WAND_CORE = ITEMS.register("clay_wand_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), Short.MAX_VALUE,Short.MAX_VALUE, -1, arcLoc("clay_wand"), new MDModifier.Creative()));
 
 	public static final RegistryObject<CoreItem> GREATWOOD_STAFF_CORE = ITEMS.register("greatwood_staff_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 25,3, 2, arcLoc("greatwood_staff"), new MDModifier.ReducedVis(Arrays.asList(AspectUtils.primalAspects).stream().map(aspect -> new AspectStack(aspect,5)).collect(Collectors.toList()))));
 	public static final RegistryObject<CoreItem> TAINTED_STAFF_CORE = ITEMS.register("tainted_staff_core", () -> new CoreItem(new Properties().group(Arcana.ITEMS), 200,30, 2, arcLoc("tainted_staff"), new MDModifier.Warping()));
