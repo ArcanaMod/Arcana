@@ -11,13 +11,13 @@ import net.minecraft.util.ResourceLocation;
  */
 public class CapItem extends Item implements Cap{
 	
-	private final int power, maxEffects, level;
+	private final int complexity, visStorage, level;
 	private final ResourceLocation id;
 	
-	public CapItem(Properties properties, int power, int maxEffects, int level, ResourceLocation id){
+	public CapItem(Properties properties, int visStorage, int complexity, int level, ResourceLocation id){
 		super(properties);
-		this.power = power;
-		this.maxEffects = maxEffects;
+		this.complexity = complexity;
+		this.visStorage = visStorage;
 		this.level = level;
 		this.id = id;
 		CAPS.put(getId(), this);
@@ -27,12 +27,12 @@ public class CapItem extends Item implements Cap{
 		return level;
 	}
 	
-	public int power(){
-		return power;
+	public int complexity(){
+		return complexity;
 	}
 	
-	public int maxEffects(){
-		return maxEffects;
+	public int visStorage(){
+		return visStorage;
 	}
 	
 	public int level(){

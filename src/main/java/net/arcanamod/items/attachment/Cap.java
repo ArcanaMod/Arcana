@@ -28,10 +28,10 @@ public interface Cap{
 	static Cap getCapOrError(ResourceLocation id){
 		return getCapById(id).orElse(ERROR_CAP);
 	}
-	
-	int power();
-	
-	int maxEffects();
+
+	int visStorage();
+
+	int complexity();
 	
 	int level();
 	
@@ -55,25 +55,25 @@ public interface Cap{
 	 */
 	class Impl implements Cap{
 		
-		int power;
-		int maxEffects;
+		int complexity;
+		int visStorage;
 		int level;
 		ResourceLocation id;
 		
-		public Impl(int power, int maxEffects, int level, ResourceLocation id){
-			this.power = power;
-			this.maxEffects = maxEffects;
+		public Impl(int complexity, int visStorage, int level, ResourceLocation id){
+			this.complexity = complexity;
+			this.visStorage = visStorage;
 			this.level = level;
 			this.id = id;
 			CAPS.put(getId(), this);
 		}
 		
-		public int power(){
-			return power;
+		public int complexity(){
+			return complexity;
 		}
 		
-		public int maxEffects(){
-			return maxEffects;
+		public int visStorage(){
+			return visStorage;
 		}
 		
 		public int level(){

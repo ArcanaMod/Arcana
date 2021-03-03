@@ -62,7 +62,9 @@ public class Aspect {
 		Aspects.ASPECTS.put(ArcanaVariables.arcLoc(name),aspect);
 		if (!ArcanaVariables.test) {
 			logger.info("Arcana: Added new aspect '" + name + "'");
-			net.minecraftforge.fml.StartupMessageManager.addModMessage("Arcana: Added \""+name+"\" aspect");
+			try {
+				net.minecraftforge.fml.StartupMessageManager.addModMessage("Arcana: Added \"" + name + "\" aspect");
+			}catch(Exception ignored){}
 		}
 		return aspect;
 	}

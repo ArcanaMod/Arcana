@@ -104,9 +104,9 @@ public class ScepterItem extends MagicDeviceItem{
 
 	@OnlyIn(Dist.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
-		super.addInformation(stack, world, tooltip, flag);
 		// Add info
-		tooltip.add(new TranslationTextComponent("tooltip.arcana.crafting_wand").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new TranslationTextComponent("tooltip.arcana.crafting_wand").applyTextStyle(TextFormatting.AQUA));
+		super.addInformation(stack, world, tooltip, flag);
 	}
 
 	@Override

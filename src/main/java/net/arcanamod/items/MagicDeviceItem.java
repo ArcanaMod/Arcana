@@ -7,11 +7,13 @@ import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.items.attachment.FocusItem;
+import net.arcanamod.systems.spell.MDModifier;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.util.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -22,11 +24,16 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -162,6 +169,20 @@ public abstract class MagicDeviceItem extends Item{
 
 	public ITextComponent getDisplayName(ItemStack stack){
 		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey())).appendText(" "+getDeviceName());
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
+		super.addInformation(stack, world, tooltip, flag);
+		// Add info
+		boolean creative = getCore(stack).modifier() instanceof MDModifier.Creative;
+		if (creative)
+			tooltip.add(new TranslationTextComponent("tooltip.arcana.creative_wand").applyTextStyle(TextFormatting.AQUA));
+		tooltip.add(new StringTextComponent(""));
+		tooltip.add(new StringTextComponent("Properties:").applyTextStyle(TextFormatting.GRAY));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (getCore(stack).maxVis() + getCap(stack).visStorage())+" Max") + " Vis").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : getCore(stack).maxVis()) + " Difficulty").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : getCap(stack).complexity()) + " Complexity").applyTextStyle(TextFormatting.DARK_GREEN));
 	}
 
 	public boolean canSwapFocus(){

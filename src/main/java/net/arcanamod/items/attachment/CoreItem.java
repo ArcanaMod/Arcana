@@ -32,6 +32,11 @@ public class CoreItem extends Item implements Core{
 		return difficulty;
 	}
 
+	@Override
+	public MDModifier modifier() {
+		return mod;
+	}
+
 	public int level(){
 		return level;
 	}
