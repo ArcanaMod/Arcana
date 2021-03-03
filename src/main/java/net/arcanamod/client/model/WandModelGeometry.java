@@ -5,6 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
+import net.arcanamod.items.ScepterItem;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
@@ -56,8 +57,8 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 	
 	public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides, ResourceLocation modelLocation){
 		IModelTransform transformsFromModel = owner.getCombinedTransform();
-		ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transformMap = PerspectiveMapWrapper.getTransforms(new ModelTransformComposition(transformsFromModel, modelTransform));
 		ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
+		ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transformMap = PerspectiveMapWrapper.getTransforms(new ModelTransformComposition(transformsFromModel, modelTransform));
 		
 		// get core texture
 		Material coreTex = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, material);
@@ -65,35 +66,32 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 		Material capTex = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, cap);
 		
 		// get variant model
-		ResourceLocation coreLoc = arcLoc("item/wands/variants/wand");
+		if(variant == null)
+			variant = arcLoc("wand");
+		ResourceLocation coreLoc = new ResourceLocation(variant.getNamespace(), "item/wands/variants/" + variant.getPath());
 		IUnbakedModel coreModel = bakery.getUnbakedModel(coreLoc);
-		// get variant cap model
-		ResourceLocation capLoc = arcLoc("item/wands/caps/wand");
-		IUnbakedModel capModel = bakery.getUnbakedModel(capLoc);
+		ItemCameraTransforms tfs = ItemCameraTransforms.DEFAULT;
 		
 		// they *should* be, but might as well check.
-		if(coreModel instanceof BlockModel)
-			((BlockModel)coreModel).textures.put("core", Either.left(coreTex));
-		else
-			LOGGER.error("Core model isn't a block model!");
-		if(capModel instanceof BlockModel)
-			((BlockModel)capModel).textures.put("cap", Either.left(capTex));
-		else
-			LOGGER.error("Cap model isn't a block model!");
+		if(coreModel instanceof BlockModel){
+			BlockModel model = (BlockModel)coreModel;
+			model.textures.put("core", Either.left(coreTex));
+			model.textures.put("cap", Either.left(capTex));
+			tfs = model.getAllTransforms();
+		}else
+			LOGGER.error("Wand model isn't a block model!");
 		
 		// get focus model and texture, apply, and add
 		Random rand = new Random();
 		if(focus != null){
 			IBakedModel focusModel = bakery.getBakedModel(new ResourceLocation(focus.getNamespace(), "item/wands/foci/" + focus.getPath()), modelTransform, spriteGetter);
-			if(focusModel != null){
+			if(focusModel != null)
 				builder.addAll(focusModel.getQuads(null, null, rand));
-			}
 		}
 		
 		builder.addAll(coreModel.bakeModel(bakery, spriteGetter, transformsFromModel, coreLoc).getQuads(null, null, rand));
-		builder.addAll(capModel.bakeModel(bakery, spriteGetter, transformsFromModel, capLoc).getQuads(null, null, rand));
 		
-		return new WandBakedModel(builder.build(), spriteGetter.apply(coreTex), Maps.immutableEnumMap(transformMap), new AttachmentOverrideHandler(bakery), true, true, this, owner, modelTransform);
+		return new WandBakedModel(builder.build(), spriteGetter.apply(coreTex), Maps.immutableEnumMap(transformMap), new AttachmentOverrideHandler(bakery), true, true, this, owner, modelTransform, tfs);
 	}
 	
 	public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors){
@@ -114,12 +112,20 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 			// get material
 			Core core = WandItem.getCore(stack);
 			// get variant (staff/scepter/wand)
-				// always "wand" currently
+			// TODO: improve this slightly
+			ResourceLocation variant = arcLoc("wand");
+			if(stack.getItem() instanceof WandItem)
+				variant = arcLoc("wand"); // yes this is redundant, just here for completeness
+			else if(stack.getItem() instanceof ScepterItem)
+				variant = arcLoc("scepter");
+			//else if(stack.getItem() instanceof StaffItem)
+			//  variant = arcLoc("staff");
+			
 			// get focus
 			// nbt context comes from the focusData tag
 			Focus focus = WandItem.getFocus(stack);
 			CompoundNBT focusData = WandItem.getFocusData(stack);
-			return new WandModelGeometry(cap.getTextureLocation(), core.getTextureLocation(), arcLoc("wand"), focus.getModelLocation(focusData)).bake(((WandBakedModel)originalModel).owner, bakery, ModelLoader.defaultTextureGetter(), ((WandBakedModel)originalModel).modelTransform, originalModel.getOverrides(), new ResourceLocation("arcana:does_this_do_anything_lol"));
+			return new WandModelGeometry(cap.getTextureLocation(), core.getTextureLocation(), variant, focus.getModelLocation(focusData)).bake(((WandBakedModel)originalModel).owner, bakery, ModelLoader.defaultTextureGetter(), ((WandBakedModel)originalModel).modelTransform, originalModel.getOverrides(), new ResourceLocation("arcana:does_this_do_anything_lol"));
 		}
 	}
 }
