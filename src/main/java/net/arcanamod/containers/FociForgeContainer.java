@@ -9,6 +9,7 @@ import net.arcanamod.client.gui.FociForgeScreen;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.ArcanaTags;
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.minecraft.entity.player.PlayerEntity;
@@ -80,7 +81,7 @@ public class FociForgeContainer extends AspectContainer {
         addSlot(new SlotItemHandler(itemHandler, 0, 137, 11){
             public boolean isItemValid(@Nonnull ItemStack stack){
                 // only ink
-                return super.isItemValid(stack) && stack.getItem()==ArcanaItems.WAND.get();
+                return super.isItemValid(stack) && stack.getItem() instanceof MagicDeviceItem;
             }
 
             public void onSlotChanged(){

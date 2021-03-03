@@ -5,6 +5,7 @@ import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.IAspectHolder;
 import net.arcanamod.aspects.UndecidedAspectStack;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.recipes.AspectCraftingInventory;
 import net.arcanamod.items.recipes.ArcanaRecipes;
 import net.arcanamod.items.recipes.IArcaneCraftingRecipe;
@@ -51,7 +52,7 @@ public class AspectCraftingResultSlot extends CraftingResultSlot {
 		for(int i = 0; i < nonnulllist.size(); ++i) {
 			ItemStack itemstack = this.craftMatrix.getStackInSlot(i);
 			ItemStack itemstack1 = nonnulllist.get(i);
-			if (!itemstack.isEmpty() && itemstack.getItem() != ArcanaItems.WAND.get()) {
+			if (!itemstack.isEmpty() && !(itemstack.getItem() instanceof MagicDeviceItem)){
 				this.craftMatrix.decrStackSize(i, 1);
 				itemstack = this.craftMatrix.getStackInSlot(i);
 			}
