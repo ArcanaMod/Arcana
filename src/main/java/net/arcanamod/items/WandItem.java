@@ -72,6 +72,21 @@ public class WandItem extends MagicDeviceItem{
 		return "Wand";
 	}
 
+	@Override
+	protected float getVisModifier() {
+		return 1;
+	}
+
+	@Override
+	protected float getDifficultyModifier() {
+		return 1;
+	}
+
+	@Override
+	protected float getComplexityModifier() {
+		return 1;
+	}
+
 	public static ItemStack withCapAndCore(String cap, String core){
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putString("cap", cap);

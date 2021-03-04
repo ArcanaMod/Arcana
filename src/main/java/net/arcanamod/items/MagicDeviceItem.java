@@ -86,9 +86,13 @@ public abstract class MagicDeviceItem extends Item{
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
 		AspectBattery battery = new AspectBattery(6, 0);
 		for(Aspect aspect : AspectUtils.primalAspects)
-			battery.createCell(new AspectCell(getCore(stack).maxVis(), aspect));
+			battery.createCell(new AspectCell((int)((getCore(stack).maxVis()+getCap(stack).visStorage())*getVisModifier()), aspect));
 		return battery;
 	}
+
+	protected abstract float getVisModifier();
+	protected abstract float getDifficultyModifier();
+	protected abstract float getComplexityModifier();
 
 	public void onUsingTick(ItemStack stack, LivingEntity player, int count){
 		World world = player.world;
@@ -180,9 +184,9 @@ public abstract class MagicDeviceItem extends Item{
 			tooltip.add(new TranslationTextComponent("tooltip.arcana.creative_wand").applyTextStyle(TextFormatting.AQUA));
 		tooltip.add(new StringTextComponent(""));
 		tooltip.add(new StringTextComponent("Properties:").applyTextStyle(TextFormatting.GRAY));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (getCore(stack).maxVis() + getCap(stack).visStorage())+" Max") + " Vis").applyTextStyle(TextFormatting.DARK_GREEN));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : getCore(stack).maxVis()) + " Difficulty").applyTextStyle(TextFormatting.DARK_GREEN));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : getCap(stack).complexity()) + " Complexity").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier())+" Max") + " Vis").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)(getCore(stack).difficulty()*getDifficultyModifier())) + " Difficulty").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)(getCap(stack).complexity()*getComplexityModifier())) + " Complexity").applyTextStyle(TextFormatting.DARK_GREEN));
 	}
 
 	public boolean canSwapFocus(){

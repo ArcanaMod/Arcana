@@ -173,6 +173,8 @@ public class ArcanaItems{
 
 	public static final RegistryObject<Item> WAND = ITEMS.register("wand", () -> new WandItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	public static final RegistryObject<Item> SCEPTER = ITEMS.register("scepter", () -> new ScepterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
+	public static final RegistryObject<Item> STAFF = ITEMS.register("staff", () -> new StaffItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
+	public static final RegistryObject<Item> GAUNTLET = ITEMS.register("gauntlet", () -> new GauntletItem(new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	
 	// Tainted Items
 	public static final RegistryObject<Item> TAINTED_MELON_SLICE = ITEMS.register("tainted_melon_slice", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(1).saturation(0.6f).effect(() -> new EffectInstance(ArcanaEffects.TAINTED.get(), 600, 0), 1f).build())));
