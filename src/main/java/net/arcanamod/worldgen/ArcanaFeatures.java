@@ -42,7 +42,7 @@ public class ArcanaFeatures{
 	public static void addMagicalForestTrees(Biome biome){
 		// blocks must be registered first, but these configs have to be made at biome time, not feature time
 		if(SILVERWOOD_TREE_CONFIG == null){
-			SILVERWOOD_TREE_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(3, 1)).heightRandA(2).heightRandB(2).baseHeight(10).build();
+			SILVERWOOD_TREE_CONFIG = new TreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(3, 1)).heightRandA(2).heightRandB(2).baseHeight(12).build();
 			GREATWOOD_TREE_CONFIG = new HugeTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.GREATWOOD_LEAVES.get().getDefaultState())).setSapling(ArcanaBlocks.GREATWOOD_SAPLING.get()).baseHeight(18).build();
 			TAINTED_GREATWOOD_TREE_CONFIG = new HugeTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LEAVES.get().getDefaultState())).setSapling(ArcanaBlocks.TAINTED_GREATWOOD_SAPLING.get()).baseHeight(18).build();
 		}

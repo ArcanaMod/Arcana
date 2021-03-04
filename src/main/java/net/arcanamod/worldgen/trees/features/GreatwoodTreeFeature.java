@@ -1,9 +1,10 @@
 package net.arcanamod.worldgen.trees.features;
 
 import com.mojang.datafixers.Dynamic;
-import net.arcanamod.util.Pair;
-import net.minecraft.util.Direction;
+
+import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.gen.IWorldGenerationBaseReader;
 import net.minecraft.world.gen.IWorldGenerationReader;
@@ -41,75 +42,142 @@ public class GreatwoodTreeFeature extends AbstractTreeFeature<HugeTreeFeatureCon
 				setDirtAt(world, ground.south().east(), pos);
 				
 				int top = y + height - 1;
-				
-				// lets pick a number of points to start a branch along with their directions
-				Set<Pair<BlockPos, Direction>> branches = new HashSet<>();
-				
+
+				Set<BlockPos> leafNodes = new HashSet<>();
+
+				// Roots
+				for (int x1 = -1; x1 <= 2; x1++) {
+				    for (int z1 = -1; z1 <= 2; z1++) {
+				    	// Skip root placement if we're in the trunk
+				    	if ((x1 == 0 || x1 == 1) && (z1 == 0 || z1 == 1)) {
+				    		continue;
+						}
+
+				    	// Get the root height by nesting random calls to make it biased towards 0
+				        int rootHeight = rand.nextInt(rand.nextInt(4) + 1);
+
+						if (isRootOnEdge(x1) && isRootOnEdge(z1)) {
+							rootHeight--; // Reduce on corners
+						}
+
+						if (rootHeight > 0) {
+							BlockPos groundPos = new BlockPos(x + x1, y - 1, z + z1);
+
+							if (isAir(world, groundPos)) {
+								world.setBlockState(groundPos, Blocks.DIRT.getDefaultState(), 3);
+							}
+
+							// Place roots
+							for (int curHeight = 0; curHeight < rootHeight; curHeight++) {
+								int curY = y + curHeight;
+								BlockPos curPos = new BlockPos(x + x1, curY, z + z1);
+
+								if (isAirOrLeaves(world, curPos)) {
+									func_227216_a_(world, rand, curPos, logs, box, config);
+								}
+							}
+						}
+				    }
+				}
+
 				// main trunk
 				for(int curHeight = 0; curHeight < height; ++curHeight){
 					int curY = y + curHeight;
 					BlockPos curPos = new BlockPos(x, curY, z);
-					if(isAirOrLeaves(world, curPos)){
+					if(isAirOrLeaves(world, curPos)) {
 						func_227216_a_(world, rand, curPos, logs, box, config);
 						func_227216_a_(world, rand, curPos.east(), logs, box, config);
 						func_227216_a_(world, rand, curPos.south(), logs, box, config);
 						func_227216_a_(world, rand, curPos.east().south(), logs, box, config);
-						if(curHeight > 4 && curHeight < height - 3){
-							// could make this random but it looks better just rotating around
-							Direction branchDir = Direction.byHorizontalIndex(curHeight);
-							branches.add(Pair.of(curPos.east(rand.nextInt(2)).south(rand.nextInt(2)).offset(branchDir), branchDir));
-							// watch me do it again
-							if(rand.nextBoolean()){
-								branchDir = Direction.byHorizontalIndex(curHeight);
-								branches.add(Pair.of(curPos.east(rand.nextInt(2)).south(rand.nextInt(2)).offset(branchDir), branchDir));
+					}
+
+					// Branches
+					if (curHeight > 6 && curHeight < height - 3) {
+						int branchCount = 1 + (curHeight / 8);
+						double offset = Math.PI * 2 * rand.nextDouble();
+
+						// Make fewer branches at the bottom, but more at the top
+						for (int i = 0; i < branchCount; i++) {
+							double angle = (((double) i / branchCount) * (Math.PI * 2)) + offset + (rand.nextDouble() * 0.2);
+							int length = rand.nextInt(2) + (6 - branchCount) + curHeight / 10;
+							// Choose a starting location on the trunk
+							BlockPos start = chooseStart(curPos, rand);
+
+							for (int j = 0; j <= length; j++) {
+								// Traverse through the branch
+								BlockPos local = start.add(Math.cos(angle) * j, j / 2.0, Math.sin(angle) * j);
+
+								// Place logs if it's air
+								if (isAir(world, local)) {
+									func_227216_a_(world, rand, local, logs, box, config);
+								}
+
+								// If we're at the end, mark this position for generating leaves
+								if (j == length) {
+									leafNodes.add(local);
+								}
+							}
+						}
+
+					}
+
+					// Add leaves to the top of the trunk
+					if (curHeight == height - 1) {
+						leafNodes.add(curPos);
+						leafNodes.add(curPos.east());
+						leafNodes.add(curPos.south());
+						leafNodes.add(curPos.east().south());
+					}
+				}
+
+				for (BlockPos node : leafNodes) {
+					// Iterate in a spheroid to place leaves
+					for(int x1 = -3; x1 <= 3; x1++) {
+						for(int z1 = -3; z1 <= 3; z1++) {
+							for(int y1 = -2; y1 <= 2; y1++) {
+								double rX = x1 / 3.0;
+								double rZ = z1 / 3.0;
+								double rY = y1 / 2.0;
+								// Scale the distance to customize the blob shape
+								rX *= 1.1;
+								rZ *= 1.1;
+								rY *= 0.95;
+								double dist = rX * rX + rZ * rZ + rY * rY;
+
+								// Apply randomness to the radius and place leaves
+								if (dist <= 1 + (rand.nextDouble() * 0.3)) {
+									BlockPos local = node.add(x1, y1, z1);
+									if (isAir(world, local)) {
+										world.setBlockState(local, config.leavesProvider.getBlockState(rand, local), 3);
+									}
+								}
 							}
 						}
 					}
 				}
-				
-				// branches
-				for(Pair<BlockPos, Direction> branch : branches){
-					int flatness = rand.nextInt(2) + 2, length = rand.nextInt(3) + 4, lean = rand.nextInt(4);
-					// place a log
-					BlockPos.Mutable cursor = new BlockPos.Mutable(branch.getFirst());
-					Direction dir = branch.getSecond();
-					Direction leanDir = (lean == 0) ? dir.rotateY() : ((lean == 1) ? dir.rotateYCCW() : null);
-					for(int i = 0; i < length; i++){
-						if(i % flatness == 0)
-							cursor.move(Direction.UP);
-						func_227216_a_(world, rand, cursor, logs, box, config);
-						cursor.move(dir);
-						if(leanDir != null)
-							cursor.move(leanDir);
-						func_227219_b_(world, rand, cursor.offset(Direction.random(rand)), leaves, box, config);
-					}
-					// and a leaf blob
-					BlockPos leafStart = cursor.toImmutable();
-					func_227219_b_(world, rand, leafStart, leaves, box, config);
-					for(int lX = -3; lX < 4; lX++)
-						for(int lY = -3; lY < 4; lY++)
-							for(int lZ = -3; lZ < 4; lZ++){
-								cursor.setPos(leafStart).move(lX, lY, lZ);
-								if(cursor.distanceSq(leafStart) <= 3 * 3 + rand.nextInt(2) - 1)
-									func_227219_b_(world, rand, cursor, leaves, box, config);
-							}
-				}
-				
-				BlockPos.Mutable cursor = new BlockPos.Mutable(x, top, z);
-				BlockPos leafStart = cursor.toImmutable();
-				int h = 5;
-				for(int lX = -h; lX <= h; lX++)
-					for(int lY = -h; lY <= h; lY++)
-						for(int lZ = -h; lZ <= h; lZ++){
-							cursor.setPos(leafStart).move(lX, lY, lZ);
-							if(cursor.distanceSq(leafStart) <= h * h + rand.nextInt(2) - 1)
-								func_227219_b_(world, rand, cursor, leaves, box, config);
-						}
-				
+
 				return true;
 			}
 		}
 		return false;
+	}
+
+	private boolean isRootOnEdge(int axis) {
+		return axis == -1 || axis == 2;
+	}
+
+	private static BlockPos chooseStart(BlockPos start, Random random) {
+		switch (random.nextInt(4)) {
+		default:
+		case 0:
+			return start;
+		case 1:
+			return start.east();
+		case 2:
+			return start.south();
+		case 3:
+			return start.east().south();
+		}
 	}
 	
 	private boolean isSpaceClearForHeight(IWorldGenerationBaseReader world, BlockPos pos, int height){
