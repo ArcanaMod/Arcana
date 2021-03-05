@@ -32,46 +32,49 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
 public abstract class MagicDeviceItem extends Item{
-	public MagicDeviceItem(Properties properties) {
+	public MagicDeviceItem(Properties properties){
 		super(properties);
 	}
-
+	
 	public abstract boolean canCraft();
+	
 	public abstract boolean canUseSpells();
+	
 	public abstract String getDeviceName();
-
+	
 	public static Cap getCap(ItemStack stack){
 		String cap = stack.getOrCreateTag().getString("cap");
 		return Cap.getCapOrError(new ResourceLocation(cap));
 	}
-
+	
 	public static Focus getFocus(ItemStack stack){
 		int focus = stack.getOrCreateTag().getInt("focus");
 		return Focus.getFocusById(focus).orElse(Focus.NO_FOCUS);
 	}
-
+	
 	public static Core getCore(ItemStack stack){
 		String core = stack.getOrCreateTag().getString("core");
 		return Core.getCoreOrError(new ResourceLocation(core));
 	}
-
+	
 	public static CompoundNBT getFocusData(ItemStack stack){
 		return stack.getOrCreateChildTag("focusData");
 	}
-
+	
 	public static Optional<ItemStack> getFocusStack(ItemStack stack){
 		return getFocus(stack).getAssociatedItem().map(ItemStack::new).map(stack1 -> {
 			stack1.setTag(getFocusData(stack));
 			return stack1;
 		});
 	}
-
+	
 	public static void setFocusFromStack(ItemStack wand, ItemStack focus){
 		if(focus.getItem() instanceof FocusItem){
 			wand.getOrCreateTag().put("focusData", focus.getOrCreateTag());
@@ -81,19 +84,21 @@ public abstract class MagicDeviceItem extends Item{
 			wand.getOrCreateTag().putInt("focus", 0);
 		}
 	}
-
+	
 	@Nullable
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
 		AspectBattery battery = new AspectBattery(6, 0);
 		for(Aspect aspect : AspectUtils.primalAspects)
-			battery.createCell(new AspectCell((int)((getCore(stack).maxVis()+getCap(stack).visStorage())*getVisModifier()), aspect));
+			battery.createCell(new AspectCell((int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier()), aspect));
 		return battery;
 	}
-
+	
 	protected abstract float getVisModifier();
+	
 	protected abstract float getDifficultyModifier();
+	
 	protected abstract float getComplexityModifier();
-
+	
 	public void onUsingTick(ItemStack stack, LivingEntity player, int count){
 		World world = player.world;
 		AuraView view = AuraView.SIDED_FACTORY.apply(world);
@@ -127,32 +132,33 @@ public abstract class MagicDeviceItem extends Item{
 			player.stopActiveHand();
 		//world.addParticle(new AspectHelixParticleData(Aspects.EXCHANGE, 450, world.rand.nextInt(180), player.getLookVec()), player.getPosX(), player.getPosYEye(), player.getPosZ(), 0, 0, 0);
 	}
-
+	
+	@Nonnull
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
+	public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, @Nonnull PlayerEntity player, @Nonnull Hand hand){
 		// TODO: only do this if you're casting a spell
 		// first do node raycast check, and then check if you have a focus
-		if (canUseSpells()) {
+		if(canUseSpells()){
 			ArcanaSounds.playSpellCastSound(player);
 			Focus focus = getFocus(player.getHeldItem(hand));
-			if (focus != Focus.NO_FOCUS) {
+			if(focus != Focus.NO_FOCUS){
 				Spell spell = focus.getSpell(player.getHeldItem(hand));
-				if (spell != null) {
+				if(spell != null){
 					IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
 					// oh my god this code is terrible // YES, I know Xd.
 					// time for more VisUtils I guess
-					if (spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler, stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
-							spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)) {
-						if (player.isCrouching())
+					if(spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler, stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
+							spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)){
+						if(player.isCrouching())
 							Spell.runSpell(spell, player, player.getHeldItem(hand), ICast.Action.SPECIAL);
 						else
 							Spell.runSpell(spell, player, player.getHeldItem(hand), ICast.Action.USE);
 						// remove aspects from wand if spell successes.
-						for (AspectStack cost : spell.getSpellCosts().toList())
-							if (cost.getAspect() != Aspects.EMPTY)
+						for(AspectStack cost : spell.getSpellCosts().toList())
+							if(cost.getAspect() != Aspects.EMPTY)
 								handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
 					}
-				} else
+				}else
 					player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
 			}
 		}
@@ -165,30 +171,31 @@ public abstract class MagicDeviceItem extends Item{
 		});
 		return ret.get();
 	}
-
-	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect) {
+	
+	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect){
 		@Nullable IAspectHolder nullableHolder = handler.findAspectInHolders(aspect);
 		return nullableHolder != null ? nullableHolder : new AspectCell();
 	}
-
-	public ITextComponent getDisplayName(ItemStack stack){
-		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey())).appendText(" "+getDeviceName());
+	
+	@Nonnull
+	public ITextComponent getDisplayName(@Nonnull ItemStack stack){
+		return new TranslationTextComponent(getCore(stack).getCoreTranslationKey(), new TranslationTextComponent(getCap(stack).getPrefixTranslationKey()), new TranslationTextComponent(getDeviceName()));
 	}
-
+	
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flag){
 		super.addInformation(stack, world, tooltip, flag);
 		// Add info
 		boolean creative = getCore(stack).modifier() instanceof MDModifier.Creative;
-		if (creative)
+		if(creative)
 			tooltip.add(new TranslationTextComponent("tooltip.arcana.creative_wand").applyTextStyle(TextFormatting.AQUA));
 		tooltip.add(new StringTextComponent(""));
 		tooltip.add(new StringTextComponent("Properties:").applyTextStyle(TextFormatting.GRAY));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier())+" Max") + " Vis").applyTextStyle(TextFormatting.DARK_GREEN));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)(getCore(stack).difficulty()*getDifficultyModifier())) + " Difficulty").applyTextStyle(TextFormatting.DARK_GREEN));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)(getCap(stack).complexity()*getComplexityModifier())) + " Complexity").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier()) + " Max") + " Vis").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)(getCore(stack).difficulty() * getDifficultyModifier())) + " Difficulty").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)(getCap(stack).complexity() * getComplexityModifier())) + " Complexity").applyTextStyle(TextFormatting.DARK_GREEN));
 	}
-
+	
 	public boolean canSwapFocus(){
 		return true;
 	}

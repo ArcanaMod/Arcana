@@ -42,6 +42,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -69,7 +70,7 @@ public class WandItem extends MagicDeviceItem{
 
 	@Override
 	public String getDeviceName() {
-		return "Wand";
+		return "item.arcana.wand.variant.wand";
 	}
 
 	@Override
@@ -152,7 +153,7 @@ public class WandItem extends MagicDeviceItem{
 	}
 	
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flag){
 		super.addInformation(stack, world, tooltip, flag);
 		// Add focus info
 		Spell spell = getFocus(stack).getSpell(stack);

@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
@@ -94,13 +95,13 @@ public class GauntletItem extends MagicDeviceItem{
 		CompoundNBT nbt = new CompoundNBT();
 		nbt.putString("cap", "arcana:" + cap);
 		nbt.putString("core", "arcana:" + core);
-		ItemStack stack = new ItemStack(ArcanaItems.WAND.get(), 1);
+		ItemStack stack = new ItemStack(ArcanaItems.GAUNTLET.get(), 1);
 		stack.setTag(nbt);
 		return stack;
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flag){
 		super.addInformation(stack, world, tooltip, flag);
 		// Add focus info
 		Spell spell = getFocus(stack).getSpell(stack);

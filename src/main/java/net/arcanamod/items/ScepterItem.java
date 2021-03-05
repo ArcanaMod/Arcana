@@ -26,6 +26,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
@@ -101,7 +102,7 @@ public class ScepterItem extends MagicDeviceItem{
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag){
+	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flag){
 		// Add info
 		tooltip.add(new TranslationTextComponent("tooltip.arcana.crafting_wand").applyTextStyle(TextFormatting.AQUA));
 		super.addInformation(stack, world, tooltip, flag);
@@ -119,7 +120,7 @@ public class ScepterItem extends MagicDeviceItem{
 
 	@Override
 	public String getDeviceName() {
-		return "Scepter";
+		return "item.arcana.wand.variant.scepter";
 	}
 
 	@Override
