@@ -20,4 +20,8 @@ public class ScribbledNoteScreen extends Screen {
         getMinecraft().fontRenderer.drawString(text, (width - getMinecraft().fontRenderer.getStringWidth(text)) / 2f, height / 2f, 1);
         getMinecraft().getTextureManager().bindTexture(SCRIBBLED_NOTE_TEXTURE);
     }
+    
+    public boolean isPauseScreen(){
+        return false;
+    }
 }
