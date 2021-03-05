@@ -124,6 +124,52 @@
       "amount": 2
     }
   ],
+  "#forge:ingots/silver": [
+    {
+      "aspect": "metal",
+      "amount": 4
+    },
+    {
+      "aspect": "imprison",
+      "amount": 2
+    }
+  ],
+  "#forge:ingots/arcanium": [
+    {
+      "aspect": "metal",
+      "amount": 3
+    },
+    {
+      "aspect": "mana",
+      "amount": 3
+    }
+  ],
+  "arcana:purified_iron": [
+    {
+      "aspect": "metal",
+      "amount": 8
+    }
+  ],
+  "arcana:purified_gold": [
+    {
+      "aspect": "metal",
+      "amount": 8
+    },
+    {
+      "aspect": "greed",
+      "amount": 4
+    }
+  ],
+  "arcana:purified_silver": [
+    {
+      "aspect": "metal",
+      "amount": 8
+    },
+    {
+      "aspect": "imprison",
+      "amount": 4
+    }
+  ],
   "#forge:stone": [
     {
       "aspect": "earth",

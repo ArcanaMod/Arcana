@@ -1,9 +1,9 @@
 {
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
-    "a f",
+    "aof",
     "glg",
-    "e w"
+    "ecw"
   ],
   "key": {
     "g": {
@@ -23,18 +23,15 @@
     },
     "w": {
       "item": "arcana:water_crystal"
+    },
+    "o": {
+      "item": "arcana:order_crystal"
+    },
+    "c": {
+      "item": "arcana:chaos_crystal"
     }
   },
-  "aspects": [
-    {
-      "aspect": "arcana:order",
-      "amount": 5
-    },
-    {
-      "aspect": "arcana:chaos",
-      "amount": 5
-    }
-  ],
+  "aspects": [],
   "result": {
     "item": "arcana:goggles_of_revealing"
   }

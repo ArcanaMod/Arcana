@@ -815,7 +815,7 @@
     "research.arcana.variant_jars": "Variant Jars",
     "research.arcana.variant_jars.desc": "Getting taint to sit still",
     "research.arcana.variant_jars.stage.1": "Warded jars, while stable enough for most aspects, cannot contain the power of pure taint. Its influence radiates out, corrupting the earth it touches. Nor can store as much of the more plentiful aspects as I would like. Enhancing my jar design to contain taint is a top priority, and a capacity upgrade would be appreciated.",
-    "research.arcana.variant_jars.stage.2": "Containing wayward aspects simply requires integrating the essence of containment itself into the design of the jar, in the form of a Secure Jar. Secure jars store the same amount as regular jars, but don't allow the aspects inside to affect the world.\n\nIncreasing capacity turned out to be significantly harder than anticipated; concentrating too much of any aspect tends to produce unreliable, unstable, and dangerous results. But adding a little link to the void in the cap allows for Void Jars to ignore excess input, destroying what cannot be stored.",
+    "research.arcana.variant_jars.stage.2": "Containing wayward aspects simply requires integrating the essence of containment itself into the design of the jar, in the form of a Secure Jar. Secure jars store the same amount as regular jars, but don't allow the aspects inside to affect the world.{~sep}Increasing capacity turned out to be significantly harder than anticipated; concentrating too much of any aspect tends to produce unreliable, unstable, and dangerous results. But adding a little link to the void in the cap allows for Void Jars to ignore excess input, destroying what cannot be stored.",
 
     "research.arcana.aspect_crystallization": "Aspect Crystallization",
     "research.arcana.aspect_crystallization.desc": "Grasp the immaterial",
@@ -836,13 +836,13 @@
     "research.arcana.research_expertise": "Research Expertise",
     "research.arcana.research_expertise.desc": "Improving my improvements",
     "research.arcana.research_expertise.stage.1": "Performing more research will teach me more about the research process itself.\n\nWith a little practical experience, I should be able to simplify the process, and offset the increasing difficulty of these puzzles.",
-    "research.arcana.research_expertise.stage.2": "I'm getting better at this.\n\nHovering over an aspect in the research table and holding shift will now display what the aspect is made up of.",
+    "research.arcana.research_expertise.stage.2": "I'm getting better at this.{~sep}Hovering over an aspect in the research table and holding shift will now display what the aspect is made up of.",
 
     "research.arcana.research_mastery": "Research Mastery",
     "research.arcana.research_mastery.desc": "§5You can never know all the facts. Only I can.§5",
 
     "research.arcana.alchemy_root": "Alchemy",
-    "research.arcana.alchemy_root.text": "Alchemy - the usage of essentia solutions to transform substances - will be researched and described here.",
+    "research.arcana.alchemy_root.text": "Alchemy - the usage of essentia solutions to transform substances - will be researched and described here.{~sep}Dropping an item into a heated crucible, filled with water, will usually break it down into its base aspects. If that item is a catalyst for an alchemy recipe I know, and there are sufficient aspects in the crucible for the recipe, the aspects will instead be absorbed into the item as per the recipe.\n\nA dropper, dispenser, or other entity, knows no recipes and will always cause a breakdown.\n\nToo many aspects in a crucible will cause flux to form, as excess aspects boil off. Emptying a crucible with aspects will also create flux.",
 
     "research.arcana.arcanium": "Magical Metallurgy",
     "research.arcana.arcanium.stage.1": "Mundane materials just aren't cutting it anymore. Tools break much too fast, armour doesn't protect my well enough, and these simple materials aren't as conductive to arcane crafts as I would like.\n\nTexts from ancient alchemists describe a material named §oThaumium§r, created by infusing iron with magic itself alchemically. I don't know how reputable of a source they are, given the lack of documentation on taint or silver, but there's no reason not to try myself.",
