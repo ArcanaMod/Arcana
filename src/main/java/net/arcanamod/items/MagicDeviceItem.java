@@ -13,6 +13,7 @@ import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.util.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -190,10 +191,10 @@ public abstract class MagicDeviceItem extends Item{
 		if(creative)
 			tooltip.add(new TranslationTextComponent("tooltip.arcana.creative_wand").applyTextStyle(TextFormatting.AQUA));
 		tooltip.add(new StringTextComponent(""));
-		tooltip.add(new StringTextComponent("Properties:").applyTextStyle(TextFormatting.GRAY));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier()) + " Max") + " Vis").applyTextStyle(TextFormatting.DARK_GREEN));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)(getCore(stack).difficulty() * getDifficultyModifier())) + " Difficulty").applyTextStyle(TextFormatting.DARK_GREEN));
-		tooltip.add(new StringTextComponent(" " + (creative ? "Infinity" : (int)(getCap(stack).complexity() * getComplexityModifier())) + " Complexity").applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new TranslationTextComponent("tooltip.arcana.properties").applyTextStyle(TextFormatting.GRAY));
+		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier()) + " "+I18n.format("tooltip.arcana.max")) + " "+I18n.format("tooltip.arcana.vis")).applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)(getCore(stack).difficulty() * getDifficultyModifier())) + " "+I18n.format("tooltip.arcana.difficulty")).applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)(getCap(stack).complexity() * getComplexityModifier())) + " "+I18n.format("tooltip.arcana.complexity")).applyTextStyle(TextFormatting.DARK_GREEN));
 	}
 	
 	public boolean canSwapFocus(){

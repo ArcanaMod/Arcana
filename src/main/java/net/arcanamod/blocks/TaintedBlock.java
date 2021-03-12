@@ -17,6 +17,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
@@ -45,7 +47,12 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 		super(block, ArcanaSounds.TAINT);
 		Taint.addTaintMapping(block, this);
 	}
-	
+
+	@Override
+	public ITextComponent getNameTextComponent() {
+		return new TranslationTextComponent("arcana.status.tainted",super.getNameTextComponent());
+	}
+
 	public boolean ticksRandomly(BlockState state){
 		return true;
 	}
