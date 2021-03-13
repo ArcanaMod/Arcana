@@ -2,6 +2,7 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
+import net.arcanamod.client.ClientUtils;
 import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.capabilities.Researcher;
@@ -58,9 +59,9 @@ public class ResearchNoteItem extends Item{
 						from.advanceEntry(entry);
 					// display a toast
 					if(world.isRemote())
-						Arcana.proxy.displayPuzzleToast(entry);
+						ClientUtils.displayPuzzleToast(entry);
 				}else if(world.isRemote())
-					Arcana.proxy.displayPuzzleToast(null);
+					ClientUtils.displayPuzzleToast(null);
 				return new ActionResult<>(ActionResultType.SUCCESS, stack);
 			}
 		}

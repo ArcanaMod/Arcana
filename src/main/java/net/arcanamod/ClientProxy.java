@@ -5,45 +5,52 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
 import net.arcanamod.client.BookRenderer;
+import net.arcanamod.client.ClientUtils;
 import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
-import net.arcanamod.client.render.DairSpiritRenderer;
-import net.arcanamod.client.render.KoalaEntityRenderer;
-import net.arcanamod.client.render.WillowSpiritRenderer;
+import net.arcanamod.client.model.tainted.TaintedFoxModel;
+import net.arcanamod.client.model.tainted.TaintedSheepModel;
+import net.arcanamod.client.model.tainted.TaintedWolfModel;
+import net.arcanamod.client.model.tainted.TaintedZombieModel;
+import net.arcanamod.client.render.*;
 import net.arcanamod.client.render.aspects.ArcanaParticles;
+import net.arcanamod.client.render.tainted.*;
 import net.arcanamod.client.render.tiles.*;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.entities.tainted.TaintedCreeperEntity;
+import net.arcanamod.entities.tainted.TaintedEntity;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.FocusItem;
-import net.arcanamod.systems.research.ResearchBooks;
 import net.arcanamod.systems.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.entity.model.*;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
@@ -62,6 +69,9 @@ public class ClientProxy extends CommonProxy{
 	
 	public void construct(){
 		super.construct();
+		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ArcanaConfig.CLIENT_SPEC);
+		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
+				() -> (mc, screen) -> new ConfigScreen(screen));
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitchHandler::onTextureStitch);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(BakeEventHandler::onModelBake);
 		
@@ -117,23 +127,11 @@ public class ClientProxy extends CommonProxy{
 		
 		ClientRegistry.registerKeyBinding(SWAP_FOCUS_BINDING);
 	}
-	
-	@Override
-	public void openResearchBookUI(ResourceLocation book, Screen parentScreen, ItemStack sender){
-		if(!ResearchBooks.disabled.contains(book))
-			Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book), parentScreen, sender));
-		else
-			Minecraft.getInstance().player.sendMessage(new TranslationTextComponent("message.arcana.disabled").applyTextStyle(TextFormatting.RED));
-	}
-	
-	@Override
-	public void openScribbledNotesUI(){
-		Minecraft.getInstance().displayGuiScreen(new ScribbledNoteScreen(new StringTextComponent("")));
-	}
-	
-	public void onResearchChange(ResearchEvent event){
-		if(Minecraft.getInstance().currentScreen instanceof ResearchEntryScreen)
-			((ResearchEntryScreen)Minecraft.getInstance().currentScreen).updateButtons();
+
+	@SubscribeEvent
+	// can't be private
+	public static void fireResearchChange(ResearchEvent even){
+		ClientUtils.onResearchChange(even);
 	}
 	
 	public PlayerEntity getPlayerOnClient(){
@@ -154,11 +152,8 @@ public class ClientProxy extends CommonProxy{
 		else
 			return AspectUtils.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % AspectUtils.aspectStacks.size());
 	}
-	
-	public void displayPuzzleToast(@Nullable ResearchEntry entry){
-		Minecraft.getInstance().getToastGui().add(new CompletePuzzleToast(entry));
-	}
-	
+
+	@SuppressWarnings("rawtypes")
 	protected void registerRenders(){
 		//Tile Entity Special Render
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);
@@ -179,8 +174,69 @@ public class ClientProxy extends CommonProxy{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.WILLOW_SPIRIT.get(), WillowSpiritRenderer::new);
-		
-		ArcanaEntities.render();
+
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_EGG.get(), SpellEggEntityRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINT_BOTTLE.get(), TaintBottleEntityRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BAT.get(), TaintedBatRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BEE.get(), manager -> new TaintedEntityRender(manager, new BeeModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAT.get(), manager -> new TaintedEntityRender(manager, new CatModel(0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CAVE_SPIDER.get(), TaintedCaveSpiderRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DONKEY.get(), manager -> new TaintedEntityRender(manager, new HorseModel(0.0F)));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DROWNED.get(), manager -> new TaintedEntityRender(manager, new DrownedModel(0.5f, true)));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ELDER_GUARDIAN.get(), manager -> new TaintedEntityRender(manager, new GuardianModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_EVOKER.get(), manager -> new TaintedEntityRender(manager, new IllagerModel(0.0F, 0.0F, 64, 64)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_FOX.get(), manager -> new TaintedEntityRender(manager, new TaintedFoxModel()));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_GIANT.get(), manager -> new TaintedEntityRender(manager, new GiantModel()));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_GUARDIAN.get(), manager -> new TaintedEntityRender(manager, new GuardianModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_HORSE.get(), manager -> new TaintedEntityRender(manager, new HorseModel(0.0F)));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_HUSK.get(), manager -> new TaintedEntityRender(manager, new ZombieModel(0.0F, false)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ILLUSIONER.get(), manager -> new TaintedEntityRender(manager, new IllagerModel(0.0F, 0.0F, 64, 64)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_LLAMA.get(), manager -> new TaintedEntityRender(manager, new LlamaModel(0.0F)));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_MAGMA_CUBE.get(), manager -> new TaintedEntityRender(manager, new MagmaCubeModel()));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_MULE.get(), manager -> new TaintedEntityRender(manager, new HorseModel(0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PANDA.get(), manager -> new TaintedEntityRender(manager, new PandaModel(9, 0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PARROT.get(), manager -> new TaintedEntityRender(manager, new ParrotModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PUFFERFISH.get(), manager -> new TaintedEntityRender(manager, new PufferFishMediumModel()));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ZOMBIE_PIGMAN.get(), manager -> new TaintedEntityRender(manager, new ZombieModel(0.0F, false))); // 1.16 -> ZombiefiedPiglin
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_POLAR_BEAR.get(), manager -> new TaintedEntityRender(manager, new PolarBearModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_RABBIT.get(), manager -> new TaintedEntityRender(manager, new RabbitModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SHEEP.get(), manager -> new TaintedEntityRender(manager, new TaintedSheepModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SKELETON.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SLIME.get(), TaintedSlimeRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SNOW_GOLEM.get(), manager -> new TaintedEntityRender(manager, new SnowManModel()));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_STRAY.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_TRADER_LLAMA.get(), manager -> new TaintedEntityRender(manager, new LlamaModel(0.0F)));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_TROPICAL_FISH.get(), manager -> new TaintedEntityRender(manager, new TropicalFishAModel(0.0F)));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_TURTLE.get(), manager -> new TaintedEntityRender(manager, new TurtleModel(0.0F)));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_VEX.get(), manager -> new TaintedEntityRender(manager, new VexModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_VINDICATOR.get(), manager -> new TaintedEntityRender(manager, new IllagerModel(0.0F, 0.0F, 64, 64)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PILLAGER.get(), manager -> new TaintedEntityRender(manager, new IllagerModel(0.0F, 0.0F, 64, 64)));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WITHER.get(), manager -> new TaintedEntityRender(manager, new WitherModel(0.0F))); // Check this.
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WITHER_SKELETON.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WOLF.get(), manager -> new TaintedEntityRender(manager, new TaintedWolfModel()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ZOMBIE.get(), manager -> new TaintedEntityRender(manager, new TaintedZombieModel()));
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_RAVAGER.get(), manager -> new TaintedEntityRender(manager, new RavagerModel()));
+
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_COW.get(), manager -> new TaintedEntityRender(manager, new CowModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PIG.get(), manager -> new TaintedEntityRender(manager, new PigModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SPIDER.get(), manager -> new TaintedEntityRender(manager, new SpiderModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BLAZE.get(), manager -> new TaintedEntityRender(manager, new BlazeModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CHICKEN.get(), manager -> new TaintedEntityRender(manager, new ChickenModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_COD.get(), manager -> new TaintedEntityRender(manager, new CodModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_CREEPER.get(), manager -> new TaintedEntityRender(manager, new CreeperModel<TaintedCreeperEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DOLPHIN.get(), manager -> new TaintedEntityRender(manager, new DolphinModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ENDERMAN.get(), manager -> new TaintedEntityRender(manager, new EndermanModel<TaintedEntity>(0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ENDERMITE.get(), manager -> new TaintedEntityRender(manager, new EndermiteModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_GHAST.get(), TaintedGhastRender::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_MOOSHROOM.get(), manager -> new TaintedEntityRender(manager, new CowModel<TaintedEntity>())); // No tainted_warts on top
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_OCELOT.get(), manager -> new TaintedEntityRender(manager, new OcelotModel<TaintedEntity>(0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SALMON.get(), manager -> new TaintedEntityRender(manager, new SalmonModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SILVERFISH.get(), manager -> new TaintedEntityRender(manager, new SilverfishModel<TaintedEntity>()));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SQUID.get(), TaintedSquidRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_VILLAGER.get(), manager -> new TaintedEntityRender(manager, new VillagerModel<TaintedEntity>(0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WANDERING_TRADER.get(), manager -> new TaintedEntityRender(manager, new VillagerModel<TaintedEntity>(0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WITCH.get(), manager -> new TaintedEntityRender(manager, new WitchModel<TaintedEntity>(0.0F)));
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PHANTOM.get(), manager -> new TaintedEntityRender(manager, new PhantomModel<TaintedEntity>()));
 	}
 	
 	protected void registerScreens(){
