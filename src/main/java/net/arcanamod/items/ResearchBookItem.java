@@ -3,6 +3,7 @@ package net.arcanamod.items;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.client.ClientUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -35,7 +36,7 @@ public class ResearchBookItem extends Item{
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
 		player.getHeldItem(hand).getOrCreateTag().putBoolean("open",true);
 
-		Arcana.proxy.openResearchBookUI(book, null, player.getHeldItem(hand));
+		ClientUtils.openResearchBookUI(book, null, player.getHeldItem(hand));
 		return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
 	}
 }

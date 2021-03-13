@@ -5,7 +5,6 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.capabilities.TaintTrackableCapability;
-import net.arcanamod.client.gui.ConfigScreen;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
@@ -21,7 +20,6 @@ import net.arcanamod.capabilities.ResearcherCapability;
 import net.arcanamod.items.recipes.ArcanaRecipes;
 import net.arcanamod.world.NodeType;
 import net.arcanamod.capabilities.AuraChunkCapability;
-import net.arcanamod.world.WorldInteractions;
 import net.arcanamod.world.WorldInteractionsRegistry;
 import net.arcanamod.worldgen.ArcanaBiomes;
 import net.arcanamod.worldgen.ArcanaFeatures;
@@ -43,7 +41,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -86,33 +83,30 @@ public class Arcana{
 	public static final boolean debug = true;
 	
 	public Arcana(){
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ArcanaConfig.COMMON_SPEC);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ArcanaConfig.CLIENT_SPEC);
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
-				() -> (mc, screen) -> new ConfigScreen(screen));
+//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
+//
+//		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ArcanaConfig.COMMON_SPEC);
 		
 		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		NodeType.init();
-		Aspects.init();
+//		NodeType.init();
+//		Aspects.init();
 
-		ArcanaBlocks.BLOCKS.register(modEventBus);
-		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
-		ArcanaItems.ITEMS.register(modEventBus);
-		ArcanaEffects.EFFECTS.register(modEventBus);
-		ArcanaRecipes.Serializers.SERIALIZERS.register(modEventBus);
-		ArcanaTiles.TES.register(modEventBus);
-		ArcanaContainers.CON.register(modEventBus);
-		ArcanaFeatures.FEATURES.register(modEventBus);
-		ArcanaBiomes.BIOMES.register(modEventBus);
-		ArcanaFluids.FLUIDS.register(modEventBus);
+//		ArcanaBlocks.BLOCKS.register(modEventBus);
+//		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
+//		ArcanaItems.ITEMS.register(modEventBus);
+//		ArcanaEffects.EFFECTS.register(modEventBus);
+//		ArcanaRecipes.Serializers.SERIALIZERS.register(modEventBus);
+//		ArcanaTiles.TES.register(modEventBus);
+//		ArcanaContainers.CON.register(modEventBus);
+//		ArcanaFeatures.FEATURES.register(modEventBus);
+//		ArcanaBiomes.BIOMES.register(modEventBus);
+//		ArcanaFluids.FLUIDS.register(modEventBus);
 
-		proxy.construct();
+//		proxy.construct();
 	}
 	
 	public static ResourceLocation arcLoc(String path){

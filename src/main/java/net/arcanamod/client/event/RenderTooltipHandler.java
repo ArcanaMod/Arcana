@@ -3,7 +3,6 @@ package net.arcanamod.client.event;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.*;
 import net.arcanamod.client.gui.UiUtil;
-import net.arcanamod.util.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
@@ -11,11 +10,9 @@ import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
-import java.awt.*;
 import java.util.List;
 
 @Mod.EventBusSubscriber
