@@ -6,6 +6,7 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.IAspectHolder;
 import net.arcanamod.aspects.UndecidedAspectStack;
+import net.arcanamod.client.ClientUtils;
 import net.arcanamod.containers.ArcaneCraftingTableContainer;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.recipes.AspectCraftingInventory;
@@ -47,7 +48,7 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 		int arcanumButtonLeft = guiLeft + 158, arcanumButtonTop = guiTop + 109;
 		if (isPlayerHavingArcanum())
 			if(mouseX >= arcanumButtonLeft && mouseX < arcanumButtonLeft + 20 && mouseY >= arcanumButtonTop && mouseY < arcanumButtonTop + 20)
-				Arcana.proxy.openResearchBookUI(arcLoc("arcanum"), this, null);
+				ClientUtils.openResearchBookUI(arcLoc("arcanum"), this, null);
 		return super.mouseClicked(mouseX, mouseY, buttonId);
 	}
 

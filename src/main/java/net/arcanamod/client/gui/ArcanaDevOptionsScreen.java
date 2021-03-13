@@ -1,6 +1,7 @@
 package net.arcanamod.client.gui;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.client.ClientUtils;
 import net.minecraft.client.gui.screen.ConfirmOpenLinkScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
@@ -20,7 +21,7 @@ public class ArcanaDevOptionsScreen extends Screen{
 	
 	@Override
 	protected void init(){
-		buttons.add(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20, I18n.format("devtools.arcana_book_editmode"), b -> Arcana.proxy.openResearchBookUI(new ResourceLocation(MODID, "arcanum"), this, null)));
+		buttons.add(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16, 204, 20, I18n.format("devtools.arcana_book_editmode"), b -> ClientUtils.openResearchBookUI(new ResourceLocation(MODID, "arcanum"), this, null)));
 		buttons.add(new Button(this.width / 2 - 102, this.height / 4 + 24 + -16 + 24 + 24, 204, 20, I18n.format("menu.reportBugs"), b -> minecraft.displayGuiScreen(new ConfirmOpenLinkScreen((p_213064_1_) -> {
 			if(p_213064_1_)
 				Util.getOSType().openURI("https://aka.ms/snapshotbugs?ref=game");

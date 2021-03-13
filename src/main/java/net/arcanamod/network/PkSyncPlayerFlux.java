@@ -5,6 +5,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.client.ClientAuraHandler;
+import net.arcanamod.client.ClientUtils;
 import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.ResearchBooks;
 import net.minecraft.network.PacketBuffer;
@@ -38,7 +39,7 @@ public class PkSyncPlayerFlux{
 			Researcher researcher = Researcher.getFrom(Arcana.proxy.getPlayerOnClient());
 			if(msg.flux > ArcanaConfig.FLUX_RESEARCH_REQUIREMENT.get() && !researcher.isPuzzleCompleted(puzzle)){
 				researcher.completePuzzle(puzzle);
-				Arcana.proxy.displayPuzzleToast(ResearchBooks.getEntry(Arcana.arcLoc("flux")));
+				ClientUtils.displayPuzzleToast(ResearchBooks.getEntry(Arcana.arcLoc("flux")));
 			}
 		});
 		supplier.get().setPacketHandled(true);
