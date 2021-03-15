@@ -20,6 +20,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.*;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
@@ -343,5 +344,10 @@ public class DelegatingBlock extends Block{
 
 	private static Properties propertiesWithSound(Properties properties, @Nullable SoundType soundType){
 		if (soundType==null) return properties; else return properties.sound(soundType);
+	}
+
+	@Override
+	public ITextComponent getNameTextComponent() {
+		return parentBlock.getNameTextComponent();
 	}
 }

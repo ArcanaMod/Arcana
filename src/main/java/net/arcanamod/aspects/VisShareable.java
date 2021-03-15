@@ -8,7 +8,7 @@ public interface VisShareable{
 	
 	boolean isVisShareable();
 
-	boolean isSharingWithResearchTable();
+	boolean isManual();
 
 	boolean isSecure();
 }

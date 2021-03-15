@@ -76,7 +76,8 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 							if(entity.enabled())
 								addNeighborsToSetExcluding(blockPos, toScan, scanned);
 						}else if(tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent())
-							endAspectHandlers.add(blockPos);
+							if (!(tile instanceof VisShareable) || !((VisShareable) tile).isManual())
+								endAspectHandlers.add(blockPos);
 					}
 				}
 			}

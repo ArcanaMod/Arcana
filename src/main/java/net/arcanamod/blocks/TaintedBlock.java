@@ -10,6 +10,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -47,6 +48,8 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 		super(block, ArcanaSounds.TAINT);
 		Taint.addTaintMapping(block, this);
 	}
+
+
 
 	@Override
 	public ITextComponent getNameTextComponent() {

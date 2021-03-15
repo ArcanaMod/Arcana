@@ -202,7 +202,7 @@ public class AspectBookshelfTileEntity extends TileEntity implements ITickableTi
 	}
 
 	@Override
-	public boolean isSharingWithResearchTable() {
+	public boolean isManual() {
 		return true;
 	}
 

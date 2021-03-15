@@ -141,7 +141,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	}
 
 	@Override
-	public boolean isSharingWithResearchTable(){
+	public boolean isManual(){
 		return false;
 	}
 	
