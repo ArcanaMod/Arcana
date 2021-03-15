@@ -169,7 +169,7 @@ public class EntityTickHandler{
 				}
 			}
 			
-			Spell.updateSpellStatusBar(player);
+			//Spell.updateSpellStatusBar(player);
 		}
 	}
 	
