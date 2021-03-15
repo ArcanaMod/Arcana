@@ -9,6 +9,7 @@ import net.arcanamod.blocks.tiles.FociForgeTileEntity;
 import net.arcanamod.client.gui.FociForgeScreen;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.SpellState;
@@ -115,7 +116,7 @@ public class FociForgeContainer extends AspectContainer {
         // else replace current spell with nothing/new spell
         if (!te.spellState.spellModified) {
             if (te.focus() == ItemStack.EMPTY || te.focus().getItem() == ArcanaItems.FOCUS_PARTS.get()) {
-                te.replaceSpell(new Spell());
+                te.replaceSpell(new Spell(null));
             } else if (te.focus().getItem() == ArcanaItems.DEFAULT_FOCUS.get()) {
                 te.replaceSpell(Spell.fromNBT(te.focus().getOrCreateTag()));
             }

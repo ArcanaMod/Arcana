@@ -54,7 +54,7 @@ public class SpellState {
     public int sequence = 0;
     public boolean spellModified = false;
     public boolean active = false;
-    public Spell currentSpell = new Spell();
+    public Spell currentSpell = new Spell(null);
     public SpellModule activeModule = null; // unused on server
     public int activeModuleIndex = -1;
     public Set<SpellModule> isolated = new HashSet<>();

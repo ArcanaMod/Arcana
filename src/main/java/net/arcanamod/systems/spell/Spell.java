@@ -93,7 +93,7 @@ public class Spell implements ISpell {
 	 * @return Deserialized Spell
 	 */
 	public static Spell fromNBT(CompoundNBT compound){
-		Spell spell = new Spell();
+		Spell spell = new Spell(null);
 		if (compound.get("spell") != null) {
 			spell.mainModule = SpellModule.fromNBTFull(compound.getCompound("spell"), 0);
 		}
