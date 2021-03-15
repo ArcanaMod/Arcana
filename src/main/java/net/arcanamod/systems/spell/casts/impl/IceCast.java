@@ -38,11 +38,11 @@ public class IceCast extends Cast {
 	}
 
 	private int getAmplifier() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"),0);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"secondModifier"),0);
 	}
 
 	private int getFrozenDuration() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"),10) * 20;
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"firstModifier"),10) * 20;
 	}
 
 	@Override

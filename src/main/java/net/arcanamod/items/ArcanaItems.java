@@ -148,7 +148,7 @@ public class ArcanaItems{
 	@GIM(ITEM) public static final RegistryObject<CapItem> CLAY_CAP = ITEMS.register("clay_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), Short.MAX_VALUE, Short.MAX_VALUE, -1, arcLoc("clay_cap")));
 	
 	// Foci
-	public static RegistryObject<FocusItem> DEFAULT_FOCUS = ITEMS.register("focus", () -> new FocusItem(new Properties().maxStackSize(1), 36, arcLoc("wand_focus")));
+	public static RegistryObject<FocusItem> DEFAULT_FOCUS = ITEMS.register("focus", () -> new FocusItem(new Properties().maxStackSize(1), FocusItem.DEFAULT_NUMSTYLES, arcLoc("wand_focus")));
 	
 	public static final RegistryObject<Item> FOCUS_PARTS = ITEMS.register("focus_parts", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	

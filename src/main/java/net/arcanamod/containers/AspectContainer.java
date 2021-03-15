@@ -21,6 +21,7 @@ public abstract class AspectContainer extends Container{
 	
 	protected List<AspectSlot> aspectSlots = new ArrayList<>();
 	protected Aspect heldAspect = null;
+	protected boolean symbolic = false;
 	protected int heldCount = 0;
 	
 	protected AspectContainer(@Nullable ContainerType<?> type, int id){
@@ -41,6 +42,14 @@ public abstract class AspectContainer extends Container{
 	
 	public void setHeldAspect(Aspect heldAspect){
 		this.heldAspect = heldAspect;
+	}
+
+	public boolean isSymbolic() {
+		return symbolic;
+	}
+
+	public void setSymbolic(boolean symbolic) {
+		this.symbolic = symbolic;
 	}
 	
 	public int getHeldCount(){
@@ -67,7 +76,7 @@ public abstract class AspectContainer extends Container{
 				// do some quick checking to make sure that the packet won't just do nothing
 				// don't actually modify anything though!
 				// <blah>
-				Connection.sendAspectClick(windowId,aspectSlots.indexOf(slot),type);
+				Connection.sendAspectClick(windowId,aspectSlots.indexOf(slot),type,slot.getAspect());
 			}
 		}
 	}

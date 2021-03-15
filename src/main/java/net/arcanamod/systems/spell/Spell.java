@@ -13,8 +13,6 @@ import net.arcanamod.systems.spell.modules.core.*;
 import net.arcanamod.util.Pair;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
@@ -45,14 +43,6 @@ public class Spell implements ISpell {
 	private static Logger logger = LogManager.getLogger();
 
 	/**
-	 * Create new Spell serializer that can be used to deserialize or serialize spell.
-	 * @return Spell serializer.
-	 */
-	public static Serializer getSerializer() {
-		return new Spell.Serializer();
-	}
-
-	/**
 	 * Run Spell.
 	 * Goes trough all spell modules and executes {@link ICast}.
 	 * @param spell Spell to run.
@@ -61,7 +51,7 @@ public class Spell implements ISpell {
 	 * @param action Spell use Action.
 	 */
 	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
-		for (SpellModule module : spell.mainModule.getBoundModules()) {
+		for (SpellModule module : spell.mainModule.bound) {
 			Logic.runSpellModule(spell, module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
 		}
 	}
@@ -70,7 +60,7 @@ public class Spell implements ISpell {
 		if (player.getHeldItem(Hand.MAIN_HAND).getItem() instanceof MagicDeviceItem) {
 			if (MagicDeviceItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)) != Focus.NO_FOCUS) {
 				if (MagicDeviceItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND))!=null) {
-					for (SpellModule module : MagicDeviceItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.getBoundModules()) {
+					for (SpellModule module : MagicDeviceItem.getFocus(player.getHeldItem(Hand.MAIN_HAND)).getSpell(player.getHeldItem(Hand.MAIN_HAND)).mainModule.bound) {
 						Logic.updateSpellStatusBarRecursive(module, player, new ArrayList<>());
 					}
 				}
@@ -97,69 +87,36 @@ public class Spell implements ISpell {
 		return Logic.blendAndGetColor(mainModule, 0x000000);
 	}
 
-	public static class Serializer{
-		/**
-		 * Spell to Spell NBT
-		 * @param spell Spell to NBT serialize
-		 * @param compound Existing CompoundNBT or new.
-		 * @return Serialized Spell
-		 */
-		public CompoundNBT serializeNBT(Spell spell, CompoundNBT compound){
-			compound.put("spell",serialize(spell.mainModule, new CompoundNBT(), new ListNBT(), 0));
-			return compound;
+	/**
+	 * Spell NBT to Spell Object
+	 * @param compound Spell NBT
+	 * @return Deserialized Spell
+	 */
+	public static Spell fromNBT(CompoundNBT compound){
+		Spell spell = new Spell();
+		if (compound.get("spell") != null) {
+			spell.mainModule = SpellModule.fromNBTFull(compound.getCompound("spell"), 0);
 		}
+		return spell;
+	}
 
-		/**
-		 * Spell NBT to Spell Object
-		 * @param compound Spell NBT
-		 * @return Deserialized Spell
-		 */
-		public Spell deserializeNBT(CompoundNBT compound){
-			Spell spell = new Spell(new StartCircle());
-			if (compound.get("spell") != null)
-				spell.mainModule.bindModule(deserialize(spell.mainModule, (CompoundNBT) compound.get("spell"), 0));
-			return spell;
+	/**
+	 * Spell to Spell NBT
+	 * @param compound Existing CompoundNBT or new.
+	 * @return Serialized Spell
+	 */
+	public CompoundNBT toNBT(CompoundNBT compound){
+		if (mainModule != null) {
+			compound.put("spell", mainModule.toNBTFull(new CompoundNBT(), 0));
 		}
-
-		private CompoundNBT serialize(SpellModule toSerialize, CompoundNBT prevModule, ListNBT prevBound, int deepness) {
-			ListNBT boundList = new ListNBT();
-			CompoundNBT moduleNBT = new CompoundNBT();
-			for (SpellModule module : toSerialize.getBoundModules()) {
-				if (module!=null) {
-					moduleNBT = new CompoundNBT();
-					boundList = new ListNBT();
-					moduleNBT.putString("name", module.getName());
-					moduleNBT.put("data", module.toNBT());
-					prevBound.add(moduleNBT);
-					serialize(module, moduleNBT, boundList, ++deepness);
-				}
-			}
-			prevModule.put("bound",prevBound);
-			return moduleNBT;
-		}
-
-		private SpellModule deserialize(SpellModule toDeserialize, CompoundNBT spellNBT, int deepness) {
-			SpellModule createdModule = null;
-			if (!spellNBT.getString("name").equals(""))
-				createdModule = SpellModule.fromNBT(spellNBT);
-
-			if (spellNBT.get("bound") != null && createdModule != null) {
-				for (INBT inbt : ((ListNBT) Objects.requireNonNull(spellNBT.get("bound")))) {
-					if (inbt instanceof CompoundNBT) {
-						CompoundNBT compound = ((CompoundNBT) inbt);
-						createdModule.bindModule(deserialize(toDeserialize, compound, ++deepness));
-					}
-				}
-			}
-			return createdModule;
-		}
+		return compound;
 	}
 
 	private static class Logic {
 		private static SpellModule updateSpellStatusBarRecursive(SpellModule toUnbound, PlayerEntity player,
 																 List<Pair<Aspect,Aspect>> castMethodsAspects) {
-/*			if (toUnbound.getBoundModules().size() > 0){
-				for (SpellModule module : toUnbound.getBoundModules()) {
+			/*if (toUnbound.bound.size() > 0){
+				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastMethod)
 						castMethodsAspects.add(of(((CastMethod) module).aspect, Aspects.EMPTY));
 					else if (module instanceof CastMethodSin) {
@@ -185,8 +142,8 @@ public class Spell implements ISpell {
 		private static SpellModule runSpellModule(Spell spell, SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
 												  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
 			SpellModule mod = null;
-			if (toUnbound.getBoundModules().size() > 0){
-				for (SpellModule module : toUnbound.getBoundModules()) {
+			if (toUnbound.bound.size() > 0){
+				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastMethod)
 						castMethodsAspects.add(of(((CastMethod) module).aspect,Aspects.EMPTY));
 					else if (module instanceof CastMethodSin) {
@@ -206,8 +163,8 @@ public class Spell implements ISpell {
 		}
 
 		private static int blendAndGetColor(SpellModule toUnbound, int color){
-			if (toUnbound.getBoundModules().size() > 0){
-				for (SpellModule module : toUnbound.getBoundModules()) {
+			if (toUnbound != null && toUnbound.bound.size() > 0){
+				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastCircle)
 						if (color != 0x000000)
 							color = UiUtil.blend(((CastCircle)module).cast.getSpellAspect().getColorRange().get(3),color,0.5f);
@@ -219,8 +176,8 @@ public class Spell implements ISpell {
 		}
 
 		public static SpellCosts getSpellCost(SpellModule toUnbound, SpellCosts cost) {
-			if (toUnbound.getBoundModules().size() > 0){
-				for (SpellModule module : toUnbound.getBoundModules()) {
+			if (toUnbound != null && toUnbound.bound.size() > 0){
+				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastMethod) {
 						Aspect aspect = ((CastMethod)module).aspect;
 						if (aspect==Aspects.EARTH)

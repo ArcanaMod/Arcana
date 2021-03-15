@@ -1,13 +1,25 @@
 package net.arcanamod.systems.spell.modules.core;
 
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.casts.Cast;
+import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.modules.SpellModule;
+import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
+import net.arcanamod.systems.spell.modules.circle.SinModifierCircle;
+import net.arcanamod.systems.spell.modules.circle.SingleModifierCircle;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ResourceLocation;
+
+import java.awt.*;
 
 public class CastCircle extends SpellModule {
-	public ICast cast;
+	public ICast cast = null;
 
 	@Override
 	public String getName() {
@@ -15,16 +27,96 @@ public class CastCircle extends SpellModule {
 	}
 
 	@Override
-	public boolean canConnect(SpellModule connectingModule) {
-		return true;
+	public void fromNBT(CompoundNBT compound) {
+		super.fromNBT(compound);
+		cast = Casts.castMap.get(new ResourceLocation(compound.getString("cast")));
 	}
 
 	@Override
-	public CompoundNBT toNBT(){
-		CompoundNBT compound = new CompoundNBT();
-		if (cast instanceof Cast)
-			compound.putString("cast", ((Cast)cast).getId().toString());
-		else compound.putString("cast", cast.getSpellAspect().toResourceLocation().toString());
+	public CompoundNBT toNBT(CompoundNBT compound) {
+		super.toNBT(compound);
+		if (cast instanceof Cast) {
+			compound.putString("cast", ((Cast) cast).getId().toString());
+		} else if (cast != null) {
+			compound.putString("cast", cast.getSpellAspect().toResourceLocation().toString());
+		} else {
+			compound.putString("cast", Aspects.EMPTY.toResourceLocation().toString());
+		}
 		return compound;
+	}
+
+	@Override
+	public boolean canConnectSpecial(SpellModule connectingModule) {
+		if (connectingModule instanceof SinModifierCircle) {
+			return boundSpecial.stream()
+					.filter(module -> module != connectingModule)
+					.noneMatch(module -> module instanceof SinModifierCircle);
+		} else if (connectingModule instanceof SingleModifierCircle
+					|| connectingModule instanceof DoubleModifierCircle) {
+			return boundSpecial.stream()
+					.filter(module -> module != connectingModule)
+					.noneMatch(module -> module instanceof SingleModifierCircle
+								|| module instanceof DoubleModifierCircle);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public Point getSpecialPoint(SpellModule module) {
+		Point ret = null;
+		if (canConnectSpecial(module)) {
+			ret = new Point(x, y);
+		}
+		return ret;
+	}
+
+	@Override
+	public boolean canAssign(int x, int y, Aspect aspect) {
+		int relX = this.x - x;
+		int relY = this.y - y;
+
+		return (relX >= -8 && relX < 8
+				&& relY >= -8 && relY < 8
+				&& Aspects.getAll().contains(aspect));
+	}
+
+	@Override
+	public void assign(int x, int y, Aspect aspect) {
+		if (canAssign(x, y, aspect)) {
+			cast = Casts.castMap.get(aspect.toResourceLocation());
+		}
+	}
+
+	@Override
+	public int getHeight() {
+		return 32;
+	}
+
+	@Override
+	public int getWidth() {
+		return 32;
+	}
+
+	@Override
+	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
+		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 32, 16, getWidth(), getHeight());
+		if (!floating || cast == null) {
+			UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 8, 32, 0, 16, 16);
+		} else {
+			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(cast.getSpellAspect()), mouseX - 8, mouseY - 8);
+		}
+	}
+
+	@Override
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
+		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 32, 16, getWidth(), getHeight());
+		if (!floating) {
+			if (cast == null) {
+				UiUtil.drawTexturedModalRect(x - 8, y - 8, 32, 0, 16, 16);
+			} else {
+				itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(cast.getSpellAspect()), x - 8, y - 8);
+			}
+		}
 	}
 }

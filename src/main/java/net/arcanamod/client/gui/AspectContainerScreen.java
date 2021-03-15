@@ -18,7 +18,8 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	public AspectContainerScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
 	}
-	
+
+	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		for(AspectSlot slot : aspectContainer.getAspectSlots())
@@ -53,7 +54,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 			float temp = itemRenderer.zLevel;
 			itemRenderer.zLevel = 500;
 			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 4);
-			itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 7, String.valueOf(aspectContainer.getHeldCount()));
+			itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 7, aspectContainer.isSymbolic() ? "" : String.valueOf(aspectContainer.getHeldCount()));
 			itemRenderer.zLevel = temp;
 		}
 	}
@@ -64,7 +65,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 		aspectContainer.handleClick((int)mouseX, (int)mouseY, mouseButton, this);
 		return false;
 	}
-	
+
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot){
 		return mouseX >= guiLeft + slot.x && mouseY >= guiTop + slot.y && mouseX < guiLeft + slot.x + 16 && mouseY < guiTop + slot.y + 16;
 	}

@@ -57,7 +57,7 @@ public class VisManipulatorsItem extends Item{
 			ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
 			int r = random.nextInt(5);
 			if (r == 0) {
-				toSet.getOrCreateTag().put("spell", Spell.getSerializer().serializeNBT(Spell.Samples.createAdvancedSpell(),new CompoundNBT()));
+				toSet.getOrCreateTag().put("spell", Spell.Samples.createAdvancedSpell().toNBT(new CompoundNBT()));
 			}
 			if (r == 1) {
 				toSet.getOrCreateTag().put("spell", Spell.getSerializer().serializeNBT(Spell.Samples.createBasicSpell(),new CompoundNBT()));

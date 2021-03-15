@@ -29,6 +29,7 @@ public class AspectUtils {
 	public static final List<Item> aspectItems = new ArrayList<>();
 	public static final Map<Aspect, Item> aspectCrystalItems = new HashMap<>();
 	public static final Aspect[] primalAspects = new Aspect[]{Aspects.AIR, Aspects.CHAOS, Aspects.EARTH, Aspects.FIRE, Aspects.ORDER, Aspects.WATER};
+	public static final Aspect[] sinAspects = new Aspect[]{Aspects.ENVY, Aspects.LUST, Aspects.SLOTH, Aspects.PRIDE, Aspects.GREED, Aspects.WRATH, Aspects.GLUTTONY};
 	public static List<ItemStack> aspectStacks;
 
 	@SuppressWarnings("deprecation")
@@ -94,8 +95,12 @@ public class AspectUtils {
 		return I18n.format("aspect." + aspect.name().toLowerCase());
 	}
 
-	public static Aspect deserializeAspect(CompoundNBT compound, String deserializableAspect){
-		return Aspect.fromResourceLocation(new ResourceLocation(compound.getString(deserializableAspect)));
+	public static void putAspect(CompoundNBT compound, String key, Aspect aspect){
+		compound.putString(key, aspect.toResourceLocation().toString());
+	}
+
+	public static Aspect getAspect(CompoundNBT compound, String key){
+		return Aspect.fromResourceLocation(new ResourceLocation(compound.getString(key)));
 	}
 
 	public static String aspectHandlerToJson(IAspectHandler handler) {

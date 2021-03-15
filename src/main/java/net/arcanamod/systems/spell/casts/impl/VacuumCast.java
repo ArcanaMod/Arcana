@@ -13,7 +13,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -65,11 +64,11 @@ public class VacuumCast extends Cast {
     }
 
     protected int getWidth(PlayerEntity playerEntity) {
-        return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"sinModifier"), 1);
+        return SpellValues.getOrDefault(AspectUtils.getAspect(data,"sinModifier"), 1);
     }
 
     protected int getDistance(PlayerEntity playerEntity) {
-        return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 16);
+        return SpellValues.getOrDefault(AspectUtils.getAspect(data,"secondModifier"), 16);
     }
 
     /**
@@ -77,7 +76,7 @@ public class VacuumCast extends Cast {
      * @return Vacuum blocks duration
      */
     protected int getDuration(PlayerEntity playerEntity) {
-        return (1+SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 0))*100;
+        return (1+SpellValues.getOrDefault(AspectUtils.getAspect(data,"firstModifier"), 0))*100;
     }
 
     @Override

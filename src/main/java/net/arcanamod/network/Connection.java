@@ -1,7 +1,9 @@
 package net.arcanamod.network;
 
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.research.Pin;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
@@ -36,6 +38,7 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkClientSlotDrain.class, PkClientSlotDrain::encode, PkClientSlotDrain::decode, PkClientSlotDrain::handle);
 		INSTANCE.registerMessage(id++, PkSyncPlayerFlux.class, PkSyncPlayerFlux::encode, PkSyncPlayerFlux::decode, PkSyncPlayerFlux::handle);
 		INSTANCE.registerMessage(id++, PkSwapFocus.class, PkSwapFocus::encode, PkSwapFocus::decode, PkSwapFocus::handle);
+		INSTANCE.registerMessage(id++, PkFociForgeAction.class, PkFociForgeAction::encode, PkFociForgeAction::decode, PkFociForgeAction::handle);
 		INSTANCE.registerMessage(id++, PkModifyPins.class, PkModifyPins::encode, PkModifyPins::decode, PkModifyPins::handle);
 	}
 	
@@ -59,8 +62,8 @@ public class Connection{
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncPlayerResearch(from.serializeNBT()));
 	}
 
-	public static void sendAspectClick(int windowId, int slotId, PkAspectClick.ClickType type){
-		INSTANCE.sendToServer(new PkAspectClick(windowId, slotId, type));
+	public static void sendAspectClick(int windowId, int slotId, PkAspectClick.ClickType type, Aspect expectedAspect){
+		INSTANCE.sendToServer(new PkAspectClick(windowId, slotId, type, expectedAspect));
 	}
 
 	public static void sendSyncAspectContainer(AspectContainer container, ServerPlayerEntity target) {
@@ -74,7 +77,11 @@ public class Connection{
 	public static void sendClientSlotDrain(int windowId, int slotId, PkAspectClick.ClickType type, ServerPlayerEntity target) {
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkClientSlotDrain(windowId, slotId, type));
 	}
-	
+
+	public static void sendFociForgeAction(int windowId, PkFociForgeAction.Type action, int ax, int ay, int bx, int by, int sequence, Aspect aspect){
+		INSTANCE.sendToServer(new PkFociForgeAction(windowId, action, ax, ay, bx, by, sequence, aspect));
+	}
+
 	public static void sendModifyPins(Pin pin, PkModifyPins.Diff diff){
 		INSTANCE.sendToServer(new PkModifyPins(diff, pin.getEntry().key(), pin.getStage()));
 	}

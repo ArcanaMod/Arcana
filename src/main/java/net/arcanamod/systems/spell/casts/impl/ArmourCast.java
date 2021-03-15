@@ -39,11 +39,11 @@ public class ArmourCast extends Cast {
 	}
 
 	public int getWardingDuration() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"firstModifier"), 10);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"firstModifier"), 10);
 	}
 
 	public int getAmplifier() {
-		return SpellValues.getOrDefault(AspectUtils.deserializeAspect(data,"secondModifier"), 1);
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"secondModifier"), 1);
 	}
 
 	@Override
