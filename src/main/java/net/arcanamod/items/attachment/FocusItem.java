@@ -45,7 +45,7 @@ public class FocusItem extends Item implements Focus{
 	}
 
 	public Spell getSpell(ItemStack stack) {
-		return Spell.fromNBT(stack.getOrCreateTag().getCompound("focusData").getCompound("spell"));
+		return Spell.fromNBT(stack.getOrCreateTag().getCompound("focusData"));
 	}
 
 	public static int getColourAspect(ItemStack stack) {
