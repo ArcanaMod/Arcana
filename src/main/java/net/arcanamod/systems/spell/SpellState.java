@@ -476,7 +476,15 @@ public class SpellState {
             SpellModule start = root.getConnectionStart();
             SpellModule end = bound.getConnectionEnd(false);
             // connect the modules
-            end.setParent(start);
+            
+            Connector connector = new Connector();
+            
+            connector.setParent(start);
+            // position isn't exactly correct, but at least it looks better than just connecting back to the StartCircle
+            connector.x = connector.parent.x;
+            connector.y = connector.parent.y;
+            
+            end.setParent(connector);
             if (isolated.contains(end)) {
                 isolated.remove((end));
             }
@@ -510,9 +518,15 @@ public class SpellState {
             List<SpellModule> toUnbind = new ArrayList<>();
             toUnbind.addAll(deleting.bound);
             toUnbind.addAll(deleting.boundSpecial);
+            
+            // Making sure that the connectors don't persist after removing either a child or parent
+            if (deleting.parent != null && deleting.parent.getName().equals("connector")
+                toUnbind.add(deleting.parent);
+                
             for (SpellModule bound : toUnbind) {
                 bound.setParent(null);
-                isolated.add(bound);
+                if (!bound.getName().equals("connector"))
+                	isolated.add(bound);
             }
             floating.remove(deleting);
             deleting.setParent(null);
@@ -533,7 +547,7 @@ public class SpellState {
                         PkFociForgeAction.Type.ASSIGN,
                         x, y, -1 ,-1,
                         sequence,
-                        Aspects.EMPTY);
+                        aspect);
                 sequence++;
             }
             // assign aspect to module
