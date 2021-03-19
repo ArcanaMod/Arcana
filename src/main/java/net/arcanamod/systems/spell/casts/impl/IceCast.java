@@ -32,7 +32,7 @@ public class IceCast extends Cast {
 
 	@Override
 	public ActionResultType useOnPlayer(PlayerEntity playerTarget){
-		playerTarget.addPotionEffect(new EffectInstance(ArcanaEffects.WARDING.get(),getFrozenDuration(),getAmplifier(),false,false));
+		playerTarget.addPotionEffect(new EffectInstance(ArcanaEffects.FROZEN.get(),getFrozenDuration(),getAmplifier(),false,false));
 		playerTarget.setFire(-80);
 		return ActionResultType.SUCCESS;
 	}
