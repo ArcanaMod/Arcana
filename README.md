@@ -15,3 +15,6 @@ Go to Settings -> Build, Execution, Deployment -> Compiler -> Annotation Process
 ## Found a bug?
 Report it here. Before reporting, check it hasn't already been reported. State the commit you were running and steps to reproduce, if possible.
 Help with fixing bugs would be appreciated.
+
+## License?
+All code in this project is under the LGPLv3 lisence, all artwork and sound is All rights reserved
