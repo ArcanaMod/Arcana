@@ -17,4 +17,4 @@ Report it here. Before reporting, check it hasn't already been reported. State t
 Help with fixing bugs would be appreciated.
 
 ## License?
-All code in this project is under the LGPLv3 lisence, all artwork and sound is All rights reserved
+All code in this project is under the LGPLv3 lisence, all artwork is under All rights reserved and sound is under cc0
