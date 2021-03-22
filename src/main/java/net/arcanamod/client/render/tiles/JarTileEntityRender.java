@@ -10,7 +10,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Quaternion;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
@@ -20,14 +19,12 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
-import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 	public static final ResourceLocation JAR_CONTENT_SIDE = new ResourceLocation(Arcana.MODID, "models/parts/fluid_side");
 	public static final ResourceLocation JAR_CONTENT_TOP = new ResourceLocation(Arcana.MODID, "models/parts/fluid_top");
-	public static final ResourceLocation JAR_CONTENT_BOTTOM = new ResourceLocation(Arcana.MODID, "models/parts/fluid_bottom");
 	public static final ResourceLocation JAR_LABEL = new ResourceLocation(Arcana.MODID, "models/parts/jar_label");
 	
 	public JarTileEntityRender(TileEntityRendererDispatcher p_i226006_1_){
@@ -76,11 +73,11 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			switch (labelSide) {
 				case NORTH:
 					q = new Quaternion(0,-90,0,true);
-					xt = 0.445f;
-					zt = -1.270f;
+					xt = 0.45f;
+					zt = -1.75f;
 					xta = -0.02f;
-					yta = -0.5f;
-					zta = 0.5f;
+					yta = -0.90f;
+					zta = 0.1f;
 					break;
 				case SOUTH:
 					q = new Quaternion(0,90,0,true);
@@ -92,7 +89,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 					break;
 				case WEST:
 					q = new Quaternion(0,0,0,true);
-					xt = .445f;
+					xt = 0.45f;
 					zt = 0.85f;
 					xta = -0.02f;
 					yta = -0.90f;
@@ -100,7 +97,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 					break;
 				case EAST:
 					q = new Quaternion(0,180,0,true);
-					xt = -2.045f;
+					xt = -2.05f;
 					zt = -1.75f;
 					xta = -0.02f;
 					yta = -0.90f;
@@ -128,6 +125,16 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			add(label_builder, matrixStack, Color.WHITE, 0, 0, 1, label.getMaxU(), label.getMinV(), combinedLight);
 			add(label_builder, matrixStack, Color.WHITE, 0, 1, 1, label.getMinU(), label.getMinV(), combinedLight);
 
+			q = new Quaternion(180,180,0,true);
+			matrixStack.translate(0, 1, 0);
+			matrixStack.rotate(q);
+			add(label_builder, matrixStack, Color.WHITE, 0, 1, 0, label.getMinU(), label.getMaxV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 0, 0, label.getMaxU(), label.getMaxV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 0, 1, label.getMaxU(), label.getMinV(), combinedLight);
+			add(label_builder, matrixStack, Color.WHITE, 0, 1, 1, label.getMinU(), label.getMinV(), combinedLight);
+			matrixStack.rotate(q);
+			matrixStack.translate(0, -1, 0);
+
 			q = new Quaternion(-90,0,0,true);
 			matrixStack.rotate(q);
 			matrixStack.translate(xta,yta,zta);
@@ -139,6 +146,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			add(label_builder, matrixStack, Color.WHITE, 0, 0, 0, aspect.getMaxU(), aspect.getMaxV(), combinedLight);
 			add(label_builder, matrixStack, Color.WHITE, 0, 0, 1, aspect.getMaxU(), aspect.getMinV(), combinedLight);
 			add(label_builder, matrixStack, Color.WHITE, 0, 1, 1, aspect.getMinU(), aspect.getMinV(), combinedLight);
+
 			matrixStack.pop();
 		}
 
@@ -185,7 +193,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			add(builder, matrixStack, c, 1, visBase, 1, spriteSide.getMaxU(), spriteSide.getMaxV(), combinedLight);
 			add(builder, matrixStack, c, 1, visHeight, 1, spriteSide.getMaxU(), spriteSide.getMinV(), combinedLight);
 			add(builder, matrixStack, c, 0, visHeight, 1, spriteSide.getMinU(), spriteSide.getMinV(), combinedLight);
-			
+
 			matrixStack.pop();
 		}
 	}

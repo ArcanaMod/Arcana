@@ -9,27 +9,30 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-import java.util.UUID;
-
+@SuppressWarnings("deprecation")
 public class ArcanaEffects extends Effect{
 	
 	public ArcanaEffects(EffectType type, int colour){
 		super(type, colour);
 	}
 	
+	// Effect UUIDs should be generated in advance
+	
 	public static final DeferredRegister<Effect> EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, Arcana.MODID);
 	
 	public static final RegistryObject<Effect> TAINTED = EFFECTS.register("tainted", TaintedEffect::new);
-	public static final RegistryObject<Effect> FROZEN = EFFECTS.register("frozen", ()-> new FrozenEffect().addAttributesModifier(
+	
+	public static final RegistryObject<Effect> FROZEN = EFFECTS.register("frozen", () -> new FrozenEffect().addAttributesModifier(
 			SharedMonsterAttributes.MOVEMENT_SPEED,
-			UUID.randomUUID().toString(), -100.0d,
+			"4617a65e-47f6-4f2f-ac4f-eef0a46517fa", -.25,
 			AttributeModifier.Operation.MULTIPLY_BASE
 	));
-	public static final RegistryObject<Effect> WARDING = EFFECTS.register("warding", ()-> new WardingEffect().addAttributesModifier(
-				SharedMonsterAttributes.ARMOR,
-				UUID.randomUUID().toString(), 4.0d,
-				AttributeModifier.Operation.MULTIPLY_BASE
-		)
-	);
-	public static final RegistryObject<Effect> VICTUS = EFFECTS.register("victus",VictusEffect::new);
+	
+	public static final RegistryObject<Effect> WARDING = EFFECTS.register("warding", () -> new WardingEffect().addAttributesModifier(
+			SharedMonsterAttributes.ARMOR,
+			"c429f8cd-3490-498a-ad98-21cd68e8476e", 1.5,
+			AttributeModifier.Operation.MULTIPLY_BASE
+	));
+	
+	public static final RegistryObject<Effect> VICTUS = EFFECTS.register("victus", VictusEffect::new);
 }

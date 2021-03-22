@@ -13,6 +13,7 @@ import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.SpellState;
+import net.arcanamod.systems.spell.modules.core.StartCircle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -117,7 +118,7 @@ public class FociForgeContainer extends AspectContainer {
         // else replace current spell with nothing/new spell
         if (!te.spellState.spellModified) {
             if (te.focus() == ItemStack.EMPTY || te.focus().getItem() == ArcanaItems.FOCUS_PARTS.get()) {
-                te.replaceSpell(new Spell(null));
+                te.replaceSpell(new Spell(new StartCircle()));
             } else if (te.focus().getItem() == ArcanaItems.DEFAULT_FOCUS.get()) {
                 te.replaceSpell(Spell.fromNBT(te.focus().getOrCreateTag()));
             }

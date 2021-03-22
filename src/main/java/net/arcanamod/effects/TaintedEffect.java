@@ -29,7 +29,7 @@ public class TaintedEffect extends Effect{
 		if(!(entityLiving instanceof PlayerEntity) && Taint.getTaintedOfEntity(entityLiving.getType()) != null){
 			LivingEntity l = (LivingEntity)Taint.getTaintedOfEntity(entityLiving.getType()).create(entityLiving.world);
 			if(l != null){
-				l.setPositionAndRotation(entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ(),entityLiving.rotationYaw,entityLiving.rotationPitch);
+				l.setPositionAndRotation(entityLiving.getPosX(), entityLiving.getPosY(), entityLiving.getPosZ(), entityLiving.rotationYaw, entityLiving.rotationPitch);
 				if(!l.getEntityWorld().isRemote)
 					((ServerWorld)l.getEntityWorld()).summonEntity(l);
 				entityLiving.remove();
@@ -39,6 +39,10 @@ public class TaintedEffect extends Effect{
 	
 	@Override
 	public boolean isReady(int duration, int amplifier){
+		// Same rate as Regeneration
+		int k = 30 >> amplifier;
+		if(k > 0)
+			return duration % k == 0;
 		return true;
 	}
 }

@@ -16,7 +16,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -84,7 +83,7 @@ public class Spell implements ISpell {
 	}
 
 	public int getSpellColor() {
-		return Logic.blendAndGetColor(mainModule, 0x000000);
+		return Logic.blendAndGetColor(mainModule, 0xFFFFFF);
 	}
 
 	/**

@@ -55,7 +55,7 @@ public class VisManipulatorsItem extends Item{
 			return ActionResultType.SUCCESS;
 		}else if (context.getWorld().getBlockState(context.getPos()).getBlock() == ArcanaBlocks.ASPECT_TESTER.get()) {
 			ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
-			int r = random.nextInt(5);
+			int r = random.nextInt(2);
 			if (r == 0) {
 				toSet.getOrCreateTag().put("spell", Spell.Samples.createAdvancedSpell().toNBT(new CompoundNBT()));
 			}

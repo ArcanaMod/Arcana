@@ -23,6 +23,7 @@ import net.minecraft.block.trees.OakTree;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.passive.ParrotEntity;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -258,7 +259,7 @@ public class Taint{
 						: entity == EntityType.PUFFERFISH
 						? TaintedPufferfishEntity::new
 						: entity == EntityType.PARROT
-						? TaintedPufferfishEntity::new
+						? TaintedParrotEntity::new
 						: entity == EntityType.HORSE
 						? TaintedHorseEntity::new
 						: (type, world) -> new TaintedEntity(type, world, entity);
