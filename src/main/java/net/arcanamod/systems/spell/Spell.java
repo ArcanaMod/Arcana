@@ -50,9 +50,8 @@ public class Spell implements ISpell {
 	 * @param action Spell use Action.
 	 */
 	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
-		for (SpellModule module : spell.mainModule.bound) {
-			Logic.runSpellModule(spell, module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
-		}
+		// This method already loops through all of the modules, old loop wasn't necessary
+		Logic.runSpellModule(spell, spell.mainModule, caster, sender, action, new ArrayList<>(),new ArrayList<>());
 	}
 
 	public static void updateSpellStatusBar(PlayerEntity player){
