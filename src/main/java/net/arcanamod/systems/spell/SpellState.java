@@ -512,14 +512,9 @@ public class SpellState {
             toUnbind.addAll(deleting.bound);
             toUnbind.addAll(deleting.boundSpecial);
             
-            // Making sure that the connectors don't persist after removing either a child or parent
-            if (deleting.parent != null && deleting.parent.getName().equals("connector"))
-                toUnbind.add(deleting.parent);
-                
             for (SpellModule bound : toUnbind) {
                 bound.setParent(null);
-                if (!bound.getName().equals("connector"))
-                	isolated.add(bound);
+                isolated.add(bound);
             }
             floating.remove(deleting);
             deleting.setParent(null);
