@@ -195,8 +195,8 @@ public class FociForgeContainer extends AspectContainer {
             te.setInventorySlotContents(1, new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1));
         if (item instanceof FocusItem) {
             te.focus().getOrCreateTag().putInt("style", style);
-            // This is a hack and not at all the proper way (or place) to add the focus item's NBTs
-                te.focus().getOrCreateTag().put("spell", te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
+            //TODO Add a button in the UI(probably) to add the NBT to the focus Item
+            te.focus().getOrCreateTag().put("spell", te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
         }
     }
 
