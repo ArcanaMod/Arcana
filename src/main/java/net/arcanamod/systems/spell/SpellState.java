@@ -380,8 +380,8 @@ public class SpellState {
             if (newModule.isStartModule()) {
                 newModule.x = 0;
                 newModule.y = 0;
-                this.x = x;
-                this.y = y;
+                this.x = FociForgeScreen.SPELL_WIDTH/2;
+                this.y = FociForgeScreen.SPELL_HEIGHT/2;
                 currentSpell.mainModule = newModule;
             } else {
                 Pair<Point, SpellModule> placement = getPlacementPoint(x, y, newModule);
@@ -477,14 +477,7 @@ public class SpellState {
             SpellModule end = bound.getConnectionEnd(false);
             // connect the modules
             
-            Connector connector = new Connector();
-            
-            connector.setParent(start);
-            // position isn't exactly correct, but at least it looks better than just connecting back to the StartCircle
-            connector.x = connector.parent.x;
-            connector.y = connector.parent.y;
-            
-            end.setParent(connector);
+            end.setParent(start);
             if (isolated.contains(end)) {
                 isolated.remove((end));
             }
