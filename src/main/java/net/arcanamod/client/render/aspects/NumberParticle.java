@@ -18,14 +18,12 @@ import java.awt.*;
 
 public class NumberParticle extends SpriteTexturedParticle {
 
-	protected NumberParticle(World world, double x, double y, double z, int color, TextureAtlasSprite sprite){
+	protected NumberParticle(World world, double x, double y, double z, TextureAtlasSprite sprite){
 		super(world, x, y, z);
 		particleGravity = 0;
 		maxAge = 0;
 		particleScale = .04f;
 		canCollide = false;
-		Color colorO = new Color(color);
-		setColor(colorO.getRed(),colorO.getGreen(),colorO.getBlue());
 		setSprite(sprite);
 	}
 
@@ -36,10 +34,9 @@ public class NumberParticle extends SpriteTexturedParticle {
 	@OnlyIn(Dist.CLIENT)
 	@ParametersAreNonnullByDefault
 	public static class Factory implements IParticleFactory<NumberParticleData> {
-
 		public Particle makeParticle(NumberParticleData data, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
 			ResourceLocation count_asset = Arcana.arcLoc("font/number_"+data.count);
-			return new NumberParticle(world, x, y, z,data.color, Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(count_asset));
+			return new NumberParticle(world, x, y, z, Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(count_asset));
 		}
 	}
 }
