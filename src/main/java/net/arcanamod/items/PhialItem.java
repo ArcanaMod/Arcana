@@ -84,9 +84,11 @@ public class PhialItem extends Item implements IOverrideAspects {
 								IAspectHolder new_holder = IAspectHandler.getFrom(new_phial).getHolder(0);
 								new_holder.insert(new AspectStack(old_holder.getContainedAspect(), inserted), false);
 								new_phial.setTag(new_phial.getShareTag());
-								context.getPlayer().addItemStackToInventory(new_phial);
+								if (!context.getPlayer().isCreative())
+									context.getPlayer().addItemStackToInventory(new_phial);
 							}else
-								context.getPlayer().inventory.addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get())); //player.addItemStackToInventory gives sound and player.inventory.addItemStackToInventory not.
+								if (!context.getPlayer().isCreative())
+									context.getPlayer().inventory.addItemStackToInventory(new ItemStack(ArcanaItems.PHIAL.get())); //player.addItemStackToInventory gives sound and player.inventory.addItemStackToInventory not.
 							context.getItem().shrink(1);
 							return ActionResultType.SUCCESS;
 						}

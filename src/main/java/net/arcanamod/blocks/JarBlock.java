@@ -110,7 +110,7 @@ public class JarBlock extends Block{
 	@Override
 	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
 		if (te instanceof JarTileEntity) {
-			JarTileEntity jte = (JarTileEntity)te;
+			JarTileEntity jte = (JarTileEntity) te;
 			if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() == 0)
 				spawnDrops(state, worldIn, pos, te, player, stack);
 		}
@@ -118,13 +118,15 @@ public class JarBlock extends Block{
 
 	@Override
 	public void onBlockHarvested(World worldIn, BlockPos pos, BlockState state, PlayerEntity player) {
-		TileEntity te = worldIn.getTileEntity(pos);
-		if (te instanceof JarTileEntity) {
-			JarTileEntity jte = (JarTileEntity)te;
-			if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() != 0){
-				ItemEntity itementity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), getItem(worldIn, pos, state));
-				itementity.setDefaultPickupDelay();
-				worldIn.addEntity(itementity);
+		if (!player.isCreative()) {
+			TileEntity te = worldIn.getTileEntity(pos);
+			if (te instanceof JarTileEntity) {
+				JarTileEntity jte = (JarTileEntity)te;
+				if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() != 0){
+					ItemEntity itementity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), getItem(worldIn, pos, state));
+					itementity.setDefaultPickupDelay();
+					worldIn.addEntity(itementity);
+				}
 			}
 		}
 		super.onBlockHarvested(worldIn, pos, state, player);
