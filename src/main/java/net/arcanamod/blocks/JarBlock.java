@@ -1,13 +1,16 @@
 package net.arcanamod.blocks;
 
+import javafx.scene.paint.Color;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
@@ -34,11 +37,12 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class JarBlock extends Block{
+public class JarBlock extends WaterloggableBlock {
 	public static final BooleanProperty UP = BooleanProperty.create("up");
 	private Type type;
 
@@ -47,7 +51,9 @@ public class JarBlock extends Block{
 	public JarBlock(Properties properties, Type type){
 		super(properties);
 		this.type = type;
-		setDefaultState(stateContainer.getBaseState().with(UP, Boolean.FALSE));
+		setDefaultState(stateContainer.getBaseState()
+				.with(UP, Boolean.FALSE)
+				.with(WATERLOGGED, Boolean.FALSE));
 	}
 	
 	public VoxelShape SHAPE = Block.makeCuboidShape(3, 0, 3, 13, 14, 13);
@@ -66,7 +72,7 @@ public class JarBlock extends Block{
 	public boolean hasTileEntity(BlockState state){
 		return true;
 	}
-	
+
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
@@ -80,9 +86,10 @@ public class JarBlock extends Block{
 	}
 	
 	public BlockState getStateForPlacement(BlockItemUseContext context){
-		return super.getStateForPlacement(context).with(UP, false);
+		return super.getStateForPlacement(context)
+				.with(UP, false);
 	}
-	
+
 	@Override
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving){
 		if(worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
@@ -100,9 +107,21 @@ public class JarBlock extends Block{
 	}
 
 	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		if (placer != null && ((JarTileEntity) Objects.requireNonNull(worldIn.getTileEntity(pos))).label != null) {
+			((JarTileEntity) Objects.requireNonNull(worldIn.getTileEntity(pos))).label = getYaw(placer);
+		}
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+	}
+
+	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-		if (player.getHeldItem(handIn).getItem() == ArcanaItems.LABEL.get()) {
-			((JarTileEntity) worldIn.getTileEntity(pos)).label = getYaw(player);
+		JarTileEntity jar = ((JarTileEntity) Objects.requireNonNull(worldIn.getTileEntity(pos)));
+		if (jar.label == null && player.getHeldItem(handIn).getItem() == ArcanaItems.LABEL.get()) {
+			player.getHeldItem(handIn).setCount(player.getHeldItem(handIn).getCount() - 1);
+			jar.label = getYaw(player);
+		} else if (jar.label != null) {
+			jar.label = getYaw(player);
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 	}
@@ -111,8 +130,13 @@ public class JarBlock extends Block{
 	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
 		if (te instanceof JarTileEntity) {
 			JarTileEntity jte = (JarTileEntity) te;
-			if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() == 0)
+			if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() == 0 && jte.label == null) {
+				te.setPos(new BlockPos(0, 0, 0));
+				if (((JarTileEntity) te).label != null) {
+					((JarTileEntity) te).label = Direction.NORTH;
+				}
 				spawnDrops(state, worldIn, pos, te, player, stack);
+			}
 		}
 	}
 
@@ -122,7 +146,11 @@ public class JarBlock extends Block{
 			TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof JarTileEntity) {
 				JarTileEntity jte = (JarTileEntity)te;
-				if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() != 0){
+				if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() != 0 || jte.label != null){
+					te.setPos(new BlockPos(0, 0, 0));
+					if (((JarTileEntity) te).label != null) {
+						((JarTileEntity) te).label = Direction.NORTH;
+					}
 					ItemEntity itementity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), getItem(worldIn, pos, state));
 					itementity.setDefaultPickupDelay();
 					worldIn.addEntity(itementity);
@@ -132,8 +160,7 @@ public class JarBlock extends Block{
 		super.onBlockHarvested(worldIn, pos, state, player);
 	}
 
-
-	public static Direction getYaw(PlayerEntity player) {
+	public static Direction getYaw(LivingEntity player) {
 		int yaw = (int)player.rotationYaw;
 		if (yaw<0)              //due to the yaw running a -360 to positive 360
 			yaw+=360;    //not sure why it's that way
@@ -181,8 +208,14 @@ public class JarBlock extends Block{
 		if (stack.getTag() != null)
 			if(!stack.getTag().isEmpty()) {
 				CompoundNBT cell = stack.getTag().getCompound("BlockEntityTag").getCompound("aspects").getCompound("cells").getCompound("cell_0");
-				tooltip.add(new StringTextComponent(AspectUtils.getLocalizedAspectDisplayName(AspectUtils.getAspectByName(cell.getString("aspect")))+": " +
-						cell.getInt("amount")).applyTextStyle(TextFormatting.AQUA));
+				if (stack.getTag().getCompound("BlockEntityTag").contains("label")) {
+					tooltip.add(new StringTextComponent("Labelled").applyTextStyle(TextFormatting.DARK_GRAY));
+				}
+				if (cell.getInt("amount") > 0) {
+					tooltip.add(new StringTextComponent(AspectUtils.getLocalizedAspectDisplayName(Objects.requireNonNull(
+							AspectUtils.getAspectByName(cell.getString("aspect")))) + ": " +
+							cell.getInt("amount")).applyTextStyle(TextFormatting.AQUA));
+				}
 				if (ArcanaConfig.JAR_ANIMATION_SPEED.get()>=299792458D){ // Small easter egg ;)
 					tooltip.add(new StringTextComponent("\"being faster than light leaves you in the darkness\" -jar").applyTextStyle(TextFormatting.GRAY));
 				}
