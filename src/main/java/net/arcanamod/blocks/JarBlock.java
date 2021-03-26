@@ -7,14 +7,18 @@ import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.MagicDeviceItem;
+import net.arcanamod.items.ScepterItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -120,6 +124,15 @@ public class JarBlock extends WaterloggableBlock {
 		if (jar.label == null && player.getHeldItem(handIn).getItem() == ArcanaItems.LABEL.get()) {
 			player.getHeldItem(handIn).setCount(player.getHeldItem(handIn).getCount() - 1);
 			jar.label = getYaw(player);
+		} else if (player.getHeldItem(handIn).getItem() instanceof MagicDeviceItem && player.isCrouching()) {
+
+		} else if (jar.label != null && player.getHeldItem(handIn).getItem() == Blocks.AIR.asItem() && player.isCrouching()) {
+			if (!player.isCreative()) {
+				if (!player.addItemStackToInventory(new ItemStack(ArcanaItems.LABEL.get()))) {
+					player.dropItem(new ItemStack(ArcanaItems.LABEL.get()), false);
+				}
+			}
+			jar.label = null;
 		} else if (jar.label != null) {
 			jar.label = getYaw(player);
 		}
