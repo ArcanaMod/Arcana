@@ -27,8 +27,8 @@ public class PedestalTileEntityRenderer extends TileEntityRenderer<PedestalTileE
 		
 		ItemStack item = tileEntity.getItem();
 		// translation above the pedestal + bobbing
-		float bob = MathHelper.sin(((float)tileEntity.getWorld().getGameTime() + partialTicks) / 10.0F) * 0.1F + 0.1F;
-		matrixStack.translate(.5f, 1.4f + bob / 2, .5f);
+		float bob = MathHelper.sin(((float)tileEntity.getWorld().getGameTime() + partialTicks) / 10.0F) * 0.2F + 0.2F;
+		matrixStack.translate(.5f, 1.3f + bob / 2, .5f);
 		// spin
 		float spin = (((float)tileEntity.getWorld().getGameTime() + partialTicks) / 20.0F);
 		matrixStack.rotate(Vector3f.YP.rotation(spin));
