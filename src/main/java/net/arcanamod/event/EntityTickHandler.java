@@ -217,12 +217,12 @@ public class EntityTickHandler{
 		double rotOffsetZ = -Math.sin(Math.toRadians(rotation));
 		double size = .1;
 		double padding = .8;
-		double center = .25;
+		double center = -.66;
 		double x = baseX - array.length * rotOffsetX * size * center;
 		double z = baseZ - array.length * rotOffsetZ * size * center;
 		for(int i = 0, length = array.length; i < length; i++){
 			char c = array[i];
-			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), color, ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY, z + rotOffsetZ * i * size * padding, 0, 0, 0);
+			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), color, ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY - .12, z + rotOffsetZ * i * size * padding, 0, 0, 0);
 		}
 	}
 	
