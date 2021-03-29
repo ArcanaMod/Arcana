@@ -122,7 +122,9 @@ public class JarBlock extends WaterloggableBlock {
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
 		JarTileEntity jar = ((JarTileEntity) Objects.requireNonNull(worldIn.getTileEntity(pos)));
 		if (jar.label == null && player.getHeldItem(handIn).getItem() == ArcanaItems.LABEL.get()) {
-			player.getHeldItem(handIn).setCount(player.getHeldItem(handIn).getCount() - 1);
+			if (!player.isCreative()) {
+				player.getHeldItem(handIn).setCount(player.getHeldItem(handIn).getCount() - 1);
+			}
 			jar.label = getYaw(player);
 		} else if (player.getHeldItem(handIn).getItem() instanceof MagicDeviceItem && player.isCrouching()) {
 

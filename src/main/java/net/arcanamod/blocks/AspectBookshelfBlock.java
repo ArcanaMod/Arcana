@@ -23,6 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
@@ -37,24 +38,21 @@ import static net.arcanamod.ArcanaSounds.playPhialshelfSlideSound;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class AspectBookshelfBlock extends WaterloggableBlock{
-	
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
-	public static final IntegerProperty LEVEL_0_9 = IntegerProperty.create("level",0,9);
-	
-	public VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0, 0, 7, 16, 16, 16);
-	public VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0, 0, 0, 16, 16, 9);
-	public VoxelShape SHAPE_EAST = Block.makeCuboidShape(0, 0, 0, 9, 16, 16);
-	public VoxelShape SHAPE_WEST = Block.makeCuboidShape(7, 0, 0, 16, 16, 16);
+	public VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0, 0, 8, 16, 16, 16);
+	public VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0, 0, 0, 16, 16, 8);
+	public VoxelShape SHAPE_EAST = Block.makeCuboidShape(0, 0, 0, 8, 16, 16);
+	public VoxelShape SHAPE_WEST = Block.makeCuboidShape(8, 0, 0, 16, 16, 16);
 
+
+	public static final IntegerProperty LEVEL_0_9 = IntegerProperty.create("level",0,9);
 	public AspectBookshelfBlock(Properties properties){
 		super(properties);
 		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(LEVEL_0_9, 0));
 	}
-	
 	public BlockState getStateForPlacement(BlockItemUseContext context){
 		return super.getStateForPlacement(context).with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite()).with(LEVEL_0_9,0);
 	}
-	
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
 		builder.add(HORIZONTAL_FACING, WATERLOGGED, LEVEL_0_9);
 	}
@@ -70,53 +68,75 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 		else
 			return SHAPE_WEST;
 	}
-	
 	@Override
 	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context){
 		return getShape(state, world, pos, context);
 	}
-	
 	public BlockState rotate(BlockState state, Rotation rot){
 		return state.with(HORIZONTAL_FACING, rot.rotate(state.get(HORIZONTAL_FACING)));
 	}
-	
 	public BlockState mirror(BlockState state, Mirror mirrorIn){
 		return state.rotate(mirrorIn.toRotation(state.get(HORIZONTAL_FACING)));
 	}
 
-	@Nullable
-	@Override
+
+
+
+	@Nullable @Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new AspectBookshelfTileEntity();
 	}
-
 	@Override
 	public boolean hasTileEntity(BlockState state) {
 		return true;
 	}
 
+
+
+	// TODO: AspectBookshelfTileEntityRenderer
+
 	@Override
-	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_)
-	{
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
 		TileEntity te = worldIn.getTileEntity(pos);
-		if(te instanceof AspectBookshelfTileEntity)
-		{
-			if (player.getHeldItem(handIn).getItem() instanceof PhialItem)
-			{
-				boolean isSuccess = ((AspectBookshelfTileEntity) te).addPhial(player.getHeldItem(handIn));
-				if (isSuccess)
+		if(te instanceof AspectBookshelfTileEntity) {
+			if (player.getHeldItem(handIn).getItem() instanceof PhialItem) {
+				int widthSlot = -1;
+				int heightSlot = -1;
+				switch (state.get(HORIZONTAL_FACING)) {
+					case NORTH:
+						widthSlot = 3 - (int)((p_225533_6_.getHitVec().x - pos.getX()) / .33);
+						heightSlot = 3 - (int)((p_225533_6_.getHitVec().y - pos.getY()) / .33);
+						break;
+					case SOUTH:
+						widthSlot = 1 + (int)((p_225533_6_.getHitVec().x - pos.getX()) / .33);
+						heightSlot = 3 - (int)((p_225533_6_.getHitVec().y - pos.getY()) / .33);
+						break;
+					case EAST:
+						widthSlot = 3 - (int)((p_225533_6_.getHitVec().z - pos.getZ()) / .33);
+						heightSlot = 3 - (int)((p_225533_6_.getHitVec().y - pos.getY()) / .33);
+						break;
+					case WEST:
+						widthSlot = 1 + (int)((p_225533_6_.getHitVec().z - pos.getZ()) / .33);
+						heightSlot = 3 - (int)((p_225533_6_.getHitVec().y - pos.getY()) / .33);
+						break;
+				}
+				int slot = widthSlot + ((heightSlot - 1) * 3);
+
+
+				// TODO: Make the tile entity and have a phial enter the slot if empty, take item out if not
+				if (((AspectBookshelfTileEntity) te).addPhial(player.getHeldItem(handIn))) {
 					player.getHeldItem(handIn).shrink(1);
+				}
 				playPhialshelfSlideSound(player);
 				return ActionResultType.SUCCESS;
-			}
-			else
-			{
-				if (state.get(LEVEL_0_9) > 0)
-				{
+			} else {
+				// TODO: Make the tile entity and have the phial be removed
+				if (state.get(LEVEL_0_9) > 0) {
 					ItemStack returned = ((AspectBookshelfTileEntity) te).removePhial();
 
-					if (returned!=ItemStack.EMPTY)
+					if (returned!=ItemStack.EMPTY) {
 						player.inventory.addItemStackToInventory(returned); //player.addItemStackToInventory gives sound and player.inventory.addItemStackToInventory not.
+					}
 					playPhialshelfSlideSound(player);
 					return ActionResultType.SUCCESS;
 				}
@@ -124,7 +144,12 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 		}
 		return ActionResultType.PASS;
 	}
-	
+
+
+
+
+
+
 	public boolean hasComparatorInputOverride(BlockState state){
 		return true;
 	}
