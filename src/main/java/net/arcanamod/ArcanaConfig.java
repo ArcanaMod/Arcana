@@ -130,6 +130,9 @@ public class ArcanaConfig{
 		SILVERWOOD_NODE_CHANCE = COMMON_BUILDER
 				.comment("The chance of a pure aura node generating with a silverwood tree, out of 100.", "50 by default.")
 				.define("SilverwoodNodeChance", 50);
+		PURE_NODE_TAINT_PROTECT_RANGE = COMMON_BUILDER
+				.comment("The maximum distance that a pure node will prevent taint spreading to.", "Blocks that are this distance, or less, from a pure node cannot be tainted.", "12 by default.")
+				.define("PureNodeTaintProtectRange", 12);
 		
 		FLUX_RESEARCH_REQUIREMENT = COMMON_BUILDER
 				.comment("The amount of flux required to advance the flux research.", "20 by default.")
@@ -226,6 +229,7 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> TAINT_SPREAD_TRIES; // 5
 	
 	public static ConfigValue<Integer> SILVERWOOD_NODE_CHANCE; // 50
+	public static ConfigValue<Integer> PURE_NODE_TAINT_PROTECT_RANGE; //12
 	
 	public static ConfigValue<Integer> FLUX_RESEARCH_REQUIREMENT; // 20
 	

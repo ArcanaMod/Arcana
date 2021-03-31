@@ -46,7 +46,7 @@ public class TaintBottleEntity extends ProjectileItemEntity{
 			for(int tries = 0; tries < 12 && tainted < 6; tries++){
 				pos.setPos(this).move(world.rand.nextInt(5) - 2, world.rand.nextInt(3) - 1, world.rand.nextInt(5) - 2);
 				BlockState state = world.getBlockState(pos);
-				if(!state.isAir(world, pos) && !Taint.isTainted(state.getBlock())){
+				if(!state.isAir(world, pos) && !Taint.isTainted(state.getBlock()) && !Taint.isBlockProtectedByPureNode(world, pos)){
 					Block to = Taint.getTaintedOfBlock(state.getBlock());
 					if(to != null){
 						world.setBlockState(pos, DelegatingBlock.switchBlock(state, to).with(UNTAINTED, false));

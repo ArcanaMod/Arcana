@@ -99,6 +99,10 @@ public abstract class NodeType{
 		return 5;
 	}
 	
+	public boolean blocksTaint(IWorld world, AuraView nodes, Node node, BlockPos pos){
+		return false;
+	}
+	
 	public String toString(){
 		return TYPES.containsValue(this) ? TYPES.inverse().get(this).toString() : super.toString();
 	}
@@ -242,6 +246,10 @@ public abstract class NodeType{
 
 		public Collection<ResourceLocation> textures(){
 			return Collections.singleton(arcLoc("nodes/pure_node"));
+		}
+		
+		public boolean blocksTaint(IWorld world, AuraView nodes, Node node, BlockPos pos){
+			return true;
 		}
 	}
 	

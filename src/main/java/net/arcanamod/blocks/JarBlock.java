@@ -1,6 +1,5 @@
 package net.arcanamod.blocks;
 
-import javafx.scene.paint.Color;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.AspectUtils;
@@ -8,7 +7,6 @@ import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.MagicDeviceItem;
-import net.arcanamod.items.ScepterItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,7 +16,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -49,8 +46,6 @@ import java.util.Objects;
 public class JarBlock extends WaterloggableBlock {
 	public static final BooleanProperty UP = BooleanProperty.create("up");
 	private Type type;
-
-	Logger LOGGER = LogManager.getLogger();
 	
 	public JarBlock(Properties properties, Type type){
 		super(properties);
