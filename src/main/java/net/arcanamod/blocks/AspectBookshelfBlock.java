@@ -41,37 +41,48 @@ import static net.arcanamod.ArcanaSounds.playPhialshelfSlideSound;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class AspectBookshelfBlock extends WaterloggableBlock{
-	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
+	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.FACING;
 	public VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0, 0, 8, 16, 16, 16);
 	public VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0, 0, 0, 16, 16, 8);
 	public VoxelShape SHAPE_EAST = Block.makeCuboidShape(0, 0, 0, 8, 16, 16);
 	public VoxelShape SHAPE_WEST = Block.makeCuboidShape(8, 0, 0, 16, 16, 16);
-
-	public static final IntegerProperty LEVEL_0_9 = IntegerProperty.create("level",0,9);
+	public VoxelShape SHAPE_UP = Block.makeCuboidShape(0, 8, 0, 16, 16, 16);
+	public VoxelShape SHAPE_DOWN = Block.makeCuboidShape(0, 0, 0, 16, 8, 16);
 
 	public AspectBookshelfBlock(Properties properties){
 		super(properties);
-		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(LEVEL_0_9, 0));
+		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE));
 	}
 
 	public BlockState getStateForPlacement(BlockItemUseContext context){
-		return super.getStateForPlacement(context).with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite()).with(LEVEL_0_9,0);
+		if (context.getPlayer() != null) {
+			if (context.getPlayer().isCrouching() && context.getFace().getOpposite() != Direction.UP) {
+				return super.getStateForPlacement(context).with(HORIZONTAL_FACING, context.getFace().getOpposite());
+			}
+		}
+		return super.getStateForPlacement(context).with(HORIZONTAL_FACING, context.getPlacementHorizontalFacing().getOpposite());
 	}
 
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
-		builder.add(HORIZONTAL_FACING, WATERLOGGED, LEVEL_0_9);
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+		builder.add(HORIZONTAL_FACING, WATERLOGGED);
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context){
-		if(state.get(HORIZONTAL_FACING) == Direction.NORTH)
-			return SHAPE_NORTH;
-		if(state.get(HORIZONTAL_FACING) == Direction.SOUTH)
-			return SHAPE_SOUTH;
-		if(state.get(HORIZONTAL_FACING) == Direction.EAST)
-			return SHAPE_EAST;
-		else
-			return SHAPE_WEST;
+	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+		switch(state.get(HORIZONTAL_FACING)) {
+			case SOUTH:
+				return SHAPE_SOUTH;
+			case EAST:
+				return SHAPE_EAST;
+			case WEST:
+				return SHAPE_WEST;
+			case UP:
+				return SHAPE_UP;
+			case DOWN:
+				return SHAPE_DOWN;
+			default:
+				return SHAPE_NORTH;
+		}
 	}
 
 	@Override
@@ -100,8 +111,8 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult p_225533_6_) {
 		TileEntity te = worldIn.getTileEntity(pos);
-
-		if (p_225533_6_.getFace() == state.get(HORIZONTAL_FACING)) {
+		boolean vert = p_225533_6_.getFace() == Direction.UP || p_225533_6_.getFace() == Direction.DOWN;
+		if ((vert && p_225533_6_.getFace() == state.get(HORIZONTAL_FACING).getOpposite()) || (!vert && p_225533_6_.getFace() == state.get(HORIZONTAL_FACING))) {
 			int widthSlot = -1;
 			int heightSlot = -1;
 			switch (state.get(HORIZONTAL_FACING)) {
@@ -120,6 +131,14 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 				case WEST:
 					widthSlot = 1 + (int) ((p_225533_6_.getHitVec().z - pos.getZ()) / .33);
 					heightSlot = 3 - (int) ((p_225533_6_.getHitVec().y - pos.getY()) / .33);
+					break;
+				case UP:
+					widthSlot = 3 - (int) ((p_225533_6_.getHitVec().x - pos.getX()) / .33);
+					heightSlot = 1 + (int) ((p_225533_6_.getHitVec().z - pos.getZ()) / .33);
+					break;
+				case DOWN:
+					widthSlot = 3 - (int) ((p_225533_6_.getHitVec().x - pos.getX()) / .33);
+					heightSlot = 3 - (int) ((p_225533_6_.getHitVec().z - pos.getZ()) / .33);
 					break;
 			}
 			if (heightSlot <= 0) {

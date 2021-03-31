@@ -1,124 +1,22 @@
 {
   "multipart": [
-        {   "when": { "facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf" }
-        },
-        {   "when": { "facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf", "y": 90 }
-        },
-        {   "when": { "facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf", "y": 180 }
-        },
-        {   "when": { "facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf", "y": 270 }
-        },
-        {   "when": { "level": "1","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_1" }
-        },
-        {   "when": { "level": "1","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_1", "y": 90 }
-        },
-        {   "when": { "level": "1","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_1", "y": 180 }
-        },
-        {   "when": { "level": "1","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_1", "y": 270 }
-        },
-        {   "when": { "level": "2","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_2" }
-        },
-        {   "when": { "level": "2","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_2", "y": 90 }
-        },
-        {   "when": { "level": "2","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_2", "y": 180 }
-        },
-        {   "when": { "level": "2","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_2", "y": 270 }
-        },
-        {   "when": { "level": "3","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_3" }
-        },
-        {   "when": { "level": "3","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_3", "y": 90 }
-        },
-        {   "when": { "level": "3","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_3", "y": 180 }
-        },
-        {   "when": { "level": "3","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_3", "y": 270 }
-        },
-        {   "when": { "level": "4","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_4" }
-        },
-        {   "when": { "level": "4","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_4", "y": 90 }
-        },
-        {   "when": { "level": "4","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_4", "y": 180 }
-        },
-        {   "when": { "level": "4","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_4", "y": 270 }
-        },
-        {   "when": { "level": "5","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_5" }
-        },
-        {   "when": { "level": "5","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_5", "y": 90 }
-        },
-        {   "when": { "level": "5","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_5", "y": 180 }
-        },
-        {   "when": { "level": "5","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_5", "y": 270 }
-        },
-        {   "when": { "level": "6","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_6" }
-        },
-        {   "when": { "level": "6","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_6", "y": 90 }
-        },
-        {   "when": { "level": "6","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_6", "y": 180 }
-        },
-        {   "when": { "level": "6","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_6", "y": 270 }
-        },
-        {   "when": { "level": "7","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_7" }
-        },
-        {   "when": { "level": "7","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_7", "y": 90 }
-        },
-        {   "when": { "level": "7","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_7", "y": 180 }
-        },
-        {   "when": { "level": "7","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_7", "y": 270 }
-        },
-        {   "when": { "level": "8","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_8" }
-        },
-        {   "when": { "level": "8","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_8", "y": 90 }
-        },
-        {   "when": { "level": "8","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_8", "y": 180 }
-        },
-        {   "when": { "level": "8","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_8", "y": 270 }
-        },
-        {   "when": { "level": "9","facing": "north" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_9" }
-        },
-        {   "when": { "level": "9","facing": "east" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_9", "y": 90 }
-        },
-        {   "when": { "level": "9","facing": "south" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_9", "y": 180 }
-        },
-        {   "when": { "level": "9","facing": "west" },
-            "apply": { "model": "arcana:block/aspect_bookshelf_9", "y": 270 }
-        }
+    {   "when": { "facing": "north" },
+      "apply": { "model": "arcana:block/aspect_bookshelf" }
+    },
+    {   "when": { "facing": "east" },
+      "apply": { "model": "arcana:block/aspect_bookshelf", "y": 90 }
+    },
+    {   "when": { "facing": "south" },
+      "apply": { "model": "arcana:block/aspect_bookshelf", "y": 180 }
+    },
+    {   "when": { "facing": "west" },
+      "apply": { "model": "arcana:block/aspect_bookshelf", "y": 270 }
+    },
+    {   "when": { "facing": "up" },
+      "apply": { "model": "arcana:block/aspect_bookshelf", "x": 90 }
+    },
+    {   "when": { "facing": "down" },
+      "apply": { "model": "arcana:block/aspect_bookshelf", "x": 270 }
+    }
   ]
 }
