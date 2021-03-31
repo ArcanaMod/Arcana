@@ -3,6 +3,7 @@ package net.arcanamod.client.render.tiles;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.items.PhialItem;
 import net.minecraft.client.Minecraft;
@@ -42,7 +43,7 @@ public class AspectBookshelfTileEntityRenderer extends TileEntityRenderer<Aspect
         IVertexBuilder builder = buffer.getBuffer(RenderType.getTranslucent());
 
 
-        TextureAtlasSprite spriteSide = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_SIDE);
+        TextureAtlasSprite spriteSide = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_TOP);
 
         Quaternion q = Quaternion.ONE;
         switch (tileEntity.rotation) {
@@ -63,13 +64,16 @@ public class AspectBookshelfTileEntityRenderer extends TileEntityRenderer<Aspect
         matrixStack.rotate(q);
         matrixStack.translate(-.5, 0, -.5);
 
-        Color c = Color.MAGENTA;
 
         for (int i = 0; i <= 8; i++) {
             if (tileEntity.getStackInSlot(i).getItem() instanceof PhialItem) {
                 matrixStack.push();
                 int slotX = 2 - ((i) % 3);
                 int slotY = 2 - ((i) / 3);
+
+                Color colour = PhialItem.getAspect(tileEntity.getStackInSlot(i)) != Aspects.EMPTY ?
+                        new Color(PhialItem.getAspect(tileEntity.getStackInSlot(i)).getColorRange().get(2)) : Color.WHITE;
+                Color c = new Color(colour.getRGB()-0x80000000);
 
                 //Base
                 add(builder, matrixStack, c, 0.3125f + (0.3125f * slotX), 0.0625f + (0.3125f * slotY), 0.5625f, spriteSide.getMaxU(), spriteSide.getMaxV(), combinedLight);
@@ -78,6 +82,7 @@ public class AspectBookshelfTileEntityRenderer extends TileEntityRenderer<Aspect
                 add(builder, matrixStack, c, 0.3125f + (0.3125f * slotX), 0.3125f + (0.3125f * slotY), 0.5625f, spriteSide.getMaxU(), spriteSide.getMinV(), combinedLight);
 
 
+                /*
                 //Front Handle
                 add(builder, matrixStack, c, 0.28125f + (0.3125f * slotX), 0.09375f + (0.3125f * slotY), 0.4375f, spriteSide.getMaxU(), spriteSide.getMaxV(), combinedLight);
                 add(builder, matrixStack, c, 0.09375f + (0.3125f * slotX), 0.09375f + (0.3125f * slotY), 0.4375f, spriteSide.getMinU(), spriteSide.getMaxV(), combinedLight);
@@ -89,7 +94,7 @@ public class AspectBookshelfTileEntityRenderer extends TileEntityRenderer<Aspect
                 add(builder, matrixStack, c, 0.09375f + (0.3125f * slotX), 0.09375f + (0.3125f * slotY), 0.5000f, spriteSide.getMinU(), spriteSide.getMaxV(), combinedLight);
                 add(builder, matrixStack, c, 0.09375f + (0.3125f * slotX), 0.28125f + (0.3125f * slotY), 0.5000f, spriteSide.getMinU(), spriteSide.getMinV(), combinedLight);
                 add(builder, matrixStack, c, 0.28125f + (0.3125f * slotX), 0.28125f + (0.3125f * slotY), 0.5000f, spriteSide.getMaxU(), spriteSide.getMinV(), combinedLight);
-
+                 */
 
 
 

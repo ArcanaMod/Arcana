@@ -1,6 +1,7 @@
 package net.arcanamod.blocks.tiles;
 
 import net.arcanamod.aspects.*;
+import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
 import net.arcanamod.items.PhialItem;
 import net.arcanamod.util.VisUtils;
@@ -45,7 +46,7 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		for (int i = 0; i < stacks.size(); i++) {
 			if (stacks.get(i).getItem() instanceof PhialItem) {
 				AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stacks.get(i));
-				IAspectHolder target = vis.getHolder(0);
+				IAspectHolder target = vis.getHolder(i);
 				vis.setCellAtIndex(i,(AspectCell)target);
 			} else {
 				if (vis.exist(i)) {
@@ -54,6 +55,17 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 			}
 		}
 		return vis;
+	}
+
+	public Color getAspectColour(int index) {
+		if (stacks.get(index).getItem() instanceof PhialItem) {
+			System.out.println(vis.getHolder(index));
+			System.out.println(vis.getHolder(index).getContainedAspect());
+			System.out.println(vis.getHolder(index).getContainedAspect().getColorRange().get(2));
+
+			return new Color(vis.getHolder(index).getContainedAspect().getColorRange().get(2));
+		}
+		return Color.MAGENTA;
 	}
 
 	@Nonnull @Override public CompoundNBT getUpdateTag(){

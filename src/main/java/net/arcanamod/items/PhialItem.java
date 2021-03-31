@@ -183,4 +183,9 @@ public class PhialItem extends Item implements IOverrideAspects {
  		if (myHolder.getContainedAspect()==Aspects.EMPTY) return IOverrideAspects.setSpecialOverrideType(SpecialOverrideType.NONE);
 		return Collections.singletonList(myHolder.getContainedAspectStack());
 	}
+
+	public static Aspect getAspect(ItemStack stack) {
+		IAspectHolder myHolder = IAspectHandler.getFrom(stack).getHolder(0);
+		return myHolder.getContainedAspect();
+	}
 }
