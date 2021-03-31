@@ -122,8 +122,11 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 					heightSlot = 3 - (int) ((p_225533_6_.getHitVec().y - pos.getY()) / .33);
 					break;
 			}
-			if (heightSlot == 0) {
+			if (heightSlot <= 0) {
 				heightSlot = 1;
+			}
+			if (widthSlot <= 0) {
+				widthSlot = 1;
 			}
 			int slot = (widthSlot + ((heightSlot - 1) * 3)) - 1;
 
