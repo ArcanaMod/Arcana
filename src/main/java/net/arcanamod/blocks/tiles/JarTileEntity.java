@@ -32,7 +32,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	private double lastVis;
 	
 	private double clientVis;
-	private double visAnimationSpeed = ArcanaConfig.JAR_ANIMATION_SPEED.get();
+	private final double visAnimationSpeed = ArcanaConfig.JAR_ANIMATION_SPEED.get();
 	
 	private static final int MAX_PUSH = 4;
 	

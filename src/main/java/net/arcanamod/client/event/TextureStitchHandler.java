@@ -22,6 +22,7 @@ public class TextureStitchHandler {
 		if(event.getMap().getTextureLocation().equals(AtlasTexture.LOCATION_BLOCKS_TEXTURE)){
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_SIDE);
 			event.addSprite(JarTileEntityRender.JAR_CONTENT_TOP);
+			event.addSprite(JarTileEntityRender.JAR_CONTENT_BOTTOM);
 			event.addSprite(JarTileEntityRender.JAR_LABEL);
 			event.addSprite(ArcanaVariables.arcLoc("font/number_0"));
 			event.addSprite(ArcanaVariables.arcLoc("font/number_1"));

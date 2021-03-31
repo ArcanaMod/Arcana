@@ -23,12 +23,13 @@ import java.awt.*;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
-	public static final ResourceLocation JAR_CONTENT_SIDE = new ResourceLocation(Arcana.MODID, "models/parts/fluid_side");
 	public static final ResourceLocation JAR_CONTENT_TOP = new ResourceLocation(Arcana.MODID, "models/parts/fluid_top");
+	public static final ResourceLocation JAR_CONTENT_SIDE = new ResourceLocation(Arcana.MODID, "models/parts/fluid_side");
+	public static final ResourceLocation JAR_CONTENT_BOTTOM = new ResourceLocation(Arcana.MODID, "models/parts/fluid_bottom");
 	public static final ResourceLocation JAR_LABEL = new ResourceLocation(Arcana.MODID, "models/parts/jar_label");
 	
-	public JarTileEntityRender(TileEntityRendererDispatcher p_i226006_1_){
-		super(p_i226006_1_);
+	public JarTileEntityRender(TileEntityRendererDispatcher rendererDispatcherIn){
+		super(rendererDispatcherIn);
 	}
 	
 	private void add(IVertexBuilder renderer, MatrixStack stack, Color color, float x, float y, float z, float u, float v, int lightmap){
@@ -43,9 +44,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 	@SuppressWarnings("deprecation")
 	@Override
 	public void render(JarTileEntity tileEntity, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay){
-		
-		TextureAtlasSprite spriteSide = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_SIDE);
+
 		TextureAtlasSprite spriteTop = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_TOP);
+		TextureAtlasSprite spriteSide = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_SIDE);
+		TextureAtlasSprite spriteBottom = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_CONTENT_BOTTOM);
 		TextureAtlasSprite label = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(JAR_LABEL);
 		TextureAtlasSprite aspect = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(tileEntity.getPaperAspectLocation());
 		IVertexBuilder builder = buffer.getBuffer(RenderType.getTranslucent());
@@ -165,10 +167,10 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			add(builder, matrixStack, c, 0, visHeight, 0, spriteTop.getMinU(), spriteTop.getMinV(), combinedLight);
 			
 			// bottom
-			add(builder, matrixStack, c, 1, visBase, 1, spriteTop.getMaxU(), spriteTop.getMaxV(), combinedLight);
-			add(builder, matrixStack, c, 0, visBase, 1, spriteTop.getMinU(), spriteTop.getMaxV(), combinedLight);
-			add(builder, matrixStack, c, 0, visBase, 0, spriteTop.getMinU(), spriteTop.getMinV(), combinedLight);
-			add(builder, matrixStack, c, 1, visBase, 0, spriteTop.getMaxU(), spriteTop.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 1, visBase, 1, spriteBottom.getMaxU(), spriteBottom.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 0, visBase, 1, spriteBottom.getMinU(), spriteBottom.getMaxV(), combinedLight);
+			add(builder, matrixStack, c, 0, visBase, 0, spriteBottom.getMinU(), spriteBottom.getMinV(), combinedLight);
+			add(builder, matrixStack, c, 1, visBase, 0, spriteBottom.getMaxU(), spriteBottom.getMinV(), combinedLight);
 			
 			// east (+X) face
 			add(builder, matrixStack, c, 1, visHeight, 0, spriteSide.getMinU(), spriteSide.getMinV(), combinedLight);
