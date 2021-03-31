@@ -14,6 +14,7 @@
 
     "_comment": "Subtitles",
     "arcana.sounds.spell_cast": "Spell Cast",
+    "arcana.sounds.phialshelf_slide": "Phialshelf used",
 
     "_comment": "Items",
     "item.arcana.scribbled_notes": "Scribbled Notes",
@@ -588,6 +589,7 @@
     "devtools.mojang": "Mojang Tools",
     "container.arcane_workbench": "Arcane Crafting",
     "container.aspect_crystallizer": "Aspect Crystallizer",
+    "container.aspectbookshelf": "Phialshelf",
     "key.categories.mod.arcana": "Arcana",
     "key.arcana.swap_focus": "Swap Wand Focus",
 
