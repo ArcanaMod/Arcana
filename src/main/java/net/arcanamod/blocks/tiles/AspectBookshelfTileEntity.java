@@ -57,17 +57,6 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		return vis;
 	}
 
-	public Color getAspectColour(int index) {
-		if (stacks.get(index).getItem() instanceof PhialItem) {
-			System.out.println(vis.getHolder(index));
-			System.out.println(vis.getHolder(index).getContainedAspect());
-			System.out.println(vis.getHolder(index).getContainedAspect().getColorRange().get(2));
-
-			return new Color(vis.getHolder(index).getContainedAspect().getColorRange().get(2));
-		}
-		return Color.MAGENTA;
-	}
-
 	@Nonnull @Override public CompoundNBT getUpdateTag(){
 		CompoundNBT nbtTagCompound = new CompoundNBT();
 		write(nbtTagCompound);
