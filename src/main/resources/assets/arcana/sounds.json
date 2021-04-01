@@ -68,6 +68,30 @@
 
     ]
   },
+  "taint_break": {
+    "subtitle": "arcana.sounds.tainted_block_break",
+    "sounds": [
+      "arcana:taint/arcanataintbreak1",
+      "arcana:taint/arcanataintbreak2",
+      "arcana:taint/arcanataintbreak3fix",
+      "arcana:taint/arcanataintbreak4"
+    ]
+  },
+  "taint_place": {
+    "subtitle": "arcana.sounds.tainted_block_place",
+    "sounds": [
+      "arcana:taint/arcanataintbreakv2"
+    ]
+  },
+  "taint_step": {
+    "subtitle": "arcana.sounds.tainted_block_step",
+    "sounds": [
+      "arcana:taint/arcanataintstep1",
+      "arcana:taint/arcanataintstep2",
+      "arcana:taint/arcanataintstep3",
+      "arcana:taint/arcanataintstep4"
+    ]
+  },
   "music_arcana_theme": {
     "subtitle": "arcana.sounds.music_arcana_theme",
     "sounds": [
