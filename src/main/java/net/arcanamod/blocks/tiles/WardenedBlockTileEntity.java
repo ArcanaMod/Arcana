@@ -16,7 +16,7 @@ import java.util.Optional;
 @MethodsReturnNonnullByDefault
 @SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "RedundantTypeArguments", "unused"})
 public class WardenedBlockTileEntity extends TileEntity {
-	private Optional<BlockState> copyState = Optional.empty();
+	private Optional<BlockState> copyState = Optional.of(Blocks.CLAY.getDefaultState());;
 
 	public WardenedBlockTileEntity() {
 		super(ArcanaTiles.WARDENED_BLOCK_TE.get());
@@ -28,7 +28,7 @@ public class WardenedBlockTileEntity extends TileEntity {
 
 	@Override
 	public CompoundNBT write(CompoundNBT tag) {
-		tag.putString("type", Objects.requireNonNull(copyState.orElse(Blocks.AIR.getDefaultState()).getBlock().getRegistryName()).toString());
+		tag.putString("type", Objects.requireNonNull(copyState.orElse(Blocks.BEDROCK.getDefaultState()).getBlock().getRegistryName()).toString());
 
 		return super.write(tag);
 	}
