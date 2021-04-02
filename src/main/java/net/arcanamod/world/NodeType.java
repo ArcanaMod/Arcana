@@ -6,11 +6,14 @@ import net.arcanamod.aspects.*;
 import net.arcanamod.client.render.aspects.ArcanaParticles;
 import net.arcanamod.client.render.aspects.NodeParticleData;
 import net.arcanamod.util.GogglePriority;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.IWorld;
+import net.minecraftforge.fluids.IFluidBlock;
 
 import java.util.*;
 
@@ -235,6 +238,36 @@ public abstract class NodeType{
 		
 		public Collection<ResourceLocation> textures(){
 			return Collections.singleton(arcLoc("nodes/hungry_node"));
+		}
+		
+		public void tick(IWorld world, AuraView nodes, Node node){
+			super.tick(world, nodes, node);
+			// check all blocks in range
+			int range = 6;
+			BlockPos nodePos = new BlockPos(node);
+			BlockPos.Mutable cursor = new BlockPos.Mutable();
+			for(int x = -range; x < range; x++){
+				for(int y = -range; y < range; y++){
+					for(int z = -range; z < range; z++){
+						cursor.setPos(nodePos).move(x, y, z);
+						// if they have air on at least one side
+						if(!world.getBlockState(cursor).isAir() && !(world.getBlockState(cursor).getBlock() instanceof IFluidBlock || world.getBlockState(cursor).getBlock() instanceof FlowingFluidBlock) && (cursor.distanceSq(node, true) < range * range) && (world.getBlockState(cursor.up()).isAir() || world.getBlockState(cursor.down()).isAir() || world.getBlockState(cursor.north()).isAir() || world.getBlockState(cursor.south()).isAir() || world.getBlockState(cursor.east()).isAir() || world.getBlockState(cursor.west()).isAir())){
+							// have particles moving from the block to the node
+							float xR = world.getRandom().nextFloat(), yR = world.getRandom().nextFloat(), zR = world.getRandom().nextFloat();
+							if(world.getRandom().nextBoolean())
+								world.addParticle(ParticleTypes.FLAME, cursor.getX() + xR, cursor.getY() + yR, cursor.getZ() + zR, -(x - node.getX() % 1 + xR - 1) / 16f, -(y - node.getY() % 1 + yR) / 16f, -(z - node.getZ() % 1 + zR) / 16f);
+							// TODO: minimum time to break (instead of pure random)
+							if(!world.isRemote()){
+								BlockState state = world.getBlockState(cursor);
+								float hardness = state.getBlockHardness(world, cursor);
+								if(hardness != -1 && world.getRandom().nextInt((int)(hardness * 300) + 1) == 0){
+									world.destroyBlock(cursor, false);
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 
