@@ -13,12 +13,16 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.tileentity.BrewingStandTileEntity;
 import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -42,6 +46,7 @@ import static net.arcanamod.ArcanaSounds.playPhialshelfSlideSound;
 @MethodsReturnNonnullByDefault
 public class AspectBookshelfBlock extends WaterloggableBlock{
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.FACING;
+	public static final BooleanProperty FULL_BLOCK = BlockStateProperties.EXTENDED;
 	public VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0, 0, 8, 16, 16, 16);
 	public VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0, 0, 0, 16, 16, 8);
 	public VoxelShape SHAPE_EAST = Block.makeCuboidShape(0, 0, 0, 8, 16, 16);
@@ -49,9 +54,31 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 	public VoxelShape SHAPE_UP = Block.makeCuboidShape(0, 8, 0, 16, 16, 16);
 	public VoxelShape SHAPE_DOWN = Block.makeCuboidShape(0, 0, 0, 16, 8, 16);
 
-	public AspectBookshelfBlock(Properties properties){
+	public AspectBookshelfBlock(boolean fullBlock, Properties properties){
 		super(properties);
-		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE));
+		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(FULL_BLOCK, fullBlock));
+	}
+
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.getBlock() != newState.getBlock()) {
+			TileEntity tileentity = worldIn.getTileEntity(pos);
+			if (tileentity instanceof AspectBookshelfTileEntity) {
+				InventoryHelper.dropInventoryItems(worldIn, pos, (AspectBookshelfTileEntity)tileentity);
+			}
+			super.onReplaced(state, worldIn, pos, newState, isMoving);
+		}
+	}
+
+	public boolean eventReceived(BlockState state, World worldIn, BlockPos pos, int id, int param) {
+		super.eventReceived(state, worldIn, pos, id, param);
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+		return tileentity != null && tileentity.receiveClientEvent(id, param);
+	}
+
+	@Nullable
+	public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+		return tileentity instanceof INamedContainerProvider ? (INamedContainerProvider)tileentity : null;
 	}
 
 	public BlockState getStateForPlacement(BlockItemUseContext context){
@@ -64,7 +91,7 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 	}
 
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(HORIZONTAL_FACING, WATERLOGGED);
+		builder.add(HORIZONTAL_FACING, WATERLOGGED, FULL_BLOCK);
 	}
 
 	@Override
@@ -161,9 +188,9 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 					if (returned != ItemStack.EMPTY) {
 						if (!player.addItemStackToInventory(returned)) {
 							ItemEntity itementity = new ItemEntity(worldIn,
-									pos.getX() + .5 + (state.get(HORIZONTAL_FACING).getXOffset() * .4),
-									pos.getY() + .5 + (state.get(HORIZONTAL_FACING).getYOffset() * .4),
-									pos.getZ() + .5 + (state.get(HORIZONTAL_FACING).getZOffset() * .4), returned);
+									player.getPosX(),
+									player.getPosY(),
+									player.getPosZ(), returned);
 							itementity.setNoPickupDelay();
 							worldIn.addEntity(itementity);
 							playPhialshelfSlideSound(player);
@@ -184,6 +211,7 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 
 	public int getComparatorInputOverride(BlockState block, World world, BlockPos pos){
 		TileEntity te = world.getTileEntity(pos);
+		assert te != null;
 		return ((AspectBookshelfTileEntity)te).getRedstoneOut();
 	}
 }

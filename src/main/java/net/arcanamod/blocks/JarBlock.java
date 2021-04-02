@@ -125,18 +125,31 @@ public class JarBlock extends WaterloggableBlock {
 			if (!player.isCreative()) {
 				player.getHeldItem(handIn).setCount(player.getHeldItem(handIn).getCount() - 1);
 			}
-			jar.label = getYaw(player);
+			if (hit.getFace() != Direction.UP && hit.getFace() != Direction.DOWN) {
+				jar.label = hit.getFace();
+			} else {
+				jar.label = getYaw(player);
+			}
 		} else if (player.getHeldItem(handIn).getItem() instanceof MagicDeviceItem && player.isCrouching()) {
-
+			// TODO: Jar breaks on shift click with wand.
 		} else if (jar.label != null && player.getHeldItem(handIn).getItem() == Blocks.AIR.asItem() && player.isCrouching()) {
 			if (!player.isCreative()) {
 				if (!player.addItemStackToInventory(new ItemStack(ArcanaItems.LABEL.get()))) {
-					player.dropItem(new ItemStack(ArcanaItems.LABEL.get()), false);
+					ItemEntity itementity = new ItemEntity(worldIn,
+							player.getPosX(),
+							player.getPosY(),
+							player.getPosZ(), new ItemStack(ArcanaItems.LABEL.get()));
+					itementity.setNoPickupDelay();
+					worldIn.addEntity(itementity);
 				}
 			}
 			jar.label = null;
-		} else if (jar.label != null) {
-			jar.label = getYaw(player);
+		} else if (jar.label != null && player.getHeldItem(handIn).getItem() instanceof MagicDeviceItem) {
+			if (hit.getFace() != Direction.UP && hit.getFace() != Direction.DOWN) {
+				jar.label = hit.getFace();
+			} else {
+				jar.label = getYaw(player);
+			}
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 	}

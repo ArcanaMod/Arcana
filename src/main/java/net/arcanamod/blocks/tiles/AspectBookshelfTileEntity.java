@@ -5,11 +5,16 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
 import net.arcanamod.items.PhialItem;
 import net.arcanamod.util.VisUtils;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BrewingStandBlock;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.DispenserContainer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -26,6 +31,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.awt.*;
+import java.util.Arrays;
 
 public class AspectBookshelfTileEntity extends LockableLootTileEntity implements ITickableTileEntity, VisShareable {
 	private NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
@@ -42,11 +48,26 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		this.rotation = rotation;
 	}
 
+	private void inventoryChanged() {
+		this.markDirty();
+		this.getWorld().notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+	}
+
+	public boolean canInsertItem(int index, ItemStack itemStackIn, @Nullable Direction direction) {
+		return this.isItemValidForSlot(index, itemStackIn);
+
+	}
+
+	public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
+		return this.getStackInSlot(index).isEmpty();
+
+	}
+
 	public AspectBattery updateBatteryAndReturn() {
 		for (int i = 0; i < stacks.size(); i++) {
 			if (stacks.get(i).getItem() instanceof PhialItem) {
 				AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stacks.get(i));
-				IAspectHolder target = vis.getHolder(i);
+				IAspectHolder target = vis.getHolder(0);
 				vis.setCellAtIndex(i,(AspectCell)target);
 			} else {
 				if (vis.exist(i)) {
@@ -100,7 +121,7 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 			stack = stack.copy();
 			stack.setCount(1);
 			this.setInventorySlotContents(slot, stack);
-			markDirty();
+			inventoryChanged();
 			return true;
 		}
 		return false;
@@ -110,7 +131,7 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		if (!this.stacks.get(slot).isEmpty()) {
 			ItemStack removedPhial = this.stacks.get(slot);
 			this.stacks.set(slot, ItemStack.EMPTY);
-			markDirty();
+			inventoryChanged();
 			return removedPhial;
 		}
 		return ItemStack.EMPTY;
@@ -152,10 +173,17 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 
 	protected void setItems(@Nonnull NonNullList<ItemStack> itemsIn) {
 		this.stacks = itemsIn;
+		inventoryChanged();
 	}
 
 	@Nonnull protected Container createMenu(int id, @Nonnull PlayerInventory player) {
 		return new DispenserContainer(id, player, this);
+	}
+
+	@Override
+	public void closeInventory(PlayerEntity player) {
+		inventoryChanged();
+		super.closeInventory(player);
 	}
 
 	@Override public boolean isVisShareable() {

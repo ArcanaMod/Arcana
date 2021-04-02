@@ -63,9 +63,9 @@ public class PedestalBlock extends WaterloggableBlock{
 			ItemStack pedestalItem = te.getItem();
 			if (!pedestalItem.isEmpty() && !player.addItemStackToInventory(pedestalItem)) {
 				ItemEntity itementity = new ItemEntity(world,
-						pos.getX() + .5,
-						pos.getY() + 1.1,
-						pos.getZ() + .5, pedestalItem);
+						player.getPosX(),
+						player.getPosY(),
+						player.getPosZ(), pedestalItem);
 				itementity.setNoPickupDelay();
 				world.addEntity(itementity);
 			}
