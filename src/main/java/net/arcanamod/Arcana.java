@@ -62,26 +62,26 @@ import javax.annotation.Nonnull;
  */
 @Mod(Arcana.MODID)
 public class Arcana{
-
+	
 	// Main
 	public static final String MODID = "arcana";
-	public static final Logger logger = LogManager.getLogger("Arcana");
+	public static final Logger LOGGER = LogManager.getLogger("Arcana");
 	public static Arcana instance;
-
+	
 	// Json Registry
 	public static ResearchLoader researchManager;
 	public static ItemAspectRegistry itemAspectRegistry;
 	public static WorldInteractionsRegistry worldInteractionsRegistry;
-
+	
 	// Item Groups
 	public static ItemGroup ITEMS = new SupplierItemGroup(MODID, () -> new ItemStack(ArcanaBlocks.ARCANE_STONE.get()))
 			.setHasSearchBar(true)
 			.setBackgroundImage(new ResourceLocation("textures/gui/container/creative_inventory/tab_item_search.png"));
 	public static ItemGroup TAINT = new SupplierItemGroup("taint", () -> new ItemStack(ArcanaBlocks.TAINTED_GRASS_BLOCK.get()));
-
+	
 	// Proxy
 	public static CommonProxy proxy = DistExecutor.safeRunForDist(() -> ClientProxy::new, () -> CommonProxy::new);
-
+	
 	// Debug Mode
 	public static final boolean debug = true;
 	

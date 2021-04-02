@@ -91,7 +91,7 @@ public class ServerAuraView implements AuraView{
 				BlockPos blockPos = pos.asBlockPos().up(world.rand.nextInt(256)).north(world.rand.nextInt(16)).east(world.rand.nextInt(16));
 				BlockState state = world.getBlockState(blockPos);
 				Block block = Taint.getTaintedOfBlock(state.getBlock());
-				if(block != null){
+				if(block != null && !Taint.isBlockProtectedByPureNode(world, blockPos)){
 					world.setBlockState(blockPos, DelegatingBlock.switchBlock(state, block).with(TaintedBlock.UNTAINTED, false));
 					chunk.addTaint(-ArcanaConfig.TAINT_SPAWN_COST.get());
 				}

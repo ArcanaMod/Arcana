@@ -65,11 +65,11 @@ public class ItemModels extends ItemModelProvider{
 			for (Field field : fields) {
 				// if field has GIM annotation
 				if (field.isAnnotationPresent(GIM.class)) {
-					Arcana.logger.debug("Found field in "+clazz.getName()+".class: name:" + field.getName() + " type:" + field.getType());
+					Arcana.LOGGER.debug("Found field in "+clazz.getName()+".class: name:" + field.getName() + " type:" + field.getType());
 					if (field.get(field.getType()) instanceof RegistryObject) {
 						// get RegistryObject from field
 						RegistryObject<Block> reg = (RegistryObject<Block>) field.get(field.getType());
-						Arcana.logger.debug("RegistryObject: " + reg.getId().toString());
+						Arcana.LOGGER.debug("RegistryObject: " + reg.getId().toString());
 						String path = reg.getId().getPath();
 						// if annotation type is ITEM generate item model, if BLOCK_REF is generated withExistingParent
 						GIM annotation = field.getAnnotation(GIM.class);

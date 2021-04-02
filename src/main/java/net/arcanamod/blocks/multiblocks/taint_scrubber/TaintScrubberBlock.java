@@ -100,12 +100,13 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 					}
 				}
 				dead = Taint.getDeadOfBlock(Taint.getPureOfBlock(dead));
+				// todo: what the heck?
 				if(compound.getBoolean("silk_touch"))
 					dead = Taint.getPureOfBlock(dead);
 				iter++;
 			}
 			// Replace it with its dead form if found.
-			if(dead != null){
+			if(dead != null && !world.isRemote()){
 				BlockState deadState = switchBlock(world.getBlockState(taintingPos), dead);
 				world.setBlockState(taintingPos, deadState);
 				if(dead.isAir(world.getBlockState(taintingPos), world, taintingPos)){

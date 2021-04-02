@@ -61,7 +61,7 @@ public class NodeParticle extends SpriteTexturedParticle{
 				particleBlue = blue(blended) / 255f;
 			}
 			catch (ArithmeticException arithmeticException) {
-				Arcana.logger.error(arithmeticException + " at: ["+ posX+"@"+posY+"@"+posZ+"]");
+				Arcana.LOGGER.error(arithmeticException + " at: ["+ posX+"@"+posY+"@"+posZ+"]");
 			}
 		}
 		super.renderParticle(buffer, renderInfo, partialTicks);
