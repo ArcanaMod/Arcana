@@ -1,6 +1,6 @@
 package net.arcanamod.systems.spell.modules.core;
 
-import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
@@ -66,7 +66,7 @@ public class CommentBlock extends SpellModule {
 
 	@Override
 	public void renderUnderMouse(int x, int y, ItemRenderer itemRenderer, boolean floating) {
-		UiUtil.drawTexturedModalRect(x, y, 176, 0, 16, 16);
+		ClientUiUtil.drawTexturedModalRect(x, y, 176, 0, 16, 16);
 	}
 
 	@Override
@@ -74,6 +74,6 @@ public class CommentBlock extends SpellModule {
 		int left = Math.min(x, startX);
 		int top = Math.min(y, startY);
 
-		UiUtil.drawModalRectWithCustomSizedTexture(left, top, 128, 0, getWidth(), getHeight(), 48, 48);
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(left, top, 128, 0, getWidth(), getHeight(), 48, 48);
 	}
 }
