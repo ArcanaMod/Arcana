@@ -83,30 +83,30 @@ public class Arcana{
 	public static final boolean debug = true;
 	
 	public Arcana(){
-//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-//		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-//
-//		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ArcanaConfig.COMMON_SPEC);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
+
+		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ArcanaConfig.COMMON_SPEC);
 		
 		// deferred registry registration
 		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-//		NodeType.init();
-//		Aspects.init();
+		NodeType.init();
+		Aspects.init();
 
-//		ArcanaBlocks.BLOCKS.register(modEventBus);
-//		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
-//		ArcanaItems.ITEMS.register(modEventBus);
-//		ArcanaEffects.EFFECTS.register(modEventBus);
-//		ArcanaRecipes.Serializers.SERIALIZERS.register(modEventBus);
-//		ArcanaTiles.TES.register(modEventBus);
-//		ArcanaContainers.CON.register(modEventBus);
-//		ArcanaFeatures.FEATURES.register(modEventBus);
-//		ArcanaBiomes.BIOMES.register(modEventBus);
-//		ArcanaFluids.FLUIDS.register(modEventBus);
+		ArcanaBlocks.BLOCKS.register(modEventBus);
+		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
+		ArcanaItems.ITEMS.register(modEventBus);
+		ArcanaEffects.EFFECTS.register(modEventBus);
+		ArcanaRecipes.Serializers.SERIALIZERS.register(modEventBus);
+		ArcanaTiles.TES.register(modEventBus);
+		ArcanaContainers.CON.register(modEventBus);
+		ArcanaFeatures.FEATURES.register(modEventBus);
+		ArcanaBiomes.BIOMES.register(modEventBus);
+		ArcanaFluids.FLUIDS.register(modEventBus);
 
-//		proxy.construct();
+		proxy.construct();
 	}
 	
 	public static ResourceLocation arcLoc(String path){
