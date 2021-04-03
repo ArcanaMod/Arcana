@@ -3,7 +3,10 @@ package net.arcanamod.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.AspectBattery;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.IAspectHolder;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.client.ClientAuraHandler;
@@ -68,9 +71,9 @@ public final class Huds{
 					int baseX = (int)(ArcanaConfig.WAND_HUD_LEFT.get() ? offX / scale : (event.getWindow().getScaledWidth() - offX) / scale - 49);
 					int baseY = (int)(ArcanaConfig.WAND_HUD_TOP.get() ? offY / scale : (event.getWindow().getScaledHeight() - offY) / scale - 49);
 					RenderSystem.pushMatrix();
-					RenderSystem.scalef(scale, scale, 2);
-					UiUtil.renderVisCore(core, baseX, baseY);
-					UiUtil.renderVisMeter(core, aspects, baseX, baseY);
+					RenderSystem.scalef(scale,scale,2);
+					ClientUiUtil.renderVisCore(core, baseX, baseY);
+					ClientUiUtil.renderVisMeter(core, aspects, baseX, baseY);
 					MagicDeviceItem.getFocusStack(wand).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
 					RenderSystem.popMatrix();
 				}
@@ -82,10 +85,10 @@ public final class Huds{
 				int flux = ClientAuraHandler.currentFlux;
 				int pixHeight = Math.min(flux, 100);
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FILLING);
-				UiUtil.drawModalRectWithCustomSizedTexture(8, 8 + (100 - pixHeight), 0, 100 * frame, 32, pixHeight, 1024, 1024);
+				ClientUiUtil.drawModalRectWithCustomSizedTexture(8, 8 + (100 - pixHeight), 0, 100 * frame, 32, pixHeight, 1024, 1024);
 				// display the frame at top-left
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FRAME);
-				UiUtil.drawTexturedModalRect(0, 0, 0, 0, 48, 116);
+				ClientUiUtil.drawTexturedModalRect(0, 0, 0, 0, 48, 116);
 				// if flux is over max, flash white
 				if(flux > 100){
 					int amount = (int)(Math.abs(((MathHelper.sin((player.ticksExisted + event.getPartialTicks()) / 3f)) / 3f)) * 255);
@@ -116,7 +119,7 @@ public final class Huds{
 						int y = baseY - 10;
 						if(i % 2 == 0)
 							y += 8;
-						UiUtil.renderAspectStack(aspStack, x, y);
+						ClientUiUtil.renderAspectStack(aspStack, x, y);
 					}
 				}
 			}
@@ -136,7 +139,7 @@ public final class Huds{
 							y += 8;
 						AspectStack stack1 = aspStack.getContainedAspectStack();
 						if(!stack1.isEmpty())
-							UiUtil.renderAspectStack(stack1, x, y);
+							ClientUiUtil.renderAspectStack(stack1, x, y);
 					}
 				}
 			}

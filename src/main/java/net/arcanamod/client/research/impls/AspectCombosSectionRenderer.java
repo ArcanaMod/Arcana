@@ -2,8 +2,8 @@ package net.arcanamod.client.research.impls;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.client.gui.ResearchEntryScreen;
-import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.systems.research.ResearchBook;
 import net.arcanamod.systems.research.ResearchBooks;
@@ -33,12 +33,12 @@ public class AspectCombosSectionRenderer implements EntrySectionRenderer<AspectC
 		for(int i = pageIndex * 5, size = list.size(); i < size && i < (pageIndex + 1) * 5; i++){
 			Pair<Aspect, Aspect> pair = list.get(i);
 			int dispIndex = i - pageIndex * 5;
-			UiUtil.renderAspect(pair.getFirst(), x, y + 30 * dispIndex);
-			UiUtil.renderAspect(pair.getSecond(), x + 40, y + 30 * dispIndex);
-			UiUtil.renderAspect(Aspects.COMBINATIONS.get(pair), x + 80, y + 30 * dispIndex);
+			ClientUiUtil.renderAspect(pair.getFirst(), x, y + 30 * dispIndex);
+			ClientUiUtil.renderAspect(pair.getSecond(), x + 40, y + 30 * dispIndex);
+			ClientUiUtil.renderAspect(Aspects.COMBINATIONS.get(pair), x + 80, y + 30 * dispIndex);
 			mc().getTextureManager().bindTexture(textures);
-			UiUtil.drawTexturedModalRect(x + 20, y + 30 * dispIndex, 105, 161, 12, 13);
-			UiUtil.drawTexturedModalRect(x + 60, y + 30 * dispIndex, 118, 161, 12, 13);
+			ClientUiUtil.drawTexturedModalRect(x + 20, y + 30 * dispIndex, 105, 161, 12, 13);
+			ClientUiUtil.drawTexturedModalRect(x + 60, y + 30 * dispIndex, 118, 161, 12, 13);
 		}
 	}
 	
@@ -51,15 +51,15 @@ public class AspectCombosSectionRenderer implements EntrySectionRenderer<AspectC
 			Pair<Aspect, Aspect> pair = list.get(i);
 			int dispIndex = i - pageIndex * 5;
 			if(mouseX >= x && mouseX < x + 16 && mouseY >= y + 30 * dispIndex && mouseY < y + 30 * dispIndex + 16){
-				UiUtil.drawAspectTooltip(pair.getFirst(), mouseX, mouseY, screenWidth, screenHeight);
+				ClientUiUtil.drawAspectTooltip(pair.getFirst(), mouseX, mouseY, screenWidth, screenHeight);
 				break;
 			}
 			if(mouseX >= x + 40 && mouseX < x + 40 + 16 && mouseY >= y + 30 * dispIndex && mouseY < y + 30 * dispIndex + 16){
-				UiUtil.drawAspectTooltip(pair.getSecond(), mouseX, mouseY, screenWidth, screenHeight);
+				ClientUiUtil.drawAspectTooltip(pair.getSecond(), mouseX, mouseY, screenWidth, screenHeight);
 				break;
 			}
 			if(mouseX >= x + 80 && mouseX < x + 80 + 16 && mouseY >= y + 30 * dispIndex && mouseY < y + 30 * dispIndex + 16){
-				UiUtil.drawAspectTooltip(Aspects.COMBINATIONS.get(pair), mouseX, mouseY, screenWidth, screenHeight);
+				ClientUiUtil.drawAspectTooltip(Aspects.COMBINATIONS.get(pair), mouseX, mouseY, screenWidth, screenHeight);
 				break;
 			}
 		}

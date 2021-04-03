@@ -14,7 +14,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import java.util.Arrays;
 import java.util.List;
 
-import static net.arcanamod.client.gui.UiUtil.drawModalRectWithCustomSizedTexture;
+import static net.arcanamod.client.gui.ClientUiUtil.drawModalRectWithCustomSizedTexture;
 
 public class PuzzlesCompletedRequirementRenderer implements RequirementRenderer<PuzzlesCompletedRequirement>{
 	

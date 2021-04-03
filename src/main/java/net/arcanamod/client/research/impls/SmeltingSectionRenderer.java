@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.AbstractCookingRecipe;
 import net.minecraft.item.crafting.IRecipe;
 
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
-import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public class SmeltingSectionRenderer extends AbstractCraftingSectionRenderer<SmeltingSection>{
 	

@@ -12,7 +12,6 @@ import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.spell.Spell;
-import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.core.StartCircle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -25,6 +24,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -32,7 +33,9 @@ import net.minecraftforge.items.SlotItemHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.function.Supplier;
 
 @MethodsReturnNonnullByDefault
@@ -66,6 +69,7 @@ public class FociForgeContainer extends AspectContainer {
         this(ArcanaContainers.FOCI_FORGE.get(),i,playerInventory,(FociForgeTileEntity) playerInventory.player.getEntityWorld().getTileEntity(packetBuffer.readBlockPos()));
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void addPlayerSlots(IInventory playerInventory){
         int hotX = 88, invX = 148, baseY = FociForgeScreen.HEIGHT - 61;
         // Slots for the main inventory

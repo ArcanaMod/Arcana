@@ -13,7 +13,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import java.util.Collections;
 import java.util.List;
 
-import static net.arcanamod.client.gui.UiUtil.drawModalRectWithCustomSizedTexture;
+import static net.arcanamod.client.gui.ClientUiUtil.drawModalRectWithCustomSizedTexture;
 
 public class ResearchCompletedRequirementRenderer implements RequirementRenderer<ResearchCompletedRequirement>{
 	
