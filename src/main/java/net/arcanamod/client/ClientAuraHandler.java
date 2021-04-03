@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@Mod.EventBusSubscriber({Dist.CLIENT})
+@Mod.EventBusSubscriber(Dist.CLIENT)
 public class ClientAuraHandler{
 	
 	public static final Collection<ChunkPos> CLIENT_LOADED_CHUNKS = new ConcurrentSkipListSet<>(Comparator.<ChunkPos>comparingInt(value -> value.x).thenComparingInt(value -> value.z));

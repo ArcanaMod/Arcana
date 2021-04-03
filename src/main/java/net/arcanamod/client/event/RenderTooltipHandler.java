@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.Mod;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-@Mod.EventBusSubscriber(value = Dist.CLIENT)
+@Mod.EventBusSubscriber(Dist.CLIENT)
 public class RenderTooltipHandler {
 	
 	@SubscribeEvent(priority = EventPriority.LOWEST)
