@@ -24,6 +24,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -34,7 +35,7 @@ import java.util.List;
 
 import static net.arcanamod.Arcana.arcLoc;
 
-@Mod.EventBusSubscriber(modid = Arcana.MODID)
+@Mod.EventBusSubscriber(modid = Arcana.MODID, value = Dist.CLIENT)
 public final class Huds{
 	
 	public static final ResourceLocation FLUX_METER_FRAME = arcLoc("textures/gui/hud/flux_meter_frame.png");

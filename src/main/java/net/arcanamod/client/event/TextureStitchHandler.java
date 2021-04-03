@@ -12,10 +12,13 @@ import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.world.NodeType;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.fml.common.Mod;
 
 import javax.annotation.Nonnull;
 
+@Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class TextureStitchHandler {
 	
 	@SuppressWarnings("deprecation")
