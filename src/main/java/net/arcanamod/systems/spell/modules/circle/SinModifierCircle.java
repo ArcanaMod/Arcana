@@ -3,7 +3,7 @@ package net.arcanamod.systems.spell.modules.circle;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.nbt.CompoundNBT;
@@ -77,9 +77,9 @@ public class SinModifierCircle extends SpellModule {
 
 	@Override
 	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
-		UiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 128, getWidth(), getHeight());
+		ClientUiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 128, getWidth(), getHeight());
 		if (!floating || aspect == Aspects.EMPTY) {
-			UiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 55, 64, 0, 16, 16);
+			ClientUiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 55, 64, 0, 16, 16);
 		} else {
 			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), mouseX - 8, mouseY - 55);
 		}
@@ -87,10 +87,10 @@ public class SinModifierCircle extends SpellModule {
 
 	@Override
 	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
-		UiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 0, 128, getWidth(), getHeight());
+		ClientUiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 0, 128, getWidth(), getHeight());
 		if (!floating) {
 			if (aspect == Aspects.EMPTY) {
-				UiUtil.drawTexturedModalRect(x - 8, y - 55, 64, 0, 16, 16);
+				ClientUiUtil.drawTexturedModalRect(x - 8, y - 55, 64, 0, 16, 16);
 			} else {
 				itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x - 8, y - 55);
 			}
