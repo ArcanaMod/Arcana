@@ -86,7 +86,7 @@ public class ClientProxy extends CommonProxy{
 		MinecraftForge.EVENT_BUS.register(ClientTickHandler.class);
 		MinecraftForge.EVENT_BUS.register(InitScreenHandler.class);
 		MinecraftForge.EVENT_BUS.register(BookRenderer.class);
-		Arcana.logger.debug("This should only be run on the client!");
+		Arcana.LOGGER.debug("This should only be run on the client!");
 		MinecraftForge.EVENT_BUS.register(ParticleFactoryEvent.class);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
