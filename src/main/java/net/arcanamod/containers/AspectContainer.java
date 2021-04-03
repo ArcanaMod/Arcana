@@ -11,6 +11,8 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.ContainerType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -59,7 +61,8 @@ public abstract class AspectContainer extends Container{
 	public void setHeldCount(int heldCount){
 		this.heldCount = heldCount;
 	}
-	
+
+	@OnlyIn(Dist.CLIENT)
 	public void handleClick(int mouseX, int mouseY, int button, AspectContainerScreen<?> gui){
 		for(AspectSlot slot : getAspectSlots()){
 			if(slot.getInventory().get() != null && gui.isSlotVisible(slot) && isMouseOverSlot(mouseX, mouseY, slot, gui)){
@@ -81,6 +84,7 @@ public abstract class AspectContainer extends Container{
 		}
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot, AspectContainerScreen<?> gui){
 		return mouseX >= gui.getGuiLeft() + slot.x && mouseY >= gui.getGuiTop() + slot.y && mouseX < gui.getGuiLeft() + slot.x + 16 && mouseY < gui.getGuiTop() + slot.y + 16;
 	}

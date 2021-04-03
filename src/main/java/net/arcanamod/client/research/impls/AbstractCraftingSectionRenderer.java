@@ -2,8 +2,8 @@ package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.client.gui.ResearchEntryScreen;
-import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.systems.research.ResearchBook;
 import net.arcanamod.systems.research.ResearchBooks;
@@ -21,8 +21,8 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
-import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public abstract class AbstractCraftingSectionRenderer<T extends AbstractCraftingSection> implements EntrySectionRenderer<T>{
 	
@@ -99,7 +99,7 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 	
 	protected void aspectTooltipArea(Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight, int areaX, int areaY){
 		if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= areaY && mouseY < areaY + 16)
-			UiUtil.drawAspectTooltip(aspect, mouseX, mouseY, screenWidth, screenHeight);
+			ClientUiUtil.drawAspectTooltip(aspect, mouseX, mouseY, screenWidth, screenHeight);
 	}
 	
 	protected void tooltip(ItemStack stack, int mouseX, int mouseY, int screenWidth, int screenHeight){

@@ -43,7 +43,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 			if(slot.getInventory().get() != null && slot.visible)
 				if(isMouseOverSlot(mouseX, mouseY, slot))
 					if(slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null)
-						UiUtil.drawAspectTooltip(slot.getAspect(), mouseX, mouseY, width, height);
+						ClientUiUtil.drawAspectTooltip(slot.getAspect(), mouseX, mouseY, width, height);
 	}
 
 	@Override

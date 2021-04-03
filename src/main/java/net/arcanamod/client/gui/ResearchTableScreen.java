@@ -47,7 +47,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
 		minecraft.getTextureManager().bindTexture(BG);
-		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
 			CompoundNBT compound = te.note().getTag();
 			if(compound != null){
@@ -184,7 +184,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				minecraft.getTextureManager().bindTexture(BG);
 				GlStateManager.disableLighting();
 				RenderSystem.color4f(1, 1, 1, 1);
-				UiUtil.drawModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
+				ClientUiUtil.drawModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
 			}
 		}
 	}

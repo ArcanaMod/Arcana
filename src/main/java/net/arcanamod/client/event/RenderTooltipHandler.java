@@ -1,8 +1,9 @@
 package net.arcanamod.client.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.aspects.*;
-import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.ItemAspectRegistry;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.text.StringTextComponent;
@@ -32,7 +33,7 @@ public class RenderTooltipHandler {
 				int x = event.getX();
 				int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();
 				for(AspectStack stack : stacks){
-					UiUtil.renderAspectStack(stack, x, y);
+					ClientUiUtil.renderAspectStack(stack, x, y);
 					x += 20;
 				}
 				RenderSystem.popMatrix();
