@@ -77,6 +77,7 @@ public class AspectSlot{
 	}
 	
 	public Aspect getAspect(){
+		if (aspect == null) return Aspects.EMPTY; // Quick fix. TODO: Fix null problems
 		return aspect;
 	}
 	

@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -91,7 +92,7 @@ public class AspectUtils {
 		return handler.findIndexesFromAspectInHolders(Aspects.EMPTY)[0];
 	}
 	
-	public static String getLocalizedAspectDisplayName(Aspect aspect) {
+	public static String getLocalizedAspectDisplayName(@Nonnull Aspect aspect) {
 		return I18n.format("aspect." + aspect.name().toLowerCase());
 	}
 

@@ -1,6 +1,7 @@
 package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.client.gui.AspectContainerScreen;
 import net.arcanamod.containers.slots.AspectSlot;
@@ -76,6 +77,7 @@ public abstract class AspectContainer extends Container{
 				// do some quick checking to make sure that the packet won't just do nothing
 				// don't actually modify anything though!
 				// <blah>
+				if (slot.getAspect() == null) slot.setAspect(Aspects.EMPTY);
 				Connection.sendAspectClick(windowId,aspectSlots.indexOf(slot),type,slot.getAspect());
 			}
 		}

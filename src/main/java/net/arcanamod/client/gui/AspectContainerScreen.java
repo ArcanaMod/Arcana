@@ -42,7 +42,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 		for(AspectSlot slot : aspectContainer.getAspectSlots())
 			if(slot.getInventory().get() != null && slot.visible)
 				if(isMouseOverSlot(mouseX, mouseY, slot))
-					if(slot.getAspect() != Aspects.EMPTY)
+					if(slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null)
 						UiUtil.drawAspectTooltip(slot.getAspect(), mouseX, mouseY, width, height);
 	}
 

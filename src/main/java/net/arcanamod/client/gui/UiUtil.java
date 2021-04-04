@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 
 import static java.lang.Math.max;
@@ -211,7 +212,7 @@ public final class UiUtil{
 		return entry == null || (from != null && from.entryStage(entry) >= entry.sections().size());
 	}
 	
-	public static void drawAspectTooltip(Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight){
+	public static void drawAspectTooltip(@Nonnull Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight){
 		String name = AspectUtils.getLocalizedAspectDisplayName(aspect);
 		drawAspectStyleTooltip(name, mouseX, mouseY, screenWidth, screenHeight);
 		

@@ -51,6 +51,7 @@ public class PkAspectClick {
 				AspectContainer container = (AspectContainer)spe.openContainer;
 				if(container.getAspectSlots().size() > msg.slotId){
 					AspectSlot slot = container.getAspectSlots().get(msg.slotId);
+					if (slot.getAspect() == null) slot.setAspect(Aspects.EMPTY); // Quick fix. TODO: Fix null problems.
 					if(msg.type == ClickType.TAKE || msg.type == ClickType.TAKE_ALL) {
 						if (slot.isSymbolic()) {
 							container.setHeldAspect(msg.expectedAspect);
