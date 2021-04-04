@@ -1,6 +1,7 @@
 package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
@@ -22,15 +23,22 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		GlStateManager.disableLighting();
+		GlStateManager.enableBlend();
 		for(AspectSlot slot : aspectContainer.getAspectSlots())
 			if(slot.getInventory().get() != null && slot.visible){
-				if(slot.getAspect() != Aspects.EMPTY){
-					itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(slot.getAspect()), slot.x, slot.y);
-					itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(slot.getAspect()), slot.x - 1, slot.y + 3, slot.shouldShowAmount() ? String.valueOf(slot.getAmount()) : "");
-				}
+				if(slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null)
+					if(slot.getAmount() > 0){
+						RenderSystem.color3f(1, 1, 1);
+						if(slot.shouldShowAmount())
+							UiUtil.renderAspectStack(slot.getAspect(), slot.getAmount(), slot.x, slot.y, 0xFFFFFF);
+						else
+							UiUtil.renderAspect(slot.getAspect(), slot.x, slot.y);
+					}else{
+						RenderSystem.color3f(.5f, .5f, .5f);
+						UiUtil.renderAspect(slot.getAspect(), slot.x, slot.y);
+					}
 				if(isMouseOverSlot(mouseX, mouseY, slot)){
-					GlStateManager.disableLighting();
-					GlStateManager.enableBlend();
 					GuiUtils.drawGradientRect(300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
 				}
 			}
