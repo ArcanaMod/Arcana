@@ -2,7 +2,7 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"1": "arcana:models/staff"
+		"1": "arcana:models/staff/staff"
 	},
 	"elements": [
 		{

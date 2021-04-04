@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [32, 32],
 	"textures": {
-		"0": "arcana:models/gauntlet",
-		"particle": "arcana:models/gauntlet"
+		"0": "arcana:models/gauntlet/gauntlet",
+		"particle": "arcana:models/gauntlet/gauntlet"
 	},
 	"elements": [
 		{

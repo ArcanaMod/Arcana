@@ -29,6 +29,7 @@ import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
+import net.minecraft.world.biome.ForestBiome;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -111,6 +113,22 @@ public class ClientProxy extends CommonProxy{
 		inst.getItemColors().register((stack, layer) ->
 						layer == 1 ? FocusItem.getColourAspect(stack) : 0xffffffff,
 				ArcanaItems.DEFAULT_FOCUS::get
+		);
+
+		inst.getBlockColors().register((state, access, pos, index) ->
+						access != null && pos != null ? BiomeColors.getFoliageColor(access, pos) : -1,
+				ArcanaBlocks.GREATWOOD_LEAVES.get(),
+				ArcanaBlocks.WILLOW_LEAVES.get(),
+				ArcanaBlocks.EUCALYPTUS_LEAVES.get(),
+				ArcanaBlocks.DAIR_LEAVES.get()
+		);
+
+		inst.getItemColors().register((stack, layer) ->
+						0x529c34,
+				ArcanaBlocks.GREATWOOD_LEAVES.get(),
+				ArcanaBlocks.WILLOW_LEAVES.get(),
+				ArcanaBlocks.EUCALYPTUS_LEAVES.get(),
+				ArcanaBlocks.DAIR_LEAVES.get()
 		);
 		
 		// this should go to client init but again it works here
