@@ -1,32 +1,18 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
-import net.arcanamod.client.render.aspects.AspectHelixParticleData;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
-import net.arcanamod.items.attachment.Focus;
-import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.spell.Spell;
-import net.arcanamod.systems.spell.casts.ICast;
-import net.arcanamod.systems.spell.modules.SpellModule;
-import net.arcanamod.systems.spell.modules.core.CastCircle;
-import net.arcanamod.systems.spell.modules.core.CastMethod;
-import net.arcanamod.util.Pair;
-import net.arcanamod.util.VisUtils;
-import net.arcanamod.world.AuraView;
-import net.arcanamod.world.Node;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
@@ -34,20 +20,17 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @ParametersAreNonnullByDefault

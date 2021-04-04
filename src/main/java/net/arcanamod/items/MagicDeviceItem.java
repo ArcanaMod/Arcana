@@ -3,7 +3,7 @@ package net.arcanamod.items;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
-import net.arcanamod.client.render.aspects.AspectHelixParticleData;
+import net.arcanamod.client.render.particles.AspectHelixParticleData;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;

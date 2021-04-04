@@ -1,4 +1,4 @@
-package net.arcanamod.client.render.aspects;
+package net.arcanamod.client.render.particles;
 
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import mcp.MethodsReturnNonnullByDefault;

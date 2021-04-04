@@ -1,4 +1,4 @@
-package net.arcanamod.client.render.aspects;
+package net.arcanamod.client.render.particles;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
