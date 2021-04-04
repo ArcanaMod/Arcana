@@ -3,12 +3,14 @@ package net.arcanamod.entities;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.arcanamod.Arcana;
 import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.command.arguments.ParticleArgument;
 import net.minecraft.entity.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -22,6 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.fml.network.NetworkHooks;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,7 +41,7 @@ public class SpellCloudEntity extends Entity {
 	private static final DataParameter<Boolean> IGNORE_RADIUS;
 	private static final DataParameter<IParticleData> PARTICLE;
 	private ICast spell;
-	private final Map<net.minecraft.entity.Entity, Integer> reapplicationDelayMap;
+	private final Map<net.minecraft.entity.Entity, Integer> reapplicationDelayMap = Maps.newHashMap();
 	private int duration;
 	private int waitTime;
 	private int reapplicationDelay;
@@ -51,11 +54,6 @@ public class SpellCloudEntity extends Entity {
 
 	public SpellCloudEntity(EntityType<? extends SpellCloudEntity> entityType, World world) {
 		super(entityType, world);
-		this.spell = Casts.EMPTY_SPELL;
-		this.reapplicationDelayMap = Maps.newHashMap();
-		this.duration = 600;
-		this.waitTime = 20;
-		this.reapplicationDelay = 20;
 		this.noClip = true;
 		this.setRadius(3.0F);
 	}
@@ -105,7 +103,7 @@ public class SpellCloudEntity extends Entity {
 	}
 
 	private void updateFixedColor() {
-		if (this.spell == Casts.EMPTY_SPELL) {
+		if (this.spell == null) {
 			this.getDataManager().set(COLOR, 0);
 		} else {
 			this.getDataManager().set(COLOR, this.spell.getSpellAspect().getColorRange().get(3));
@@ -148,6 +146,7 @@ public class SpellCloudEntity extends Entity {
 
 	public void tick() {
 		super.tick();
+
 		boolean ignores = this.shouldIgnoreRadius();
 		float radius = this.getRadius();
 		if (this.world.isRemote) {
@@ -255,7 +254,8 @@ public class SpellCloudEntity extends Entity {
 
 						this.reapplicationDelayMap.put(lvt_7_3_, this.ticksExisted + this.reapplicationDelay);
 
-						((Cast) spell).useOnEntity(null, lvt_7_3_);
+						if (spell != null)
+							((Cast) spell).useOnEntity((PlayerEntity) owner, lvt_7_3_);
 
 						if (this.radiusOnUse != 0.0F) {
 							radius += this.radiusOnUse;
@@ -356,7 +356,7 @@ public class SpellCloudEntity extends Entity {
 			compoundNBT.putInt("Color", this.getColor());
 		}
 
-		if (this.spell != Casts.EMPTY_SPELL && this.spell != null) {
+		if (this.spell != null) {
 			compoundNBT.putString("spell", ((Cast) spell).getId().toString()); // TODO: REPLACE (SPELL) wit (ISPELL)
 		}
 	}
@@ -373,8 +373,9 @@ public class SpellCloudEntity extends Entity {
 		return PushReaction.IGNORE;
 	}
 
+	@Override
 	public IPacket<?> createSpawnPacket() {
-		return new SSpawnObjectPacket(this);
+		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	public EntitySize getSize(Pose p_213305_1_) {

@@ -8,7 +8,6 @@ import net.minecraft.util.ResourceLocation;
 public class Casts {
 	public static final BiMap<ResourceLocation, ICast> castMap = HashBiMap.create();
 
-	public static final ICast EMPTY_SPELL = new TemporaryEmptyCast(); // This temporary variable will be removed
 	public static final ICast MINING_CAST = new MiningCast();
 	public static final ICast EXCHANGE_CAST = new ExchangeCast();
 	public static final ICast FABRIC_CAST = new FabricCast();

@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public class AspectSlot{
 	
-	private Aspect aspect;
+	private Aspect aspect = Aspects.EMPTY;
 	private final Supplier<IAspectHandler> inventory;
 	
 	public int x, y;
@@ -31,14 +31,14 @@ public class AspectSlot{
 	 */
 	public boolean storeSlot = false;
 	
-	public AspectSlot(Aspect aspect, @Nonnull Supplier<IAspectHandler> inventory, int x, int y){
+	public AspectSlot(@Nonnull Aspect aspect, @Nonnull Supplier<IAspectHandler> inventory, int x, int y){
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
 		this.y = y;
 	}
 	
-	public AspectSlot(Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y, boolean storeSlot){
+	public AspectSlot(@Nonnull Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y, boolean storeSlot){
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
@@ -69,7 +69,7 @@ public class AspectSlot{
 	
 	public void onChange(){
 		if(storeSlot && getAmount() == 0)
-			aspect = null;
+			aspect = Aspects.EMPTY;
 	}
 	
 	public Supplier<IAspectHandler> getInventory(){
@@ -80,7 +80,7 @@ public class AspectSlot{
 		return aspect;
 	}
 	
-	public void setAspect(Aspect aspect){
+	public void setAspect(@Nonnull Aspect aspect){
 		this.aspect = aspect;
 	}
 	
@@ -97,7 +97,7 @@ public class AspectSlot{
 	 *
 	 * @return The result of drawing from the underlying inventory.
 	 */
-	public int drain(Aspect aspect, int amount, boolean simulate) {
+	public int drain(@Nonnull Aspect aspect, int amount, boolean simulate) {
 		int result = 0;
 		if (symbolic) {
 			result = amount;
@@ -116,7 +116,7 @@ public class AspectSlot{
 	 *
 	 * @return The result of inserting into the underlying inventory.
 	 */
-	public int insert(Aspect aspect, int amount, boolean simulate){
+	public int insert(@Nonnull Aspect aspect, int amount, boolean simulate){
 		int result = amount;
 		if (!symbolic) {
 			if(getInventory().get() != null) {

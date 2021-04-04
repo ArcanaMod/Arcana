@@ -10,6 +10,7 @@ import net.arcanamod.client.gui.*;
 import net.arcanamod.client.model.WandModelLoader;
 import net.arcanamod.client.render.DairSpiritRenderer;
 import net.arcanamod.client.render.KoalaEntityRenderer;
+import net.arcanamod.client.render.SpellCloudEntityRenderer;
 import net.arcanamod.client.render.WillowSpiritRenderer;
 import net.arcanamod.client.render.aspects.ArcanaParticles;
 import net.arcanamod.client.render.tiles.*;
@@ -197,6 +198,7 @@ public class ClientProxy extends CommonProxy{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.WILLOW_SPIRIT.get(), WillowSpiritRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_CLOUD.get(), SpellCloudEntityRenderer::new);
 		
 		ArcanaEntities.render();
 	}

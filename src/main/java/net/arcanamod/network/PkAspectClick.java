@@ -2,6 +2,7 @@ package net.arcanamod.network;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class PkAspectClick {
@@ -19,9 +21,9 @@ public class PkAspectClick {
 	int windowId;
 	int slotId;
 	ClickType type;
-	Aspect expectedAspect;
+	@Nonnull Aspect expectedAspect;
 
-	public PkAspectClick(int windowId, int slotId, ClickType type, Aspect expectedAspect) {
+	public PkAspectClick(int windowId, int slotId, ClickType type, @Nonnull Aspect expectedAspect) {
 		this.windowId = windowId;
 		this.slotId = slotId;
 		this.type = type;
@@ -57,16 +59,16 @@ public class PkAspectClick {
 							int drain = msg.type == ClickType.TAKE_ALL ? slot.getAmount() : 1;
 							container.setHeldCount(container.getHeldCount() + syncAndGet(slot, drain, msg.windowId, msg.slotId, msg.type, spe, true));
 							if (slot.getAmount() <= 0 && slot.storeSlot)
-								slot.setAspect(null);
+								slot.setAspect(Aspects.EMPTY);
 							slot.onChange();
 						}
 					} else if (msg.type == ClickType.PUT || msg.type == ClickType.PUT_ALL) {
 						if (slot.isSymbolic()) {
 							container.setHeldCount(0);
 							container.setHeldAspect(null);
-						} else if (container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == null)) {
+						} else if (container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == Aspects.EMPTY)) {
 							int drain = msg.type == ClickType.PUT_ALL ? container.getHeldCount() : 1;
-							if(slot.getAspect() == null && slot.storeSlot)
+							if(slot.getAspect() == Aspects.EMPTY && slot.storeSlot)
 								slot.setAspect(container.getHeldAspect());
 							container.setHeldCount(container.getHeldCount() - (drain - syncAndGet(slot, drain,msg.windowId,msg.slotId,msg.type,spe,false)));
 							if(container.getHeldCount() <= 0){

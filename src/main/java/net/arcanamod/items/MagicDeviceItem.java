@@ -1,5 +1,6 @@
 package net.arcanamod.items;
 
+import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
 import net.arcanamod.client.render.aspects.AspectHelixParticleData;
@@ -139,6 +140,8 @@ public abstract class MagicDeviceItem extends Item{
 	public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, @Nonnull PlayerEntity player, @Nonnull Hand hand){
 		// TODO: only do this if you're casting a spell
 		// first do node raycast check, and then check if you have a focus
+		if (world.isRemote) Arcana.LOGGER.error("-2 -> rem0te");
+		if (player.world.isRemote) Arcana.LOGGER.error("-2 -> rem1te");
 		if(canUseSpells()){
 			ArcanaSounds.playSpellCastSound(player);
 			Focus focus = getFocus(player.getHeldItem(hand));
@@ -151,9 +154,9 @@ public abstract class MagicDeviceItem extends Item{
 					if(spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler, stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
 							spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)){
 						if(player.isCrouching())
-							Spell.runSpell(spell, player, player.getHeldItem(hand), ICast.Action.SPECIAL);
+							Spell.runSpell(spell, world, player, player.getHeldItem(hand), ICast.Action.SPECIAL);
 						else
-							Spell.runSpell(spell, player, player.getHeldItem(hand), ICast.Action.USE);
+							Spell.runSpell(spell, world, player, player.getHeldItem(hand), ICast.Action.USE);
 						// remove aspects from wand if spell successes.
 						for(AspectStack cost : spell.getSpellCosts().toList())
 							if(cost.getAspect() != Aspects.EMPTY)

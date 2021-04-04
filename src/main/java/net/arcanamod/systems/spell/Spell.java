@@ -16,6 +16,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,9 +50,9 @@ public class Spell implements ISpell {
 	 * @param sender {@link net.minecraft.item.ItemStack} that {@link net.minecraft.item.Item} extends {@link MagicDeviceItem}
 	 * @param action Spell use Action.
 	 */
-	public static void runSpell(Spell spell, PlayerEntity caster, Object sender, ICast.Action action){
+	public static void runSpell(Spell spell, World world, PlayerEntity caster, Object sender, ICast.Action action){
 		for (SpellModule module : spell.mainModule.bound) {
-			Logic.runSpellModule(spell, module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
+			Logic.runSpellModule(spell, world, module, caster, sender, action, new ArrayList<>(),new ArrayList<>());
 		}
 	}
 
@@ -138,7 +139,7 @@ public class Spell implements ISpell {
 		/**
 		 * Run spell Recursion.
 		 */
-		private static SpellModule runSpellModule(Spell spell, SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
+		private static SpellModule runSpellModule(Spell spell, World world, SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
 												  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
 			SpellModule mod = null;
 			if (toUnbound.bound.size() > 0){
@@ -150,12 +151,12 @@ public class Spell implements ISpell {
 							castMethodsAspects.get(castMethodsAspects.size()-1).setSecond(((CastMethodSin) module).aspect);
 					} else if (module instanceof CastCircle)
 						casts.add(((CastCircle) module).cast);
-					mod = runSpellModule(spell, module, caster, sender, action, castMethodsAspects, casts);
+					mod = runSpellModule(spell, world, module, caster, sender, action, castMethodsAspects, casts);
 				}
 			}else{
 				for (ICast cast : casts){
 					for (Pair<Aspect,Aspect> castMethodsAspect : castMethodsAspects)
-						cast.use(spell.spellUUID, caster, sender, castMethodsAspect, action);
+						cast.use(spell.spellUUID, world, caster, sender, castMethodsAspect, action);
 				}
 			}
 			return mod;
@@ -219,11 +220,11 @@ public class Spell implements ISpell {
 			castMethodToCastCircle_connector.bindModule(castCircle);
 
 			CastMethodSin sinMethod = new CastMethodSin();
-			sinMethod.aspect = Aspects.GREED;
+			sinMethod.aspect = Aspects.GLUTTONY;
 			sinMethod.bindModule(castMethodToCastCircle_connector);
 
 			CastMethod castMethod = new CastMethod();
-			castMethod.aspect = Aspects.FIRE;
+			castMethod.aspect = Aspects.AIR;
 			castMethod.bindModule(sinMethod);
 			startToCastMethod_connector.bindModule(castMethod);
 			Spell spell = new Spell(new StartCircle());

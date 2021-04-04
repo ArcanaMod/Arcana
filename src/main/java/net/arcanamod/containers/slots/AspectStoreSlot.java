@@ -2,6 +2,7 @@ package net.arcanamod.containers.slots;
 
 import net.arcanamod.aspects.*;
 
+import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class AspectStoreSlot extends AspectSlot{
@@ -35,7 +36,7 @@ public class AspectStoreSlot extends AspectSlot{
 		return holder.stored;
 	}
 	
-	public void setAspect(Aspect aspect){
+	public void setAspect(@Nonnull Aspect aspect){
 		if(holder != null)
 			holder.stored = aspect;
 	}

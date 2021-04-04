@@ -3,13 +3,14 @@ package net.arcanamod.network;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.capabilities.Researcher;
-import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.research.Pin;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
+
+import javax.annotation.Nonnull;
 
 import static net.arcanamod.Arcana.arcLoc;
 
@@ -62,7 +63,7 @@ public class Connection{
 		INSTANCE.send(PacketDistributor.PLAYER.with(() -> target), new PkSyncPlayerResearch(from.serializeNBT()));
 	}
 
-	public static void sendAspectClick(int windowId, int slotId, PkAspectClick.ClickType type, Aspect expectedAspect){
+	public static void sendAspectClick(int windowId, int slotId, PkAspectClick.ClickType type, @Nonnull Aspect expectedAspect){
 		INSTANCE.sendToServer(new PkAspectClick(windowId, slotId, type, expectedAspect));
 	}
 
