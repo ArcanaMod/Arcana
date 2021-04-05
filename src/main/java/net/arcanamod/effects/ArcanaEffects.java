@@ -24,7 +24,7 @@ public class ArcanaEffects extends Effect{
 	
 	public static final RegistryObject<Effect> FROZEN = EFFECTS.register("frozen", () -> new FrozenEffect().addAttributesModifier(
 			SharedMonsterAttributes.MOVEMENT_SPEED,
-			"4617a65e-47f6-4f2f-ac4f-eef0a46517fa", -.25,
+			"4617a65e-47f6-4f2f-ac4f-eef0a46517fa", -.45,
 			AttributeModifier.Operation.MULTIPLY_BASE
 	));
 	

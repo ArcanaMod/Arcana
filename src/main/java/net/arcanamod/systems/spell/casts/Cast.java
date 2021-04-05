@@ -97,12 +97,12 @@ public abstract class Cast implements ICast {
 					// slowly moves towards the closest hostile mob
 				} else if (cast.getSecond() == GLUTTONY) {
 					// the cloud is bigger
-					createSpellCloud(player,world,player.getPositionVec());
+					createSpellCloud(player,world,player.getPositionVec(),1);
 				} else if (cast.getSecond() == WRATH) {
 					// creates a trap that creates a cloud when triggered
 				} else {
 					// Default AIR SPELL
-					createSpellCloud(player,world,player.getPositionVec());
+					createSpellCloud(player,world,player.getPositionVec(),0);
 				}
 			}
 			if (cast.getFirst() == WATER) {
@@ -329,13 +329,13 @@ public abstract class Cast implements ICast {
 		}
 	}
 
-	private void createSpellCloud(PlayerEntity player, World world, Vec3d area) {
+	private void createSpellCloud(PlayerEntity player, World world, Vec3d area,int rMultP) {
 		if (world.isRemote) Arcana.LOGGER.error("0 -> rem0te");
 		if (player.world.isRemote) Arcana.LOGGER.error("0 -> rem1te");
 		SpellCloudEntity cloud = new SpellCloudEntity(world, area);
 		cloud.setOwner(player);
 		cloud.setDuration(800);
-		cloud.setRadius(3.0F);
+		cloud.setRadius(3.0F*(rMultP+1));
 		cloud.setRadiusOnUse(-0.5F);
 		cloud.setWaitTime(10);
 		cloud.setRadiusPerTick(-cloud.getRadius() / (float)cloud.getDuration());

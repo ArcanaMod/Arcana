@@ -42,7 +42,7 @@ public class IceCast extends Cast {
 	}
 
 	private int getFrozenDuration() {
-		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"firstModifier"),10) * 20;
+		return SpellValues.getOrDefault(AspectUtils.getAspect(data,"firstModifier"),3) * 20;
 	}
 
 	@Override
