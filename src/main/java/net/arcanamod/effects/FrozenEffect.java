@@ -16,14 +16,11 @@ public class FrozenEffect extends Effect{
 	@Override
 	public void performEffect(@Nonnull LivingEntity entity, int amplifier){
 		entity.attackEntityFrom(DamageSource.MAGIC, 2.0F);
-		// if you want to change jump height, look at the Jump Boost effect
-		// if you want to affect fall speed, look at the Slow Fall status effect
-		// you will very likely need to mixin
 	}
 	
 	@Override
 	public boolean isReady(int duration, int amplifier){
-		int j = 30 >> amplifier;
+		int j = 40 >> amplifier;
 		if (j > 0) {
 			return duration % j == 0;
 		} else {
