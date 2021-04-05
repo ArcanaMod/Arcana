@@ -3,15 +3,16 @@ package net.arcanamod.world;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import net.arcanamod.aspects.*;
-import net.arcanamod.client.render.aspects.ArcanaParticles;
-import net.arcanamod.client.render.aspects.NodeParticleData;
+import net.arcanamod.client.render.particles.ArcanaParticles;
+import net.arcanamod.client.render.particles.NodeParticleData;
 import net.arcanamod.util.GogglePriority;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.particles.BlockParticleData;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.fluids.IFluidBlock;
 
@@ -243,7 +244,7 @@ public abstract class NodeType{
 		public void tick(IWorld world, AuraView nodes, Node node){
 			super.tick(world, nodes, node);
 			// check all blocks in range
-			int range = 6;
+			int range = (int)(0.7f * MathHelper.sqrt(node.aspects.getHolders().stream().mapToInt(IAspectHolder::getCurrentVis).sum()));
 			BlockPos nodePos = new BlockPos(node);
 			BlockPos.Mutable cursor = new BlockPos.Mutable();
 			for(int x = -range; x < range; x++){
@@ -251,23 +252,26 @@ public abstract class NodeType{
 					for(int z = -range; z < range; z++){
 						cursor.setPos(nodePos).move(x, y, z);
 						// if they have air on at least one side
-						if(!world.getBlockState(cursor).isAir() && !(world.getBlockState(cursor).getBlock() instanceof IFluidBlock || world.getBlockState(cursor).getBlock() instanceof FlowingFluidBlock) && (cursor.distanceSq(node, true) < range * range) && (world.getBlockState(cursor.up()).isAir() || world.getBlockState(cursor.down()).isAir() || world.getBlockState(cursor.north()).isAir() || world.getBlockState(cursor.south()).isAir() || world.getBlockState(cursor.east()).isAir() || world.getBlockState(cursor.west()).isAir())){
+						BlockState state = world.getBlockState(cursor);
+						if(!state.isAir() && !(state.getBlock() instanceof IFluidBlock || state.getBlock() instanceof FlowingFluidBlock) && (cursor.distanceSq(node, true) < range * range) && (cursor.distanceSq(node, true) < 2 || (emptySpace(world.getBlockState(cursor.up())) || emptySpace(world.getBlockState(cursor.down())) || emptySpace(world.getBlockState(cursor.north())) || emptySpace(world.getBlockState(cursor.south())) || emptySpace(world.getBlockState(cursor.east())) || emptySpace(world.getBlockState(cursor.west()))))){
 							// have particles moving from the block to the node
 							float xR = world.getRandom().nextFloat(), yR = world.getRandom().nextFloat(), zR = world.getRandom().nextFloat();
 							if(world.getRandom().nextBoolean())
-								world.addParticle(ParticleTypes.FLAME, cursor.getX() + xR, cursor.getY() + yR, cursor.getZ() + zR, -(x - node.getX() % 1 + xR - 1) / 16f, -(y - node.getY() % 1 + yR) / 16f, -(z - node.getZ() % 1 + zR) / 16f);
+								world.addParticle(new BlockParticleData(ArcanaParticles.HUNGRY_NODE_BLOCK_PARTICLE.get(), state).setPos(cursor), cursor.getX() + xR, cursor.getY() + yR, cursor.getZ() + zR, -(x - node.getX() % 1 + xR - 1) / 20f, -(y - node.getY() % 1 + yR) / 20f, -(z - node.getZ() % 1 + zR) / 20f);
 							// TODO: minimum time to break (instead of pure random)
 							if(!world.isRemote()){
-								BlockState state = world.getBlockState(cursor);
 								float hardness = state.getBlockHardness(world, cursor);
-								if(hardness != -1 && world.getRandom().nextInt((int)(hardness * 300) + 1) == 0){
+								if(hardness != -1 && world.getRandom().nextInt((int)(hardness * 300) + 1) == 0)
 									world.destroyBlock(cursor, false);
-								}
 							}
 						}
 					}
 				}
 			}
+		}
+		
+		private static boolean emptySpace(BlockState state){
+			return state.isAir() || state.getBlock() instanceof IFluidBlock || state.getBlock() instanceof FlowingFluidBlock;
 		}
 	}
 

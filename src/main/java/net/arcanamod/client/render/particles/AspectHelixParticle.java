@@ -1,4 +1,4 @@
-package net.arcanamod.client.render.aspects;
+package net.arcanamod.client.render.particles;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.util.LocalAxis;

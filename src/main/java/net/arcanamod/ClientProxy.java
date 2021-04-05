@@ -12,7 +12,7 @@ import net.arcanamod.client.render.DairSpiritRenderer;
 import net.arcanamod.client.render.KoalaEntityRenderer;
 import net.arcanamod.client.render.SpellCloudEntityRenderer;
 import net.arcanamod.client.render.WillowSpiritRenderer;
-import net.arcanamod.client.render.aspects.ArcanaParticles;
+import net.arcanamod.client.render.particles.ArcanaParticles;
 import net.arcanamod.client.render.tiles.*;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
