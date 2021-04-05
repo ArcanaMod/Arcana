@@ -28,7 +28,7 @@ public class ArcanaSounds {
 
 	// SoundTypes
 	public static SoundType JAR = new SoundType(0.6F, 1.0F,Impl.jar_break,Impl.jar_step,Impl.jar_place,Impl.jar_break,Impl.jar_step);
-	public static SoundType TAINT = new SoundType(0.6F, 1.0F,Impl.taint_break,Impl.taint_step,Impl.taint_place,Impl.taint_break,Impl.taint_step);
+	public static SoundType TAINT = new SoundType(0.6F, 1.4F,Impl.taint_break,Impl.taint_step,Impl.taint_place,Impl.taint_break,Impl.taint_step);
 	public static SoundType CRYSTAL = new SoundType(0.6F, 1.0F,Impl.crystal_break,Impl.crystal_place,Impl.crystal_place,Impl.crystal_break,Impl.crystal_place);
 
 	// SoundEvents

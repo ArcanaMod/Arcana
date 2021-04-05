@@ -83,7 +83,7 @@ public class WardenedBlockBakedModel implements IBakedModel {
 		Minecraft mc = Minecraft.getInstance();
 		BlockRendererDispatcher blockRendererDispatcher = mc.getBlockRendererDispatcher();
 		retval = blockRendererDispatcher.getModelForState(copiedBlock.get());
-		return retval;
+		return retval.getBakedModel();
 	}
 
 	private IBakedModel modelWhenNotCamouflaged;

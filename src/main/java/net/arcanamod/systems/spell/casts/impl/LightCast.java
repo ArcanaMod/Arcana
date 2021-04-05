@@ -34,12 +34,23 @@ public class LightCast extends Cast {
 
 	@Override
 	public ActionResultType useOnPlayer(PlayerEntity playerTarget) {
-		throw new NotImplementedException();
+		return placeLight(playerTarget);
 	}
 
 	@Override
 	public ActionResultType useOnEntity(PlayerEntity caster, Entity entityTarget) {
-		throw new NotImplementedException();
+		return placeLight(entityTarget);
+	}
+
+	public ActionResultType placeLight(Entity entityTarget){
+		if (entityTarget.world.getBlockState(entityTarget.getPosition().up()).getBlock() == ArcanaBlocks.LIGHT_BLOCK.get()){
+			return ActionResultType.SUCCESS;
+		}
+		if (entityTarget.world.getBlockState(entityTarget.getPosition().up()).getBlock().isAir(entityTarget.world.getBlockState(entityTarget.getPosition().up()),entityTarget.world,entityTarget.getPosition().up())){
+			entityTarget.world.setBlockState(entityTarget.getPosition().up(), ArcanaBlocks.LIGHT_BLOCK.get().getDefaultState());
+			return ActionResultType.SUCCESS;
+		}
+		return ActionResultType.FAIL;
 	}
 
 	@Override

@@ -8,8 +8,6 @@ import net.arcanamod.entities.SpellEggEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -17,11 +15,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.EggEntity;
-import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.EffectInstance;
@@ -32,8 +26,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,9 +64,6 @@ public abstract class Cast implements ICast {
 
 	@Override
 	public void use(UUID spellUUID, World world, PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, ICast.Action action){
-		if (world.isRemote) Arcana.LOGGER.error("-1 -> rem0te");
-		if (player.world.isRemote) Arcana.LOGGER.error("-1 -> rem1te");
-
 		if (action == ICast.Action.USE) {
 			if (cast.getFirst() == AIR) {
 				/*
@@ -330,8 +319,6 @@ public abstract class Cast implements ICast {
 	}
 
 	private void createSpellCloud(PlayerEntity player, World world, Vec3d area,int rMultP) {
-		if (world.isRemote) Arcana.LOGGER.error("0 -> rem0te");
-		if (player.world.isRemote) Arcana.LOGGER.error("0 -> rem1te");
 		SpellCloudEntity cloud = new SpellCloudEntity(world, area);
 		cloud.setOwner(player);
 		cloud.setDuration(800);
