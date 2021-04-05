@@ -22,6 +22,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -441,6 +442,6 @@ public class ArcanaBlocks{
 
 	// Spell made blocks
 	public static final RegistryObject<Block> VACUUM_BLOCK = BLOCKS.register("vacuum_block", () -> new VacuumBlock(create(MISCELLANEOUS).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(15)));
-	public static final RegistryObject<Block> WARDENED_BLOCK = BLOCKS.register("wardened_block", () -> new WardenedBlock(create(MISCELLANEOUS).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(3)));
+	public static final RegistryObject<Block> WARDENED_BLOCK = BLOCKS.register("wardened_block", () -> new WardenedBlock(create(MISCELLANEOUS).hardnessAndResistance(64).harvestTool(ToolType.AXE).doesNotBlockMovement().notSolid().lightValue(3)));
 	public static final RegistryObject<Block> LIGHT_BLOCK = BLOCKS.register("light_block", () -> new Block(create(AIR).hardnessAndResistance(0).doesNotBlockMovement().notSolid().lightValue(3)));
 }
