@@ -7,6 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,8 +20,10 @@ import java.util.Optional;
 @ParametersAreNullableByDefault
 @MethodsReturnNonnullByDefault
 @SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "RedundantTypeArguments", "unused"})
-public class WardenedBlockTileEntity extends TileEntity {
+public class WardenedBlockTileEntity extends TileEntity implements ITickableTileEntity {
 	private Optional<BlockState> copyState = Optional.of(Blocks.CLAY.getDefaultState());;
+	protected int maxTime;
+	protected int time;
 
 	public WardenedBlockTileEntity() {
 		super(ArcanaTiles.WARDENED_BLOCK_TE.get());
@@ -28,6 +31,9 @@ public class WardenedBlockTileEntity extends TileEntity {
 
 	public void setState(Optional<BlockState> state) {
 		copyState = state;
+	}
+	public void setMaxTime(int maxTime) {
+		this.maxTime = maxTime;
 	}
 
 	@Override
@@ -80,5 +86,11 @@ public class WardenedBlockTileEntity extends TileEntity {
 	public void handleUpdateTag(CompoundNBT tag)
 	{
 		this.read(tag);
+	}
+
+	@Override
+	public void tick() {
+		if (time > maxTime) world.setBlockState(pos,copyState.orElse(Blocks.AIR.getDefaultState()));
+		time++;
 	}
 }

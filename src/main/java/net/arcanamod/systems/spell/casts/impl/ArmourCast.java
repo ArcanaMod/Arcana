@@ -56,9 +56,10 @@ public class ArmourCast extends Cast {
 	@Override
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		if (world.isRemote) return ActionResultType.SUCCESS;
-			Block previousState = world.getBlockState(blockTarget).getBlock();
-			world.setBlockState(blockTarget, ArcanaBlocks.WARDENED_BLOCK.get().getDefaultState());
-			((WardenedBlockTileEntity)world.getTileEntity(blockTarget)).setState(Optional.of(previousState.getDefaultState()));
+		Block previousState = world.getBlockState(blockTarget).getBlock();
+		world.setBlockState(blockTarget, ArcanaBlocks.WARDENED_BLOCK.get().getDefaultState());
+		((WardenedBlockTileEntity)world.getTileEntity(blockTarget)).setState(Optional.of(previousState.getDefaultState()));
+		((WardenedBlockTileEntity)world.getTileEntity(blockTarget)).setMaxTime(getWardingDuration()*20);
 		return ActionResultType.SUCCESS;
 	}
 

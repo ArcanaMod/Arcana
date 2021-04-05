@@ -1,5 +1,7 @@
 {
-    "variants": {
-      "": {}
+  "variants": {
+    "": {
+      "model": "arcana:block/wardened_block"
     }
+  }
 }
