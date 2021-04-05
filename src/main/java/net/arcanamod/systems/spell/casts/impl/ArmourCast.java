@@ -10,6 +10,7 @@ import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.systems.spell.*;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -57,9 +58,12 @@ public class ArmourCast extends Cast {
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		if (world.isRemote) return ActionResultType.SUCCESS;
 		Block previousState = world.getBlockState(blockTarget).getBlock();
-		world.setBlockState(blockTarget, ArcanaBlocks.WARDENED_BLOCK.get().getDefaultState());
-		((WardenedBlockTileEntity)world.getTileEntity(blockTarget)).setState(Optional.of(previousState.getDefaultState()));
-		((WardenedBlockTileEntity)world.getTileEntity(blockTarget)).setMaxTime(getWardingDuration()*20);
+		if (previousState.getBlock() != ArcanaBlocks.WARDENED_BLOCK.get()) {
+			world.setBlockState(blockTarget, ArcanaBlocks.WARDENED_BLOCK.get().getDefaultState());
+			((WardenedBlockTileEntity) world.getTileEntity(blockTarget)).setState(Optional.of(previousState.getDefaultState()));
+		} else {
+			world.setBlockState(blockTarget, ((WardenedBlockTileEntity) world.getTileEntity(blockTarget)).getState().orElse(Blocks.AIR.getDefaultState()));
+		}
 		return ActionResultType.SUCCESS;
 	}
 

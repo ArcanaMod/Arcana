@@ -20,10 +20,8 @@ import java.util.Optional;
 @ParametersAreNullableByDefault
 @MethodsReturnNonnullByDefault
 @SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "RedundantTypeArguments", "unused"})
-public class WardenedBlockTileEntity extends TileEntity implements ITickableTileEntity {
-	private Optional<BlockState> copyState = Optional.of(Blocks.CLAY.getDefaultState());;
-	protected int maxTime;
-	protected int time;
+public class WardenedBlockTileEntity extends TileEntity {
+	private Optional<BlockState> copyState = null;
 
 	public WardenedBlockTileEntity() {
 		super(ArcanaTiles.WARDENED_BLOCK_TE.get());
@@ -31,9 +29,6 @@ public class WardenedBlockTileEntity extends TileEntity implements ITickableTile
 
 	public void setState(Optional<BlockState> state) {
 		copyState = state;
-	}
-	public void setMaxTime(int maxTime) {
-		this.maxTime = maxTime;
 	}
 
 	@Override
@@ -86,11 +81,5 @@ public class WardenedBlockTileEntity extends TileEntity implements ITickableTile
 	public void handleUpdateTag(CompoundNBT tag)
 	{
 		this.read(tag);
-	}
-
-	@Override
-	public void tick() {
-		if (time > maxTime) world.setBlockState(pos,copyState.orElse(Blocks.AIR.getDefaultState()));
-		time++;
 	}
 }
