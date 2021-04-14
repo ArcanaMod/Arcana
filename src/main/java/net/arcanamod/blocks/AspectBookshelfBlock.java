@@ -35,7 +35,7 @@ import static net.arcanamod.ArcanaSounds.playPhialshelfSlideSound;
 @MethodsReturnNonnullByDefault
 public class AspectBookshelfBlock extends WaterloggableBlock{
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.FACING;
-	public static final BooleanProperty FULL_BLOCK = BlockStateProperties.EXTENDED;
+	public static final BooleanProperty FULL_SIZE = BlockStateProperties.EXTENDED;
 	public VoxelShape SHAPE_FULL = Block.makeCuboidShape(0, 0, 0, 16, 16, 16);
 	public VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0, 0, 8, 16, 16, 16);
 	public VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0, 0, 0, 16, 16, 8);
@@ -46,7 +46,7 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 
 	public AspectBookshelfBlock(boolean fullBlock, Properties properties){
 		super(properties);
-		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(FULL_BLOCK, fullBlock));
+		setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH).with(WATERLOGGED, Boolean.FALSE).with(FULL_SIZE, fullBlock));
 	}
 
 	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
@@ -81,13 +81,13 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 	}
 
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(HORIZONTAL_FACING, WATERLOGGED, FULL_BLOCK);
+		builder.add(HORIZONTAL_FACING, WATERLOGGED, FULL_SIZE);
 	}
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		if (state.get(FULL_BLOCK)) {
-			return SHAPE_FULL;
+		if (state.get(FULL_SIZE)) {
+			return super.getShape(state, worldIn, pos, context);
 		} else {
 			switch (state.get(HORIZONTAL_FACING)) {
 				case SOUTH:
@@ -164,9 +164,13 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 			}
 			if (heightSlot <= 0) {
 				heightSlot = 1;
+			} else if (heightSlot >= 4) {
+				heightSlot = 3;
 			}
 			if (widthSlot <= 0) {
 				widthSlot = 1;
+			} else if (widthSlot >= 4) {
+				widthSlot = 3;
 			}
 			int slot = (widthSlot + ((heightSlot - 1) * 3)) - 1;
 
