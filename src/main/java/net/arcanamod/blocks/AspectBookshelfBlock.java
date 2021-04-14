@@ -1,13 +1,8 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.Arcana;
-import net.arcanamod.ArcanaSounds;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.blocks.bases.HorizontalWaterloggableBlock;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
-import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.PhialItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -19,20 +14,14 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
-import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.tileentity.BrewingStandTileEntity;
-import net.minecraft.tileentity.DispenserTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -47,6 +36,7 @@ import static net.arcanamod.ArcanaSounds.playPhialshelfSlideSound;
 public class AspectBookshelfBlock extends WaterloggableBlock{
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.FACING;
 	public static final BooleanProperty FULL_BLOCK = BlockStateProperties.EXTENDED;
+	public VoxelShape SHAPE_FULL = Block.makeCuboidShape(0, 0, 0, 16, 16, 16);
 	public VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0, 0, 8, 16, 16, 16);
 	public VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0, 0, 0, 16, 16, 8);
 	public VoxelShape SHAPE_EAST = Block.makeCuboidShape(0, 0, 0, 8, 16, 16);
@@ -96,19 +86,23 @@ public class AspectBookshelfBlock extends WaterloggableBlock{
 
 	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		switch(state.get(HORIZONTAL_FACING)) {
-			case SOUTH:
-				return SHAPE_SOUTH;
-			case EAST:
-				return SHAPE_EAST;
-			case WEST:
-				return SHAPE_WEST;
-			case UP:
-				return SHAPE_UP;
-			case DOWN:
-				return SHAPE_DOWN;
-			default:
-				return SHAPE_NORTH;
+		if (state.get(FULL_BLOCK)) {
+			return SHAPE_FULL;
+		} else {
+			switch (state.get(HORIZONTAL_FACING)) {
+				case SOUTH:
+					return SHAPE_SOUTH;
+				case EAST:
+					return SHAPE_EAST;
+				case WEST:
+					return SHAPE_WEST;
+				case UP:
+					return SHAPE_UP;
+				case DOWN:
+					return SHAPE_DOWN;
+				default:
+					return SHAPE_NORTH;
+			}
 		}
 	}
 

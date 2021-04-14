@@ -1,0 +1,22 @@
+{
+  "multipart": [
+    {   "when": { "facing": "north" },
+      "apply": { "model": "arcana:block/aspect_bookshelf_block" }
+    },
+    {   "when": { "facing": "east" },
+      "apply": { "model": "arcana:block/aspect_bookshelf_block", "y": 90 }
+    },
+    {   "when": { "facing": "south" },
+      "apply": { "model": "arcana:block/aspect_bookshelf_block", "y": 180 }
+    },
+    {   "when": { "facing": "west" },
+      "apply": { "model": "arcana:block/aspect_bookshelf_block", "y": 270 }
+    },
+    {   "when": { "facing": "up" },
+      "apply": { "model": "arcana:block/aspect_bookshelf_block", "x": 90 }
+    },
+    {   "when": { "facing": "down" },
+      "apply": { "model": "arcana:block/aspect_bookshelf_block", "x": 270 }
+    }
+  ]
+}

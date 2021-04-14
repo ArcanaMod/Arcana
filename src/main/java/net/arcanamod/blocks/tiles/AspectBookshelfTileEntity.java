@@ -1,26 +1,18 @@
 package net.arcanamod.blocks.tiles;
 
 import net.arcanamod.aspects.*;
-import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.blocks.JarBlock;
 import net.arcanamod.items.PhialItem;
-import net.arcanamod.util.VisUtils;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BrewingStandBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.DispenserContainer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableLootTileEntity;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.ITextComponent;
@@ -30,8 +22,6 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.*;
-import java.util.Arrays;
 
 public class AspectBookshelfTileEntity extends LockableLootTileEntity implements ITickableTileEntity, VisShareable {
 	private NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
@@ -55,7 +45,6 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 
 	public boolean canInsertItem(int index, ItemStack itemStackIn, @Nullable Direction direction) {
 		return this.isItemValidForSlot(index, itemStackIn);
-
 	}
 
 	public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {

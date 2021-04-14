@@ -163,6 +163,7 @@ public class ClientProxy extends CommonProxy{
 		//Tile Entity Special Render
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_SHELF_TE.get(), AspectBookshelfTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_SHELF_BLOCK_TE.get(), AspectBookshelfTileEntityRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.VACUUM_TE.get(), VacuumTileEntityRender::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.PEDESTAL_TE.get(), PedestalTileEntityRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_VALVE_TE.get(), AspectValveTileEntityRenderer::new);

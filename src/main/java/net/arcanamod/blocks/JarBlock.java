@@ -50,8 +50,6 @@ public class JarBlock extends WaterloggableBlock {
 	public static final BooleanProperty UP = BooleanProperty.create("up");
 	private Type type;
 
-	Logger LOGGER = LogManager.getLogger();
-	
 	public JarBlock(Properties properties, Type type){
 		super(properties);
 		this.type = type;
@@ -131,7 +129,8 @@ public class JarBlock extends WaterloggableBlock {
 				jar.label = getYaw(player);
 			}
 		} else if (player.getHeldItem(handIn).getItem() instanceof MagicDeviceItem && player.isCrouching()) {
-			// TODO: Jar breaks on shift click with wand.
+			onBlockHarvested(worldIn, pos, state, player);
+			worldIn.removeBlock(pos, false);
 		} else if (jar.label != null && player.getHeldItem(handIn).getItem() == Blocks.AIR.asItem() && player.isCrouching()) {
 			if (!player.isCreative()) {
 				if (!player.addItemStackToInventory(new ItemStack(ArcanaItems.LABEL.get()))) {
