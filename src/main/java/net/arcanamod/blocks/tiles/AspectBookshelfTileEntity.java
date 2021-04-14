@@ -1,5 +1,6 @@
 package net.arcanamod.blocks.tiles;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
 import net.arcanamod.items.PhialItem;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +23,11 @@ import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class AspectBookshelfTileEntity extends LockableLootTileEntity implements ITickableTileEntity, VisShareable {
 	private NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
 	AspectBattery vis = new AspectBattery(9, 8);
@@ -40,51 +45,12 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 
 	private void inventoryChanged() {
 		this.markDirty();
-		this.getWorld().notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+		Objects.requireNonNull(this.getWorld()).notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
 	}
 
-	public boolean canInsertItem(int index, ItemStack itemStackIn, @Nullable Direction direction) {
-		return this.isItemValidForSlot(index, itemStackIn);
-	}
-
-	public boolean isItemValidForSlot(int index, @Nonnull ItemStack stack) {
+	@Override
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		return this.getStackInSlot(index).isEmpty();
-
-	}
-
-	public AspectBattery updateBatteryAndReturn() {
-		for (int i = 0; i < stacks.size(); i++) {
-			if (stacks.get(i).getItem() instanceof PhialItem) {
-				AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stacks.get(i));
-				IAspectHolder target = vis.getHolder(0);
-				vis.setCellAtIndex(i,(AspectCell)target);
-			} else {
-				if (vis.exist(i)) {
-					vis.deleteCell(i);
-				}
-			}
-		}
-		return vis;
-	}
-
-	@Nonnull @Override public CompoundNBT getUpdateTag(){
-		CompoundNBT nbtTagCompound = new CompoundNBT();
-		write(nbtTagCompound);
-		return nbtTagCompound;
-	}
-
-	@Override public void handleUpdateTag(CompoundNBT tag){
-		this.read(tag);
-	}
-
-	@Override @Nullable public SUpdateTileEntityPacket getUpdatePacket() {
-		CompoundNBT nbtTagCompound = new CompoundNBT();
-		write(nbtTagCompound);
-		return new SUpdateTileEntityPacket(pos, -1, nbtTagCompound);
-	}
-
-	@Override public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		read(pkt.getNbtCompound());
 	}
 
 	public int getVisTotal() {
@@ -97,12 +63,100 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		return vis;
 	}
 
-	@Nonnull @Override public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+	public int getSizeInventory() {
+		return 9;
+	}
+
+	public int getInventoryStackLimit() {
+		return 1;
+	}
+
+	protected ITextComponent getDefaultName() {
+		return new TranslationTextComponent("container.aspectbookshelf");
+	}
+
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new DispenserContainer(id, player, this);
+	}
+
+	@Override
+	public void closeInventory(PlayerEntity player) {
+		inventoryChanged();
+		super.closeInventory(player);
+	}
+
+	public int getRedstoneOut() {
+		float vis;
+		vis = getVisTotal();
+		return (int) ((vis / 72F) * 15);
+	}
+
+	protected NonNullList<ItemStack> getItems() {
+		return this.stacks;
+	}
+
+	protected void setItems(NonNullList<ItemStack> itemsIn) {
+		this.stacks = itemsIn;
+		inventoryChanged();
+	}
+
+	@Override public void tick() {
+		double newVis = vis.getHoldersAmount();
+		if (world != null && lastVis != newVis && !world.isRemote) {
+			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
+		}
+		lastVis = newVis;
+	}
+
+	public CompoundNBT write(CompoundNBT compound) {
+		super.write(compound);
+		CompoundNBT aspectsNbt = vis.serializeNBT();
+		compound.put("aspects", aspectsNbt);
+		if (!this.checkLootAndWrite(compound)) {
+			ItemStackHelper.saveAllItems(compound, this.stacks);
+		}
+		return compound;
+	}
+
+	public void read(CompoundNBT compound) {
+		vis.deserializeNBT(compound.getCompound("aspects"));
+		this.stacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		if (!this.checkLootAndRead(compound)) {
+			ItemStackHelper.loadAllItems(compound, this.stacks);
+		}
+		super.read(compound);
+	}
+
+	public AspectBattery updateBatteryAndReturn() {
+		for (int i = 0; i < stacks.size(); i++) {
+			if (stacks.get(i).getItem() instanceof PhialItem) {
+				AspectBattery aspectBattery = (AspectBattery) IAspectHandler.getFrom(stacks.get(i));
+				IAspectHolder target;
+				if (aspectBattery != null) {
+					target = aspectBattery.getHolder(0);
+					vis.setCellAtIndex(i,(AspectCell)target);
+				}
+			} else {
+				if (vis.exist(i)) {
+					vis.deleteCell(i);
+				}
+			}
+		}
+		return vis;
+	}
+
+
+	@Override public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
 		if (cap == AspectHandlerCapability.ASPECT_HANDLER) {
+			inventoryChanged();
 			return updateBatteryAndReturn().getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		} else {
-			return null;
+			return updateBatteryAndReturn().getCapability(null, null);
 		}
+	}
+
+	@Override public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+		return this.getCapability(cap);
 	}
 
 	public boolean addPhial(ItemStack stack, int slot) {
@@ -126,53 +180,26 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		return ItemStack.EMPTY;
 	}
 
-	public int getSizeInventory() {
-		return 9;
+	@Override @Nullable public SUpdateTileEntityPacket getUpdatePacket() {
+		CompoundNBT nbtTagCompound = new CompoundNBT();
+		write(nbtTagCompound);
+		return new SUpdateTileEntityPacket(pos, -1, nbtTagCompound);
 	}
 
-	public int getInventoryStackLimit() {
-		return 1;
+	@Override public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+		read(pkt.getNbtCompound());
 	}
 
-	@Nonnull protected ITextComponent getDefaultName() {
-		return new TranslationTextComponent("container.aspectbookshelf");
-	}
-
-	public void read(@Nonnull CompoundNBT compound) {
-		super.read(compound);
-		vis.deserializeNBT(compound.getCompound("aspects"));
-		this.stacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
-		if (!this.checkLootAndRead(compound)) {
-			ItemStackHelper.loadAllItems(compound, this.stacks);
-		}
-	}
-
-	@Nonnull public CompoundNBT write(CompoundNBT compound) {
-		CompoundNBT aspectsNbt = vis.serializeNBT();
-		compound.put("aspects", aspectsNbt);
-		if (!this.checkLootAndWrite(compound)) {
-			ItemStackHelper.saveAllItems(compound, this.stacks);
-		}
-		return super.write(compound);
-	}
-
-	@Nonnull protected NonNullList<ItemStack> getItems() {
-		return this.stacks;
-	}
-
-	protected void setItems(@Nonnull NonNullList<ItemStack> itemsIn) {
-		this.stacks = itemsIn;
-		inventoryChanged();
-	}
-
-	@Nonnull protected Container createMenu(int id, @Nonnull PlayerInventory player) {
-		return new DispenserContainer(id, player, this);
+	@Override public CompoundNBT getUpdateTag(){
+		CompoundNBT nbtTagCompound = new CompoundNBT();
+		write(nbtTagCompound);
+		return nbtTagCompound;
 	}
 
 	@Override
-	public void closeInventory(PlayerEntity player) {
-		inventoryChanged();
-		super.closeInventory(player);
+	public void handleUpdateTag(CompoundNBT tag)
+	{
+		this.read(tag);
 	}
 
 	@Override public boolean isVisShareable() {
@@ -185,19 +212,5 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 
 	@Override public boolean isSecure() {
 		return false;
-	}
-
-	@Override public void tick() {
-		double newVis = vis.getHoldersAmount();
-		if(lastVis != newVis && !world.isRemote) {
-			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
-		}
-		lastVis = newVis;
-	}
-
-	public int getRedstoneOut() {
-		float vis;
-		vis = getVisTotal();
-		return (int) ((vis / 72F) * 15);
 	}
 }
