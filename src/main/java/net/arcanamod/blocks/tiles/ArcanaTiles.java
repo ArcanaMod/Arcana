@@ -16,7 +16,7 @@ public class ArcanaTiles{
 	public static final RegistryObject<TileEntityType<JarTileEntity>> JAR_TE =
 			TES.register("jar", () -> new TileEntityType<>(JarTileEntity::new, Sets.newHashSet(ArcanaBlocks.JAR.get(), ArcanaBlocks.SECURE_JAR.get(), ArcanaBlocks.VOID_JAR.get(), ArcanaBlocks.VACUUM_JAR.get(), ArcanaBlocks.PRESSURE_JAR.get()), null));
 	public static final RegistryObject<TileEntityType<AspectBookshelfTileEntity>> ASPECT_SHELF_TE =
-			TES.register("aspect_shelf", () -> new TileEntityType<>(AspectBookshelfTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_BOOKSHELF.get()), null));
+			TES.register("aspect_shelf", () -> new TileEntityType<>(AspectBookshelfTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_BOOKSHELF.get(), ArcanaBlocks.ASPECT_BOOKSHELF_BLOCK.get()), null));
 	public static final RegistryObject<TileEntityType<ResearchTableTileEntity>> RESEARCH_TABLE_TE =
 			TES.register("research_table", () -> new TileEntityType<>(ResearchTableTileEntity::new, Sets.newHashSet(ArcanaBlocks.RESEARCH_TABLE.get()), null));
 	public static final RegistryObject<TileEntityType<FociForgeTileEntity>> FOCI_FORGE_TE =

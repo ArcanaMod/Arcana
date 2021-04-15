@@ -101,7 +101,8 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> VACUUM_JAR = BLOCKS.register("vacuum_jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.3f), JarBlock.Type.VACUUM));
 	public static final RegistryObject<Block> PRESSURE_JAR = BLOCKS.register("pressure_jar", () -> new JarBlock(create(GLASS).sound(ArcanaSounds.JAR).hardnessAndResistance(0.3f), JarBlock.Type.PRESSURE));
 	
-	public static final RegistryObject<Block> ASPECT_BOOKSHELF = BLOCKS.register("aspect_bookshelf", () -> new AspectBookshelfBlock(create(WOOD).hardnessAndResistance(6)));
+	public static final RegistryObject<Block> ASPECT_BOOKSHELF = BLOCKS.register("aspect_bookshelf", () -> new AspectBookshelfBlock(false, create(WOOD).hardnessAndResistance(6).sound(SoundType.WOOD).notSolid()));
+	public static final RegistryObject<Block> ASPECT_BOOKSHELF_BLOCK = BLOCKS.register("aspect_bookshelf_block", () -> new AspectBookshelfBlock(true, create(WOOD).hardnessAndResistance(6).sound(SoundType.WOOD).notSolid()));
 	@GLT public static final RegistryObject<Block> RESEARCH_TABLE = BLOCKS.register("research_table", () -> new ResearchTableCoreBlock(create(WOOD).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> RESEARCH_TABLE_COMPONENT = BLOCKS.register("research_table_component", () -> new ResearchTableComponentBlock(create(WOOD).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> ARCANE_CRAFTING_TABLE = BLOCKS.register("arcane_crafting_table", () -> new ArcaneCraftingTableBlock(create(WOOD).hardnessAndResistance(2).notSolid()));

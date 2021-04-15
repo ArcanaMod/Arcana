@@ -14,6 +14,7 @@
 
     "_comment": "Subtitles",
     "arcana.sounds.spell_cast": "Spell Cast",
+    "arcana.sounds.phialshelf_slide": "Phialshelf used",
 
     "_comment": "Items",
     "item.arcana.scribbled_notes": "Scribbled Notes",
@@ -348,6 +349,7 @@
     "block.arcana.pressure_jar": "Pressure Jar",
 
     "block.arcana.aspect_bookshelf": "Phialshelf",
+    "block.arcana.aspect_bookshelf_block": "Block Phialshelf",
     "block.arcana.arcane_crafting_table": "Arcane Crafting Table",
     "block.arcana.crucible": "Crucible",
     "block.arcana.alembic": "Arcane Alembic",
@@ -588,6 +590,7 @@
     "devtools.mojang": "Mojang Tools",
     "container.arcane_workbench": "Arcane Crafting",
     "container.aspect_crystallizer": "Aspect Crystallizer",
+    "container.aspectbookshelf": "Phialshelf",
     "key.categories.mod.arcana": "Arcana",
     "key.arcana.swap_focus": "Swap Wand Focus",
 

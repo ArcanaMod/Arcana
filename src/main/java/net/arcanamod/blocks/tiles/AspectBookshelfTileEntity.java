@@ -1,213 +1,216 @@
 package net.arcanamod.blocks.tiles;
 
-import net.arcanamod.Arcana;
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
-import net.arcanamod.blocks.AspectBookshelfBlock;
-import net.arcanamod.util.Pair;
+import net.arcanamod.items.PhialItem;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.DispenserContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.LockableLootTileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Objects;
 
-@SuppressWarnings("deprecation")
-public class AspectBookshelfTileEntity extends TileEntity implements ITickableTileEntity, VisShareable
-{
-	AspectBattery aspectBattery = new AspectBattery(9, 8);
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class AspectBookshelfTileEntity extends LockableLootTileEntity implements ITickableTileEntity, VisShareable {
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
+	AspectBattery vis = new AspectBattery(9, 8);
+	private double lastVis;
+	public Direction rotation;
 
 	public AspectBookshelfTileEntity() {
 		super(ArcanaTiles.ASPECT_SHELF_TE.get());
 	}
 
-	protected NonNullList<ItemStack> items = NonNullList.withSize(9, ItemStack.EMPTY);
+	public AspectBookshelfTileEntity(Direction rotation) {
+		super(ArcanaTiles.ASPECT_SHELF_TE.get());
+		this.rotation = rotation;
+	}
 
-	public NonNullList<ItemStack> getItems() {
-		return items;
+	private void inventoryChanged() {
+		this.markDirty();
+		Objects.requireNonNull(this.getWorld()).notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
 	}
 
 	@Override
-	public void tick() {
-		if (getBlockState().get(AspectBookshelfBlock.LEVEL_0_9)!=getNonEmptyItemsStoredCount()) {
-			if (!world.isRemote)
-			world.setBlockState(pos,getBlockState().with(AspectBookshelfBlock.LEVEL_0_9,getNonEmptyItemsStoredCount()));
+	public boolean isItemValidForSlot(int index, ItemStack stack) {
+		return this.getStackInSlot(index).isEmpty();
+	}
+
+	public int getVisTotal() {
+		int vis = 0;
+		for (ItemStack stack : stacks) {
+			if (stack.getItem() instanceof PhialItem) {
+				vis += ((PhialItem) stack.getItem()).getAspectStacks(stack).get(0).getAmount();
+			}
 		}
+		return vis;
+	}
+
+	public int getSizeInventory() {
+		return 9;
+	}
+
+	public int getInventoryStackLimit() {
+		return 1;
+	}
+
+	protected ITextComponent getDefaultName() {
+		return new TranslationTextComponent("container.aspectbookshelf");
+	}
+
+	protected Container createMenu(int id, PlayerInventory player) {
+		return new DispenserContainer(id, player, this);
 	}
 
 	@Override
+	public void closeInventory(PlayerEntity player) {
+		inventoryChanged();
+		super.closeInventory(player);
+	}
+
+	public int getRedstoneOut() {
+		float vis;
+		vis = getVisTotal();
+		return (int) ((vis / 72F) * 15);
+	}
+
+	protected NonNullList<ItemStack> getItems() {
+		return this.stacks;
+	}
+
+	protected void setItems(NonNullList<ItemStack> itemsIn) {
+		this.stacks = itemsIn;
+		inventoryChanged();
+	}
+
+	@Override public void tick() {
+		double newVis = vis.getHoldersAmount();
+		if (world != null && lastVis != newVis && !world.isRemote) {
+			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
+		}
+		lastVis = newVis;
+	}
+
 	public CompoundNBT write(CompoundNBT compound) {
 		super.write(compound);
-		ItemStackHelper.saveAllItems(compound, this.items);
+		CompoundNBT aspectsNbt = vis.serializeNBT();
+		compound.put("aspects", aspectsNbt);
+		if (!this.checkLootAndWrite(compound)) {
+			ItemStackHelper.saveAllItems(compound, this.stacks);
+		}
 		return compound;
 	}
 
-	@Override
 	public void read(CompoundNBT compound) {
-		this.items = NonNullList.withSize(9, ItemStack.EMPTY);
-		ItemStackHelper.loadAllItems(compound, this.items);
+		vis.deserializeNBT(compound.getCompound("aspects"));
+		this.stacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+		if (!this.checkLootAndRead(compound)) {
+			ItemStackHelper.loadAllItems(compound, this.stacks);
+		}
 		super.read(compound);
 	}
 
-	private int getNonEmptyItemsStoredCount() {
-		int count = 0;
-		for (ItemStack stack : items)
-		{
-			if (!stack.isEmpty())
-				count++;
-		}
-		return count;
-	}
-
-	public AspectBattery updateBatteryAndReturn()
-	{
-		for (int i = 0; i < items.size(); i++) {
-			if (!items.get(i).isEmpty()) {
-				AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(items.get(i));
-				IAspectHolder target = vis.getHolder(0);
-				aspectBattery.setCellAtIndex(i,(AspectCell)target);
+	public AspectBattery updateBatteryAndReturn() {
+		for (int i = 0; i < stacks.size(); i++) {
+			if (stacks.get(i).getItem() instanceof PhialItem) {
+				AspectBattery aspectBattery = (AspectBattery) IAspectHandler.getFrom(stacks.get(i));
+				IAspectHolder target;
+				if (aspectBattery != null) {
+					target = aspectBattery.getHolder(0);
+					vis.setCellAtIndex(i,(AspectCell)target);
+				}
 			} else {
-				if (aspectBattery.exist(i))
-					aspectBattery.deleteCell(i);
+				if (vis.exist(i)) {
+					vis.deleteCell(i);
+				}
 			}
 		}
-
-		return aspectBattery;
+		return vis;
 	}
 
-	@Nonnull
-	@Override
-	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-		if (cap == AspectHandlerCapability.ASPECT_HANDLER)
+
+	@Override public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
+		if (cap == AspectHandlerCapability.ASPECT_HANDLER) {
+			inventoryChanged();
 			return updateBatteryAndReturn().getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
-		else return null;
+		} else {
+			return updateBatteryAndReturn().getCapability(null, null);
+		}
 	}
 
-	@Nonnull
-	@Override
-	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
+	@Override public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
 		return this.getCapability(cap);
 	}
 
-	/**
-	 * Add phial to shelf
-	 * @param toAdd ItemStack of phial to add
-	 * @return returns true if success
-	 */
-	public boolean addPhial(ItemStack toAdd)
-	{
-		if (getNonEmptyItemsStoredCount() < 9 && toAdd != ItemStack.EMPTY)
-		{
-			AspectBattery vis = (AspectBattery) toAdd.getCapability(AspectHandlerCapability.ASPECT_HANDLER).orElse(null);
-			if (vis!=null&&(Arcana.debug||vis.getHolder(0).getCurrentVis()==0))
-			{
-				ItemStack stack = toAdd.copy();
-				stack.setCount(1);
-				for (int i = 0; i < items.size(); i++) {
-					if (items.get(i)==ItemStack.EMPTY)
-					{
-						items.set(getNonEmptyItemsStoredCount(),stack);
-						return true;
-					}
-				}
-			}
+	public boolean addPhial(ItemStack stack, int slot) {
+		if (this.stacks.get(slot).isEmpty()) {
+			stack = stack.copy();
+			stack.setCount(1);
+			this.setInventorySlotContents(slot, stack);
+			inventoryChanged();
+			return true;
 		}
 		return false;
 	}
 
-	/**
-	 * Removes phial from shelf
-	 * @return removed phial stack with vis inside
-	 */
-	public ItemStack removePhial()
-	{
-		Pair<ItemStack,Integer> idStack = new Pair<>(ItemStack.EMPTY, 0);
-		ItemStack emptyPhial;
-		int i = -1;
-		if (getNonEmptyItemsStoredCount() > 0)
-		{
-			for (ItemStack stack : items)
-			{
-				i++;
-				if (!stack.isEmpty())
-				{
-					idStack.setFirst(stack.copy());
-					idStack.setSecond(i);
-					AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(stack);
-					//Remove empty phials
-					if (vis.getHolder(0)!=null)
-					{
-						if (vis.getHolder(0).getCurrentVis()==0) {
-							items.set(i, ItemStack.EMPTY);
-							emptyPhial = stack.copy();
-							aspectBattery.setCellAtIndex(i,new AspectCell(8));
-							emptyPhial.setTag(emptyPhial.getShareTag());
-							return emptyPhial;
-						}
-					}
-				}
-			}
+	public ItemStack removePhial(int slot) {
+		if (!this.stacks.get(slot).isEmpty()) {
+			ItemStack removedPhial = this.stacks.get(slot);
+			this.stacks.set(slot, ItemStack.EMPTY);
+			inventoryChanged();
+			return removedPhial;
 		}
-		if (idStack.getSecond() != -1){
-			items.set(idStack.getSecond(),ItemStack.EMPTY);
-			aspectBattery.setCellAtIndex(idStack.getSecond(),new AspectCell(8));
-		}
-		return idStack.getFirst();
+		return ItemStack.EMPTY;
 	}
 
-	//  When the world loads from disk, the server needs to send the TileEntity information to the client
-	//  it uses getUpdatePacket(), getUpdateTag(), onDataPacket(), and handleUpdateTag() to do this:
-	//  getUpdatePacket() and onDataPacket() are used for one-at-a-time TileEntity updates
-	//  getUpdateTag() and handleUpdateTag() are used by vanilla to collate together into a single chunk update packet
-	//  Not really required for this example since we only use the timer on the client, but included anyway for illustration
-	@Override
-	@Nullable
-	public SUpdateTileEntityPacket getUpdatePacket(){
+	@Override @Nullable public SUpdateTileEntityPacket getUpdatePacket() {
 		CompoundNBT nbtTagCompound = new CompoundNBT();
 		write(nbtTagCompound);
-		int tileEntityType = ArcanaTiles.ASPECT_SHELF_TE.hashCode();
-		return new SUpdateTileEntityPacket(this.pos, tileEntityType, nbtTagCompound);
+		return new SUpdateTileEntityPacket(pos, -1, nbtTagCompound);
 	}
 
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+	@Override public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
 		read(pkt.getNbtCompound());
 	}
 
-	/* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client */
-	@Override
-	public CompoundNBT getUpdateTag(){
+	@Override public CompoundNBT getUpdateTag(){
 		CompoundNBT nbtTagCompound = new CompoundNBT();
 		write(nbtTagCompound);
 		return nbtTagCompound;
 	}
 
-	/* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client */
 	@Override
 	public void handleUpdateTag(CompoundNBT tag)
 	{
 		this.read(tag);
 	}
-	
-	@Override
-	public boolean isVisShareable() {
+
+	@Override public boolean isVisShareable() {
 		return true;
 	}
 
-	@Override
-	public boolean isManual() {
+	@Override public boolean isManual() {
 		return true;
 	}
 
-	@Override
-	public boolean isSecure() {
+	@Override public boolean isSecure() {
 		return false;
 	}
 }
