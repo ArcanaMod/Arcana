@@ -5,6 +5,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.entities.BigSpellEggEntity;
 import net.arcanamod.entities.SpellCloudEntity;
 import net.arcanamod.entities.SpellEggEntity;
+import net.arcanamod.entities.SpellTrapEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
@@ -64,6 +65,9 @@ public abstract class Cast implements ICast {
 
 	@Override
 	public void use(UUID spellUUID, World world, PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, ICast.Action action){
+		/*
+		TODO LIST OF NOT ADDED CASTS:
+		 */
 		if (action == ICast.Action.USE) {
 			if (cast.getFirst() == AIR) {
 				/*
@@ -89,6 +93,7 @@ public abstract class Cast implements ICast {
 					createSpellCloud(player,world,player.getPositionVec(),1);
 				} else if (cast.getSecond() == WRATH) {
 					// creates a trap that creates a cloud when triggered
+					createSpellCloudTrap(new SpellCloudEntity.CloudVariableGrid(player,world,player.getPositionVec(),0));
 				} else {
 					// Default AIR SPELL
 					createSpellCloud(player,world,player.getPositionVec(),0);
@@ -316,6 +321,10 @@ public abstract class Cast implements ICast {
 				}
 			}
 		}
+	}
+
+	private void createSpellCloudTrap(SpellCloudEntity.CloudVariableGrid variableGrid) {
+		SpellTrapEntity trap = new SpellTrapEntity(variableGrid);
 	}
 
 	private void createSpellCloud(PlayerEntity player, World world, Vec3d area,int rMultP) {

@@ -23,6 +23,7 @@ import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -192,8 +193,11 @@ public class FociForgeContainer extends AspectContainer {
         Item item = te.focus().getItem();
         if (item == ArcanaItems.FOCUS_PARTS.get())
             te.setInventorySlotContents(1, new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1));
-        if (item instanceof FocusItem)
+        if (item instanceof FocusItem) {
             te.focus().getOrCreateTag().putInt("style", style);
+            //TODO Add a button in the UI(probably) to add the NBT to the focus Item
+            te.focus().getOrCreateTag().put("spell", te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
+        }
     }
 
     @Override
