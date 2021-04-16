@@ -126,6 +126,7 @@ public class EntityTickHandler{
 					}
 				});
 			}
+
 			// Render aspect particle around Jar
 			if(te instanceof JarTileEntity){
 				if(world.isRemote()){
@@ -147,6 +148,7 @@ public class EntityTickHandler{
 						}
 				}
 			}
+
 			// Render aspect particle around Phialshelf
 			if(te instanceof AspectBookshelfTileEntity){
 				if(world.isRemote()){
@@ -221,7 +223,8 @@ public class EntityTickHandler{
 		double z = baseZ - array.length * rotOffsetZ * size * center;
 		for(int i = 0, length = array.length; i < length; i++){
 			char c = array[i];
-			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), color, ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY - .12, z + rotOffsetZ * i * size * padding, 0, 0, 0);
+			world.addParticle(new NumberParticleData(Integer.parseInt(String.valueOf(c)), color, ArcanaParticles.NUMBER_PARTICLE.get()),
+					false, x + rotOffsetX * i * size * padding, baseY - .12, z + rotOffsetZ * i * size * padding, 0, 0, 0);
 		}
 	}
 	

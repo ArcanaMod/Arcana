@@ -37,53 +37,56 @@ import static net.arcanamod.blocks.DelegatingBlock.switchBlock;
 import static net.minecraft.entity.EntityClassification.MONSTER;
 
 public class Taint{
-	
+
 	public static final BooleanProperty UNTAINTED = BooleanProperty.create("untainted"); // false by default
 	private static final Map<Block, Block> TAINT_MAP = new HashMap<>();
 	private static final Map<Block, Block> DEAD_MAP = new HashMap<>();
-	
+
 	/**
 	 * We can't access world.rand from {@link #getLivingOfBlock(Block)} or {@link #getPureOfBlock(Block)}
 	 * because methods that use it are not provided with a World.
 	 * These are only called server-side, so its safe to use.
 	 */
 	private static final Random RANDOM_LIVING_PICKER = new Random();
-	
+
 	public static void init(){
 		addDeadUnstableBlock(
 				Blocks.OAK_LEAVES, Blocks.BIRCH_LEAVES, Blocks.SPRUCE_LEAVES, Blocks.JUNGLE_LEAVES, Blocks.DARK_OAK_LEAVES, Blocks.ACACIA_LEAVES,
 				ArcanaBlocks.DAIR_LEAVES.get(), ArcanaBlocks.EUCALYPTUS_LEAVES.get(), ArcanaBlocks.GREATWOOD_LEAVES.get(), ArcanaBlocks.HAWTHORN_LEAVES.get(), ArcanaBlocks.SILVERWOOD_LEAVES.get()
 		);
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public static Block taintedOf(Block parent, Block... blocks){
 		Block tainted;
-		if(parent instanceof FallingBlock)
+		if(parent instanceof FallingBlock) {
 			tainted = new TaintedFallingBlock(parent);
-		else if(parent instanceof SaplingBlock)
+		} else if (parent instanceof VineBlock) {
+			tainted = new TaintedVineBlock(parent);
+		} else if (parent instanceof SaplingBlock) {
 			tainted = new TaintedSaplingBlock(parent);
-		else if(parent instanceof IPlantable || parent instanceof IShearable || parent instanceof IGrowable)
+		} else if (parent instanceof IPlantable || parent instanceof IShearable || parent instanceof IGrowable) {
 			tainted = new TaintedPlantBlock(parent);
-		else if(parent instanceof StairsBlock)
+		} else if (parent instanceof StairsBlock) {
 			tainted = new TaintedStairsBlock(parent);
-		else if(parent instanceof SlabBlock)
+		} else if (parent instanceof SlabBlock) {
 			tainted = new TaintedSlabBlock(parent);
-		else
+		} else {
 			tainted = new TaintedBlock(parent);
-		
+		}
+
 		//Add children to TaintMapping, NOT parent (see TaintedBlock)!
 		for(Block block : blocks){
 			Taint.addTaintMapping(block, tainted);
 		}
-		
+
 		return tainted;
 	}
-	
+
 	public static void addDeadUnstableBlock(Block... blocks){
 		DEAD_MAP.putAll(Lists.newArrayList(blocks).stream().collect(Collectors.toMap(block -> block, block -> Blocks.AIR)));
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public static Block deadOf(Block parent, Block... blocks){
 		Block dead;
@@ -91,14 +94,14 @@ public class Taint{
 			dead = new DeadPlantBlock(parent);
 		else
 			dead = new DeadBlock(parent);
-		
+
 		//Add children to DeadMapping, NOT parent (see DeadBlock)!
 		for(Block block : blocks)
 			Taint.addDeadMapping(block, dead);
-		
+
 		return dead;
 	}
-	
+
 	/**
 	 * Returns the purified version of the input tainted block.
 	 * If the input is not a tainted block, the input will be returned.
@@ -115,7 +118,7 @@ public class Taint{
 				.collect(Collectors.toList());
 		return pures.size() == 0 ? block : pures.get(RANDOM_LIVING_PICKER.nextInt(pures.size()));
 	}
-	
+
 	/**
 	 * Returns the living version of the input dead block.
 	 * If the input is not a dead block, the input will be returned.
@@ -132,23 +135,23 @@ public class Taint{
 				.collect(Collectors.toList());
 		return livings.size() == 0 ? block : livings.get(RANDOM_LIVING_PICKER.nextInt(livings.size()));
 	}
-	
+
 	public static Block getDeadOfBlock(Block block){
 		return DEAD_MAP.getOrDefault(block, block);
 	}
-	
+
 	public static Block getTaintedOfBlock(Block block){
 		return TAINT_MAP.get(block);
 	}
-	
+
 	public static void addTaintMapping(Block original, Block tainted){
 		TAINT_MAP.put(original, tainted);
 	}
-	
+
 	public static void addDeadMapping(Block original, Block dead){
 		DEAD_MAP.put(original, dead);
 	}
-	
+
 	public static void tickTaintedBlock(BlockState state, ServerWorld world, BlockPos pos, Random random){
 		// if we're near a pure node, purify
 		if(isBlockProtectedByPureNode(world, pos)){
@@ -201,7 +204,7 @@ public class Taint{
 			}
 		}
 	}
-	
+
 	public static boolean isBlockProtectedByPureNode(World world, BlockPos pos){
 		AuraView view = AuraView.SIDED_FACTORY.apply(world);
 		int range = ArcanaConfig.PURE_NODE_TAINT_PROTECT_RANGE.get();
@@ -211,13 +214,13 @@ public class Taint{
 						node.type().blocksTaint(world, view, node, pos)
 								&& pos.distanceSq(node, true) <= range * range);
 	}
-	
+
 	public static int taintTickWait(int taintLevel){
 		// more taint level -> less tick wait
 		int base = (int)((1d / taintLevel) * 200);
 		return base > 0 ? base : 1;
 	}
-	
+
 	public static void tickTaintInContainer(Object sender){
 		if(sender instanceof JarTileEntity){
 			JarTileEntity jar = (JarTileEntity)sender;
@@ -232,7 +235,7 @@ public class Taint{
 			}
 		}
 	}
-	
+
 	public static boolean isAreaInTaintBiome(BlockPos pos, IBlockReader world){
 		// check if they're in a taint biome
 		// 7x13x7 cube, centred on the entity
@@ -254,19 +257,19 @@ public class Taint{
 				}
 		return false;
 	}
-	
+
 	@SuppressWarnings({"rawtypes"})
 	private static final Map<EntityType, EntityType> entityTaintMap = new HashMap<>();
-	
+
 	@SuppressWarnings({"rawtypes"})
 	public static EntityType taintedEntityOf(EntityType entity){
 		if(entity.getRegistryName() == null)
 			return null;
 		EntityType<? extends Entity> tainted;
-		
+
 		String id = new ResourceLocation(Arcana.MODID, "tainted_" + entity.getRegistryName().getPath()).toString();
 		float w = entity.getSize().width, h = entity.getSize().height;
-		
+
 		EntityType.IFactory<?> factoryIn =
 				entity == EntityType.BAT
 						? TaintedBatEntity::new
@@ -312,29 +315,29 @@ public class Taint{
 						? TaintedHorseEntity::new
 						: (type, world) -> new TaintedEntity(type, world, entity);
 		tainted = EntityType.Builder.create(factoryIn, MONSTER).size(w, h).build(id);
-		
+
 		entityTaintMap.put(entity, tainted);
 		return tainted;
 	}
-	
+
 	@SuppressWarnings({"rawtypes"})
 	public static EntityType getTaintedOfEntity(EntityType entity){
 		return entityTaintMap.get(entity);
 	}
-	
+
 	public static boolean isTainted(EntityType<?> entity){
 		return entityTaintMap.containsValue(entity);
 	}
-	
+
 	public static boolean isTainted(Block block){
 		return TAINT_MAP.containsValue(block);
 	}
-	
+
 	@SuppressWarnings("rawtypes")
 	public static Collection<EntityType> getTaintedEntities(){
 		return entityTaintMap.values();
 	}
-	
+
 	public static Tree taintedTreeOf(SaplingBlock block){
 		if(block == Blocks.OAK_SAPLING)
 			return new TaintedOakTree();

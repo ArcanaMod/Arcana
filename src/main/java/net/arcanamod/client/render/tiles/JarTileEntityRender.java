@@ -143,7 +143,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 
 			scale = 0.8f;
 			matrixStack.scale(scale, scale, scale);
-			matrixStack.translate(-.02, -.02, -.02);
+			matrixStack.translate(-.002, -.002, -.002);
 			add(label_builder, matrixStack, Color.WHITE, 0, 1, 0, aspect.getMinU(), aspect.getMaxV(), combinedLight);
 			add(label_builder, matrixStack, Color.WHITE, 0, 0, 0, aspect.getMaxU(), aspect.getMaxV(), combinedLight);
 			add(label_builder, matrixStack, Color.WHITE, 0, 0, 1, aspect.getMaxU(), aspect.getMinV(), combinedLight);

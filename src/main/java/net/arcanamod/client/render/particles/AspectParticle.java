@@ -18,7 +18,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class AspectParticle extends SpriteTexturedParticle {
-
 	protected AspectParticle(World world, double x, double y, double z, TextureAtlasSprite sprite){
 		super(world, x, y, z);
 		particleGravity = 0;
@@ -35,7 +34,6 @@ public class AspectParticle extends SpriteTexturedParticle {
 	@OnlyIn(Dist.CLIENT)
 	@ParametersAreNonnullByDefault
 	public static class Factory implements IParticleFactory<AspectParticleData> {
-
 		public Particle makeParticle(AspectParticleData data, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
 			return new AspectParticle(world, x, y, z, Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(data.aspectTexture));
 		}

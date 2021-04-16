@@ -1,6 +1,5 @@
 package net.arcanamod.blocks;
 
-import javafx.scene.paint.Color;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.AspectUtils;
@@ -8,7 +7,6 @@ import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.MagicDeviceItem;
-import net.arcanamod.items.ScepterItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -18,7 +16,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -35,8 +32,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;

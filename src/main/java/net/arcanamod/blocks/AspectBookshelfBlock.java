@@ -36,7 +36,6 @@ import static net.arcanamod.ArcanaSounds.playPhialshelfSlideSound;
 public class AspectBookshelfBlock extends WaterloggableBlock{
 	public static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.FACING;
 	public static final BooleanProperty FULL_SIZE = BlockStateProperties.EXTENDED;
-	public VoxelShape SHAPE_FULL = Block.makeCuboidShape(0, 0, 0, 16, 16, 16);
 	public VoxelShape SHAPE_NORTH = Block.makeCuboidShape(0, 0, 8, 16, 16, 16);
 	public VoxelShape SHAPE_SOUTH = Block.makeCuboidShape(0, 0, 0, 16, 16, 8);
 	public VoxelShape SHAPE_EAST = Block.makeCuboidShape(0, 0, 0, 8, 16, 16);
