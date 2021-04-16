@@ -52,6 +52,16 @@ public class SpellCloudEntity extends Entity {
 	private LivingEntity owner;
 	private UUID ownerUniqueId;
 
+	public static class CloudVariableGrid{
+		public PlayerEntity player;
+		World world;
+		Vec3d area;
+		int rMultP;
+
+		public CloudVariableGrid(PlayerEntity player, World world, Vec3d positionVec, int i) {
+		}
+	}
+
 	public SpellCloudEntity(EntityType<? extends SpellCloudEntity> entityType, World world) {
 		super(entityType, world);
 		this.noClip = true;
