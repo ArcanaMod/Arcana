@@ -380,8 +380,8 @@ public class SpellState {
             if (newModule.isStartModule()) {
                 newModule.x = 0;
                 newModule.y = 0;
-                this.x = x;
-                this.y = y;
+                this.x = FociForgeScreen.SPELL_WIDTH/2;
+                this.y = FociForgeScreen.SPELL_HEIGHT/2;
                 currentSpell.mainModule = newModule;
             } else {
                 Pair<Point, SpellModule> placement = getPlacementPoint(x, y, newModule);
@@ -476,6 +476,7 @@ public class SpellState {
             SpellModule start = root.getConnectionStart();
             SpellModule end = bound.getConnectionEnd(false);
             // connect the modules
+            
             end.setParent(start);
             if (isolated.contains(end)) {
                 isolated.remove((end));
@@ -510,6 +511,7 @@ public class SpellState {
             List<SpellModule> toUnbind = new ArrayList<>();
             toUnbind.addAll(deleting.bound);
             toUnbind.addAll(deleting.boundSpecial);
+            
             for (SpellModule bound : toUnbind) {
                 bound.setParent(null);
                 isolated.add(bound);
@@ -533,7 +535,7 @@ public class SpellState {
                         PkFociForgeAction.Type.ASSIGN,
                         x, y, -1 ,-1,
                         sequence,
-                        Aspects.EMPTY);
+                        aspect);
                 sequence++;
             }
             // assign aspect to module
