@@ -19,7 +19,7 @@ import static net.arcanamod.Arcana.arcLoc;
  */
 @SuppressWarnings("unchecked")
 public class ArcanaEntities{
-	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = new DeferredRegister<>(ForgeRegistries.ENTITIES,
+	public static final DeferredRegister<EntityType<?>> ENTITY_TYPES = DeferredRegister.create(ForgeRegistries.ENTITIES,
 			Arcana.MODID);
 
 	public static final RegistryObject<EntityType<KoalaEntity>> KOALA_ENTITY = ENTITY_TYPES

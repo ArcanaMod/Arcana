@@ -7,10 +7,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.arcanamod.Arcana.MODID;
 
-@SuppressWarnings("unused")
 public class ArcanaRecipes{
 	public static class Serializers{
-		public static final DeferredRegister<IRecipeSerializer<?>> SERIALIZERS = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
+		public static final DeferredRegister<IRecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, MODID);
 
 		public static final RegistryObject<IRecipeSerializer<WandsRecipe>> CRAFTING_WANDS = SERIALIZERS.register("crafting_special_wands", () -> new SpecialRecipeSerializer<>(WandsRecipe::new));
 		public static final RegistryObject<IRecipeSerializer<AlchemyRecipe>> ALCHEMY = SERIALIZERS.register("alchemy", AlchemyRecipe.Serializer::new);

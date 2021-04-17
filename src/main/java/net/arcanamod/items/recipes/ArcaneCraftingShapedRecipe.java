@@ -368,7 +368,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 
 			ArrayList<UndecidedAspectStack> aspectStacksArray = new ArrayList<UndecidedAspectStack>();
 			int stackAmount = buffer.readInt();
-			for (int l = 0; l < stackAmount-1; l++) {
+			for (int l = 0; l < stackAmount; l++) {
 				aspectStacksArray.add(readUndecidedAspectStack(buffer));
 			}
 
