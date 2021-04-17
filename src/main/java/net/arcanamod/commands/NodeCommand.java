@@ -11,6 +11,8 @@ import net.arcanamod.world.NodeType;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.ISuggestionProvider;
+import net.minecraft.command.arguments.ArgumentSerializer;
+import net.minecraft.command.arguments.ArgumentTypes;
 import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.command.arguments.Vec3Argument;
 import net.minecraft.util.ResourceLocation;
@@ -30,6 +32,8 @@ public class NodeCommand{
 	private static final SuggestionProvider<CommandSource> SUGGEST_TYPES = (ctx, builder) -> ISuggestionProvider.func_212476_a(NodeType.TYPES.keySet().stream(), builder);
 	
 	public static void register(CommandDispatcher<CommandSource> dispatcher){
+		// Register nodes as an argument
+		ArgumentTypes.register("node_argument", NodeArgument.class, new ArgumentSerializer<>(NodeArgument::new));
 		// arcana-nodes <add|remove|modify>
 		// arcana-nodes add <type> <x> <y> <z>
 		// arcana-nodes remove <nodes>

@@ -29,7 +29,7 @@ public class ArcanaFluids {
 	public static final ResourceLocation FLUID_STILL = arcLoc("fluid/tainted_goo");
 	public static final ResourceLocation FLUID_FLOWING = arcLoc("fluid/tainted_goo_flowing");
 	
-	public static final DeferredRegister<Fluid> FLUIDS = new DeferredRegister<>(ForgeRegistries.FLUIDS, Arcana.MODID);
+	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, Arcana.MODID);
 
 	public static RegistryObject<FlowingFluid> TAINT_FLUID = FLUIDS.register("tainted_goo", () ->
 			new ForgeFlowingFluid.Source(ArcanaFluids.taint_fluid_properties)

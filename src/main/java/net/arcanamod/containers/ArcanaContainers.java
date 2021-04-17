@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class ArcanaContainers{
 	
-	public static final DeferredRegister<ContainerType<?>> CON = new DeferredRegister<>(ForgeRegistries.CONTAINERS, Arcana.MODID);
+	public static final DeferredRegister<ContainerType<?>> CON = DeferredRegister.create(ForgeRegistries.CONTAINERS, Arcana.MODID);
 
 	public static final RegistryObject<ContainerType<FociForgeContainer>> FOCI_FORGE = CON.register("foci_forge", () -> IForgeContainerType.create(FociForgeContainer::new));
 	public static final RegistryObject<ContainerType<ResearchTableContainer>> RESEARCH_TABLE = CON.register("research_table", () -> IForgeContainerType.create(ResearchTableContainer::new));

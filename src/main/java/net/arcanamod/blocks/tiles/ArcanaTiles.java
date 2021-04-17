@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 @SuppressWarnings("ConstantConditions")
 public class ArcanaTiles{
 	
-	public static final DeferredRegister<TileEntityType<?>> TES = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Arcana.MODID);
+	public static final DeferredRegister<TileEntityType<?>> TES = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Arcana.MODID);
 
 	public static final RegistryObject<TileEntityType<JarTileEntity>> JAR_TE =
 			TES.register("jar", () -> new TileEntityType<>(JarTileEntity::new, Sets.newHashSet(ArcanaBlocks.JAR.get(), ArcanaBlocks.SECURE_JAR.get(), ArcanaBlocks.VOID_JAR.get(), ArcanaBlocks.VACUUM_JAR.get(), ArcanaBlocks.PRESSURE_JAR.get()), null));

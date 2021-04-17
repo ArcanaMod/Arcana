@@ -193,7 +193,8 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	}
 
 	public void scrollAspectTo(float pos) {
-		List<Aspect> searchAspects = AspectUtils.castContaingAspects();
+		//List<Aspect> searchAspects = Aspects.getWithoutPrimalsOrSins();
+		List<Aspect> searchAspects = null;
 		int extraRows = (searchAspects.size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;
 		int scroll = Math.max(0, Math.round(pos * extraRows));
 
