@@ -140,8 +140,6 @@ public abstract class MagicDeviceItem extends Item{
 	public ActionResult<ItemStack> onItemRightClick(@Nonnull World world, @Nonnull PlayerEntity player, @Nonnull Hand hand){
 		// TODO: only do this if you're casting a spell
 		// first do node raycast check, and then check if you have a focus
-		if (world.isRemote) Arcana.LOGGER.error("-2 -> rem0te");
-		if (player.world.isRemote) Arcana.LOGGER.error("-2 -> rem1te");
 		if(canUseSpells()){
 			ArcanaSounds.playSpellCastSound(player);
 			Focus focus = getFocus(player.getHeldItem(hand));

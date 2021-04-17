@@ -158,8 +158,8 @@ public class ArcanaConfig{
 				.comment("Text scaling for the research entry GUI.", "0.7 by default")
 				.define("ResearchBookTextScaling", 0.7);
 		WAND_HUD_SCALING = CLIENT_BUILDER
-				.comment("Texture scaling for the wand HUD.", "2.0 by default")
-				.define("WandHudScaling", 1.0);
+				.comment("Texture scaling for the wand HUD.", "1.5 by default")
+				.define("WandHudScaling", 1.5);
 		WAND_HUD_X = CLIENT_BUILDER
 				.comment("Distance of Wand HUD from the horizontal edge.", "5 by default")
 				.define("WandHrznOffset", 5d);

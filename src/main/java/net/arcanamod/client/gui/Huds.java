@@ -46,15 +46,16 @@ public final class Huds{
 			
 			ItemStack wand = ItemStack.EMPTY;
 			ItemStack meter = ItemStack.EMPTY;
-			if(mainHand.getItem() instanceof MagicDeviceItem)
+			if(mainHand.getItem() instanceof MagicDeviceItem){
 				wand = mainHand;
-			else if(offHand.getItem() instanceof MagicDeviceItem)
+			}else if(offHand.getItem() instanceof MagicDeviceItem){
 				wand = offHand;
-			
-			if(mainHand.getItem().equals(ArcanaItems.FLUX_METER.get()))
+			}
+			if(mainHand.getItem().equals(ArcanaItems.FLUX_METER.get())){
 				meter = mainHand;
-			else if(offHand.getItem().equals(ArcanaItems.FLUX_METER.get()))
+			}else if(offHand.getItem().equals(ArcanaItems.FLUX_METER.get())){
 				meter = offHand;
+			}
 			
 			// wand GUI (high render priority)
 			if(wand != ItemStack.EMPTY){
@@ -63,7 +64,7 @@ public final class Huds{
 				if(aspects != null){
 					int offX = ArcanaConfig.WAND_HUD_X.get().intValue();
 					int offY = ArcanaConfig.WAND_HUD_Y.get().intValue();
-					float scale = 1.5f * ArcanaConfig.WAND_HUD_SCALING.get().floatValue();
+					float scale = ArcanaConfig.WAND_HUD_SCALING.get().floatValue();
 					int baseX = (int)(ArcanaConfig.WAND_HUD_LEFT.get() ? offX / scale : (event.getWindow().getScaledWidth() - offX) / scale - 49);
 					int baseY = (int)(ArcanaConfig.WAND_HUD_TOP.get() ? offY / scale : (event.getWindow().getScaledHeight() - offY) / scale - 49);
 					RenderSystem.pushMatrix();
