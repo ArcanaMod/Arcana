@@ -43,22 +43,21 @@ public final class Huds{
 		if(player != null && event.getType().equals(RenderGameOverlayEvent.ElementType.ALL)){
 			ItemStack mainHand = player.getHeldItemMainhand();
 			ItemStack offHand = player.getHeldItemOffhand();
-
+			
 			ItemStack wand = ItemStack.EMPTY;
 			ItemStack meter = ItemStack.EMPTY;
-			if (mainHand.getItem() instanceof MagicDeviceItem) {
+			if(mainHand.getItem() instanceof MagicDeviceItem)
 				wand = mainHand;
-			} else if (offHand.getItem() instanceof MagicDeviceItem) {
+			else if(offHand.getItem() instanceof MagicDeviceItem)
 				wand = offHand;
-			}
-			if (mainHand.getItem().equals(ArcanaItems.FLUX_METER.get())) {
+			
+			if(mainHand.getItem().equals(ArcanaItems.FLUX_METER.get()))
 				meter = mainHand;
-			} else if (offHand.getItem().equals(ArcanaItems.FLUX_METER.get())) {
+			else if(offHand.getItem().equals(ArcanaItems.FLUX_METER.get()))
 				meter = offHand;
-			}
-
+			
 			// wand GUI (high render priority)
-			if (wand != ItemStack.EMPTY) {
+			if(wand != ItemStack.EMPTY){
 				Core core = MagicDeviceItem.getCore(wand);
 				IAspectHandler aspects = IAspectHandler.getFrom(wand);
 				if(aspects != null){
@@ -68,14 +67,14 @@ public final class Huds{
 					int baseX = (int)(ArcanaConfig.WAND_HUD_LEFT.get() ? offX / scale : (event.getWindow().getScaledWidth() - offX) / scale - 49);
 					int baseY = (int)(ArcanaConfig.WAND_HUD_TOP.get() ? offY / scale : (event.getWindow().getScaledHeight() - offY) / scale - 49);
 					RenderSystem.pushMatrix();
-					RenderSystem.scalef(scale,scale,2);
+					RenderSystem.scalef(scale, scale, 2);
 					UiUtil.renderVisCore(core, baseX, baseY);
 					UiUtil.renderVisMeter(core, aspects, baseX, baseY);
 					MagicDeviceItem.getFocusStack(wand).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
 					RenderSystem.popMatrix();
 				}
-			// flux meter GUI
-			} else if (meter != ItemStack.EMPTY){
+				// flux meter GUI
+			}else if(meter != ItemStack.EMPTY){
 				// display filling at 8,8
 				// 10 frames, 32x100
 				int frame = (int)((player.ticksExisted + event.getPartialTicks()) % 10);

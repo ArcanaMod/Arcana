@@ -59,12 +59,16 @@ public class NodeParticle extends SpriteTexturedParticle{
 				particleRed = red(blended) / 255f;
 				particleGreen = green(blended) / 255f;
 				particleBlue = blue(blended) / 255f;
-			}
-			catch (ArithmeticException arithmeticException) {
-				Arcana.LOGGER.error(arithmeticException + " at: ["+ posX+"@"+posY+"@"+posZ+"]");
+			}catch(ArithmeticException arithmeticException){
+				Arcana.LOGGER.error(arithmeticException + " at: [" + posX + "@" + posY + "@" + posZ + "]");
 			}
 		}
 		super.renderParticle(buffer, renderInfo, partialTicks);
+	}
+	
+	protected int getBrightnessForRender(float partialTick){
+		// fullbright
+		return 0xf000f0;
 	}
 	
 	@OnlyIn(Dist.CLIENT)

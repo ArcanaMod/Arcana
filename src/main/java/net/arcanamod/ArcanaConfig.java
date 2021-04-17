@@ -161,11 +161,11 @@ public class ArcanaConfig{
 				.comment("Texture scaling for the wand HUD.", "2.0 by default")
 				.define("WandHudScaling", 1.0);
 		WAND_HUD_X = CLIENT_BUILDER
-				.comment("Distance of Wand HUD from the horizontal edge.", "0.0 by default")
-				.define("WandHrznOffset", 0.0);
+				.comment("Distance of Wand HUD from the horizontal edge.", "5 by default")
+				.define("WandHrznOffset", 5d);
 		WAND_HUD_Y = CLIENT_BUILDER
-				.comment("Distance of Wand HUD from the vertical edge.", "0.0 by default")
-				.define("WandVertOffset", 0.0);
+				.comment("Distance of Wand HUD from the vertical edge.", "5 by default")
+				.define("WandVertOffset", 5d);
 		WAND_HUD_LEFT = CLIENT_BUILDER
 				.comment("Whether the wand HUD should display on the left of the screen (true) or the right (false).", "True by default.")
 				.define("WandHudHorizontalSide", true);
@@ -245,8 +245,8 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> CUSTOM_BOOK_HEIGHT; // -1
 	public static ConfigValue<Double> BOOK_TEXT_SCALING; // 0.8
 	public static ConfigValue<Double> WAND_HUD_SCALING; // 2.0
-	public static ConfigValue<Double> WAND_HUD_X; // 0.0
-	public static ConfigValue<Double> WAND_HUD_Y; // 0.0
+	public static ConfigValue<Double> WAND_HUD_X; // 5
+	public static ConfigValue<Double> WAND_HUD_Y; // 5
 	public static ConfigValue<Boolean> WAND_HUD_LEFT; // true
 	public static ConfigValue<Boolean> WAND_HUD_TOP; // true
 	public static ConfigValue<Boolean> BLOCK_HUDS_TOP; // true
