@@ -96,7 +96,7 @@ public class WardenedBlockBakedModel implements IBakedModel {
 		throw new AssertionError("IBakedModel::getQuads should never be called, only IForgeBakedModel::getQuads");
 	}
 
-	// getTexture is used directly when player is inside the block.  The game will crash if you don't use something
+	// getTexture is used directly when player is inside the block. The game will crash if you don't use something
 	//   meaningful here.
 	@Override
 	public TextureAtlasSprite getParticleTexture() {

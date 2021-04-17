@@ -67,6 +67,10 @@ public abstract class Cast implements ICast {
 	public void use(UUID spellUUID, World world, PlayerEntity player, Object sender, Pair<Aspect, Aspect> cast, ICast.Action action){
 		/*
 		TODO LIST OF NOT ADDED CASTS:
+		Chaos
+		Water
+		Fire+SLOTH
+		Earth+ENVY
 		 */
 		if (action == ICast.Action.USE) {
 			if (cast.getFirst() == AIR) {

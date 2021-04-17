@@ -46,12 +46,8 @@ public class FabricCast extends Cast {
 
 	@Override
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-		TileEntity tileentity = new ResearchTableTileEntity();
-		Throwable throwable = new NullPointerException();
-		CrashReport crashreport = CrashReport.makeCrashReport(throwable, "Ticking block entity");
-		CrashReportCategory crashreportcategory = crashreport.makeCategory("Block entity being ticked");
-		tileentity.addInfoToCrashReport(crashreportcategory);
-		throw new ReportedException(crashreport);
+		caster.sendMessage(new StringTextComponent("hehe Ticking block entity"));
+		return ActionResultType.SUCCESS;
 	}
 
 	@Override

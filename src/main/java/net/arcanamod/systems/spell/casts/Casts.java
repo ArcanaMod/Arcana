@@ -15,4 +15,6 @@ public class Casts {
 	public static final ICast ARMOUR_CAST = new ArmourCast();
 	public static final ICast ICE_CAST = new IceCast();
 	public static final ICast LIFE_CAST = new LifeCast();
+	public static final ICast DEATH_CAST = new DeathCast();
+	public static final ICast JOURNEY_CAST = new JourneyCast();
 }
