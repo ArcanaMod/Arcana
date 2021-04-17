@@ -99,9 +99,14 @@ public class ArcanaConfig{
 		MAX_ALEMBIC_STACK = COMMON_BUILDER
 				.comment("The maximum amount of alembics that can be stacked.", "3 by default.")
 				.define("MaxAlembicStack", 3);
+		
 		ALCHEMY_ASPECT_CARRY_FRACTION = COMMON_BUILDER
 				.comment("The fraction of aspects used in an alchemy recipe that should be assigned to the result through recipes.", "Setting this to 0.5, the default, for example, will cause an item crafted with 10 aer in alchemy to be given 5 aer from that recipe.")
 				.define("AlchemyAspectCarryFraction", .5);
+		HUNGRY_NODE_ASPECT_CARRY_FRACTION = COMMON_BUILDER
+				.comment("The fraction of aspects that a hungry node will absorb from blocks or items it destroys.", "Setting this to 0.5, the default, for example, will cause a hungry node to gain 2 terra after absorbing an item with 4.", "Hungry nodes will always absorb at least one of every aspect in a block or item it destroys, unless this value is set to 0.")
+				.define("HungryNodeAspectCarryFraction", .5);
+		
 		TAINT_SPAWN_THRESHOLD = COMMON_BUILDER
 				.comment("The amount of flux in a chunk that is required to spawn a taint block. Does not affect taint spreading.", "60 by default.")
 				.define("TaintSpawnThreshold", 60);
@@ -216,7 +221,9 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> MAX_ALEMBIC_ASPECT_OUT; // 3
 	public static ConfigValue<Integer> MAX_ALEMBIC_AIR; // 4
 	public static ConfigValue<Integer> MAX_ALEMBIC_STACK; // 3
+	
 	public static ConfigValue<Double> ALCHEMY_ASPECT_CARRY_FRACTION; // .5
+	public static ConfigValue<Double> HUNGRY_NODE_ASPECT_CARRY_FRACTION; // .5
 	
 	public static ConfigValue<Integer> TAINT_SPAWN_THRESHOLD; // 60
 	public static ConfigValue<Integer> TAINT_SPAWN_COST; // 40

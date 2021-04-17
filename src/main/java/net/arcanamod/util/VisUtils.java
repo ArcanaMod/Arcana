@@ -9,8 +9,11 @@ import java.util.List;
 // TODO: this stuff should be fine in AspectHandler but that's currently a little messy so its here rn
 public final class VisUtils{
 	
+	/** Sorts empty aspect holders after full ones. */
 	public static final Comparator<IAspectHolder> EMPTY_SORTER = (a, b) -> a.getCurrentVis() == 0 ? (b.getCurrentVis() == 0 ? 0 : 1) : (b.getCurrentVis() == 0 ? -1 : 0);
+	/** Sorts voiding aspect holders after non-voiding aspect holders. */
 	public static final Comparator<IAspectHolder> VOID_SORTER = (a, b) -> a.isIgnoringFullness() ? (b.isIgnoringFullness() ? 0 : 1) : (b.isIgnoringFullness() ? -1 : 0);
+	/** Sorts non-empty non-voiding aspect holders first, then empty aspect holders, then voiding aspect holders. */
 	public static final Comparator<IAspectHolder> INPUT_PRIORITY_SORTER = VOID_SORTER.thenComparing(EMPTY_SORTER);
 	
 	/**
@@ -87,6 +90,40 @@ public final class VisUtils{
 							toInsert = Math.min(toInsert, max - transferred);
 						AspectStack stack = new AspectStack(from.getContainedAspect(), toInsert);
 						transferred += from.drain(stack, false);
+						toHolder.insert(stack, false);
+					}
+			}
+		}
+	}
+	
+	public static void moveAspects(AspectStack in, IAspectHandler to, int max){
+		moveAspects(in.getAspect(), in.getAmount(), to, max);
+	}
+	
+	public static void moveAspects(Aspect in, int amount, IAspectHandler to, int max){
+		int transferred = 0;
+		if(amount > 0){
+			List<IAspectHolder> holders = to.getHolders();
+			// move void cells, then empty cells to the end
+			holders.sort(INPUT_PRIORITY_SORTER);
+			for(IAspectHolder toHolder : holders){
+				if(transferred >= max && max != -1)
+					break;
+				if(toHolder.getContainedAspect() == in || toHolder.getContainedAspect() == Aspects.EMPTY)
+					if(toHolder.canInput() && (toHolder.getCapacity() > toHolder.getCurrentVis() || toHolder.isIgnoringFullness())){
+						int toInsert = amount;
+						if(!toHolder.isIgnoringFullness())
+							toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getCurrentVis());
+						if(max != -1)
+							toInsert = Math.min(toInsert, max - transferred);
+						AspectStack stack = new AspectStack(toHolder.getContainedAspect(), toInsert);
+						if(toInsert >= amount){
+							transferred += amount;
+							amount = 0;
+						}else{
+							transferred += toInsert;
+							amount -= toInsert;
+						}
 						toHolder.insert(stack, false);
 					}
 			}
