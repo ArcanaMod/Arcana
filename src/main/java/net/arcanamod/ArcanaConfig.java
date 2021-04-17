@@ -99,9 +99,14 @@ public class ArcanaConfig{
 		MAX_ALEMBIC_STACK = COMMON_BUILDER
 				.comment("The maximum amount of alembics that can be stacked.", "3 by default.")
 				.define("MaxAlembicStack", 3);
+		
 		ALCHEMY_ASPECT_CARRY_FRACTION = COMMON_BUILDER
 				.comment("The fraction of aspects used in an alchemy recipe that should be assigned to the result through recipes.", "Setting this to 0.5, the default, for example, will cause an item crafted with 10 aer in alchemy to be given 5 aer from that recipe.")
 				.define("AlchemyAspectCarryFraction", .5);
+		HUNGRY_NODE_ASPECT_CARRY_FRACTION = COMMON_BUILDER
+				.comment("The fraction of aspects that a hungry node will absorb from blocks or items it destroys.", "Setting this to 0.5, the default, for example, will cause a hungry node to gain 2 terra after absorbing an item with 4.", "Hungry nodes will always absorb at least one of every aspect in a block or item it destroys, unless this value is set to 0.")
+				.define("HungryNodeAspectCarryFraction", .5);
+		
 		TAINT_SPAWN_THRESHOLD = COMMON_BUILDER
 				.comment("The amount of flux in a chunk that is required to spawn a taint block. Does not affect taint spreading.", "60 by default.")
 				.define("TaintSpawnThreshold", 60);
@@ -153,14 +158,14 @@ public class ArcanaConfig{
 				.comment("Text scaling for the research entry GUI.", "0.7 by default")
 				.define("ResearchBookTextScaling", 0.7);
 		WAND_HUD_SCALING = CLIENT_BUILDER
-				.comment("Texture scaling for the wand HUD.", "2.0 by default")
-				.define("WandHudScaling", 1.0);
+				.comment("Texture scaling for the wand HUD.", "1.5 by default")
+				.define("WandHudScaling", 1.5);
 		WAND_HUD_X = CLIENT_BUILDER
-				.comment("Distance of Wand HUD from the horizontal edge.", "0.0 by default")
-				.define("WandHrznOffset", 0.0);
+				.comment("Distance of Wand HUD from the horizontal edge.", "5 by default")
+				.define("WandHrznOffset", 5d);
 		WAND_HUD_Y = CLIENT_BUILDER
-				.comment("Distance of Wand HUD from the vertical edge.", "0.0 by default")
-				.define("WandVertOffset", 0.0);
+				.comment("Distance of Wand HUD from the vertical edge.", "5 by default")
+				.define("WandVertOffset", 5d);
 		WAND_HUD_LEFT = CLIENT_BUILDER
 				.comment("Whether the wand HUD should display on the left of the screen (true) or the right (false).", "True by default.")
 				.define("WandHudHorizontalSide", true);
@@ -216,7 +221,9 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> MAX_ALEMBIC_ASPECT_OUT; // 3
 	public static ConfigValue<Integer> MAX_ALEMBIC_AIR; // 4
 	public static ConfigValue<Integer> MAX_ALEMBIC_STACK; // 3
+	
 	public static ConfigValue<Double> ALCHEMY_ASPECT_CARRY_FRACTION; // .5
+	public static ConfigValue<Double> HUNGRY_NODE_ASPECT_CARRY_FRACTION; // .5
 	
 	public static ConfigValue<Integer> TAINT_SPAWN_THRESHOLD; // 60
 	public static ConfigValue<Integer> TAINT_SPAWN_COST; // 40
@@ -238,8 +245,8 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> CUSTOM_BOOK_HEIGHT; // -1
 	public static ConfigValue<Double> BOOK_TEXT_SCALING; // 0.8
 	public static ConfigValue<Double> WAND_HUD_SCALING; // 2.0
-	public static ConfigValue<Double> WAND_HUD_X; // 0.0
-	public static ConfigValue<Double> WAND_HUD_Y; // 0.0
+	public static ConfigValue<Double> WAND_HUD_X; // 5
+	public static ConfigValue<Double> WAND_HUD_Y; // 5
 	public static ConfigValue<Boolean> WAND_HUD_LEFT; // true
 	public static ConfigValue<Boolean> WAND_HUD_TOP; // true
 	public static ConfigValue<Boolean> BLOCK_HUDS_TOP; // true

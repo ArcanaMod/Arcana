@@ -13,11 +13,18 @@ import java.util.UUID;
 // implements position for BlockPos constructor convenience
 public class Node implements IPosition{
 	
+	/** The aspects contained in the node. */
 	IAspectHandler aspects;
+	/** The type of node this is. */
 	NodeType type;
+	/** The position of this node. */
 	double x, y, z;
+	/** The unique ID of this node. */
 	UUID nodeUniqueId = MathHelper.getRandomUUID();
+	/** The time, in ticks, until the node gains some aspects. */
 	int timeUntilRecharge;
+	/** Any extra data, used by the node type (e.g. hungry nodes). */
+	CompoundNBT data = new CompoundNBT();
 	
 	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge){
 		this.aspects = aspects;
@@ -28,7 +35,17 @@ public class Node implements IPosition{
 		this.timeUntilRecharge = timeUntilRecharge;
 	}
 	
-	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge, UUID nodeUniqueId){
+	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge, CompoundNBT data){
+		this.aspects = aspects;
+		this.type = type;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.timeUntilRecharge = timeUntilRecharge;
+		this.data = data;
+	}
+	
+	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge, UUID nodeUniqueId, CompoundNBT data){
 		this.aspects = aspects;
 		this.type = type;
 		this.x = x;
@@ -36,6 +53,7 @@ public class Node implements IPosition{
 		this.z = z;
 		this.timeUntilRecharge = timeUntilRecharge;
 		this.nodeUniqueId = nodeUniqueId;
+		this.data = data;
 	}
 	
 	public NodeType type(){
@@ -51,6 +69,7 @@ public class Node implements IPosition{
 		nbt.putDouble("z", getZ());
 		nbt.putUniqueId("nodeUniqueId", nodeUniqueId);
 		nbt.putInt("timeUntilRecharge", timeUntilRecharge);
+		nbt.put("data", data);
 		return nbt;
 	}
 	
@@ -60,10 +79,13 @@ public class Node implements IPosition{
 		NodeType type = NodeType.TYPES.get(new ResourceLocation(nbt.getString("type")));
 		double x = nbt.getDouble("x"), y = nbt.getDouble("y"), z = nbt.getDouble("z");
 		int timeUntilRecharge = nbt.getInt("timeUntilRecharge");
-		return nbt.hasUniqueId("nodeUniqueId") ? new Node(aspects, type, x, y, z, timeUntilRecharge, nbt.getUniqueId("nodeUniqueId")) : new Node(aspects, type, x, y, z, timeUntilRecharge);
+		CompoundNBT data = nbt.getCompound("data");
+		return nbt.hasUniqueId("nodeUniqueId") ? new Node(aspects, type, x, y, z, timeUntilRecharge, nbt.getUniqueId("nodeUniqueId"), data) : new Node(aspects, type, x, y, z, timeUntilRecharge, data);
 	}
-
-	public Vec3d getPosition(){return new Vec3d(x,y,z);}
+	
+	public Vec3d getPosition(){
+		return new Vec3d(x, y, z);
+	}
 	
 	public IAspectHandler getAspects(){
 		return aspects;
@@ -109,6 +131,10 @@ public class Node implements IPosition{
 		return nodeUniqueId;
 	}
 	
+	public CompoundNBT getData(){
+		return data;
+	}
+	
 	public String toString(){
 		return "Node{" +
 				"aspects=" + aspects +
@@ -118,6 +144,7 @@ public class Node implements IPosition{
 				", z=" + z +
 				", nodeUniqueId=" + nodeUniqueId +
 				", timeUntilRecharge=" + timeUntilRecharge +
+				", data=" + data +
 				'}';
 	}
 }

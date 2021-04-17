@@ -15,8 +15,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-public class NumberParticle extends SpriteTexturedParticle {
-
+public class NumberParticle extends SpriteTexturedParticle{
+	
 	protected NumberParticle(World world, double x, double y, double z, TextureAtlasSprite sprite){
 		super(world, x, y, z);
 		particleGravity = 0;
@@ -25,16 +25,21 @@ public class NumberParticle extends SpriteTexturedParticle {
 		canCollide = false;
 		setSprite(sprite);
 	}
-
+	
 	public IParticleRenderType getRenderType(){
 		return IParticleRenderType.TERRAIN_SHEET;
 	}
-
+	
+	protected int getBrightnessForRender(float partialTick){
+		// fullbright
+		return 0xf000f0;
+	}
+	
 	@OnlyIn(Dist.CLIENT)
 	@ParametersAreNonnullByDefault
-	public static class Factory implements IParticleFactory<NumberParticleData> {
+	public static class Factory implements IParticleFactory<NumberParticleData>{
 		public Particle makeParticle(NumberParticleData data, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
-			ResourceLocation count_asset = Arcana.arcLoc("font/number_"+data.count);
+			ResourceLocation count_asset = Arcana.arcLoc("font/number_" + data.count);
 			return new NumberParticle(world, x, y, z, Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(count_asset));
 		}
 	}

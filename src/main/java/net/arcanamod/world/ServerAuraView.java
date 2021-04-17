@@ -52,6 +52,7 @@ public class ServerAuraView implements AuraView{
 		return allNodes;
 	}
 	
+	// TODO: sendNodeToClients so we send less redundant data
 	public void sendChunkToClients(IPosition pos){
 		sendChunkToClients(new BlockPos(pos));
 	}

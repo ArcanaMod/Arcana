@@ -2,18 +2,24 @@ package net.arcanamod.world;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
 import net.arcanamod.client.render.particles.ArcanaParticles;
 import net.arcanamod.client.render.particles.NodeParticleData;
 import net.arcanamod.util.GogglePriority;
+import net.arcanamod.util.VisUtils;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.IFluidBlock;
 
 import java.util.*;
@@ -244,7 +250,7 @@ public abstract class NodeType{
 		public void tick(IWorld world, AuraView nodes, Node node){
 			super.tick(world, nodes, node);
 			// check all blocks in range
-			int range = (int)(0.7f * MathHelper.sqrt(node.aspects.getHolders().stream().mapToInt(IAspectHolder::getCurrentVis).sum()));
+			int range = (int)(0.7f * MathHelper.sqrt(node.aspects.getHolders().stream().mapToInt(IAspectHolder::getCurrentVis).sum())) + 1;
 			BlockPos nodePos = new BlockPos(node);
 			BlockPos.Mutable cursor = new BlockPos.Mutable();
 			for(int x = -range; x < range; x++){
@@ -261,8 +267,27 @@ public abstract class NodeType{
 							// TODO: minimum time to break (instead of pure random)
 							if(!world.isRemote()){
 								float hardness = state.getBlockHardness(world, cursor);
-								if(hardness != -1 && world.getRandom().nextInt((int)(hardness * 300) + 1) == 0)
+								if(hardness != -1 && world.getRandom().nextInt((int)(hardness * 300) + 1) == 0){
+									// note down that the block has been broken
+									CompoundNBT blocks = node.getData().getCompound("blocks");
+									node.getData().put("blocks", blocks);
+									String key = state.getBlock().getRegistryName().toString();
+									blocks.putInt(key, blocks.getInt(key) + 1);
+									// gain a fraction of that block's aspects
+									if(ArcanaConfig.HUNGRY_NODE_ASPECT_CARRY_FRACTION.get() > 0){
+										if(world instanceof ServerWorld)
+											for(ItemStack drop : Block.getDrops(state, (ServerWorld)world, cursor, world.getTileEntity(cursor)))
+												for(AspectStack stack : ItemAspectRegistry.get(drop)){
+													int toInsert = (int)Math.max(1, stack.getAmount() * ArcanaConfig.HUNGRY_NODE_ASPECT_CARRY_FRACTION.get());
+													VisUtils.moveAspects(stack.getAspect(), toInsert, node.aspects, -1);
+												}
+									}
+									// send changes to client
+									if(nodes instanceof ServerAuraView)
+										((ServerAuraView)nodes).sendChunkToClients(node);
+									// destroy the block
 									world.destroyBlock(cursor, false);
+								}
 							}
 						}
 					}

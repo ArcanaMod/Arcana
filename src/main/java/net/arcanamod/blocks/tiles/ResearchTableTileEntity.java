@@ -27,11 +27,11 @@ import java.util.ArrayList;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class ResearchTableTileEntity extends LockableTileEntity {
-
+public class ResearchTableTileEntity extends LockableTileEntity{
+	
 	ArrayList<BlockPos> visContainers = new ArrayList<>();
-	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE,100);
-
+	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE, 100);
+	
 	public ResearchTableTileEntity(){
 		super(ArcanaTiles.RESEARCH_TABLE_TE.get());
 	}
@@ -43,29 +43,29 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	// so its ~15 max?
 	
 	// slots 0-2 are always there, the rest are reserved for the games themselves
-
+	
 	protected ItemStackHandler items = new ItemStackHandler(14){
 		protected void onContentsChanged(int slot){
 			super.onContentsChanged(slot);
 			markDirty();
 		}
 	};
-
-	public AspectBattery getVisBattery() {
+	
+	public AspectBattery getVisBattery(){
 		return getVisShareablesAsBattery();
 	}
-
+	
 	//TODO: There is better way to do it
-	private AspectBattery getVisShareablesAsBattery() {
+	private AspectBattery getVisShareablesAsBattery(){
 		battery.clear();
-		BlockPos.getAllInBox(getPos().north(4).east(4).up(4),getPos().south(4).west(4).down(2)).forEach(blockPos -> {
-			if (world.getBlockState(blockPos).hasTileEntity()) {
+		BlockPos.getAllInBox(getPos().north(4).east(4).up(4), getPos().south(4).west(4).down(2)).forEach(blockPos -> {
+			if(world.getBlockState(blockPos).hasTileEntity()){
 				TileEntity tileEntityInBox = world.getTileEntity(blockPos);
-				if (tileEntityInBox != null)
-					if (tileEntityInBox instanceof VisShareable)
-						if (((VisShareable) tileEntityInBox).isVisShareable()&&((VisShareable) tileEntityInBox).isManual()) {
+				if(tileEntityInBox != null)
+					if(tileEntityInBox instanceof VisShareable)
+						if(((VisShareable)tileEntityInBox).isVisShareable() && ((VisShareable)tileEntityInBox).isManual()){
 							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(tileEntityInBox);
-							if (vis != null) {
+							if(vis != null){
 								visContainers.add(new BlockPos(blockPos)); // Removing reference
 								AspectBattery.merge(battery, vis);
 							}
@@ -74,7 +74,7 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 		});
 		return battery;
 	}
-
+	
 	@Override
 	public void read(CompoundNBT compound){
 		super.read(compound);
@@ -88,36 +88,34 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 		compound.put("items", items.serializeNBT());
 		return compound;
 	}
-
+	
 	@Override
-	protected ITextComponent getDefaultName() {
+	protected ITextComponent getDefaultName(){
 		return new StringTextComponent("research_table");
 	}
-
+	
 	@Override
-	protected Container createMenu(int id, PlayerInventory player) {
-		PacketBuffer buffer = new PacketBuffer(Unpooled.buffer(8,8));
+	protected Container createMenu(int id, PlayerInventory player){
+		PacketBuffer buffer = new PacketBuffer(Unpooled.buffer(8, 8));
 		buffer.writeBlockPos(pos);
-		return new ResearchTableContainer(id,player,buffer);
+		return new ResearchTableContainer(id, player, buffer);
 	}
-
-	//net.minecraftforge.common.util.LazyOptional<? extends net.minecraftforge.items.IItemHandler>[] handlers =
-	//		net.minecraftforge.items.wrapper.SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
+	
 	@Nonnull
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing){
-		if(capability == AspectHandlerCapability.ASPECT_HANDLER) {
+		if(capability == AspectHandlerCapability.ASPECT_HANDLER){
 			AspectBattery battery = getVisBattery();
 			return battery.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		}
 		return super.getCapability(capability, facing).cast();
 	}
-
+	
 	@Nonnull
 	@Override
-	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
-		return this.getCapability(cap,null);
+	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap){
+		return this.getCapability(cap, null);
 	}
-
+	
 	public ItemStack visItem(){
 		return items.getStackInSlot(0);
 	}
@@ -130,27 +128,24 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	public ItemStack note(){
 		return items.getStackInSlot(2);
 	}
-
-	/**
-	 * Returns the number of slots in the inventory.
-	 */
+	
 	@Override
-	public int getSizeInventory() {
+	public int getSizeInventory(){
 		return items.getSlots();
 	}
-
+	
 	@Override
-	public boolean isEmpty() {
+	public boolean isEmpty(){
 		return false;
 	}
 	
 	@Override
-	public ItemStack getStackInSlot(int index) {
-		return this.items.getStackInSlot(index);
+	public ItemStack getStackInSlot(int index){
+		return items.getStackInSlot(index);
 	}
 	
 	@Override
-	public ItemStack decrStackSize(int index, int count) {
+	public ItemStack decrStackSize(int index, int count){
 		ItemStack stack0 = items.getStackInSlot(index);
 		ItemStack stack1 = items.getStackInSlot(index).copy();
 		stack0.shrink(count);
@@ -159,33 +154,29 @@ public class ResearchTableTileEntity extends LockableTileEntity {
 	}
 	
 	@Override
-	public ItemStack removeStackFromSlot(int index) {
+	public ItemStack removeStackFromSlot(int index){
 		ItemStack stack = this.items.getStackInSlot(index).copy();
 		items.getStackInSlot(index).setCount(0);
 		return stack;
 	}
 	
 	@Override
-	public void setInventorySlotContents(int index, ItemStack stack) {
+	public void setInventorySlotContents(int index, ItemStack stack){
 		items.setStackInSlot(index, stack);
-		if (stack.getCount() > getInventoryStackLimit()) {
+		if(stack.getCount() > getInventoryStackLimit())
 			stack.setCount(getInventoryStackLimit());
-		}
 	}
 	
 	@Override
-	public boolean isUsableByPlayer(PlayerEntity player) {
-		if (world.getTileEntity(pos) != this) {
+	public boolean isUsableByPlayer(PlayerEntity player){
+		if(world.getTileEntity(pos) != this)
 			return false;
-		} else {
-			return player.getDistanceSq(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5) <= 64;
-		}
+		return player.getDistanceSq(pos.getX() + .5, pos.getY() + .5, pos.getZ() + .5) <= 64;
 	}
-
+	
 	@Override
-	public void clear() {
-		for (int i = 0; i < items.getSlots()-1; i++) {
+	public void clear(){
+		for(int i = 0; i < items.getSlots() - 1; i++)
 			items.getStackInSlot(i).setCount(0);
-		}
 	}
 }
