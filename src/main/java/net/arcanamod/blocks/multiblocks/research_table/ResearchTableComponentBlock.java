@@ -8,12 +8,16 @@ import net.arcanamod.blocks.multiblocks.StaticComponent;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.ShapeUtils;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -30,16 +34,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class ResearchTableComponentBlock extends WaterloggableBlock implements StaticComponent, GroupedBlock {
-
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+	public static final BooleanProperty PAPER = BooleanProperty.create("paper");
 	public static final Vec3i COM_OFFSET = new Vec3i(1, 0, 0);
 	public static final Vec3i COM_INVERT = new Vec3i(-1, 0, 0);
 
 	public ResearchTableComponentBlock(Properties properties){
 		super(properties);
-
-		setDefaultState(this.getDefaultState()
-				.with(FACING, Direction.NORTH));
+		setDefaultState(this.getDefaultState().with(FACING, Direction.NORTH).with(PAPER, false));
 	}
 
 	@Override
@@ -54,7 +56,7 @@ public class ResearchTableComponentBlock extends WaterloggableBlock implements S
 
 	@Override
 	public BlockRenderType getRenderType(BlockState state) {
-		return BlockRenderType.INVISIBLE;
+		return BlockRenderType.MODEL;
 	}
 
 	public boolean isCore(BlockPos pos, BlockState state) {
@@ -67,7 +69,7 @@ public class ResearchTableComponentBlock extends WaterloggableBlock implements S
 
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		super.fillStateContainer(builder);
-		builder.add(FACING);
+		builder.add(FACING).add(PAPER);
 	}
 	
 	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player){

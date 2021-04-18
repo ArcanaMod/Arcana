@@ -3,7 +3,6 @@ package net.arcanamod.blocks.tiles;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
 import net.arcanamod.items.PhialItem;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
@@ -43,11 +42,6 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		this.rotation = rotation;
 	}
 
-	private void inventoryChanged() {
-		this.markDirty();
-		Objects.requireNonNull(this.getWorld()).notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
-	}
-
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
 		return this.getStackInSlot(index).isEmpty();
@@ -79,12 +73,6 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		return new DispenserContainer(id, player, this);
 	}
 
-	@Override
-	public void closeInventory(PlayerEntity player) {
-		inventoryChanged();
-		super.closeInventory(player);
-	}
-
 	public int getRedstoneOut() {
 		float vis;
 		vis = getVisTotal();
@@ -97,7 +85,6 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 
 	protected void setItems(NonNullList<ItemStack> itemsIn) {
 		this.stacks = itemsIn;
-		inventoryChanged();
 	}
 
 	@Override public void tick() {
@@ -148,7 +135,6 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 
 	@Override public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap) {
 		if (cap == AspectHandlerCapability.ASPECT_HANDLER) {
-			inventoryChanged();
 			return updateBatteryAndReturn().getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		} else {
 			return updateBatteryAndReturn().getCapability(null, null);
@@ -164,7 +150,6 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 			stack = stack.copy();
 			stack.setCount(1);
 			this.setInventorySlotContents(slot, stack);
-			inventoryChanged();
 			return true;
 		}
 		return false;
@@ -174,10 +159,16 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 		if (!this.stacks.get(slot).isEmpty()) {
 			ItemStack removedPhial = this.stacks.get(slot);
 			this.stacks.set(slot, ItemStack.EMPTY);
-			inventoryChanged();
 			return removedPhial;
 		}
 		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public void setInventorySlotContents(int index, ItemStack stack) {
+		this.markDirty();
+		this.getWorld().notifyBlockUpdate(this.getPos(), this.getBlockState(), this.getBlockState(), 3);
+		super.setInventorySlotContents(index, stack);
 	}
 
 	@Override @Nullable public SUpdateTileEntityPacket getUpdatePacket() {

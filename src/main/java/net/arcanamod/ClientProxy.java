@@ -22,13 +22,11 @@ import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.entities.ArcanaEntities;
-import net.arcanamod.entities.tainted.TaintedCreeperEntity;
 import net.arcanamod.entities.tainted.TaintedEntity;
 import net.arcanamod.event.ResearchEvent;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.FocusItem;
-import net.arcanamod.systems.research.ResearchEntry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraft.client.renderer.RenderType;
@@ -38,10 +36,8 @@ import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
-import net.minecraft.world.biome.ForestBiome;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -55,8 +51,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.lwjgl.glfw.GLFW;
-
-import javax.annotation.Nullable;
 
 import static net.arcanamod.Arcana.MODID;
 import static net.arcanamod.Arcana.arcLoc;
@@ -178,7 +172,6 @@ public class ClientProxy extends CommonProxy{
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.VACUUM_TE.get(), VacuumTileEntityRender::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.PEDESTAL_TE.get(), PedestalTileEntityRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_VALVE_TE.get(), AspectValveTileEntityRenderer::new);
-		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.RESEARCH_TABLE_TE.get(), ResearchTableTileEntityRender::new);
 		
 		//Special Render
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID, "item/phial"));
@@ -277,6 +270,7 @@ public class ClientProxy extends CommonProxy{
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.PRESSURE_JAR.get(), RenderType.getTranslucent());
 		
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.RESEARCH_TABLE.get(), RenderType.getTranslucent());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.RESEARCH_TABLE_COMPONENT.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.ASPECT_WINDOW.get(), RenderType.getTranslucent());
 		
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.HARDENED_GLASS.get(), RenderType.getTranslucent());

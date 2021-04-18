@@ -1,7 +1,34 @@
 {
   "variants": {
-    "": {
-      "model": "arcana:block/research_table"
+    "facing=north,paper=false": {
+      "model": "arcana:block/research_table_component"
+    },
+    "facing=south,paper=false": {
+      "model": "arcana:block/research_table_component",
+      "y": 180
+    },
+    "facing=east,paper=false": {
+      "model": "arcana:block/research_table_component",
+      "y": 90
+    },
+    "facing=west,paper=false": {
+      "model": "arcana:block/research_table_component",
+      "y": 270
+    },
+    "facing=north,paper=true": {
+      "model": "arcana:block/research_table_component_paper"
+    },
+    "facing=south,paper=true": {
+      "model": "arcana:block/research_table_component_paper",
+      "y": 180
+    },
+    "facing=east,paper=true": {
+      "model": "arcana:block/research_table_component_paper",
+      "y": 90
+    },
+    "facing=west,paper=true": {
+      "model": "arcana:block/research_table_component_paper",
+      "y": 270
     }
   }
 }

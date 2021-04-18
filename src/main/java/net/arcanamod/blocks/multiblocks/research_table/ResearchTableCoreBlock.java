@@ -1,7 +1,6 @@
 package net.arcanamod.blocks.multiblocks.research_table;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
@@ -18,6 +17,7 @@ import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -34,16 +34,13 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import static net.arcanamod.blocks.multiblocks.research_table.ResearchTableComponentBlock.COM_INVERT;
 import static net.arcanamod.blocks.multiblocks.research_table.ResearchTableComponentBlock.COM_OFFSET;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-// TODO: This has a visual problem when being mined. I don't think this can be solved without a TER.
-// Thankfully, I'll probably switch this over to a TER anyways to show ink, wands, and research notes. yay.
 public class ResearchTableCoreBlock extends WaterloggableBlock implements StaticComponent, GroupedBlock {
-
     public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
+    public static final BooleanProperty INK = BooleanProperty.create("ink");
 
     public ResearchTableCoreBlock(Properties properties) {
         super(properties);
@@ -79,7 +76,7 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
 
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         super.fillStateContainer(builder);
-        builder.add(FACING);
+        builder.add(FACING).add(INK);
     }
 
     @Override
@@ -105,7 +102,7 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
             return null;
         if (!context.getWorld().getBlockState(context.getPos().add(ShapeUtils.fromNorth(COM_OFFSET, facing))).isReplaceable(context))
             return null;
-        return this.getDefaultState().with(FACING, facing);
+        return this.getDefaultState().with(FACING, facing).with(INK, false);
     }
 
     public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {

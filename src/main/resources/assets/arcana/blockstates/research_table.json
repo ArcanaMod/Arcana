@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,ink=false": {
       "model": "arcana:block/research_table"
     },
-    "facing=south": {
+    "facing=south,ink=false": {
       "model": "arcana:block/research_table",
       "y": 180
     },
-    "facing=east": {
+    "facing=east,ink=false": {
       "model": "arcana:block/research_table",
       "y": 90
     },
-    "facing=west": {
+    "facing=west,ink=false": {
       "model": "arcana:block/research_table",
+      "y": 270
+    },
+    "facing=north,ink=true": {
+      "model": "arcana:block/research_table_ink"
+    },
+    "facing=south,ink=true": {
+      "model": "arcana:block/research_table_ink",
+      "y": 180
+    },
+    "facing=east,ink=true": {
+      "model": "arcana:block/research_table_ink",
+      "y": 90
+    },
+    "facing=west,ink=true": {
+      "model": "arcana:block/research_table_ink",
       "y": 270
     }
   }

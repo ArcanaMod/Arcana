@@ -13,6 +13,5 @@ public class ResearchTableTileEntityRender extends TileEntityRenderer<ResearchTa
 
 	@Override
 	public void render(ResearchTableTileEntity researchTableTileEntity, float v, MatrixStack matrixStack, IRenderTypeBuffer iRenderTypeBuffer, int i, int i1) {
-		// TODO: Add ink and paper.
 	}
 }

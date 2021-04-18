@@ -2,10 +2,50 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [11, 14],
 	"textures": {
+		"2": "arcana:block/paper",
 		"particle": "arcana:block/research_table",
 		"1_0": "arcana:block/research_table"
 	},
 	"elements": [
+		{
+			"from": [-2, 16.05, 4],
+			"to": [7, 16.05, 16],
+			"rotation": {"angle": -22.5, "axis": "y", "origin": [11, 24, 19]},
+			"faces": {
+				"north": {"uv": [0, 0, 9, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 12, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 9, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 12, 0], "texture": "#missing"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#2"}
+			}
+		},
+		{
+			"from": [-1, 16.15, 1],
+			"to": [8, 16.15, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [12, 24, 16]},
+			"faces": {
+				"north": {"uv": [0, 0, 9, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 12, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 9, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 12, 0], "texture": "#missing"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#2"}
+			}
+		},
+		{
+			"from": [-1, 16.1, 0],
+			"to": [10, 16.1, 9],
+			"rotation": {"angle": 22.5, "axis": "y", "origin": [14, 24, 15]},
+			"faces": {
+				"north": {"uv": [0, 0, 9, 0], "texture": "#missing"},
+				"east": {"uv": [0, 0, 12, 0], "texture": "#missing"},
+				"south": {"uv": [0, 0, 9, 0], "texture": "#missing"},
+				"west": {"uv": [0, 0, 12, 0], "texture": "#missing"},
+				"up": {"uv": [0, 0, 16, 16], "rotation": 90, "texture": "#2"},
+				"down": {"uv": [0, 0, 16, 16], "rotation": 270, "texture": "#2"}
+			}
+		},
 		{
 			"from": [0, 12, 0],
 			"to": [16, 16, 16],
@@ -87,13 +127,24 @@
 	],
 	"groups": [
 		{
+			"name": "paper",
+			"origin": [8, 8, 8],
+			"children": [
+				{
+					"name": "paper",
+					"origin": [17, 24, 19],
+					"children": [0, 1, 2]
+				}
+			]
+		},
+		{
 			"name": "research_table_right",
 			"origin": [8, 8, 8],
 			"children": [
 				{
 					"name": "Right",
 					"origin": [8, 8, 8],
-					"children": [0, 1, 2, 3, 4, 5]
+					"children": [3, 4, 5, 6, 7, 8]
 				}
 			]
 		}
