@@ -14,6 +14,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.HorizontalBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -71,15 +72,27 @@ public class ResearchTableComponentBlock extends WaterloggableBlock implements S
 		super.fillStateContainer(builder);
 		builder.add(FACING).add(PAPER);
 	}
-	
-	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player){
+
+	public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player) {
 		BlockPos corePos = getCorePos(pos, state);
-		if(world.getBlockState(corePos).getBlock() == ArcanaBlocks.RESEARCH_TABLE.get())
+		if (world.getBlockState(corePos).getBlock() == ArcanaBlocks.RESEARCH_TABLE.get()) {
 			world.destroyBlock(corePos, false);
+		}
 		// TODO: loot table that detects harvested by player
-		if (!player.isCreative())
+		if (!player.isCreative()) {
 			spawnDrops(state, world, pos);
+		}
 		super.onBlockHarvested(world, pos, state, player);
+	}
+
+	public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+		if (state.getBlock() != newState.getBlock()) {
+			TileEntity tileentity = worldIn.getTileEntity(getCorePos(pos, state));
+			if (tileentity instanceof ResearchTableTileEntity) {
+				InventoryHelper.dropInventoryItems(worldIn, pos, (ResearchTableTileEntity)tileentity);
+			}
+			super.onReplaced(state, worldIn, pos, newState, isMoving);
+		}
 	}
 
 	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {

@@ -12,6 +12,7 @@ import net.minecraft.block.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.Item;
@@ -82,9 +83,20 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
     @Override
     public void onBlockHarvested(World world, BlockPos pos, BlockState state, PlayerEntity player){
         BlockPos offset = pos.add(ShapeUtils.fromNorth(COM_OFFSET, state.get(FACING)));
-        if(world.getBlockState(offset).getBlock() == ArcanaBlocks.RESEARCH_TABLE_COMPONENT.get())
+        if(world.getBlockState(offset).getBlock() == ArcanaBlocks.RESEARCH_TABLE_COMPONENT.get()) {
             world.destroyBlock(offset, false);
+        }
         super.onBlockHarvested(world, pos, state, player);
+    }
+
+    public void onReplaced(BlockState state, World worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.getBlock() != newState.getBlock()) {
+            TileEntity tileentity = worldIn.getTileEntity(pos);
+            if (tileentity instanceof ResearchTableTileEntity) {
+                InventoryHelper.dropInventoryItems(worldIn, pos, (ResearchTableTileEntity)tileentity);
+            }
+            super.onReplaced(state, worldIn, pos, newState, isMoving);
+        }
     }
 
     @Override
@@ -112,7 +124,7 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
             BlockPos comPos = pos.add(ShapeUtils.fromNorth(COM_OFFSET, facing));
             world.setBlockState(comPos,
                     ArcanaBlocks.RESEARCH_TABLE_COMPONENT.get().getDefaultState()
-                        .with(ResearchTableComponentBlock.FACING, facing));
+                            .with(ResearchTableComponentBlock.FACING, facing));
             world.notifyNeighbors(comPos, Blocks.AIR);
             state.updateNeighbors(world, comPos, 3);
         }
