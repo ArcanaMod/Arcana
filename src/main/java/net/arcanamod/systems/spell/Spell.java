@@ -11,6 +11,7 @@ import net.arcanamod.systems.spell.modules.SpellModule;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
 import net.arcanamod.systems.spell.modules.core.*;
 import net.arcanamod.util.Pair;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
@@ -20,6 +21,7 @@ import net.minecraft.world.World;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.util.*;
 
 import static net.arcanamod.util.Pair.of;
@@ -83,7 +85,10 @@ public class Spell implements ISpell {
 	}
 
 	public int getSpellColor() {
-		return Logic.blendAndGetColor(mainModule, 0xFFFFFF);
+		Integer color = null;
+		Logic.blendAndGetColor(mainModule, color, new ArrayList<>());
+		if (color == null) return 0xFFFFFF;
+		return color;
 	}
 
 	/**
@@ -141,6 +146,7 @@ public class Spell implements ISpell {
 		private static SpellModule runSpellModule(Spell spell, World world, SpellModule toUnbound, PlayerEntity caster, Object sender, ICast.Action action,
 												  List<Pair<Aspect,Aspect>> castMethodsAspects, List<ICast> casts) {
 			SpellModule mod = null;
+			if (toUnbound == null) return reportNullSpell();
 			if (toUnbound.bound.size() > 0){
 				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastMethod)
@@ -161,17 +167,22 @@ public class Spell implements ISpell {
 			return mod;
 		}
 
-		private static int blendAndGetColor(SpellModule toUnbound, int color){
-			if (toUnbound != null && toUnbound.bound.size() > 0){
+		public static SpellModule blendAndGetColor(SpellModule toUnbound, @Nullable Integer color, List<ICast> casts){
+			SpellModule mod = null;
+			if (toUnbound == null) return reportNullSpell();
+			if (toUnbound.bound.size() > 0){
 				for (SpellModule module : toUnbound.bound) {
 					if (module instanceof CastCircle)
-						if (color != 0x000000)
-							color = UiUtil.blend(((CastCircle)module).cast.getSpellAspect().getColorRange().get(3),color,0.5f);
-						else color = ((CastCircle)module).cast.getSpellAspect().getColorRange().get(3);
-					return blendAndGetColor(module, color);
+						casts.add(((CastCircle) module).cast);
+					mod = blendAndGetColor(module, color, casts);
+				}
+			}else{
+				for (ICast cast : casts){
+					if (color == null) color = cast.getSpellAspect().getColorRange().get(3);
+					else UiUtil.blend(color,cast.getSpellAspect().getColorRange().get(3),0.5f);
 				}
 			}
-			return color;
+			return mod;
 		}
 
 		public static SpellCosts getSpellCost(SpellModule toUnbound, SpellCosts cost) {
@@ -307,5 +318,12 @@ public class Spell implements ISpell {
 			spell.mainModule.bindModule(castMethod);
 			return spell;
 		}
+	}
+
+	protected static boolean isReported;
+	protected static SpellModule reportNullSpell() {
+		if (!isReported) LogManager.getLogger().fatal(CrashReport.makeCrashReport(new NullSpellException(),"Null spell is present. Please report this issue to Arcana github page.").getCompleteReport());
+		isReported = true;
+		return new StartCircle();
 	}
 }
