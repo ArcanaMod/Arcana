@@ -14,7 +14,7 @@ import net.arcanamod.client.model.tainted.TaintedSheepModel;
 import net.arcanamod.client.model.tainted.TaintedWolfModel;
 import net.arcanamod.client.model.tainted.TaintedZombieModel;
 import net.arcanamod.client.render.*;
-import net.arcanamod.client.render.aspects.ArcanaParticles;
+import net.arcanamod.client.render.particles.ArcanaParticles;
 import net.arcanamod.client.render.tainted.*;
 import net.arcanamod.client.render.tiles.*;
 import net.arcanamod.client.research.EntrySectionRenderer;
@@ -192,6 +192,7 @@ public class ClientProxy extends CommonProxy{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.WILLOW_SPIRIT.get(), WillowSpiritRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_CLOUD.get(), SpellCloudEntityRenderer::new);
 
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_EGG.get(), SpellEggEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINT_BOTTLE.get(), TaintBottleEntityRenderer::new);

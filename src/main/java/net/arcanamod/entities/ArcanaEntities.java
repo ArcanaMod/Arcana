@@ -111,4 +111,8 @@ public class ArcanaEntities{
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WANDERING_TRADER = ENTITY_TYPES.register("tainted_wandering_trader", () -> Taint.taintedEntityOf(EntityType.WANDERING_TRADER));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WITCH = ENTITY_TYPES.register("tainted_witch", () -> Taint.taintedEntityOf(EntityType.WITCH));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_PHANTOM = ENTITY_TYPES.register("tainted_phantom", () -> Taint.taintedEntityOf(EntityType.PHANTOM));
+
+	public static final RegistryObject<EntityType<SpellTrapEntity>> SPELL_TRAP = ENTITY_TYPES
+			.register("spell_trap", () -> EntityType.Builder.<SpellTrapEntity>create(SpellTrapEntity::new, EntityClassification.MISC)
+					.immuneToFire().size(.4f, .4f).build(arcLoc("spell_trap").toString()));
 }
