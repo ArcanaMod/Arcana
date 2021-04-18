@@ -16,4 +16,5 @@ public class ArcanaParticles{
 	public static final RegistryObject<ParticleType<AspectHelixParticleData>> ASPECT_HELIX_PARTICLE = PARTICLE_TYPES.register("aspect_helix_particle", () -> new ParticleType<>(true, AspectHelixParticleData.DESERIALIZER));
 	public static final RegistryObject<ParticleType<NumberParticleData>> NUMBER_PARTICLE = PARTICLE_TYPES.register("number_particle", () -> new ParticleType<>(true, NumberParticleData.DESERIALIZER));
 	public static final RegistryObject<ParticleType<BlockParticleData>> HUNGRY_NODE_BLOCK_PARTICLE = PARTICLE_TYPES.register("hungry_node_block_particle", () -> new ParticleType<>(true, BlockParticleData.DESERIALIZER));
+	public static final RegistryObject<ParticleType<BlockParticleData>> HUNGRY_NODE_DISC_PARTICLE = PARTICLE_TYPES.register("hungry_node_disc_particle", () -> new ParticleType<>(true, BlockParticleData.DESERIALIZER));
 }

@@ -15,5 +15,6 @@ public class ParticleFactoryEvent{
 		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.NUMBER_PARTICLE.get(), new NumberParticle.Factory());
 		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.ASPECT_HELIX_PARTICLE.get(), AspectHelixParticle.Factory::new);
 		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.HUNGRY_NODE_BLOCK_PARTICLE.get(), new HungryNodeBlockParticle.Factory());
+		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.HUNGRY_NODE_DISC_PARTICLE.get(), new HungryNodeDiscParticle.Factory());
 	}
 }

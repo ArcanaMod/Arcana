@@ -21,6 +21,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.IFluidBlock;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.*;
 
@@ -253,8 +254,8 @@ public abstract class NodeType{
 			int range = (int)(0.7f * MathHelper.sqrt(node.aspects.getHolders().stream().mapToInt(IAspectHolder::getCurrentVis).sum())) + 1;
 			BlockPos nodePos = new BlockPos(node);
 			BlockPos.Mutable cursor = new BlockPos.Mutable();
-			for(int x = -range; x < range; x++){
-				for(int y = -range; y < range; y++){
+			for(int x = -range; x < range; x++)
+				for(int y = -range; y < range; y++)
 					for(int z = -range; z < range; z++){
 						cursor.setPos(nodePos).move(x, y, z);
 						// if they have air on at least one side
@@ -291,7 +292,18 @@ public abstract class NodeType{
 							}
 						}
 					}
-				}
+			// make disc particles
+			// disc radius = 1/3 * pull radius
+			CompoundNBT blocks = node.getData().getCompound("blocks");
+			if(blocks.keySet().size() > 0){
+				float discRad = range * (1 / 3f);
+				// TODO: very slightly off centre?
+				float xPos = (float)(node.x);
+				float zPos = (float)(node.z - discRad);
+				// TODO: weighted selection
+				BlockState state = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blocks.keySet().stream().toArray(String[]::new)[world.getRandom().nextInt(blocks.keySet().size())])).getDefaultState();
+				// TODO: slightly thicker rings, more rings
+				world.addParticle(new BlockParticleData(ArcanaParticles.HUNGRY_NODE_DISC_PARTICLE.get(), state).setPos(nodePos), xPos, node.y, zPos, discRad / 4f, 0, discRad / 4f);
 			}
 		}
 		
