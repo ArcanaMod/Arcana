@@ -9,7 +9,6 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-@SuppressWarnings("deprecation")
 public class ArcanaEffects extends Effect{
 	
 	public ArcanaEffects(EffectType type, int colour){
@@ -18,7 +17,7 @@ public class ArcanaEffects extends Effect{
 	
 	// Effect UUIDs should be generated in advance
 	
-	public static final DeferredRegister<Effect> EFFECTS = new DeferredRegister<>(ForgeRegistries.POTIONS, Arcana.MODID);
+	public static final DeferredRegister<Effect> EFFECTS = DeferredRegister.create(ForgeRegistries.POTIONS, Arcana.MODID);
 	
 	public static final RegistryObject<Effect> TAINTED = EFFECTS.register("tainted", TaintedEffect::new);
 	

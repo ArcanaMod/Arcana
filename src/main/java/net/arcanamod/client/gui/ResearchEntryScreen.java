@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 
 public class ResearchEntryScreen extends Screen{
 	
@@ -421,8 +421,8 @@ public class ResearchEntryScreen extends Screen{
 				getMinecraft().getTextureManager().bindTexture(bg);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
-				
-				UiUtil.renderIcon(pin.getIcon(), x + xOffset - 1, y - 1, 0);
+
+				ClientUiUtil.renderIcon(pin.getIcon(), x + xOffset - 1, y - 1, 0);
 			}
 		}
 		

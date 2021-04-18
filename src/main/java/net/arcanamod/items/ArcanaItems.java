@@ -47,7 +47,7 @@ import static net.arcanamod.util.annotations.GIM.Type.ITEM;
 @SuppressWarnings({"unused", "RedundantSuppression"})
 public class ArcanaItems{
 	
-	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, MODID);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MODID);
 
 	//Music discs
 	public static final RegistryObject<Item> MUSIC_DISC_MAIN = ITEMS.register("music_disc_main", () -> new ArcanaMusicDiscItem(1, ArcanaSounds.Impl.music_arcana_theme, new Properties().maxStackSize(1).group(Arcana.ITEMS).rarity(Rarity.RARE)));

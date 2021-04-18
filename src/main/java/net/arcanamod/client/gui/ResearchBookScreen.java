@@ -32,12 +32,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.lang.Math.*;
-import static net.arcanamod.client.gui.UiUtil.drawModalRectWithCustomSizedTexture;
-import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
+import static net.arcanamod.client.gui.ClientUiUtil.drawModalRectWithCustomSizedTexture;
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 import static net.minecraft.util.math.MathHelper.clamp;
 import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
 
@@ -183,7 +182,7 @@ public class ResearchBookScreen extends Screen{
 					Icon icon = entry.icons().get((getMinecraft().player.ticksExisted / 30) % entry.icons().size());
 					int x = (int)(entry.x() * 30 + getXOffset() + 7);
 					int y = (int)(entry.y() * 30 + getYOffset() + 7);
-					UiUtil.renderIcon(icon, x, y, 100);
+					ClientUiUtil.renderIcon(icon, x, y, 100);
 				}
 				
 				// for every visible parent
@@ -731,8 +730,8 @@ public class ResearchBookScreen extends Screen{
 				getMinecraft().getTextureManager().bindTexture(texture);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
-				
-				UiUtil.renderIcon(pin.getIcon(), x + xOffset, y - 1, 0);
+
+				ClientUiUtil.renderIcon(pin.getIcon(), x + xOffset, y - 1, 0);
 			}
 		}
 		

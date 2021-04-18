@@ -7,9 +7,7 @@ import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, modid = Arcana.MODID)
 public class ParticleFactoryEvent{
-
 	@SubscribeEvent
 	public static void onParticleFactoryRegister(final ParticleFactoryRegisterEvent event){
 		Minecraft.getInstance().particles.registerFactory(ArcanaParticles.NODE_PARTICLE.get(), new NodeParticle.Factory());

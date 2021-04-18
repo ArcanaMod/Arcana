@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.client.gui.FociForgeScreen;
 import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.network.Connection;
@@ -574,7 +575,7 @@ public class SpellState {
         float start_y = getNegativeMod16(this.y);
         for (float bg_x = start_x; bg_x < width + 16; bg_x += 16) {
             for (float bg_y = start_y; bg_y < height + 16; bg_y += 16) {
-                UiUtil.drawTexturedModalRect((int)Math.floor(bg_x), (int)Math.floor(bg_y), bg_texX, 0, 16, 16);
+                ClientUiUtil.drawTexturedModalRect((int)Math.floor(bg_x), (int)Math.floor(bg_y), bg_texX, 0, 16, 16);
             }
         }
 
@@ -630,12 +631,12 @@ public class SpellState {
                 // sprite rendered from (0,0) to (x, 0), so we rotate the matrix to draw accordingly
                 float angle = (float)(Math.atan2(basePoint.y - rootPoint.y, basePoint.x - rootPoint.x) * 180 / Math.PI);
                 RenderSystem.rotatef(angle, 0, 0, 1);
-                UiUtil.drawTexturedModalRect(-8, -8, 176, 16, 16, 16);
-                UiUtil.drawTexturedModalRect((int)distance - 8, -8, 208, 16, 16, 16);
+                ClientUiUtil.drawTexturedModalRect(-8, -8, 176, 16, 16, 16);
+                ClientUiUtil.drawTexturedModalRect((int)distance - 8, -8, 208, 16, 16, 16);
                 if (distance > 16) {
                     RenderSystem.translatef(8,0,0);
                     RenderSystem.scalef(((float)distance - 16.0f) / 16.0f,1,  1);
-                    UiUtil.drawTexturedModalRect(0, -8, 192, 16, 16, 16);
+                    ClientUiUtil.drawTexturedModalRect(0, -8, 192, 16, 16, 16);
                 }
                 RenderSystem.popMatrix();
             }
@@ -669,7 +670,7 @@ public class SpellState {
         mc.getTextureManager().bindTexture(FociForgeScreen.BG);
         if (currentSpell != null) {
             for (int i = 0; i < 9; i++) {
-                UiUtil.drawModalRectWithCustomSizedTexture(
+                ClientUiUtil.drawModalRectWithCustomSizedTexture(
                         guiLeft + FociForgeScreen.SPELL_X + TRAY_X + TRAY_DELTA * i,
                         guiTop + FociForgeScreen.SPELL_Y + TRAY_Y,
                         32 * i, 313, 32, 32, 397, 397);

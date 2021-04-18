@@ -1,19 +1,18 @@
 package net.arcanamod.client.research.impls;
 
 import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.client.gui.ResearchEntryScreen;
-import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.items.recipes.AlchemyRecipe;
 import net.arcanamod.systems.research.impls.AlchemySection;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.List;
 
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
-import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<AlchemySection>{
 	
@@ -39,7 +38,7 @@ public class AlchemySectionRenderer extends AbstractCraftingSectionRenderer<Alch
 				AspectStack aspect = aspects.get(i);
 				int xx = aspectStartX + (i % aspectsWidth) * 20;
 				int yy = aspectStartY + (i / aspectsWidth) * 20;
-				UiUtil.renderAspectStack(aspect, xx, yy);
+				ClientUiUtil.renderAspectStack(aspect, xx, yy);
 			}
 		}else
 			error();

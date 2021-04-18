@@ -3,8 +3,8 @@ package net.arcanamod.client.research.impls;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.UndecidedAspectStack;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.client.gui.ResearchEntryScreen;
-import net.arcanamod.client.gui.UiUtil;
 import net.arcanamod.items.recipes.IArcaneCraftingRecipe;
 import net.arcanamod.systems.research.impls.ArcaneCraftingSection;
 import net.minecraft.client.resources.I18n;
@@ -13,8 +13,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.common.crafting.IShapedRecipe;
 
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
-import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRenderer<ArcaneCraftingSection>{
 	
@@ -54,7 +54,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 				UndecidedAspectStack stack = stacks[i];
 				Aspect display = stack.any ? Aspects.EXCHANGE : stack.stack.getAspect();
 				int amount = stack.stack.getAmount();
-				UiUtil.renderAspectStack(display, amount, aspectX + i * (16 + 2 * spacing) + spacing, aspectY);
+				ClientUiUtil.renderAspectStack(display, amount, aspectX + i * (16 + 2 * spacing) + spacing, aspectY);
 			}
 		}else
 			error();
@@ -94,7 +94,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 				String displayed = stack.any ? I18n.format("aspect.any") : I18n.format("aspect." + stack.stack.getAspect().name().toLowerCase());
 				int areaX = aspectX + i * (16 + 2 * spacing) + spacing;
 				if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= aspectY && mouseY < aspectY + 16)
-					UiUtil.drawAspectStyleTooltip(displayed, mouseX, mouseY, screenWidth, screenHeight);
+					ClientUiUtil.drawAspectStyleTooltip(displayed, mouseX, mouseY, screenWidth, screenHeight);
 			}
 		}
 	}

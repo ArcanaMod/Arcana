@@ -31,12 +31,12 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 					if(slot.getAmount() > 0){
 						RenderSystem.color3f(1, 1, 1);
 						if(slot.shouldShowAmount())
-							UiUtil.renderAspectStack(slot.getAspect(), slot.getAmount(), slot.x, slot.y, 0xFFFFFF);
+							ClientUiUtil.renderAspectStack(slot.getAspect(), slot.getAmount(), slot.x, slot.y, 0xFFFFFF);
 						else
-							UiUtil.renderAspect(slot.getAspect(), slot.x, slot.y);
+							ClientUiUtil.renderAspect(slot.getAspect(), slot.x, slot.y);
 					}else{
 						RenderSystem.color3f(.5f, .5f, .5f);
-						UiUtil.renderAspect(slot.getAspect(), slot.x, slot.y);
+						ClientUiUtil.renderAspect(slot.getAspect(), slot.x, slot.y);
 					}
 				if(isMouseOverSlot(mouseX, mouseY, slot)){
 					GuiUtils.drawGradientRect(300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
@@ -51,7 +51,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 			if(slot.getInventory().get() != null && slot.visible)
 				if(isMouseOverSlot(mouseX, mouseY, slot))
 					if(slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null)
-						UiUtil.drawAspectTooltip(slot.getAspect(), mouseX, mouseY, width, height);
+						ClientUiUtil.drawAspectTooltip(slot.getAspect(), mouseX, mouseY, width, height);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import static net.arcanamod.Arcana.MODID;
 @SuppressWarnings("deprecation")
 public class ArcanaFeatures{
 	
-	public static final DeferredRegister<Feature<?>> FEATURES = new DeferredRegister<>(ForgeRegistries.FEATURES, MODID);
+	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MODID);
 	
 	// have to delay populating it until block registry is done because forge thonk
 	public static TreeFeatureConfig SILVERWOOD_TREE_CONFIG;

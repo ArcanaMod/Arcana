@@ -2,7 +2,7 @@ package net.arcanamod.client.research.impls;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.client.gui.UiUtil;
+import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.systems.research.impls.Chemistry;
@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import java.util.List;
 
 import static net.arcanamod.aspects.AspectUtils.areAspectsConnected;
-import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 
 public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRenderer<Chemistry>{
 	
@@ -37,7 +37,7 @@ public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRender
 				int index = x + y * gridWidth;
 				Aspect slot = puzzle.getAspectInSlot(index);
 				if(slot != null){
-					UiUtil.renderAspect(slot, scX + 2, scY + 2);
+					ClientUiUtil.renderAspect(slot, scX + 2, scY + 2);
 					mc().getTextureManager().bindTexture(TEX);
 				}else{
 					mc().getTextureManager().bindTexture(TEX);
@@ -119,7 +119,7 @@ public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRender
 			int scX = xx + paperLeft(screenWidth) + (214 - (23 * gridWidth - 2)) / 2 + 2;
 			int scY = yy + paperTop(screenHeight) + (134 - (19 * gridHeight + 1)) / 2 + 2;
 			if(mouseX >= scX && mouseX < scX + 16 && mouseY >= scY && mouseY < scY + 16){
-				UiUtil.drawAspectTooltip(puzzle.getAspectInSlot(index), mouseX, mouseY, screenWidth, screenHeight);
+				ClientUiUtil.drawAspectTooltip(puzzle.getAspectInSlot(index), mouseX, mouseY, screenWidth, screenHeight);
 				break;
 			}
 		}

@@ -1,15 +1,15 @@
 package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.IAspectHolder;
 import net.arcanamod.aspects.UndecidedAspectStack;
+import net.arcanamod.client.ClientUtils;
 import net.arcanamod.containers.ArcaneCraftingTableContainer;
 import net.arcanamod.items.ArcanaItems;
-import net.arcanamod.items.recipes.AspectCraftingInventory;
 import net.arcanamod.items.recipes.ArcanaRecipes;
+import net.arcanamod.items.recipes.AspectCraftingInventory;
 import net.arcanamod.items.recipes.IArcaneCraftingRecipe;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.recipebook.RecipeList;
@@ -47,7 +47,7 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 		int arcanumButtonLeft = guiLeft + 158, arcanumButtonTop = guiTop + 109;
 		if (isPlayerHavingArcanum())
 			if(mouseX >= arcanumButtonLeft && mouseX < arcanumButtonLeft + 20 && mouseY >= arcanumButtonTop && mouseY < arcanumButtonTop + 20)
-				Arcana.proxy.openResearchBookUI(arcLoc("arcanum"), this, null);
+				ClientUtils.openResearchBookUI(arcLoc("arcanum"), this, null);
 		return super.mouseClicked(mouseX, mouseY, buttonId);
 	}
 
@@ -55,14 +55,14 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
 		getMinecraft().getTextureManager().bindTexture(BG);
-		UiUtil.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		ClientUiUtil.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
 		// draw "show Arcanum" button if player it has in inventory
 		int arcanumButtonLeft = guiLeft + 158, arcanumButtonTop = guiTop + 109;
 		if (isPlayerHavingArcanum()) {
-			UiUtil.drawTexturedModalRect(arcanumButtonLeft, arcanumButtonTop, 213, 17, 20, 20);
+			ClientUiUtil.drawTexturedModalRect(arcanumButtonLeft, arcanumButtonTop, 213, 17, 20, 20);
 			if (mouseX >= arcanumButtonLeft && mouseX < arcanumButtonLeft + 20 && mouseY >= arcanumButtonTop && mouseY < arcanumButtonTop + 20)
-				UiUtil.drawTexturedModalRect(arcanumButtonLeft, arcanumButtonTop, 213, 38, 20, 20);
+				ClientUiUtil.drawTexturedModalRect(arcanumButtonLeft, arcanumButtonTop, 213, 38, 20, 20);
 		}
 
 		// draw necessary aspects
@@ -78,19 +78,19 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 					int amount = stack.stack.getAmount();
 					if(!stack.any){
 						if(stack.stack.getAspect() == Aspects.AIR)
-							UiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 15, colour);
+							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 15, colour);
 						else if(stack.stack.getAspect() == Aspects.WATER)
-							UiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 39, colour);
+							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 39, colour);
 						else if(stack.stack.getAspect() == Aspects.FIRE)
-							UiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 39, colour);
+							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 39, colour);
 						else if(stack.stack.getAspect() == Aspects.EARTH)
-							UiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 89, colour);
+							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 89, colour);
 						else if(stack.stack.getAspect() == Aspects.ORDER)
-							UiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 89, colour);
+							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 89, colour);
 						else if(stack.stack.getAspect() == Aspects.CHAOS)
-							UiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 117, colour);
+							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 117, colour);
 					}else
-						UiUtil.renderAspectStack(Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
+						ClientUiUtil.renderAspectStack(Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
 				}
 			}else{
 				// check if there's a match, but the wand isn't present
@@ -125,19 +125,19 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 						}
 						if(!stack.any){
 							if(stack.stack.getAspect() == Aspects.AIR)
-								UiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 15, colour);
+								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 15, colour);
 							else if(stack.stack.getAspect() == Aspects.WATER)
-								UiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 39, colour);
+								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 39, colour);
 							else if(stack.stack.getAspect() == Aspects.FIRE)
-								UiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 39, colour);
+								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 39, colour);
 							else if(stack.stack.getAspect() == Aspects.EARTH)
-								UiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 89, colour);
+								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 89, colour);
 							else if(stack.stack.getAspect() == Aspects.ORDER)
-								UiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 89, colour);
+								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 89, colour);
 							else if(stack.stack.getAspect() == Aspects.CHAOS)
-								UiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 117, colour);
+								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 117, colour);
 						}else
-							UiUtil.renderAspectStack(Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
+							ClientUiUtil.renderAspectStack(Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
 						RenderSystem.popMatrix();
 					}
 				}

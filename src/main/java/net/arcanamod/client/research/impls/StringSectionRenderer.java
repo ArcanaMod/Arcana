@@ -1,7 +1,6 @@
 package net.arcanamod.client.research.impls;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.ArcanaConfig;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.FormattingHelper;
@@ -11,8 +10,8 @@ import net.minecraft.entity.player.PlayerEntity;
 
 import java.util.List;
 
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 import static net.arcanamod.client.gui.ResearchEntryScreen.*;
-import static net.arcanamod.client.gui.UiUtil.drawTexturedModalRect;
 
 public class StringSectionRenderer implements EntrySectionRenderer<StringSection>{
 	

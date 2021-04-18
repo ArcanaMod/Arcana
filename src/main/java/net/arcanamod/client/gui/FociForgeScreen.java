@@ -65,11 +65,13 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
 		renderBackground();
+		minecraft.getTextureManager().bindTexture(BG);
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		searchWidget.render(mouseX, mouseY, partialTicks);
 		minecraft.getTextureManager().bindTexture(BG);
-		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
-		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + ASPECT_SCROLL_X, guiTop + ASPECT_SCROLL_Y + (int)(ASPECT_SCROLL_HEIGHT * aspectScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
-		UiUtil.drawModalRectWithCustomSizedTexture(guiLeft + FOCI_SCROLL_X, guiTop + FOCI_SCROLL_Y + (int)(FOCI_SCROLL_HEIGHT * fociScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft + ASPECT_SCROLL_X, guiTop + ASPECT_SCROLL_Y + (int)(ASPECT_SCROLL_HEIGHT * aspectScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft + FOCI_SCROLL_X, guiTop + FOCI_SCROLL_Y + (int)(FOCI_SCROLL_HEIGHT * fociScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
 		te.spellState.render(guiLeft, guiTop,guiLeft + SPELL_X, guiTop + SPELL_Y, SPELL_WIDTH, SPELL_HEIGHT, mouseX, mouseY);
 	}
 
@@ -191,7 +193,8 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	}
 
 	public void scrollAspectTo(float pos) {
-		List<Aspect> searchAspects = AspectUtils.castContaingAspects();
+		//List<Aspect> searchAspects = Aspects.getWithoutPrimalsOrSins();
+		List<Aspect> searchAspects = null;
 		int extraRows = (searchAspects.size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;
 		int scroll = Math.max(0, Math.round(pos * extraRows));
 

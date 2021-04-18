@@ -2,6 +2,7 @@ package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
+import net.arcanamod.client.ClientUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,7 @@ public class ScribbledNoteItem extends Item{
 	
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand){
-		Arcana.proxy.openScribbledNotesUI();
+		ClientUtils.openScribbledNotesUI();
 		return new ActionResult<>(ActionResultType.SUCCESS, player.getHeldItem(hand));
 	}
 }
