@@ -41,7 +41,7 @@ import static net.minecraft.util.math.MathHelper.clamp;
 import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
 
 public class ResearchBookScreen extends Screen{
-	
+
 	ResearchBook book;
 	List<ResearchCategory> categories;
 	ResourceLocation texture;
@@ -50,17 +50,17 @@ public class ResearchBookScreen extends Screen{
 	List<TooltipButton> tooltipButtons = new ArrayList<>();
 	List<PinButton> pinButtons = new ArrayList<>();
 	ItemStack sender;
-	
+
 	// public static final String SUFFIX = "_menu_gui.png";
 	public static final String SUFFIX_RESIZABLE = "_menu_resizable.png";
 	public static final ResourceLocation ARROWS_AND_BASES = new ResourceLocation(Arcana.MODID, "textures/gui/research/research_bases.png");
-	
+
 	private static final int MAX_PAN = 512;
 	private static final int ZOOM_MULTIPLIER = 2;
-	
+
 	// drawing helper
 	private final Arrows arrows = new Arrows();
-	
+
 	static float xPan = 0;
 	static float yPan = 0;
 	static float zoom = 0.7f;
@@ -85,20 +85,20 @@ public class ResearchBookScreen extends Screen{
 			return Researcher.getFrom(player).entryStage(entry) >= entry.sections().size();
 		}).collect(Collectors.toList());
 	}
-	
+
 	public float getXOffset(){
 		return ((width / 2f) * (1 / zoom)) + (xPan / 2f);
 	}
-	
+
 	public float getYOffset(){
 		return ((height / 2f) * (1 / zoom)) - (yPan / 2f);
 	}
-	
+
 	public void render(int mouseX, int mouseY, float partialTicks){
 		renderBackground();
 		RenderSystem.enableBlend();
 		super.render(mouseX, mouseY, partialTicks);
-		
+
 		// draw stuff
 		// 224x196 viewing area
 		int scale = (int)getMinecraft().getMainWindow().getGuiScaleFactor();
@@ -107,25 +107,25 @@ public class ResearchBookScreen extends Screen{
 		GL11.glScissor(x * scale, y * scale, visibleWidth * scale, visibleHeight * scale);
 		GL11.glEnable(GL_SCISSOR_TEST);
 		// scissors on
-		
+
 		renderResearchBackground();
 		renderEntries(partialTicks);
-		
+
 		// scissors off
 		GL11.glDisable(GL_SCISSOR_TEST);
-		
+
 		setBlitOffset(299);
 		renderFrame();
 		setBlitOffset(0);
 		renderEntryTooltip(mouseX, mouseY);
-		
+
 		tooltipButtons.forEach(pin -> pin.renderAfter(mouseX, mouseY));
 		RenderSystem.enableBlend();
 	}
-	
+
 	public void init(@Nonnull Minecraft mc, int mouseX, int mouseY){
 		super.init(mc, mouseX, mouseY);
-		
+
 		// add buttons
 		for(int i = 0, size = categories.size(); i < size; i++){
 			ResearchCategory category = categories.get(i);
@@ -133,10 +133,10 @@ public class ResearchBookScreen extends Screen{
 			addButton(categoryButton);
 			tooltipButtons.add(categoryButton);
 		}
-		
+
 		refreshPinButtons(mc);
 	}
-	
+
 	void refreshPinButtons(Minecraft mc){
 		tooltipButtons.removeAll(pinButtons);
 		buttons.removeAll(pinButtons);
@@ -155,12 +155,12 @@ public class ResearchBookScreen extends Screen{
 			i.incrementAndGet();
 		}));
 	}
-	
+
 	private void renderResearchBackground(){
 		getMinecraft().getTextureManager().bindTexture(categories.get(tab).bg());
 		drawModalRectWithCustomSizedTexture((width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, getFrameWidth() - 32, getFrameHeight() - 34, (int)(width*1.2f), (int)(width*1.2f));
 	}
-	
+
 	private void renderEntries(float partialTicks){
 		RenderSystem.scaled(zoom, zoom, 1f);
 		for(ResearchEntry entry : categories.get(tab).entries()){
@@ -184,7 +184,7 @@ public class ResearchBookScreen extends Screen{
 					int y = (int)(entry.y() * 30 + getYOffset() + 7);
 					ClientUiUtil.renderIcon(icon, x, y, 100);
 				}
-				
+
 				// for every visible parent
 				// draw an arrow & arrowhead
 				RenderSystem.enableBlend();
@@ -321,8 +321,7 @@ public class ResearchBookScreen extends Screen{
 		}
 		RenderSystem.scaled(1 / zoom, 1 / zoom, 1f);
 	}
-	
-	
+
 	public PageStyle style(ResearchEntry entry){
 		// if the page is at full progress, its complete.
 		Researcher r = Researcher.getFrom(getMinecraft().player);
@@ -347,7 +346,7 @@ public class ResearchBookScreen extends Screen{
 		// otherwise, its invisible
 		return PageStyle.NONE;
 	}
-	
+
 	public PageStyle parentStyle(ResearchEntry entry, Parent parent){
 		// if the parent is greater than required, consider it complete
 		Researcher r = Researcher.getFrom(getMinecraft().player);
@@ -375,7 +374,7 @@ public class ResearchBookScreen extends Screen{
 		// otherwise, its invisible
 		return PageStyle.NONE;
 	}
-	
+
 	private int base(ResearchEntry entry){
 		int base = 8;
 		if(entry.meta().contains("purple_base"))
@@ -384,7 +383,7 @@ public class ResearchBookScreen extends Screen{
 			base = 4;
 		else if(entry.meta().contains("no_base"))
 			return 12;
-		
+
 		if(entry.meta().contains("round_base"))
 			return base + 1;
 		else if(entry.meta().contains("square_base"))
@@ -395,7 +394,7 @@ public class ResearchBookScreen extends Screen{
 			return base;
 		return base + 2;
 	}
-	
+
 	private void renderEntryTooltip(int mouseX, int mouseY){
 		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style = null;
@@ -410,7 +409,7 @@ public class ResearchBookScreen extends Screen{
 			}
 		}
 	}
-	
+
 	private boolean hovering(ResearchEntry entry, int mouseX, int mouseY){
 		int x = (int)((entry.x() * 30 + getXOffset() + 2) * zoom);
 		int y = (int)((entry.y() * 30 + getYOffset() + 2) * zoom);
@@ -418,7 +417,7 @@ public class ResearchBookScreen extends Screen{
 		int visibleWidth = getFrameWidth() - 32, visibleHeight = getFrameHeight() - 34;
 		return mouseX >= x && mouseX <= x + (26 * zoom) && mouseY >= y && mouseY <= y + (26 * zoom) && mouseX >= scrx && mouseX <= scrx + visibleWidth && mouseY >= scry && mouseY <= scry + visibleHeight;
 	}
-	
+
 	private void renderFrame(){
 		getMinecraft().getTextureManager().bindTexture(texture);
 		RenderSystem.enableBlend();
@@ -447,7 +446,7 @@ public class ResearchBookScreen extends Screen{
 			RenderSystem.enableDepthTest();
 		}
 	}
-	
+
 	private int getFrameWidth(){
 		int conf = ArcanaConfig.CUSTOM_BOOK_WIDTH.get();
 		if(conf == -1)
@@ -455,7 +454,7 @@ public class ResearchBookScreen extends Screen{
 		else
 			return clamp(conf, 220, width);
 	}
-	
+
 	private int getFrameHeight(){
 		int conf = ArcanaConfig.CUSTOM_BOOK_HEIGHT.get();
 		if(conf == -1)
@@ -463,7 +462,7 @@ public class ResearchBookScreen extends Screen{
 		else
 			return clamp(conf, 220, height);
 	}
-	
+
 	public boolean mouseDragged(double mouseX, double mouseY, int button, double deltaX, double deltaY){
 		xPan += (deltaX * ZOOM_MULTIPLIER) / zoom;
 		yPan -= (deltaY * ZOOM_MULTIPLIER) / zoom;
@@ -471,7 +470,7 @@ public class ResearchBookScreen extends Screen{
 		yPan = clamp(yPan, -MAX_PAN, MAX_PAN);
 		return super.mouseDragged(mouseX, mouseY, button, deltaX, deltaY);
 	}
-	
+
 	public boolean mouseClicked(double mouseX, double mouseY, int button){
 		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style;
@@ -488,7 +487,7 @@ public class ResearchBookScreen extends Screen{
 		}
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
-	
+
 	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
 		float amnt = 1.2f;
 		if((scroll < 0 && zoom > 0.5) || (scroll > 0 && zoom < 1))
@@ -497,57 +496,57 @@ public class ResearchBookScreen extends Screen{
 			zoom = 1f;
 		return super.mouseScrolled(mouseX, mouseY, scroll);
 	}
-	
+
 	public boolean isPauseScreen(){
 		return false;
 	}
-	
+
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers){
-		if(super.keyPressed(keyCode, scanCode, modifiers))
+		if(super.keyPressed(keyCode, scanCode, modifiers)) {
 			return true;
-		else{
-			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
-			if(keyCode == 256 || getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
-				getMinecraft().player.closeScreen();
-				return true;
-			}
-			if(keyCode == 292){
-				// F3 pressed
-				showZoom = !showZoom;
-			}
-			return false;
 		}
+		InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
+		if (keyCode == 256 || getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)) {
+			onClose();
+			getMinecraft().player.closeScreen();
+			return true;
+		} else if (keyCode == 292) {
+			// F3 pressed
+			showZoom = !showZoom;
+		}
+		return false;
 	}
 
 	public void onClose() {
-		if (sender != null)
-			sender.getOrCreateTag().putBoolean("open",false);
+		if (sender != null) {
+			sender.getOrCreateTag().putBoolean("open", false);
+		}
 
 		Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
-	
+
 	/**
 	 * Helper class containing methods to draw segments of lines. Made to avoid cluttering up the namespace.
 	 * The lines texture must be bound before calling these methods.
 	 */
 	private final class Arrows{
-		
+
 		int gX2SX(int gX){
 			return (int)((gX * 30 + getXOffset()));
 		}
-		
+
 		int gY2SY(int gY){
 			return (int)((gY * 30 + getYOffset()));
 		}
-		
+
 		void drawHorizontalSegment(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 0, 30, 30);
 		}
-		
+
 		void drawVerticalSegment(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 0, 30, 30);
 		}
-		
+
 		void drawHorizontalLine(int y, int startGX, int endGX){
 			int temp = startGX;
 			// *possibly* swap them
@@ -558,7 +557,7 @@ public class ResearchBookScreen extends Screen{
 				drawHorizontalSegment(j, y);
 			}
 		}
-		
+
 		void drawVerticalLine(int x, int startGY, int endGY){
 			int temp = startGY;
 			// *possibly* swap them
@@ -568,7 +567,7 @@ public class ResearchBookScreen extends Screen{
 			for(int j = startGY + 1; j < endGY; j++)
 				drawVerticalSegment(x, j);
 		}
-		
+
 		void drawHorizontalLineMinus1(int y, int startGX, int endGX){
 			int temp = startGX;
 			// take one
@@ -583,7 +582,7 @@ public class ResearchBookScreen extends Screen{
 			for(int j = startGX + 1; j < endGX; j++)
 				drawHorizontalSegment(j, y);
 		}
-		
+
 		void drawVerticalLineMinus1(int x, int startGY, int endGY){
 			int temp = startGY;
 			// take one
@@ -598,66 +597,66 @@ public class ResearchBookScreen extends Screen{
 			for(int j = startGY + 1; j < endGY; j++)
 				drawVerticalSegment(x, j);
 		}
-		
+
 		void drawLuCurve(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 164, 0, 30, 30);
 		}
-		
+
 		void drawRuCurve(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 0, 30, 30);
 		}
-		
+
 		void drawLdCurve(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 224, 0, 30, 30);
 		}
-		
+
 		void drawRdCurve(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 30, 30, 30);
 		}
-		
+
 		void drawLargeLuCurve(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 30, 60, 60);
 		}
-		
+
 		void drawLargeRuCurve(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 30, 60, 60);
 		}
-		
+
 		void drawLargeLdCurve(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 90, 60, 60);
 		}
-		
+
 		void drawLargeRdCurve(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 90, 60, 60);
 		}
-		
+
 		void drawDownArrow(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30);
 		}
-		
+
 		void drawUpArrow(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30);
 		}
-		
+
 		void drawLeftArrow(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30);
 		}
-		
+
 		void drawRightArrow(int gX, int gY){
 			drawTexturedModalRect(gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30);
 		}
 	}
-	
+
 	interface TooltipButton{
-		
+
 		void renderAfter(int mouseX, int mouseY);
 	}
-	
+
 	class CategoryButton extends Button implements TooltipButton{
-		
+
 		protected int categoryNum;
 		protected ResearchCategory category;
-		
+
 		public CategoryButton(int categoryNum, int x, int y, ResearchCategory category){
 			super(x, y, 16, 16, "", button -> {
 				if(Minecraft.getInstance().currentScreen instanceof ResearchBookScreen)
@@ -667,20 +666,20 @@ public class ResearchBookScreen extends Screen{
 			this.category = category;
 			visible = true;
 		}
-		
+
 		@ParametersAreNonnullByDefault
 		public void renderButton(int mouseX, int mouseY, float partialTicks){
 			if(visible){
 				RenderSystem.color3f(1, 1, 1);
 				RenderHelper.disableStandardItemLighting();
-				
+
 				Minecraft.getInstance().getTextureManager().bindTexture(category.icon());
 				drawModalRectWithCustomSizedTexture(x - (categoryNum == tab ? 6 : (isHovered) ? 4 : 0), y, 0, 0, 16, 16, 16, 16);
-				
+
 				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			}
 		}
-		
+
 		public void renderAfter(int mouseX, int mouseY){
 			if(isHovered){
 				int completion = (category.entries().size() > 0) ? ((category.streamEntries().mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / category.entries().size()) : 100;
@@ -688,12 +687,12 @@ public class ResearchBookScreen extends Screen{
 			}
 		}
 	}
-	
-	class PinButton extends Button implements TooltipButton{
-		
+
+	class PinButton extends Button implements TooltipButton {
+
 		Pin pin;
-		
-		public PinButton(int x, int y, Pin pin){
+
+		public PinButton(int x, int y, Pin pin) {
 			super(x, y, 18, 18, "", b -> {
 				if(Screen.hasControlDown()){
 					// unpin
@@ -720,13 +719,13 @@ public class ResearchBookScreen extends Screen{
 			});
 			this.pin = pin;
 		}
-		
-		public void renderButton(int mouseX, int mouseY, float partialTicks){
+
+		public void renderButton(int mouseX, int mouseY, float partialTicks) {
 			if(visible){
 				RenderSystem.color3f(1, 1, 1);
-				
+
 				int xOffset = isHovered ? 3 : 0;
-				
+
 				getMinecraft().getTextureManager().bindTexture(texture);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 				drawTexturedModalRect(x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
@@ -734,8 +733,8 @@ public class ResearchBookScreen extends Screen{
 				ClientUiUtil.renderIcon(pin.getIcon(), x + xOffset, y - 1, 0);
 			}
 		}
-		
-		public void renderAfter(int mouseX, int mouseY){
+
+		public void renderAfter(int mouseX, int mouseY) {
 			isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			if(isHovered)
 				GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), TextFormatting.AQUA + I18n.format("researchBook.jump_to_pin"), TextFormatting.AQUA + I18n.format("researchEntry.unpin")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
