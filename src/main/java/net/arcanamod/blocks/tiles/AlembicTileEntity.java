@@ -5,7 +5,7 @@ import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
-import net.arcanamod.util.VisUtils;
+import net.arcanamod.systems.vis.VisUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;

@@ -13,7 +13,7 @@ import net.arcanamod.client.ClientAuraHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.Core;
-import net.arcanamod.util.GogglePriority;
+import net.arcanamod.items.settings.GogglePriority;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;

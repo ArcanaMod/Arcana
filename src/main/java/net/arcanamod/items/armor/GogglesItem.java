@@ -1,6 +1,6 @@
 package net.arcanamod.items.armor;
 
-import net.arcanamod.util.GogglePriority;
+import net.arcanamod.items.settings.GogglePriority;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;

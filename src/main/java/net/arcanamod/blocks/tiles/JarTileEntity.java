@@ -5,7 +5,7 @@ import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
-import net.arcanamod.util.VisUtils;
+import net.arcanamod.systems.vis.VisUtils;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;

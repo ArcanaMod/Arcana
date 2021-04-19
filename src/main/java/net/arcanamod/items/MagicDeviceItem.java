@@ -1,6 +1,5 @@
 package net.arcanamod.items;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
@@ -11,7 +10,7 @@ import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.spell.MDModifier;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.casts.ICast;
-import net.arcanamod.util.VisUtils;
+import net.arcanamod.systems.vis.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
 import net.minecraft.client.resources.I18n;

@@ -1,4 +1,4 @@
-package net.arcanamod.util;
+package net.arcanamod.items.settings;
 
 import net.arcanamod.items.armor.GogglesItem;
 import net.minecraft.client.Minecraft;

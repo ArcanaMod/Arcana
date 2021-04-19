@@ -1,6 +1,5 @@
 package net.arcanamod.client.event;
 
-import com.google.common.collect.ImmutableList;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
@@ -10,7 +9,7 @@ import net.arcanamod.client.render.particles.AspectParticleData;
 import net.arcanamod.client.render.particles.NumberParticleData;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.mixin.AccessorMinecraft;
-import net.arcanamod.util.GogglePriority;
+import net.arcanamod.items.settings.GogglePriority;
 import net.arcanamod.util.LocalAxis;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;

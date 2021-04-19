@@ -1,6 +1,5 @@
 package net.arcanamod.systems.spell.casts;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.entities.BigSpellEggEntity;
 import net.arcanamod.entities.SpellCloudEntity;

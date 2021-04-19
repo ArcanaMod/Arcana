@@ -18,6 +18,7 @@ import net.arcanamod.systems.research.Requirement;
 import net.arcanamod.systems.research.ResearchLoader;
 import net.arcanamod.capabilities.ResearcherCapability;
 import net.arcanamod.items.recipes.ArcanaRecipes;
+import net.arcanamod.util.AuthorisationManager;
 import net.arcanamod.world.NodeType;
 import net.arcanamod.capabilities.AuraChunkCapability;
 import net.arcanamod.world.WorldInteractionsRegistry;
@@ -53,6 +54,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
 
 /**
  * Base Arcana Class
@@ -83,6 +85,13 @@ public class Arcana{
 	public static final boolean debug = true;
 	
 	public Arcana(){
+		AuthorisationManager manager = new AuthorisationManager();
+		try {
+			manager.getUserLevel();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);

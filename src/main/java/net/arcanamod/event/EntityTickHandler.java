@@ -1,44 +1,24 @@
 package net.arcanamod.event;
 
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.*;
-import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
-import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.capabilities.TaintTrackable;
-import net.arcanamod.client.gui.UiUtil;
-import net.arcanamod.client.render.particles.ArcanaParticles;
-import net.arcanamod.client.render.particles.AspectParticleData;
-import net.arcanamod.client.render.particles.NumberParticleData;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.systems.spell.casts.DelayedCast;
 import net.arcanamod.systems.spell.casts.ToggleableCast;
 import net.arcanamod.systems.taint.Taint;
-import net.arcanamod.util.GogglePriority;
-import net.arcanamod.util.LocalAxis;
-import net.arcanamod.util.Pair;
-import net.arcanamod.util.RayTraceUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
 import net.arcanamod.world.ServerAuraView;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,7 +28,6 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mod.EventBusSubscriber
 public class EntityTickHandler{
