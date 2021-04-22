@@ -296,14 +296,12 @@ public abstract class NodeType{
 			// disc radius = 1/3 * pull radius
 			CompoundNBT blocks = node.getData().getCompound("blocks");
 			if(blocks.keySet().size() > 0){
-				float discRad = range * (1 / 3f);
-				// TODO: very slightly off centre?
+				float discRad = (float)(range * (1 / 3f) + world.getRandom().nextGaussian() / 5f);
 				float xPos = (float)(node.x);
 				float zPos = (float)(node.z - discRad);
 				// TODO: weighted selection
 				BlockState state = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blocks.keySet().stream().toArray(String[]::new)[world.getRandom().nextInt(blocks.keySet().size())])).getDefaultState();
-				// TODO: slightly thicker rings, more rings
-				world.addParticle(new BlockParticleData(ArcanaParticles.HUNGRY_NODE_DISC_PARTICLE.get(), state).setPos(nodePos), xPos, node.y, zPos, discRad / 4f, 0, discRad / 4f);
+				world.addParticle(new BlockParticleData(ArcanaParticles.HUNGRY_NODE_DISC_PARTICLE.get(), state).setPos(nodePos), xPos, node.y, zPos, discRad / 6f, 0, discRad / 6f);
 			}
 		}
 		

@@ -30,7 +30,7 @@ public class HungryNodeDiscParticle extends SpriteTexturedParticle{
 		motionY = motionY * 0.01f + ySpeed;
 		motionZ = motionZ * 0.01f + zSpeed;
 		posX += (rand.nextFloat() - rand.nextFloat()) * .05f;
-		posY += (rand.nextFloat() - rand.nextFloat()) * .05f;
+		posY += (rand.nextGaussian()) * .2f;
 		posZ += (rand.nextFloat() - rand.nextFloat()) * .05f;
 		particleRed = .6f;
 		particleGreen = .6f;
@@ -38,7 +38,7 @@ public class HungryNodeDiscParticle extends SpriteTexturedParticle{
 		particleScale /= 2;
 		u = rand.nextFloat() * 3;
 		v = rand.nextFloat() * 3;
-		maxAge = 80;
+		maxAge = 120;
 	}
 	
 	@Nonnull
@@ -58,7 +58,7 @@ public class HungryNodeDiscParticle extends SpriteTexturedParticle{
 		if(age++ >= maxAge)
 			setExpired();
 		else{
-			float time = age / 4f;
+			float time = age / 6f;
 			// TODO: allow off-axis rings
 			move(MathHelper.cos(time) * motionX, motionY, MathHelper.sin(time) * motionZ);
 		}
