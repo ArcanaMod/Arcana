@@ -33,17 +33,18 @@ public class ClientUiUtil {
         renderAspectStack(stack.getAspect(), stack.getAmount(), x, y, colour);
     }
 
-    public static void renderAspectStack(Aspect aspect, int amount, int x, int y){
+    public static void renderAspectStack(Aspect aspect, float amount, int x, int y){
         renderAspectStack(aspect, amount, x, y, UiUtil.tooltipColour(aspect));
     }
 
-    public static void renderAspectStack(Aspect aspect, int amount, int x, int y, int colour){
+    public static void renderAspectStack(Aspect aspect, float amount, int x, int y, int colour){
         Minecraft mc = Minecraft.getInstance();
         // render aspect
         renderAspect(aspect, x, y);
         // render amount
         MatrixStack matrixstack = new MatrixStack();
-        String s = String.valueOf(amount);
+        // if there is a fractional part, round it
+        String s = (amount % 1 > 0) ? String.format("%.1f", amount) : String.format("%.0f", amount);
         matrixstack.translate(0, 0, mc.getItemRenderer().zLevel + 200.0F);
         IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
         mc.fontRenderer.renderString(s, x + 19 - mc.fontRenderer.getStringWidth(s), y + 10, colour, true, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
@@ -159,10 +160,10 @@ public class ClientUiUtil {
         }
     }
 
-    public static void renderVisFill(AspectStack aspStack, int visMax, boolean vertical, int x, int y) {
+    public static void renderVisFill(AspectStack aspStack, float visMax, boolean vertical, int x, int y) {
         int meterShort = 3;
         int meterLen = 16;
-        int renderLen = (aspStack.getAmount() * meterLen) / visMax;
+        int renderLen = (int)((aspStack.getAmount() * meterLen) / visMax);
         if (renderLen > 0) {
             Minecraft.getInstance().getTextureManager().bindTexture(aspStack.getAspect().getVisMeterTexture());
             if (vertical)

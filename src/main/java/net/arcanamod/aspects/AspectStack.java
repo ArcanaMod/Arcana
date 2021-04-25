@@ -5,7 +5,7 @@ public class AspectStack {
 	public static final AspectStack EMPTY = new AspectStack(Aspects.EMPTY, 0);
 
 	private boolean isEmpty;
-	private int amount;
+	private float amount;
 	private Aspect aspect;
 
 	public boolean isEmpty() {
@@ -16,11 +16,11 @@ public class AspectStack {
 		this.aspect = aspect;
 	}
 
-	public int getAmount() {
+	public float getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(float amount) {
 		this.amount = amount;
 	}
 
@@ -36,7 +36,7 @@ public class AspectStack {
 		this(aspect,1);
 	}
 
-	public AspectStack(Aspect aspect, int amount){
+	public AspectStack(Aspect aspect, float amount){
 		this.isEmpty = amount <= 0 || aspect == Aspects.EMPTY;
 
 		this.aspect = isEmpty ? Aspects.EMPTY : aspect;

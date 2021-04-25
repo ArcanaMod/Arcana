@@ -26,8 +26,8 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	}
 	
 	public Aspect stored;
-	public int held;
-	int capacity;
+	public float held;
+	float capacity;
 	
 	public StoreSlotAspect(int capacity){
 		this.capacity = capacity;
@@ -43,13 +43,13 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	 * @return The amount of vis (that would be) leftover.
 	 */
 	@Override
-	public int insert(AspectStack stack, boolean simulate) {
+	public float insert(AspectStack stack, boolean simulate) {
 		Aspect _stored = stored;
 		if(_stored == null)
 			_stored = stack.getAspect();
 		if(_stored != stack.getAspect())
 			return stack.getAmount();
-		int capacityRemaining = getCapacity(stack.getAspect()) - getCurrentVis();
+		float capacityRemaining = getCapacity(stack.getAspect()) - getCurrentVis();
 		if(stack.getAmount() <= capacityRemaining){
 			if(!simulate){
 				held = getCurrentVis() + stack.getAmount();
@@ -71,7 +71,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	 * @return The amount of that aspect stored.
 	 */
 	@Override
-	public int getCurrentVis() {
+	public float getCurrentVis() {
 		return held;
 	}
 
@@ -84,8 +84,8 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	 * @return The amount of vis removed from this handler.
 	 */
 	@Override
-	public int drain(AspectStack stack, boolean simulate) {
-		int vis = getCurrentVis();
+	public float drain(AspectStack stack, boolean simulate) {
+		float vis = getCurrentVis();
 		if(stack.getAmount() >= vis){
 			if(!simulate){
 				held = 0;
@@ -107,11 +107,11 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 		return true;
 	}
 	
-	public int getCapacity(Aspect aspect){
+	public float getCapacity(Aspect aspect){
 		return capacity;
 	}
 	
-	public int getCapacity(){
+	public float getCapacity(){
 		return capacity;
 	}
 	
@@ -140,7 +140,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	}
 
 	@Override
-	public void setCapacity(int defaultCellSize) {
+	public void setCapacity(float defaultCellSize) {
 		capacity = defaultCellSize;
 	}
 
@@ -215,7 +215,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	 * @return Inserted amount
 	 */
 	@Override
-	public int insert(int holder, AspectStack resource, boolean simulate) {
+	public float insert(int holder, AspectStack resource, boolean simulate) {
 		return insert(resource, simulate);
 	}
 
@@ -228,7 +228,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	 * @return Inserted amount
 	 */
 	@Override
-	public int insert(int holder, int maxInsert, boolean simulate) {
+	public float insert(int holder, int maxInsert, boolean simulate) {
 		return insert(holder, new AspectStack(stored,maxInsert), simulate);
 	}
 
@@ -241,7 +241,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	 * @return Drained amount
 	 */
 	@Override
-	public int drain(int holder, AspectStack resource, boolean simulate) {
+	public float drain(int holder, AspectStack resource, boolean simulate) {
 		return drain(resource,simulate);
 	}
 
@@ -254,7 +254,7 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	 * @return Drained amount
 	 */
 	@Override
-	public int drain(int holder, int maxDrain, boolean simulate) {
+	public float drain(int holder, int maxDrain, boolean simulate) {
 		return drain(holder, new AspectStack(stored,maxDrain), simulate);
 	}
 
@@ -295,9 +295,9 @@ public class StoreSlotAspect implements IAspectHandler, IAspectHolder, ICapabili
 	public CompoundNBT serializeNBT(){
 		CompoundNBT compound = new CompoundNBT();
 		CompoundNBT storedAspects = new CompoundNBT();
-		storedAspects.putInt(stored != null ? stored.name().toLowerCase() : "null", held);
+		storedAspects.putFloat(stored != null ? stored.name().toLowerCase() : "null", held);
 		compound.put("stored", storedAspects);
-		compound.putInt("capacity", capacity);
+		compound.putFloat("capacity", capacity);
 		return compound;
 	}
 	

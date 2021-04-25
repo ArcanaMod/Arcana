@@ -6,7 +6,6 @@ import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.blocks.multiblocks.IStaticEnum;
 import net.arcanamod.blocks.multiblocks.StaticComponent;
 import net.arcanamod.blocks.tiles.FociForgeTileEntity;
-import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.util.ShapeUtils;
 import net.minecraft.block.Block;
@@ -35,6 +34,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+@SuppressWarnings("deprecation")
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class FociForgeComponentBlock extends Block implements StaticComponent, GroupedBlock {

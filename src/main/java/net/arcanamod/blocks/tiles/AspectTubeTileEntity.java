@@ -155,26 +155,26 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		throw new UnsupportedOperationException("Tried to modify pipe aspect cell data!");
 	}
 	
-	public int insert(int holder, AspectStack resource, boolean simulate){
+	public float insert(int holder, AspectStack resource, boolean simulate){
 		// if an exception occurs, it's your fault
 		checkScan();
 		return cells.get(holder).insert(resource, simulate);
 	}
 	
-	public int insert(int holder, int maxInsert, boolean simulate){
+	public float insert(int holder, int maxInsert, boolean simulate){
 		// if an exception occurs, it's your fault
 		checkScan();
 		return cells.get(holder).insert(new AspectStack(cells.get(holder).getContainedAspect(), maxInsert), simulate);
 	}
 	
-	public int drain(int holder, AspectStack resource, boolean simulate){
+	public float drain(int holder, AspectStack resource, boolean simulate){
 		checkScan();
 		if(holder >= cells.size())
 			return 0;
 		return cells.get(holder).drain(resource, simulate);
 	}
 	
-	public int drain(int holder, int maxDrain, boolean simulate){
+	public float drain(int holder, int maxDrain, boolean simulate){
 		checkScan();
 		if(holder >= cells.size())
 			return 0;
@@ -283,17 +283,17 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 			this.notifying = notifying;
 		}
 		
-		public int insert(AspectStack stack, boolean simulate){
+		public float insert(AspectStack stack, boolean simulate){
 			tryNotify(stack, simulate);
 			return cell.insert(stack, simulate);
 		}
 		
-		public int drain(AspectStack stack, boolean simulate){
+		public float drain(AspectStack stack, boolean simulate){
 			tryNotify(stack, simulate);
 			return cell.drain(stack, simulate);
 		}
 		
-		public int getCurrentVis(){
+		public float getCurrentVis(){
 			return cell.getCurrentVis();
 		}
 		
@@ -305,11 +305,11 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 			return cell.canStore(aspect);
 		}
 		
-		public int getCapacity(Aspect aspect){
+		public float getCapacity(Aspect aspect){
 			return cell.getCapacity(aspect);
 		}
 		
-		public int getCapacity(){
+		public float getCapacity(){
 			return cell.getCapacity();
 		}
 		
@@ -325,7 +325,7 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 			return cell.getContainedAspect();
 		}
 		
-		public void setCapacity(int defaultCellSize){
+		public void setCapacity(float defaultCellSize){
 			cell.setCapacity(defaultCellSize);
 		}
 

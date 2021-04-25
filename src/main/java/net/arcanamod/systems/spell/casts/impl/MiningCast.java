@@ -66,6 +66,7 @@ public class MiningCast extends Cast {
 		return ActionResultType.FAIL;
 	}
 
+	@SuppressWarnings("deprecation")
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
 		if(caster.world.isRemote) return ActionResultType.SUCCESS;
 		BlockState blockToDestroy = caster.world.getBlockState(blockTarget);

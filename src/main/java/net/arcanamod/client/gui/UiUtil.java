@@ -7,7 +7,6 @@ import static java.lang.Math.min;
 
 public final class UiUtil{
 	
-
 	private UiUtil(){
 	}
 	
@@ -24,7 +23,7 @@ public final class UiUtil{
 		int finB = (int)(aB * progress + bB * inv);
 		return combine(finR, finG, finB);
 	}
-
+	
 	public static int invert(int colour){
 		int red = red(colour);
 		int green = green(colour);
@@ -34,23 +33,23 @@ public final class UiUtil{
 		int newBlue = 255 - blue;
 		return combine(newRed, newGreen, newBlue);
 	}
-
+	
 	public static int red(int colour){
 		return (colour & 0xff0000) >> 16;
 	}
-
+	
 	public static int green(int colour){
 		return (colour & 0xff00) >> 8;
 	}
-
+	
 	public static int blue(int colour){
 		return colour & 0xff;
 	}
-
+	
 	public static int combine(int red, int green, int blue){
 		return red << 16 | green << 8 | blue;
 	}
-
+	
 	// Adapted from Color#HSBtoRGB
 	public static int hsbToRgb(int hsb){
 		float hue = red(hsb) / 255f, saturation = green(hsb) / 255f, brightness = blue(hsb) / 255f;
@@ -98,11 +97,11 @@ public final class UiUtil{
 		}
 		return combine(r, g, b);
 	}
-
+	
 	public static int rgbToHsb(int color){
 		return rgbToHsb(red(color), green(color), blue(color));
 	}
-
+	
 	// Adapted from Color#RGBtoHSB
 	public static int rgbToHsb(int red, int green, int blue){
 		float hue, saturation, brightness;
@@ -112,7 +111,7 @@ public final class UiUtil{
 		int cMin = min(red, green);
 		if(blue < cMin)
 			cMin = blue;
-
+		
 		brightness = (float)cMax;
 		if(cMax != 0)
 			saturation = (cMax - cMin) / (float)(cMax);
@@ -136,12 +135,12 @@ public final class UiUtil{
 		}
 		return combine((int)(hue * 255), (int)(saturation * 255), (int)brightness);
 	}
-
+	
 	public static int tooltipColour(Aspect aspect){
 		// hueshift by 30, increase brightness by 120, reduce saturation by 20
 		int hsb = rgbToHsb(aspect.getColorRange().get(1));
 		return hsbToRgb(combine((red(hsb) + 30) % 256, max(green(hsb) - 20, 0), min(blue(hsb) + 120, 255)));
 	}
 	
-
+	
 }

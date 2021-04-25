@@ -155,6 +155,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 			this.right = right;
 		}
 		
+		@SuppressWarnings("deprecation")
 		@Override
 		public void render(int mouseX, int mouseY, float partialTicks){
 			if(visible){

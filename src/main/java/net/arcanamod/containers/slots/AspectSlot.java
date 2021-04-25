@@ -18,7 +18,7 @@ public class AspectSlot{
 	 * be accessed by clients.
 	 */
 	public boolean visible = true;
-
+	
 	/**
 	 * If true, this slot will act similar to the creative menu. The slot will not display its capacity and
 	 * aspects can be freely taken out.
@@ -45,26 +45,23 @@ public class AspectSlot{
 		this.y = y;
 		this.storeSlot = storeSlot;
 	}
-
-	public void setSymbolic(boolean state) {
+	
+	public void setSymbolic(boolean state){
 		symbolic = state;
 	}
 	
-	public int getAmount(){
-		if (symbolic) {
+	public float getAmount(){
+		if(symbolic)
 			return 1;
-		} else {
-			if (getInventory().get() != null) {
-				int amount = 0;
-				int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-				for(int index : aspectIndexes){
-					amount += getInventory().get().getHolder(index).getCurrentVis();
-				}
-				return amount;
+		if(getInventory().get() != null){
+			int amount = 0;
+			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
+			for(int index : aspectIndexes){
+				amount += getInventory().get().getHolder(index).getCurrentVis();
 			}
-			else
-				return -1;
-		}
+			return amount;
+		}else
+			return -1;
 	}
 	
 	public void onChange(){
@@ -77,7 +74,8 @@ public class AspectSlot{
 	}
 	
 	public Aspect getAspect(){
-		if (aspect == null) return Aspects.EMPTY; // Quick fix. TODO: Fix null problems
+		if(aspect == null)
+			return Aspects.EMPTY; // Quick fix. TODO: Fix null problems
 		return aspect;
 	}
 	
@@ -88,8 +86,8 @@ public class AspectSlot{
 	public boolean isSymbolic(){
 		return symbolic;
 	}
-
-	public boolean shouldShowAmount() {
+	
+	public boolean shouldShowAmount(){
 		return !symbolic;
 	}
 	
@@ -98,12 +96,12 @@ public class AspectSlot{
 	 *
 	 * @return The result of drawing from the underlying inventory.
 	 */
-	public int drain(@Nonnull Aspect aspect, int amount, boolean simulate) {
-		int result = 0;
-		if (symbolic) {
+	public float drain(@Nonnull Aspect aspect, float amount, boolean simulate){
+		float result = 0;
+		if(symbolic){
 			result = amount;
-		} else {
-			if(getInventory().get() != null) {
+		}else{
+			if(getInventory().get() != null){
 				int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
 				result = getInventory().get().drain(aspectIndexes[0], new AspectStack(aspect, amount), simulate);
 			}
@@ -117,16 +115,16 @@ public class AspectSlot{
 	 *
 	 * @return The result of inserting into the underlying inventory.
 	 */
-	public int insert(@Nonnull Aspect aspect, int amount, boolean simulate){
-		int result = amount;
-		if (!symbolic) {
-			if(getInventory().get() != null) {
-
+	public float insert(@Nonnull Aspect aspect, float amount, boolean simulate){
+		float result = amount;
+		if(!symbolic){
+			if(getInventory().get() != null){
+				
 				int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-
+				
 				boolean isInserted = false;
-				if (aspectIndexes.length == 0) {
-					result = getInventory().get().insert(AspectUtils.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
+				if(aspectIndexes.length == 0){
+					result = getInventory().get().insert(AspectUtils.getEmptyCell(getInventory().get()), new AspectStack(aspect, amount), simulate);
 					isInserted = true;
 				}
 				for(int index : aspectIndexes){
@@ -136,7 +134,8 @@ public class AspectSlot{
 						break;
 					}
 				}
-				if (!isInserted) result = getInventory().get().insert(AspectUtils.getEmptyCell(getInventory().get()),new AspectStack(aspect, amount), simulate);
+				if(!isInserted)
+					result = getInventory().get().insert(AspectUtils.getEmptyCell(getInventory().get()), new AspectStack(aspect, amount), simulate);
 			}
 			onChange();
 		}

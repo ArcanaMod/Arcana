@@ -58,7 +58,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 					// and take from it
 					for(IAspectHolder holder : tileHandle.getHolders())
 						if(holder.getCurrentVis() > 0){
-							int min = Math.min(holder.getCurrentVis(), 8);
+							float min = Math.min(holder.getCurrentVis(), 8);
 							playPhialCorkpopSound(context.getPlayer());
 							Aspect aspect = holder.getContainedAspect();
 							// create a filled phial
@@ -76,7 +76,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 					// insert to block
 					for(IAspectHolder holder : tileHandle.getHolders())
 						if((holder.getCapacity() - holder.getCurrentVis() > 0 || holder.isIgnoringFullness()) && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY)){
-							int inserted = holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
+							float inserted = holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
 							playPhialCorkpopSound(context.getPlayer());
 							if(inserted != 0){
 								ItemStack new_phial = new ItemStack(this, 1);
@@ -124,7 +124,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 				if(vis.getHolder(0).getContainedAspect() != Aspects.EMPTY){
 					AspectStack aspectStack = vis.getHolder(0).getContainedAspectStack();
 					tooltip.add(new TranslationTextComponent("tooltip.contains_aspect",
-							aspectStack.getAspect().name().toLowerCase().substring(0, 1).toUpperCase() + aspectStack.getAspect().name().toLowerCase().substring(1), aspectStack.getAmount()));
+							aspectStack.getAspect().name().toLowerCase().substring(0, 1).toUpperCase() + aspectStack.getAspect().name().toLowerCase().substring(1), (int)aspectStack.getAmount()));
 				}
 			}
 		}
@@ -138,11 +138,11 @@ public class PhialItem extends Item implements IOverrideAspects {
 		if(vis != null){
 			if(vis.getHolder(0) != null){
 				Aspect aspect = vis.getHolder(0).getContainedAspect();
-				int amount = vis.getHolder(0).getCurrentVis();
+				float amount = vis.getHolder(0).getCurrentVis();
 				if(aspect != null && amount != 0){
 					CompoundNBT compoundNBT = new CompoundNBT();
 					compoundNBT.putInt("id", aspect.getId() - 1);
-					compoundNBT.putInt("amount", amount);
+					compoundNBT.putFloat("amount", amount);
 					return compoundNBT;
 				}
 			}

@@ -174,7 +174,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	}
 	
 	public double getClientVis(float partialTicks){
-		int newVis = vis.getHolder(0).getCurrentVis();
+		float newVis = vis.getHolder(0).getCurrentVis();
 		if(clientVis > newVis)
 			return Math.max(clientVis - (visAnimationSpeed * partialTicks), newVis);
 		else if(clientVis < newVis)
@@ -188,7 +188,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 
 	public ResourceLocation getPaperAspectLocation() {
 		return new ResourceLocation(vis.getHolder(0).getContainedAspect().toResourceLocation().toString()
-				.replace((CharSequence)":",(CharSequence)":aspect/paper/paper_"));
+				.replace(":", ":aspect/paper/paper_"));
 	}
 
 	public @Nullable Direction getLabelSide() {

@@ -32,6 +32,7 @@ public class WandBakedModel extends BakedItemModel{
 		return parent;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public ItemCameraTransforms getItemCameraTransforms(){
 		return itemTransforms != null ? itemTransforms : ItemCameraTransforms.DEFAULT;
 	}

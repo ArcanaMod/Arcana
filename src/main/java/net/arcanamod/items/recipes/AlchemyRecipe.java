@@ -136,7 +136,7 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 			buffer.writeVarInt(recipe.aspectsIn.size());
 			for(AspectStack stack : recipe.aspectsIn){
 				buffer.writeString(stack.getAspect().name());
-				buffer.writeVarInt(stack.getAmount());
+				buffer.writeFloat(stack.getAmount());
 			}
 			buffer.writeVarInt(recipe.requiredResearch.size());
 			for(Parent research : recipe.requiredResearch)

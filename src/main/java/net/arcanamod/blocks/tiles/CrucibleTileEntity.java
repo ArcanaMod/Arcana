@@ -112,7 +112,7 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 	
 	public void empty(){
 		// release aspects as flux
-		AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(aspectStackMap.values().stream().mapToInt(AspectStack::getAmount).sum() * ArcanaConfig.ASPECT_DUMPING_WASTE.get()));
+		AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(aspectStackMap.values().stream().mapToDouble(AspectStack::getAmount).sum() * ArcanaConfig.ASPECT_DUMPING_WASTE.get()));
 		aspectStackMap.clear();
 		// block handles changing state
 	}
@@ -143,7 +143,7 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 		for(AspectStack stack : aspectStackMap.values()){
 			CompoundNBT stackNbt = new CompoundNBT();
 			stackNbt.putString("aspect", stack.getAspect().name());
-			stackNbt.putInt("amount", stack.getAmount());
+			stackNbt.putFloat("amount", stack.getAmount());
 			aspects.add(stackNbt);
 		}
 		compound.put("aspects", aspects);

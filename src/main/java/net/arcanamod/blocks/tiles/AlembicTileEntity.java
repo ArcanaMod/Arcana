@@ -36,7 +36,6 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	public boolean suppressedByRedstone = false;
 	
 	public static int maxAspectOut = ArcanaConfig.MAX_ALEMBIC_ASPECT_OUT.get();
-	public static int maxAspectDistill = ArcanaConfig.ALEMBIC_DISTILL_TIME.get();
 	
 	public AlembicTileEntity(){
 		super(ArcanaTiles.ALEMBIC_TE.get());
@@ -110,16 +109,17 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 						if(!stacked)
 							world.addParticle(new AspectHelixParticleData(aspect, 20 * airs + 15, world.rand.nextInt(180), new Vec3d(0, 1, 0)), cruciblePos.getX() + .5 + world.rand.nextFloat() * .1, cruciblePos.getY() + .7, cruciblePos.getZ() + .5 + world.rand.nextFloat() * .1, 0, 0, 0);
 						// pick a random aspect, take from it, and store them in our actual aspect handler
-						int diff = Math.min(aspectStack.getAmount(), maxAspectDistill);
-						AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - maxAspectDistill);
-						if(!newStack.isEmpty())
-							te.getAspectStackMap().put(aspect, newStack);
-						else
-							te.getAspectStackMap().remove(aspect);
-						// TODO: use a float-valued aspect battery (or own system?) to fix rounding jank
-						adding.insert(new AspectStack(aspectStack.getAspect(), (int)Math.max(diff * ArcanaConfig.ALEMBIC_BASE_DISTILL_EFFICIENCY.get(), 1)), false);
-						
-						AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_FLUX_RATE.get()));
+						if(world.getGameTime() % ArcanaConfig.ALEMBIC_DISTILL_TIME.get() == 0){
+							float diff = Math.min(aspectStack.getAmount(), 1);
+							AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - 1);
+							if(!newStack.isEmpty())
+								te.getAspectStackMap().put(aspect, newStack);
+							else
+								te.getAspectStackMap().remove(aspect);
+							
+							adding.insert(new AspectStack(aspectStack.getAspect(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_DISTILL_EFFICIENCY.get())), false);
+							AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_FLUX_RATE.get()));
+						}
 					}
 				}
 				// then push them out into the total pipe system from sides
@@ -127,6 +127,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 					TileEntity tubeTe = world.getTileEntity(pos.offset(directions));
 					if(tubeTe instanceof AspectTubeTileEntity){
 						AspectTubeTileEntity aspectTube = (AspectTubeTileEntity)tubeTe;
+						// moveAllAspects only moves integer amounts
 						VisUtils.moveAllAspects(aspects, IAspectHandler.getFrom(aspectTube), maxAspectOut);
 						break;
 					}

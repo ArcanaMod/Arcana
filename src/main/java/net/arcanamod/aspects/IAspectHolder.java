@@ -13,14 +13,14 @@ public interface IAspectHolder {
 	 * 		If true, the amount of vis is not actually changed.
 	 * @return The amount of vis (that would be) leftover.
 	 */
-	int insert(AspectStack stack, boolean simulate);
+	float insert(AspectStack stack, boolean simulate);
 
 	/**
 	 * Gets the current amount of vis of a given aspect stored in this handler.
 	 *
 	 * @return The amount of that aspect stored.
 	 */
-	int getCurrentVis();
+	float getCurrentVis();
 
 	/**
 	 * Drains an amount of vis of a given aspect from this handler, and returns
@@ -32,7 +32,7 @@ public interface IAspectHolder {
 	 * 		If true, the amount of vis is not actually changed.
 	 * @return The amount of vis removed from this handler.
 	 */
-	int drain(AspectStack stack, boolean simulate);
+	float drain(AspectStack stack, boolean simulate);
 
 	/**
 	 * Returns whether any non-zero amount of that aspect can be currently inserted.
@@ -61,7 +61,7 @@ public interface IAspectHolder {
 	 * 		The aspect to test for.
 	 * @return The maximum amount of that aspect that can be inserted.
 	 */
-	int getCapacity(Aspect aspect);
+	float getCapacity(Aspect aspect);
 
 	/**
 	 * Returns the maximum amount of vis of any type that is accepted by this
@@ -69,7 +69,7 @@ public interface IAspectHolder {
 	 *
 	 * @return The maximum amount of vis stored by this handler.
 	 */
-	int getCapacity();
+	float getCapacity();
 
 	/**
 	 * Returns a set containing all aspects that are allowed in this handler.`canStore` will return true
@@ -93,7 +93,7 @@ public interface IAspectHolder {
 	 */
 	Aspect getContainedAspect();
 
-	void setCapacity(int defaultCellSize);
+	void setCapacity(float defaultCellSize);
 
 	void clear();
 

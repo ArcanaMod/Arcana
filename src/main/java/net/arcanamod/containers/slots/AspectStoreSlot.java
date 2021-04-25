@@ -41,7 +41,7 @@ public class AspectStoreSlot extends AspectSlot{
 			holder.stored = aspect;
 	}
 	
-	public int getAmount(){
+	public float getAmount(){
 		if(holder != null)
 			return holder.held;
 		else

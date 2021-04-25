@@ -4,7 +4,6 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.IAspectHolder;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
-import net.arcanamod.blocks.tiles.AspectValveTileEntity;
 import net.arcanamod.world.AuraView;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -394,7 +394,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 		protected void writeUndecidedAspectStack(PacketBuffer buffer, UndecidedAspectStack stack){
 			buffer.writeBoolean(stack.any);
 			buffer.writeString(stack.stack.getAspect().name());
-			buffer.writeInt(stack.stack.getAmount());
+			buffer.writeFloat(stack.stack.getAmount());
 		}
 
 		protected UndecidedAspectStack readUndecidedAspectStack(PacketBuffer buffer){

@@ -17,7 +17,7 @@ import static net.arcanamod.Arcana.arcLoc;
 public class Connection{
 	
 	private static int id = -100;
-	private static final String PROTOCOL_RELEASE = "Arcana1";
+	private static final String PROTOCOL_RELEASE = "Arcana_2";
 	
 	public static SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder
 			.named(arcLoc("main"))

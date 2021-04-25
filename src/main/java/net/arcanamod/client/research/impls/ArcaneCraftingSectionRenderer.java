@@ -53,7 +53,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 			for(int i = 0, length = stacks.length; i < length; i++){
 				UndecidedAspectStack stack = stacks[i];
 				Aspect display = stack.any ? Aspects.EXCHANGE : stack.stack.getAspect();
-				int amount = stack.stack.getAmount();
+				float amount = stack.stack.getAmount();
 				ClientUiUtil.renderAspectStack(display, amount, aspectX + i * (16 + 2 * spacing) + spacing, aspectY);
 			}
 		}else

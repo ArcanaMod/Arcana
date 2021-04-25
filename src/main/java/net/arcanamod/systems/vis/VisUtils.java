@@ -28,7 +28,7 @@ public final class VisUtils{
 	 * @param max
 	 *      The maximum amount of aspects to move, or -1 for no limit.
 	 */
-	public static void moveAllAspects(@Nullable IAspectHandler from, @Nullable IAspectHandler to, int max){
+	public static void moveAllAspects(@Nullable IAspectHandler from, @Nullable IAspectHandler to, float max){
 		if(from == null || to == null)
 			return;
 		int transferred = 0;
@@ -49,7 +49,7 @@ public final class VisUtils{
 						break;
 					if(toHolder.getContainedAspect() == holder.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
 						if(toHolder.canInput() && (toHolder.getCapacity() > toHolder.getCurrentVis() || toHolder.isIgnoringFullness())){
-							int toInsert = holder.getCurrentVis();
+							float toInsert = (int)(holder.getCurrentVis());
 							if(!toHolder.isIgnoringFullness())
 								toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getCurrentVis());
 							if(max != -1)
@@ -72,7 +72,7 @@ public final class VisUtils{
 	 * @param to
 	 * 		The aspect handler to insert into.
 	 */
-	public static void moveAspects(IAspectHolder from, IAspectHandler to, int max){
+	public static void moveAspects(IAspectHolder from, IAspectHandler to, float max){
 		int transferred = 0;
 		if(from.getCurrentVis() > 0){
 			List<IAspectHolder> holders = to.getHolders();
@@ -83,7 +83,7 @@ public final class VisUtils{
 					break;
 				if(toHolder.getContainedAspect() == from.getContainedAspect() || toHolder.getContainedAspect() == Aspects.EMPTY)
 					if(toHolder.canInput() && (toHolder.getCapacity() > toHolder.getCurrentVis() || toHolder.isIgnoringFullness())){
-						int toInsert = from.getCurrentVis();
+						float toInsert = (float)Math.floor(from.getCurrentVis());
 						if(!toHolder.isIgnoringFullness())
 							toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getCurrentVis());
 						if(max != -1)
@@ -96,11 +96,11 @@ public final class VisUtils{
 		}
 	}
 	
-	public static void moveAspects(AspectStack in, IAspectHandler to, int max){
+	public static void moveAspects(AspectStack in, IAspectHandler to, float max){
 		moveAspects(in.getAspect(), in.getAmount(), to, max);
 	}
 	
-	public static void moveAspects(Aspect in, int amount, IAspectHandler to, int max){
+	public static void moveAspects(Aspect in, float amount, IAspectHandler to, float max){
 		int transferred = 0;
 		if(amount > 0){
 			List<IAspectHolder> holders = to.getHolders();
@@ -111,7 +111,7 @@ public final class VisUtils{
 					break;
 				if(toHolder.getContainedAspect() == in || toHolder.getContainedAspect() == Aspects.EMPTY)
 					if(toHolder.canInput() && (toHolder.getCapacity() > toHolder.getCurrentVis() || toHolder.isIgnoringFullness())){
-						int toInsert = amount;
+						float toInsert = (float)Math.floor(amount);
 						if(!toHolder.isIgnoringFullness())
 							toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getCurrentVis());
 						if(max != -1)

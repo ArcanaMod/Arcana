@@ -30,6 +30,7 @@ public class BookRenderer {
 	public static final Logger LOGGER = LogManager.getLogger();
 
 	private static final ArcanumModel model = new ArcanumModel();
+	@SuppressWarnings("deprecation")
 	public static final Material TEXTURE = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, arcLoc("models/items/thaumonomicon_model"));
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)

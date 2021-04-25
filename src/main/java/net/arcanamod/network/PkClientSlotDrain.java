@@ -46,10 +46,10 @@ public class PkClientSlotDrain {
 				if(container.getAspectSlots().size() > msg.slotId){
 					AspectSlot slot = container.getAspectSlots().get(msg.slotId);
 					if((msg.type == PkAspectClick.ClickType.TAKE || msg.type == PkAspectClick.ClickType.TAKE_ALL) && (container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0){
-						int drain = msg.type == PkAspectClick.ClickType.TAKE_ALL ? slot.getAmount() : 1;
+						float drain = msg.type == PkAspectClick.ClickType.TAKE_ALL ? slot.getAmount() : 1;
 						slot.drain(slot.getAspect(), drain, false);
 					}else if((msg.type == PkAspectClick.ClickType.PUT || msg.type == PkAspectClick.ClickType.PUT_ALL) && container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == null)){
-						int drain = msg.type == PkAspectClick.ClickType.PUT_ALL ? container.getHeldCount() : 1;
+						float drain = msg.type == PkAspectClick.ClickType.PUT_ALL ? container.getHeldCount() : 1;
 						slot.insert(slot.getAspect(), drain, false);
 					}
 				}else{

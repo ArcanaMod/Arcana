@@ -25,7 +25,7 @@ public abstract class AspectContainer extends Container{
 	protected List<AspectSlot> aspectSlots = new ArrayList<>();
 	protected Aspect heldAspect = null;
 	protected boolean symbolic = false;
-	protected int heldCount = 0;
+	protected float heldCount = 0;
 	
 	protected AspectContainer(@Nullable ContainerType<?> type, int id){
 		super(type, id);
@@ -46,23 +46,23 @@ public abstract class AspectContainer extends Container{
 	public void setHeldAspect(Aspect heldAspect){
 		this.heldAspect = heldAspect;
 	}
-
-	public boolean isSymbolic() {
+	
+	public boolean isSymbolic(){
 		return symbolic;
 	}
-
-	public void setSymbolic(boolean symbolic) {
+	
+	public void setSymbolic(boolean symbolic){
 		this.symbolic = symbolic;
 	}
 	
-	public int getHeldCount(){
+	public float getHeldCount(){
 		return heldCount;
 	}
 	
-	public void setHeldCount(int heldCount){
+	public void setHeldCount(float heldCount){
 		this.heldCount = heldCount;
 	}
-
+	
 	@OnlyIn(Dist.CLIENT)
 	public void handleClick(int mouseX, int mouseY, int button, AspectContainerScreen<?> gui){
 		for(AspectSlot slot : getAspectSlots()){
@@ -80,12 +80,13 @@ public abstract class AspectContainer extends Container{
 				// do some quick checking to make sure that the packet won't just do nothing
 				// don't actually modify anything though!
 				// <blah>
-				if (slot.getAspect() == null) slot.setAspect(Aspects.EMPTY);
-				Connection.sendAspectClick(windowId,aspectSlots.indexOf(slot),type,slot.getAspect());
+				if(slot.getAspect() == null)
+					slot.setAspect(Aspects.EMPTY);
+				Connection.sendAspectClick(windowId, aspectSlots.indexOf(slot), type, slot.getAspect());
 			}
 		}
 	}
-
+	
 	@OnlyIn(Dist.CLIENT)
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot, AspectContainerScreen<?> gui){
 		return mouseX >= gui.getGuiLeft() + slot.x && mouseY >= gui.getGuiTop() + slot.y && mouseX < gui.getGuiLeft() + slot.x + 16 && mouseY < gui.getGuiTop() + slot.y + 16;
@@ -110,10 +111,10 @@ public abstract class AspectContainer extends Container{
 	public void onContainerClosed(@Nonnull PlayerEntity player){
 		super.onContainerClosed(player);
 		//quick fix for disappearing aspects from closing research screen while holding any amount of an aspect
-		if (heldCount != 0 ) {
-			for(AspectSlot slot : aspectSlots) {
-				if (slot.getAspect() == heldAspect) {
-					while(heldCount > 0) {
+		if(heldCount != 0){
+			for(AspectSlot slot : aspectSlots){
+				if(slot.getAspect() == heldAspect){
+					while(heldCount > 0){
 						heldCount = slot.insert(heldAspect, heldCount, false);
 					}
 					break;
@@ -121,7 +122,7 @@ public abstract class AspectContainer extends Container{
 			}
 		}
 		//uncertain whether implementation should be here or somewhere else
-		if(shouldReturnAspectsOnClose()) {
+		if(shouldReturnAspectsOnClose()){
 			aspectSlots.forEach(AspectSlot::onClose);
 		}
 	}
@@ -130,5 +131,6 @@ public abstract class AspectContainer extends Container{
 		return true;
 	}
 	
-	public void onAspectSlotChange(){}
+	public void onAspectSlotChange(){
+	}
 }

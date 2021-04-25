@@ -14,33 +14,34 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public class PkAspectClick {
-
+public class PkAspectClick{
+	
 	public static final Logger LOGGER = LogManager.getLogger();
-
+	
 	int windowId;
 	int slotId;
 	ClickType type;
-	@Nonnull Aspect expectedAspect;
-
-	public PkAspectClick(int windowId, int slotId, ClickType type, @Nonnull Aspect expectedAspect) {
+	@Nonnull
+	Aspect expectedAspect;
+	
+	public PkAspectClick(int windowId, int slotId, ClickType type, @Nonnull Aspect expectedAspect){
 		this.windowId = windowId;
 		this.slotId = slotId;
 		this.type = type;
 		this.expectedAspect = expectedAspect;
 	}
-
+	
 	public static void encode(PkAspectClick msg, PacketBuffer buffer){
 		buffer.writeInt(msg.windowId);
 		buffer.writeInt(msg.slotId);
 		buffer.writeEnumValue(msg.type);
 		buffer.writeString(msg.expectedAspect.name());
 	}
-
+	
 	public static PkAspectClick decode(PacketBuffer buffer){
-		return new PkAspectClick(buffer.readInt(),buffer.readInt(), buffer.readEnumValue(ClickType.class), AspectUtils.getAspectByName(buffer.readString()));
+		return new PkAspectClick(buffer.readInt(), buffer.readInt(), buffer.readEnumValue(ClickType.class), AspectUtils.getAspectByName(buffer.readString()));
 	}
-
+	
 	public static void handle(PkAspectClick msg, Supplier<NetworkEvent.Context> supplier){
 		// on server
 		supplier.get().enqueueWork(() -> {
@@ -51,27 +52,28 @@ public class PkAspectClick {
 				AspectContainer container = (AspectContainer)spe.openContainer;
 				if(container.getAspectSlots().size() > msg.slotId){
 					AspectSlot slot = container.getAspectSlots().get(msg.slotId);
-					if (slot.getAspect() == null) slot.setAspect(Aspects.EMPTY); // Quick fix. TODO: Fix null problems.
-					if(msg.type == ClickType.TAKE || msg.type == ClickType.TAKE_ALL) {
-						if (slot.isSymbolic()) {
+					if(slot.getAspect() == null)
+						slot.setAspect(Aspects.EMPTY); // Quick fix. TODO: Fix null problems.
+					if(msg.type == ClickType.TAKE || msg.type == ClickType.TAKE_ALL){
+						if(slot.isSymbolic()){
 							container.setHeldAspect(msg.expectedAspect);
-						} else if ((container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0) {
+						}else if((container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0){
 							container.setHeldAspect(slot.getAspect());
-							int drain = msg.type == ClickType.TAKE_ALL ? slot.getAmount() : 1;
+							float drain = msg.type == ClickType.TAKE_ALL ? slot.getAmount() : 1;
 							container.setHeldCount(container.getHeldCount() + syncAndGet(slot, drain, msg.windowId, msg.slotId, msg.type, spe, true));
-							if (slot.getAmount() <= 0 && slot.storeSlot)
+							if(slot.getAmount() <= 0 && slot.storeSlot)
 								slot.setAspect(Aspects.EMPTY);
 							slot.onChange();
 						}
-					} else if (msg.type == ClickType.PUT || msg.type == ClickType.PUT_ALL) {
-						if (slot.isSymbolic()) {
+					}else if(msg.type == ClickType.PUT || msg.type == ClickType.PUT_ALL){
+						if(slot.isSymbolic()){
 							container.setHeldCount(0);
 							container.setHeldAspect(null);
-						} else if (container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == Aspects.EMPTY)) {
-							int drain = msg.type == ClickType.PUT_ALL ? container.getHeldCount() : 1;
+						}else if(container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == Aspects.EMPTY)){
+							float drain = msg.type == ClickType.PUT_ALL ? container.getHeldCount() : 1;
 							if(slot.getAspect() == Aspects.EMPTY && slot.storeSlot)
 								slot.setAspect(container.getHeldAspect());
-							container.setHeldCount(container.getHeldCount() - (drain - syncAndGet(slot, drain,msg.windowId,msg.slotId,msg.type,spe,false)));
+							container.setHeldCount(container.getHeldCount() - (drain - syncAndGet(slot, drain, msg.windowId, msg.slotId, msg.type, spe, false)));
 							if(container.getHeldCount() <= 0){
 								container.setHeldCount(0);
 								container.setHeldAspect(null);
@@ -88,13 +90,13 @@ public class PkAspectClick {
 		});
 		supplier.get().setPacketHandled(true);
 	}
-
-	private static int syncAndGet(AspectSlot s, int d,int windowId,int slotId,ClickType type,ServerPlayerEntity spe, boolean isDrain) {
-		int temp = isDrain ? s.drain(s.getAspect(), d, false) : s.insert(s.getAspect(), d, false);
-		Connection.sendClientSlotDrain(windowId,slotId,type,spe);
+	
+	private static float syncAndGet(AspectSlot s, float d, int windowId, int slotId, ClickType type, ServerPlayerEntity spe, boolean isDrain){
+		float temp = isDrain ? s.drain(s.getAspect(), d, false) : s.insert(s.getAspect(), d, false);
+		Connection.sendClientSlotDrain(windowId, slotId, type, spe);
 		return temp;
 	}
-
+	
 	public enum ClickType{
 		TAKE,
 		PUT,

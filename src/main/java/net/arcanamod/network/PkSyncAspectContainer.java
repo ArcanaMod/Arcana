@@ -25,9 +25,9 @@ public class PkSyncAspectContainer {
 	// 2. the contents of every slot
 	// regular slots can be synced just by syncing the underlying AspectHandler
 	// store slots need that + their own aspect
-
-	int heldCount;
-	Aspect heldAspect = null;
+	
+	float heldCount;
+	Aspect heldAspect;
 	List<Pair<Integer, CompoundNBT>> handlers = new ArrayList<>();
 	List<Pair<Integer, Aspect>> storeSlotAspects = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class PkSyncAspectContainer {
 		}
 	}
 
-	public PkSyncAspectContainer(int heldCount, Aspect heldAspect, List<Pair<Integer, CompoundNBT>> handlers, List<Pair<Integer, Aspect>> storeSlotAspects) {
+	public PkSyncAspectContainer(float heldCount, Aspect heldAspect, List<Pair<Integer, CompoundNBT>> handlers, List<Pair<Integer, Aspect>> storeSlotAspects) {
 		this.heldCount = heldCount;
 		this.heldAspect = heldAspect;
 		this.handlers = handlers;
@@ -53,7 +53,7 @@ public class PkSyncAspectContainer {
 	}
 
 	public static void encode(PkSyncAspectContainer msg, PacketBuffer buf){
-		buf.writeInt(msg.heldCount);
+		buf.writeFloat(msg.heldCount);
 		writeAspect(buf, msg.heldAspect);
 
 		buf.writeInt(msg.handlers.size());
@@ -70,7 +70,7 @@ public class PkSyncAspectContainer {
 	}
 
 	public static PkSyncAspectContainer decode(PacketBuffer buf){
-		int temp_heldCount = buf.readInt();
+		float temp_heldCount = buf.readFloat();
 		Aspect temp_heldAspect = readAspect(buf);
 		List<Pair<Integer, CompoundNBT>> temp_handlers = new ArrayList<>();
 		List<Pair<Integer, Aspect>> temp_storeSlotAspects = new ArrayList<>();

@@ -36,6 +36,7 @@ public class PillarBlock extends Block {
 		return false;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updateNeighbors(BlockState stateIn, IWorld worldIn, BlockPos pos, int flags) {
 		UpdatePillars(((World)worldIn),pos);

@@ -172,7 +172,7 @@ public class Arcana{
 						if(myHandle.getCurrentVis() <= 0){
 							for(IAspectHolder holder : tileHandle.getHolders())
 								if(holder.getCurrentVis() > 0){
-									int min = Math.min(holder.getCurrentVis(), 8);
+									float min = Math.min(holder.getCurrentVis(), 8);
 									Aspect aspect = holder.getContainedAspect();
 									ItemStack cappedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
 									IAspectHandler.getFrom(cappedItemStack).insert(0, new AspectStack(aspect, min), false);
@@ -193,7 +193,7 @@ public class Arcana{
 						}else{
 							for(IAspectHolder holder : tileHandle.getHolders())
 								if((holder.getCapacity() - holder.getCurrentVis() > 0 || holder.isIgnoringFullness()) && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY)){
-									int inserted = holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
+									float inserted = holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
 									if(inserted != 0){
 										ItemStack newPhial = new ItemStack(ArcanaItems.PHIAL.get(), 1);
 										IAspectHolder oldHolder = IAspectHandler.getFrom(stack).getHolder(0);

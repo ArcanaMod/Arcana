@@ -8,14 +8,14 @@ public class AspectCell implements IAspectHolder {
 
 	private AspectStack stored = AspectStack.EMPTY;
 	private Aspect optionalWhitelist = null;
-	private int capacity;
+	private float capacity;
 	public boolean ignoreFullness = false, canInput = true;
 
 	public AspectCell(){
 		this(100);
 	}
 
-	public AspectCell(int capacity){
+	public AspectCell(float capacity){
 		this.capacity = capacity;
 	}
 	
@@ -23,15 +23,15 @@ public class AspectCell implements IAspectHolder {
 		this(100, optionalWhitelist);
 	}
 	
-	public AspectCell(int capacity, Aspect optionalWhitelist){
+	public AspectCell(float capacity, Aspect optionalWhitelist){
 		this.capacity = capacity;
 		this.optionalWhitelist = optionalWhitelist;
 	}
 
-	public int insert(AspectStack stack, boolean simulate){
+	public float insert(AspectStack stack, boolean simulate){
 		if(optionalWhitelist != null && optionalWhitelist != stack.getAspect())
 			return stack.getAmount();
-		int capacityRemaining = getCapacity(stack.getAspect()) == -1 ? -1 : Math.max(getCapacity(stack.getAspect()) - getCurrentVis(), 0);
+		float capacityRemaining = getCapacity(stack.getAspect()) == -1 ? -1 : Math.max(getCapacity(stack.getAspect()) - getCurrentVis(), 0);
 		if(capacityRemaining == -1 || stack.getAmount() <= capacityRemaining){
 			if(!simulate)
 				stored = new AspectStack(stack.getAspect(), getCurrentVis() + stack.getAmount());
@@ -45,12 +45,12 @@ public class AspectCell implements IAspectHolder {
 		}
 	}
 
-	public int drain(AspectStack stack, boolean simulate){
+	public float drain(AspectStack stack, boolean simulate){
 		if(optionalWhitelist != null && optionalWhitelist != stack.getAspect())
 			return 0;
 		// if amount >= left, return left & left = 0
 		// if amount < left, return amount & left = left - amount
-		int vis = getCurrentVis();
+		float vis = getCurrentVis();
 		if(stack.getAmount() >= vis){
 			if(!simulate)
 				stored = AspectStack.EMPTY;
@@ -62,7 +62,7 @@ public class AspectCell implements IAspectHolder {
 		}
 	}
 
-	public int getCurrentVis(){
+	public float getCurrentVis(){
 		return stored.getAmount();
 	}
 
@@ -74,11 +74,11 @@ public class AspectCell implements IAspectHolder {
 		return optionalWhitelist == null || optionalWhitelist == aspect;
 	}
 
-	public int getCapacity(Aspect aspect){
+	public float getCapacity(Aspect aspect){
 		return (optionalWhitelist != null && optionalWhitelist != aspect) ? 0 : capacity;
 	}
 
-	public int getCapacity(){
+	public float getCapacity(){
 		return capacity;
 	}
 
@@ -89,8 +89,8 @@ public class AspectCell implements IAspectHolder {
 
 	public CompoundNBT toNBT(){
 		CompoundNBT nbt = new CompoundNBT();
-		nbt.putInt("amount", stored.getAmount());
-		nbt.putInt("capacity", getCapacity());
+		nbt.putFloat("amount", stored.getAmount());
+		nbt.putFloat("capacity", getCapacity());
 		nbt.putString("aspect", stored.getAspect().name().toLowerCase());
 		nbt.putString("whitelisted", optionalWhitelist != null ? optionalWhitelist.name().toLowerCase() : "null");
 		nbt.putBoolean("ignoreFullness", ignoreFullness);
@@ -123,7 +123,7 @@ public class AspectCell implements IAspectHolder {
 	}
 
 	@Override
-	public void setCapacity(int defaultCellSize) {
+	public void setCapacity(float defaultCellSize) {
 		capacity = defaultCellSize;
 	}
 

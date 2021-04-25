@@ -152,11 +152,11 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			}
 		ret = allGenerated.stream()
 				// pair of aspects:total num of aspects
-				.map(stacks -> Pair.of(stacks, stacks.stream().mapToInt(AspectStack::getAmount).sum()))
+				.map(stacks -> Pair.of(stacks, stacks.stream().mapToDouble(AspectStack::getAmount).sum()))
 				// filter combos with 0 aspects
 				.filter(pair -> pair.getSecond() > 0)
 				// sort by least total aspects
-				.min(Comparator.comparingInt(Pair::getSecond))
+				.min(Comparator.comparingDouble(Pair::getSecond))
 				// get aspects
 				.map(Pair::getFirst).orElse(new ArrayList<>());
 		return ret;

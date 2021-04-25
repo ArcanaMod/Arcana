@@ -75,7 +75,7 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 				// the wand is present
 				for(UndecidedAspectStack stack : recipe.getAspectStacks()){
 					int colour = 0xffffff;
-					int amount = stack.stack.getAmount();
+					float amount = stack.stack.getAmount();
 					if(!stack.any){
 						if(stack.stack.getAspect() == Aspects.AIR)
 							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 15, colour);
@@ -102,7 +102,7 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 						boolean satisfied = true;
 						boolean anySatisfied = false;
 						boolean hasAny = false;
-						int amount = stack.stack.getAmount();
+						float amount = stack.stack.getAmount();
 						IAspectHandler handler = IAspectHandler.getFrom(container.craftMatrix.getWandSlot().getStack());
 						if(handler == null || handler.getHoldersAmount() == 0)
 							satisfied = false;

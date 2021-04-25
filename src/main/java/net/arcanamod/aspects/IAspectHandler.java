@@ -47,7 +47,7 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 	 * @param simulate If true, the amount of vis is not actually changed.
 	 * @return Inserted amount
 	 */
-	int insert(int holder, AspectStack resource, boolean simulate);
+	float insert(int holder, AspectStack resource, boolean simulate);
 
 	/**
 	 * Inserts amount of existing AspectStack inside.
@@ -56,7 +56,7 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 	 * @param simulate If true, the amount of vis is not actually changed.
 	 * @return Inserted amount
 	 */
-	int insert(int holder, int maxInsert, boolean simulate);
+	float insert(int holder, int maxInsert, boolean simulate);
 
 	/**
 	 * Drains AspectStack that contains Aspect and Amount.
@@ -65,7 +65,7 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 	 * @param simulate If true, the amount of vis is not actually changed.
 	 * @return Drained amount
 	 */
-	int drain(int holder, AspectStack resource, boolean simulate);
+	float drain(int holder, AspectStack resource, boolean simulate);
 
 	/**
 	 * Drains amount of existing AspectStack inside.
@@ -74,7 +74,7 @@ public interface IAspectHandler extends INBTSerializable<CompoundNBT> {
 	 * @param simulate If true, the amount of vis is not actually changed.
 	 * @return Drained amount
 	 */
-	int drain(int holder, int maxDrain, boolean simulate);
+	float drain(int holder, int maxDrain, boolean simulate);
 
 	void clear();
 	

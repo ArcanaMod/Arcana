@@ -81,7 +81,7 @@ public abstract class NodeType{
 		if(node.timeUntilRecharge <= 0){
 			node.timeUntilRecharge = rechargeTime(world, nodes, node);
 			// are we below our cap? if so, charge
-			if(node.getAspects().getHolders().stream().mapToInt(IAspectHolder::getCurrentVis).sum() < rechargeCap(world, nodes, node)){
+			if(node.getAspects().getHolders().stream().mapToDouble(IAspectHolder::getCurrentVis).sum() < rechargeCap(world, nodes, node)){
 				int toCharge = rechargePower(world, nodes, node) + world.getRandom().nextInt(3) - 1;
 				// pick a random aspect and give 1-3 aspect to it until we're done
 				while(toCharge > 0){
@@ -127,8 +127,9 @@ public abstract class NodeType{
 			Aspect aspect = primalAspects[random.nextInt(primalAspects.length)];
 			// 10-27
 			int amount = 10 + random.nextInt(18);
-			if(battery.findAspectInHolders(aspect) != null)
-				battery.findAspectInHolders(aspect).insert(new AspectStack(aspect, amount), false);
+			IAspectHolder holder = battery.findAspectInHolders(aspect);
+			if(holder != null)
+				holder.insert(new AspectStack(aspect, amount), false);
 			else{
 				AspectCell cell = new AspectCell();
 				cell.setCapacity(-1);
@@ -141,8 +142,9 @@ public abstract class NodeType{
 		if(world.getFluidState(location).isTagged(FluidTags.WATER)){
 			Aspect aspect = Aspects.WATER;
 			int amount = 5 + random.nextInt(6);
-			if(battery.findAspectInHolders(aspect) != null)
-				battery.findAspectInHolders(aspect).insert(new AspectStack(aspect, amount), false);
+			IAspectHolder holder = battery.findAspectInHolders(aspect);
+			if(holder != null)
+				holder.insert(new AspectStack(aspect, amount), false);
 			else{
 				AspectCell cell = new AspectCell();
 				cell.insert(new AspectStack(aspect, amount), false);
@@ -238,6 +240,7 @@ public abstract class NodeType{
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static class HungryNodeType extends NodeType{
 		
 		public ResourceLocation texture(IWorld world, AuraView nodes, Node node){
@@ -251,7 +254,7 @@ public abstract class NodeType{
 		public void tick(IWorld world, AuraView nodes, Node node){
 			super.tick(world, nodes, node);
 			// check all blocks in range
-			int range = (int)(0.7f * MathHelper.sqrt(node.aspects.getHolders().stream().mapToInt(IAspectHolder::getCurrentVis).sum())) + 1;
+			int range = (int)(0.7f * MathHelper.sqrt(node.aspects.getHolders().stream().mapToDouble(IAspectHolder::getCurrentVis).sum())) + 1;
 			BlockPos nodePos = new BlockPos(node);
 			BlockPos.Mutable cursor = new BlockPos.Mutable();
 			for(int x = -range; x < range; x++)
@@ -272,7 +275,7 @@ public abstract class NodeType{
 									// note down that the block has been broken
 									CompoundNBT blocks = node.getData().getCompound("blocks");
 									node.getData().put("blocks", blocks);
-									String key = state.getBlock().getRegistryName().toString();
+									String key = Objects.requireNonNull(state.getBlock().getRegistryName()).toString();
 									blocks.putInt(key, blocks.getInt(key) + 1);
 									// gain a fraction of that block's aspects
 									if(ArcanaConfig.HUNGRY_NODE_ASPECT_CARRY_FRACTION.get() > 0){
@@ -300,7 +303,7 @@ public abstract class NodeType{
 				float xPos = (float)(node.x);
 				float zPos = (float)(node.z - discRad);
 				// TODO: weighted selection
-				BlockState state = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blocks.keySet().stream().toArray(String[]::new)[world.getRandom().nextInt(blocks.keySet().size())])).getDefaultState();
+				BlockState state = Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(blocks.keySet().toArray(new String[0])[world.getRandom().nextInt(blocks.keySet().size())]))).getDefaultState();
 				world.addParticle(new BlockParticleData(ArcanaParticles.HUNGRY_NODE_DISC_PARTICLE.get(), state).setPos(nodePos), xPos, node.y, zPos, discRad / 6f, 0, discRad / 6f);
 			}
 		}

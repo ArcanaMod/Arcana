@@ -9,16 +9,20 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Nonnull;
+
 @OnlyIn(Dist.CLIENT)
-public class SpellCloudEntityRenderer extends EntityRenderer<SpellCloudEntity> {
-	public SpellCloudEntityRenderer(EntityRendererManager manager) {
+public class SpellCloudEntityRenderer extends EntityRenderer<SpellCloudEntity>{
+	public SpellCloudEntityRenderer(EntityRendererManager manager){
 		super(manager);
 	}
-
+	
 	/**
 	 * Returns the location of an entity's texture.
 	 */
-	public ResourceLocation getEntityTexture(SpellCloudEntity entity) {
+	@SuppressWarnings("deprecation")
+	@Nonnull
+	public ResourceLocation getEntityTexture(@Nonnull SpellCloudEntity entity){
 		return AtlasTexture.LOCATION_BLOCKS_TEXTURE;
 	}
 }
