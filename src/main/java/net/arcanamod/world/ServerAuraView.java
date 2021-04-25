@@ -87,14 +87,14 @@ public class ServerAuraView implements AuraView{
 		loaded.forEach((pos, chunk) -> {
 			// if they have more than 60 flux, place a tainted block and consume 40
 			// don't do this *every* tick, to allow for existing tainted areas to spread first
-			if(chunk.getTaintLevel() >= ArcanaConfig.TAINT_SPAWN_THRESHOLD.get() && world.getGameTime() % 30 == 0){
+			if(chunk.getFluxLevel() >= ArcanaConfig.TAINT_SPAWN_THRESHOLD.get() && world.getGameTime() % 30 == 0){
 				// pick a completely random block
 				BlockPos blockPos = pos.asBlockPos().up(world.rand.nextInt(256)).north(world.rand.nextInt(16)).east(world.rand.nextInt(16));
 				BlockState state = world.getBlockState(blockPos);
 				Block block = Taint.getTaintedOfBlock(state.getBlock());
 				if(block != null && !Taint.isBlockProtectedByPureNode(world, blockPos)){
 					world.setBlockState(blockPos, DelegatingBlock.switchBlock(state, block).with(TaintedBlock.UNTAINTED, false));
-					chunk.addTaint(-ArcanaConfig.TAINT_SPAWN_COST.get());
+					chunk.addFlux(-ArcanaConfig.TAINT_SPAWN_COST.get());
 				}
 			}
 			// and for each of their loaded neighbors,
@@ -102,19 +102,19 @@ public class ServerAuraView implements AuraView{
 				if(loaded.containsKey(neighbor)){
 					// if they have more than 30 more flux
 					AuraChunk chunk1 = loaded.get(neighbor);
-					if(chunk1.getTaintLevel() - chunk.getTaintLevel() > 60){
+					if(chunk1.getFluxLevel() - chunk.getFluxLevel() > 60){
 						// move some of the difference
-						int diff = (chunk1.getTaintLevel() - chunk.getTaintLevel()) / 12;
-						chunk.addTaint(diff);
-						chunk1.addTaint(-diff);
+						float diff = (chunk1.getFluxLevel() - chunk.getFluxLevel()) / 20;
+						chunk.addFlux(diff);
+						chunk1.addFlux(-diff);
 					}
 				}
 		});
 		// send an update packet to every player to update their flux meters
 		// check if they're eligible for "Taste flux firsthand"
 		for(ServerPlayerEntity player : world.getPlayers()){
-			Connection.sendTo(new PkSyncPlayerFlux(getTaintAt(player.getPosition())), player);
-			if(getTaintAt(player.getPosition()) > ArcanaConfig.FLUX_RESEARCH_REQUIREMENT.get())
+			Connection.sendTo(new PkSyncPlayerFlux(getFluxAt(player.getPosition())), player);
+			if(getFluxAt(player.getPosition()) > ArcanaConfig.FLUX_RESEARCH_REQUIREMENT.get())
 				Researcher.getFrom(player).completePuzzle(ResearchBooks.puzzles.get(Arcana.arcLoc("flux_build_research")));
 		}
 	}

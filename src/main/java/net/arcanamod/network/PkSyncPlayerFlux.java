@@ -15,18 +15,18 @@ import java.util.function.Supplier;
 
 public class PkSyncPlayerFlux{
 	
-	int flux;
+	float flux;
 	
-	public PkSyncPlayerFlux(int flux){
+	public PkSyncPlayerFlux(float flux){
 		this.flux = flux;
 	}
 	
 	public static void encode(PkSyncPlayerFlux msg, PacketBuffer buffer){
-		buffer.writeVarInt(msg.flux);
+		buffer.writeFloat(msg.flux);
 	}
 	
 	public static PkSyncPlayerFlux decode(PacketBuffer buffer){
-		return new PkSyncPlayerFlux(buffer.readVarInt());
+		return new PkSyncPlayerFlux(buffer.readFloat());
 	}
 	
 	public static void handle(PkSyncPlayerFlux msg, Supplier<NetworkEvent.Context> supplier){

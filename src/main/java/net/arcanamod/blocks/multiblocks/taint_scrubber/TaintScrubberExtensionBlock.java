@@ -60,7 +60,7 @@ public class TaintScrubberExtensionBlock extends Block implements ITaintScrubber
 			if(!world.isRemote && world.getGameTime() % 2 == 0){
 				ServerAuraView aura = new ServerAuraView((ServerWorld)world);
 				//aura.addTaintAt(pos, -Math.abs(compound.getInt("speed") + 1));
-				aura.addTaintAt(pos, -1);
+				aura.addFluxAt(pos, -1);
 			}
 	}
 	

@@ -23,6 +23,10 @@ public interface AuraView{
 	
 	World getWorld();
 	
+	static AuraView getSided(World world){
+		return SIDED_FACTORY.apply(world);
+	}
+	
 	// no-op on client
 	default void tickTaintLevel(){}
 	
@@ -42,13 +46,13 @@ public interface AuraView{
 		return nc != null ? nc.getNodes() : Collections.emptyList();
 	}
 	
-	default int getTaintWithinChunk(ChunkPos pos){
+	default float getFluxWithinChunk(ChunkPos pos){
 		AuraChunk nc = getAuraChunk(pos);
-		return nc != null ? nc.getTaintLevel() : -1;
+		return nc != null ? nc.getFluxLevel() : -1;
 	}
 	
-	default int getTaintAt(BlockPos pos){
-		return getTaintWithinChunk(new ChunkPos(pos));
+	default float getFluxAt(BlockPos pos){
+		return getFluxWithinChunk(new ChunkPos(pos));
 	}
 	
 	/**
@@ -58,19 +62,19 @@ public interface AuraView{
 	 * 		The chunk to add taint to.
 	 * @return The previous taint level.
 	 */
-	default int addTaintToChunk(ChunkPos pos, int amount){
+	default float addFluxToChunk(ChunkPos pos, float amount){
 		AuraChunk nc = getAuraChunk(pos);
 		if(nc != null){
-			int level = nc.getTaintLevel();
-			nc.addTaint(amount);
+			float level = nc.getFluxLevel();
+			nc.addFlux(amount);
 			return level;
 		}else{
 			return -1;
 		}
 	}
 	
-	default int addTaintAt(BlockPos pos, int amount){
-		return addTaintToChunk(new ChunkPos(pos), amount);
+	default float addFluxAt(BlockPos pos, float amount){
+		return addFluxToChunk(new ChunkPos(pos), amount);
 	}
 	
 	/**
@@ -80,19 +84,19 @@ public interface AuraView{
 	 * 		The chunk to set the taint of.
 	 * @return The previous taint level.
 	 */
-	default int setTaintOfChunk(ChunkPos pos, int amount){
+	default float setFluxOfChunk(ChunkPos pos, float amount){
 		AuraChunk nc = getAuraChunk(pos);
 		if(nc != null){
-			int level = nc.getTaintLevel();
-			nc.setTaint(amount);
+			float level = nc.getFluxLevel();
+			nc.setFlux(amount);
 			return level;
 		}else{
 			return -1;
 		}
 	}
 	
-	default int setTaintAt(BlockPos pos, int amount){
-		return setTaintOfChunk(new ChunkPos(pos), amount);
+	default float setFluxAt(BlockPos pos, float amount){
+		return setFluxOfChunk(new ChunkPos(pos), amount);
 	}
 	
 	default Collection<Node> getNodesWithinAABB(AxisAlignedBB bounds){

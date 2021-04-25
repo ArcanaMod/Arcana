@@ -172,7 +172,7 @@ public class Taint{
 		if(state.getBlock() == ArcanaFluids.TAINT_FLUID_BLOCK.get() || !state.get(UNTAINTED)){
 			// and if flux level is greater than 5,
 			ServerAuraView auraView = new ServerAuraView(world);
-			int at = auraView.getTaintAt(pos);
+			float at = auraView.getFluxAt(pos);
 			if(at > ArcanaConfig.TAINT_SPREAD_MIN_FLUX.get()){
 				// Pick a block within a 4x6x4 area.
 				// If this block is air, stop. If this block doesn't have a tainted form, re-roll. If this block is near a pure node, stop.
@@ -197,7 +197,7 @@ public class Taint{
 					BlockState taintedState = switchBlock(world.getBlockState(taintingPos), tainted).with(UNTAINTED, false);
 					world.setBlockState(taintingPos, taintedState);
 					// Reduce flux level
-					auraView.addTaintAt(pos, -ArcanaConfig.TAINT_SPREAD_FLUX_COST.get());
+					auraView.addFluxAt(pos, -ArcanaConfig.TAINT_SPREAD_FLUX_COST.get());
 					// Schedule a tick
 					world.getPendingBlockTicks().scheduleTick(pos, state.getBlock(), taintTickWait(at));
 				}
@@ -215,7 +215,7 @@ public class Taint{
 								&& pos.distanceSq(node, true) <= range * range);
 	}
 
-	public static int taintTickWait(int taintLevel){
+	public static int taintTickWait(float taintLevel){
 		// more taint level -> less tick wait
 		int base = (int)((1d / taintLevel) * 200);
 		return base > 0 ? base : 1;
@@ -231,7 +231,7 @@ public class Taint{
 					return;
 				ServerAuraView auraView = new ServerAuraView((ServerWorld)jar.getWorld());
 				if(jar.getWorld().rand.nextInt(20) == 2)
-					auraView.addTaintAt(jar.getPos(), 1);
+					auraView.addFluxAt(jar.getPos(), 1);
 			}
 		}
 	}

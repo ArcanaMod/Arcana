@@ -81,11 +81,11 @@ public interface AuraChunk{
 	 */
 	Collection<Node> getNodesOfTypeWithinAABB(NodeType type, AxisAlignedBB bounds);
 	
-	int getTaintLevel();
+	float getFluxLevel();
 	
-	void addTaint(int amount);
+	void addFlux(float amount);
 	
-	void setTaint(int newTaint);
+	void setFlux(float newFlux);
 	
 	/**
 	 * Returns a set containing all nodes in this chunk, except for the specified node.

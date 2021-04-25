@@ -83,8 +83,8 @@ public final class Huds{
 				// display filling at 8,8
 				// 10 frames, 32x100
 				int frame = (int)((player.ticksExisted + event.getPartialTicks()) % 10);
-				int flux = ClientAuraHandler.currentFlux;
-				int pixHeight = Math.min(flux, 100);
+				float flux = ClientAuraHandler.currentFlux;
+				int pixHeight = (int)Math.min(flux, 100);
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FILLING);
 				ClientUiUtil.drawModalRectWithCustomSizedTexture(8, 8 + (100 - pixHeight), 0, 100 * frame, 32, pixHeight, 1024, 1024);
 				// display the frame at top-left
@@ -96,9 +96,10 @@ public final class Huds{
 					int colour = 0x00ffffff | (amount << 24);
 					GuiUtils.drawGradientRect(1, 8, 8, 40, 108, colour, colour);
 				}
-				// if the player is sneaking, display the amount of flux exactly
+				// if the player is sneaking, display the amount of flux "exactly"
+				// rounded to 2dp
 				if(player.isSneaking())
-					Minecraft.getInstance().fontRenderer.drawStringWithShadow(String.valueOf(flux), 47, 8 + (97 - pixHeight), -1);
+					Minecraft.getInstance().fontRenderer.drawStringWithShadow(String.format("%.2f", flux), 47, 8 + (97 - pixHeight), -1);
 			}
 			double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
 			Vec3d start = player.getEyePosition(1);

@@ -55,7 +55,7 @@ public class TaintBottleEntity extends ProjectileItemEntity{
 				}
 			}
 			// add some flux too
-			AuraView.SIDED_FACTORY.apply(world).addTaintAt(getPosition(), world.rand.nextInt(3) + 3 + (6 - tainted));
+			AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPosition(), world.rand.nextInt(3) + 3 + (6 - tainted));
 			// add some particles
 			world.playEvent(2007, new BlockPos(this), 0xa200ff);
 			// and die

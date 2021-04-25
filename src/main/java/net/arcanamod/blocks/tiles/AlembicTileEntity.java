@@ -6,6 +6,7 @@ import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
 import net.arcanamod.systems.vis.VisUtils;
+import net.arcanamod.world.AuraView;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
@@ -27,6 +28,7 @@ import static net.arcanamod.aspects.Aspects.EMPTY;
 public class AlembicTileEntity extends TileEntity implements ITickableTileEntity{
 	
 	// 50 of 5 aspects
+	// TODO: see usage of ALEMBIC_BASE_DISTILL_EFFICIENCY
 	public AspectBattery aspects = new AspectBattery(5, 50);
 	int crucibleLevel = -1;
 	boolean stacked = false;
@@ -34,7 +36,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	public boolean suppressedByRedstone = false;
 	
 	public static int maxAspectOut = ArcanaConfig.MAX_ALEMBIC_ASPECT_OUT.get();
-	public static int maxAspectDistill = ArcanaConfig.MAX_ALEMBIC_ASPECT_DISTILL.get();
+	public static int maxAspectDistill = ArcanaConfig.ALEMBIC_DISTILL_TIME.get();
 	
 	public AlembicTileEntity(){
 		super(ArcanaTiles.ALEMBIC_TE.get());
@@ -114,7 +116,10 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 							te.getAspectStackMap().put(aspect, newStack);
 						else
 							te.getAspectStackMap().remove(aspect);
-						adding.insert(new AspectStack(aspectStack.getAspect(), diff), false);
+						// TODO: use a float-valued aspect battery (or own system?) to fix rounding jank
+						adding.insert(new AspectStack(aspectStack.getAspect(), (int)Math.max(diff * ArcanaConfig.ALEMBIC_BASE_DISTILL_EFFICIENCY.get(), 1)), false);
+						
+						AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_FLUX_RATE.get()));
 					}
 				}
 				// then push them out into the total pipe system from sides

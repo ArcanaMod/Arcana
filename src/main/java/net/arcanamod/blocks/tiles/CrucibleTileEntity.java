@@ -1,6 +1,7 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
@@ -110,9 +111,8 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 	}
 	
 	public void empty(){
-		// release aspects as flux :)
-		// half as much as there are aspects
-		AuraView.SIDED_FACTORY.apply(world).addTaintAt(getPos(), aspectStackMap.values().stream().mapToInt(AspectStack::getAmount).sum() / 2);
+		// release aspects as flux
+		AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(aspectStackMap.values().stream().mapToInt(AspectStack::getAmount).sum() * ArcanaConfig.ASPECT_DUMPING_WASTE.get()));
 		aspectStackMap.clear();
 		// block handles changing state
 	}

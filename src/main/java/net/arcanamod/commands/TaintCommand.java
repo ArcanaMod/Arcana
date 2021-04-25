@@ -46,7 +46,7 @@ public class TaintCommand{
 	
 	public static int get(CommandContext<CommandSource> ctx){
 		AuraView view = new ServerAuraView(ctx.getSource().getWorld());
-		int get = view.getTaintAt(Vec3Argument.getLocation(ctx, "position").getBlockPos(ctx.getSource()));
+		float get = view.getFluxAt(Vec3Argument.getLocation(ctx, "position").getBlockPos(ctx.getSource()));
 		if(get == -1){
 			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcana.taint.error"));
 			return 0;
@@ -59,7 +59,7 @@ public class TaintCommand{
 		AuraView view = new ServerAuraView(ctx.getSource().getWorld());
 		BlockPos position = Vec3Argument.getLocation(ctx, "position").getBlockPos(ctx.getSource());
 		int amount = IntegerArgumentType.getInteger(ctx, "amount");
-		int get = view.addTaintAt(position, amount);
+		float get = view.addFluxAt(position, amount);
 		if(get == -1){
 			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcana.taint.error"));
 			return 0;
@@ -72,7 +72,7 @@ public class TaintCommand{
 		AuraView view = new ServerAuraView(ctx.getSource().getWorld());
 		BlockPos position = Vec3Argument.getLocation(ctx, "position").getBlockPos(ctx.getSource());
 		int amount = IntegerArgumentType.getInteger(ctx, "amount");
-		int get = view.setTaintAt(position, amount);
+		float get = view.setFluxAt(position, amount);
 		if(get == -1){
 			ctx.getSource().sendErrorMessage(new TranslationTextComponent("commands.arcana.taint.error"));
 			return 0;

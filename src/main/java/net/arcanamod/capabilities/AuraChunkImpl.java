@@ -1,7 +1,6 @@
 package net.arcanamod.capabilities;
 
 import net.arcanamod.world.Node;
-import net.arcanamod.capabilities.AuraChunk;
 import net.arcanamod.world.NodeType;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -16,7 +15,7 @@ import java.util.Collection;
 public class AuraChunkImpl implements AuraChunk{
 	
 	Collection<Node> nodes = new ArrayList<>();
-	int taint;
+	float taint;
 	
 	public void addNode(Node node){
 		nodes.add(node);
@@ -59,16 +58,16 @@ public class AuraChunkImpl implements AuraChunk{
 		return set;
 	}
 	
-	public int getTaintLevel(){
+	public float getFluxLevel(){
 		return taint;
 	}
 	
-	public void addTaint(int amount){
+	public void addFlux(float amount){
 		taint += amount;
 		taint = Math.max(taint, 0);
 	}
 	
-	public void setTaint(int newTaint){
+	public void setFlux(float newTaint){
 		taint = Math.max(newTaint, 0);
 	}
 	
@@ -79,7 +78,7 @@ public class AuraChunkImpl implements AuraChunk{
 		for(Node node : nodes)
 			data.add(node.serializeNBT());
 		compound.put("nodes", data);
-		compound.putInt("taint", taint);
+		compound.putFloat("flux", taint);
 		return compound;
 	}
 	
@@ -91,6 +90,9 @@ public class AuraChunkImpl implements AuraChunk{
 			if(nodeNBT instanceof CompoundNBT)
 				nodeSet.add(Node.fromNBT((CompoundNBT)nodeNBT));
 		nodes = nodeSet;
-		taint = data.getInt("taint");
+		taint = data.getFloat("flux");
+		// load old integer taint
+		if(data.contains("taint"))
+			taint += data.getInt("taint");
 	}
 }
