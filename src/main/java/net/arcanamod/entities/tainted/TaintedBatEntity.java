@@ -2,10 +2,7 @@ package net.arcanamod.entities.tainted;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.passive.BatEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -15,7 +12,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
@@ -105,7 +102,7 @@ public class TaintedBatEntity extends CreatureEntity {
 	public void tick() {
 		super.tick();
 		if (this.getIsBatHanging()) {
-			this.setMotion(Vec3d.ZERO);
+			this.setMotion(Vector3d.ZERO);
 			this.setRawPosition(this.getPosX(), (double) MathHelper.floor(this.getPosY()) + 1.0D - (double)this.getHeight(), this.getPosZ());
 		} else {
 			this.setMotion(this.getMotion().mul(1.0D, 0.6D, 1.0D));
@@ -141,8 +138,8 @@ public class TaintedBatEntity extends CreatureEntity {
 			double d0 = (double)this.spawnPosition.getX() + 0.5D - this.getPosX();
 			double d1 = (double)this.spawnPosition.getY() + 0.1D - this.getPosY();
 			double d2 = (double)this.spawnPosition.getZ() + 0.5D - this.getPosZ();
-			Vec3d vec3d = this.getMotion();
-			Vec3d vec3d1 = vec3d.add((Math.signum(d0) * 0.5D - vec3d.x) * (double)0.1F, (Math.signum(d1) * (double)0.7F - vec3d.y) * (double)0.1F, (Math.signum(d2) * 0.5D - vec3d.z) * (double)0.1F);
+			Vector3d vec3d = this.getMotion();
+			Vector3d vec3d1 = vec3d.add((Math.signum(d0) * 0.5D - vec3d.x) * (double)0.1F, (Math.signum(d1) * (double)0.7F - vec3d.y) * (double)0.1F, (Math.signum(d2) * 0.5D - vec3d.z) * (double)0.1F);
 			this.setMotion(vec3d1);
 			float f = (float)(MathHelper.atan2(vec3d1.z, vec3d1.x) * (double)(180F / (float)Math.PI)) - 90.0F;
 			float f1 = MathHelper.wrapDegrees(f - this.rotationYaw);

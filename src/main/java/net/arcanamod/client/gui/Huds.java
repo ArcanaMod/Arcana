@@ -23,7 +23,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceContext;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -102,9 +102,9 @@ public final class Huds{
 					Minecraft.getInstance().fontRenderer.drawStringWithShadow(String.format("%.2f", flux), 47, 8 + (97 - pixHeight), -1);
 			}
 			double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
-			Vec3d start = player.getEyePosition(1);
-			Vec3d facing = player.getLookVec();
-			Vec3d end = start.add(facing.getX() * reach, facing.getY() * reach, facing.getZ() * reach);
+			Vector3d start = player.getEyePosition(1);
+			Vector3d facing = player.getLookVec();
+			Vector3d end = start.add(facing.getX() * reach, facing.getY() * reach, facing.getZ() * reach);
 			BlockPos targeted = player.world.rayTraceBlocks(new RayTraceContext(start, end, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.NONE, player)).getPos();
 			TileEntity te = player.world.getTileEntity(targeted);
 			if(te instanceof CrucibleTileEntity){

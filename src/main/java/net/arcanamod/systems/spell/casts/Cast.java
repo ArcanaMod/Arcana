@@ -20,10 +20,12 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.EntityPredicates;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
@@ -330,7 +332,7 @@ public abstract class Cast implements ICast {
 		SpellTrapEntity trap = new SpellTrapEntity(variableGrid);
 	}
 
-	private void createSpellCloud(PlayerEntity player, World world, Vec3d area,int rMultP) {
+	private void createSpellCloud(PlayerEntity player, World world, Vector3d area, int rMultP) {
 		SpellCloudEntity cloud = new SpellCloudEntity(world, area);
 		cloud.setOwner(player);
 		cloud.setDuration(800);

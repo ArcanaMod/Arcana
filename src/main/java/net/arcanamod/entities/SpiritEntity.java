@@ -9,7 +9,7 @@ import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import java.util.EnumSet;
@@ -51,7 +51,7 @@ public class SpiritEntity extends FlyingEntity implements IFlyingAnimal {
 
         public void tick(){
             if(parentEntity.getAttackTarget() == null){
-                Vec3d motion = parentEntity.getMotion();
+                Vector3d motion = parentEntity.getMotion();
                 parentEntity.rotationYaw = -((float) MathHelper.atan2(motion.x, motion.z)) * 57.295776F;
                 parentEntity.renderYawOffset = parentEntity.rotationYaw;
             }else{
@@ -114,7 +114,7 @@ public class SpiritEntity extends FlyingEntity implements IFlyingAnimal {
             if(action == Action.MOVE_TO)
                 if(courseChangeCooldown-- <= 0){
                     courseChangeCooldown += parentEntity.getRNG().nextInt(5) + 2;
-                    Vec3d posDiff = new Vec3d(posX - parentEntity.getPosX(), posY - parentEntity.getPosY(), posZ - parentEntity.getPosZ());
+                    Vector3d posDiff = new Vector3d(posX - parentEntity.getPosX(), posY - parentEntity.getPosY(), posZ - parentEntity.getPosZ());
                     double posLength = posDiff.length();
                     posDiff = posDiff.normalize();
                     if(canMove(posDiff, MathHelper.ceil(posLength)))
@@ -124,7 +124,7 @@ public class SpiritEntity extends FlyingEntity implements IFlyingAnimal {
                 }
         }
 
-        private boolean canMove(Vec3d pos, int size){
+        private boolean canMove(Vector3d pos, int size){
             AxisAlignedBB boundingBox = this.parentEntity.getBoundingBox();
 
             for(int i = 1; i < size; ++i){

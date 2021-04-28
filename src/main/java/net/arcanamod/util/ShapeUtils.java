@@ -1,22 +1,22 @@
 package net.arcanamod.util;
 
 import net.minecraft.util.Direction;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3i;
 
 public class ShapeUtils {
-    public static Vec3i fromNorth(Vec3i vec, Direction direction) {
+    public static Vector3i fromNorth(Vector3i vec, Direction direction) {
         switch (direction) {
             case WEST:
-                return new Vec3i( vec.getZ(), vec.getY(), -vec.getX());
+                return new Vector3i( vec.getZ(), vec.getY(), -vec.getX());
             case SOUTH:
-                return new Vec3i(-vec.getX(), vec.getY(), -vec.getZ());
+                return new Vector3i(-vec.getX(), vec.getY(), -vec.getZ());
             case EAST:
-                return new Vec3i(-vec.getZ(), vec.getY(),  vec.getX());
+                return new Vector3i(-vec.getZ(), vec.getY(),  vec.getX());
             case NORTH:
             default:
-                return new Vec3i( vec.getX(), vec.getY(),  vec.getZ());
+                return new Vector3i( vec.getX(), vec.getY(),  vec.getZ());
         }
     }
 

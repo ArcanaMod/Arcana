@@ -27,7 +27,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -102,7 +102,7 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
         Direction facing = state.get(FACING);
-        Vec3i rotated = ShapeUtils.fromNorth(COM_OFFSET, facing);
+        Vector3i rotated = ShapeUtils.fromNorth(COM_OFFSET, facing);
         if(world.getBlockState(pos.add(rotated)).getBlock() != ArcanaBlocks.RESEARCH_TABLE_COMPONENT.get())
             world.destroyBlock(pos.add(rotated), false);
         super.neighborChanged(state, world, pos, block, fromPos, isMoving);

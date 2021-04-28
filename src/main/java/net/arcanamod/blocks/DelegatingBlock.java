@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.IProperty;
@@ -17,9 +18,9 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.*;
 import net.minecraft.world.server.ServerWorld;
@@ -71,7 +72,7 @@ public class DelegatingBlock extends Block{
 			}
 	}
 	
-	public IFluidState getFluidState(BlockState state){
+	public FluidState getFluidState(BlockState state){
 		return parentBlock.getFluidState(state);
 	}
 	
@@ -108,7 +109,7 @@ public class DelegatingBlock extends Block{
 		return switchBlock(parentBlock.getStateForPlacement(state, facing, state2, world, pos1, pos2, hand), this);
 	}
 	
-	public BlockState getStateAtViewpoint(BlockState state, IBlockReader world, BlockPos pos, Vec3d viewpoint){
+	public BlockState getStateAtViewpoint(BlockState state, IBlockReader world, BlockPos pos, Vector3d viewpoint){
 		return switchBlock(parentBlock.getStateAtViewpoint(state, world, pos, viewpoint), this);
 	}
 	

@@ -8,7 +8,7 @@ import net.arcanamod.aspects.AspectUtils;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
@@ -35,20 +35,20 @@ public class AspectHelixParticleData implements IParticleData{
 			reader.skipWhitespace();
 			double z = reader.readDouble();
 			reader.expect(']');
-			return new AspectHelixParticleData(aspect, life, time, new Vec3d(x, y, z));
+			return new AspectHelixParticleData(aspect, life, time, new Vector3d(x, y, z));
 		}
 		
 		public AspectHelixParticleData read(ParticleType<AspectHelixParticleData> particleType, PacketBuffer buffer){
-			return new AspectHelixParticleData(AspectUtils.getAspectByName(buffer.readString()), buffer.readInt(), buffer.readFloat(), new Vec3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble()));
+			return new AspectHelixParticleData(AspectUtils.getAspectByName(buffer.readString()), buffer.readInt(), buffer.readFloat(), new Vector3d(buffer.readDouble(), buffer.readDouble(), buffer.readDouble()));
 		}
 	};
 	
 	private final Aspect aspect;
 	private final int life;
 	private final float time;
-	private final Vec3d direction;
+	private final Vector3d direction;
 	
-	public AspectHelixParticleData(@Nullable Aspect aspect, int life, float time, Vec3d direction){
+	public AspectHelixParticleData(@Nullable Aspect aspect, int life, float time, Vector3d direction){
 		this.aspect = aspect;
 		this.life = life;
 		this.time = time;
@@ -68,7 +68,7 @@ public class AspectHelixParticleData implements IParticleData{
 		return time;
 	}
 	
-	public Vec3d getDirection(){
+	public Vector3d getDirection(){
 		return direction;
 	}
 	

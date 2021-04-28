@@ -21,7 +21,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
@@ -118,7 +118,7 @@ public class ClientTickHandler{
 				// Render aspect particle around Node
 				if(priority == GogglePriority.SHOW_ASPECTS){
 					AuraView view = AuraView.SIDED_FACTORY.apply(player.world);
-					Vec3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
+					Vector3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
 					view.raycast(position, reach, player).ifPresent(node -> {
 						List<IAspectHolder> holders = node.getAspects().getHolders();
 						ArrayList<Pair<Aspect, Float>> stacks = new ArrayList<>();
@@ -131,12 +131,12 @@ public class ClientTickHandler{
 							// then its as easy as picking positions on a circle
 							float angle = (float)(Math.toRadians(360 * i) / size);
 							// TODO: ease in/out (multiply by some fraction)
-							Vec3d localPos = new Vec3d(MathHelper.sin(angle) * (size / 5f), MathHelper.cos(angle) * (size / 5f), 0);
-							Vec3d wPos = LocalAxis.toAbsolutePos(localPos, player.getPitchYaw(), node.getPosition());
+							Vector3d localPos = new Vector3d(MathHelper.sin(angle) * (size / 5f), MathHelper.cos(angle) * (size / 5f), 0);
+							Vector3d wPos = LocalAxis.toAbsolutePos(localPos, player.getPitchYaw(), node.getPosition());
 							// why?
 							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(stack.getFirst()).toString().replace("textures/", "").replace(".png", "")), ArcanaParticles.ASPECT_PARTICLE.get()), wPos.getX(), wPos.getY(), wPos.getZ(), 0, 0, 0);
 							// TODO: client reference (UiUtil::tooltipColour)
-							Vec3d numberPos = new Vec3d(MathHelper.sin(angle) * ((size / 5f) - .04), MathHelper.cos(angle) * ((size / 5f) - .04), -.1);
+							Vector3d numberPos = new Vector3d(MathHelper.sin(angle) * ((size / 5f) - .04), MathHelper.cos(angle) * ((size / 5f) - .04), -.1);
 							wPos = LocalAxis.toAbsolutePos(numberPos, player.getPitchYaw(), node.getPosition());
 							renderNumberParticles(wPos.x, wPos.y, wPos.z, player.getYaw(0), stack.getSecond(), world);
 						}
@@ -177,7 +177,7 @@ public class ClientTickHandler{
 										stacks.add(vis.getHolder(i).getContainedAspectStack());
 								// Squish aspect stacks in to reducedStacks
 								List<AspectStack> reducedStacks = AspectUtils.squish(stacks);
-								renderAspectAndNumberParticlesInCircle(world, new Vec3d(pos), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()));
+								renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()));
 							}
 						}
 					}
@@ -190,7 +190,7 @@ public class ClientTickHandler{
 		}
 	}
 	
-	protected static void renderAspectAndNumberParticlesInCircle(World world, Vec3d pos, ClientPlayerEntity player, List<Pair<Aspect, Float>> aspectStacks){
+	protected static void renderAspectAndNumberParticlesInCircle(World world, Vector3d pos, ClientPlayerEntity player, List<Pair<Aspect, Float>> aspectStacks){
 		float[] v = spreadVertices(aspectStacks.size(), 32);
 		for(int i = 0; i < aspectStacks.size(); i++){
 			double centerSpread = v[i];

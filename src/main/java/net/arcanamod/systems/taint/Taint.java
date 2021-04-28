@@ -18,6 +18,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IShearable;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
@@ -28,7 +29,6 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.IShearable;
 
 import java.util.*;
 import java.util.stream.Collectors;

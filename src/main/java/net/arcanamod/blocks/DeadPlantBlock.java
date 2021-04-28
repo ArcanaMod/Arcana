@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.IGrowable;
+import net.minecraft.entity.IShearable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +15,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
@@ -69,7 +69,7 @@ public class DeadPlantBlock extends DeadBlock implements IPlantable, IGrowable, 
 
 	@Nullable
 	private IShearable getShearable(){
-		return parentBlock instanceof IShearable ? (IShearable)parentBlock : null;
+		return parentBlock instanceof IShearable ? (IShearable) parentBlock : null;
 	}
 
 	public boolean isShearable(@Nonnull ItemStack item, IWorldReader world, BlockPos pos){

@@ -4,6 +4,7 @@ import net.arcanamod.capabilities.AuraChunk;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkStatus;
@@ -228,8 +229,8 @@ public interface AuraView{
 		return false;
 	}
 	
-	default Optional<Node> raycast(Vec3d from, double length, boolean ignoreBlocks, Entity entity){
-		Vec3d to = from.add(entity.getLookVec().mul(length, length, length));
+	default Optional<Node> raycast(Vector3d from, double length, boolean ignoreBlocks, Entity entity){
+		Vector3d to = from.add(entity.getLookVec().mul(length, length, length));
 		BlockRayTraceResult result = null;
 		if(!ignoreBlocks)
 			result = getWorld().rayTraceBlocks(new RayTraceContext(from, to, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, entity));
@@ -238,7 +239,7 @@ public interface AuraView{
 		double curDist = length;
 		for(Node node : getNodesWithinAABB(box)){
 			AxisAlignedBB nodeBox = new AxisAlignedBB(node.x - HALF_NODE, node.y - HALF_NODE, node.z - HALF_NODE, node.x + HALF_NODE, node.y + HALF_NODE, node.z + HALF_NODE);
-			Optional<Vec3d> optional = nodeBox.rayTrace(from, to);
+			Optional<Vector3d> optional = nodeBox.rayTrace(from, to);
 			if(optional.isPresent()){
 				double dist = from.squareDistanceTo(optional.get());
 				if(dist < curDist){
@@ -254,7 +255,7 @@ public interface AuraView{
 		return Optional.ofNullable(ret);
 	}
 	
-	default Optional<Node> raycast(Vec3d from, double length, Entity entity){
+	default Optional<Node> raycast(Vector3d from, double length, Entity entity){
 		return raycast(from, length, false, entity);
 	}
 }

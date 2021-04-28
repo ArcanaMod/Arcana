@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -30,10 +31,10 @@ public final class RayTraceUtils {
 	}
 
 	public static BlockRayTraceResult getTargetBlockResult(PlayerEntity player,World world, int maxdistance){
-		Vec3d vec = player.getPositionVector();
-		Vec3d vec3 = new Vec3d(vec.x,vec.y+player.getEyeHeight(),vec.z);
-		Vec3d vec3a = player.getLook(1.0F);
-		Vec3d vec3b = vec3.add(vec3a.getX() * maxdistance, vec3a.getY()*  maxdistance, vec3a.getZ()*  maxdistance);
+		Vector3d vec = player.getPositionVector();
+		Vector3d vec3 = new Vector3d(vec.x,vec.y+player.getEyeHeight(),vec.z);
+		Vector3d vec3a = player.getLook(1.0F);
+		Vector3d vec3b = vec3.add(vec3a.getX() * maxdistance, vec3a.getY()*  maxdistance, vec3a.getZ()*  maxdistance);
 
 		BlockRayTraceResult rayTraceResult = world.rayTraceBlocks(new RayTraceContext(vec3, vec3b,RayTraceContext.BlockMode.OUTLINE,  RayTraceContext.FluidMode.ANY, player));
 
@@ -61,11 +62,11 @@ public final class RayTraceUtils {
 		return null;
 	}
 
-	public static <T extends Entity> List<T> rayTraceEntities(World w, Vec3d pos, Vec3d ray, Optional<Predicate<T>> entityFilter, Class<T> entityClazz)
+	public static <T extends Entity> List<T> rayTraceEntities(World w, Vector3d pos, Vector3d ray, Optional<Predicate<T>> entityFilter, Class<T> entityClazz)
 	{
-		Vec3d end = pos.add(new Vec3d(1, 1, 1));
+		Vector3d end = pos.add(new Vector3d(1, 1, 1));
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.x, pos.y, pos.z, end.x, end.y, end.z).expand(ray.x, ray.y, ray.z);
-		Vec3d checkVec = pos.add(ray);
+		Vector3d checkVec = pos.add(ray);
 		List<T> ret = Lists.newArrayList();
 		for (T t : w.getEntitiesWithinAABB(entityClazz, aabb, entityFilter.orElse(Predicates.alwaysTrue())))
 		{

@@ -24,10 +24,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3i;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -62,7 +62,7 @@ public class FociForgeComponentBlock extends Block implements StaticComponent, G
 	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		VoxelShape shape;
 		Direction facing = state.get(FACING);
-		Vec3i fromCore = state.get(COMPONENT).getInvert(facing);
+		Vector3i fromCore = state.get(COMPONENT).getInvert(facing);
 		switch(facing) {
 			case EAST:
 				shape = SHAPE_E;
@@ -157,24 +157,24 @@ public class FociForgeComponentBlock extends Block implements StaticComponent, G
 		FR("fr", 1, 0, 1);
 
 		private final String name;
-		private final Vec3i offset;
-		private final Vec3i invert;
+		private final Vector3i offset;
+		private final Vector3i invert;
 
 		Component(String name, int x, int y, int z) {
 			this.name = name;
-			this.offset = new Vec3i(x, y, z);
-			this.invert = new Vec3i(-x, -y, -z);
+			this.offset = new Vector3i(x, y, z);
+			this.invert = new Vector3i(-x, -y, -z);
 		}
 
 		public String getName() {
 			return name;
 		}
 
-		public Vec3i getOffset(Direction direction) {
+		public Vector3i getOffset(Direction direction) {
 			return ShapeUtils.fromNorth(this.offset, direction);
 		}
 
-		public Vec3i getInvert(Direction direction) {
+		public Vector3i getInvert(Direction direction) {
 			return ShapeUtils.fromNorth(this.invert, direction);
 		}
 	}

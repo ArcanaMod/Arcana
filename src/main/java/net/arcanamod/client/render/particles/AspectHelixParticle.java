@@ -4,7 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.util.LocalAxis;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -15,7 +15,7 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 	
 	private float time;
 	private final IAnimatedSprite spriteSheet;
-	private final Vec3d direction;
+	private final Vector3d direction;
 	
 	protected AspectHelixParticle(World world, double x, double y, double z, IAnimatedSprite spriteSheet, AspectHelixParticleData data){
 		super(world, x, y, z);
@@ -54,7 +54,7 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 			float z1 = f * MathHelper.sin(time);
 			
 			// FIXME: this, uhh, doesn't work, I'm working on it
-			Vec3d motion = LocalAxis.toAbsolutePos(new Vec3d(x1, f, z1), direction, Vec3d.ZERO);
+			Vector3d motion = LocalAxis.toAbsolutePos(new Vector3d(x1, f, z1), direction, Vector3d.ZERO);
 			move(motion.x, motion.y, motion.z);
 			
 			time += .2f;

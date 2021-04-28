@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 
 public final class PoseHandler{
 	
@@ -18,7 +18,7 @@ public final class PoseHandler{
 				// point where we're facing.
 				// TODO: better draining pose
 				ModelRenderer arm = player.getActiveHand() == Hand.MAIN_HAND ? model.bipedRightArm : model.bipedLeftArm;
-				Vec3d facing = player.getLookVec();
+				Vector3d facing = player.getLookVec();
 				arm.rotateAngleX = -((float)facing.y) - 1.5f;
 			}
 		}

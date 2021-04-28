@@ -25,7 +25,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -37,8 +37,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class ResearchTableComponentBlock extends WaterloggableBlock implements StaticComponent, GroupedBlock {
 	public static final DirectionProperty FACING = HorizontalBlock.HORIZONTAL_FACING;
 	public static final BooleanProperty PAPER = BooleanProperty.create("paper");
-	public static final Vec3i COM_OFFSET = new Vec3i(1, 0, 0);
-	public static final Vec3i COM_INVERT = new Vec3i(-1, 0, 0);
+	public static final Vector3i COM_OFFSET = new Vector3i(1, 0, 0);
+	public static final Vector3i COM_INVERT = new Vector3i(-1, 0, 0);
 
 	public ResearchTableComponentBlock(Properties properties){
 		super(properties);

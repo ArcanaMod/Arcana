@@ -4,7 +4,7 @@ import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.systems.spell.*;
+import net.arcanamod.systems.spell.SpellValues;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -13,8 +13,11 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.IFluidState;
-import net.minecraft.item.*;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.item.IItemTier;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
@@ -85,7 +88,7 @@ public class MiningCast extends Cast {
 
 			// Spawn drops and destroy block.
 			Block.spawnDrops(blockToDestroy, world, blockTarget, tileentity, caster, pickaxe);
-			IFluidState ifluidstate = blockToDestroy.getBlock().getFluidState(blockToDestroy);
+			FluidState ifluidstate = blockToDestroy.getBlock().getFluidState(blockToDestroy);
 			world.setBlockState(blockTarget, ifluidstate.getBlockState(), 3);
 			blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
 		}

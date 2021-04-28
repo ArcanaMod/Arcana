@@ -3,10 +3,9 @@ package net.arcanamod.entities;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.arcanamod.Arcana;
-import net.arcanamod.systems.spell.casts.ICast;
-import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.Cast;
+import net.arcanamod.systems.spell.casts.Casts;
+import net.arcanamod.systems.spell.casts.ICast;
 import net.minecraft.block.material.PushReaction;
 import net.minecraft.command.arguments.ParticleArgument;
 import net.minecraft.entity.*;
@@ -16,12 +15,11 @@ import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.network.play.server.SSpawnObjectPacket;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
@@ -55,10 +53,10 @@ public class SpellCloudEntity extends Entity {
 	public static class CloudVariableGrid{
 		public PlayerEntity player;
 		World world;
-		Vec3d area;
+		Vector3d area;
 		int rMultP;
 
-		public CloudVariableGrid(PlayerEntity player, World world, Vec3d positionVec, int i) {
+		public CloudVariableGrid(PlayerEntity player, World world, Vector3d positionVec, int i) {
 		}
 	}
 
@@ -73,7 +71,7 @@ public class SpellCloudEntity extends Entity {
 		this.setPosition(x, y, z);
 	}
 
-	public SpellCloudEntity(World world, Vec3d vec) {
+	public SpellCloudEntity(World world, Vector3d vec) {
 		this(ArcanaEntities.SPELL_CLOUD.get(), world);
 		this.setPosition(vec.x,vec.y,vec.z);
 	}

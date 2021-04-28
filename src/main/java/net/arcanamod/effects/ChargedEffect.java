@@ -1,13 +1,10 @@
 package net.arcanamod.effects;
 
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
-
-import javax.annotation.Nonnull;
 
 public class ChargedEffect extends Effect {
 	public ChargedEffect(){
@@ -18,7 +15,7 @@ public class ChargedEffect extends Effect {
 	public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
 		super.performEffect(entityLivingBaseIn, amplifier);
 		if (entityLivingBaseIn.world.isRainingAt(entityLivingBaseIn.getPosition()))
-			addAttributesModifier(SharedMonsterAttributes.ARMOR,"0963515b-6188-4415-9bb6-edb7a45914cd",0.5f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+			addAttributesModifier(Attributes.ARMOR,"0963515b-6188-4415-9bb6-edb7a45914cd",0.5f, AttributeModifier.Operation.MULTIPLY_TOTAL);
 	}
 
 	@Override

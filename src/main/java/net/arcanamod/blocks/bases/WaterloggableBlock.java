@@ -4,8 +4,8 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.IWaterLoggable;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
@@ -32,7 +32,7 @@ public class WaterloggableBlock extends Block implements IWaterLoggable{
 	@Nonnull
 	public BlockState getStateForPlacement(BlockItemUseContext context){
 		BlockPos blockpos = context.getPos();
-		IFluidState ifluidstate = context.getWorld().getFluidState(blockpos);
+		FluidState ifluidstate = context.getWorld().getFluidState(blockpos);
 		return getDefaultState().with(WATERLOGGED, ifluidstate.getFluid() == Fluids.WATER);
 	}
 	
@@ -46,7 +46,7 @@ public class WaterloggableBlock extends Block implements IWaterLoggable{
 		builder.add(WATERLOGGED);
 	}
 	
-	public IFluidState getFluidState(BlockState state){
+	public FluidState getFluidState(BlockState state){
 		return state.get(WATERLOGGED) ? Fluids.WATER.getStillFluidState(false) : super.getFluidState(state);
 	}
 }

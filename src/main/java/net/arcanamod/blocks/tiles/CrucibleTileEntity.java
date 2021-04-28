@@ -2,7 +2,10 @@ package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.ItemAspectRegistry;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
 import net.arcanamod.items.recipes.AlchemyInventory;
@@ -12,8 +15,8 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
@@ -53,7 +56,7 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 	
 	public void tick(){
 		BlockState below = world.getBlockState(pos.down());
-		IFluidState fluidState = world.getFluidState(pos.down());
+		FluidState fluidState = world.getFluidState(pos.down());
 		// TODO: use a block+fluid tag
 		boiling = hasWater() && (below.getBlock() == Blocks.FIRE || below.getBlock() == Blocks.MAGMA_BLOCK || below.getBlock() == ArcanaBlocks.NITOR.get() || fluidState.getFluid() == Fluids.FLOWING_LAVA || fluidState.getFluid() == Fluids.LAVA);
 		

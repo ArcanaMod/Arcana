@@ -23,7 +23,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -121,10 +121,10 @@ public abstract class MagicDeviceItem extends Item{
 					VisUtils.moveAspects(holder, wandHolder, ASPECT_DRAIN_AMOUNT + world.rand.nextInt(1));
 					if(moved){
 						// spawn aspect helix particles
-						Vec3d nodePos = new Vec3d(node.getX(), node.getY(), node.getZ());
-						Vec3d playerPos = player.getEyePosition(1);
-						Vec3d diff = nodePos.subtract(playerPos);
-						Vec3d direction = diff.normalize().mul(-1, -1, -1);
+						Vector3d nodePos = new Vector3d(node.getX(), node.getY(), node.getZ());
+						Vector3d playerPos = player.getEyePosition(1);
+						Vector3d diff = nodePos.subtract(playerPos);
+						Vector3d direction = diff.normalize().mul(-1, -1, -1);
 						int life = (int)Math.ceil(diff.length() / .05f);
 						world.addParticle(new AspectHelixParticleData(aspect, life, world.rand.nextInt(180), direction), nodePos.x, nodePos.y, nodePos.z, 0, 0, 0);
 					}

@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
 import net.minecraft.block.IGrowable;
+import net.minecraft.entity.IShearable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -31,7 +32,7 @@ import java.util.Random;
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class TaintedPlantBlock extends TaintedBlock implements IPlantable, IGrowable, IShearable{
+public class TaintedPlantBlock extends TaintedBlock implements IPlantable, IGrowable, IShearable {
 	
 	public TaintedPlantBlock(Block block){
 		super(block);

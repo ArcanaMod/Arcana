@@ -17,7 +17,7 @@ import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.command.arguments.Vec3Argument;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
@@ -81,7 +81,7 @@ public class NodeCommand{
 			throw new CommandSyntaxException(new SimpleCommandExceptionType(noSuchEntry), noSuchEntry);
 		}else
 			nt = NodeType.TYPES.get(type);
-		Vec3d loc = Vec3Argument.getVec3(ctx, "position");
+		Vector3d loc = Vec3Argument.getVec3(ctx, "position");
 		Node node = new Node(nt.genBattery(new BlockPos(loc), ctx.getSource().getWorld(), new Random()), nt, loc.x, loc.y, loc.z, 0);
 		ServerAuraView view = new ServerAuraView(ctx.getSource().getWorld());
 		boolean added = view.addNode(node);

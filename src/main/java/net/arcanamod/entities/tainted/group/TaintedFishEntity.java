@@ -1,19 +1,15 @@
 package net.arcanamod.entities.tainted.group;
 
-import net.arcanamod.entities.ArcanaEntities;
 import net.arcanamod.items.ArcanaItems;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.fish.AbstractFishEntity;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.entity.passive.fish.AbstractGroupFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
@@ -24,10 +20,10 @@ public class TaintedFishEntity extends AbstractGroupFishEntity {
 	@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
-		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+		this.getAttributes().registerAttribute(Attributes.ATTACK_DAMAGE);
 		//this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.5D);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(0.0D);
+		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0.5D);
+		this.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.0D);
 	}
 
 	public TaintedFishEntity(EntityType<AbstractGroupFishEntity> type, World worldIn) {
