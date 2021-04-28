@@ -13,7 +13,7 @@ public class TaintedAcaciaTree extends Tree {
 	 * Get a {@link net.minecraft.world.gen.feature.ConfiguredFeature} of tree
 	 */
 	@Nullable
-	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random random, boolean beeLike) {
+	protected ConfiguredFeature<TreeFeature, ?> getTreeFeature(Random random, boolean beeLike) {
 		return Feature.ACACIA_TREE.withConfiguration(TaintedFeatures.Config.ACACIA_TREE_CONFIG);
 	}
 }

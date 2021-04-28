@@ -1,8 +1,6 @@
 package net.arcanamod.systems.taint;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.minecraft.block.Blocks;
 import net.minecraft.block.VineBlock;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.util.math.BlockPos;

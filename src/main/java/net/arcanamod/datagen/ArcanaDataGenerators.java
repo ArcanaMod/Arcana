@@ -3,14 +3,14 @@ package net.arcanamod.datagen;
 import net.arcanamod.Arcana;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 
 import java.util.Map;
 
-import static com.google.common.collect.Maps.*;
+import static com.google.common.collect.Maps.newHashMap;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class ArcanaDataGenerators{

@@ -10,9 +10,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.IFluidState;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
@@ -80,7 +79,7 @@ public class DelegatingBlock extends Block{
 	public static BlockState switchBlock(BlockState state, Block block){
 		BlockState base = block.stateContainer.getBaseState();
 		// A helper method doesn't work here...
-		for(IProperty property : state.getProperties())
+		for(Property property : state.getProperties())
 			if(base.has(property))
 				base = base.with(property, state.get(property));
 		return base;

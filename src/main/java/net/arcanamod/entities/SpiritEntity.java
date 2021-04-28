@@ -3,7 +3,7 @@ package net.arcanamod.entities;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.passive.IFlyingAnimal;
@@ -32,8 +32,8 @@ public class SpiritEntity extends FlyingEntity implements IFlyingAnimal {
     @Override
     protected void registerAttributes(){
         super.registerAttributes();
-        getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(16);
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(.23);
+        getAttribute(Attributes.MAX_HEALTH).setBaseValue(16);
+        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(.23);
     }
 
     static class LookAroundGoal extends Goal {

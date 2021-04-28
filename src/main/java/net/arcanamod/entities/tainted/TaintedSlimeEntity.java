@@ -2,7 +2,7 @@ package net.arcanamod.entities.tainted;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.SlimeEntity;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
@@ -16,7 +16,7 @@ public class TaintedSlimeEntity extends SlimeEntity {
 	@Override
 	protected void setSlimeSize(int size, boolean resetHealth) {
 		super.setSlimeSize(size,resetHealth);
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)(size * size)+4);
+		this.getAttribute(Attributes.MAX_HEALTH).setBaseValue((double)(size * size)+4);
 	}
 
 	protected IParticleData getSquishParticle() {

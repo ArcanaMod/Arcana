@@ -4,7 +4,7 @@ import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 
 import javax.annotation.Nonnull;
 
@@ -12,7 +12,7 @@ import static net.arcanamod.blocks.ArcanaBlocks.*;
 import static net.arcanamod.datagen.ArcanaDataGenerators.*;
 
 public class Blockstates extends BlockStateProvider{
-	
+
 	ExistingFileHelper efh;
 	
 	public Blockstates(DataGenerator gen, ExistingFileHelper exFileHelper){

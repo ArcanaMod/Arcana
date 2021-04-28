@@ -9,14 +9,16 @@ import net.minecraft.block.SoundType;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.BlockItemUseContext;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.state.IProperty;
+import net.minecraft.state.Property;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -29,7 +31,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Copy of BlockItem, but allows specifying growth stage & uses different render layer.
@@ -119,7 +120,7 @@ public class CrystalClusterItem extends Item{
 			StateContainer<Block, BlockState> statecontainer = state.getBlock().getStateContainer();
 			
 			for(String s : tag.keySet()){
-				IProperty<?> prop = statecontainer.getProperty(s);
+				Property<?> prop = statecontainer.getProperty(s);
 				if(prop != null){
 					String s1 = tag.get(s).getString();
 					blockstate = func_219988_a(blockstate, prop, s1);
@@ -133,7 +134,7 @@ public class CrystalClusterItem extends Item{
 		return blockstate;
 	}
 	
-	private static <T extends Comparable<T>> BlockState func_219988_a(BlockState state, IProperty<T> prop, String str){
+	private static <T extends Comparable<T>> BlockState func_219988_a(BlockState state, Property<T> prop, String str){
 		return prop.parseValue(str).map((val) -> state.with(prop, val)).orElse(state);
 	}
 	

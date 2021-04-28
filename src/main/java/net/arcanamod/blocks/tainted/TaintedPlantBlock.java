@@ -1,8 +1,8 @@
 package net.arcanamod.blocks.tainted;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.TaintedBlock;
+import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BushBlock;
@@ -17,7 +17,6 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.IShearable;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
