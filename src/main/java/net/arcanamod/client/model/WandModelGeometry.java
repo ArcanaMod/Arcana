@@ -55,15 +55,15 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 		this.focus = focus;
 	}
 	
-	public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<Material, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides, ResourceLocation modelLocation){
+	public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides, ResourceLocation modelLocation){
 		IModelTransform transformsFromModel = owner.getCombinedTransform();
 		ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 		ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transformMap = PerspectiveMapWrapper.getTransforms(new ModelTransformComposition(transformsFromModel, modelTransform));
 		
 		// get core texture
-		Material coreTex = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, material);
+		RenderMaterial coreTex = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, material);
 		// get cap texture
-		Material capTex = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, cap);
+		RenderMaterial capTex = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, cap);
 		
 		// get variant model
 		if(variant == null)
@@ -94,7 +94,7 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 		return new WandBakedModel(builder.build(), spriteGetter.apply(coreTex), Maps.immutableEnumMap(transformMap), new AttachmentOverrideHandler(bakery), true, true, this, owner, modelTransform, tfs);
 	}
 	
-	public Collection<Material> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors){
+	public Collection<RenderMaterial> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors){
 		return Collections.emptyList();
 	}
 	

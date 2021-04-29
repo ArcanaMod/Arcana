@@ -10,7 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.model.Material;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.item.ItemStack;
@@ -31,7 +31,7 @@ public class BookRenderer {
 
 	private static final ArcanumModel model = new ArcanumModel();
 	@SuppressWarnings("deprecation")
-	public static final Material TEXTURE = new Material(AtlasTexture.LOCATION_BLOCKS_TEXTURE, arcLoc("models/items/thaumonomicon_model"));
+	public static final RenderMaterial TEXTURE = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, arcLoc("models/items/thaumonomicon_model"));
 
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public static void renderHand(RenderHandEvent evt) {
@@ -109,7 +109,7 @@ public class BookRenderer {
 		float rightPageAngle = MathHelper.frac(pageFlip + 0.75F) * 1.6F - 0.3F;
 		model.func_228247_a_(ClientTickHandler.total, MathHelper.clamp(leftPageAngle, 0.0F, 1.0F), MathHelper.clamp(rightPageAngle, 0.0F, 1.0F), opening);
 
-		Material mat = TEXTURE;
+		RenderMaterial mat = TEXTURE;
 		IVertexBuilder buffer = mat.getBuffer(buffers, RenderType::getEntitySolid);
 		model.render(ms, buffer, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 
