@@ -125,8 +125,8 @@ public class ResearchTableCoreBlock extends WaterloggableBlock implements Static
             world.setBlockState(comPos,
                     ArcanaBlocks.RESEARCH_TABLE_COMPONENT.get().getDefaultState()
                             .with(ResearchTableComponentBlock.FACING, facing));
-            world.notifyNeighbors(comPos, Blocks.AIR);
-            state.updateNeighbors(world, comPos, 3);
+            world.notifyNeighborsOfStateChange(comPos, Blocks.AIR);
+            state.updateNeighbours(world, comPos, 3);
         }
     }
 

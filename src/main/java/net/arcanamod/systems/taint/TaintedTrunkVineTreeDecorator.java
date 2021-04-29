@@ -1,5 +1,5 @@
 package net.arcanamod.systems.taint;
-
+/*
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.block.VineBlock;
 import net.minecraft.state.BooleanProperty;
@@ -52,3 +52,4 @@ public class TaintedTrunkVineTreeDecorator extends TrunkVineTreeDecorator {
 		this.func_227423_a_(p_227424_1_, p_227424_2_, ArcanaBlocks.TAINTED_VINE.get().getDefaultState().with(p_227424_3_, Boolean.valueOf(true)), p_227424_4_, p_227424_5_);
 	}
 }
+*/

@@ -1,5 +1,5 @@
 package net.arcanamod.worldgen;
-
+/*
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.worldgen.trees.features.GreatwoodTreeFeature;
 import net.arcanamod.worldgen.trees.features.SilverwoodTreeFeature;
@@ -50,4 +50,4 @@ public class ArcanaFeatures{
 		biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, SILVERWOOD_TREE.withConfiguration(SILVERWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(0, 0.04f, 1))));
 		biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, GREATWOOD_TREE.withConfiguration(GREATWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(0, 0.1f, 1))));
 	}
-}
+}*/

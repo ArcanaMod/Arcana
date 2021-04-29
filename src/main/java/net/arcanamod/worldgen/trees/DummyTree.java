@@ -1,5 +1,5 @@
 package net.arcanamod.worldgen.trees;
-
+/*
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.TreeFeatureConfig;
@@ -14,4 +14,4 @@ public class DummyTree extends Tree{
 	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(@Nonnull Random random, boolean p_225546_2_){
 		return null;
 	}
-}
+}*/

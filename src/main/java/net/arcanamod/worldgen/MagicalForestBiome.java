@@ -10,8 +10,8 @@ import net.minecraft.world.gen.feature.structure.MineshaftConfig;
 import net.minecraft.world.gen.feature.structure.MineshaftStructure;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 import net.minecraftforge.common.BiomeManager;
-
-public class MagicalForestBiome extends Biome{
+/*
+public class MagicalForestBiome extends Biome {
 	
 	protected MagicalForestBiome(){
 		// TODO: proper colours
@@ -66,4 +66,4 @@ public class MagicalForestBiome extends Biome{
 	public int getGrassColor(double posX, double posZ){
 		return 0x7FF3AC;
 	}
-}
+}*/

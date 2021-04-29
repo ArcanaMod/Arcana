@@ -1,5 +1,5 @@
 package net.arcanamod.worldgen;
-
+/*
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.block.Block;
@@ -40,7 +40,7 @@ public class FeatureGenerator{
 	 * 		Config about where that ore will be generated.
 	 * @param veinSize
 	 * 		Size of vein.
-	 */
+	 *
 	public static void oreFeature(Biome biome, OreFeatureConfig.FillerBlockType fillerBlockType, Block toGenerate, CountRangeConfig rangeConfig, int veinSize){
 		biome.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, OreFeature.ORE.withConfiguration(new OreFeatureConfig(fillerBlockType, toGenerate.getDefaultState(), veinSize)).withPlacement(Placement.COUNT_RANGE.configure(rangeConfig)));
 	}
@@ -48,4 +48,4 @@ public class FeatureGenerator{
 	public static void overworldNodeFeature(Biome biome){
 		biome.addFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, ArcanaFeatures.NODE.withConfiguration(new NoFeatureConfig()).withPlacement(Placement.CHANCE_TOP_SOLID_HEIGHTMAP.configure(NODE_CONFIG)));
 	}
-}
+}*/

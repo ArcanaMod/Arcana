@@ -337,7 +337,7 @@ public class Taint{
 	public static Collection<EntityType> getTaintedEntities(){
 		return entityTaintMap.values();
 	}
-
+/*
 	public static Tree taintedTreeOf(SaplingBlock block){
 		if(block == Blocks.OAK_SAPLING)
 			return new TaintedOakTree();
@@ -352,5 +352,5 @@ public class Taint{
 		if(block == Blocks.DARK_OAK_SAPLING)
 			return new TaintedDarkOakTree();
 		return new TaintedOakTree();
-	}
+	}*/
 }

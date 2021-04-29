@@ -1,5 +1,5 @@
 package net.arcanamod.worldgen.trees;
-
+/*
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.minecraft.block.trees.Tree;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -16,4 +16,4 @@ public class SilverwoodTree extends Tree{
 	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random rand, boolean h){
 		return ArcanaFeatures.SILVERWOOD_TREE.withConfiguration(ArcanaFeatures.SILVERWOOD_TREE_CONFIG);
 	}
-}
+}*/

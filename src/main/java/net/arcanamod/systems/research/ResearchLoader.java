@@ -28,7 +28,7 @@ import java.util.stream.StreamSupport;
  * confusion for addon makers. (If you don't think its verbose, add more logging.)
  */
 @ParametersAreNonnullByDefault
-public class ResearchLoader extends JsonReloadListener{
+public class ResearchLoader extends JsonReloadListener {
 	
 	private static final Logger LOGGER = LogManager.getLogger();
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
@@ -41,7 +41,7 @@ public class ResearchLoader extends JsonReloadListener{
 	public ResearchLoader(){
 		super(GSON, "arcana/research");
 	}
-	
+
 	private static void applyBooksArray(ResourceLocation rl, JsonArray books){
 		for(JsonElement bookElement : books){
 			if(!bookElement.isJsonObject())

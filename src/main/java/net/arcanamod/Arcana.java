@@ -23,8 +23,8 @@ import net.arcanamod.world.NodeType;
 import net.arcanamod.capabilities.AuraChunkCapability;
 import net.arcanamod.world.WorldInteractionsRegistry;
 import net.arcanamod.worldgen.ArcanaBiomes;
-import net.arcanamod.worldgen.ArcanaFeatures;
-import net.arcanamod.worldgen.FeatureGenerator;
+//import net.arcanamod.worldgen.ArcanaFeatures;
+//import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IBlockSource;
@@ -111,7 +111,7 @@ public class Arcana{
 		ArcanaRecipes.Serializers.SERIALIZERS.register(modEventBus);
 		ArcanaTiles.TES.register(modEventBus);
 		ArcanaContainers.CON.register(modEventBus);
-		ArcanaFeatures.FEATURES.register(modEventBus);
+		//ArcanaFeatures.FEATURES.register(modEventBus);
 		ArcanaBiomes.BIOMES.register(modEventBus);
 		ArcanaFluids.FLUIDS.register(modEventBus);
 
@@ -146,7 +146,7 @@ public class Arcana{
 				BlockPos blockpos = source.getBlockPos().offset(source.getBlockState().get(DispenserBlock.FACING));
 				ActionResultType convert = WandItem.convert(world, blockpos, null);
 				if(convert.isSuccess()){
-					successful = true;
+					//successful = true;
 					return stack;
 				}else
 					return super.dispenseStack(source, stack);
@@ -186,7 +186,7 @@ public class Arcana{
 											doDispense(source.getWorld(), stack, 6, direction, iposition);
 										}
 									holder.drain(new AspectStack(aspect, min), false);
-									successful = true;
+									//successful = true;
 									world.notifyBlockUpdate(pos, state, state, 2);
 									return cappedItemStack;
 								}
@@ -221,7 +221,7 @@ public class Arcana{
 			}
 		});
 
-		FeatureGenerator.setupFeatureGeneration();
+		//FeatureGenerator.setupFeatureGeneration();
 	}
 	
 	private void setupClient(FMLClientSetupEvent event){

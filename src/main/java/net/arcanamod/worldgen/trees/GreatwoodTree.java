@@ -1,5 +1,5 @@
 package net.arcanamod.worldgen.trees;
-
+/*
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.minecraft.block.trees.BigTree;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -22,4 +22,4 @@ public class GreatwoodTree extends BigTree{
 	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random rand, boolean h){
 		return null;
 	}
-}
+}*/

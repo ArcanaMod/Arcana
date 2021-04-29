@@ -1,5 +1,5 @@
 package net.arcanamod.worldgen;
-
+/*
 import com.mojang.datafixers.Dynamic;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
@@ -86,4 +86,4 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 		}
 		return true;
 	}
-}
+}*/

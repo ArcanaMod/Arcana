@@ -1,5 +1,5 @@
 package net.arcanamod.worldgen.trees.features;
-
+/*
 import com.mojang.datafixers.Dynamic;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.IAspectHandler;
@@ -134,4 +134,4 @@ public class SilverwoodTreeFeature extends AbstractTreeFeature<TreeFeatureConfig
 		
 		return true;
 	}
-}
+}*/

@@ -1,5 +1,5 @@
 package net.arcanamod.systems.taint;
-
+/*
 import com.google.common.collect.ImmutableList;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.block.LogBlock;
@@ -155,4 +155,4 @@ public class TaintedFeatures {
 
 		public static final HugeTreeFeatureConfig DARK_OAK_TREE_CONFIG = (new HugeTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_DARKOAK_LOG.get().getDefaultState().with(LogBlock.AXIS, Direction.Axis.Y)), new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_DARKOAK_LEAVES.get().getDefaultState()))).baseHeight(6).setSapling((net.minecraftforge.common.IPlantable) ArcanaBlocks.TAINTED_DARKOAK_SAPLING.get()).build();
 	}
-}
+}*/
