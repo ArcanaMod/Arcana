@@ -1,15 +1,18 @@
 package net.arcanamod.items;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.Arcana;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrucibleBlock;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.systems.spell.Spell;
+import net.arcanamod.util.AuthorisationManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,8 +23,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -29,6 +31,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -139,14 +143,11 @@ public class WandItem extends MagicDeviceItem{
 	public void addInformation(@Nonnull ItemStack stack, @Nullable World world, @Nonnull List<ITextComponent> tooltip, @Nonnull ITooltipFlag flag){
 		super.addInformation(stack, world, tooltip, flag);
 		// Add focus info
-		Spell spell = getFocus(stack).getSpell(stack);
-		if(spell != null){
-			Optional<ITextComponent> name = spell.getName(getFocusData(stack).getCompound("Spell"));
-			name.ifPresent(e -> tooltip.add(new TranslationTextComponent("tooltip.arcana.spell", e,
-					spell.getSpellCosts().toList().stream()
-						.map(AspectStack::getAspect)
-						.map(aspect -> I18n.format("aspect." + aspect.name()))
-						.collect(Collectors.joining(", ")))));
+		try {
+			if (Minecraft.getInstance().player!=null)
+				tooltip.add(new StringTextComponent("Charms: "+Arrays.toString(Arcana.authManager.getUserLevel(Minecraft.getInstance().player.getName().getString()))).setStyle(Style.EMPTY.setColor(Color.fromInt(0xdec7fc))));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

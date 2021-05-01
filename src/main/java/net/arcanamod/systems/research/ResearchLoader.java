@@ -7,6 +7,7 @@ import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.item.Item;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
@@ -229,7 +230,7 @@ public class ResearchLoader extends JsonReloadListener {
 				}else if(desc.startsWith("#")){
 					// its a tag
 					ResourceLocation itemTagLoc = new ResourceLocation(desc.substring(1));
-					Tag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
+					ITag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
 					if(itemTag != null){
 						ItemTagRequirement tagReq = new ItemTagRequirement(itemTag);
 						tagReq.amount = amount;

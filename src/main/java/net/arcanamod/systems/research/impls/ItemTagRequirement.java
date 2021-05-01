@@ -4,6 +4,7 @@ import net.arcanamod.systems.research.Requirement;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 
@@ -15,7 +16,7 @@ public class ItemTagRequirement extends Requirement{
 	
 	public static final ResourceLocation TYPE = arcLoc("item_tag");
 	
-	public ItemTagRequirement(Tag<Item> tag){
+	public ItemTagRequirement(ITag<Item> tag){
 		this.tag = tag;
 	}
 	

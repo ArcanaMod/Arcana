@@ -1,5 +1,6 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.AspectUtils;
@@ -21,8 +22,8 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+	protected void drawGuiContainerForegroundLayer(MatrixStack matrices,int mouseX, int mouseY){
+		super.drawGuiContainerForegroundLayer(matrices,mouseX, mouseY);
 		GlStateManager.disableLighting();
 		GlStateManager.enableBlend();
 		for(AspectSlot slot : aspectContainer.getAspectSlots())
@@ -39,14 +40,14 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 						ClientUiUtil.renderAspect(slot.getAspect(), slot.x, slot.y);
 					}
 				if(isMouseOverSlot(mouseX, mouseY, slot)){
-					GuiUtils.drawGradientRect(300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
+					GuiUtils.drawGradientRect(matrices,300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
 				}
 			}
 	}
 
 	@Override
-	protected void renderHoveredToolTip(int mouseX, int mouseY){
-		super.renderHoveredToolTip(mouseX, mouseY);
+	protected void renderHoveredToolTip(MatrixStack matrices, int mouseX, int mouseY){
+		super.renderHoveredTooltip(matrices,mouseX, mouseY);
 		for(AspectSlot slot : aspectContainer.getAspectSlots())
 			if(slot.getInventory().get() != null && slot.visible)
 				if(isMouseOverSlot(mouseX, mouseY, slot))
@@ -55,9 +56,9 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	}
 
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks){
-		super.render(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack matrices,int mouseX, int mouseY, float partialTicks){
+		super.render(matrices,mouseX, mouseY, partialTicks);
+		renderHoveredToolTip(matrices,mouseX, mouseY);
 		if(aspectContainer.getHeldAspect() != null){
 			float temp = itemRenderer.zLevel;
 			itemRenderer.zLevel = 500;

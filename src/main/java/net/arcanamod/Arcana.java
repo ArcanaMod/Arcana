@@ -27,6 +27,7 @@ import net.arcanamod.worldgen.ArcanaBiomes;
 //import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
@@ -66,7 +67,8 @@ public class Arcana{
 	public static final String MODID = "arcana";
 	public static final Logger LOGGER = LogManager.getLogger("Arcana");
 	public static Arcana instance;
-	
+	public static AuthorisationManager authManager;
+
 	// Json Registry
 	public static ResearchLoader researchManager;
 	public static ItemAspectRegistry itemAspectRegistry;
@@ -85,13 +87,6 @@ public class Arcana{
 	public static final boolean debug = true;
 	
 	public Arcana(){
-		AuthorisationManager manager = new AuthorisationManager();
-		try {
-			manager.getUserLevel();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
@@ -123,6 +118,8 @@ public class Arcana{
 	}
 
 	private void setup(FMLCommonSetupEvent event){
+		authManager = new AuthorisationManager();
+
 		// init, init, init, init, init, init, init, init
 		EntrySection.init();
 		Requirement.init();

@@ -27,9 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.*;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 
@@ -232,15 +230,15 @@ public class JarBlock extends WaterloggableBlock {
 			if(!stack.getTag().isEmpty()) {
 				CompoundNBT cell = stack.getTag().getCompound("BlockEntityTag").getCompound("aspects").getCompound("cells").getCompound("cell_0");
 				if (stack.getTag().getCompound("BlockEntityTag").contains("label")) {
-					tooltip.add(new StringTextComponent("Labelled").applyTextStyle(TextFormatting.DARK_GRAY));
+					tooltip.add(new StringTextComponent("Labelled").setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.DARK_GRAY))));
 				}
 				if (cell.getInt("amount") > 0) {
 					tooltip.add(new StringTextComponent(AspectUtils.getLocalizedAspectDisplayName(Objects.requireNonNull(
 							AspectUtils.getAspectByName(cell.getString("aspect")))) + ": " +
-							cell.getInt("amount")).applyTextStyle(TextFormatting.AQUA));
+							cell.getInt("amount")).setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.AQUA))));
 				}
 				if (ArcanaConfig.JAR_ANIMATION_SPEED.get()>=299792458D){ // Small easter egg ;)
-					tooltip.add(new StringTextComponent("\"being faster than light leaves you in the darkness\" -jar").applyTextStyle(TextFormatting.GRAY));
+					tooltip.add(new StringTextComponent("\"being faster than light leaves you in the darkness\" -jar").setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GRAY))));
 				}
 			}
 	}

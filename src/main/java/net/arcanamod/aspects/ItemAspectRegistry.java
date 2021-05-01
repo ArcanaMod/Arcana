@@ -16,6 +16,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.Tag;
 import net.minecraft.util.JSONUtils;
@@ -42,7 +43,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 	private static boolean processing = false;
 	
 	private static Map<Item, List<AspectStack>> itemAssociations = new HashMap<>();
-	private static Map<Tag<Item>, List<AspectStack>> itemTagAssociations = new HashMap<>();
+	private static Map<ITag<Item>, List<AspectStack>> itemTagAssociations = new HashMap<>();
 	private static Collection<BiConsumer<ItemStack, List<AspectStack>>> stackFunctions = new ArrayList<>();
 	
 	private static Map<Item, List<AspectStack>> itemAspects = new HashMap<>();
@@ -73,7 +74,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		return squish(itemAspects);
 	}
 	
-	protected void apply(@Nonnull Map<ResourceLocation, JsonObject> objects, @Nonnull IResourceManager resourceManager, @Nonnull IProfiler profiler){
+	protected void apply(@Nonnull Map<ResourceLocation, JsonElement> objects, @Nonnull IResourceManager resourceManager, @Nonnull IProfiler profiler){
 		// remove existing data
 		processing = true;
 		itemAssociations.clear();
@@ -189,7 +190,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			JsonElement value = entry.getValue();
 			if(key.startsWith("#")){
 				ResourceLocation itemTagLoc = new ResourceLocation(key.substring(1));
-				Tag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
+				ITag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
 				if(itemTag != null)
 					parseAspectStackList(location, value).ifPresent(stacks -> itemTagAssociations.put(itemTag, stacks));
 				else
