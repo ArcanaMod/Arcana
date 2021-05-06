@@ -9,7 +9,6 @@ import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
@@ -42,7 +41,7 @@ public class ResearchLoader extends JsonReloadListener {
 	public ResearchLoader(){
 		super(GSON, "arcana/research");
 	}
-
+	
 	private static void applyBooksArray(ResourceLocation rl, JsonArray books){
 		for(JsonElement bookElement : books){
 			if(!bookElement.isJsonObject())
@@ -253,13 +252,16 @@ public class ResearchLoader extends JsonReloadListener {
 		return ret;
 	}
 	
-	protected void apply(Map<ResourceLocation, JsonObject> object, IResourceManager resourceManager, IProfiler profiler){
+	protected void apply(Map<ResourceLocation, JsonElement> object, IResourceManager resourceManager, IProfiler profiler){
 		bookQueue.clear();
 		categoryQueue.clear();
 		entryQueue.clear();
 		puzzleQueue.clear();
 		
-		object.forEach((location, object1) -> applyJson(object1, location));
+		object.forEach((location, object1) -> {
+			if(object1.isJsonObject())
+				applyJson(object1.getAsJsonObject(), location);
+		});
 		
 		bookQueue.forEach(ResearchLoader::applyBooksArray);
 		categoryQueue.forEach(ResearchLoader::applyCategoriesArray);
