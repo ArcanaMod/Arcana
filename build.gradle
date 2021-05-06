@@ -10,6 +10,9 @@ buildscript {
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
     }
 }
+
+allprojects { gradle.projectsEvaluated { tasks.withType(JavaCompile) { options.compilerArgs << "-Xmaxerrs" << "1000" } } }
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
 
