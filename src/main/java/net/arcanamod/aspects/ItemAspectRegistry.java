@@ -1,8 +1,8 @@
 package net.arcanamod.aspects;
 
 import com.google.gson.*;
-import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.items.CrystalItem;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.StreamUtils;
 import net.minecraft.client.resources.JsonReloadListener;
@@ -18,7 +18,6 @@ import net.minecraft.resources.IResourceManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -181,27 +180,30 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		return processing;
 	}
 	
-	private static void applyJson(ResourceLocation location, JsonObject object){
+	private static void applyJson(ResourceLocation location, JsonElement e){
 		// just go through the keys and map them to tags or items
 		// then put them in the relevant maps
 		// error if they don't map
-		for(Map.Entry<String, JsonElement> entry : object.entrySet()){
-			String key = entry.getKey();
-			JsonElement value = entry.getValue();
-			if(key.startsWith("#")){
-				ResourceLocation itemTagLoc = new ResourceLocation(key.substring(1));
-				ITag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
-				if(itemTag != null)
-					parseAspectStackList(location, value).ifPresent(stacks -> itemTagAssociations.put(itemTag, stacks));
-				else
-					LOGGER.error("Invalid item tag \"" + key.substring(1) + "\" found in file " + location + "!");
-			}else{
-				ResourceLocation itemLoc = new ResourceLocation(key);
-				Item item = ForgeRegistries.ITEMS.getValue(itemLoc);
-				if(item != null)
-					parseAspectStackList(location, value).ifPresent(stacks -> itemAssociations.put(item, stacks));
-				else
-					LOGGER.error("Invalid item tag \"" + key.substring(1) + "\" found in file " + location + "!");
+		if(e.isJsonObject()){
+			JsonObject object = e.getAsJsonObject();
+			for(Map.Entry<String, JsonElement> entry : object.entrySet()){
+				String key = entry.getKey();
+				JsonElement value = entry.getValue();
+				if(key.startsWith("#")){
+					ResourceLocation itemTagLoc = new ResourceLocation(key.substring(1));
+					ITag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
+					if(itemTag != null)
+						parseAspectStackList(location, value).ifPresent(stacks -> itemTagAssociations.put(itemTag, stacks));
+					else
+						LOGGER.error("Invalid item tag \"" + key.substring(1) + "\" found in file " + location + "!");
+				}else{
+					ResourceLocation itemLoc = new ResourceLocation(key);
+					Item item = ForgeRegistries.ITEMS.getValue(itemLoc);
+					if(item != null)
+						parseAspectStackList(location, value).ifPresent(stacks -> itemAssociations.put(item, stacks));
+					else
+						LOGGER.error("Invalid item tag \"" + key.substring(1) + "\" found in file " + location + "!");
+				}
 			}
 		}
 	}

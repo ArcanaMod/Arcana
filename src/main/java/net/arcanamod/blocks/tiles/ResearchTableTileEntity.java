@@ -8,6 +8,7 @@ import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.VisShareable;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.containers.ResearchTableContainer;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -83,8 +84,8 @@ public class ResearchTableTileEntity extends LockableTileEntity{
 	}
 
 	@Override
-	public void read(CompoundNBT compound){
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound){
+		super.read(state, compound);
 		if(compound.contains("items"))
 			items.deserializeNBT(compound.getCompound("items"));
 	}

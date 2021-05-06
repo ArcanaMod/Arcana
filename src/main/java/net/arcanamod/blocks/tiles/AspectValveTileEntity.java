@@ -1,6 +1,7 @@
 package net.arcanamod.blocks.tiles;
 
 import com.google.common.collect.Sets;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -72,8 +73,8 @@ public class AspectValveTileEntity extends AspectTubeTileEntity{
 		return nbt;
 	}
 	
-	public void handleUpdateTag(CompoundNBT tag){
-		super.handleUpdateTag(tag);
+	public void handleUpdateTag(BlockState state, CompoundNBT tag){
+		super.handleUpdateTag(state, tag);
 		setSuppressedByRedstone(tag.getBoolean("suppressed"));
 	}
 	
@@ -83,6 +84,6 @@ public class AspectValveTileEntity extends AspectTubeTileEntity{
 	}
 	
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-		handleUpdateTag(pkt.getNbtCompound());
+		handleUpdateTag(getBlockState(), pkt.getNbtCompound());
 	}
 }

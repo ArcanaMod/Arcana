@@ -8,7 +8,7 @@ import net.minecraft.block.trees.Tree;
 public class TaintedSaplingBlock extends SaplingBlock {
 	
 	public TaintedSaplingBlock(Block parent){
-		super(Taint.taintedTreeOf((SaplingBlock) parent), Block.Properties.from(parent));
+		super(/*Taint.taintedTreeOf((SaplingBlock) parent)*/null, Block.Properties.from(parent));
 		Taint.addTaintMapping(parent, this);
 	}
 	

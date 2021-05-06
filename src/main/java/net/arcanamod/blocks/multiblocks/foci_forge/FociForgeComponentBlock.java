@@ -177,6 +177,10 @@ public class FociForgeComponentBlock extends Block implements StaticComponent, G
 		public Vector3i getInvert(Direction direction) {
 			return ShapeUtils.fromNorth(this.invert, direction);
 		}
+		
+		public String getString(){
+			return name;
+		}
 	}
 
 	@Override

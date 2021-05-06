@@ -4,6 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.*;
 import net.arcanamod.containers.AspectCrystallizerContainer;
 import net.arcanamod.items.CrystalItem;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ISidedInventory;
@@ -47,7 +48,7 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 		IAspectHolder holder = vis.getHolder(0);
 		if(holder.getCurrentVis() > 0
 				&& ((getStackInSlot(0).getItem() instanceof CrystalItem && ((CrystalItem)getStackInSlot(0).getItem()).aspect == holder.getContainedAspect() && getStackInSlot(0).getCount() < 64)
-				 || ((getStackInSlot(0).isEmpty())))){
+				|| ((getStackInSlot(0).isEmpty())))){
 			if(progress >= MAX_PROGRESS){
 				progress = 0;
 				if(getStackInSlot(0).isEmpty())
@@ -69,11 +70,11 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 		return super.write(compound);
 	}
 	
-	public void read(CompoundNBT compound){
+	public void read(BlockState state, CompoundNBT compound){
 		ItemStackHelper.loadAllItems(compound, items);
 		vis.deserializeNBT(compound.getCompound("aspects"));
 		progress = compound.getInt("progress");
-		super.read(compound);
+		super.read(state, compound);
 	}
 	
 	@Nonnull
@@ -165,7 +166,7 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 	}
 	
 	@Override
-	public void handleUpdateTag(CompoundNBT tag){
-		this.read(tag);
+	public void handleUpdateTag(BlockState state, CompoundNBT tag){
+		this.read(state, tag);
 	}
 }

@@ -151,8 +151,8 @@ public class FociForgeCoreBlock extends Block implements StaticComponent, Groupe
 			}
 			for (FociForgeComponentBlock.Component com : FociForgeComponentBlock.Component.values()) {
 				BlockPos comPos = pos.add(com.getOffset(facing));
-				world.notifyNeighbors(comPos, Blocks.AIR);
-				state.updateNeighbors(world, comPos, 3);
+				world.notifyNeighborsOfStateChange(comPos, Blocks.AIR);
+				state.updateNeighbours(world, comPos, 3);
 			}
 		}
 	}

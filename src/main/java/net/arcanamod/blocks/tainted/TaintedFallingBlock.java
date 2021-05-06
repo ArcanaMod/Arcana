@@ -48,10 +48,6 @@ public class TaintedFallingBlock extends FallingBlock implements GroupedBlock{
 		builder.add(UNTAINTED);
 	}
 	
-	public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand){
-		return super.getStateForPlacement(state, facing, state2, world, pos1, pos2, hand).with(UNTAINTED, true);
-	}
-	
 	public BlockState getStateForPlacement(BlockItemUseContext context){
 		BlockState placement = super.getStateForPlacement(context);
 		return placement != null ? placement.with(UNTAINTED, true) : null;

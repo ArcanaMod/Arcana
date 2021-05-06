@@ -1,5 +1,6 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
@@ -18,6 +19,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.Nonnull;
@@ -44,8 +46,8 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		ySize = HEIGHT;
 	}
 	
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
-		renderBackground();
+	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY){
+		renderBackground(stack);
 		minecraft.getTextureManager().bindTexture(BG);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
@@ -57,18 +59,18 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 					if(te.ink().isEmpty() || te.ink().getDamage() >= 100){
 						// tell them "no u cant do research without a pen"
 						int color = 0x44000000;
-						GuiUtils.drawGradientRect(0, guiLeft + 137, guiTop + 31, guiLeft + 360, guiTop + 174, color, color);
+						GuiUtils.drawGradientRect(stack.getLast().getMatrix(), 0, guiLeft + 137, guiTop + 31, guiLeft + 360, guiTop + 174, color, color);
 						String noInk = te.ink().isEmpty() ? I18n.format("researchTable.ink_needed") : I18n.format("researchTable.ink_refill_needed");
-						font.drawString(noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2f, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2f, -1);
+						font.drawString(stack, noInk, guiLeft + 141 + (213 - font.getStringWidth(noInk)) / 2f, guiTop + 35 + (134 - font.FONT_HEIGHT) / 2f, -1);
 					}
 				}
 			}
 		}
-		searchWidget.render(mouseX, mouseY, partialTicks);
+		searchWidget.render(stack, mouseX, mouseY, partialTicks);
 	}
 	
-	public void render(int mouseX, int mouseY, float partialTicks){
-		super.render(mouseX, mouseY, partialTicks);
+	public void render(MatrixStack stack,  int mouseX, int mouseY, float partialTicks){
+		super.render(stack, mouseX, mouseY, partialTicks);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
 			CompoundNBT compound = te.note().getTag();
 			if(compound != null){
@@ -114,7 +116,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	protected void init(){
 		super.init();
 		
-		searchWidget = new TextFieldWidget(font, guiLeft + 13, guiTop + 14, 120, 15, I18n.format("researchTable.search"));
+		searchWidget = new TextFieldWidget(font, guiLeft + 13, guiTop + 14, 120, 15, ITextComponent.getTextComponentOrEmpty(I18n.format("researchTable.search")));
 		searchWidget.setMaxStringLength(30);
 		searchWidget.setEnableBackgroundDrawing(false);
 		searchWidget.setTextColor(16777215);
@@ -151,13 +153,13 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		boolean right;
 		
 		public ChangeAspectPageButton(int x, int y, boolean right, Button.IPressable onPress){
-			super(x, y, 15, 11, "", onPress);
+			super(x, y, 15, 11, new StringTextComponent(""), onPress);
 			this.right = right;
 		}
 		
 		@SuppressWarnings("deprecation")
 		@Override
-		public void render(int mouseX, int mouseY, float partialTicks){
+		public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks){
 			if(visible){
 				isHovered = mouseX >= x && mouseY >= +y && mouseX < guiLeft + x + width && mouseY < guiTop + y + height;
 				int teX = right ? 120 : 135;

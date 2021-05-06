@@ -29,8 +29,8 @@ public class VacuumTileEntity extends TileEntity implements ITickableTileEntity 
     }
 
     @Override
-    public void read(CompoundNBT compoundNBT) {
-        super.read(compoundNBT);
+    public void read(BlockState state, CompoundNBT compoundNBT) {
+        super.read(state, compoundNBT);
         duration = compoundNBT.getInt("Duration");
         existTime = compoundNBT.getInt("ExistTime");
         originBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(compoundNBT.getString("Block"))).getDefaultState();

@@ -24,6 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -110,7 +111,7 @@ public class ClientTickHandler{
 						}
 				}
 				
-				double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
+				double reach = player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
 				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, world, (int)reach);
 				TileEntity te = world.getTileEntity(pos);
 				GogglePriority priority = GogglePriority.getClientGogglePriority();
@@ -177,7 +178,7 @@ public class ClientTickHandler{
 										stacks.add(vis.getHolder(i).getContainedAspectStack());
 								// Squish aspect stacks in to reducedStacks
 								List<AspectStack> reducedStacks = AspectUtils.squish(stacks);
-								renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()));
+								renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()));
 							}
 						}
 					}

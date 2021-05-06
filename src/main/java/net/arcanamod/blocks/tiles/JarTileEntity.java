@@ -6,6 +6,7 @@ import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
 import net.arcanamod.systems.vis.VisUtils;
+import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
@@ -55,8 +56,8 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	}
 
 	@Override
-	public void read(CompoundNBT compound){
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound){
+		super.read(state, compound);
 		vis.deserializeNBT(compound.getCompound("aspects"));
 		clientVis = vis.getHolder(0).getCurrentVis();
 		if (compound.contains("label")) {
@@ -120,7 +121,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-		read(pkt.getNbtCompound());
+		read(getBlockState(), pkt.getNbtCompound());
 	}
 	
 	/* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client */
@@ -133,8 +134,8 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	
 	/* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client */
 	@Override
-	public void handleUpdateTag(CompoundNBT tag){
-		this.read(tag);
+	public void handleUpdateTag(BlockState state, CompoundNBT tag){
+		this.read(state, tag);
 	}
 
 	@Override

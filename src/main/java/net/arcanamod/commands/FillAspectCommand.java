@@ -14,6 +14,7 @@ import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.command.arguments.ResourceLocationArgument;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 
@@ -57,11 +58,11 @@ public class FillAspectCommand {
 						if(is.getTag() == null)
 							is.setTag(is.getShareTag());
 					}else
-						serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_aspect", aspect_name).applyTextStyle(TextFormatting.RED));
+						serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_aspect", aspect_name).mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
 				}else
-					serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
+					serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_item", is.getItem().getRegistryName().toString()).mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
 			}else
-				serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_item", is.getItem().getRegistryName().toString()).applyTextStyle(TextFormatting.RED));
+				serverPlayerEntity.sendMessage(new TranslationTextComponent("commands.arcana.fill.invalid_item", is.getItem().getRegistryName().toString()).mergeStyle(TextFormatting.RED), Util.DUMMY_UUID);
 			ret.getAndIncrement();
 		});
 		return ret.get();

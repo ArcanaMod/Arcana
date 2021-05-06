@@ -14,6 +14,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -25,7 +26,7 @@ import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Random;
 
-public class DeadPlantBlock extends DeadBlock implements IPlantable, IGrowable, IShearable {
+public class DeadPlantBlock extends DeadBlock implements IPlantable, IGrowable, IForgeShearable{
 	public DeadPlantBlock(Block parent) {
 		super(parent);
 	}
@@ -58,29 +59,13 @@ public class DeadPlantBlock extends DeadBlock implements IPlantable, IGrowable, 
 	}
 
 	public PlantType getPlantType(IBlockReader world, BlockPos pos){
-		return getPlantable() != null ? getPlantable().getPlantType(world, pos) : PlantType.Plains;
+		return getPlantable() != null ? getPlantable().getPlantType(world, pos) : PlantType.PLAINS;
 	}
 
 	public BlockState getPlant(IBlockReader world, BlockPos pos){
 		return getPlantable() != null ? switchBlock(getPlantable().getPlant(world, pos), this) : getDefaultState();
 	}
-
-	// Shearable methods
-
-	@Nullable
-	private IShearable getShearable(){
-		return parentBlock instanceof IShearable ? (IShearable) parentBlock : null;
-	}
-
-	public boolean isShearable(@Nonnull ItemStack item, IWorldReader world, BlockPos pos){
-		return getShearable() != null && getShearable().isShearable(item, world, pos);
-	}
-
-	@Nonnull
-	public List<ItemStack> onSheared(@Nonnull ItemStack item, IWorld world, BlockPos pos, int fortune){
-		return getShearable() != null ? getShearable().onSheared(item, world, pos, fortune) : NonNullList.create();
-	}
-
+	
 	// Fix BushBlock
 	// TODO: AT instead of reflection
 	// func_200014_a_(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/IBlockReader;Lnet/minecraft/util/math/BlockPos;)Z

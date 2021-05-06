@@ -28,60 +28,56 @@ import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class TaintedVineBlock extends VineBlock implements GroupedBlock {
-    public static final BooleanProperty UNTAINTED = Taint.UNTAINTED;
-
-    public TaintedVineBlock(Block parent){
-        super(Properties.from(parent));
-        Taint.addTaintMapping(parent, this);
-    }
-
-    public boolean ticksRandomly(BlockState state){
-        return true;
-    }
-
-    protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
-        super.fillStateContainer(builder);
-        builder.add(UNTAINTED);
-    }
-
-    public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand){
-        return super.getStateForPlacement(state, facing, state2, world, pos1, pos2, hand).with(UNTAINTED, true);
-    }
-
-    public BlockState getStateForPlacement(BlockItemUseContext context){
-        BlockState placement = super.getStateForPlacement(context);
-        return placement != null ? placement.with(UNTAINTED, true) : null;
-    }
-
-    public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random){
-        super.tick(state, world, pos, random);
-        Taint.tickTaintedBlock(state, world, pos, random);
-    }
-
-    @Nullable
-    @Override
-    public ItemGroup getGroup(){
-        return Arcana.TAINT;
-    }
-
-    @SuppressWarnings("deprecation")
-    public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
-        super.onEntityCollision(state, world, pos, entity);
-        startTracking(entity);
-    }
-
-    public void onEntityWalk(World world, BlockPos pos, Entity entity){
-        super.onEntityWalk(world, pos, entity);
-        startTracking(entity);
-    }
-
-    private void startTracking(Entity entity){
-        if(entity instanceof LivingEntity){
-            // Start tracking taint biome for entity
-            TaintTrackable trackable = TaintTrackable.getFrom((LivingEntity)entity);
-            if(trackable != null)
-                trackable.setTracking(true);
-        }
-    }
+public class TaintedVineBlock extends VineBlock implements GroupedBlock{
+	public static final BooleanProperty UNTAINTED = Taint.UNTAINTED;
+	
+	public TaintedVineBlock(Block parent){
+		super(Properties.from(parent));
+		Taint.addTaintMapping(parent, this);
+	}
+	
+	public boolean ticksRandomly(BlockState state){
+		return true;
+	}
+	
+	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
+		super.fillStateContainer(builder);
+		builder.add(UNTAINTED);
+	}
+	
+	public BlockState getStateForPlacement(BlockItemUseContext context){
+		BlockState placement = super.getStateForPlacement(context);
+		return placement != null ? placement.with(UNTAINTED, true) : null;
+	}
+	
+	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random random){
+		super.tick(state, world, pos, random);
+		Taint.tickTaintedBlock(state, world, pos, random);
+	}
+	
+	@Nullable
+	@Override
+	public ItemGroup getGroup(){
+		return Arcana.TAINT;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
+		super.onEntityCollision(state, world, pos, entity);
+		startTracking(entity);
+	}
+	
+	public void onEntityWalk(World world, BlockPos pos, Entity entity){
+		super.onEntityWalk(world, pos, entity);
+		startTracking(entity);
+	}
+	
+	private void startTracking(Entity entity){
+		if(entity instanceof LivingEntity){
+			// Start tracking taint biome for entity
+			TaintTrackable trackable = TaintTrackable.getFrom((LivingEntity)entity);
+			if(trackable != null)
+				trackable.setTracking(true);
+		}
+	}
 }

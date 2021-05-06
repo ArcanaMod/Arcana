@@ -29,9 +29,10 @@ public class SpiritEntity extends FlyingEntity implements IFlyingAnimal {
         goalSelector.addGoal(7, new SpiritEntity.LookAroundGoal(this));
     }
 
-    @Override
-    protected void registerAttributes(){
-        super.registerAttributes();
+    //@Override
+    protected void registerAttributesh(){
+        registerAttributes();
+        // TODO: stats
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(16);
         getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(.23);
     }

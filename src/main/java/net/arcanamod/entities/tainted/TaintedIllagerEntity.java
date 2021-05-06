@@ -62,12 +62,16 @@ public class TaintedIllagerEntity extends AbstractIllagerEntity {
 		this.goalSelector.addGoal(9, new LookAtGoal(this, PlayerEntity.class, 3.0F, 1.0F));
 		this.goalSelector.addGoal(10, new LookAtGoal(this, MobEntity.class, 8.0F));
 	}
-
+	
+	public void applyWaveBonus(int wave, boolean p_213660_2_){
+	
+	}
+	
 	protected void updateAITasks() {
 		if (!this.isAIDisabled()) {
 			PathNavigator pathnavigator = this.getNavigator();
 			if (pathnavigator instanceof GroundPathNavigator) {
-				boolean flag = ((ServerWorld)this.world).hasRaid(new BlockPos(this));
+				boolean flag = ((ServerWorld)this.world).hasRaid(new BlockPos(getPosition()));
 				((GroundPathNavigator)pathnavigator).setBreakDoors(flag);
 			}
 		}
@@ -75,27 +79,27 @@ public class TaintedIllagerEntity extends AbstractIllagerEntity {
 		super.updateAITasks();
 	}
 
-	protected void registerAttributes() {
+	/*protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.35F);
 		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(14.0D);
 		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(24.0D);
 		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(10.0D);
-	}
+	}*/
 
 	public void writeAdditional(CompoundNBT compound) {
 		super.writeAdditional(compound);
 
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	/*@OnlyIn(Dist.CLIENT)
 	public AbstractIllagerEntity.ArmPose getArmPose() {
 		if (this.isAggressive()) {
 			return AbstractIllagerEntity.ArmPose.ATTACKING;
 		} else {
 			return this.func_213656_en() ? AbstractIllagerEntity.ArmPose.CELEBRATING : AbstractIllagerEntity.ArmPose.CROSSED;
 		}
-	}
+	}*/
 
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
@@ -110,11 +114,11 @@ public class TaintedIllagerEntity extends AbstractIllagerEntity {
 	}
 
 	@Nullable
-	public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		ILivingEntityData ilivingentitydata = super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+	public ILivingEntityData onInitialSpawn(ServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+		ILivingEntityData ilivingentitydata = super.onInitialSpawn(world, difficulty, reason, spawnDataIn, dataTag);
 		((GroundPathNavigator)this.getNavigator()).setBreakDoors(true);
-		this.setEquipmentBasedOnDifficulty(difficultyIn);
-		this.setEnchantmentBasedOnDifficulty(difficultyIn);
+		this.setEquipmentBasedOnDifficulty(difficulty);
+		this.setEnchantmentBasedOnDifficulty(difficulty);
 		return ilivingentitydata;
 	}
 

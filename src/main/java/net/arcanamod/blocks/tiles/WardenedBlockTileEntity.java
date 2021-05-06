@@ -40,8 +40,8 @@ public class WardenedBlockTileEntity extends TileEntity {
 	}
 
 	@Override
-	public void read(CompoundNBT tag) {
-		super.read(tag);
+	public void read(BlockState state, CompoundNBT tag) {
+		super.read(state, tag);
 		copyState = Optional.<BlockState>of(Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(tag.getString("type")))).getDefaultState());
 	}
 
@@ -65,7 +65,7 @@ public class WardenedBlockTileEntity extends TileEntity {
 
 	@Override
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		read(pkt.getNbtCompound());
+		read(getBlockState(), pkt.getNbtCompound());
 	}
 
 	/* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client */
@@ -78,8 +78,8 @@ public class WardenedBlockTileEntity extends TileEntity {
 
 	/* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client */
 	@Override
-	public void handleUpdateTag(CompoundNBT tag)
+	public void handleUpdateTag(BlockState state, CompoundNBT tag)
 	{
-		this.read(tag);
+		this.read(state, tag);
 	}
 }

@@ -1,5 +1,6 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
@@ -21,8 +22,8 @@ public class AspectCrystallizerScreen extends ContainerScreen<AspectCrystallizer
         super(screenContainer, inv, title);
     }
 
-    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        renderBackground();
+    protected void drawGuiContainerBackgroundLayer(MatrixStack matricies, float partialTicks, int mouseX, int mouseY) {
+        renderBackground(matricies);
         getMinecraft().getTextureManager().bindTexture(BG);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
         Aspect aspect = Aspects.EMPTY;
@@ -41,14 +42,14 @@ public class AspectCrystallizerScreen extends ContainerScreen<AspectCrystallizer
         drawTexturedModalRect(guiLeft + 72, guiTop + 35, 176, 0, pixProgress, 16);
     }
 
-    public void render(int mouseX, int mouseY, float partialTicks) {
-        super.render(mouseX, mouseY, partialTicks);
-        renderHoveredToolTip(mouseX, mouseY);
+    public void render(MatrixStack matricies, int mouseX, int mouseY, float partialTicks) {
+        super.render(matricies, mouseX, mouseY, partialTicks);
+        renderHoveredTooltip(matricies, mouseX, mouseY);
     }
 
-    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-        String s = title.getFormattedText();
-        font.drawString(s, (float) (xSize / 2 - font.getStringWidth(s) / 2), 6.0F, 4210752);
-        font.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, (float) (ySize - 96 + 2), 4210752);
+    protected void drawGuiContainerForegroundLayer(MatrixStack matricies, int mouseX, int mouseY) {
+        String s = title.getString();
+        font.drawString(matricies, s, (float) (xSize / 2 - font.getStringWidth(s) / 2), 6.0F, 4210752);
+        font.drawString(matricies, playerInventory.getDisplayName().getString(), 8.0F, (float) (ySize - 96 + 2), 4210752);
     }
 }

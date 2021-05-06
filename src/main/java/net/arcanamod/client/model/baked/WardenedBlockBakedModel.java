@@ -119,12 +119,11 @@ public class WardenedBlockBakedModel implements IBakedModel {
 	{
 		return modelWhenNotCamouflaged.isGui3d();
 	}
-
-	@Override
-	public boolean func_230044_c_() {
-		return modelWhenNotCamouflaged.func_230044_c_();  // related to item "diffuselighting"
+	
+	public boolean isSideLit(){
+		return modelWhenNotCamouflaged.isSideLit();
 	}
-
+	
 	@Override
 	public boolean isBuiltInRenderer()
 	{

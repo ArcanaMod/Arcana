@@ -26,6 +26,7 @@ import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
@@ -94,14 +95,14 @@ public final class Huds{
 				if(flux > 100){
 					int amount = (int)(Math.abs(((MathHelper.sin((player.ticksExisted + event.getPartialTicks()) / 3f)) / 3f)) * 255);
 					int colour = 0x00ffffff | (amount << 24);
-					GuiUtils.drawGradientRect(1, 8, 8, 40, 108, colour, colour);
+					GuiUtils.drawGradientRect(event.getMatrixStack().getLast().getMatrix(), 1, 8, 8, 40, 108, colour, colour);
 				}
 				// if the player is sneaking, display the amount of flux "exactly"
 				// rounded to 2dp
 				if(player.isSneaking())
-					Minecraft.getInstance().fontRenderer.drawStringWithShadow(String.format("%.2f", flux), 47, 8 + (97 - pixHeight), -1);
+					Minecraft.getInstance().fontRenderer.drawStringWithShadow(event.getMatrixStack(), String.format("%.2f", flux), 47, 8 + (97 - pixHeight), -1);
 			}
-			double reach = player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue();
+			double reach = player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue();
 			Vector3d start = player.getEyePosition(1);
 			Vector3d facing = player.getLookVec();
 			Vector3d end = start.add(facing.getX() * reach, facing.getY() * reach, facing.getZ() * reach);

@@ -141,8 +141,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 		return !suppressedByRedstone;
 	}
 	
-	public void read(CompoundNBT compound){
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound){
+		super.read(state, compound);
 		aspects.deserializeNBT(compound.getCompound("aspects"));
 		suppressedByRedstone = compound.getBoolean("suppressed");
 	}

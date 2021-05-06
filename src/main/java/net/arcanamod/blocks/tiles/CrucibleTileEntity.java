@@ -128,8 +128,8 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 		return boiling;
 	}
 	
-	public void read(CompoundNBT compound){
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound){
+		super.read(state, compound);
 		ListNBT aspects = compound.getList("aspects", Constants.NBT.TAG_COMPOUND);
 		aspectStackMap.clear();
 		for(INBT inbt : aspects){
@@ -157,8 +157,8 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 		return write(new CompoundNBT());
 	}
 	
-	public void handleUpdateTag(CompoundNBT tag){
-		read(tag);
+	public void handleUpdateTag(BlockState state, CompoundNBT tag){
+		read(state, tag);
 	}
 	
 	public SUpdateTileEntityPacket getUpdatePacket(){
@@ -166,6 +166,6 @@ public class CrucibleTileEntity extends TileEntity implements ITickableTileEntit
 	}
 	
 	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-		handleUpdateTag(pkt.getNbtCompound());
+		handleUpdateTag(getBlockState(), pkt.getNbtCompound());
 	}
 }

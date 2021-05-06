@@ -1,5 +1,6 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.IAspectHandler;
@@ -52,8 +53,8 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 	}
 
 	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
-		renderBackground();
+	protected void drawGuiContainerBackgroundLayer(MatrixStack matricies, float partialTicks, int mouseX, int mouseY){
+		renderBackground(matricies);
 		getMinecraft().getTextureManager().bindTexture(BG);
 		ClientUiUtil.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
 
@@ -166,12 +167,12 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 		return container.playerInventory.hasItemStack(new ItemStack(ArcanaItems.ARCANUM.get()));
 	}
 	
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY){
-		font.drawString(title.getFormattedText(), 10, -5, 0xA0A0A0);
+	protected void drawGuiContainerForegroundLayer(MatrixStack stack, int mouseX, int mouseY){
+		font.drawString(stack, title.getString(), 10, -5, 0xA0A0A0);
 	}
 	
-	public void render(int mouseX, int mouseY, float partialTicks){
-		super.render(mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(mouseX, mouseY);
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks){
+		super.render(stack, mouseX, mouseY, partialTicks);
+		renderHoveredTooltip(stack, mouseX, mouseY);
 	}
 }

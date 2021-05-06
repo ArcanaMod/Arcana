@@ -10,6 +10,7 @@ import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.SpellModule;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.container.Container;
@@ -52,8 +53,8 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	// Read from file
 	// wipes the floating module list, resets spellState sequence
 	@Override
-	public void read(CompoundNBT compound){
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound){
+		super.read(state, compound);
 		if (compound.contains("items")) {
 			items.deserializeNBT(compound.getCompound("items"));
 		}
@@ -67,7 +68,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	// Read from packet
 	// update spellState sequence, adjust current module
 	public void readPacket(CompoundNBT compound){
-		super.read(compound);
+		super.read(getBlockState(), compound);
 		if (compound.contains("items")) {
 			items.deserializeNBT(compound.getCompound("items"));
 		}

@@ -13,6 +13,9 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
+@ParametersAreNonnullByDefault
 public abstract class AspectContainerScreen<T extends AspectContainer> extends ContainerScreen<T>{
 	
 	protected T aspectContainer;
@@ -20,10 +23,10 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	public AspectContainerScreen(T screenContainer, PlayerInventory inv, ITextComponent titleIn){
 		super(screenContainer, inv, titleIn);
 	}
-
+	
 	@Override
-	protected void drawGuiContainerForegroundLayer(MatrixStack matrices,int mouseX, int mouseY){
-		super.drawGuiContainerForegroundLayer(matrices,mouseX, mouseY);
+	protected void drawGuiContainerForegroundLayer(MatrixStack matrices, int mouseX, int mouseY){
+		super.drawGuiContainerForegroundLayer(matrices, mouseX, mouseY);
 		GlStateManager.disableLighting();
 		GlStateManager.enableBlend();
 		for(AspectSlot slot : aspectContainer.getAspectSlots())
@@ -40,25 +43,25 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 						ClientUiUtil.renderAspect(slot.getAspect(), slot.x, slot.y);
 					}
 				if(isMouseOverSlot(mouseX, mouseY, slot)){
-					GuiUtils.drawGradientRect(matrices,300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
+					GuiUtils.drawGradientRect(matrices.getLast().getMatrix(), 300, slot.x, slot.y, slot.x + 16, slot.y + 16, 0x60ccfffc, 0x60ccfffc);
 				}
 			}
 	}
-
+	
 	@Override
-	protected void renderHoveredToolTip(MatrixStack matrices, int mouseX, int mouseY){
-		super.renderHoveredTooltip(matrices,mouseX, mouseY);
+	protected void renderHoveredTooltip(MatrixStack matrices, int mouseX, int mouseY){
+		super.renderHoveredTooltip(matrices, mouseX, mouseY);
 		for(AspectSlot slot : aspectContainer.getAspectSlots())
 			if(slot.getInventory().get() != null && slot.visible)
 				if(isMouseOverSlot(mouseX, mouseY, slot))
 					if(slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null)
 						ClientUiUtil.drawAspectTooltip(slot.getAspect(), mouseX, mouseY, width, height);
 	}
-
+	
 	@Override
-	public void render(MatrixStack matrices,int mouseX, int mouseY, float partialTicks){
-		super.render(matrices,mouseX, mouseY, partialTicks);
-		renderHoveredToolTip(matrices,mouseX, mouseY);
+	public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks){
+		super.render(matrices, mouseX, mouseY, partialTicks);
+		renderHoveredTooltip(matrices, mouseX, mouseY);
 		if(aspectContainer.getHeldAspect() != null){
 			float temp = itemRenderer.zLevel;
 			itemRenderer.zLevel = 500;
@@ -67,14 +70,14 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 			itemRenderer.zLevel = temp;
 		}
 	}
-
+	
 	@Override
-	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
+	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton){
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		aspectContainer.handleClick((int)mouseX, (int)mouseY, mouseButton, this);
 		return false;
 	}
-
+	
 	protected boolean isMouseOverSlot(int mouseX, int mouseY, AspectSlot slot){
 		return mouseX >= guiLeft + slot.x && mouseY >= guiTop + slot.y && mouseX < guiLeft + slot.x + 16 && mouseY < guiTop + slot.y + 16;
 	}

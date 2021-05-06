@@ -2,6 +2,7 @@ package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.containers.ArcaneCraftingTableContainer;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -112,9 +113,8 @@ public class ArcaneCraftingTableTileEntity extends LockableTileEntity {
 	}
 
 	@Override
-	public void read(CompoundNBT nbt) {
-		super.read(nbt);
+	public void read(BlockState state, CompoundNBT nbt) {
+		super.read(state, nbt);
 		ItemStackHelper.loadAllItems(nbt, items);
-
 	}
 }

@@ -3,6 +3,7 @@ package net.arcanamod.entities;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
@@ -13,6 +14,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -30,9 +32,9 @@ public class KoalaEntity extends AnimalEntity{
 	}
 	
 	@Override
-	public AgeableEntity createChild(AgeableEntity ageable){
+	public AgeableEntity createChild(ServerWorld world, AgeableEntity ageable){
 		KoalaEntity entity = new KoalaEntity(ArcanaEntities.KOALA_ENTITY.get(), this.world);
-		entity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entity)),
+		entity.onInitialSpawn(world, world.getDifficultyForLocation(new BlockPos(entity.getPosition())),
 				SpawnReason.BREEDING, null, null);
 		return entity;
 	}
@@ -66,9 +68,9 @@ public class KoalaEntity extends AnimalEntity{
 		super.livingTick();
 	}
 	
-	@Override
-	protected void registerAttributes(){
-		super.registerAttributes();
+	void registerAttributesh(){
+		// TODO: stats
+		LivingEntity.registerAttributes();
 		getAttribute(Attributes.MAX_HEALTH).setBaseValue(16.0D);
 		getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.23D);
 	}

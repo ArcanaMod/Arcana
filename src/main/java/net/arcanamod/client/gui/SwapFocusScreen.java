@@ -1,5 +1,6 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.ClientProxy;
 import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.FocusItem;
@@ -28,8 +29,8 @@ public class SwapFocusScreen extends Screen{
 		this.hand = hand;
 	}
 	
-	public void render(int mouseX, int mouseY, float partialTicks){
-		super.render(mouseX, mouseY, partialTicks);
+	public void render(MatrixStack matricies, int mouseX, int mouseY, float partialTicks){
+		super.render(matricies, mouseX, mouseY, partialTicks);
 		ItemStack wand = getMinecraft().player.getHeldItem(hand);
 		if(wand.getItem() instanceof MagicDeviceItem && ((MagicDeviceItem)wand.getItem()).canSwapFocus()){
 			//display current focus
@@ -46,7 +47,7 @@ public class SwapFocusScreen extends Screen{
 				int distance1 = distance + random.nextInt(21) - 10;
 				int x = (int)(MathHelper.cos((float)v) * (distance1 + 4)) - 4 + width / 2;
 				int y = (int)(MathHelper.sin((float)v) * (distance1 + 4)) - 4 + height / 2;
-				GuiUtils.drawGradientRect(0, x, y, x + 8, y + 8, colour, colour);
+				GuiUtils.drawGradientRect(matricies.getLast().getMatrix(), 0, x, y, x + 8, y + 8, colour, colour);
 			}
 			for(int i = 0; i < size; i++){
 				ItemStack focus = foci.get(i);

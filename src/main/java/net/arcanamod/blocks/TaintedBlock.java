@@ -15,12 +15,10 @@ import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.lighting.LightEngine;
@@ -47,12 +45,11 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 		super(block, ArcanaSounds.TAINT);
 		Taint.addTaintMapping(block, this);
 	}
-
-	@Override
-	public ITextComponent getNameTextComponent() {
-		return new TranslationTextComponent("arcana.status.tainted",super.getNameTextComponent());
+	
+	public IFormattableTextComponent getTranslatedName(){
+		return new TranslationTextComponent("arcana.status.tainted", super.getTranslatedName());
 	}
-
+	
 	public boolean ticksRandomly(BlockState state){
 		return true;
 	}
@@ -60,10 +57,6 @@ public class TaintedBlock extends DelegatingBlock implements GroupedBlock{
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
 		super.fillStateContainer(builder);
 		builder.add(UNTAINTED);
-	}
-	
-	public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand){
-		return super.getStateForPlacement(state, facing, state2, world, pos1, pos2, hand).with(UNTAINTED, true);
 	}
 	
 	public BlockState getStateForPlacement(BlockItemUseContext context){

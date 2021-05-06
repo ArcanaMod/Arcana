@@ -9,13 +9,12 @@ import net.minecraft.block.BushBlock;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.IShearable;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -25,13 +24,12 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.List;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class TaintedPlantBlock extends TaintedBlock implements IPlantable, IGrowable, IShearable {
+public class TaintedPlantBlock extends TaintedBlock implements IPlantable, IGrowable, IForgeShearable{
 	
 	public TaintedPlantBlock(Block block){
 		super(block);
@@ -65,7 +63,7 @@ public class TaintedPlantBlock extends TaintedBlock implements IPlantable, IGrow
 	}
 	
 	public PlantType getPlantType(IBlockReader world, BlockPos pos){
-		return getPlantable() != null ? getPlantable().getPlantType(world, pos) : PlantType.Plains;
+		return getPlantable() != null ? getPlantable().getPlantType(world, pos) : PlantType.PLAINS;
 	}
 	
 	public BlockState getPlant(IBlockReader world, BlockPos pos){
@@ -79,13 +77,8 @@ public class TaintedPlantBlock extends TaintedBlock implements IPlantable, IGrow
 		return parentBlock instanceof IShearable ? (IShearable)parentBlock : null;
 	}
 	
-	public boolean isShearable(@Nonnull ItemStack item, IWorldReader world, BlockPos pos){
-		return getShearable() != null && getShearable().isShearable(item, world, pos);
-	}
-	
-	@Nonnull
-	public List<ItemStack> onSheared(@Nonnull ItemStack item, IWorld world, BlockPos pos, int fortune){
-		return getShearable() != null ? getShearable().onSheared(item, world, pos, fortune) : NonNullList.create();
+	public boolean isShearable(@Nonnull ItemStack item, World world, BlockPos pos){
+		return getShearable() != null && getShearable().isShearable();
 	}
 	
 	// Fix BushBlock

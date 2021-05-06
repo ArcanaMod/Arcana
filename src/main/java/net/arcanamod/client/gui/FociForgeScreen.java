@@ -1,5 +1,6 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
@@ -63,11 +64,11 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		scrollFociTo(0);
 	}
 
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY){
-		renderBackground();
+	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY){
+		renderBackground(stack);
 		minecraft.getTextureManager().bindTexture(BG);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
-		searchWidget.render(mouseX, mouseY, partialTicks);
+		searchWidget.render(stack, mouseX, mouseY, partialTicks);
 		minecraft.getTextureManager().bindTexture(BG);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft + ASPECT_SCROLL_X, guiTop + ASPECT_SCROLL_Y + (int)(ASPECT_SCROLL_HEIGHT * aspectScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
@@ -237,8 +238,8 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	@Override
 	protected void init() {
 		super.init();
-
-		searchWidget = new TextFieldWidget(font,guiLeft + 13,guiTop + 36,120,15,I18n.format("fociForge.search"));
+		
+		searchWidget = new TextFieldWidget(font, guiLeft + 13, guiTop + 36, 120, 15, ITextComponent.getTextComponentOrEmpty(I18n.format("fociForge.search")));
 		searchWidget.setMaxStringLength(30);
 		searchWidget.setEnableBackgroundDrawing(false);
 		searchWidget.setTextColor(0xFFFFFF);

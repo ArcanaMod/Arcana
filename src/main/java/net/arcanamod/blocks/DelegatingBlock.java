@@ -20,6 +20,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.IFormattableTextComponent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.*;
 import net.minecraft.world.server.ServerWorld;
@@ -47,7 +48,7 @@ public class DelegatingBlock extends Block{
 		// Refill the state container - Block does this too early
 		StateContainer.Builder<Block, BlockState> builder = new StateContainer.Builder<>(this);
 		fillStateContainer(builder);
-		stateContainer = builder.create((__, properties) -> new BlockState(this, properties));
+		stateContainer = builder.createStateContainer(Block::getDefaultState, BlockState::new);
 		setDefaultState(stateContainer.getBaseState());
 	}
 
@@ -80,7 +81,7 @@ public class DelegatingBlock extends Block{
 		BlockState base = block.stateContainer.getBaseState();
 		// A helper method doesn't work here...
 		for(Property property : state.getProperties())
-			if(base.has(property))
+			if(base.hasProperty(property))
 				base = base.with(property, state.get(property));
 		return base;
 	}
@@ -104,10 +105,6 @@ public class DelegatingBlock extends Block{
 		return switchBlock(parentBlock.mirror(state, mirror), this);
 	}
 	
-	public BlockState getStateForPlacement(BlockState state, Direction facing, BlockState state2, IWorld world, BlockPos pos1, BlockPos pos2, Hand hand){
-		return switchBlock(parentBlock.getStateForPlacement(state, facing, state2, world, pos1, pos2, hand), this);
-	}
-	
 	public BlockState getStateAtViewpoint(BlockState state, IBlockReader world, BlockPos pos, Vector3d viewpoint){
 		return switchBlock(parentBlock.getStateAtViewpoint(state, world, pos, viewpoint), this);
 	}
@@ -124,16 +121,20 @@ public class DelegatingBlock extends Block{
 		return parentBlock != null && parentBlock.isTransparent(state);
 	}
 	
-	public boolean isFoliage(BlockState state, IWorldReader world, BlockPos pos){
-		return parentBlock.isFoliage(state, world, pos);
-	}
-	
 	public int getFireSpreadSpeed(BlockState state, IBlockReader world, BlockPos pos, Direction face){
 		return parentBlock.getFireSpreadSpeed(state, world, pos, face);
 	}
 	
-	public float getExplosionResistance(BlockState state, IWorldReader world, BlockPos pos, @Nullable Entity exploder, Explosion explosion){
-		return parentBlock.getExplosionResistance(state, world, pos, exploder, explosion);
+	public float getExplosionResistance(){
+		return parentBlock.getExplosionResistance();
+	}
+	
+	public void onBlockExploded(BlockState state, World world, BlockPos pos, Explosion explosion){
+		parentBlock.onBlockExploded(state, world, pos, explosion);
+	}
+	
+	public float getExplosionResistance(BlockState state, IBlockReader world, BlockPos pos, Explosion explosion){
+		return parentBlock.getExplosionResistance(state, world, pos, explosion);
 	}
 	
 	public boolean addRunningEffects(BlockState state, World world, BlockPos pos, Entity entity){
@@ -152,33 +153,12 @@ public class DelegatingBlock extends Block{
 		return parentBlock.addLandingEffects(state1, worldserver, pos, state2, entity, numberOfParticles);
 	}
 	
-	/*public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random){
-		parentBlock.randomTick(state, worldIn, pos, random);
-	}
-	
-	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand){
-		parentBlock.tick(state, worldIn, pos, rand);
-	}*/
-	
-	public int getLightValue(BlockState state){
-		return parentBlock != null ? parentBlock.getLightValue(state) : super.getLightValue(state);
-	}
-	
 	public float getSlipperiness(){
 		return parentBlock.getSlipperiness();
 	}
 	
-	public void beginLeaveDecay(BlockState state, IWorldReader world, BlockPos pos){
-		parentBlock.beginLeaveDecay(state, world, pos);
-	}
-	
 	public boolean isToolEffective(BlockState state, ToolType tool){
 		return parentBlock.isToolEffective(state, tool);
-	}
-	
-	@Nullable
-	public Direction[] getValidRotations(BlockState state, IBlockReader world, BlockPos pos){
-		return parentBlock.getValidRotations(state, world, pos);
 	}
 	
 	public boolean canHarvestBlock(BlockState state, IBlockReader world, BlockPos pos, PlayerEntity player){
@@ -200,14 +180,14 @@ public class DelegatingBlock extends Block{
 		return parentBlock.propagatesSkylightDown(state, world, pos);
 	}
 	
-	@Override
+	/*@Override
 	public int tickRate(IWorldReader world){
 		return parentBlock.tickRate(world);
-	}
+	}*/
 	
 	@Override
-	public void dropXpOnBlockBreak(World world, BlockPos pos, int num){
-		parentBlock.dropXpOnBlockBreak(world, pos, num);
+	public void dropXpOnBlockBreak(ServerWorld world, BlockPos pos, int amount){
+		parentBlock.dropXpOnBlockBreak(world, pos, amount);
 	}
 	
 	@Override
@@ -245,10 +225,10 @@ public class DelegatingBlock extends Block{
 		return parentBlock.getJumpFactor();
 	}
 	
-	@Override
+	/*@Override
 	public void onProjectileCollision(World world, BlockState state, BlockRayTraceResult trace, Entity entity){
 		parentBlock.onProjectileCollision(world, state, trace, entity);
-	}
+	}*/
 	
 	@Override
 	public void fillWithRain(World world, BlockPos pos){
@@ -345,9 +325,8 @@ public class DelegatingBlock extends Block{
 	private static Properties propertiesWithSound(Properties properties, @Nullable SoundType soundType){
 		if (soundType==null) return properties; else return properties.sound(soundType);
 	}
-
-	@Override
-	public ITextComponent getNameTextComponent() {
-		return parentBlock.getNameTextComponent();
+	
+	public IFormattableTextComponent getTranslatedName(){
+		return parentBlock.getTranslatedName();
 	}
 }

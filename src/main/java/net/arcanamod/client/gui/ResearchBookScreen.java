@@ -94,10 +94,10 @@ public class ResearchBookScreen extends Screen{
 		return ((height / 2f) * (1 / zoom)) - (yPan / 2f);
 	}
 
-	public void render(int mouseX, int mouseY, float partialTicks){
-		renderBackground();
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks){
+		renderBackground(stack);
 		RenderSystem.enableBlend();
-		super.render(mouseX, mouseY, partialTicks);
+		super.render(stack, mouseX, mouseY, partialTicks);
 
 		// draw stuff
 		// 224x196 viewing area
@@ -117,9 +117,9 @@ public class ResearchBookScreen extends Screen{
 		setBlitOffset(299);
 		renderFrame();
 		setBlitOffset(0);
-		renderEntryTooltip(mouseX, mouseY);
+		renderEntryTooltip(stack, mouseX, mouseY);
 
-		tooltipButtons.forEach(pin -> pin.renderAfter(mouseX, mouseY));
+		tooltipButtons.forEach(pin -> pin.renderAfter(stack, mouseX, mouseY));
 		RenderSystem.enableBlend();
 	}
 
@@ -395,7 +395,7 @@ public class ResearchBookScreen extends Screen{
 		return base + 2;
 	}
 
-	private void renderEntryTooltip(int mouseX, int mouseY){
+	private void renderEntryTooltip(MatrixStack stack, int mouseX, int mouseY){
 		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style = null;
 			if(hovering(entry, mouseX, mouseY) && (style = style(entry)) == PageStyle.COMPLETE || style == PageStyle.IN_PROGRESS){
@@ -403,7 +403,7 @@ public class ResearchBookScreen extends Screen{
 				List<String> lines = Lists.newArrayList(I18n.format(entry.name()));
 				if(entry.description() != null && !entry.description().equals(""))
 					lines.add(TextFormatting.GRAY + I18n.format(entry.description()));
-				GuiUtils.drawHoveringText(lines, mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
+				GuiUtils.drawHoveringText(stack, lines.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
 				RenderHelper.disableStandardItemLighting();
 				break;
 			}
@@ -649,7 +649,7 @@ public class ResearchBookScreen extends Screen{
 
 	interface TooltipButton{
 
-		void renderAfter(int mouseX, int mouseY);
+		void renderAfter(MatrixStack stack, int mouseX, int mouseY);
 	}
 
 	class CategoryButton extends Button implements TooltipButton{
@@ -658,7 +658,7 @@ public class ResearchBookScreen extends Screen{
 		protected ResearchCategory category;
 
 		public CategoryButton(int categoryNum, int x, int y, ResearchCategory category){
-			super(x, y, 16, 16, "", button -> {
+			super(x, y, 16, 16, new StringTextComponent(""), button -> {
 				if(Minecraft.getInstance().currentScreen instanceof ResearchBookScreen)
 					((ResearchBookScreen)Minecraft.getInstance().currentScreen).tab = categoryNum;
 			});
@@ -668,7 +668,7 @@ public class ResearchBookScreen extends Screen{
 		}
 
 		@ParametersAreNonnullByDefault
-		public void renderButton(int mouseX, int mouseY, float partialTicks){
+		public void renderWidget(MatrixStack stack, int mouseX, int mouseY, float partialTicks){
 			if(visible){
 				RenderSystem.color3f(1, 1, 1);
 				RenderHelper.disableStandardItemLighting();
@@ -680,10 +680,10 @@ public class ResearchBookScreen extends Screen{
 			}
 		}
 
-		public void renderAfter(int mouseX, int mouseY){
+		public void renderAfter(MatrixStack stack, int mouseX, int mouseY){
 			if(isHovered){
 				int completion = (category.entries().size() > 0) ? ((category.streamEntries().mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / category.entries().size()) : 100;
-				GuiUtils.drawHoveringText(Lists.newArrayList(I18n.format(category.name()).trim() + " (" + completion + "%)"), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
+				GuiUtils.drawHoveringText(stack, Lists.newArrayList(new StringTextComponent(I18n.format(category.name()).trim() + " (" + completion + "%)")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
 		}
 	}
@@ -693,7 +693,7 @@ public class ResearchBookScreen extends Screen{
 		Pin pin;
 
 		public PinButton(int x, int y, Pin pin) {
-			super(x, y, 18, 18, "", b -> {
+			super(x, y, 18, 18, new StringTextComponent(""), b -> {
 				if(Screen.hasControlDown()){
 					// unpin
 					Researcher from = Researcher.getFrom(Minecraft.getInstance().player);
@@ -720,7 +720,7 @@ public class ResearchBookScreen extends Screen{
 			this.pin = pin;
 		}
 
-		public void renderButton(int mouseX, int mouseY, float partialTicks) {
+		public void renderWidget(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 			if(visible){
 				RenderSystem.color3f(1, 1, 1);
 
@@ -734,10 +734,10 @@ public class ResearchBookScreen extends Screen{
 			}
 		}
 
-		public void renderAfter(int mouseX, int mouseY) {
+		public void renderAfter(MatrixStack stack, int mouseX, int mouseY) {
 			isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			if(isHovered)
-				GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), TextFormatting.AQUA + I18n.format("researchBook.jump_to_pin"), TextFormatting.AQUA + I18n.format("researchEntry.unpin")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
+				GuiUtils.drawHoveringText(stack, Lists.newArrayList(new StringTextComponent(pin.getIcon().getStack().getDisplayName().getString()), new StringTextComponent(TextFormatting.AQUA + I18n.format("researchBook.jump_to_pin")), new StringTextComponent(TextFormatting.AQUA + I18n.format("researchEntry.unpin"))), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 		}
 	}
 }

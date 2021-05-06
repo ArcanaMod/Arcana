@@ -7,6 +7,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,11 +25,11 @@ public class InitScreenHandler{
 			if(gui instanceof IngameMenuScreen){
 				Widget rm_button = null;
 				for(final Widget button : event.getWidgetList()){
-					if(button.getMessage().equals(I18n.format("menu.reportBugs")))
+					if(button.getMessage().getString().equals(I18n.format("menu.reportBugs")))
 						rm_button = button;
 				} // You can't report bugs because forge is installed
 				event.removeWidget(rm_button);
-				event.addWidget(new Button(gui.width / 2 + 4, gui.height / 4 + 72 + -16, 98, 20, I18n.format("devtools.more"), p_onPress_1_ -> event.getGui().getMinecraft().displayGuiScreen(new ArcanaDevOptionsScreen())));
+				event.addWidget(new Button(gui.width / 2 + 4, gui.height / 4 + 72 + -16, 98, 20, new TranslationTextComponent("devtools.more"), p_onPress_1_ -> event.getGui().getMinecraft().displayGuiScreen(new ArcanaDevOptionsScreen())));
 			}
 		}
 	}

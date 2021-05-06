@@ -14,47 +14,51 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.Map;
 
 import static net.arcanamod.world.WorldInteractions.freezable;
 
-public class WorldInteractionsRegistry extends JsonReloadListener {
-
+public class WorldInteractionsRegistry extends JsonReloadListener{
+	
 	private static final Logger LOGGER = LogManager.getLogger();
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 	private static boolean processing = false;
-
+	
 	private MinecraftServer server;
-
+	
 	public WorldInteractionsRegistry(MinecraftServer server){
 		super(GSON, "arcana/interactions");
 		this.server = server;
 	}
-
-	public static void applyJson(ResourceLocation location, JsonObject object){
-		if (location.getPath().equals("freeze")) {
-			for (JsonElement element : object.get("values").getAsJsonArray()) {
-				String from = element.getAsJsonObject().get("from").getAsString();
-				String to = element.getAsJsonObject().get("to").getAsString();
-				String cover = "minecraft:air";
-				if (element.getAsJsonObject().has("cover")) {
-					cover = element.getAsJsonObject().get("cover").getAsString();
+	
+	public static void applyJson(ResourceLocation location, JsonElement e){
+		if(e.isJsonObject()){
+			JsonObject object = e.getAsJsonObject();
+			if(location.getPath().equals("freeze")){
+				for(JsonElement element : object.get("values").getAsJsonArray()){
+					String from = element.getAsJsonObject().get("from").getAsString();
+					String to = element.getAsJsonObject().get("to").getAsString();
+					String cover = "minecraft:air";
+					if(element.getAsJsonObject().has("cover")){
+						cover = element.getAsJsonObject().get("cover").getAsString();
+					}
+					
+					freezable.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(from)),
+							Pair.of(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(to)),
+									ForgeRegistries.BLOCKS.getValue(new ResourceLocation(cover))));
 				}
-
-				freezable.put(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(from)),
-						Pair.of(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(to)),
-								ForgeRegistries.BLOCKS.getValue(new ResourceLocation(cover))));
 			}
 		}
 	}
-
+	
 	@Override
-	protected void apply(Map<ResourceLocation, JsonObject> objects, IResourceManager resourceManagerIn, IProfiler profilerIn) {
+	protected void apply(Map<ResourceLocation, JsonElement> objects, @Nonnull IResourceManager resourceManager, @Nonnull IProfiler profiler){
 		processing = true;
-
-		objects.forEach((r,o) -> WorldInteractionsRegistry.applyJson(r,o));
-
+		
+		objects.forEach(WorldInteractionsRegistry::applyJson);
+		
 		processing = false;
 	}
 }

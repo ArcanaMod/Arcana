@@ -36,7 +36,7 @@ public class BookRenderer {
 	@SubscribeEvent(priority = EventPriority.NORMAL)
 	public static void renderHand(RenderHandEvent evt) {
 		Minecraft mc = Minecraft.getInstance();
-		if (mc.gameSettings.thirdPersonView != 0
+		if (!mc.gameSettings.getPointOfView().func_243192_a()
 				|| mc.player.getHeldItem(evt.getHand()).isEmpty()
 				|| mc.player.getHeldItem(evt.getHand()).getItem() != ArcanaItems.ARCANUM.get()) {
 			return;

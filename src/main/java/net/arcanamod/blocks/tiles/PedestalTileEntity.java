@@ -1,6 +1,7 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.BlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
@@ -33,8 +34,8 @@ public class PedestalTileEntity extends TileEntity{
 	}
 	
 	@Override
-	public void read(CompoundNBT compound){
-		super.read(compound);
+	public void read(BlockState state, CompoundNBT compound){
+		super.read(state, compound);
 		if(compound.contains("items"))
 			items.deserializeNBT(compound.getCompound("items"));
 	}
@@ -52,8 +53,8 @@ public class PedestalTileEntity extends TileEntity{
 		return nbt;
 	}
 	
-	public void handleUpdateTag(CompoundNBT tag){
-		super.handleUpdateTag(tag);
+	public void handleUpdateTag(BlockState state, CompoundNBT tag){
+		super.handleUpdateTag(state, tag);
 		items.deserializeNBT(tag.getCompound("items"));
 	}
 	

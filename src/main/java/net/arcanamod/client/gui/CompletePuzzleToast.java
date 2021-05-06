@@ -1,5 +1,6 @@
 package net.arcanamod.client.gui;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.items.ArcanaItems;
@@ -25,16 +26,17 @@ public class CompletePuzzleToast implements IToast{
 		this.entry = entry;
 	}
 	
-	public Visibility draw(ToastGui toastGui, long delta){
+	// draw
+	public Visibility func_230444_a_(MatrixStack matrixStack, ToastGui toastGui, long delta){
 		toastGui.getMinecraft().getTextureManager().bindTexture(TEXTURE_TOASTS);
 		RenderSystem.color3f(1, 1, 1);
-		toastGui.blit(0, 0, 0, 32, 160, 32);
+		toastGui.blit(matrixStack, 0, 0, 0, 32, 160, 32);
 		// Puzzle Complete!
 		// <Research Name>
 		boolean present = entry != null;
-		toastGui.getMinecraft().fontRenderer.drawString(I18n.format("puzzle.toast.title"), 30, present ? 7 : 12, 0xff500050);
+		toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format("puzzle.toast.title"), 30, present ? 7 : 12, 0xff500050);
 		if(present)
-			toastGui.getMinecraft().fontRenderer.drawString(I18n.format(entry.name()), 30, 18, 0xff000000);
+			toastGui.getMinecraft().fontRenderer.drawString(matrixStack, I18n.format(entry.name()), 30, 18, 0xff000000);
 		toastGui.getMinecraft().getItemRenderer().renderItemAndEffectIntoGUI(null, ICON, 8, 8);
 		return delta >= 5000 ? IToast.Visibility.HIDE : IToast.Visibility.SHOW;
 	}

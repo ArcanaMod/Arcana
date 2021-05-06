@@ -11,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.text.*;
 
 import javax.annotation.Nullable;
@@ -20,7 +21,7 @@ public class ClientUtils {
         if(!ResearchBooks.disabled.contains(book))
             Minecraft.getInstance().displayGuiScreen(new ResearchBookScreen(ResearchBooks.books.get(book), parentScreen, sender));
         else
-            Minecraft.getInstance().player.sendMessage(new TranslationTextComponent("message.arcana.disabled").setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.RED))));
+            Minecraft.getInstance().player.sendMessage(new TranslationTextComponent("message.arcana.disabled").setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.RED))), Util.DUMMY_UUID);
     }
 
     public static void openScribbledNotesUI(){

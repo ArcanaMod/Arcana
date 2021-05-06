@@ -1,6 +1,7 @@
 package net.arcanamod.client.gui;
 
 import com.google.common.collect.Lists;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.capabilities.Researcher;
@@ -19,6 +20,9 @@ import net.minecraft.client.renderer.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Matrix4f;
+import net.minecraft.util.math.vector.TransformationMatrix;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -64,9 +68,9 @@ public class ResearchEntryScreen extends Screen{
 		bg = new ResourceLocation(entry.key().getNamespace(), "textures/gui/research/" + entry.category().book().getPrefix() + SUFFIX);
 	}
 	
-	public void render(int mouseX, int mouseY, float partialTicks){
-		renderBackground();
-		super.render(mouseX, mouseY, partialTicks);
+	public void render(MatrixStack stack,  int mouseX, int mouseY, float partialTicks){
+		renderBackground(stack);
+		super.render(stack, mouseX, mouseY, partialTicks);
 		getMinecraft().getTextureManager().bindTexture(bg);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
 		drawTexturedModalRect((width - 256) / 2, (height - 181) / 2 + HEIGHT_OFFSET, 0, 0, 256, 181);
@@ -101,11 +105,11 @@ public class ResearchEntryScreen extends Screen{
 					List<ITextComponent> tooltip = renderer(requirements.get(i)).tooltip(requirements.get(i), getMinecraft().player);
 					List<String> lines = new ArrayList<>();
 					for(int i1 = 0, tooltipSize = tooltip.size(); i1 < tooltipSize; i1++){
-						String s = tooltip.get(i1).getFormattedText();
+						String s = tooltip.get(i1).getString();
 						s = (i1 == 0 ? TextFormatting.WHITE : TextFormatting.GRAY) + s;
 						lines.add(s);
 					}
-					GuiUtils.drawHoveringText(lines, mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
+					GuiUtils.drawHoveringText(stack, lines.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
 					break;
 				}
 		}
@@ -123,7 +127,7 @@ public class ResearchEntryScreen extends Screen{
 		}
 		
 		// Pin tooltips
-		pins.forEach(button -> button.renderAfter(mouseX, mouseY));
+		pins.forEach(button -> button.renderAfter(stack, mouseX, mouseY));
 	}
 	
 	public void init(@Nonnull Minecraft mc, int p_init_2_, int p_init_3_){
@@ -142,16 +146,16 @@ public class ResearchEntryScreen extends Screen{
 			updateButtons();
 		}));
 		String text = I18n.format("researchEntry.continue");
-		ExtendedButton button = new ExtendedButton(x - getMinecraft().fontRenderer.getStringWidth(text) / 2 + 2, y + 20, getMinecraft().fontRenderer.getStringWidth(text) + 10, 18, text, __ -> {
+		ExtendedButton button = new ExtendedButton(x - getMinecraft().fontRenderer.getStringWidth(text) / 2 + 2, y + 20, getMinecraft().fontRenderer.getStringWidth(text) + 10, 18, new StringTextComponent(text), __ -> {
 			Connection.sendTryAdvance(entry.key());
 			// need to update visuals when an advance packet is received...
 			updateButtons();
 		}){
 			// I can't be bothered to make a new type for something which will use this behaviours exactly once.
 			// If I ever need this behaviour elsewhere, I'll move it to a proper class.
-			public void renderButton(int mouseX, int mouseY, float partial){
+			public void renderWidget(MatrixStack stack, int mouseX, int mouseY, float partial){
 				active = Researcher.getFrom(mc.player).entryStage(entry) < entry.sections().size() && entry.sections().get(Researcher.getFrom(getMinecraft().player).entryStage(entry)).getRequirements().stream().allMatch(it -> it.satisfied(getMinecraft().player));
-				super.renderButton(mouseX, mouseY, partial);
+				super.renderWidget(stack, mouseX, mouseY, partial);
 			}
 		};
 		cont = addButton(button);
@@ -334,12 +338,12 @@ public class ResearchEntryScreen extends Screen{
 		boolean right;
 		
 		public ChangePageButton(int x, int y, boolean right, IPressable pressable){
-			super(x, y, 12, 6, "", pressable);
+			super(x, y, 12, 6, new StringTextComponent(""), pressable);
 			this.right = right;
 		}
 		
 		@ParametersAreNonnullByDefault
-		public void renderButton(int mouseX, int mouseY, float partialTicks){
+		public void renderWidget(MatrixStack stack, int mouseX, int mouseY, float partialTicks){
 			if(visible){
 				isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
 				float mult = isHovered ? 1f : 0.5f;
@@ -356,11 +360,11 @@ public class ResearchEntryScreen extends Screen{
 	class ReturnToBookButton extends Button{
 		
 		public ReturnToBookButton(int x, int y, IPressable event){
-			super(x, y, 15, 8, "", event);
+			super(x, y, 15, 8, new StringTextComponent(""), event);
 		}
 		
 		@ParametersAreNonnullByDefault
-		public void renderButton(int mouseX, int mouseY, float partialTicks){
+		public void renderWidget(MatrixStack stack,  int mouseX, int mouseY, float partialTicks){
 			if(visible){
 				isHovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
 				float mult = isHovered ? 1f : 0.5f;
@@ -379,7 +383,7 @@ public class ResearchEntryScreen extends Screen{
 		Pin pin;
 		
 		public PinButton(int x, int y, Pin pin){
-			super(x, y, 18, 18, "", b -> {
+			super(x, y, 18, 18, new StringTextComponent(""), b -> {
 				if(Minecraft.getInstance().currentScreen instanceof ResearchEntryScreen){
 					// can't reference variables here directly
 					ResearchEntryScreen screen = (ResearchEntryScreen)Minecraft.getInstance().currentScreen;
@@ -411,7 +415,7 @@ public class ResearchEntryScreen extends Screen{
 			this.pin = pin;
 		}
 		
-		public void renderButton(int mouseX, int mouseY, float partialTicks){
+		public void renderWidget(MatrixStack stack, int mouseX, int mouseY, float partialTicks){
 			if(visible){
 				RenderSystem.color3f(1, 1, 1);
 				
@@ -426,14 +430,14 @@ public class ResearchEntryScreen extends Screen{
 			}
 		}
 		
-		public void renderAfter(int mouseX, int mouseY){
+		public void renderAfter(MatrixStack stack, int mouseX, int mouseY){
 			// check if we're already pinned
 			List<Integer> pinned = Researcher.getFrom(getMinecraft().player).getPinned().get(entry.key());
 			String tooltip = TextFormatting.AQUA + I18n.format(pinned != null && pinned.contains(pin.getStage()) ? "researchEntry.unpin" : "researchEntry.pin");
 			
 			isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			if(isHovered)
-				GuiUtils.drawHoveringText(Lists.newArrayList(pin.getIcon().getStack().getDisplayName().getFormattedText(), tooltip), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
+				GuiUtils.drawHoveringText(stack, Lists.newArrayList(new StringTextComponent(pin.getIcon().getStack().getDisplayName().getString()), new StringTextComponent(tooltip)), mouseX, mouseY, ResearchEntryScreen.this.width, ResearchEntryScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 		}
 	}
 }

@@ -17,14 +17,14 @@ import net.minecraft.world.World;
 public class TaintedFishEntity extends AbstractGroupFishEntity {
 	public ItemStack bucket;
 
-	@Override
+	/*@Override
 	protected void registerAttributes() {
 		super.registerAttributes();
 		this.getAttributes().registerAttribute(Attributes.ATTACK_DAMAGE);
 		//this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK);
 		this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(0.5D);
 		this.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(0.0D);
-	}
+	}*/
 
 	public TaintedFishEntity(EntityType<AbstractGroupFishEntity> type, World worldIn) {
 		super(type, worldIn);
