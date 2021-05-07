@@ -1,6 +1,8 @@
 package net.arcanamod.entities.tainted;
 
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.monster.CreeperEntity;
@@ -15,13 +17,11 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -55,9 +55,8 @@ public class TaintedCreeperEntity extends CreeperEntity {
 		this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
 	}
 
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return CreeperEntity.registerAttributes().createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D);
 	}
 
 	/**
@@ -198,25 +197,25 @@ public class TaintedCreeperEntity extends CreeperEntity {
 	/**
 	 * Called when a lightning bolt hits the entity.
 	 */
-	public void onStruckByLightning(LightningBoltEntity lightningBolt) {
-		super.onStruckByLightning(lightningBolt);
+	public void causeLightningStrike(ServerWorld world, LightningBoltEntity lightning) {
+		super.causeLightningStrike(world, lightning);
 		this.dataManager.set(POWERED, true);
 	}
 
-	protected boolean processInteract(PlayerEntity player, Hand hand) {
-		ItemStack itemstack = player.getHeldItem(hand);
+	protected ActionResultType getEntityInteractionResult(PlayerEntity playerIn, Hand hand) {
+		ItemStack itemstack = playerIn.getHeldItem(hand);
 		if (itemstack.getItem() == Items.FLINT_AND_STEEL) {
-			this.world.playSound(player, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ITEM_FLINTANDSTEEL_USE, this.getSoundCategory(), 1.0F, this.rand.nextFloat() * 0.4F + 0.8F);
+			this.world.playSound(playerIn, this.getPosX(), this.getPosY(), this.getPosZ(), SoundEvents.ITEM_FLINTANDSTEEL_USE, this.getSoundCategory(), 1.0F, this.rand.nextFloat() * 0.4F + 0.8F);
 			if (!this.world.isRemote) {
 				this.ignite();
-				itemstack.damageItem(1, player, (p_213625_1_) -> {
-					p_213625_1_.sendBreakAnimation(hand);
+				itemstack.damageItem(1, playerIn, (player) -> {
+					player.sendBreakAnimation(hand);
 				});
 			}
 
-			return true;
+			return ActionResultType.func_233537_a_(this.world.isRemote);
 		} else {
-			return super.processInteract(player, hand);
+			return super.getEntityInteractionResult(playerIn, hand);
 		}
 	}
 

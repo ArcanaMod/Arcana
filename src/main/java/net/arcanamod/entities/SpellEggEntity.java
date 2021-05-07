@@ -19,6 +19,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -69,7 +70,7 @@ public class SpellEggEntity extends ProjectileItemEntity {
 	protected void onImpact(RayTraceResult result) {
 		if (cast != null) {
 			if (result.getType() == RayTraceResult.Type.ENTITY) {
-				((EntityRayTraceResult) result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0.5F);
+				((EntityRayTraceResult) result).getEntity().attackEntityFrom(DamageSource.causeThrownDamage(this, this.getShooter()), 0.5F);
 				if (!world.isRemote)
 					cast.useOnEntity(caster, ((EntityRayTraceResult) result).getEntity());
 				remove();
@@ -83,14 +84,15 @@ public class SpellEggEntity extends ProjectileItemEntity {
 
 	@Override
 	public void tick() {
-		if (this.throwableShake > 0) {
-			--this.throwableShake;
-		}
+//		if (this.throwableShake > 0) {
+//			--this.throwableShake;
+//		}
 
-		if (this.inGround) {
-			this.inGround = false;
-			this.setMotion(this.getMotion().mul((double)(this.rand.nextFloat() * 0.2F), (double)(this.rand.nextFloat() * 0.2F), (double)(this.rand.nextFloat() * 0.2F)));
-		}
+		// TODO: Look into Fix
+//		if (this.inGround) {
+//			this.inGround = false;
+//			this.setMotion(this.getMotion().mul((double)(this.rand.nextFloat() * 0.2F), (double)(this.rand.nextFloat() * 0.2F), (double)(this.rand.nextFloat() * 0.2F)));
+//		}
 
 		AxisAlignedBB axisalignedbb = this.getBoundingBox().expand(this.getMotion()).grow(1.0D);
 
@@ -102,7 +104,7 @@ public class SpellEggEntity extends ProjectileItemEntity {
 				break;
 			}
 
-			if (this.owner != null && this.ticksExisted < 2 && this.ignoreEntity == null) {
+			if (this.getShooter() != null && this.ticksExisted < 2 && this.ignoreEntity == null) {
 				this.ignoreEntity = entity;
 				this.ignoreTime = 3;
 				break;
@@ -124,7 +126,7 @@ public class SpellEggEntity extends ProjectileItemEntity {
 			}
 		}
 
-		Vec3d vec3d = this.getMotion();
+		Vector3d vec3d = this.getMotion();
 		double d0 = this.getPosX() + vec3d.x;
 		double d1 = this.getPosY() + vec3d.y;
 		double d2 = this.getPosZ() + vec3d.z;
@@ -163,7 +165,7 @@ public class SpellEggEntity extends ProjectileItemEntity {
 
 		this.setMotion(vec3d.scale((double)f1));
 		if (!this.hasNoGravity()) {
-			Vec3d vec3d1 = this.getMotion();
+			Vector3d vec3d1 = this.getMotion();
 			this.setMotion(vec3d1.x, vec3d1.y - (double)this.getGravityVelocity(), vec3d1.z);
 		}
 

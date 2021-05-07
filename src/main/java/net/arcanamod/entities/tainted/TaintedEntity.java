@@ -1,6 +1,8 @@
 package net.arcanamod.entities.tainted;
 
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -36,11 +38,11 @@ public class TaintedEntity extends MonsterEntity implements IMob {
 	}
 
 	// TODO: Adjust values for every entity
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35.0D);
-		this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.25F);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0D);
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return MonsterEntity.registerAttributes()
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D);
 	}
 
 	@OnlyIn(Dist.CLIENT)

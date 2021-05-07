@@ -70,7 +70,7 @@ public class KoalaEntity extends AnimalEntity{
 	
 	void registerAttributesh(){
 		// TODO: stats
-		LivingEntity.registerAttributes();
+		LivingEntity.registerAttributes().;
 		getAttribute(Attributes.MAX_HEALTH).setBaseValue(16.0D);
 		getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(0.23D);
 	}

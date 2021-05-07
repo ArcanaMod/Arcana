@@ -4,6 +4,8 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
@@ -21,13 +23,10 @@ public class TaintedSquidEntity extends SquidEntity{
 		super((EntityType<? extends SquidEntity>) type, worldIn);
 	}
 
-	@Override
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-		//this.getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.5D);
-		this.getAttribute(SharedMonsterAttributes.ATTACK_KNOCKBACK).setBaseValue(0.0D);
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return SquidEntity.func_234227_m_()
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 0.5D)
+				.createMutableAttribute(Attributes.ATTACK_KNOCKBACK, 0.0D);
 	}
 
 	protected void registerGoals() {

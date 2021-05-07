@@ -2,6 +2,9 @@ package net.arcanamod.entities.tainted;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.SpiderEntity;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -77,9 +80,8 @@ public class TaintedBatEntity extends CreatureEntity {
 	protected void collideWithNearbyEntities() {
 	}
 
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(6.0D);
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return MobEntity.registerAttributes().createMutableAttribute(Attributes.MAX_HEALTH, 6.0D);
 	}
 
 	public boolean getIsBatHanging() {
@@ -112,7 +114,7 @@ public class TaintedBatEntity extends CreatureEntity {
 
 	protected void updateAITasks() {
 		super.updateAITasks();
-		BlockPos blockpos = new BlockPos(this);
+		BlockPos blockpos = new BlockPos(this.getPosition());
 		BlockPos blockpos1 = blockpos.up();
 		if (this.getIsBatHanging()) {
 			if (this.world.getBlockState(blockpos1).isNormalCube(this.world, blockpos)) {

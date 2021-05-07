@@ -2,6 +2,8 @@ package net.arcanamod.entities.tainted;
 
 import net.arcanamod.effects.ArcanaEffects;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.CaveSpiderEntity;
 import net.minecraft.entity.monster.SpiderEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -19,9 +21,8 @@ public class TaintedCaveSpiderEntity extends SpiderEntity {
 		super((EntityType<? extends SpiderEntity>) type, worldIn);
 	}
 
-	protected void registerAttributes() {
-		super.registerAttributes();
-		this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(18.0D);
+	public static AttributeModifierMap.MutableAttribute registerAttributes() {
+		return SpiderEntity.func_234305_eI_().createMutableAttribute(Attributes.MAX_HEALTH, 18.0D);
 	}
 
 	public boolean attackEntityAsMob(Entity entityIn) {

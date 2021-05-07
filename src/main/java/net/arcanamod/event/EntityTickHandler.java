@@ -48,7 +48,7 @@ public class EntityTickHandler{
 				// it switches it for a complete version,
 				player.inventory.setInventorySlotContents(getSlotFor(new ItemStack(ArcanaItems.SCRIBBLED_NOTES.get()), player.inventory), new ItemStack(ArcanaItems.SCRIBBLED_NOTES_COMPLETE.get()));
 				// and gives them a status message.
-				ITextComponent status = new TranslationTextComponent("status.get_complete_note").applyTextStyles(TextFormatting.ITALIC, TextFormatting.LIGHT_PURPLE);
+				ITextComponent status = new TranslationTextComponent("status.get_complete_note").mergeStyle(TextFormatting.ITALIC, TextFormatting.LIGHT_PURPLE);
 				serverPlayerEntity.sendStatusMessage(status, false);
 			}
 			

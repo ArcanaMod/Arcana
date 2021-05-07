@@ -44,7 +44,7 @@ public class TaintBottleEntity extends ProjectileItemEntity{
 			int tainted = 0;
 			BlockPos.Mutable pos = new BlockPos.Mutable();
 			for(int tries = 0; tries < 12 && tainted < 6; tries++){
-				pos.setPos(this).move(world.rand.nextInt(5) - 2, world.rand.nextInt(3) - 1, world.rand.nextInt(5) - 2);
+				pos.setPos(this.getPosition()).move(world.rand.nextInt(5) - 2, world.rand.nextInt(3) - 1, world.rand.nextInt(5) - 2);
 				BlockState state = world.getBlockState(pos);
 				if(!state.isAir(world, pos) && !Taint.isTainted(state.getBlock()) && !Taint.isBlockProtectedByPureNode(world, pos)){
 					Block to = Taint.getTaintedOfBlock(state.getBlock());
@@ -57,7 +57,7 @@ public class TaintBottleEntity extends ProjectileItemEntity{
 			// add some flux too
 			AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPosition(), world.rand.nextInt(3) + 3 + (6 - tainted));
 			// add some particles
-			world.playEvent(2007, new BlockPos(this), 0xa200ff);
+			world.playEvent(2007, new BlockPos(this.getPosition()), 0xa200ff);
 			// and die
 			this.remove();
 		}
