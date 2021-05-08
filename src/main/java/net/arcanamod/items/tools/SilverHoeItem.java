@@ -14,7 +14,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class SilverHoeItem extends HoeItem{
 	
 	public SilverHoeItem(IItemTier tier, float attackSpeed, Properties builder){
-		super(tier, attackSpeed, builder);
+		super(tier, 1, attackSpeed, builder);
 	}
 	
 	public float getDestroySpeed(ItemStack stack, BlockState state){

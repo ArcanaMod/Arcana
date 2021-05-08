@@ -169,7 +169,7 @@ public class CrystalClusterItem extends Item{
 					compoundnbt1.putInt("y", pos.getY());
 					compoundnbt1.putInt("z", pos.getZ());
 					if(!compoundnbt1.equals(compoundnbt2)){
-						tileentity.read(compoundnbt1);
+						tileentity.read(tileentity.getBlockState(), compoundnbt1);
 						tileentity.markDirty();
 						return true;
 					}

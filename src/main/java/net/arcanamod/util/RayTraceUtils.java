@@ -20,18 +20,14 @@ public final class RayTraceUtils {
 		BlockRayTraceResult rayTraceResult = getTargetBlockResult(player,world, maxDistance);
 		return rayTraceResult.getPos();
 	}
-
-	public static BlockState getTargetBlock(PlayerEntity player,World world, int maxdistance){
-		BlockPos blockpos = getTargetBlockPos(player,world, maxdistance);
-		if(blockpos == null) {
-			return null;
-		}
-		BlockState blockstate= world.getBlockState(blockpos);
-		return blockstate;
+	
+	public static BlockState getTargetBlock(PlayerEntity player, World world, int maxdistance){
+		BlockPos blockpos = getTargetBlockPos(player, world, maxdistance);
+		return world.getBlockState(blockpos);
 	}
 
 	public static BlockRayTraceResult getTargetBlockResult(PlayerEntity player,World world, int maxdistance){
-		Vector3d vec = player.getPositionVector();
+		Vector3d vec = player.getPositionVec();
 		Vector3d vec3 = new Vector3d(vec.x,vec.y+player.getEyeHeight(),vec.z);
 		Vector3d vec3a = player.getLook(1.0F);
 		Vector3d vec3b = vec3.add(vec3a.getX() * maxdistance, vec3a.getY()*  maxdistance, vec3a.getZ()*  maxdistance);

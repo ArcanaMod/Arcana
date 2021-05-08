@@ -17,6 +17,7 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import java.util.Collections;
@@ -25,22 +26,22 @@ public class ClientUiUtil {
 
     private static ResourceLocation RESEARCH_EXPERTISE = Arcana.arcLoc("research_expertise");
 
-    public static void renderAspectStack(AspectStack stack, int x, int y){
-        renderAspectStack(stack, x, y, UiUtil.tooltipColour(stack.getAspect()));
+    public static void renderAspectStack(MatrixStack matricies, AspectStack stack, int x, int y){
+        renderAspectStack(matricies, stack, x, y, UiUtil.tooltipColour(stack.getAspect()));
     }
 
-    public static void renderAspectStack(AspectStack stack, int x, int y, int colour){
-        renderAspectStack(stack.getAspect(), stack.getAmount(), x, y, colour);
+    public static void renderAspectStack(MatrixStack matricies, AspectStack stack, int x, int y, int colour){
+        renderAspectStack(matricies, stack.getAspect(), stack.getAmount(), x, y, colour);
     }
 
-    public static void renderAspectStack(Aspect aspect, float amount, int x, int y){
-        renderAspectStack(aspect, amount, x, y, UiUtil.tooltipColour(aspect));
+    public static void renderAspectStack(MatrixStack stack, Aspect aspect, float amount, int x, int y){
+        renderAspectStack(stack, aspect, amount, x, y, UiUtil.tooltipColour(aspect));
     }
 
-    public static void renderAspectStack(Aspect aspect, float amount, int x, int y, int colour){
+    public static void renderAspectStack(MatrixStack stack, Aspect aspect, float amount, int x, int y, int colour){
         Minecraft mc = Minecraft.getInstance();
         // render aspect
-        renderAspect(aspect, x, y);
+        renderAspect(stack, aspect, x, y);
         // render amount
         MatrixStack matrixstack = new MatrixStack();
         // if there is a fractional part, round it
@@ -51,19 +52,19 @@ public class ClientUiUtil {
         impl.finish();
     }
 
-    public static void renderAspect(Aspect aspect, int x, int y){
+    public static void renderAspect(MatrixStack stack, Aspect aspect, int x, int y){
         Minecraft mc = Minecraft.getInstance();
         mc.getTextureManager().bindTexture(AspectUtils.getAspectTextureLocation(aspect));
-        drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+        drawModalRectWithCustomSizedTexture(stack, x, y, 0, 0, 16, 16, 16, 16);
     }
 
-    public static void drawModalRectWithCustomSizedTexture(int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
+    public static void drawModalRectWithCustomSizedTexture(MatrixStack stack, int x, int y, float texX, float texY, int width, int height, int textureWidth, int textureHeight){
         int z = Minecraft.getInstance().currentScreen != null ? Minecraft.getInstance().currentScreen.getBlitOffset() : 1;
-        AbstractGui.blit(x, y, z, texX, texY, width, height, textureWidth, textureHeight);
+        AbstractGui.blit(stack, x, y, z, texX, texY, width, height, textureWidth, textureHeight);
     }
 
-    public static void drawTexturedModalRect(int x, int y, float texX, float texY, int width, int height){
-        drawModalRectWithCustomSizedTexture(x, y, texX, texY, width, height, 256, 256);
+    public static void drawTexturedModalRect(MatrixStack stack, int x, int y, float texX, float texY, int width, int height){
+        drawModalRectWithCustomSizedTexture(stack, x, y, texX, texY, width, height, 256, 256);
     }
 
     public static boolean shouldShowAspectIngredients(){
@@ -74,9 +75,9 @@ public class ClientUiUtil {
         return entry == null || (from != null && from.entryStage(entry) >= entry.sections().size());
     }
 
-    public static void drawAspectTooltip(Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight){
+    public static void drawAspectTooltip(MatrixStack stack, Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight){
         String name = AspectUtils.getLocalizedAspectDisplayName(aspect);
-        drawAspectStyleTooltip(name, mouseX, mouseY, screenWidth, screenHeight);
+        drawAspectStyleTooltip(stack, name, mouseX, mouseY, screenWidth, screenHeight);
 
         if(shouldShowAspectIngredients() && Screen.hasShiftDown()){
             RenderSystem.pushMatrix();
@@ -103,21 +104,21 @@ public class ClientUiUtil {
             if(combinationPairs != null){
                 int color = 0xa0222222;
                 // 2px padding horizontally, 2px padding vertically
-                GuiUtils.drawGradientRect(0, x, y - 2, x + 40, y + 18, color, color);
+                GuiUtils.drawGradientRect(stack.getLast().getMatrix(), 0, x, y - 2, x + 40, y + 18, color, color);
                 x += 2;
-                renderAspect(combinationPairs.getFirst(), x, y);
+                renderAspect(stack, combinationPairs.getFirst(), x, y);
                 x += 20;
-                renderAspect(combinationPairs.getSecond(), x, y);
+                renderAspect(stack, combinationPairs.getSecond(), x, y);
             }
             RenderSystem.popMatrix();
         }
     }
 
-    public static void drawAspectStyleTooltip(String text, int mouseX, int mouseY, int screenWidth, int screenHeight){
-        GuiUtils.drawHoveringText(Collections.singletonList(text), mouseX, mouseY, screenWidth, screenHeight, -1, GuiUtils.DEFAULT_BACKGROUND_COLOR, 0xFF00505F, 0xFF00282F, Minecraft.getInstance().fontRenderer);
+    public static void drawAspectStyleTooltip(MatrixStack stack, String text, int mouseX, int mouseY, int screenWidth, int screenHeight){
+        GuiUtils.drawHoveringText(stack, Collections.singletonList(new StringTextComponent(text)), mouseX, mouseY, screenWidth, screenHeight, -1, GuiUtils.DEFAULT_BACKGROUND_COLOR, 0xFF00505F, 0xFF00282F, Minecraft.getInstance().fontRenderer);
     }
 
-    public static void renderIcon(Icon icon, int x, int y, int itemZLevel){
+    public static void renderIcon(MatrixStack stack, Icon icon, int x, int y, int itemZLevel){
         // first, check if its an item
         if(icon.getStack() != null && !icon.getStack().isEmpty()){
             // this, uhh, doesn't work
@@ -128,16 +129,16 @@ public class ClientUiUtil {
             // otherwise, check for a texture
             Minecraft.getInstance().getTextureManager().bindTexture(icon.getResourceLocation());
             RenderSystem.enableDepthTest();
-            drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+            drawModalRectWithCustomSizedTexture(stack, x, y, 0, 0, 16, 16, 16, 16);
         }
     }
 
-    public static void renderVisCore(Core core, int x, int y) {
+    public static void renderVisCore(MatrixStack stack, Core core, int x, int y) {
         Minecraft.getInstance().getTextureManager().bindTexture(core.getGuiTexture());
-        drawModalRectWithCustomSizedTexture(x, y, 0, 0, 49, 49, 49, 49);
+        drawModalRectWithCustomSizedTexture(stack, x, y, 0, 0, 49, 49, 49, 49);
     }
 
-    public static void renderVisMeter(Core core, IAspectHandler aspects, int x, int y) {
+    public static void renderVisMeter(MatrixStack stack, IAspectHandler aspects, int x, int y) {
         int poolOffset = 2;
         int poolSpacing = 6;
         int poolFromEdge = 24;
@@ -149,27 +150,27 @@ public class ClientUiUtil {
         int offset = poolOffset;
         for (Aspect aspect : vertical) {
             IAspectHolder holder = aspects.findAspectInHolders(aspect);
-            renderVisFill(holder.getContainedAspectStack(), holder.getCapacity(aspect), true, x + offset, y + poolFromEdge);
+            renderVisFill(stack, holder.getContainedAspectStack(), holder.getCapacity(aspect), true, x + offset, y + poolFromEdge);
             offset += poolSpacing;
         }
         offset = poolOffset;
         for (Aspect aspect : horizontal) {
             IAspectHolder holder = aspects.findAspectInHolders(aspect);
-            renderVisFill(holder.getContainedAspectStack(), holder.getCapacity(aspect), false, x + poolFromEdge, y + offset);
+            renderVisFill(stack, holder.getContainedAspectStack(), holder.getCapacity(aspect), false, x + poolFromEdge, y + offset);
             offset += poolSpacing;
         }
     }
 
-    public static void renderVisFill(AspectStack aspStack, float visMax, boolean vertical, int x, int y) {
+    public static void renderVisFill(MatrixStack stack, AspectStack aspStack, float visMax, boolean vertical, int x, int y) {
         int meterShort = 3;
         int meterLen = 16;
         int renderLen = (int)((aspStack.getAmount() * meterLen) / visMax);
         if (renderLen > 0) {
             Minecraft.getInstance().getTextureManager().bindTexture(aspStack.getAspect().getVisMeterTexture());
             if (vertical)
-                drawModalRectWithCustomSizedTexture(x, y, 0, 0, meterShort, renderLen, meterLen, meterLen);
+                drawModalRectWithCustomSizedTexture(stack, x, y, 0, 0, meterShort, renderLen, meterLen, meterLen);
             else
-                drawModalRectWithCustomSizedTexture(x, y, 0, 0, renderLen, meterShort, meterLen, meterLen);
+                drawModalRectWithCustomSizedTexture(stack, x, y, 0, 0, renderLen, meterShort, meterLen, meterLen);
         }
     }
 }

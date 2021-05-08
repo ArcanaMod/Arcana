@@ -1,5 +1,6 @@
 package net.arcanamod.systems.spell.modules.circle;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
@@ -107,31 +108,31 @@ public class DoubleModifierCircle extends SpellModule {
 	}
 
 	@Override
-	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
-		ClientUiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 48, getWidth(), getHeight());
+	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating, MatrixStack stack) {
+		ClientUiUtil.drawTexturedModalRect(stack, mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 48, getWidth(), getHeight());
 		if (!floating || firstAspect == Aspects.EMPTY) {
-			ClientUiUtil.drawTexturedModalRect(mouseX - 35, mouseY - 8, 48, 0, 16, 16);
+			ClientUiUtil.drawTexturedModalRect(stack, mouseX - 35, mouseY - 8, 48, 0, 16, 16);
 		} else {
 			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(firstAspect), mouseX - 35, mouseY - 8);
 		}
 		if (!floating || secondAspect == Aspects.EMPTY) {
-			ClientUiUtil.drawTexturedModalRect(mouseX + 19, mouseY - 8, 48, 0, 16, 16);
+			ClientUiUtil.drawTexturedModalRect(stack, mouseX + 19, mouseY - 8, 48, 0, 16, 16);
 		} else {
 			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(secondAspect), mouseX + 19, mouseY - 8);
 		}
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
-		ClientUiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 0, 48, getWidth(), getHeight());
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating, MatrixStack stack) {
+		ClientUiUtil.drawTexturedModalRect(stack, x - getWidth() / 2, y - getHeight() / 2, 0, 48, getWidth(), getHeight());
 		if (!floating) {
 			if (firstAspect == Aspects.EMPTY) {
-				ClientUiUtil.drawTexturedModalRect(x - 35, y - 8, 48, 0, 16, 16);
+				ClientUiUtil.drawTexturedModalRect(stack, x - 35, y - 8, 48, 0, 16, 16);
 			} else {
 				itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(firstAspect), x - 35, y - 8);
 			}
 			if (secondAspect == Aspects.EMPTY) {
-				ClientUiUtil.drawTexturedModalRect(x + 19, y - 8, 48, 0, 16, 16);
+				ClientUiUtil.drawTexturedModalRect(stack, x + 19, y - 8, 48, 0, 16, 16);
 			} else {
 				itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(secondAspect), x + 19, y - 8);
 			}

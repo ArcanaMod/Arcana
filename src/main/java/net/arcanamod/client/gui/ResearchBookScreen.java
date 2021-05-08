@@ -108,14 +108,14 @@ public class ResearchBookScreen extends Screen{
 		GL11.glEnable(GL_SCISSOR_TEST);
 		// scissors on
 
-		renderResearchBackground();
-		renderEntries(partialTicks);
+		renderResearchBackground(stack);
+		renderEntries(stack, partialTicks);
 
 		// scissors off
 		GL11.glDisable(GL_SCISSOR_TEST);
 
 		setBlitOffset(299);
-		renderFrame();
+		renderFrame(stack);
 		setBlitOffset(0);
 		renderEntryTooltip(stack, mouseX, mouseY);
 
@@ -156,12 +156,12 @@ public class ResearchBookScreen extends Screen{
 		}));
 	}
 
-	private void renderResearchBackground(){
+	private void renderResearchBackground(MatrixStack stack){
 		getMinecraft().getTextureManager().bindTexture(categories.get(tab).bg());
-		drawModalRectWithCustomSizedTexture((width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, getFrameWidth() - 32, getFrameHeight() - 34, (int)(width*1.2f), (int)(width*1.2f));
+		drawModalRectWithCustomSizedTexture(stack, (width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, getFrameWidth() - 32, getFrameHeight() - 34, (int)(width*1.2f), (int)(width*1.2f));
 	}
 
-	private void renderEntries(float partialTicks){
+	private void renderEntries(MatrixStack stack, float partialTicks){
 		RenderSystem.scaled(zoom, zoom, 1f);
 		for(ResearchEntry entry : categories.get(tab).entries()){
 			PageStyle style = style(entry);
@@ -176,13 +176,13 @@ public class ResearchBookScreen extends Screen{
 					mult = 0.1f;
 				RenderSystem.color4f(mult, mult, mult, 1f);
 				//noinspection IntegerDivisionInFloatingPointContext
-				drawTexturedModalRect((int)((entry.x() * 30 + getXOffset() + 2)), (int)((entry.y() * 30 + getYOffset() + 2)), base % 4 * 26, base / 4 * 26, 26, 26);
+				drawTexturedModalRect(stack, (int)((entry.x() * 30 + getXOffset() + 2)), (int)((entry.y() * 30 + getYOffset() + 2)), base % 4 * 26, base / 4 * 26, 26, 26);
 				// render texture
 				if(entry.icons().size() > 0){
 					Icon icon = entry.icons().get((getMinecraft().player.ticksExisted / 30) % entry.icons().size());
 					int x = (int)(entry.x() * 30 + getXOffset() + 7);
 					int y = (int)(entry.y() * 30 + getYOffset() + 7);
-					ClientUiUtil.renderIcon(icon, x, y, 100);
+					ClientUiUtil.renderIcon(stack, icon, x, y, 100);
 				}
 
 				// for every visible parent
@@ -197,120 +197,120 @@ public class ResearchBookScreen extends Screen{
 						// if there is a y-difference or x-difference of 0, draw a line
 						if(xdiff == 0 || ydiff == 0)
 							if(xdiff == 0){
-								arrows.drawVerticalLine(parentEntry.x(), entry.y(), parentEntry.y());
+								arrows.drawVerticalLine(stack, parentEntry.x(), entry.y(), parentEntry.y());
 								if(parent.shouldShowArrowhead())
 									if(parentEntry.y() > entry.y())
-										arrows.drawUpArrow(entry.x(), entry.y() + 1);
+										arrows.drawUpArrow(stack, entry.x(), entry.y() + 1);
 									else
-										arrows.drawDownArrow(entry.x(), entry.y() - 1);
+										arrows.drawDownArrow(stack, entry.x(), entry.y() - 1);
 							}else{
-								arrows.drawHorizontalLine(parentEntry.y(), entry.x(), parentEntry.x());
+								arrows.drawHorizontalLine(stack, parentEntry.y(), entry.x(), parentEntry.x());
 								if(parent.shouldShowArrowhead())
 									if(parentEntry.x() > entry.x())
-										arrows.drawLeftArrow(entry.x() + 1, entry.y());
+										arrows.drawLeftArrow(stack, entry.x() + 1, entry.y());
 									else
-										arrows.drawRightArrow(entry.x() - 1, entry.y());
+										arrows.drawRightArrow(stack, entry.x() - 1, entry.y());
 							}
 						else{
 							boolean unreversed = !(entry.meta().contains("reverse") || parent.shouldReverseLine());
 							if(xdiff < 2 || ydiff < 2){
 								// from entry's POV
 								if(unreversed){
-									arrows.drawVerticalLine(entry.x(), parentEntry.y(), entry.y());
-									arrows.drawHorizontalLine(parentEntry.y(), parentEntry.x(), entry.x());
+									arrows.drawVerticalLine(stack, entry.x(), parentEntry.y(), entry.y());
+									arrows.drawHorizontalLine(stack, parentEntry.y(), parentEntry.x(), entry.x());
 									if(entry.x() > parentEntry.x()){
 										if(entry.y() > parentEntry.y()){
-											arrows.drawLdCurve(entry.x(), parentEntry.y());
+											arrows.drawLdCurve(stack, entry.x(), parentEntry.y());
 											if(parent.shouldShowArrowhead())
-												arrows.drawDownArrow(entry.x(), entry.y() - 1);
+												arrows.drawDownArrow(stack, entry.x(), entry.y() - 1);
 										}else{
-											arrows.drawLuCurve(entry.x(), parentEntry.y());
+											arrows.drawLuCurve(stack, entry.x(), parentEntry.y());
 											if(parent.shouldShowArrowhead())
-												arrows.drawUpArrow(entry.x(), entry.y() + 1);
+												arrows.drawUpArrow(stack, entry.x(), entry.y() + 1);
 										}
 									}else{
 										if(entry.y() > parentEntry.y()){
-											arrows.drawRdCurve(entry.x(), parentEntry.y());
+											arrows.drawRdCurve(stack, entry.x(), parentEntry.y());
 											if(parent.shouldShowArrowhead())
-												arrows.drawDownArrow(entry.x(), entry.y() - 1);
+												arrows.drawDownArrow(stack, entry.x(), entry.y() - 1);
 										}else{
-											arrows.drawRuCurve(entry.x(), parentEntry.y());
+											arrows.drawRuCurve(stack, entry.x(), parentEntry.y());
 											if(parent.shouldShowArrowhead())
-												arrows.drawUpArrow(entry.x(), entry.y() + 1);
+												arrows.drawUpArrow(stack, entry.x(), entry.y() + 1);
 										}
 									}
 									// RDs and RUs are called at the same time (when LDs and LUs should)
 								}else{
-									arrows.drawHorizontalLine(entry.y(), entry.x(), parentEntry.x());
-									arrows.drawVerticalLine(parentEntry.x(), parentEntry.y(), entry.y());
+									arrows.drawHorizontalLine(stack, entry.y(), entry.x(), parentEntry.x());
+									arrows.drawVerticalLine(stack, parentEntry.x(), parentEntry.y(), entry.y());
 									if(entry.x() > parentEntry.x()){
 										if(entry.y() > parentEntry.y()){
 											// ru
-											arrows.drawRuCurve(parentEntry.x(), entry.y());
+											arrows.drawRuCurve(stack, parentEntry.x(), entry.y());
 											if(parent.shouldShowArrowhead())
-												arrows.drawRightArrow(entry.x() - 1, entry.y());
+												arrows.drawRightArrow(stack, entry.x() - 1, entry.y());
 										}else{
 											// rd
-											arrows.drawRdCurve(entry.x() - 1, parentEntry.y() - 1);
+											arrows.drawRdCurve(stack, entry.x() - 1, parentEntry.y() - 1);
 											if(parent.shouldShowArrowhead())
-												arrows.drawRightArrow(entry.x() - 1, entry.y());
+												arrows.drawRightArrow(stack, entry.x() - 1, entry.y());
 										}
 									}else{
 										if(entry.y() > parentEntry.y()){
 											// lu
-											arrows.drawLuCurve(entry.x() + 1, entry.y());
+											arrows.drawLuCurve(stack, entry.x() + 1, entry.y());
 											if(parent.shouldShowArrowhead())
-												arrows.drawLeftArrow(entry.x() + 1, entry.y());
+												arrows.drawLeftArrow(stack, entry.x() + 1, entry.y());
 										}else{
 											// ld
-											arrows.drawLdCurve(entry.x() + 1, parentEntry.y() - 1);
+											arrows.drawLdCurve(stack, entry.x() + 1, parentEntry.y() - 1);
 											if(parent.shouldShowArrowhead())
-												arrows.drawLeftArrow(entry.x() + 1, entry.y());
+												arrows.drawLeftArrow(stack, entry.x() + 1, entry.y());
 										}
 									}
 								}
 							}else{
 								if(unreversed){
-									arrows.drawHorizontalLineMinus1(parentEntry.y(), parentEntry.x(), entry.x());
-									arrows.drawVerticalLineMinus1(entry.x(), entry.y(), parentEntry.y());
+									arrows.drawHorizontalLineMinus1(stack, parentEntry.y(), parentEntry.x(), entry.x());
+									arrows.drawVerticalLineMinus1(stack, entry.x(), entry.y(), parentEntry.y());
 									if(entry.x() > parentEntry.x()){
 										if(entry.y() > parentEntry.y()){
-											arrows.drawLargeLdCurve(entry.x() - 1, parentEntry.y());
+											arrows.drawLargeLdCurve(stack, entry.x() - 1, parentEntry.y());
 											if(parent.shouldShowArrowhead())
-												arrows.drawDownArrow(entry.x(), entry.y() - 1);
+												arrows.drawDownArrow(stack, entry.x(), entry.y() - 1);
 										}else{
-											arrows.drawLargeLuCurve(entry.x() - 1, parentEntry.y() - 1);
+											arrows.drawLargeLuCurve(stack, entry.x() - 1, parentEntry.y() - 1);
 											if(parent.shouldShowArrowhead())
-												arrows.drawUpArrow(entry.x(), entry.y() + 1);
+												arrows.drawUpArrow(stack, entry.x(), entry.y() + 1);
 										}
 									}else{
 										if(entry.y() > parentEntry.y()){
-											arrows.drawLargeRdCurve(entry.x(), parentEntry.y());
+											arrows.drawLargeRdCurve(stack, entry.x(), parentEntry.y());
 											if(parent.shouldShowArrowhead())
-												arrows.drawDownArrow(entry.x(), entry.y() - 1);
+												arrows.drawDownArrow(stack, entry.x(), entry.y() - 1);
 										}else{
-											arrows.drawLargeRuCurve(entry.x(), parentEntry.y() - 1);
+											arrows.drawLargeRuCurve(stack, entry.x(), parentEntry.y() - 1);
 											if(parent.shouldShowArrowhead())
-												arrows.drawUpArrow(entry.x(), entry.y() + 1);
+												arrows.drawUpArrow(stack, entry.x(), entry.y() + 1);
 										}
 									}
 								}else{
-									arrows.drawHorizontalLineMinus1(entry.y(), entry.x(), parentEntry.x());
-									arrows.drawVerticalLineMinus1(parentEntry.x(), parentEntry.y(), entry.y());
+									arrows.drawHorizontalLineMinus1(stack, entry.y(), entry.x(), parentEntry.x());
+									arrows.drawVerticalLineMinus1(stack, parentEntry.x(), parentEntry.y(), entry.y());
 									if(entry.x() > parentEntry.x()){
 										if(entry.y() > parentEntry.y())
-											arrows.drawLargeRuCurve(parentEntry.x(), entry.y() - 1);
+											arrows.drawLargeRuCurve(stack, parentEntry.x(), entry.y() - 1);
 										else
-											arrows.drawLargeRdCurve(parentEntry.x(), entry.y());
+											arrows.drawLargeRdCurve(stack, parentEntry.x(), entry.y());
 										if(parent.shouldShowArrowhead())
-											arrows.drawRightArrow(entry.x() - 1, entry.y());
+											arrows.drawRightArrow(stack, entry.x() - 1, entry.y());
 									}else{
 										if(entry.y() > parentEntry.y())
-											arrows.drawLargeLuCurve(entry.x() + 1, entry.y() - 1);
+											arrows.drawLargeLuCurve(stack, entry.x() + 1, entry.y() - 1);
 										else
-											arrows.drawLargeLdCurve(entry.x() + 1, entry.y());
+											arrows.drawLargeLdCurve(stack, entry.x() + 1, entry.y());
 										if(parent.shouldShowArrowhead())
-											arrows.drawLeftArrow(entry.x() + 1, entry.y());
+											arrows.drawLeftArrow(stack, entry.x() + 1, entry.y());
 									}
 								}
 							}
@@ -418,7 +418,7 @@ public class ResearchBookScreen extends Screen{
 		return mouseX >= x && mouseX <= x + (26 * zoom) && mouseY >= y && mouseY <= y + (26 * zoom) && mouseX >= scrx && mouseX <= scrx + visibleWidth && mouseY >= scry && mouseY <= scry + visibleHeight;
 	}
 
-	private void renderFrame(){
+	private void renderFrame(MatrixStack stack){
 		getMinecraft().getTextureManager().bindTexture(texture);
 		RenderSystem.enableBlend();
 		// resizable gui!
@@ -429,13 +429,13 @@ public class ResearchBookScreen extends Screen{
 		int y = (this.height - height) / 2;
 		GuiUtils.drawContinuousTexturedBox(x, y, 0, 0, width, height, 140, 140, 69, getBlitOffset());
 		// draw top
-		drawTexturedModalRect((x + (width / 2)) - 36, y, 140, 0, 72, 17);
+		drawTexturedModalRect(stack, (x + (width / 2)) - 36, y, 140, 0, 72, 17);
 		// draw bottom
-		drawTexturedModalRect((x + (width / 2)) - 36, (y + height) - 18, 140, 17, 72, 18);
+		drawTexturedModalRect(stack, (x + (width / 2)) - 36, (y + height) - 18, 140, 17, 72, 18);
 		// draw left
-		drawTexturedModalRect(x, (y + (height / 2)) - 35, 140, 35, 17, 70);
+		drawTexturedModalRect(stack, x, (y + (height / 2)) - 35, 140, 35, 17, 70);
 		// draw right
-		drawTexturedModalRect(x + width - 17, (y + (height / 2)) - 35, 157, 35, 17, 70);
+		drawTexturedModalRect(stack, x + width - 17, (y + (height / 2)) - 35, 157, 35, 17, 70);
 		if(showZoom){
 			MatrixStack textStack = new MatrixStack();
 			textStack.translate(0.0D, 0.0D, 299);
@@ -539,36 +539,36 @@ public class ResearchBookScreen extends Screen{
 			return (int)((gY * 30 + getYOffset()));
 		}
 
-		void drawHorizontalSegment(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 0, 30, 30);
+		void drawHorizontalSegment(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 104, 0, 30, 30);
 		}
 
-		void drawVerticalSegment(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 0, 30, 30);
+		void drawVerticalSegment(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 134, 0, 30, 30);
 		}
 
-		void drawHorizontalLine(int y, int startGX, int endGX){
+		void drawHorizontalLine(MatrixStack stack, int y, int startGX, int endGX){
 			int temp = startGX;
 			// *possibly* swap them
 			startGX = min(startGX, endGX);
 			endGX = max(endGX, temp);
 			// *exclusive*
 			for(int j = startGX + 1; j < endGX; j++){
-				drawHorizontalSegment(j, y);
+				drawHorizontalSegment(stack, j, y);
 			}
 		}
 
-		void drawVerticalLine(int x, int startGY, int endGY){
+		void drawVerticalLine(MatrixStack stack, int x, int startGY, int endGY){
 			int temp = startGY;
 			// *possibly* swap them
 			startGY = min(startGY, endGY);
 			endGY = max(endGY, temp);
 			// *exclusive*
 			for(int j = startGY + 1; j < endGY; j++)
-				drawVerticalSegment(x, j);
+				drawVerticalSegment(stack, x, j);
 		}
 
-		void drawHorizontalLineMinus1(int y, int startGX, int endGX){
+		void drawHorizontalLineMinus1(MatrixStack stack, int y, int startGX, int endGX){
 			int temp = startGX;
 			// take one
 			if(startGX > endGX)
@@ -580,10 +580,10 @@ public class ResearchBookScreen extends Screen{
 			endGX = max(endGX, temp);
 			// *exclusive*
 			for(int j = startGX + 1; j < endGX; j++)
-				drawHorizontalSegment(j, y);
+				drawHorizontalSegment(stack, j, y);
 		}
 
-		void drawVerticalLineMinus1(int x, int startGY, int endGY){
+		void drawVerticalLineMinus1(MatrixStack stack, int x, int startGY, int endGY){
 			int temp = startGY;
 			// take one
 			if(startGY > endGY)
@@ -595,55 +595,55 @@ public class ResearchBookScreen extends Screen{
 			endGY = max(endGY, temp);
 			// *exclusive*
 			for(int j = startGY + 1; j < endGY; j++)
-				drawVerticalSegment(x, j);
+				drawVerticalSegment(stack, x, j);
 		}
 
-		void drawLuCurve(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 164, 0, 30, 30);
+		void drawLuCurve(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 164, 0, 30, 30);
 		}
 
-		void drawRuCurve(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 0, 30, 30);
+		void drawRuCurve(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 194, 0, 30, 30);
 		}
 
-		void drawLdCurve(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 224, 0, 30, 30);
+		void drawLdCurve(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 224, 0, 30, 30);
 		}
 
-		void drawRdCurve(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 104, 30, 30, 30);
+		void drawRdCurve(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 104, 30, 30, 30);
 		}
 
-		void drawLargeLuCurve(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 30, 60, 60);
+		void drawLargeLuCurve(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 134, 30, 60, 60);
 		}
 
-		void drawLargeRuCurve(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 30, 60, 60);
+		void drawLargeRuCurve(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 194, 30, 60, 60);
 		}
 
-		void drawLargeLdCurve(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 134, 90, 60, 60);
+		void drawLargeLdCurve(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 134, 90, 60, 60);
 		}
 
-		void drawLargeRdCurve(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY), 194, 90, 60, 60);
+		void drawLargeRdCurve(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY), 194, 90, 60, 60);
 		}
 
-		void drawDownArrow(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30);
+		void drawDownArrow(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY) + 1, 104, 60, 30, 30);
 		}
 
-		void drawUpArrow(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30);
+		void drawUpArrow(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX), gY2SY(gY) - 1, 104, 120, 30, 30);
 		}
 
-		void drawLeftArrow(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30);
+		void drawLeftArrow(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX) - 1, gY2SY(gY), 104, 90, 30, 30);
 		}
 
-		void drawRightArrow(int gX, int gY){
-			drawTexturedModalRect(gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30);
+		void drawRightArrow(MatrixStack stack, int gX, int gY){
+			drawTexturedModalRect(stack, gX2SX(gX) + 1, gY2SY(gY), 104, 150, 30, 30);
 		}
 	}
 
@@ -674,7 +674,7 @@ public class ResearchBookScreen extends Screen{
 				RenderHelper.disableStandardItemLighting();
 
 				Minecraft.getInstance().getTextureManager().bindTexture(category.icon());
-				drawModalRectWithCustomSizedTexture(x - (categoryNum == tab ? 6 : (isHovered) ? 4 : 0), y, 0, 0, 16, 16, 16, 16);
+				drawModalRectWithCustomSizedTexture(stack, x - (categoryNum == tab ? 6 : (isHovered) ? 4 : 0), y, 0, 0, 16, 16, 16, 16);
 
 				isHovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
 			}
@@ -728,9 +728,9 @@ public class ResearchBookScreen extends Screen{
 
 				getMinecraft().getTextureManager().bindTexture(texture);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
-				drawTexturedModalRect(x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
+				drawTexturedModalRect(stack, x - 2, y - 1, 6 - xOffset, 140, 34 - (6 - xOffset), 18);
 
-				ClientUiUtil.renderIcon(pin.getIcon(), x + xOffset, y - 1, 0);
+				ClientUiUtil.renderIcon(stack, pin.getIcon(), x + xOffset, y - 1, 0);
 			}
 		}
 

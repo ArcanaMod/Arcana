@@ -73,7 +73,7 @@ public class ResearchNoteItem extends Item{
 		if(compound != null && compound.contains("research")){
 			ResearchEntry research = ResearchBooks.getEntry(new ResourceLocation(compound.getString("research")));
 			if(research != null)
-				tooltip.add(new TranslationTextComponent(research.name()).applyTextStyle(TextFormatting.AQUA));
+				tooltip.add(new TranslationTextComponent(research.name()).mergeStyle(TextFormatting.AQUA));
 		}
 	}
 }

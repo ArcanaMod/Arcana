@@ -27,8 +27,8 @@ public class FluidRaytraceHelper {
 		Vector3d vec3d = projectile.getMotion();
 		World world = projectile.world;
 		Vector3d vec3d1 = projectile.getPositionVec();
-		if (p_221268_5_ && !world.hasNoCollisions(projectile, projectile.getBoundingBox(), (Set<Entity>)(!includeShooter && shooter != null ? getEntityAndMount(shooter) : ImmutableSet.of()))) {
-			return new BlockRayTraceResult(vec3d1, Direction.getFacingFromVector(vec3d.x, vec3d.y, vec3d.z), new BlockPos(projectile), false);
+		if (p_221268_5_ && !world.hasNoCollisions(projectile, projectile.getBoundingBox(), ((Set<Entity>)(!includeShooter && shooter != null ? getEntityAndMount(shooter) : ImmutableSet.of()))::contains)) {
+			return new BlockRayTraceResult(vec3d1, Direction.getFacingFromVector(vec3d.x, vec3d.y, vec3d.z), new BlockPos(projectile.getPosition()), false);
 		} else {
 			Vector3d vec3d2 = vec3d1.add(vec3d);
 			RayTraceResult raytraceresult = world.rayTraceBlocks(new RayTraceContext(vec3d1, vec3d2, blockModeIn, RayTraceContext.FluidMode.SOURCE_ONLY, projectile));

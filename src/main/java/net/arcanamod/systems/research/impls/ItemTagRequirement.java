@@ -12,7 +12,7 @@ import static net.arcanamod.Arcana.arcLoc;
 
 public class ItemTagRequirement extends Requirement{
 	
-	protected Tag<Item> tag;
+	protected ITag<Item> tag;
 	
 	public static final ResourceLocation TYPE = arcLoc("item_tag");
 	

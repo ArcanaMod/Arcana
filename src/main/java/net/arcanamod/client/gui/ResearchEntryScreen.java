@@ -73,18 +73,18 @@ public class ResearchEntryScreen extends Screen{
 		super.render(stack, mouseX, mouseY, partialTicks);
 		getMinecraft().getTextureManager().bindTexture(bg);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
-		drawTexturedModalRect((width - 256) / 2, (height - 181) / 2 + HEIGHT_OFFSET, 0, 0, 256, 181);
+		drawTexturedModalRect(stack, (width - 256) / 2, (height - 181) / 2 + HEIGHT_OFFSET, 0, 0, 256, 181);
 		
 		// Main rendering
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);
 			if(section != null)
-				EntrySectionRenderer.get(section).render(section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
+				EntrySectionRenderer.get(section).render(stack, section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
 		}
 		if(totalLength() > index + 1){
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section).render(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
+				EntrySectionRenderer.get(section).render(stack, section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
 		
 		// Requirements
@@ -96,8 +96,8 @@ public class ResearchEntryScreen extends Screen{
 			final int baseX = (width / 2) - (reqWidth * requirements.size() / 2);
 			for(int i = 0, size = requirements.size(); i < size; i++){
 				Requirement requirement = requirements.get(i);
-				renderer(requirement).render(baseX + i * reqWidth + 2, y, requirement, getMinecraft().player.ticksExisted, partialTicks, getMinecraft().player);
-				renderAmount(requirement, baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfied(getMinecraft().player));
+				renderer(requirement).render(stack, baseX + i * reqWidth + 2, y, requirement, getMinecraft().player.ticksExisted, partialTicks, getMinecraft().player);
+				renderAmount(stack, requirement, baseX + i * reqWidth + 2, y, requirement.getAmount(), requirement.satisfied(getMinecraft().player));
 			}
 			// Show tooltips
 			for(int i = 0, size = requirements.size(); i < size; i++)
@@ -118,12 +118,12 @@ public class ResearchEntryScreen extends Screen{
 		if(totalLength() > index){
 			EntrySection section = getSectionAtIndex(index);
 			if(section != null)
-				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
+				EntrySectionRenderer.get(section).renderAfter(stack, section, sectionIndex(index), width, height, mouseX, mouseY, false, getMinecraft().player);
 		}
 		if(totalLength() > index + 1){
 			EntrySection section = getSectionAtIndex(index + 1);
 			if(section != null)
-				EntrySectionRenderer.get(section).renderAfter(section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
+				EntrySectionRenderer.get(section).renderAfter(stack, section, sectionIndex(index + 1), width, height, mouseX, mouseY, true, getMinecraft().player);
 		}
 		
 		// Pin tooltips
@@ -302,14 +302,14 @@ public class ResearchEntryScreen extends Screen{
 		return RequirementRenderer.get(requirement);
 	}
 	
-	private void renderAmount(Requirement requirement, int x, int y, int amount, boolean complete){
+	private void renderAmount(MatrixStack stack, Requirement requirement, int x, int y, int amount, boolean complete){
 		if(renderer(requirement).shouldDrawTickOrCross(requirement, amount)){
 			//display tick or cross
 			getMinecraft().getTextureManager().bindTexture(bg);
 			RenderSystem.color4f(1f, 1f, 1f, 1f);
 			// ensure it renders over items
 			setBlitOffset(300);
-			drawTexturedModalRect(x + 10, y + 9, complete ? 0 : 8, 247, 8, 9);
+			drawTexturedModalRect(stack, x + 10, y + 9, complete ? 0 : 8, 247, 8, 9);
 			setBlitOffset(0);
 		}else{
 			String s = String.valueOf(amount);
@@ -351,7 +351,7 @@ public class ResearchEntryScreen extends Screen{
 				int texX = right ? 12 : 0;
 				int texY = 185;
 				getMinecraft().getTextureManager().bindTexture(bg);
-				drawTexturedModalRect(x, y, texX, texY, width, height);
+				drawTexturedModalRect(stack, x, y, texX, texY, width, height);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 			}
 		}
@@ -372,7 +372,7 @@ public class ResearchEntryScreen extends Screen{
 				int texX = 41;
 				int texY = 204;
 				getMinecraft().getTextureManager().bindTexture(bg);
-				drawTexturedModalRect(x, y, texX, texY, width, height);
+				drawTexturedModalRect(stack, x, y, texX, texY, width, height);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
 			}
 		}
@@ -424,9 +424,9 @@ public class ResearchEntryScreen extends Screen{
 				
 				getMinecraft().getTextureManager().bindTexture(bg);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
-				drawTexturedModalRect(x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
+				drawTexturedModalRect(stack, x - 2, y - 1, 16 + (6 - xOffset), 238, 34 - (6 - xOffset), 18);
 
-				ClientUiUtil.renderIcon(pin.getIcon(), x + xOffset - 1, y - 1, 0);
+				ClientUiUtil.renderIcon(stack, pin.getIcon(), x + xOffset - 1, y - 1, 0);
 			}
 		}
 		

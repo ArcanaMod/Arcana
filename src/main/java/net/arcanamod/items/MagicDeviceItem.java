@@ -31,6 +31,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nonnull;
@@ -103,7 +104,7 @@ public abstract class MagicDeviceItem extends Item{
 	public void onUsingTick(ItemStack stack, LivingEntity player, int count){
 		World world = player.world;
 		AuraView view = AuraView.SIDED_FACTORY.apply(world);
-		Optional<Node> nodeOptional = view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player);
+		Optional<Node> nodeOptional = view.raycast(player.getEyePosition(0), player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue(), player);
 		if(nodeOptional.isPresent()){
 			final int ASPECT_DRAIN_AMOUNT = 2;
 			final int ASPECT_DRAIN_WAIT = 3;
@@ -166,7 +167,7 @@ public abstract class MagicDeviceItem extends Item{
 		AuraView view = AuraView.SIDED_FACTORY.apply(world);
 		ItemStack itemstack = player.getHeldItem(hand);
 		AtomicReference<ActionResult<ItemStack>> ret = new AtomicReference<>(ActionResult.resultConsume(itemstack));
-		view.raycast(player.getEyePosition(0), player.getAttribute(PlayerEntity.REACH_DISTANCE).getValue(), player).ifPresent(node -> {
+		view.raycast(player.getEyePosition(0), player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue(), player).ifPresent(node -> {
 			player.setActiveHand(hand);
 			ret.set(ActionResult.resultConsume(itemstack));
 		});
@@ -189,12 +190,12 @@ public abstract class MagicDeviceItem extends Item{
 		// Add info
 		boolean creative = getCore(stack).modifier() instanceof MDModifier.Creative;
 		if(creative)
-			tooltip.add(new TranslationTextComponent("tooltip.arcana.creative_wand").applyTextStyle(TextFormatting.AQUA));
+			tooltip.add(new TranslationTextComponent("tooltip.arcana.creative_wand").mergeStyle(TextFormatting.AQUA));
 		tooltip.add(new StringTextComponent(""));
-		tooltip.add(new TranslationTextComponent("tooltip.arcana.properties").applyTextStyle(TextFormatting.GRAY));
-		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier()) + " "+I18n.format("tooltip.arcana.max")) + " "+I18n.format("tooltip.arcana.vis")).applyTextStyle(TextFormatting.DARK_GREEN));
-		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)(getCore(stack).difficulty() * getDifficultyModifier())) + " "+I18n.format("tooltip.arcana.difficulty")).applyTextStyle(TextFormatting.DARK_GREEN));
-		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)(getCap(stack).complexity() * getComplexityModifier())) + " "+I18n.format("tooltip.arcana.complexity")).applyTextStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new TranslationTextComponent("tooltip.arcana.properties").mergeStyle(TextFormatting.GRAY));
+		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier()) + " "+I18n.format("tooltip.arcana.max")) + " "+I18n.format("tooltip.arcana.vis")).mergeStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)(getCore(stack).difficulty() * getDifficultyModifier())) + " "+I18n.format("tooltip.arcana.difficulty")).mergeStyle(TextFormatting.DARK_GREEN));
+		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)(getCap(stack).complexity() * getComplexityModifier())) + " "+I18n.format("tooltip.arcana.complexity")).mergeStyle(TextFormatting.DARK_GREEN));
 	}
 	
 	public boolean canSwapFocus(){

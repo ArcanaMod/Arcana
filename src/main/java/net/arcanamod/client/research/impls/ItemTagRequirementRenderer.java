@@ -1,5 +1,6 @@
 package net.arcanamod.client.research.impls;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.research.RequirementRenderer;
 import net.arcanamod.systems.research.impls.ItemTagRequirement;
@@ -21,7 +22,7 @@ import static net.minecraft.client.util.ITooltipFlag.TooltipFlags.NORMAL;
 
 public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRequirement>{
 	
-	public void render(int x, int y, ItemTagRequirement requirement, int ticks, float partialTicks, PlayerEntity player){
+	public void render(MatrixStack matrices, int x, int y, ItemTagRequirement requirement, int ticks, float partialTicks, PlayerEntity player){
 		// pick an item
 		List<Item> items = new ArrayList<>(requirement.getTag().getAllElements());
 		ItemStack stack = new ItemStack(items.get((ticks / 30) % items.size()));
@@ -42,7 +43,7 @@ public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRe
 			tooltip.set(0, new TranslationTextComponent("requirement.item.num", requirement.getAmount(), tooltip.get(0)));
 		else
 			tooltip.set(0, new TranslationTextComponent("requirement.item.have", tooltip.get(0)));
-		tooltip.add(new TranslationTextComponent("requirement.tag.accepts_any", requirement.getTag().getId().toString()).applyTextStyle(TextFormatting.DARK_GRAY));
+		tooltip.add(new TranslationTextComponent("requirement.tag.accepts_any", requirement.getTag().getId().toString()).mergeStyle(TextFormatting.DARK_GRAY));
 		return tooltip;
 	}
 	

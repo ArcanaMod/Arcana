@@ -1,5 +1,6 @@
 package net.arcanamod.client.research;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.client.research.impls.ChemistryPuzzleRenderer;
 import net.arcanamod.client.research.impls.ThaumaturgyPuzzleRenderer;
@@ -43,7 +44,7 @@ public interface PuzzleRenderer<T extends Puzzle>{
 		return get(puzzle.type());
 	}
 	
-	void render(T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player);
+	void render(MatrixStack stack, T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player);
 	
 	default Minecraft mc(){
 		return Minecraft.getInstance();
@@ -53,12 +54,12 @@ public interface PuzzleRenderer<T extends Puzzle>{
 		return mc().fontRenderer;
 	}
 	
-	default void drawPaper(int screenWidth, int screenHeight){
+	default void drawPaper(MatrixStack stack, int screenWidth, int screenHeight){
 		mc().getTextureManager().bindTexture(PAPER);
-		blit(guiLeft(screenWidth) + 141, guiTop(screenHeight) + 35, 0, 0, 214, 134, 214, 134);
+		blit(stack, guiLeft(screenWidth) + 141, guiTop(screenHeight) + 35, 0, 0, 214, 134, 214, 134);
 	}
 	
-	default void renderAfter(T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player){}
+	default void renderAfter(MatrixStack stack, T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player){}
 	
 	default int guiLeft(int screenWidth){
 		return (screenWidth - ResearchTableScreen.WIDTH) / 2;

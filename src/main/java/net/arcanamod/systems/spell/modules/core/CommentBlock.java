@@ -1,5 +1,6 @@
 package net.arcanamod.systems.spell.modules.core;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.client.renderer.ItemRenderer;
@@ -65,15 +66,15 @@ public class CommentBlock extends SpellModule {
 
 
 	@Override
-	public void renderUnderMouse(int x, int y, ItemRenderer itemRenderer, boolean floating) {
-		ClientUiUtil.drawTexturedModalRect(x, y, 176, 0, 16, 16);
+	public void renderUnderMouse(int x, int y, ItemRenderer itemRenderer, boolean floating, MatrixStack stack) {
+		ClientUiUtil.drawTexturedModalRect(stack, x, y, 176, 0, 16, 16);
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating, MatrixStack stack) {
 		int left = Math.min(x, startX);
 		int top = Math.min(y, startY);
 
-		ClientUiUtil.drawModalRectWithCustomSizedTexture(left, top, 128, 0, getWidth(), getHeight(), 48, 48);
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, left, top, 128, 0, getWidth(), getHeight(), 48, 48);
 	}
 }

@@ -1,5 +1,6 @@
 package net.arcanamod.client.research.impls;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.UndecidedAspectStack;
@@ -18,7 +19,7 @@ import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
 
 public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRenderer<ArcaneCraftingSection>{
 	
-	void renderRecipe(IRecipe<?> recipe, ArcaneCraftingSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
+	void renderRecipe(MatrixStack matrices, IRecipe<?> recipe, ArcaneCraftingSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		if(recipe instanceof IArcaneCraftingRecipe){
 			IArcaneCraftingRecipe craftingRecipe = (IArcaneCraftingRecipe)recipe;
 			int x = right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X, y = ResearchEntryScreen.PAGE_Y;
@@ -27,7 +28,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 			if(craftingRecipe.getAspectStacks().length > 0)
 				ulY -= 15;
 			mc().getTextureManager().bindTexture(textures);
-			drawTexturedModalRect(ulX - 10, ulY - 10, 73, 75, 84, 84);
+			drawTexturedModalRect(matrices, ulX - 10, ulY - 10, 73, 75, 84, 84);
 			
 			int width = recipe instanceof IShapedRecipe ? ((IShapedRecipe<?>)craftingRecipe).getRecipeWidth() : 3;
 			int height = recipe instanceof IShapedRecipe ? ((IShapedRecipe<?>)craftingRecipe).getRecipeHeight() : 3;
@@ -54,13 +55,13 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 				UndecidedAspectStack stack = stacks[i];
 				Aspect display = stack.any ? Aspects.EXCHANGE : stack.stack.getAspect();
 				float amount = stack.stack.getAmount();
-				ClientUiUtil.renderAspectStack(display, amount, aspectX + i * (16 + 2 * spacing) + spacing, aspectY);
+				ClientUiUtil.renderAspectStack(matrices, display, amount, aspectX + i * (16 + 2 * spacing) + spacing, aspectY);
 			}
 		}else
 			error();
 	}
 	
-	void renderRecipeTooltips(IRecipe<?> recipe, ArcaneCraftingSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
+	void renderRecipeTooltips(MatrixStack matrices, IRecipe<?> recipe, ArcaneCraftingSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		if(recipe instanceof IArcaneCraftingRecipe){
 			IArcaneCraftingRecipe craftingRecipe = (IArcaneCraftingRecipe)recipe;
 			int x = right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X, y = ResearchEntryScreen.PAGE_Y;
@@ -80,7 +81,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 						int itemY = ulY + yy * 24;
 						ItemStack[] stacks = recipe.getIngredients().get(index).getMatchingStacks();
 						if(stacks.length > 0)
-							tooltipArea(stacks[displayIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, itemX, itemY);
+							tooltipArea(matrices, stacks[displayIndex(stacks.length, player)], mouseX, mouseY, screenWidth, screenHeight, itemX, itemY);
 					}
 				}
 			
@@ -94,7 +95,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 				String displayed = stack.any ? I18n.format("aspect.any") : I18n.format("aspect." + stack.stack.getAspect().name().toLowerCase());
 				int areaX = aspectX + i * (16 + 2 * spacing) + spacing;
 				if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= aspectY && mouseY < aspectY + 16)
-					ClientUiUtil.drawAspectStyleTooltip(displayed, mouseX, mouseY, screenWidth, screenHeight);
+					ClientUiUtil.drawAspectStyleTooltip(matrices, displayed, mouseX, mouseY, screenWidth, screenHeight);
 			}
 		}
 	}

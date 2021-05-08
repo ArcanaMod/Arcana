@@ -1,6 +1,7 @@
 package net.arcanamod.systems.spell.modules;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.systems.spell.SpellState;
 import net.arcanamod.systems.spell.modules.circle.DoubleModifierCircle;
@@ -247,10 +248,10 @@ public abstract class SpellModule {
 	public boolean mouseDown(int x, int y) { return false; }
 
 	// Called when rendering a floating module under the mouse.
-	public void renderUnderMouse(int x, int y, ItemRenderer itemRenderer, boolean floating) { }
+	public void renderUnderMouse(int x, int y, ItemRenderer itemRenderer, boolean floating, MatrixStack stack) { }
 
 	// Renders the module as a member of the SpellState board.
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) { }
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating, MatrixStack stack) { }
 
 	// Returns location where connections from this module should start.
 	public Point getConnectionRenderStart() {

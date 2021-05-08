@@ -1,5 +1,6 @@
 package net.arcanamod.client.research.impls;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.client.gui.ResearchEntryScreen;
 import net.arcanamod.client.research.EntrySectionRenderer;
@@ -26,7 +27,7 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 		return (int)Math.ceil(fr().listFormattedStringToWidth(getTranslatedText(section), (int)(ResearchEntryScreen.PAGE_WIDTH / ResearchEntryScreen.TEXT_SCALING)).size() / (double)linesPerPage);
 	}
 	
-	public void render(StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
+	public void render(MatrixStack stack, StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
 		List<String> lines = fr().listFormattedStringToWidth(getTranslatedText(section), (int)(ResearchEntryScreen.PAGE_WIDTH / TEXT_SCALING));
 		lines = lines.subList(pageIndex * linesPerPage, Math.min((pageIndex + 1) * linesPerPage, lines.size()));
 		
@@ -44,7 +45,7 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 				// if we want to reuse renderers we'll make this a liiiiiittle better
 				mc().getTextureManager().bindTexture(((ResearchEntryScreen)(mc().currentScreen)).bg);
 				RenderSystem.color4f(1f, 1f, 1f, 1f);
-				drawTexturedModalRect((int)(lineX + (PAGE_WIDTH / TEXT_SCALING - 86) / (2)), (int)lineY + 3, 29, 184, 86, 3);
+				drawTexturedModalRect(stack, (int)(lineX + (PAGE_WIDTH / TEXT_SCALING - 86) / (2)), (int)lineY + 3, 29, 184, 86, 3);
 			}else if(text.equals(""))
 				paragraphCentred = false;
 			else{
@@ -53,11 +54,11 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 					paragraphCentred = true;
 					text = text.substring(4);
 				}
-				fr().drawString(text, lineX + (paragraphCentred ? (PAGE_WIDTH / TEXT_SCALING - fr().getStringWidth(text)) / 2 : 0), lineY, 0x383838);
+				fr().drawString(stack, text, lineX + (paragraphCentred ? (PAGE_WIDTH / TEXT_SCALING - fr().getStringWidth(text)) / 2 : 0), lineY, 0x383838);
 			}
 		}
 		RenderSystem.popMatrix();
 	}
 	
-	public void renderAfter(StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){}
+	public void renderAfter(MatrixStack stack, StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){}
 }

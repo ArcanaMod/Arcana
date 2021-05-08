@@ -68,4 +68,8 @@ public enum ArcanaArmourMaterials implements IArmorMaterial{
 	public float getToughness(){
 		return toughness;
 	}
+	
+	public float getKnockbackResistance(){
+		return 0;
+	}
 }

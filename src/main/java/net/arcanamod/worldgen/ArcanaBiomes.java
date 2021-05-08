@@ -12,5 +12,5 @@ public class ArcanaBiomes{
 	
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, MODID);
 	
-	public static final RegistryObject<Biome> MAGICAL_FOREST = BIOMES.register("magical_forest", MagicalForestBiome::new);
+	//public static final RegistryObject<Biome> MAGICAL_FOREST = BIOMES.register("magical_forest", MagicalForestBiome::new);
 }

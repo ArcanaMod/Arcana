@@ -74,8 +74,8 @@ public final class Huds{
 					int baseY = (int)(ArcanaConfig.WAND_HUD_TOP.get() ? offY / scale : (event.getWindow().getScaledHeight() - offY) / scale - 49);
 					RenderSystem.pushMatrix();
 					RenderSystem.scalef(scale,scale,2);
-					ClientUiUtil.renderVisCore(core, baseX, baseY);
-					ClientUiUtil.renderVisMeter(core, aspects, baseX, baseY);
+					ClientUiUtil.renderVisCore(event.getMatrixStack(), core, baseX, baseY);
+					ClientUiUtil.renderVisMeter(event.getMatrixStack(), aspects, baseX, baseY);
 					MagicDeviceItem.getFocusStack(wand).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
 					RenderSystem.popMatrix();
 				}
@@ -87,10 +87,10 @@ public final class Huds{
 				float flux = ClientAuraHandler.currentFlux;
 				int pixHeight = (int)Math.min(flux, 100);
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FILLING);
-				ClientUiUtil.drawModalRectWithCustomSizedTexture(8, 8 + (100 - pixHeight), 0, 100 * frame, 32, pixHeight, 1024, 1024);
+				ClientUiUtil.drawModalRectWithCustomSizedTexture(event.getMatrixStack(), 8, 8 + (100 - pixHeight), 0, 100 * frame, 32, pixHeight, 1024, 1024);
 				// display the frame at top-left
 				Minecraft.getInstance().getTextureManager().bindTexture(FLUX_METER_FRAME);
-				ClientUiUtil.drawTexturedModalRect(0, 0, 0, 0, 48, 116);
+				ClientUiUtil.drawTexturedModalRect(event.getMatrixStack(), 0, 0, 0, 0, 48, 116);
 				// if flux is over max, flash white
 				if(flux > 100){
 					int amount = (int)(Math.abs(((MathHelper.sin((player.ticksExisted + event.getPartialTicks()) / 3f)) / 3f)) * 255);
@@ -122,7 +122,7 @@ public final class Huds{
 						int y = baseY - 10;
 						if(i % 2 == 0)
 							y += 8;
-						ClientUiUtil.renderAspectStack(aspStack, x, y);
+						ClientUiUtil.renderAspectStack(event.getMatrixStack(), aspStack, x, y);
 					}
 				}
 			}
@@ -142,7 +142,7 @@ public final class Huds{
 							y += 8;
 						AspectStack stack1 = aspStack.getContainedAspectStack();
 						if(!stack1.isEmpty())
-							ClientUiUtil.renderAspectStack(stack1, x, y);
+							ClientUiUtil.renderAspectStack(event.getMatrixStack(), stack1, x, y);
 					}
 				}
 			}

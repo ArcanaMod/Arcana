@@ -110,7 +110,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 		if(aspectHandler != null && aspectHandler.getHolder(0) != null){
 			if(aspectHandler.getHolder(0).getContainedAspect() != Aspects.EMPTY){
 				String aspectName = AspectUtils.getLocalizedAspectDisplayName(aspectHandler.getHolder(0).getContainedAspect());
-				return new TranslationTextComponent("item.arcana.phial", aspectName).applyTextStyle(Rarity.RARE.color);
+				return new TranslationTextComponent("item.arcana.phial", aspectName).mergeStyle(Rarity.RARE.color);
 			}
 		}
 		return new TranslationTextComponent("item.arcana.empty_phial");

@@ -46,16 +46,16 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		ySize = HEIGHT;
 	}
 	
-	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY){
+	protected void drawGuiContainerBackgroundLayer(@Nonnull MatrixStack stack, float partialTicks, int mouseX, int mouseY){
 		renderBackground(stack);
 		minecraft.getTextureManager().bindTexture(BG);
-		ClientUiUtil.drawModalRectWithCustomSizedTexture(guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
 			CompoundNBT compound = te.note().getTag();
 			if(compound != null){
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
 				if(puzzle != null){
-					PuzzleRenderer.get(puzzle).render(puzzle, aspectContainer.puzzleSlots, aspectContainer.puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
+					PuzzleRenderer.get(puzzle).render(stack, puzzle, aspectContainer.puzzleSlots, aspectContainer.puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
 					if(te.ink().isEmpty() || te.ink().getDamage() >= 100){
 						// tell them "no u cant do research without a pen"
 						int color = 0x44000000;
@@ -76,7 +76,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 			if(compound != null){
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
 				if(puzzle != null)
-					PuzzleRenderer.get(puzzle).renderAfter(puzzle, aspectContainer.puzzleSlots, aspectContainer.puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
+					PuzzleRenderer.get(puzzle).renderAfter(stack, puzzle, aspectContainer.puzzleSlots, aspectContainer.puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
 			}
 		}
 	}
@@ -187,7 +187,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 				minecraft.getTextureManager().bindTexture(BG);
 				GlStateManager.disableLighting();
 				RenderSystem.color4f(1, 1, 1, 1);
-				ClientUiUtil.drawModalRectWithCustomSizedTexture(x, y, teX, teY, width, height, 378, 378);
+				ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, x, y, teX, teY, width, height, 378, 378);
 			}
 		}
 	}

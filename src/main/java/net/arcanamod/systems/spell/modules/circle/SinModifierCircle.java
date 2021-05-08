@@ -1,5 +1,6 @@
 package net.arcanamod.systems.spell.modules.circle;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
@@ -76,21 +77,21 @@ public class SinModifierCircle extends SpellModule {
 	}
 
 	@Override
-	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
-		ClientUiUtil.drawTexturedModalRect(mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 128, getWidth(), getHeight());
+	public void renderUnderMouse(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating, MatrixStack stack) {
+		ClientUiUtil.drawTexturedModalRect(stack, mouseX - getWidth() / 2, mouseY - getHeight() / 2, 0, 128, getWidth(), getHeight());
 		if (!floating || aspect == Aspects.EMPTY) {
-			ClientUiUtil.drawTexturedModalRect(mouseX - 8, mouseY - 55, 64, 0, 16, 16);
+			ClientUiUtil.drawTexturedModalRect(stack, mouseX - 8, mouseY - 55, 64, 0, 16, 16);
 		} else {
 			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), mouseX - 8, mouseY - 55);
 		}
 	}
 
 	@Override
-	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating) {
-		ClientUiUtil.drawTexturedModalRect(x - getWidth() / 2, y - getHeight() / 2, 0, 128, getWidth(), getHeight());
+	public void renderInMinigame(int mouseX, int mouseY, ItemRenderer itemRenderer, boolean floating, MatrixStack stack) {
+		ClientUiUtil.drawTexturedModalRect(stack, x - getWidth() / 2, y - getHeight() / 2, 0, 128, getWidth(), getHeight());
 		if (!floating) {
 			if (aspect == Aspects.EMPTY) {
-				ClientUiUtil.drawTexturedModalRect(x - 8, y - 55, 64, 0, 16, 16);
+				ClientUiUtil.drawTexturedModalRect(stack, x - 8, y - 55, 64, 0, 16, 16);
 			} else {
 				itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspect), x - 8, y - 55);
 			}

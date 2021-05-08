@@ -34,7 +34,7 @@ public class RenderTooltipHandler {
 				int x = event.getX();
 				int y = 10 * (event.getLines().size() - 3) + 14 + event.getY();
 				for(AspectStack stack : stacks){
-					ClientUiUtil.renderAspectStack(stack, x, y);
+					ClientUiUtil.renderAspectStack(event.getMatrixStack(), stack, x, y);
 					x += 20;
 				}
 				RenderSystem.popMatrix();

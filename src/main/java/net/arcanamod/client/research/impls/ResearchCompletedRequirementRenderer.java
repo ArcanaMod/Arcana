@@ -1,5 +1,6 @@
 package net.arcanamod.client.research.impls;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.client.research.RequirementRenderer;
@@ -19,10 +20,10 @@ public class ResearchCompletedRequirementRenderer implements RequirementRenderer
 	
 	private static final ResourceLocation ICON = Arcana.arcLoc("textures/item/arcanum_open.png");
 	
-	public void render(int x, int y, ResearchCompletedRequirement requirement, int ticks, float partialTicks, PlayerEntity player){
+	public void render(MatrixStack matrices, int x, int y, ResearchCompletedRequirement requirement, int ticks, float partialTicks, PlayerEntity player){
 		Minecraft.getInstance().getTextureManager().bindTexture(ICON);
 		RenderSystem.color4f(1f, 1f, 1f, 1f);
-		drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+		drawModalRectWithCustomSizedTexture(matrices, x, y, 0, 0, 16, 16, 16, 16);
 	}
 	
 	public List<ITextComponent> tooltip(ResearchCompletedRequirement requirement, PlayerEntity player){

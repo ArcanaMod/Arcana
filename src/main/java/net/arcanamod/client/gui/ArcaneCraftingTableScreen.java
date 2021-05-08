@@ -56,14 +56,14 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 	protected void drawGuiContainerBackgroundLayer(MatrixStack matricies, float partialTicks, int mouseX, int mouseY){
 		renderBackground(matricies);
 		getMinecraft().getTextureManager().bindTexture(BG);
-		ClientUiUtil.drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
+		ClientUiUtil.drawTexturedModalRect(matricies, guiLeft, guiTop, 0, 0, xSize, ySize);
 
 		// draw "show Arcanum" button if player it has in inventory
 		int arcanumButtonLeft = guiLeft + 158, arcanumButtonTop = guiTop + 109;
 		if (isPlayerHavingArcanum()) {
-			ClientUiUtil.drawTexturedModalRect(arcanumButtonLeft, arcanumButtonTop, 213, 17, 20, 20);
+			ClientUiUtil.drawTexturedModalRect(matricies, arcanumButtonLeft, arcanumButtonTop, 213, 17, 20, 20);
 			if (mouseX >= arcanumButtonLeft && mouseX < arcanumButtonLeft + 20 && mouseY >= arcanumButtonTop && mouseY < arcanumButtonTop + 20)
-				ClientUiUtil.drawTexturedModalRect(arcanumButtonLeft, arcanumButtonTop, 213, 38, 20, 20);
+				ClientUiUtil.drawTexturedModalRect(matricies, arcanumButtonLeft, arcanumButtonTop, 213, 38, 20, 20);
 		}
 
 		// draw necessary aspects
@@ -79,19 +79,19 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 					float amount = stack.stack.getAmount();
 					if(!stack.any){
 						if(stack.stack.getAspect() == Aspects.AIR)
-							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 15, colour);
+							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 65, guiTop + 15, colour);
 						else if(stack.stack.getAspect() == Aspects.WATER)
-							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 39, colour);
+							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 108, guiTop + 39, colour);
 						else if(stack.stack.getAspect() == Aspects.FIRE)
-							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 39, colour);
+							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 22, guiTop + 39, colour);
 						else if(stack.stack.getAspect() == Aspects.EARTH)
-							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 89, colour);
+							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 22, guiTop + 89, colour);
 						else if(stack.stack.getAspect() == Aspects.ORDER)
-							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 89, colour);
+							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 108, guiTop + 89, colour);
 						else if(stack.stack.getAspect() == Aspects.CHAOS)
-							ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 117, colour);
+							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 65, guiTop + 117, colour);
 					}else
-						ClientUiUtil.renderAspectStack(Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
+						ClientUiUtil.renderAspectStack(matricies, Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
 				}
 			}else{
 				// check if there's a match, but the wand isn't present
@@ -126,19 +126,19 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 						}
 						if(!stack.any){
 							if(stack.stack.getAspect() == Aspects.AIR)
-								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 15, colour);
+								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 65, guiTop + 15, colour);
 							else if(stack.stack.getAspect() == Aspects.WATER)
-								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 39, colour);
+								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 108, guiTop + 39, colour);
 							else if(stack.stack.getAspect() == Aspects.FIRE)
-								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 39, colour);
+								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 22, guiTop + 39, colour);
 							else if(stack.stack.getAspect() == Aspects.EARTH)
-								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 22, guiTop + 89, colour);
+								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 22, guiTop + 89, colour);
 							else if(stack.stack.getAspect() == Aspects.ORDER)
-								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 108, guiTop + 89, colour);
+								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 108, guiTop + 89, colour);
 							else if(stack.stack.getAspect() == Aspects.CHAOS)
-								ClientUiUtil.renderAspectStack(stack.stack, guiLeft + 65, guiTop + 117, colour);
+								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 65, guiTop + 117, colour);
 						}else
-							ClientUiUtil.renderAspectStack(Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
+							ClientUiUtil.renderAspectStack(matricies, Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
 						RenderSystem.popMatrix();
 					}
 				}

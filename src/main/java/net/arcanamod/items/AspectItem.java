@@ -28,7 +28,7 @@ public class AspectItem extends Item{
 	}
 	
 	public ITextComponent getDisplayName(ItemStack stack){
-		return new TranslationTextComponent("aspect." + aspectName).applyTextStyle(TextFormatting.AQUA);
+		return new TranslationTextComponent("aspect." + aspectName).mergeStyle(TextFormatting.AQUA);
 	}
 	
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn){

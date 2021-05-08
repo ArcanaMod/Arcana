@@ -41,11 +41,6 @@ public class TaintFluid extends FlowingFluidBlock{
 	}
 
 	@Override
-	public MaterialColor getMaterialColor(BlockState state, IBlockReader world, BlockPos pos){
-		return MaterialColor.PURPLE;
-	}
-
-	@Override
 	public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity){
 		if(entity instanceof LivingEntity)
 			((LivingEntity)entity).addPotionEffect(new EffectInstance(ArcanaEffects.TAINTED.get(), 5 * 20));

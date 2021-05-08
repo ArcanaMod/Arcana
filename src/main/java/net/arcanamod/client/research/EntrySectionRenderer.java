@@ -1,5 +1,6 @@
 package net.arcanamod.client.research;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.client.research.impls.*;
 import net.arcanamod.systems.research.EntrySection;
 import net.arcanamod.systems.research.impls.*;
@@ -24,9 +25,9 @@ public interface EntrySectionRenderer<T extends EntrySection>{
 		map.put(AspectCombosSection.TYPE, new AspectCombosSectionRenderer());
 	}
 	
-	void render(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);
+	void render(MatrixStack stack, T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);
 	
-	void renderAfter(T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);
+	void renderAfter(MatrixStack stack, T section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player);
 	
 	int span(T section, PlayerEntity player);
 	
