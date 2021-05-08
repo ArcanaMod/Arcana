@@ -16,31 +16,32 @@ import static net.arcanamod.aspects.ColorRange.create;
 import static net.arcanamod.util.Pair.of;
 
 @SuppressWarnings("unused")
-public class Aspects {
-
+public class Aspects{
+	
 	/**
 	 * Returns array of ALL aspects. Including Empty.
-	 * @deprecated Use getAll();
+	 *
 	 * @return ALL aspects.
+	 * @deprecated Use getAll();
 	 */
 	@Deprecated
-	public static Aspect[] values() {
+	public static Aspect[] values(){
 		return ASPECTS.values().toArray(new Aspect[0]);
 	}
-
+	
 	public static BiMap<ResourceLocation, Aspect> ASPECTS = HashBiMap.create();
-
+	
 	public static final Aspect
 			EMPTY = Aspect.create("empty", create(0x0, 0x0, 0x0, 0x0, 0x0), null),
-
-			AIR = Aspect.create("air", create(0x7c554b, 0xa7846a, 0xe8d2a0, 0xf4f0c4, 0xfdffe5), null),
+	
+	AIR = Aspect.create("air", create(0x7c554b, 0xa7846a, 0xe8d2a0, 0xf4f0c4, 0xfdffe5), null),
 			CHAOS = Aspect.create("chaos", create(0x90909, 0x1e1e1f, 0x4d4d4d, 0x757377, 0x9a979c), null),
 			FIRE = Aspect.create("fire", create(0x972015, 0xd73d21, 0xed8a50, 0xf2c66c, 0xf4f2c6), null),
 			EARTH = Aspect.create("earth", create(0x1d6861, 0x2ba24e, 0x58dd5f, 0xb4f87e, 0xfdffe5), null),
 			ORDER = Aspect.create("order", create(0x6a686c, 0x9a979c, 0xb7b7b7, 0xd9d9d4, 0xfefff7), null),
 			WATER = Aspect.create("water", create(0x26317c, 0x4b6fb0, 0x4aaed6, 0xa0e2cb, 0xefeee6), null),
-
-			ARMOUR = Aspect.create("armour", create(0x4a456f, 0x685683, 0x7a71b4, 0xa589cb, 0xd0b5e0), null),
+	
+	ARMOUR = Aspect.create("armour", create(0x4a456f, 0x685683, 0x7a71b4, 0xa589cb, 0xd0b5e0), null),
 			AURA = Aspect.create("aura", create(0x456978, 0x699fa7, 0x82c7bd, 0xa0e2cb, 0xefeee6), null),
 			BEAST = Aspect.create("beast", create(0x5a1925, 0x87332d, 0x9c533f, 0xb27357, 0xd09c6b), null),
 			CRAFTING = Aspect.create("crafting", create(0x381627, 0x5a2835, 0x804246, 0xa25f52, 0xb2826b), null),
@@ -155,45 +156,46 @@ public class Aspects {
 		COMBINATIONS.put(of(HUMAN, FABRIC), PRIDE);
 		COMBINATIONS.put(of(HUMAN, METAL), GREED);
 	}
-
+	
 	public static final List<Pair<Aspect, Aspect>> COMBOS_AS_LIST = new ArrayList<>(COMBINATIONS.keySet());
-
+	
 	@Nullable
 	public static Aspect getCompound(Pair<Aspect, Aspect> components){
 		return Aspects.COMBINATIONS.containsKey(components) ? Aspects.COMBINATIONS.get(components) : Aspects.COMBINATIONS.getOrDefault(components.flip(), null);
 	}
-
+	
 	/**
 	 * Returns array of ALL aspects. Excluding Empty.
+	 *
 	 * @return ALL aspects.
 	 */
-	public static List<Aspect> getWithoutEmpty()
-	{
-		Aspect[] modifiedValues = Arrays.copyOfRange(values(),1,values().length);
+	public static List<Aspect> getWithoutEmpty(){
+		Aspect[] modifiedValues = Arrays.copyOfRange(values(), 1, values().length);
 		return Arrays.asList(modifiedValues);
 	}
-
+	
 	/**
 	 * Returns array of ALL aspects. Including Empty.
+	 *
 	 * @return ALL aspects.
 	 */
-	public static List<Aspect> getAll()
-	{
+	public static List<Aspect> getAll(){
 		return new ArrayList<>(ASPECTS.values());
 	}
-
-	public static Aspect valueOf(String value) {
+	
+	public static Aspect valueOf(String value){
 		return ASPECTS.values().stream()
 				.filter(entry -> entry.name().equalsIgnoreCase(value))
 				.findAny().orElse(Aspects.EMPTY);
 	}
-
+	
 	/**
 	 * Returns array of all elements, except primals and sins.
+	 *
 	 * @return A list of relevant aspects.
 	 */
 	// Note from Prefex: Isn't bad idea to add a list of sin aspects for addon creators. And you can use AspectUtils.primalAspects list.
-	public static List<Aspect> getWithoutPrimalsOrSins() {
+	public static List<Aspect> getWithoutPrimalsOrSins(){
 		return ASPECTS.values().stream()
 				.filter(entry -> !entry.equals(EMPTY))
 				.filter(entry -> !entry.equals(AIR))
@@ -211,8 +213,8 @@ public class Aspects {
 				.filter(entry -> !entry.equals(GREED))
 				.collect(Collectors.toList());
 	}
-
-	public static void init() {
+	
+	public static void init(){
 		net.minecraftforge.fml.StartupMessageManager.addModMessage("Arcana: Aspect registration completed");
 	}
 }

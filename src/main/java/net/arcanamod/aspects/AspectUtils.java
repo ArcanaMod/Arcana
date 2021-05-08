@@ -68,7 +68,6 @@ public class AspectUtils {
 	 * 		The name of the aspect.
 	 * @return The aspect with that name, or null.
 	 */
-	@SuppressWarnings("deprecation")
 	@Nullable
 	public static Aspect getAspectByName(@Nullable String name){
 		if(name == null)

@@ -2,9 +2,12 @@ package net.arcanamod.client.render.particles;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.util.Codecs;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleType;
@@ -17,6 +20,17 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class AspectHelixParticleData implements IParticleData{
+	
+	public static final Codec<AspectHelixParticleData> CODEC = RecordCodecBuilder.create(o ->
+			o.group(Codecs.ASPECT_CODEC.fieldOf("aspect")
+							.forGetter(e -> e.aspect),
+					Codec.INT.fieldOf("life")
+							.forGetter(e -> e.life),
+					Codec.FLOAT.fieldOf("time")
+							.forGetter(e -> e.time),
+					Codecs.VECTOR_3D_CODEC.fieldOf("direction")
+							.forGetter(e -> e.direction))
+					.apply(o, AspectHelixParticleData::new));
 	
 	public static final IParticleData.IDeserializer<AspectHelixParticleData> DESERIALIZER = new IDeserializer<AspectHelixParticleData>(){
 		public AspectHelixParticleData deserialize(ParticleType<AspectHelixParticleData> particleType, StringReader reader) throws CommandSyntaxException{

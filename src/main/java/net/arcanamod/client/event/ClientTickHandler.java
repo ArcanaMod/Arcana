@@ -135,7 +135,7 @@ public class ClientTickHandler{
 							Vector3d localPos = new Vector3d(MathHelper.sin(angle) * (size / 5f), MathHelper.cos(angle) * (size / 5f), 0);
 							Vector3d wPos = LocalAxis.toAbsolutePos(localPos, player.getPitchYaw(), node.getPosition());
 							// why?
-							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(stack.getFirst()).toString().replace("textures/", "").replace(".png", "")), ArcanaParticles.ASPECT_PARTICLE.get()), wPos.getX(), wPos.getY(), wPos.getZ(), 0, 0, 0);
+							world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(stack.getFirst()).toString().replace("textures/", "").replace(".png", ""))), wPos.getX(), wPos.getY(), wPos.getZ(), 0, 0, 0);
 							// TODO: client reference (UiUtil::tooltipColour)
 							Vector3d numberPos = new Vector3d(MathHelper.sin(angle) * ((size / 5f) - .04), MathHelper.cos(angle) * ((size / 5f) - .04), -.1);
 							wPos = LocalAxis.toAbsolutePos(numberPos, player.getPitchYaw(), node.getPosition());
@@ -154,7 +154,7 @@ public class ClientTickHandler{
 								double srx = (-Math.sin(Math.toRadians(player.rotationYaw)));
 								double crx = (Math.cos(Math.toRadians(player.rotationYaw)));
 								// Add Aspect Particle
-								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/", "").replace(".png", "")), ArcanaParticles.ASPECT_PARTICLE.get()),
+								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/", "").replace(".png", ""))),
 										pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
 								float currVis = jte.vis.getHolder(0).getCurrentVis();
 								// Add Number Particles
@@ -199,7 +199,7 @@ public class ClientTickHandler{
 			double srx = (-Math.sin(Math.toRadians(player.rotationYaw + centerSpread + 10)));
 			double crx = (Math.cos(Math.toRadians(player.rotationYaw + centerSpread + 10)));
 			// Add Aspect Particle
-			world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(aspectStacks.get(i).getFirst()).toString().replace("textures/", "").replace(".png", "")), ArcanaParticles.ASPECT_PARTICLE.get()),
+			world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(aspectStacks.get(i).getFirst()).toString().replace("textures/", "").replace(".png", ""))),
 					pos.getX() + 0.5D + (((-srx) / 2)), pos.getY() + 0.8D, pos.getZ() + 0.5D + (((-crx) / 2)), 0, 0, 0);
 			float currVis = aspectStacks.get(i).getSecond();
 			// Add Number Particles
@@ -221,7 +221,7 @@ public class ClientTickHandler{
 		double z = baseZ - array.length * rotOffsetZ * size * center;
 		for(int i = 0, length = array.length; i < length; i++){
 			char c = array[i];
-			world.addParticle(new NumberParticleData(c, ArcanaParticles.NUMBER_PARTICLE.get()), false, x + rotOffsetX * i * size * padding, baseY - .12, z + rotOffsetZ * i * size * padding, 0, 0, 0);
+			world.addParticle(new NumberParticleData(c), false, x + rotOffsetX * i * size * padding, baseY - .12, z + rotOffsetZ * i * size * padding, 0, 0, 0);
 		}
 	}
 	
