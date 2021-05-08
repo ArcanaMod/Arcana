@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -32,7 +31,7 @@ public class NodeParticle extends SpriteTexturedParticle{
 	private Node node;
 	protected static final int time = 40;
 	
-	protected NodeParticle(World world, double x, double y, double z, TextureAtlasSprite sprite, @Nullable Node node){
+	protected NodeParticle(ClientWorld world, double x, double y, double z, TextureAtlasSprite sprite, @Nullable Node node){
 		super(world, x, y, z);
 		this.node = node;
 		particleGravity = 0;
@@ -76,7 +75,7 @@ public class NodeParticle extends SpriteTexturedParticle{
 	public static class Factory implements IParticleFactory<NodeParticleData>{
 		
 		@SuppressWarnings("deprecation")
-		public Particle makeParticle(NodeParticleData data, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
+		public Particle makeParticle(NodeParticleData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
 			return new NodeParticle(world, x, y, z, Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(data.nodeTexture), new ClientAuraView((ClientWorld)world).getNodeByUuid(data.node).orElse(null));
 		}
 	}

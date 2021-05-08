@@ -90,7 +90,7 @@ public class MiningCast extends Cast {
 			Block.spawnDrops(blockToDestroy, world, blockTarget, tileentity, caster, pickaxe);
 			FluidState ifluidstate = blockToDestroy.getBlock().getFluidState(blockToDestroy);
 			world.setBlockState(blockTarget, ifluidstate.getBlockState(), 3);
-			blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
+			blockToDestroy.updateNeighbours(caster.world, blockTarget,3);
 		}
 		return ActionResultType.SUCCESS;
 	}

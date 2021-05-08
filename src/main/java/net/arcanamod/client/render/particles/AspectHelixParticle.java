@@ -3,6 +3,7 @@ package net.arcanamod.client.render.particles;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.util.LocalAxis;
 import net.minecraft.client.particle.*;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
@@ -17,7 +18,7 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 	private final IAnimatedSprite spriteSheet;
 	private final Vector3d direction;
 	
-	protected AspectHelixParticle(World world, double x, double y, double z, IAnimatedSprite spriteSheet, AspectHelixParticleData data){
+	protected AspectHelixParticle(ClientWorld world, double x, double y, double z, IAnimatedSprite spriteSheet, AspectHelixParticleData data){
 		super(world, x, y, z);
 		this.spriteSheet = spriteSheet;
 		selectSpriteWithAge(spriteSheet);
@@ -72,7 +73,7 @@ public class AspectHelixParticle extends SpriteTexturedParticle{
 			this.spriteSet = sheet;
 		}
 		
-		public Particle makeParticle(AspectHelixParticleData data, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
+		public Particle makeParticle(AspectHelixParticleData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
 			return new AspectHelixParticle(world, x, y, z, spriteSet, data);
 		}
 	}

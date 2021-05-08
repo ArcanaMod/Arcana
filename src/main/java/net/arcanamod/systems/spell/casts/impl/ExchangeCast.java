@@ -14,10 +14,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameters;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -61,12 +63,12 @@ public class ExchangeCast extends Cast {
 			ItemStack held = caster.getHeldItem(Hand.OFF_HAND);
 			if (!held.isEmpty() && Block.getBlockFromItem(held.getItem()) != Blocks.AIR) {
 				for (ItemStack stack : caster.world.getBlockState(blockTarget).getDrops(new LootContext.Builder((ServerWorld) caster.world)
-						.withParameter(LootParameters.POSITION, blockTarget).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel() >= 3 ? Items.DIAMOND_PICKAXE : Items.IRON_PICKAXE)))) {
+						.withParameter(LootParameters.ORIGIN, Vector3d.copyCentered(blockTarget)).withParameter(LootParameters.TOOL, new ItemStack(getMiningLevel() >= 3 ? Items.DIAMOND_PICKAXE : Items.IRON_PICKAXE)))) {
 					caster.addItemStackToInventory(stack);
 				}
 				caster.world.setBlockState(blockTarget, Block.getBlockFromItem(held.getItem()).getDefaultState());
 				held.shrink(1);
-				blockToDestroy.updateNeighbors(caster.world,blockTarget,3);
+				blockToDestroy.updateNeighbours(caster.world, blockTarget, 3);
 			}
 		}
 		return ActionResultType.SUCCESS;

@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -38,23 +39,23 @@ public class FabricCast extends Cast {
 
 	@Override
 	public ActionResultType useOnEntity(PlayerEntity caster, Entity target) {
-		target.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"));
-		target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"));
-		target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"));
+		target.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"), Util.DUMMY_UUID);
+		target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"), Util.DUMMY_UUID);
+		target.sendMessage(new StringTextComponent(target.getName().getString()+" gets gold award on r/minecraft"), Util.DUMMY_UUID);
 		return ActionResultType.SUCCESS;
 	}
 
 	@Override
 	public ActionResultType useOnBlock(PlayerEntity caster, World world, BlockPos blockTarget) {
-		caster.sendMessage(new StringTextComponent("hehe Ticking block entity"));
+		caster.sendMessage(new StringTextComponent("hehe Ticking block entity"), Util.DUMMY_UUID);
 		return ActionResultType.SUCCESS;
 	}
 
 	@Override
 	public ActionResultType useOnPlayer(PlayerEntity playerTarget) {
-		playerTarget.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"));
-		playerTarget.sendMessage(new StringTextComponent(playerTarget.getName().getString()+" gets gold award on r/minecraft"));
-		playerTarget.sendMessage(new StringTextComponent(playerTarget.getName().getString()+" gets gold award on r/minecraft"));
+		playerTarget.sendMessage(new StringTextComponent("MCP is broken everyone shold use Yarn"), Util.DUMMY_UUID);
+		playerTarget.sendMessage(new StringTextComponent(playerTarget.getName().getString()+" gets gold award on r/minecraft"), Util.DUMMY_UUID);
+		playerTarget.sendMessage(new StringTextComponent(playerTarget.getName().getString()+" gets gold award on r/minecraft"), Util.DUMMY_UUID);
 		return ActionResultType.SUCCESS;
 	}
 }

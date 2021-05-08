@@ -8,8 +8,8 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteTexturedParticle;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -18,7 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 public class NumberParticle extends SpriteTexturedParticle{
 	
-	protected NumberParticle(World world, double x, double y, double z, TextureAtlasSprite sprite){
+	protected NumberParticle(ClientWorld world, double x, double y, double z, TextureAtlasSprite sprite){
 		super(world, x, y, z);
 		particleGravity = 0;
 		maxAge = 0;
@@ -41,7 +41,7 @@ public class NumberParticle extends SpriteTexturedParticle{
 	@ParametersAreNonnullByDefault
 	public static class Factory implements IParticleFactory<NumberParticleData>{
 		@SuppressWarnings("deprecation")
-		public Particle makeParticle(NumberParticleData data, World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
+		public Particle makeParticle(NumberParticleData data, ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed){
 			ResourceLocation countTex = Arcana.arcLoc("font/number_" + data.count);
 			return new NumberParticle(world, x, y, z, Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(countTex));
 		}

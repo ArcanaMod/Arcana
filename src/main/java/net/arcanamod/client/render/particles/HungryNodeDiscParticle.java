@@ -8,10 +8,10 @@ import net.minecraft.client.particle.IParticleFactory;
 import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteTexturedParticle;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BlockParticleData;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -23,7 +23,7 @@ public class HungryNodeDiscParticle extends SpriteTexturedParticle{
 	private final float u;
 	private final float v;
 	
-	protected HungryNodeDiscParticle(World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, BlockState state){
+	protected HungryNodeDiscParticle(ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed, BlockState state){
 		super(world, x, y, z, xSpeed, ySpeed, zSpeed);
 		sourceState = state;
 		motionX = motionX * 0.01f + xSpeed;
@@ -111,7 +111,7 @@ public class HungryNodeDiscParticle extends SpriteTexturedParticle{
 	
 	public static class Factory implements IParticleFactory<BlockParticleData>{
 		@SuppressWarnings("deprecation")
-		public Particle makeParticle(BlockParticleData type, @Nonnull World world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+		public Particle makeParticle(BlockParticleData type, @Nonnull ClientWorld world, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
 			BlockState blockstate = type.getBlockState();
 			return !blockstate.isAir() && blockstate.getBlock() != Blocks.MOVING_PISTON ? (new HungryNodeDiscParticle(world, x, y, z, xSpeed, ySpeed, zSpeed, blockstate)).init().updateSprite(type.getPos()) : null;
 		}
