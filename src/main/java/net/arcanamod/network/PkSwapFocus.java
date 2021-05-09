@@ -44,7 +44,7 @@ public class PkSwapFocus{
 				ItemStack focus = foci.get(msg.newFocusIndex);
 				MagicDeviceItem.setFocusFromStack(wandStack, focus);
 				// Remove the stack from the inventory
-				spe.inventory.clearMatchingItems(stack -> stack == focus, 1);
+				spe.inventory.func_234564_a_(stack -> stack == focus, 1, spe.container.func_234641_j_());
 			}else{
 				MagicDeviceItem.getFocusStack(wandStack).ifPresent(spe.inventory::addItemStackToInventory);
 				MagicDeviceItem.setFocusFromStack(wandStack, ItemStack.EMPTY);

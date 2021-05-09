@@ -1,5 +1,6 @@
 package net.arcanamod.event;
 
+import com.mojang.brigadier.CommandDispatcher;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.ItemAspectRegistry;
@@ -16,6 +17,7 @@ import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.world.WorldInteractions;
 import net.arcanamod.world.WorldInteractionsRegistry;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.command.CommandSource;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.resources.IReloadableResourceManager;
@@ -64,7 +66,7 @@ public class WorldLoadEvent{
 	
 	@SubscribeEvent
 	public static void serverAboutToStart(FMLServerAboutToStartEvent event){
-		IReloadableResourceManager manager = event.getServer().getResourceManager();
+		IReloadableResourceManager manager = (IReloadableResourceManager)event.getServer().getDataPackRegistries().getResourceManager();
 		manager.addReloadListener(Arcana.researchManager = new ResearchLoader());
 		manager.addReloadListener(Arcana.itemAspectRegistry = new ItemAspectRegistry(event.getServer()));
 		manager.addReloadListener(Arcana.worldInteractionsRegistry = new WorldInteractionsRegistry(event.getServer()));
@@ -72,9 +74,10 @@ public class WorldLoadEvent{
 	
 	@SubscribeEvent
 	public static void serverStarting(FMLServerStartingEvent event){
-		ResearchCommand.register(event.getCommandDispatcher());
-		FillAspectCommand.register(event.getCommandDispatcher());
-		NodeCommand.register(event.getCommandDispatcher());
-		TaintCommand.register(event.getCommandDispatcher());
+		CommandDispatcher<CommandSource> dispatcher = event.getServer().getCommandManager().getDispatcher();
+		ResearchCommand.register(dispatcher);
+		FillAspectCommand.register(dispatcher);
+		NodeCommand.register(dispatcher);
+		TaintCommand.register(dispatcher);
 	}
 }

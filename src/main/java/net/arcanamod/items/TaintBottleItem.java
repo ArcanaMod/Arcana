@@ -27,7 +27,7 @@ public class TaintBottleItem extends Item{
 		
 		if(!world.isRemote()){
 			TaintBottleEntity entity = new TaintBottleEntity(player, world);
-			entity.shoot(player, player.rotationPitch, player.rotationYaw, -20, .5f, 1);
+			entity.shoot(player.getLookVec().getX(), player.getLookVec().getY(), player.getLookVec().getZ(), .5f, 1);
 			world.addEntity(entity);
 		}
 		

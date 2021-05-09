@@ -9,6 +9,8 @@ import net.arcanamod.systems.research.impls.StringSection;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
@@ -23,12 +25,13 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 		return FormattingHelper.process(I18n.format(section.getText()), section).replace("{~sep}", "\n{~sep}\n");
 	}
 	
+	// TODO: readd formatting
 	public int span(StringSection section, PlayerEntity player){
-		return (int)Math.ceil(fr().listFormattedStringToWidth(getTranslatedText(section), (int)(ResearchEntryScreen.PAGE_WIDTH / ResearchEntryScreen.TEXT_SCALING)).size() / (double)linesPerPage);
+		return /*(int)Math.ceil(fr().listFormattedStringToWidth(getTranslatedText(section), (int)(ResearchEntryScreen.PAGE_WIDTH / ResearchEntryScreen.TEXT_SCALING)).size()*/1 /*/ (double)linesPerPage*/;
 	}
 	
 	public void render(MatrixStack stack, StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){
-		List<String> lines = fr().listFormattedStringToWidth(getTranslatedText(section), (int)(ResearchEntryScreen.PAGE_WIDTH / TEXT_SCALING));
+		List<String> lines = /*fr().listFormattedStringToWidth*/new ArrayList<>(Collections.singleton(getTranslatedText(section))/*, (int)(ResearchEntryScreen.PAGE_WIDTH / TEXT_SCALING)*/);
 		lines = lines.subList(pageIndex * linesPerPage, Math.min((pageIndex + 1) * linesPerPage, lines.size()));
 		
 		int x = right ? ResearchEntryScreen.PAGE_X + ResearchEntryScreen.RIGHT_X_OFFSET : ResearchEntryScreen.PAGE_X;

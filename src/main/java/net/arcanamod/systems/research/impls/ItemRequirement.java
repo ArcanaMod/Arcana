@@ -23,11 +23,11 @@ public class ItemRequirement extends Requirement{
 	}
 	
 	public boolean satisfied(PlayerEntity player){
-		return player.inventory.clearMatchingItems(x -> x.getItem() == item, 0) >= (getAmount() == 0 ? 1 : getAmount());
+		return player.inventory.func_234564_a_(x -> x.getItem() == item, 0, player.container.func_234641_j_()) >= (getAmount() == 0 ? 1 : getAmount());
 	}
 	
 	public void take(PlayerEntity player){
-		player.inventory.clearMatchingItems(x -> x.getItem() == item, getAmount());
+		player.inventory.func_234564_a_(x -> x.getItem() == item, getAmount(), player.container.func_234641_j_());
 	}
 	
 	public ResourceLocation type(){

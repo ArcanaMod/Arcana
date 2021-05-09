@@ -25,7 +25,8 @@ public class FocusItem extends Item implements Focus{
 		this.numStyles = numStyles;
 		modelLocations = Arrays.asList(locations);
 		Focus.FOCI.add(this);
-		addPropertyOverride(new ResourceLocation("style"), (stack, world, entity) -> stack.getOrCreateTag().getInt("style"));
+		// TODO: property overrides are now defined separately
+		//addPropertyOverride(new ResourceLocation("style"), (stack, world, entity) -> stack.getOrCreateTag().getInt("style"));
 	}
 	
 	public ResourceLocation getModelLocation(CompoundNBT nbt){

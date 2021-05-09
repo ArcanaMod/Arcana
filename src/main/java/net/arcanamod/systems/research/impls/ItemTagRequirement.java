@@ -5,27 +5,26 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ITag;
-import net.minecraft.tags.Tag;
 import net.minecraft.util.ResourceLocation;
 
 import static net.arcanamod.Arcana.arcLoc;
 
 public class ItemTagRequirement extends Requirement{
 	
-	protected ITag<Item> tag;
+	protected ITag.INamedTag<Item> tag;
 	
 	public static final ResourceLocation TYPE = arcLoc("item_tag");
 	
-	public ItemTagRequirement(ITag<Item> tag){
+	public ItemTagRequirement(ITag.INamedTag<Item> tag){
 		this.tag = tag;
 	}
 	
 	public boolean satisfied(PlayerEntity player){
-		return player.inventory.clearMatchingItems(x -> x.getItem().isIn(tag), 0) >= (getAmount() == 0 ? 1 : getAmount());
+		return player.inventory.func_234564_a_(x -> x.getItem().isIn(tag), 0, player.container.func_234641_j_()) >= (getAmount() == 0 ? 1 : getAmount());
 	}
 	
 	public void take(PlayerEntity player){
-		player.inventory.clearMatchingItems(x -> x.getItem().isIn(tag), getAmount());
+		player.inventory.func_234564_a_(x -> x.getItem().isIn(tag), getAmount(), player.container.func_234641_j_());
 	}
 	
 	public ResourceLocation type(){
@@ -34,11 +33,11 @@ public class ItemTagRequirement extends Requirement{
 	
 	public CompoundNBT data(){
 		CompoundNBT compound = new CompoundNBT();
-		compound.putString("itemTag", tag.getId().toString());
+		compound.putString("itemTag", tag.getName().toString());
 		return compound;
 	}
 	
-	public Tag<Item> getTag(){
+	public ITag.INamedTag<Item> getTag(){
 		return tag;
 	}
 }

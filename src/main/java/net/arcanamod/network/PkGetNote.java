@@ -12,24 +12,24 @@ import net.minecraftforge.fml.network.NetworkEvent;
 import java.util.function.Supplier;
 
 public class PkGetNote{
-
+	
 	String entryName;
 	ResourceLocation researchLocation;
-
-	public PkGetNote(ResourceLocation id, String entryName) {
+	
+	public PkGetNote(ResourceLocation id, String entryName){
 		this.researchLocation = id;
 		this.entryName = entryName;
 	}
-
+	
 	public static void encode(PkGetNote msg, PacketBuffer buffer){
 		buffer.writeResourceLocation(msg.researchLocation);
 		buffer.writeString(msg.entryName);
 	}
-
+	
 	public static PkGetNote decode(PacketBuffer buffer){
-		return new PkGetNote(buffer.readResourceLocation(),buffer.readString());
+		return new PkGetNote(buffer.readResourceLocation(), buffer.readString());
 	}
-
+	
 	public static void handle(PkGetNote msg, Supplier<NetworkEvent.Context> supplier){
 		supplier.get().enqueueWork(() -> {
 			ServerPlayerEntity epm = supplier.get().getSender();
@@ -46,13 +46,13 @@ public class PkGetNote{
 					for(int i = 0; i < epm.inventory.getSizeInventory(); i++){
 						ItemStack stack = epm.inventory.getStackInSlot(i);
 						if(stack.getItem() == ArcanaItems.SCRIBING_TOOLS.get()){
-							stack.damageItem(1, epm,null);
+							stack.damageItem(1, epm, null);
 							break;
 						}
 					}
 					// remove paper -- done
-
-					epm.inventory.clearMatchingItems(e -> e.getItem()==Items.PAPER, 1);
+					
+					epm.inventory.func_234564_a_(e -> e.getItem() == Items.PAPER, 1, epm.container.func_234641_j_());
 				}
 				// tell client?
 			}

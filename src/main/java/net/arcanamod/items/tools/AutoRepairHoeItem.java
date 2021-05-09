@@ -15,7 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class AutoRepairHoeItem extends HoeItem{
 	
 	public AutoRepairHoeItem(IItemTier tier, float attackSpeed, Properties builder){
-		super(tier, attackSpeed, builder);
+		super(tier, 1, attackSpeed, builder);
 	}
 	
 	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged){

@@ -23,13 +23,14 @@ public class ResearchBookItem extends Item{
 	
 	public ResearchBookItem(Properties properties, ResourceLocation book){
 		super(properties);
-		this.addPropertyOverride(new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
+		// TODO: property overrides are now defined separately
+		/*this.addPropertyOverride(new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
 			if(!itemStack.getOrCreateTag().contains("open"))
 				return 0;
 			if(itemStack.getOrCreateTag().getBoolean("open"))
 				return 1;
 			return 0;
-		});
+		});*/
 		this.book = book;
 	}
 	

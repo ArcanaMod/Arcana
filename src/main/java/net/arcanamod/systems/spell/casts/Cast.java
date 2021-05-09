@@ -141,7 +141,7 @@ public abstract class Cast implements ICast {
 						// homes to players / passive mobs
 						SpellEggEntity eggentity = new SpellEggEntity(world, player, this);
 						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
-						eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+						eggentity.shoot(player.getLookVec().getX(), player.getLookVec().getY(), player.getLookVec().getZ(), 1.5F, 1.0F);
 						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
 						eggentity.enableHoming(PlayerEntity.class, CreatureEntity.class);
 						world.addEntity(eggentity);
@@ -153,7 +153,7 @@ public abstract class Cast implements ICast {
 						for (int i = 0; i < 3; i++) {
 							SpellEggEntity eggentity = new SpellEggEntity(world, player, this);
 							eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
-							eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 0.6F, 20.0F);
+							eggentity.shoot(player.getLookVec().getX(), player.getLookVec().getY(), player.getLookVec().getZ(), 0.6F, 20.0F);
 							eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
 							world.addEntity(eggentity);
 						}
@@ -161,7 +161,7 @@ public abstract class Cast implements ICast {
 						// homes to hostile mobs
 						SpellEggEntity eggentity = new SpellEggEntity(world, player, this);
 						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
-						eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+						eggentity.shoot(player.getLookVec().getX(), player.getLookVec().getY(), player.getLookVec().getZ(), 1.5F, 1.0F);
 						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
 						eggentity.enableHoming(MobEntity.class);
 						world.addEntity(eggentity);
@@ -169,7 +169,7 @@ public abstract class Cast implements ICast {
 						// the projectile is bigger
 						BigSpellEggEntity eggentity = new BigSpellEggEntity(world, player, this);
 						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
-						eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+						eggentity.shoot(player.getLookVec().getX(), player.getLookVec().getY(), player.getLookVec().getZ(), 1.5F, 1.0F);
 						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
 						world.addEntity(eggentity);
 					} else if (cast.getSecond() == WRATH) {
@@ -178,7 +178,7 @@ public abstract class Cast implements ICast {
 						// Default FIRE SPELL
 						SpellEggEntity eggentity = new SpellEggEntity(world, player, this);
 						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
-						eggentity.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, 1.5F, 1.0F);
+						eggentity.shoot(player.getLookVec().getX(), player.getLookVec().getY(), player.getLookVec().getZ(), 1.5F, 1.0F);
 						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
 						world.addEntity(eggentity);
 					}

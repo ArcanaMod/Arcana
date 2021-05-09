@@ -2,7 +2,9 @@ package net.arcanamod.systems.research;
 
 import net.arcanamod.systems.research.impls.*;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -42,7 +44,7 @@ public abstract class Requirement{
 	public static void init(){
 		// item and item tag requirement creation is handled by ResearchLoader -- an explicit form may be useful though.
 		deserializers.put(ItemRequirement.TYPE, compound -> new ItemRequirement(ForgeRegistries.ITEMS.getValue(new ResourceLocation(compound.getString("itemType")))));
-		deserializers.put(ItemTagRequirement.TYPE, compound -> new ItemTagRequirement(ItemTags.getCollection().get(new ResourceLocation(compound.getString("itemTag")))));
+		deserializers.put(ItemTagRequirement.TYPE, compound -> new ItemTagRequirement((ITag.INamedTag<Item>)ItemTags.getCollection().get(new ResourceLocation(compound.getString("itemTag")))));
 		
 		factories.put(XpRequirement.TYPE, __ -> new XpRequirement());
 		deserializers.put(XpRequirement.TYPE, __ -> new XpRequirement());
