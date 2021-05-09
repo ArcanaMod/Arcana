@@ -1,10 +1,13 @@
 package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,9 +33,11 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Random;
+import java.util.function.Function;
 
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
@@ -40,9 +45,10 @@ import java.util.Random;
 public class DelegatingBlock extends Block{
 	protected final Block parentBlock;
 	private static final Method fillStateContainer = ObfuscationReflectionHelper.findMethod(Block.class, "func_206840_a", StateContainer.Builder.class);
+	private static final Field blockColorsField = ObfuscationReflectionHelper.findField(AbstractBlock.Properties.class, "field_235800_b_");
 	
 	public DelegatingBlock(Block blockIn, @Nullable SoundType sound){
-		super(propertiesWithSound(Properties.from(blockIn),sound));
+		super(propertiesWithSound(Properties.from(blockIn), sound));
 		this.parentBlock = blockIn;
 		
 		// Refill the state container - Block does this too early
@@ -51,9 +57,9 @@ public class DelegatingBlock extends Block{
 		stateContainer = builder.createStateContainer(Block::getDefaultState, BlockState::new);
 		setDefaultState(stateContainer.getBaseState());
 	}
-
+	
 	public DelegatingBlock(Block blockIn){
-		this(blockIn,null);
+		this(blockIn, null);
 	}
 	
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
@@ -321,9 +327,21 @@ public class DelegatingBlock extends Block{
 	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos){
 		return parentBlock.getLightValue(state, world, pos);
 	}
-
+	
 	private static Properties propertiesWithSound(Properties properties, @Nullable SoundType soundType){
-		if (soundType==null) return properties; else return properties.sound(soundType);
+		// FIXME: state-properties are added too late, so we have to clear these two block-properties to avoid a crash
+		properties.setLightLevel(__ -> 0);
+		blockColorsField.setAccessible(true);
+		try{
+			blockColorsField.set(properties, (Function<BlockState, MaterialColor>)__ -> MaterialColor.PURPLE);
+		}catch(IllegalAccessException e){
+			e.printStackTrace();
+			System.err.println("[Arcana, hackfix] Unable to clear block properties!");
+		}
+		if(soundType == null)
+			return properties;
+		else
+			return properties.sound(soundType);
 	}
 	
 	public IFormattableTextComponent getTranslatedName(){

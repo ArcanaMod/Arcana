@@ -25,16 +25,15 @@ public class RegistryHandler{
 		IForgeRegistry<Item> registry = event.getRegistry();
 		ArcanaBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
 			Item.Properties properties = new Item.Properties();
-			if(!(block instanceof FlowingFluidBlock)
-			){
+			if(!(block instanceof FlowingFluidBlock)){
 				if(block instanceof GroupedBlock){
 					GroupedBlock grouped = (GroupedBlock)block;
 					ItemGroup group = grouped.getGroup();
 					if(group != null)
 						properties = properties.group(group);
-				}else if (block != ArcanaBlocks.WARDENED_BLOCK.get()
-						&& block != ArcanaBlocks.VACUUM_BLOCK.get()
-						&& block != ArcanaBlocks.LIGHT_BLOCK.get())
+				}else if(block != ArcanaBlocks.WARDENED_BLOCK.orElse(null)
+						&& block != ArcanaBlocks.VACUUM_BLOCK.orElse(null)
+						&& block != ArcanaBlocks.LIGHT_BLOCK.orElse(null))
 					properties = properties.group(Arcana.ITEMS);
 				Item blockItem = block instanceof CrystalClusterBlock ? new CrystalClusterItem(block, properties, 3) : new BlockItem(block, properties);
 				blockItem.setRegistryName(block.getRegistryName());

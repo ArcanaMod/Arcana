@@ -1,11 +1,9 @@
 package net.arcanamod.client.event;
 
-import net.arcanamod.Arcana;
 import net.arcanamod.client.render.particles.*;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 
 public class ParticleFactoryEvent{
 	@SubscribeEvent

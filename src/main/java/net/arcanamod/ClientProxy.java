@@ -38,6 +38,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColors;
+import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -67,23 +68,22 @@ public class ClientProxy extends CommonProxy{
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ArcanaConfig.CLIENT_SPEC);
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
 				() -> (mc, screen) -> new ConfigScreen(screen));
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(TextureStitchHandler::onTextureStitch);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(BakeEventHandler::onModelBake);
+		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		bus.addListener(TextureStitchHandler::onTextureStitch);
+		bus.addListener(BakeEventHandler::onModelBake);
+		bus.addListener(ParticleFactoryEvent::onParticleFactoryRegister);
+		bus.addListener((ModelRegistryEvent event) -> ModelLoaderRegistry.registerLoader(arcLoc("wand_loader"), new WandModelLoader()));
 		
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		modEventBus.addListener(RenderTooltipHandler::makeTooltip);
-		modEventBus.addListener(FogHandler::setFogColour);
-		modEventBus.addListener(FogHandler::setFogDensity);
-		modEventBus.addListener(FogHandler::setFogLength);
-		modEventBus.addListener(InitScreenHandler::onInitGuiEvent);
-		modEventBus.addListener(ParticleFactoryEvent::onParticleFactoryRegister);
-		
+		MinecraftForge.EVENT_BUS.addListener(RenderTooltipHandler::makeTooltip);
+		MinecraftForge.EVENT_BUS.addListener(FogHandler::setFogColour);
+		MinecraftForge.EVENT_BUS.addListener(FogHandler::setFogDensity);
+		MinecraftForge.EVENT_BUS.addListener(FogHandler::setFogLength);
+		MinecraftForge.EVENT_BUS.addListener(InitScreenHandler::onInitGuiEvent);
 		MinecraftForge.EVENT_BUS.register(ClientTickHandler.class);
-		MinecraftForge.EVENT_BUS.register(InitScreenHandler.class);
 		MinecraftForge.EVENT_BUS.register(BookRenderer.class);
 		MinecraftForge.EVENT_BUS.register(ParticleFactoryEvent.class);
 		
-		ArcanaParticles.PARTICLE_TYPES.register(modEventBus);
+		ArcanaParticles.PARTICLE_TYPES.register(bus);
 	}
 	
 	@Override
@@ -95,7 +95,6 @@ public class ClientProxy extends CommonProxy{
 		EntrySectionRenderer.init();
 		RequirementRenderer.init();
 		PuzzleRenderer.init();
-		ModelLoaderRegistry.registerLoader(arcLoc("wand_loader"), new WandModelLoader());
 		
 		// there's an event for this, but putting it here seems to affect literally nothing. huh.
 		// I'm not at all surprised.

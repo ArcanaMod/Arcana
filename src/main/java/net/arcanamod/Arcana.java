@@ -68,7 +68,7 @@ public class Arcana{
 	public static final Logger LOGGER = LogManager.getLogger("Arcana");
 	public static Arcana instance;
 	public static AuthorisationManager authManager;
-
+	
 	// Json Registry
 	public static ResearchLoader researchManager;
 	public static ItemAspectRegistry itemAspectRegistry;
@@ -87,39 +87,39 @@ public class Arcana{
 	public static final boolean debug = true;
 	
 	public Arcana(){
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::enqueueIMC);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMC);
-		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
-
+		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+		bus.addListener(this::setup);
+		bus.addListener(this::enqueueIMC);
+		bus.addListener(this::processIMC);
+		bus.addListener(this::setupClient);
+		
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ArcanaConfig.COMMON_SPEC);
 		
 		// deferred registry registration
-		IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		NodeType.init();
 		Aspects.init();
-
-		ArcanaBlocks.BLOCKS.register(modEventBus);
-		ArcanaEntities.ENTITY_TYPES.register(modEventBus);
-		ArcanaItems.ITEMS.register(modEventBus);
-		ArcanaEffects.EFFECTS.register(modEventBus);
-		ArcanaRecipes.Serializers.SERIALIZERS.register(modEventBus);
-		ArcanaTiles.TES.register(modEventBus);
-		ArcanaContainers.CON.register(modEventBus);
+		
+		ArcanaBlocks.BLOCKS.register(bus);
+		ArcanaEntities.ENTITY_TYPES.register(bus);
+		ArcanaItems.ITEMS.register(bus);
+		ArcanaEffects.EFFECTS.register(bus);
+		ArcanaRecipes.Serializers.SERIALIZERS.register(bus);
+		ArcanaTiles.TES.register(bus);
+		ArcanaContainers.CON.register(bus);
 		//ArcanaFeatures.FEATURES.register(modEventBus);
-		ArcanaBiomes.BIOMES.register(modEventBus);
-		ArcanaFluids.FLUIDS.register(modEventBus);
-
+		ArcanaBiomes.BIOMES.register(bus);
+		ArcanaFluids.FLUIDS.register(bus);
+		
 		proxy.construct();
 	}
 	
 	public static ResourceLocation arcLoc(String path){
 		return new ResourceLocation(MODID, path);
 	}
-
+	
 	private void setup(FMLCommonSetupEvent event){
 		authManager = new AuthorisationManager();
-
+		
 		// init, init, init, init, init, init, init, init
 		EntrySection.init();
 		Requirement.init();
@@ -132,7 +132,7 @@ public class Arcana{
 		net.minecraftforge.fml.StartupMessageManager.addModMessage("Arcana: Research registration completed");
 		
 		proxy.preInit(event);
-
+		
 		Connection.init();
 		
 		// dispenser behaviour for wand conversion
@@ -217,7 +217,7 @@ public class Arcana{
 				return super.dispenseStack(source, stack);
 			}
 		});
-
+		
 		//FeatureGenerator.setupFeatureGeneration();
 	}
 	
