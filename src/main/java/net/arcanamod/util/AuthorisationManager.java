@@ -22,6 +22,12 @@ public class AuthorisationManager {
 	}
 
 	public UserPermissionLevel[] getUserLevel(String username) throws IOException {
+		UserPermissionLevel[] lvl = getUserLevelNoCached(username);
+		if (cache == null) cache = lvl;
+		return lvl;
+	}
+
+	private UserPermissionLevel[] getUserLevelNoCached(String username) throws IOException {
 		if (cache == null) {
 			URL url = new URL("https://dczippl.tk/arcana.php");
 			URLConnection con = url.openConnection();
@@ -35,7 +41,6 @@ public class AuthorisationManager {
 				if (user.contains(username)) {
 					UserPermissionLevel[] upr = new UserPermissionLevel[1];
 					upr[0] = UserPermissionLevel.DEVELOPER;
-					cache = upr;
 					return upr;
 				}
 			}
