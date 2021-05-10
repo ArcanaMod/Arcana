@@ -1,8 +1,10 @@
 package net.arcanamod.entities.tainted;
 
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.monster.MonsterEntity;
@@ -10,6 +12,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import javax.annotation.Nullable;
 
 public class TaintedEntity extends MonsterEntity implements IMob {
 	public EntityType parentEntity;
@@ -43,6 +47,11 @@ public class TaintedEntity extends MonsterEntity implements IMob {
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 35.0D)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3.0D);
+	}
+
+	@Override
+	public CreatureAttribute getCreatureAttribute() {
+		return CreatureAttribute.UNDEFINED;
 	}
 
 	@OnlyIn(Dist.CLIENT)

@@ -322,7 +322,7 @@ public class Spell implements ISpell {
 
 	protected static boolean isReported;
 	protected static SpellModule reportNullSpell() {
-		if (!isReported) LogManager.getLogger().fatal(CrashReport.makeCrashReport(new NullSpellException(),"Null spell is present. Please report this issue to Arcana github page.").getCompleteReport());
+		if (!isReported) LogManager.getLogger().fatal("Null spell is present. Please report this issue to Arcana github page.");
 		isReported = true;
 		return new StartCircle();
 	}

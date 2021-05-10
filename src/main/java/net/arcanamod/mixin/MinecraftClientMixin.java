@@ -7,6 +7,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Hand;
+import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,7 +26,9 @@ public abstract class MinecraftClientMixin{
 	@Shadow
 	@Nullable
 	public ClientPlayerEntity player;
-	
+
+	@Shadow @Final private static Logger LOGGER;
+
 	@Inject(method = "processKeyBinds",
 	        at = @At("HEAD"))
 	private void processKeyBinds(CallbackInfo ci){
@@ -32,7 +36,9 @@ public abstract class MinecraftClientMixin{
 			for(Hand hand : Hand.values())
 				if(player.getHeldItem(hand).getItem() instanceof MagicDeviceItem){
 					if (((MagicDeviceItem)player.getHeldItem(hand).getItem()).canUseSpells()) {
-						displayGuiScreen(new SwapFocusScreen(hand));
+						try {
+							displayGuiScreen(new SwapFocusScreen(hand));
+						} catch (Exception exception) {LOGGER.error("OBJECT TYPE ERROR!!!");}
 						break;
 					}
 				}

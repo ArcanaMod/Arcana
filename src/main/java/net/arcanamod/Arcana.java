@@ -27,7 +27,6 @@ import net.arcanamod.worldgen.ArcanaBiomes;
 //import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
-import net.minecraft.client.Minecraft;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
@@ -55,7 +54,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
-import java.io.IOException;
 
 /**
  * Base Arcana Class
@@ -101,6 +99,7 @@ public class Arcana{
 		
 		ArcanaBlocks.BLOCKS.register(bus);
 		ArcanaEntities.ENTITY_TYPES.register(bus);
+		ArcanaEntities.T_ENTITY_TYPES.register(bus);
 		ArcanaItems.ITEMS.register(bus);
 		ArcanaEffects.EFFECTS.register(bus);
 		ArcanaRecipes.Serializers.SERIALIZERS.register(bus);
@@ -220,7 +219,7 @@ public class Arcana{
 		
 		//FeatureGenerator.setupFeatureGeneration();
 	}
-	
+
 	private void setupClient(FMLClientSetupEvent event){
 		// Moved to Client Proxy
 	}
