@@ -1,6 +1,8 @@
 package net.arcanamod.event;
 
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.entities.KoalaEntity;
+import net.arcanamod.entities.SpiritEntity;
 import net.arcanamod.entities.tainted.TaintedEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -19,5 +21,8 @@ public class GlobalEntity {
 				event.put((EntityType<? extends LivingEntity>)regobj.get(), TaintedEntity.registerAttributes().create());
 			}
 		});
+		event.put(ArcanaEntities.KOALA_ENTITY.get(), KoalaEntity.registerAttributes().create());
+		event.put(ArcanaEntities.DAIR_SPIRIT.get(), SpiritEntity.registerAttributes().create());
+		event.put(ArcanaEntities.WILLOW_SPIRIT.get(), SpiritEntity.registerAttributes().create());
 	}
 }
