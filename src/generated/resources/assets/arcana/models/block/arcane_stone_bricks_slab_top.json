@@ -1,5 +1,5 @@
 {
-  "parent": "block/slab_top",
+  "parent": "minecraft:block/slab_top",
   "textures": {
     "side": "arcana:block/arcane_stone_bricks",
     "bottom": "arcana:block/arcane_stone_bricks",

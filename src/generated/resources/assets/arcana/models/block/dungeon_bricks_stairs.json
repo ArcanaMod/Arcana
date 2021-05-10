@@ -1,5 +1,5 @@
 {
-  "parent": "block/stairs",
+  "parent": "minecraft:block/stairs",
   "textures": {
     "side": "arcana:block/dungeon_bricks",
     "bottom": "arcana:block/dungeon_bricks",

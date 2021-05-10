@@ -1,5 +1,5 @@
 {
-  "parent": "block/stairs",
+  "parent": "minecraft:block/stairs",
   "textures": {
     "side": "arcana:block/arcane_stone",
     "bottom": "arcana:block/arcane_stone",
