@@ -566,6 +566,7 @@
     "tooltip.arcana.complexity": "Complexity",
     "tooltip.arcana.vis": "Vis",
     "tooltip.arcana.infinity": "Infinity",
+    "tooltip.arcana.properties": "Properties:",
     "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration.\nMaybe you should look at those notes again.",
     "status.arcana.null_spell": "Null spell!",
     "status.arcana.invalid_spell": "Invalid spell!",

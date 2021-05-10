@@ -1,6 +1,7 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
@@ -34,6 +35,7 @@ import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.model.*;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -98,6 +100,17 @@ public class ClientProxy extends CommonProxy{
 		
 		// there's an event for this, but putting it here seems to affect literally nothing. huh.
 		// I'm not at all surprised.
+
+		ItemModelsProperties.registerProperty(ArcanaItems.PHIAL.get(),new ResourceLocation("aspect"), (itemStack, world, livingEntity) -> {
+			IAspectHandler vis = IAspectHandler.getFrom(itemStack);
+			if(vis == null)
+				return -1;
+			if(vis.getHoldersAmount() == 0)
+				return -1;
+			if(vis.getHolder(0) == null)
+				return -1;
+			return vis.getHolder(0).getContainedAspect().getId() - 1;
+		});
 		
 		Minecraft inst = Minecraft.getInstance();
 		inst.getBlockColors().register((state, access, pos, index) -> {

@@ -30,17 +30,6 @@ public class PhialItem extends Item implements IOverrideAspects {
 	
 	public PhialItem(){
 		super(new Properties().group(Arcana.ITEMS));
-		// TODO: property overrides are now defined separately
-		/*this.addPropertyOverride(new ResourceLocation("aspect"), (itemStack, world, livingEntity) -> {
-			IAspectHandler vis = IAspectHandler.getFrom(itemStack);
-			if(vis == null)
-				return -1;
-			if(vis.getHoldersAmount() == 0)
-				return -1;
-			if(vis.getHolder(0) == null)
-				return -1;
-			return vis.getHolder(0).getContainedAspect().getId() - 1;
-		});*/
 	}
 	
 	@SuppressWarnings("ConstantConditions")
