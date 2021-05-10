@@ -111,6 +111,13 @@ public class ClientProxy extends CommonProxy{
 				return -1;
 			return vis.getHolder(0).getContainedAspect().getId() - 1;
 		});
+		ItemModelsProperties.registerProperty(ArcanaItems.ARCANUM.get(),new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
+			if(!itemStack.getOrCreateTag().contains("open"))
+				return 0;
+			if(itemStack.getOrCreateTag().getBoolean("open"))
+				return 1;
+			return 0;
+		});
 		
 		Minecraft inst = Minecraft.getInstance();
 		inst.getBlockColors().register((state, access, pos, index) -> {
