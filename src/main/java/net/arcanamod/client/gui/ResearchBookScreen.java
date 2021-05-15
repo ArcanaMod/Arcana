@@ -516,13 +516,13 @@ public class ResearchBookScreen extends Screen{
 		}
 		return false;
 	}
-
-	public void onClose() {
-		if (sender != null) {
+	
+	public void onClose(){
+		if(sender != null)
 			sender.getOrCreateTag().putBoolean("open", false);
-		}
-
-		Minecraft.getInstance().displayGuiScreen(parentScreen);
+		
+		// TODO: parent screens
+		//Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 
 	/**

@@ -330,7 +330,8 @@ public class ResearchEntryScreen extends Screen{
 	}
 
 	public void onClose() {
-		Minecraft.getInstance().displayGuiScreen(parentScreen);
+		// TODO: parent screens
+		//Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 	
 	class ChangePageButton extends Button{
