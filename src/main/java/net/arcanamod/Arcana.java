@@ -2,29 +2,28 @@ package net.arcanamod;
 
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
+import net.arcanamod.capabilities.AuraChunkCapability;
+import net.arcanamod.capabilities.ResearcherCapability;
 import net.arcanamod.capabilities.TaintTrackableCapability;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
+import net.arcanamod.event.WorldLoadEvent;
 import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
+import net.arcanamod.items.recipes.ArcanaRecipes;
 import net.arcanamod.network.Connection;
 import net.arcanamod.systems.research.EntrySection;
 import net.arcanamod.systems.research.Puzzle;
 import net.arcanamod.systems.research.Requirement;
 import net.arcanamod.systems.research.ResearchLoader;
-import net.arcanamod.capabilities.ResearcherCapability;
-import net.arcanamod.items.recipes.ArcanaRecipes;
+import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.AuthorisationManager;
 import net.arcanamod.world.NodeType;
-import net.arcanamod.capabilities.AuraChunkCapability;
 import net.arcanamod.world.WorldInteractionsRegistry;
 import net.arcanamod.worldgen.ArcanaBiomes;
-//import net.arcanamod.worldgen.ArcanaFeatures;
-//import net.arcanamod.worldgen.FeatureGenerator;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IBlockSource;
@@ -39,6 +38,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
@@ -108,6 +108,8 @@ public class Arcana{
 		//ArcanaFeatures.FEATURES.register(modEventBus);
 		ArcanaBiomes.BIOMES.register(bus);
 		ArcanaFluids.FLUIDS.register(bus);
+		
+		MinecraftForge.EVENT_BUS.addListener(WorldLoadEvent::serverAboutToStart);
 		
 		proxy.construct();
 	}

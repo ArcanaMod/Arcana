@@ -13,9 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.JSONUtils;
@@ -47,12 +47,12 @@ public class ItemAspectRegistry extends JsonReloadListener{
 	
 	private static Map<Item, List<AspectStack>> itemAspects = new HashMap<>();
 	
-	private MinecraftServer server;
+	private RecipeManager recipes;
 	private static Set<Item> generating = new HashSet<>();
 	
-	public ItemAspectRegistry(MinecraftServer server){
+	public ItemAspectRegistry(RecipeManager recipes){
 		super(GSON, "arcana/aspect_maps");
-		this.server = server;
+		this.recipes = recipes;
 	}
 	
 	public static List<AspectStack> get(Item item){
@@ -104,7 +104,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		});
 		
 		// for every item not already given aspects in this way, give according to recipes
-		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes()){
+		for(IRecipe<?> recipe : recipes.getRecipes()){
 			Item item = recipe.getRecipeOutput().getItem();
 			if(!itemAspects.containsKey(item))
 				itemAspects.put(item, getGenerating(item));
@@ -133,7 +133,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		List<AspectStack> ret;
 		List<List<AspectStack>> allGenerated = new ArrayList<>();
 		// consider every recipe that produces this item
-		for(IRecipe<?> recipe : server.getRecipeManager().getRecipes())
+		for(IRecipe<?> recipe : recipes.getRecipes())
 			if(recipe.getRecipeOutput().getItem() == item){
 				List<AspectStack> generated = new ArrayList<>();
 				for(Ingredient ingredient : recipe.getIngredients()){

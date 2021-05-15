@@ -22,6 +22,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.resources.IReloadableResourceManager;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -65,11 +66,11 @@ public class WorldLoadEvent{
 	}
 	
 	@SubscribeEvent
-	public static void serverAboutToStart(FMLServerAboutToStartEvent event){
-		IReloadableResourceManager manager = (IReloadableResourceManager)event.getServer().getDataPackRegistries().getResourceManager();
-		manager.addReloadListener(Arcana.researchManager = new ResearchLoader());
-		manager.addReloadListener(Arcana.itemAspectRegistry = new ItemAspectRegistry(event.getServer()));
-		manager.addReloadListener(Arcana.worldInteractionsRegistry = new WorldInteractionsRegistry(event.getServer()));
+	public static void serverAboutToStart(AddReloadListenerEvent event){
+		//IReloadableResourceManager manager = (IReloadableResourceManager)event.getServer().getDataPackRegistries().getResourceManager();
+		event.addListener(Arcana.researchManager = new ResearchLoader());
+		event.addListener(Arcana.itemAspectRegistry = new ItemAspectRegistry(event.getDataPackRegistries().getRecipeManager()));
+		event.addListener(Arcana.worldInteractionsRegistry = new WorldInteractionsRegistry());
 	}
 	
 	@SubscribeEvent
