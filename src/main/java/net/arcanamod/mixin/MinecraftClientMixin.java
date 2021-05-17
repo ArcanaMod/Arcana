@@ -26,21 +26,25 @@ public abstract class MinecraftClientMixin{
 	@Shadow
 	@Nullable
 	public ClientPlayerEntity player;
-
-	@Shadow @Final private static Logger LOGGER;
-
+	
+	@Shadow
+	@Final
+	private static Logger LOGGER;
+	
 	@Inject(method = "processKeyBinds",
 	        at = @At("HEAD"))
 	private void processKeyBinds(CallbackInfo ci){
-		try {
-		while(ClientProxy.SWAP_FOCUS_BINDING.isPressed())
-			for(Hand hand : Hand.values())
-				if(player.getHeldItem(hand).getItem() instanceof MagicDeviceItem){
-					if (((MagicDeviceItem)player.getHeldItem(hand).getItem()).canUseSpells()) {
+		try{
+			while(ClientProxy.SWAP_FOCUS_BINDING.isPressed())
+				for(Hand hand : Hand.values())
+					if(player.getHeldItem(hand).getItem() instanceof MagicDeviceItem){
+						if(((MagicDeviceItem)player.getHeldItem(hand).getItem()).canUseSpells()){
 							displayGuiScreen(new SwapFocusScreen(hand));
-						break;
+							break;
+						}
 					}
-				}
-		} catch (Exception exception) {LOGGER.error("OBJECT TYPE ERROR!!!");}
+		}catch(Exception exception){
+			LOGGER.error("OBJECT TYPE ERROR!!!");
+		}
 	}
 }
