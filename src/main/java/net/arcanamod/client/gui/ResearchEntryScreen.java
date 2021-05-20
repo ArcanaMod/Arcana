@@ -7,6 +7,7 @@ import net.arcanamod.ArcanaConfig;
 import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
+import net.arcanamod.client.research.impls.StringSectionRenderer;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkModifyPins;
 import net.arcanamod.systems.research.EntrySection;
@@ -159,7 +160,7 @@ public class ResearchEntryScreen extends Screen{
 			}
 		};
 		cont = addButton(button);
-		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, b -> onClose()));
+		ret = addButton(new ReturnToBookButton(width / 2 - 7, (height - 181) / 2 - 26, b -> Minecraft.getInstance().displayGuiScreen(parentScreen)));
 		pins = new ArrayList<>();
 		updateButtons();
 	}
@@ -190,7 +191,9 @@ public class ResearchEntryScreen extends Screen{
 		else{
 			InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
 			if(getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey))
-				onClose();
+				Minecraft.getInstance().displayGuiScreen(parentScreen);
+			else if(keyCode == 292)
+				StringSectionRenderer.clearCache();
 			return false;
 		}
 	}
@@ -199,7 +202,7 @@ public class ResearchEntryScreen extends Screen{
 		super.mouseClicked(mouseX, mouseY, mouseButton);
 		// mouse button 1 is right click, just return
 		if(mouseButton == 1){
-			onClose();
+			Minecraft.getInstance().displayGuiScreen(parentScreen);
 			return true;
 		}
 		// mouse button 0 is left click, defer to entries and requirements
@@ -327,11 +330,6 @@ public class ResearchEntryScreen extends Screen{
 	
 	public boolean isPauseScreen(){
 		return false;
-	}
-
-	public void onClose() {
-		// TODO: parent screens
-		//Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 	
 	class ChangePageButton extends Button{

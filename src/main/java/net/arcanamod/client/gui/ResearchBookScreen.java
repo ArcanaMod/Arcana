@@ -506,11 +506,11 @@ public class ResearchBookScreen extends Screen{
 			return true;
 		}
 		InputMappings.Input mouseKey = InputMappings.getInputByCode(keyCode, scanCode);
-		if (keyCode == 256 || getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)) {
+		if(keyCode == 256 || getMinecraft().gameSettings.keyBindInventory.isActiveAndMatches(mouseKey)){
 			onClose();
-			getMinecraft().player.closeScreen();
+			Minecraft.getInstance().displayGuiScreen(parentScreen);
 			return true;
-		} else if (keyCode == 292) {
+		}else if(keyCode == 292){
 			// F3 pressed
 			showZoom = !showZoom;
 		}
@@ -520,9 +520,6 @@ public class ResearchBookScreen extends Screen{
 	public void onClose(){
 		if(sender != null)
 			sender.getOrCreateTag().putBoolean("open", false);
-		
-		// TODO: parent screens
-		//Minecraft.getInstance().displayGuiScreen(parentScreen);
 	}
 
 	/**

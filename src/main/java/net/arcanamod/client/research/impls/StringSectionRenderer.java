@@ -109,4 +109,8 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 	}
 	
 	public void renderAfter(MatrixStack stack, StringSection section, int pageIndex, int screenWidth, int screenHeight, int mouseX, int mouseY, boolean right, PlayerEntity player){}
+	
+	public static void clearCache(){
+		textCache = new HashMap<>();
+	}
 }

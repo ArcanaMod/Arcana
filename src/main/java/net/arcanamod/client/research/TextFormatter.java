@@ -15,6 +15,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.fonts.Font;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.ModList;
 
@@ -86,7 +87,7 @@ public final class TextFormatter{
 		}
 		
 		public float getHeight(){
-			return 16;
+			return 17;
 		}
 	}
 	
@@ -133,6 +134,7 @@ public final class TextFormatter{
 						lines.get(curLine).add(span);
 				}
 			}
+			height += curLineHeight;
 		}
 		
 		public SpanParagraph(List<Span> spans){
@@ -171,7 +173,7 @@ public final class TextFormatter{
 		Font font = ((FontRendererAccessor)fr).callGetFont(style.getFontId());
 		boolean formatting = false;
 		for(char c : str.toCharArray())
-			if(c == '§')
+			if(c == '\u00a7')
 				formatting = true;
 			else if(!formatting)
 				ret += font.func_238557_a_(c).getAdvance(style.getBold());
@@ -182,7 +184,7 @@ public final class TextFormatter{
 	
 	public static List<Paragraph> compile(String in, @Nullable StringSection section){
 		// split up by (\n\n)s
-		String[] paragraphs = in.split("\n");
+		String[] paragraphs = in.split("\n+");
 		List<Paragraph> ret = new ArrayList<>(paragraphs.length);
 		for(String paragraph : paragraphs){
 			List<Span> list = new ArrayList<>();
@@ -190,23 +192,15 @@ public final class TextFormatter{
 			for(String s : paragraph.split("([ ]+)|(?=\\{)|(?<=})")){
 				// if it begins with { and ends with }, its a formatting fragment
 				if(s.startsWith("{") && s.endsWith("}")){
-				
-				}else
+					s = s.substring(1, s.length() - 1);
+					if(s.startsWith("aspect:"))
+						list.add(new AspectSpan(Aspects.ASPECTS.get(new ResourceLocation(s.substring(7)))));
+				}else if(!s.isEmpty())
 					list.add(new TextSpan(s, Style.EMPTY));
 			}
 			ret.add(new SpanParagraph(list));
 		}
 		return ret;
-		/*return Arrays.stream(paragraphs)
-				.map(paragraph -> {
-					List<Span> list = new ArrayList<>();
-					for(String str : paragraph.split(" +")){
-						TextSpan span = new TextSpan(str, Style.EMPTY);
-						list.add(span);
-					}
-					return new SpanParagraph(list);
-				})
-				.collect(Collectors.toList());*/
 	}
 	
 	public static String process(String in, @Nullable StringSection section){
