@@ -169,18 +169,44 @@ public final class TextFormatter{
 	public static float width(String str, Style style, FontRenderer fr){
 		float ret = 0;
 		Font font = ((FontRendererAccessor)fr).callGetFont(style.getFontId());
+		boolean formatting = false;
 		for(char c : str.toCharArray())
-			ret += font.func_238557_a_(c).getAdvance(style.getBold());
+			if(c == '§')
+				formatting = true;
+			else if(!formatting)
+				ret += font.func_238557_a_(c).getAdvance(style.getBold());
+			else
+				formatting = false;
 		return ret;
 	}
 	
 	public static List<Paragraph> compile(String in, @Nullable StringSection section){
 		// split up by (\n\n)s
-		return Arrays.stream(in.split("\n"))
-				.map(paragraph -> new SpanParagraph(Arrays.stream(paragraph.split(" +"))
-						.map(str -> new TextSpan(str, Style.EMPTY))
-						.collect(Collectors.toList())))
-				.collect(Collectors.toList());
+		String[] paragraphs = in.split("\n");
+		List<Paragraph> ret = new ArrayList<>(paragraphs.length);
+		for(String paragraph : paragraphs){
+			List<Span> list = new ArrayList<>();
+			// splits before { and after } and at spaces
+			for(String s : paragraph.split("([ ]+)|(?=\\{)|(?<=})")){
+				// if it begins with { and ends with }, its a formatting fragment
+				if(s.startsWith("{") && s.endsWith("}")){
+				
+				}else
+					list.add(new TextSpan(s, Style.EMPTY));
+			}
+			ret.add(new SpanParagraph(list));
+		}
+		return ret;
+		/*return Arrays.stream(paragraphs)
+				.map(paragraph -> {
+					List<Span> list = new ArrayList<>();
+					for(String str : paragraph.split(" +")){
+						TextSpan span = new TextSpan(str, Style.EMPTY);
+						list.add(span);
+					}
+					return new SpanParagraph(list);
+				})
+				.collect(Collectors.toList());*/
 	}
 	
 	public static String process(String in, @Nullable StringSection section){

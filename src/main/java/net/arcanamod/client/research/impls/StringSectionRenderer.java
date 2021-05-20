@@ -27,7 +27,7 @@ public class StringSectionRenderer implements EntrySectionRenderer<StringSection
 	
 	public int span(StringSection section, PlayerEntity player){
 		List<TextFormatter.Paragraph> paragraphs = textCache.computeIfAbsent(section, s -> TextFormatter.compile(getTranslatedText(s), s));
-		int curPage = 0;
+		int curPage = 1;
 		float curPageHeight = 0;
 		for(int i = 0; i < paragraphs.size(); i++){
 			TextFormatter.Paragraph paragraph = paragraphs.get(i);
