@@ -641,7 +641,7 @@
 
     "research.arcana.root": "Arcana",
     "research.arcana.root.desc": "The Start of Something Amazing",
-    "research.arcana.root.text": "That was an... odd experience. That sudden burst of inspiration... I can't blame it on anything mundane. No, this is something magical.\nI'll write down my notes in this book: the Arcanum, and read through those scribbled notes ones more time. I might just keep them here, for future reference.",
+    "research.arcana.root.text": "That was an... odd experience. That sudden burst of inspiration... I can't blame it on anything mundane. No, this is something magical.\nI'll write down my notes in this book: the Arcanum, and read through those scribbled notes ones more time. I might just keep them here, for future reference.\nFormatting test: {i}italic{i}, {b}bold{b}, {s}strikethrough{s}, {u}underlined{u}, {o}obfuscated{o}, {w}wavy{w}, {sh}shadowed{sh}, {i}{b}{s}{u}{w}{sh}many{r}.",
 
     "research.arcana.flux": "Flux, Taint, Warp",
     "research.arcana.flux.desc": "No such thing as free lunch",
