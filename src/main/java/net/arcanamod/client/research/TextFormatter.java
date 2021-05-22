@@ -38,7 +38,8 @@ import static net.arcanamod.client.gui.ResearchEntryScreen.TEXT_SCALING;
 
 public final class TextFormatter{
 	
-	private TextFormatter(){}
+	private TextFormatter(){
+	}
 	
 	private static final float TEXT_WIDTH = ResearchEntryScreen.PAGE_WIDTH / TEXT_SCALING;
 	
@@ -99,6 +100,36 @@ public final class TextFormatter{
 		
 		public float getHeight(){
 			return 17;
+		}
+	}
+	
+	public static class MultiSpan implements Span{
+		
+		private List<Span> spans;
+		
+		public MultiSpan(List<Span> spans){
+			this.spans = spans;
+		}
+		
+		public void render(MatrixStack stack, int x, int y){
+			for(Span span : spans){
+				span.render(stack, x, y);
+				x += span.getWidth();
+			}
+		}
+		
+		public float getWidth(){
+			float width = 0;
+			for(Span span : spans)
+				width += span.getWidth();
+			return width;
+		}
+		
+		public float getHeight(){
+			float height = 0;
+			for(Span span : spans)
+				height = Math.max(span.getHeight(), height);
+			return height;
 		}
 	}
 	
@@ -231,81 +262,88 @@ public final class TextFormatter{
 			CustomTextStyle curStyle = CustomTextStyle.EMPTY;
 			boolean styleNeedsCopy = true, centred = false;
 			List<Span> list = new ArrayList<>();
-			// splits before { and after } and at spaces
-			for(String s : paragraph.split("([ ]+)|(?=\\{)|(?<=})")){
-				// if it begins with { and ends with }, its a formatting fragment
-				if(s.startsWith("{") && s.endsWith("}")){
-					s = s.substring(1, s.length() - 1);
-					if(s.startsWith("aspect:"))
-						list.add(new AspectSpan(Aspects.ASPECTS.get(new ResourceLocation(s.substring(7)))));
-					// todo: move config inlining here?
-					else if(s.equals("r")){
-						curStyle = CustomTextStyle.EMPTY;
-						styleNeedsCopy = true;
-					}else{
-						if(styleNeedsCopy){
-							curStyle = curStyle.copy();
-							styleNeedsCopy = false;
+			// splits at spaces
+			for(String word : paragraph.split("([ ]+)")){
+				List<Span> segments = new ArrayList<>();
+				// splits before { and after }
+				for(String s : word.split("(?=\\{)|(?<=})")){
+					// if it begins with { and ends with }, its a formatting fragment
+					if(s.startsWith("{") && s.endsWith("}")){
+						s = s.substring(1, s.length() - 1);
+						if(s.startsWith("aspect:"))
+							list.add(new AspectSpan(Aspects.ASPECTS.get(new ResourceLocation(s.substring(7)))));
+							// todo: move config inlining here?
+						else if(s.equals("r")){
+							curStyle = CustomTextStyle.EMPTY;
+							styleNeedsCopy = true;
+						}else{
+							if(styleNeedsCopy){
+								curStyle = curStyle.copy();
+								styleNeedsCopy = false;
+							}
+							if(s.equals("b")) // Boolean formatting
+								curStyle.setBold(!curStyle.isBold());
+							else if(s.equals("i"))
+								curStyle.setItalics(!curStyle.isItalics());
+							else if(s.equals("s"))
+								curStyle.setStrikethrough(!curStyle.isStrikethrough());
+							else if(s.equals("u"))
+								curStyle.setUnderline(!curStyle.isUnderline());
+							else if(s.equals("o"))
+								curStyle.setObfuscated(!curStyle.isObfuscated());
+							else if(s.equals("w"))
+								curStyle.setWavy(!curStyle.isWavy());
+							else if(s.equals("sh"))
+								curStyle.setShadow(!curStyle.isShadow());
+								// Vanilla colour codes, prefixed with 'c'
+							else if(s.equals("c0")) // Black
+								curStyle.setColour(0x000000);
+							else if(s.equals("c1")) // Dark Blue
+								curStyle.setColour(0x0000aa);
+							else if(s.equals("c2")) // Dark Green
+								curStyle.setColour(0x00aa00);
+							else if(s.equals("c3")) // Dark Aqua
+								curStyle.setColour(0x00aaaa);
+							else if(s.equals("c4")) // Dark Red
+								curStyle.setColour(0xaa0000);
+							else if(s.equals("c5")) // Dark Purple
+								curStyle.setColour(0xaa00aa);
+							else if(s.equals("c6")) // Gold
+								curStyle.setColour(0xffaa00);
+							else if(s.equals("c7")) // Gray
+								curStyle.setColour(0xaaaaaa);
+							else if(s.equals("c8")) // Dark Gray
+								curStyle.setColour(0x555555);
+							else if(s.equals("c9")) // Blue
+								curStyle.setColour(0x5555ff);
+							else if(s.equals("ca")) // Green
+								curStyle.setColour(0x55ff55);
+							else if(s.equals("cb")) // Aqua
+								curStyle.setColour(0x55ffff);
+							else if(s.equals("cc")) // Red
+								curStyle.setColour(0xff5555);
+							else if(s.equals("cd")) // Light Purple
+								curStyle.setColour(0xff55ff);
+							else if(s.equals("ce")) // Yellow
+								curStyle.setColour(0xffff55);
+							else if(s.equals("cf")) // White
+								curStyle.setColour(0xffffff);
+							else if(s.equals("c")) // Centred
+								centred = true;
+							else if(s.startsWith("size:"))
+								curStyle.setSize(Float.parseFloat(s.substring(5)));
+							else if(s.startsWith("colour:"))
+								curStyle.setColour(Integer.parseInt(s.substring(7), 16));
 						}
-						if(s.equals("b")) // Boolean formatting
-							curStyle.setBold(!curStyle.isBold());
-						else if(s.equals("i"))
-							curStyle.setItalics(!curStyle.isItalics());
-						else if(s.equals("s"))
-							curStyle.setStrikethrough(!curStyle.isStrikethrough());
-						else if(s.equals("u"))
-							curStyle.setUnderline(!curStyle.isUnderline());
-						else if(s.equals("o"))
-							curStyle.setObfuscated(!curStyle.isObfuscated());
-						else if(s.equals("w"))
-							curStyle.setWavy(!curStyle.isWavy());
-						else if(s.equals("sh"))
-							curStyle.setShadow(!curStyle.isShadow());
-						// Vanilla colour codes, prefixed with 'c'
-						else if(s.equals("c0")) // Black
-							curStyle.setColour(0x000000);
-						else if(s.equals("c1")) // Dark Blue
-							curStyle.setColour(0x0000aa);
-						else if(s.equals("c2")) // Dark Green
-							curStyle.setColour(0x00aa00);
-						else if(s.equals("c3")) // Dark Aqua
-							curStyle.setColour(0x00aaaa);
-						else if(s.equals("c4")) // Dark Red
-							curStyle.setColour(0xaa0000);
-						else if(s.equals("c5")) // Dark Purple
-							curStyle.setColour(0xaa00aa);
-						else if(s.equals("c6")) // Gold
-							curStyle.setColour(0xffaa00);
-						else if(s.equals("c7")) // Gray
-							curStyle.setColour(0xaaaaaa);
-						else if(s.equals("c8")) // Dark Gray
-							curStyle.setColour(0x555555);
-						else if(s.equals("c9")) // Blue
-							curStyle.setColour(0x5555ff);
-						else if(s.equals("ca")) // Green
-							curStyle.setColour(0x55ff55);
-						else if(s.equals("cb")) // Aqua
-							curStyle.setColour(0x55ffff);
-						else if(s.equals("cc")) // Red
-							curStyle.setColour(0xff5555);
-						else if(s.equals("cd")) // Light Purple
-							curStyle.setColour(0xff55ff);
-						else if(s.equals("ce")) // Yellow
-							curStyle.setColour(0xffff55);
-						else if(s.equals("cf")) // White
-							curStyle.setColour(0xffffff);
-						else if(s.equals("c")) // Centred
-							centred = true;
-						else if(s.startsWith("size:"))
-							curStyle.setSize(Float.parseFloat(s.substring(5)));
-						else if(s.startsWith("colour:"))
-							curStyle.setColour(Integer.parseInt(s.substring(7), 16));
+					}else if(!s.isEmpty()){
+						segments.add(new TextSpan(s, curStyle));
+						styleNeedsCopy = true;
 					}
-					
-				}else if(!s.isEmpty()){
-					list.add(new TextSpan(s, curStyle));
-					styleNeedsCopy = true;
 				}
+				if(segments.size() == 1)
+					list.add(segments.get(0));
+				else if(segments.size() > 0)
+					list.add(new MultiSpan(segments));
 			}
 			ret.add(new SpanParagraph(list, centred));
 		}
@@ -386,10 +424,10 @@ public final class TextFormatter{
 			
 			float advance = glyph.getAdvance(style.isBold());
 			float shadowed = style.isShadow() ? 1 : 0;
-			if (style.isStrikethrough())
+			if(style.isStrikethrough())
 				effects.add(new TexturedGlyph.Effect(x + shadowed - 1, y + shadowed + 4, x + shadowed + advance, y + shadowed + 4.5F - 1, 0.01F, red, green, blue, 1));
 			
-			if (style.isUnderline())
+			if(style.isUnderline())
 				effects.add(new TexturedGlyph.Effect(x + shadowed - 1, y + shadowed + 9, x + shadowed + advance, y + shadowed + 9.0F - 1, 0.01F, red, green, blue, 1));
 			x += advance;
 		}
