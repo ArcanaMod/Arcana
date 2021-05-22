@@ -74,7 +74,7 @@ public final class TextFormatter{
 		}
 		
 		public float getWidth(){
-			return width(text, renderStyle) * renderStyle.getSize();
+			return width(text, renderStyle) * renderStyle.getSize() * (renderStyle.isSubscript() || renderStyle.isSuperscript() ? .6f : 1);
 		}
 		
 		public float getHeight(){
@@ -295,6 +295,10 @@ public final class TextFormatter{
 								curStyle.setWavy(!curStyle.isWavy());
 							else if(s.equals("sh"))
 								curStyle.setShadow(!curStyle.isShadow());
+							else if(s.equals("super"))
+								curStyle.setSuperscript(!curStyle.isSuperscript());
+							else if(s.equals("sub"))
+								curStyle.setSubscript(!curStyle.isSubscript());
 								// Vanilla colour codes, prefixed with 'c'
 							else if(s.equals("c0")) // Black
 								curStyle.setColour(0x000000);
@@ -397,6 +401,13 @@ public final class TextFormatter{
 	
 	// vanilla copy: FontRenderer, line 288
 	public static void renderStringWithCustomFormatting(MatrixStack stack, String text, CustomTextStyle style, float x, float y, Font font){
+		if(style.isSubscript() || style.isSuperscript()){
+			stack.push();
+			stack.scale(.5f, .5f, 1);
+			x /= .5f;
+			y /= .5f;
+			y = style.isSuperscript() ? y - 3 : y + 8;
+		}
 		IRenderTypeBuffer.Impl buffer = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
 		int colour = style.getColour();
 		float red = (float)(colour >> 16 & 255) / 255.0F;
@@ -436,6 +447,8 @@ public final class TextFormatter{
 		for(TexturedGlyph.Effect effect : effects)
 			texturedglyph.renderEffect(effect, stack.getLast().getMatrix(), ivertexbuilder, 0xf000f0);
 		buffer.finish();
+		if(style.isSubscript() || style.isSuperscript())
+			stack.pop();
 	}
 	
 	public static void renderStringWithCustomFormatting(MatrixStack stack, String text, CustomTextStyle style, float x, float y){

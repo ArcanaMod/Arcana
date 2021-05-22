@@ -3,12 +3,12 @@ package net.arcanamod.client.research;
 public class CustomTextStyle{
 	
 	private int colour;
-	private boolean bold, italics, underline, obfuscated, wavy, shadow, strikethrough;
+	private boolean bold, italics, underline, obfuscated, wavy, shadow, strikethrough, subscript, superscript;
 	private float size;
 	
-	public static final CustomTextStyle EMPTY = new CustomTextStyle(0, false, false, false, false, false, 1, false, false);
+	public static final CustomTextStyle EMPTY = new CustomTextStyle(0, false, false, false, false, false, 1, false, false, false, false);
 	
-	public CustomTextStyle(int colour, boolean bold, boolean italics, boolean underline, boolean obfuscated, boolean wavy, float size, boolean shadow, boolean strikethrough){
+	public CustomTextStyle(int colour, boolean bold, boolean italics, boolean underline, boolean obfuscated, boolean wavy, float size, boolean shadow, boolean strikethrough, boolean subscript, boolean superscript){
 		this.colour = colour;
 		this.bold = bold;
 		this.italics = italics;
@@ -21,7 +21,7 @@ public class CustomTextStyle{
 	}
 	
 	public CustomTextStyle(CustomTextStyle in){
-		this(in.colour, in.bold, in.italics, in.underline, in.obfuscated, in.wavy, in.size, in.shadow, in.strikethrough);
+		this(in.colour, in.bold, in.italics, in.underline, in.obfuscated, in.wavy, in.size, in.shadow, in.strikethrough, in.subscript, in.superscript);
 	}
 	
 	public CustomTextStyle copy(){
@@ -106,6 +106,24 @@ public class CustomTextStyle{
 	
 	public CustomTextStyle setStrikethrough(boolean strikethrough){
 		this.strikethrough = strikethrough;
+		return this;
+	}
+	
+	public boolean isSubscript(){
+		return subscript;
+	}
+	
+	public boolean isSuperscript(){
+		return superscript;
+	}
+	
+	public CustomTextStyle setSubscript(boolean subscript){
+		this.subscript = subscript;
+		return this;
+	}
+	
+	public CustomTextStyle setSuperscript(boolean superscript){
+		this.superscript = superscript;
 		return this;
 	}
 }
