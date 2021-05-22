@@ -33,11 +33,14 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
+import static net.arcanamod.client.gui.ResearchEntryScreen.TEXT_SCALING;
+
 public final class TextFormatter{
 	
 	private TextFormatter(){}
 	
-	private static final float TEXT_WIDTH = ResearchEntryScreen.PAGE_WIDTH / ResearchEntryScreen.TEXT_SCALING;
+	private static final float TEXT_WIDTH = ResearchEntryScreen.PAGE_WIDTH / TEXT_SCALING;
 	
 	public interface Span{
 		
@@ -60,15 +63,21 @@ public final class TextFormatter{
 		}
 		
 		public void render(MatrixStack stack, int x, int y){
-			renderStringWithCustomFormatting(stack, text, renderStyle, x, y);
+			if(renderStyle.getSize() != 1){
+				stack.push();
+				stack.scale(renderStyle.getSize(), renderStyle.getSize(), 1);
+			}
+			renderStringWithCustomFormatting(stack, text, renderStyle, x / renderStyle.getSize(), y / renderStyle.getSize());
+			if(renderStyle.getSize() != 1)
+				stack.pop();
 		}
 		
 		public float getWidth(){
-			return width(text, renderStyle);
+			return width(text, renderStyle) * renderStyle.getSize();
 		}
 		
 		public float getHeight(){
-			return 9 + (renderStyle.isWavy() ? 1 : 0);
+			return (9 + (renderStyle.isWavy() ? 1 : 0)) * renderStyle.getSize();
 		}
 	}
 	
@@ -166,6 +175,18 @@ public final class TextFormatter{
 		}
 	}
 	
+	public static class SeparatorParagraph implements Paragraph{
+		
+		public void render(MatrixStack stack, int x, int y, float scale){
+			Minecraft.getInstance().getTextureManager().bindTexture(((ResearchEntryScreen)(Minecraft.getInstance().currentScreen)).bg);
+			drawTexturedModalRect(stack, (int)(x + (TEXT_WIDTH - 86) / 2), y + 3, 29, 184, 86, 3);
+		}
+		
+		public float getHeight(){
+			return 6;
+		}
+	}
+	
 	public static float width(String str, Style style){
 		return width(str, style, Minecraft.getInstance().fontRenderer);
 	}
@@ -203,8 +224,12 @@ public final class TextFormatter{
 		String[] paragraphs = in.split("\n+");
 		List<Paragraph> ret = new ArrayList<>(paragraphs.length);
 		for(String paragraph : paragraphs){
+			if(paragraph.equals("{~sep}")){
+				ret.add(new SeparatorParagraph());
+				continue;
+			}
 			CustomTextStyle curStyle = CustomTextStyle.EMPTY;
-			boolean styleNeedsCopy = true;
+			boolean styleNeedsCopy = true, centred = false;
 			List<Span> list = new ArrayList<>();
 			// splits before { and after } and at spaces
 			for(String s : paragraph.split("([ ]+)|(?=\\{)|(?<=})")){
@@ -213,6 +238,7 @@ public final class TextFormatter{
 					s = s.substring(1, s.length() - 1);
 					if(s.startsWith("aspect:"))
 						list.add(new AspectSpan(Aspects.ASPECTS.get(new ResourceLocation(s.substring(7)))));
+					// todo: move config inlining here?
 					else if(s.equals("r")){
 						curStyle = CustomTextStyle.EMPTY;
 						styleNeedsCopy = true;
@@ -221,9 +247,7 @@ public final class TextFormatter{
 							curStyle = curStyle.copy();
 							styleNeedsCopy = false;
 						}
-						// it takes up 100% more space on java 8 >_>
-						//noinspection IfCanBeSwitch
-						if(s.equals("b"))
+						if(s.equals("b")) // Boolean formatting
 							curStyle.setBold(!curStyle.isBold());
 						else if(s.equals("i"))
 							curStyle.setItalics(!curStyle.isItalics());
@@ -237,6 +261,45 @@ public final class TextFormatter{
 							curStyle.setWavy(!curStyle.isWavy());
 						else if(s.equals("sh"))
 							curStyle.setShadow(!curStyle.isShadow());
+						// Vanilla colour codes, prefixed with 'c'
+						else if(s.equals("c0")) // Black
+							curStyle.setColour(0x000000);
+						else if(s.equals("c1")) // Dark Blue
+							curStyle.setColour(0x0000aa);
+						else if(s.equals("c2")) // Dark Green
+							curStyle.setColour(0x00aa00);
+						else if(s.equals("c3")) // Dark Aqua
+							curStyle.setColour(0x00aaaa);
+						else if(s.equals("c4")) // Dark Red
+							curStyle.setColour(0xaa0000);
+						else if(s.equals("c5")) // Dark Purple
+							curStyle.setColour(0xaa00aa);
+						else if(s.equals("c6")) // Gold
+							curStyle.setColour(0xffaa00);
+						else if(s.equals("c7")) // Gray
+							curStyle.setColour(0xaaaaaa);
+						else if(s.equals("c8")) // Dark Gray
+							curStyle.setColour(0x555555);
+						else if(s.equals("c9")) // Blue
+							curStyle.setColour(0x5555ff);
+						else if(s.equals("ca")) // Green
+							curStyle.setColour(0x55ff55);
+						else if(s.equals("cb")) // Aqua
+							curStyle.setColour(0x55ffff);
+						else if(s.equals("cc")) // Red
+							curStyle.setColour(0xff5555);
+						else if(s.equals("cd")) // Light Purple
+							curStyle.setColour(0xff55ff);
+						else if(s.equals("ce")) // Yellow
+							curStyle.setColour(0xffff55);
+						else if(s.equals("cf")) // White
+							curStyle.setColour(0xffffff);
+						else if(s.equals("c")) // Centred
+							centred = true;
+						else if(s.startsWith("size:"))
+							curStyle.setSize(Float.parseFloat(s.substring(5)));
+						else if(s.startsWith("colour:"))
+							curStyle.setColour(Integer.parseInt(s.substring(7), 16));
 					}
 					
 				}else if(!s.isEmpty()){
@@ -244,7 +307,7 @@ public final class TextFormatter{
 					styleNeedsCopy = true;
 				}
 			}
-			ret.add(new SpanParagraph(list));
+			ret.add(new SpanParagraph(list, centred));
 		}
 		return ret;
 	}
@@ -257,7 +320,7 @@ public final class TextFormatter{
 		if(section != null && ArcanaConfig.ENTRY_TITLES.get()){
 			ResearchEntry entry = ResearchBooks.getEntry(section.getEntry());
 			if(entry.sections().get(0) == section)
-				in = "{~c}" + TextFormatting.ITALIC + I18n.format(entry.name()) + TextFormatting.RESET + "{~sep}" + in;
+				in = "{c}{size:1.5}" + I18n.format(entry.name()) + "{r}{~sep}" + in;
 		}
 		if(in.contains("{$")){
 			Pattern findBraces = Pattern.compile("(\\{\\$.*?})");
