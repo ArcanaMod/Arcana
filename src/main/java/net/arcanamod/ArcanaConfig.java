@@ -10,14 +10,14 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
  * @author Mozaran, Luna
  */
 public class ArcanaConfig{
-	
+
 	private static final Builder COMMON_BUILDER = new Builder();
 	private static final Builder CLIENT_BUILDER = new Builder();
-	
+
 	static{
 		// TODO: proper categories
 		COMMON_BUILDER.push("General");
-		
+
 		SPAWN_WITH_NOTES = COMMON_BUILDER
 				.comment("If the player should spawn with scribbled notes when first joining the world.", "True by default.")
 				.define("SpawnWithNotes", true);
@@ -33,7 +33,7 @@ public class ArcanaConfig{
 		GENERATE_OVERWORLD = COMMON_BUILDER
 				.comment("Enables ore generation in the overworld.", "If disabled, Arcana's ores will not generate.", "True by default.")
 				.define("OverworldGeneration", true);
-		
+
 		AMBER_MIN_VEIN_SIZE = COMMON_BUILDER
 				.comment("The minimum size of amber ore veins.", "(Currently unused. 4 by default.)")
 				.define("MinAmberSize", 4);
@@ -49,7 +49,7 @@ public class ArcanaConfig{
 		AMBER_MAX_Y = COMMON_BUILDER
 				.comment("The maximum Y level that amber ore will generate at.", "50 by default.")
 				.define("MaxAmberY", 50);
-		
+
 		SILVER_MIN_VEIN_SIZE = COMMON_BUILDER
 				.comment("The minimum size of amber ore veins.", "(Currently unused. 3 by default.)")
 				.define("MinAmberSize", 3);
@@ -65,7 +65,7 @@ public class ArcanaConfig{
 		SILVER_MAX_Y = COMMON_BUILDER
 				.comment("The maximum Y level that amber ore will generate at.", "30 by default.")
 				.define("MaxAmberY", 30);
-		
+
 		CINNABAR_MIN_VEIN_SIZE = COMMON_BUILDER
 				.comment("The minimum size of amber ore veins.", "(Currently unused. 1 by default.)")
 				.define("MinAmberSize", 1);
@@ -81,7 +81,7 @@ public class ArcanaConfig{
 		CINNABAR_MAX_Y = COMMON_BUILDER
 				.comment("The maximum Y level that amber ore will generate at.", "80 by default.")
 				.define("MaxAmberY", 80);
-		
+
 		NODE_CHANCE = COMMON_BUILDER
 				.comment("The chance of an aura node generating in a chunk, out of 100.", "1 by default.")
 				.define("NodeChance", 1);
@@ -106,18 +106,18 @@ public class ArcanaConfig{
 		ALEMBIC_BASE_FLUX_RATE = COMMON_BUILDER
 				.comment("The amount of flux per aspect created by an unfiltered alembic distilling aspects from a crucible.", "0.2 by default.")
 				.define("AlembicBaseFluxRate", .2);
-		
+
 		ASPECT_DUMPING_WASTE = COMMON_BUILDER
 				.comment("The amount of flux per aspect created when emptying an alembic or crucible by hand.", "0.5 by default.")
 				.define("AspectDumpingWaste", .5);
-		
+
 		ALCHEMY_ASPECT_CARRY_FRACTION = COMMON_BUILDER
 				.comment("The fraction of aspects used in an alchemy recipe that should be assigned to the result through recipes.", "Setting this to 0.5, the default, for example, will cause an item crafted with 10 aer in alchemy to be given 5 aer from that recipe.")
 				.define("AlchemyAspectCarryFraction", .5);
 		HUNGRY_NODE_ASPECT_CARRY_FRACTION = COMMON_BUILDER
 				.comment("The fraction of aspects that a hungry node will absorb from blocks or items it destroys.", "Setting this to 0.5, the default, for example, will cause a hungry node to gain 2 terra after absorbing an item with 4.", "Hungry nodes will always absorb at least one of every aspect in a block or item it destroys, unless this value is set to 0.")
 				.define("HungryNodeAspectCarryFraction", .5);
-		
+
 		TAINT_SPAWN_THRESHOLD = COMMON_BUILDER
 				.comment("The amount of flux in a chunk that is required to spawn a taint block. Does not affect taint spreading.", "60 by default.")
 				.define("TaintSpawnThreshold", 60);
@@ -142,22 +142,22 @@ public class ArcanaConfig{
 		TAINT_SPREAD_TRIES = COMMON_BUILDER
 				.comment("The number of times that a tainted block will attempt to spread taint on a random tick.", "5 by default.")
 				.define("TaintSpreadTries", 5);
-		
+
 		SILVERWOOD_NODE_CHANCE = COMMON_BUILDER
 				.comment("The chance of a pure aura node generating with a silverwood tree, out of 100.", "50 by default.")
 				.define("SilverwoodNodeChance", 50);
 		PURE_NODE_TAINT_PROTECT_RANGE = COMMON_BUILDER
 				.comment("The maximum distance that a pure node will prevent taint spreading to.", "Blocks that are this distance, or less, from a pure node cannot be tainted.", "12 by default.")
 				.define("PureNodeTaintProtectRange", 12);
-		
+
 		FLUX_RESEARCH_REQUIREMENT = COMMON_BUILDER
 				.comment("The amount of flux required to advance the flux research.", "20 by default.")
 				.define("FluxResearchRequirement", 50);
-		
+
 		COMMON_BUILDER.pop();
-		
-		
-		
+
+
+
 		CLIENT_BUILDER.push("Client");
 		CUSTOM_BOOK_WIDTH = CLIENT_BUILDER
 				.comment("The width that the research book GUI should use.", "Setting it to -1, the default, makes the GUI adjust to screen width automatically.")
@@ -186,6 +186,9 @@ public class ArcanaConfig{
 		BLOCK_HUDS_TOP = CLIENT_BUILDER
 				.comment("Whether block HUDS that display in the middle of the screen should display above the crosshair (true) or below (false).", "True by default.")
 				.define("BlockHudsTop", true);
+		PHIALSHELF_COLOUR = CLIENT_BUILDER
+				.comment("The colour scheme used by phialshelves.", "Ranged 0-5, with higher numbers being darker and 0 being disabled.", "3 by default.")
+				.define("PhialshelfColour", 3);
 		JAR_ANIMATION_SPEED = CLIENT_BUILDER
 				.comment("The speed of the warded jar filling animation, in vis per tick.", "1.0 by default.")
 				.define("JarFillAnimationSpeed", 1.0);
@@ -197,35 +200,35 @@ public class ArcanaConfig{
 				.define("EntryTitles", true);
 		CLIENT_BUILDER.pop();
 	}
-	
+
 	public static final ForgeConfigSpec COMMON_SPEC = COMMON_BUILDER.build();
 	public static final ForgeConfigSpec CLIENT_SPEC = CLIENT_BUILDER.build();
-	
+
 	// Common
 	public static ConfigValue<Boolean> SPAWN_WITH_NOTES; // true
 	public static ConfigValue<Boolean> ORE_RETROGEN; // false
 	public static ConfigValue<Boolean> NODE_RETROGEN; // false
 	public static ConfigValue<Boolean> VERBOSE; // false
 	public static ConfigValue<Boolean> GENERATE_OVERWORLD; // true
-	
+
 	public static ConfigValue<Integer> AMBER_MIN_VEIN_SIZE; // 4
 	public static ConfigValue<Integer> AMBER_MAX_VEIN_SIZE; // 8
 	public static ConfigValue<Integer> AMBER_CHANCES_TO_SPAWN; // 3
 	public static ConfigValue<Integer> AMBER_MIN_Y; // 2
 	public static ConfigValue<Integer> AMBER_MAX_Y; // 50
-	
+
 	public static ConfigValue<Integer> SILVER_MIN_VEIN_SIZE; // 3
 	public static ConfigValue<Integer> SILVER_MAX_VEIN_SIZE; // 6
 	public static ConfigValue<Integer> SILVER_CHANCES_TO_SPAWN; // 3
 	public static ConfigValue<Integer> SILVER_MIN_Y; // 1
 	public static ConfigValue<Integer> SILVER_MAX_Y; // 30
-	
+
 	public static ConfigValue<Integer> CINNABAR_MIN_VEIN_SIZE; // 1
 	public static ConfigValue<Integer> CINNABAR_MAX_VEIN_SIZE; // 3
 	public static ConfigValue<Integer> CINNABAR_CHANCES_TO_SPAWN; // 4
 	public static ConfigValue<Integer> CINNABAR_MIN_Y; // 40
 	public static ConfigValue<Integer> CINNABAR_MAX_Y; // 80
-	
+
 	public static ConfigValue<Integer> NODE_CHANCE; // 1
 	public static ConfigValue<Integer> SPECIAL_NODE_CHANCE; // 15
 	public static ConfigValue<Integer> ALEMBIC_DISTILL_TIME; // 4
@@ -234,27 +237,27 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> MAX_ALEMBIC_STACK; // 3
 	public static ConfigValue<Double> ALEMBIC_BASE_DISTILL_EFFICIENCY; // .7
 	public static ConfigValue<Double> ALEMBIC_BASE_FLUX_RATE; // .2
-	
+
 	public static ConfigValue<Double> ASPECT_DUMPING_WASTE;
-	
+
 	public static ConfigValue<Double> ALCHEMY_ASPECT_CARRY_FRACTION; // .5
 	public static ConfigValue<Double> HUNGRY_NODE_ASPECT_CARRY_FRACTION; // .5
-	
+
 	public static ConfigValue<Integer> TAINT_SPAWN_THRESHOLD; // 60
 	public static ConfigValue<Integer> TAINT_SPAWN_COST; // 40
 	public static ConfigValue<Integer> TAINT_EFFECT_TIME; // 80
-	
+
 	public static ConfigValue<Integer> TAINT_SPREAD_XZ; // 4
 	public static ConfigValue<Integer> TAINT_SPREAD_Y; // 6
 	public static ConfigValue<Integer> TAINT_SPREAD_MIN_FLUX; // 5
 	public static ConfigValue<Integer> TAINT_SPREAD_FLUX_COST; // 1
 	public static ConfigValue<Integer> TAINT_SPREAD_TRIES; // 5
-	
+
 	public static ConfigValue<Integer> SILVERWOOD_NODE_CHANCE; // 50
 	public static ConfigValue<Integer> PURE_NODE_TAINT_PROTECT_RANGE; //12
-	
+
 	public static ConfigValue<Integer> FLUX_RESEARCH_REQUIREMENT; // 20
-	
+
 	// Client
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1
 	public static ConfigValue<Integer> CUSTOM_BOOK_HEIGHT; // -1
@@ -265,6 +268,7 @@ public class ArcanaConfig{
 	public static ConfigValue<Boolean> WAND_HUD_LEFT; // true
 	public static ConfigValue<Boolean> WAND_HUD_TOP; // true
 	public static ConfigValue<Boolean> BLOCK_HUDS_TOP; // true
+	public static ConfigValue<Integer> PHIALSHELF_COLOUR; // 3
 	public static ConfigValue<Double> JAR_ANIMATION_SPEED; // 1
 	public static ConfigValue<Boolean> NO_JAR_ANIMATION; // false
 	public static ConfigValue<Boolean> ENTRY_TITLES; // true
