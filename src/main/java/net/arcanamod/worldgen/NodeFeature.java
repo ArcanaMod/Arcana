@@ -1,6 +1,6 @@
 package net.arcanamod.worldgen;
-/*
-import com.mojang.datafixers.Dynamic;
+
+import com.mojang.serialization.Codec;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.Aspect;
@@ -16,10 +16,9 @@ import net.minecraft.block.Block;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.ISeedReader;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationSettings;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static java.util.Objects.requireNonNull;
@@ -51,11 +49,11 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 		
 	}
 	
-	public NodeFeature(Function<Dynamic<?>, ? extends NoFeatureConfig> configFactory){
-		super(configFactory);
+	public NodeFeature(Codec<NoFeatureConfig> codec){
+		super(codec);
 	}
 	
-	public boolean place(IWorld world, ChunkGenerator<? extends GenerationSettings> generator, Random rand, BlockPos pos, NoFeatureConfig config){
+	public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, NoFeatureConfig config){
 		//requireNonNull(NodeChunk.getFrom((Chunk)world.getChunk(pos))).addNode(new Node(NORMAL.genNodeAspects(pos, world, rand), NORMAL, pos.getX(), pos.getY(), pos.getZ()));
 		// its a chunkprimer, not a chunk, with no capability data attached
 		// add it on the next tick.
@@ -67,7 +65,7 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 				requireNonNull(AuraChunk.getFrom((Chunk)newWorld.getChunk(newPos))).addNode(new Node(aspects, type, newPos.getX(), newPos.getY(), newPos.getZ(), 0));
 				// Add some crystal clusters around here too
 				int successes = 0;
-				BlockPos.Mutable pointer = new BlockPos.Mutable(pos);
+				BlockPos.Mutable pointer = pos.toMutable();
 				for(int i = 0; i < 40 && successes < (rand.nextInt(5) + 6); i++){
 					// Pick a random block from the ground
 					pointer.setPos(pos).move(rand.nextInt(7) - rand.nextInt(7), rand.nextInt(5) - rand.nextInt(5), rand.nextInt(7) - rand.nextInt(7));
@@ -86,4 +84,4 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 		}
 		return true;
 	}
-}*/
+}

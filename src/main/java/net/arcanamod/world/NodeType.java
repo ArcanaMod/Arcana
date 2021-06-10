@@ -35,7 +35,7 @@ public abstract class NodeType{
 	
 	// A diet registry, used for serialization and deserialization.
 	public static final BiMap<ResourceLocation, NodeType> TYPES = HashBiMap.create(6);
-	public static final Set<NodeType> SPECIAL_TYPES = new HashSet<>(4);
+	public static final Set<NodeType> SPECIAL_TYPES = new HashSet<>(5);
 	
 	public static final NodeType
 			NORMAL = new NormalNodeType(),

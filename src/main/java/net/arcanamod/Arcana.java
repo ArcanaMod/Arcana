@@ -24,6 +24,7 @@ import net.arcanamod.util.AuthorisationManager;
 import net.arcanamod.world.NodeType;
 import net.arcanamod.world.WorldInteractionsRegistry;
 import net.arcanamod.worldgen.ArcanaBiomes;
+import net.arcanamod.worldgen.ArcanaFeatures;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.IBlockSource;
@@ -105,7 +106,7 @@ public class Arcana{
 		ArcanaRecipes.Serializers.SERIALIZERS.register(bus);
 		ArcanaTiles.TES.register(bus);
 		ArcanaContainers.CON.register(bus);
-		//ArcanaFeatures.FEATURES.register(modEventBus);
+		ArcanaFeatures.FEATURES.register(bus);
 		ArcanaBiomes.BIOMES.register(bus);
 		ArcanaFluids.FLUIDS.register(bus);
 		
