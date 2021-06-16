@@ -18,9 +18,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class ResearchBookItem extends Item{
-	
 	ResourceLocation book;
-	
 	public ResearchBookItem(Properties properties, ResourceLocation book){
 		super(properties);
 		this.book = book;

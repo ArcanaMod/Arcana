@@ -5,7 +5,6 @@ import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
-import net.arcanamod.client.BookRenderer;
 import net.arcanamod.client.ClientUtils;
 import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
@@ -82,7 +81,6 @@ public class ClientProxy extends CommonProxy{
 		MinecraftForge.EVENT_BUS.addListener(FogHandler::setFogLength);
 		MinecraftForge.EVENT_BUS.addListener(InitScreenHandler::onInitGuiEvent);
 		MinecraftForge.EVENT_BUS.register(ClientTickHandler.class);
-		MinecraftForge.EVENT_BUS.register(BookRenderer.class);
 		MinecraftForge.EVENT_BUS.register(ParticleFactoryEvent.class);
 		
 		ArcanaParticles.PARTICLE_TYPES.register(bus);
