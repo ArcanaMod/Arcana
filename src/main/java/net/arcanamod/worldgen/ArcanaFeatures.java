@@ -1,13 +1,19 @@
 package net.arcanamod.worldgen;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.worldgen.trees.features.GreatwoodFoliagePlacer;
+import net.arcanamod.worldgen.trees.features.GreatwoodTrunkPlacer;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.placement.ChanceConfig;
+import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.feature.*;
+import net.minecraft.world.gen.foliageplacer.FoliagePlacerType;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,26 +23,24 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.arcanamod.Arcana.MODID;
+import static net.arcanamod.Arcana.arcLoc;
 
 @Mod.EventBusSubscriber(modid = Arcana.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ArcanaFeatures{
 	
 	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, MODID);
+	public static final DeferredRegister<FoliagePlacerType<?>> FOLAIGE_PLACERS = DeferredRegister.create(ForgeRegistries.FOLIAGE_PLACER_TYPES, MODID);
 	
 	// have to delay populating it until block registry is done because forge thonk
 	//public static TreeFeatureConfig SILVERWOOD_TREE_CONFIG;
-	//public static HugeTreeFeatureConfig GREATWOOD_TREE_CONFIG;
+	public static BaseTreeFeatureConfig GREATWOOD_TREE_CONFIG;
 	//public static HugeTreeFeatureConfig TAINTED_GREATWOOD_TREE_CONFIG;
 	
 	// features have to exist first because forge is stupid and insists on registering biomes first
 	public static Feature<NoFeatureConfig> NODE = new NodeFeature(NoFeatureConfig.CODEC);
-	//public static Feature<TreeFeatureConfig> SILVERWOOD_TREE = new SilverwoodTreeFeature(TreeFeatureConfig::func_227338_a_);
-	//public static Feature<HugeTreeFeatureConfig> GREATWOOD_TREE = new GreatwoodTreeFeature(HugeTreeFeatureConfig::func_227277_a_);
+	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> GREATWOOD_TREE;
 	
-	// TODO: move to regular registry event
-	private static final RegistryObject<Feature<NoFeatureConfig>> NODE_R = FEATURES.register("node", () -> NODE);
-	//private static final RegistryObject<Feature<TreeFeatureConfig>> SILVERWOOD_TREE_R = FEATURES.register("silverwood_tree", () -> SILVERWOOD_TREE);
-	//private static final RegistryObject<Feature<HugeTreeFeatureConfig>> GREATWOOD_TREE_R = FEATURES.register("greatwood_tree", () -> GREATWOOD_TREE);
+	public static RegistryObject<FoliagePlacerType<GreatwoodFoliagePlacer>> GREATWOOD_FOLIAGE = FOLAIGE_PLACERS.register("greatwood_foliage_placer", () -> new FoliagePlacerType<>(GreatwoodFoliagePlacer.CODEC));
 	
 	public static void addMagicalForestTrees(Biome biome){
 		// blocks must be registered first, but these configs have to be made at biome time, not feature time

@@ -4,8 +4,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "arcana.refmap.json",
   "mixins": [
-    "FontRendererAccessor",
-    "ModContainerAccessor"
+    "ModContainerAccessor",
+    "TrunkPlacerTypeAccessor"
   ],
   "client": [
     "AccessorFirstPersonRenderer",
@@ -13,7 +13,8 @@
     "BiomeColorMixin",
     "BipedModelMixin",
     "BlockClientMixin",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "FontRendererAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

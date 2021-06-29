@@ -1,5 +1,6 @@
 package net.arcanamod.worldgen.trees;
 
+import net.arcanamod.worldgen.ArcanaFeatures;
 import net.minecraft.block.trees.BigTree;
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -10,36 +11,15 @@ import java.util.Random;
 
 @ParametersAreNonnullByDefault
 public class GreatwoodTree extends BigTree{
-	/**
-	 * Get a {@link ConfiguredFeature} of the huge variant of this tree
-	 *
-	 * @param rand
-	 */
-	@Nullable
-	@Override
-	protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getHugeTreeFeature(Random rand) {
-		return null;
-	}
-
-	/**
-	 * Get a {@link ConfiguredFeature} of tree
-	 *
-	 * @param randomIn
-	 * @param largeHive
-	 */
-	@Nullable
-	@Override
-	protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean largeHive) {
-		return null;
-	}
 	
-	/*@Nullable
-	protected ConfiguredFeature<HugeTreeFeatureConfig, ?> getHugeTreeFeature(Random rand){
-		return ArcanaFeatures.GREATWOOD_TREE.withConfiguration(ArcanaFeatures.GREATWOOD_TREE_CONFIG);
+	@Nullable
+	protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getHugeTreeFeature(Random rand){
+		System.out.println(ArcanaFeatures.GREATWOOD_TREE);
+		return ArcanaFeatures.GREATWOOD_TREE;
 	}
 	
 	@Nullable
-	protected ConfiguredFeature<TreeFeatureConfig, ?> getTreeFeature(Random rand, boolean h){
+	protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean largeHive){
 		return null;
-	}*/
+	}
 }

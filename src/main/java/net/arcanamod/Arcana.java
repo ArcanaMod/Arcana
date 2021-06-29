@@ -107,6 +107,7 @@ public class Arcana{
 		ArcanaTiles.TES.register(bus);
 		ArcanaContainers.CON.register(bus);
 		ArcanaFeatures.FEATURES.register(bus);
+		ArcanaFeatures.FOLAIGE_PLACERS.register(bus);
 		ArcanaBiomes.BIOMES.register(bus);
 		ArcanaFluids.FLUIDS.register(bus);
 		
