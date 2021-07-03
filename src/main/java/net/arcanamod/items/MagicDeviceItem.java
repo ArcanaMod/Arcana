@@ -151,10 +151,7 @@ public abstract class MagicDeviceItem extends Item{
 					// time for more VisUtils I guess
 					if(spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler, stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
 							spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)){
-						if(player.isCrouching())
-							Spell.runSpell(spell, world, player, player.getHeldItem(hand), ICast.Action.SPECIAL);
-						else
-							Spell.runSpell(spell, world, player, player.getHeldItem(hand), ICast.Action.USE);
+						Spell.runSpell(spell, world, player, player.getHeldItem(hand), player.isCrouching() ? ICast.Action.SPECIAL : ICast.Action.USE);
 						// remove aspects from wand if spell successes.
 						for(AspectStack cost : spell.getSpellCosts().toList())
 							if(cost.getAspect() != Aspects.EMPTY)

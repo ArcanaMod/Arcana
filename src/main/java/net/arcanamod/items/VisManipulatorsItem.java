@@ -57,7 +57,7 @@ public class VisManipulatorsItem extends Item{
 			ItemStack toSet = new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1);
 			int r = random.nextInt(1);
 			if (r == 0) {
-				toSet.getOrCreateTag().put("spell", Spell.Samples.createBasicSpell().toNBT(new CompoundNBT()));
+				toSet.setTag(Spell.Samples.createBasicSpell().toNBT(new CompoundNBT()));
 			}
 			toSet.getOrCreateTag().putInt("style", random.nextInt(36));
 			context.getPlayer().addItemStackToInventory(toSet);
