@@ -89,7 +89,7 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 						else if(stack.stack.getAspect() == Aspects.ORDER)
 							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 108, guiTop + 89, colour);
 						else if(stack.stack.getAspect() == Aspects.CHAOS)
-							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 65, guiTop + 117, colour);
+							ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 65, guiTop + 113, colour);
 					}else
 						ClientUiUtil.renderAspectStack(matricies, Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
 				}
@@ -136,7 +136,7 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 							else if(stack.stack.getAspect() == Aspects.ORDER)
 								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 108, guiTop + 89, colour);
 							else if(stack.stack.getAspect() == Aspects.CHAOS)
-								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 65, guiTop + 117, colour);
+								ClientUiUtil.renderAspectStack(matricies, stack.stack, guiLeft + 65, guiTop + 113, colour);
 						}else
 							ClientUiUtil.renderAspectStack(matricies, Aspects.EXCHANGE, amount, guiLeft + 65, guiTop + 117, colour);
 						RenderSystem.popMatrix();

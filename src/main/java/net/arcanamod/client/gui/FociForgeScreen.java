@@ -67,7 +67,6 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY){
 		renderBackground(stack);
 		minecraft.getTextureManager().bindTexture(BG);
-		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		searchWidget.render(stack, mouseX, mouseY, partialTicks);
 		minecraft.getTextureManager().bindTexture(BG);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
