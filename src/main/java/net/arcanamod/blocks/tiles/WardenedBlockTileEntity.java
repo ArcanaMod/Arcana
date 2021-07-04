@@ -2,6 +2,8 @@ package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.items.MagicDeviceItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,6 +11,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
@@ -20,8 +23,9 @@ import java.util.Optional;
 @ParametersAreNullableByDefault
 @MethodsReturnNonnullByDefault
 @SuppressWarnings({"OptionalUsedAsFieldOrParameterType", "RedundantTypeArguments", "unused"})
-public class WardenedBlockTileEntity extends TileEntity {
+public class WardenedBlockTileEntity extends TileEntity implements ITickableTileEntity {
 	private Optional<BlockState> copyState = null;
+	private Boolean holdingSpell = false;
 
 	public WardenedBlockTileEntity() {
 		super(ArcanaTiles.WARDENED_BLOCK_TE.get());
@@ -42,6 +46,7 @@ public class WardenedBlockTileEntity extends TileEntity {
 	@Override
 	public void read(BlockState state, CompoundNBT tag) {
 		super.read(state, tag);
+		holdingSpell = world.getPlayers().get(0).getHeldItem(Hand.MAIN_HAND).getItem() instanceof MagicDeviceItem;
 		copyState = Optional.<BlockState>of(Objects.requireNonNull(ForgeRegistries.BLOCKS.getValue(new ResourceLocation(tag.getString("type")))).getDefaultState());
 	}
 
@@ -81,5 +86,14 @@ public class WardenedBlockTileEntity extends TileEntity {
 	public void handleUpdateTag(BlockState state, CompoundNBT tag)
 	{
 		this.read(state, tag);
+	}
+
+	@Override
+	public void tick() {
+		holdingSpell = world.getPlayers().get(0).getHeldItem(Hand.MAIN_HAND).getItem() instanceof MagicDeviceItem;
+	}
+
+	public Boolean isHoldingWand() {
+		return holdingSpell;
 	}
 }

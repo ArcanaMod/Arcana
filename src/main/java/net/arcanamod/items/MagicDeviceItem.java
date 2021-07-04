@@ -145,7 +145,7 @@ public abstract class MagicDeviceItem extends Item{
 			Focus focus = getFocus(player.getHeldItem(hand));
 			if(focus != Focus.NO_FOCUS){
 				Spell spell = focus.getSpell(player.getHeldItem(hand));
-				if(spell != null){
+				if(spell != null && spell.mainModule != null){
 					IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
 					// oh my god this code is terrible // YES, I know Xd.
 					// time for more VisUtils I guess

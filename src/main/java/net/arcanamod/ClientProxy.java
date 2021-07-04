@@ -280,7 +280,7 @@ public class ClientProxy extends CommonProxy{
 	
 	protected void setRenderLayers(){
 		//Render Layers for Blocks
-		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WARDENED_BLOCK.get(), RenderType.getSolid());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WARDENED_BLOCK.get(), RenderType.getTranslucent());
 		
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.JAR.get(), RenderType.getTranslucent());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SECURE_JAR.get(), RenderType.getTranslucent());

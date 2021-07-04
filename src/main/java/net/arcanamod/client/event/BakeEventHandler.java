@@ -27,7 +27,6 @@ public class BakeEventHandler {
 		// of our blockstates file for the BlockCamouflage.
 		// Replace the mapping with our CamouflageBakedModel.
 		// we only have one BlockState variant but I've shown code that loops through all of them, in case you have more than one.
-
 		for (BlockState blockState : ArcanaBlocks.WARDENED_BLOCK.get().getStateContainer().getValidStates()) {
 			ModelResourceLocation variantMRL = BlockModelShapes.getModelLocation(blockState);
 			IBakedModel existingModel = event.getModelRegistry().get(variantMRL);
