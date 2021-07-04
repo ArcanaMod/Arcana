@@ -1,8 +1,11 @@
 package net.arcanamod.containers.slots;
 
+import net.arcanamod.items.GauntletItem;
 import net.arcanamod.items.MagicDeviceItem;
+import net.arcanamod.items.StaffItem;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class WandSlot extends Slot {
@@ -14,7 +17,8 @@ public class WandSlot extends Slot {
 
 	@Override
 	public boolean isItemValid(ItemStack stack) {
-		return stack.getItem() instanceof MagicDeviceItem;
+		Item item = stack.getItem();
+		return item instanceof MagicDeviceItem && !(item instanceof GauntletItem) && !(item instanceof StaffItem);
 	}
 
 	@Override
