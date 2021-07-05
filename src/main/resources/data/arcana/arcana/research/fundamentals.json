@@ -34,15 +34,12 @@
         "arcana:aspect_chaos"
       ],
       "category": "arcana:fundamentals",
-      "parents": [
-        "&arcana:root"
-      ],
       "meta": [
-        "spiky_base",
+        "square_base",
         "purple_base"
       ],
-      "x": 0,
-      "y": 4,
+      "x": -7,
+      "y": 0,
       "sections": [
         {
           "type": "string",
@@ -67,13 +64,13 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "&arcana:aspects"
+        "&arcana:root"
       ],
       "meta": [
-        "round_base"
+        "square_base"
       ],
-      "x": 2,
-      "y": 2,
+      "x": -2,
+      "y": 0,
       "sections": [
         {
           "type": "string",
@@ -99,7 +96,7 @@
       "meta": [
         "round_base"
       ],
-      "x": 4,
+      "x": -4,
       "y": 0,
       "sections": [
         {
@@ -112,10 +109,6 @@
         {
           "type": "string",
           "content": "research.arcana.arcane_crafting.stage.2"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/goggles_of_revealing"
         }
       ]
     },
@@ -127,15 +120,15 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:arcane_crafting"
+        "arcana:goggles_of_revealing"
       ],
       "meta": [
         "square_base",
         "purple_base",
         "reverse"
       ],
-      "x": 2,
-      "y": -2,
+      "x": -3,
+      "y": 7,
       "sections": [
         {
           "type": "string",
@@ -162,14 +155,14 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:alchemy"
+        "arcana:arcane_crafting"
       ],
       "meta": [
         "round_base",
         "reverse"
       ],
-      "x": 0,
-      "y": -4,
+      "x": -4,
+      "y": 2,
       "sections": [
         {
           "type": "string",
@@ -204,135 +197,31 @@
       ]
     },
     {
-      "key": "arcana:aspect_tubes",
-      "name": "research.arcana.aspect_tubes",
-      "desc": "research.arcana.aspect_tubes.desc",
+      "key": "arcana:goggles_of_revealing",
+      "name": "research.arcana.goggles_of_revealing",
+      "desc": "research.arcana.goggles_of_revealing.desc",
       "icons": [
-        "arcana:essentia_tube",
-        "arcana:essentia_window",
-        "arcana:essentia_valve"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [
-        "&arcana:aspect_collection"
-      ],
-      "meta": [
-        "hexagon_base",
-        "hidden",
-        "reverse"
-      ],
-      "x": -2,
-      "y": -6,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.aspect_tubes.text"
-        },
-        {
-          "type": "crafting",
-          "content": "arcana:essentia_tube"
-        },
-        {
-          "type": "crafting",
-          "content": "arcana:essentia_valve"
-        },
-        {
-          "type": "crafting",
-          "content": "arcana:essentia_window"
-        }
-      ]
-    },
-    {
-      "key": "arcana:variant_jars",
-      "name": "research.arcana.variant_jars",
-      "desc": "research.arcana.variant_jars.desc",
-      "icons": [
-        "arcana:secure_jar",
-        "arcana:void_jar"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [
-        "arcana:aspect_collection",
-        "arcana:flux"
-      ],
-      "meta": [],
-      "x": 4,
-      "y": -4,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.variant_jars.stage.1",
-          "requirements": [
-            "3*arcana:imprison_crystal",
-            "3*arcana:taint_crystal",
-            "3*arcana:mana_crystal",
-            "3*arcana:crystal_crystal",
-            "3*arcana:earth_crystal",
-            "6*arcana:amber"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.variant_jars.stage.2"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/void_jar"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/secure_jar"
-        }
-      ]
-    },
-    {
-      "key": "arcana:aspect_permutation",
-      "name": "research.arcana.aspect_permutation",
-      "icons": [
-        "arcana:item/exchange_phial.png"
+        "arcana:goggles_of_revealing"
       ],
       "category": "arcana:fundamentals",
       "parents": [
         "arcana:aspect_collection"
       ],
-      "meta": [
-        "reverse"
-      ],
-      "x": 2,
-      "y": -6,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.aspect_permutation.stage.1"
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.aspect_permutation.stage.2"
-        }
-      ]
-    },
-    {
-      "key": "arcana:aspect_crystallization",
-      "name": "research.arcana.aspect_crystallization",
-      "desc": "research.arcana.aspect_crystallization.desc",
-      "icons": [
-        "arcana:item/ice_phial.png"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [
-        "arcana:crystal_farming"
-      ],
       "meta": [],
-      "x": -5,
-      "y": -4,
+      "x": -4,
+      "y": 4,
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.aspect_crystallization.stage.1"
+          "content": "research.arcana.goggles_of_revealing.1"
+        },
+        {
+          "type": "arcane_crafting",
+          "content": "arcana:arcane_crafting/goggles_of_revealing"
         },
         {
           "type": "string",
-          "content": "research.arcana.aspect_crystallization.stage.2"
+          "content": "research.arcana.goggles_of_revealing.2"
         }
       ]
     },
@@ -345,14 +234,13 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:aspect_collection"
+        "arcana:root"
       ],
       "meta": [
-        "square_base",
-        "purple_base"
+        "square_base"
       ],
-      "x": -2,
-      "y": -2,
+      "x": 1,
+      "y": 2,
       "sections": [
         {
           "type": "string",
@@ -401,8 +289,8 @@
       "meta": [
         "round_base"
       ],
-      "x": -4,
-      "y": 0,
+      "x": 1,
+      "y": 5,
       "sections": [
         {
           "type": "string",
@@ -432,8 +320,8 @@
         "round_base",
         "reverse"
       ],
-      "x": -2,
-      "y": 2,
+      "x": 1,
+      "y": 7,
       "sections": [
         {
           "type": "string",
@@ -459,8 +347,8 @@
         "purple_base",
         "spiky_base"
       ],
-      "x": 6,
-      "y": -6,
+      "x": -6,
+      "y": 6,
       "sections": [
         {
           "type": "string",
@@ -489,8 +377,8 @@
       "meta": [
         "hexagon_base"
       ],
-      "x": 8,
-      "y": -4,
+      "x": -6,
+      "y": 8,
       "sections": [
         {
           "type": "string",
@@ -499,53 +387,6 @@
         {
           "type": "arcane_crafting",
           "content": "arcana:arcane_crafting/flux_meter"
-        }
-      ]
-    },
-    {
-      "key": "arcana:crystal_farming",
-      "name": "research.arcana.crystal_farming",
-      "desc": "research.arcana.crystal_farming.desc",
-      "icons": [
-        "arcana:air_cluster_seed",
-        "arcana:air_cluster",
-        "arcana:earth_cluster_seed",
-        "arcana:earth_cluster",
-        "arcana:fire_cluster_seed",
-        "arcana:fire_cluster",
-        "arcana:water_cluster_seed",
-        "arcana:water_cluster",
-        "arcana:order_cluster_seed",
-        "arcana:order_cluster",
-        "arcana:chaos_cluster_seed",
-        "arcana:chaos_cluster"
-      ],
-      "category": "arcana:fundamentals",
-      "parents": [
-        "~arcana:research"
-      ],
-      "meta": [],
-      "x": -5,
-      "y": -6,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.crystal_farming.stage.1",
-          "requirements": [
-            "arcana::puzzle{arcana:crystal_farming_puzzle}"
-          ]
-        },
-        {
-          "type": "string",
-          "content": "research.arcana.crystal_farming.stage.2"
-        },
-        {
-          "type": "alchemy",
-          "content": "arcana:alchemy/cluster_seeds/air_cluster_seed"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/clusters/air_cluster"
         }
       ]
     }
