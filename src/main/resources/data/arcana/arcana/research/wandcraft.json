@@ -1,12 +1,12 @@
 {
   "entries": [
     {
-      "key": "arcana:auromancy_root",
-      "name": "research.arcana.auromancy_root",
+      "key": "arcana:wandcraft_root",
+      "name": "research.arcana.wandcraft_root",
       "icons": [
         "arcana:item/basicwand.png"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
         "arcana:wandcraft"
       ],
@@ -18,7 +18,7 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.auromancy_root.text"
+          "content": "research.arcana.wandcraft_root.text"
         }
       ]
     },
@@ -28,9 +28,9 @@
       "icons": [
         "arcana:greatwood_wand_core"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
-        "&arcana:auromancy_root"
+        "&arcana:wandcraft_root"
       ],
       "meta": [
         "round_base",
@@ -55,7 +55,7 @@
       "icons": [
         "arcana:hawthorn_wand_core"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
         "arcana:cores_intro"
       ],
@@ -78,7 +78,7 @@
       "icons": [
         "arcana:arcanium_wand_core"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
         "arcana:cores_intro"
       ],
@@ -101,7 +101,7 @@
       "icons": [
         "arcana:dair_wand_core"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
         "arcana:cores_intro"
       ],
@@ -124,7 +124,7 @@
       "icons": [
         "arcana:silverwood_wand_core"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
         "arcana:dair_core",
         "/arcana:hawthorn_core",
@@ -149,9 +149,9 @@
       "icons": [
         "arcana:gold_cap"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
-        "&arcana:auromancy_root"
+        "&arcana:wandcraft_root"
       ],
       "meta": [
         "round_base",
@@ -176,9 +176,9 @@
       "icons": [
         "arcana:focus_parts"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
-        "&arcana:auromancy_root"
+        "&arcana:wandcraft_root"
       ],
       "meta": [
         "round_base",
@@ -199,9 +199,9 @@
       "icons": [
         "arcana:item/basicstaff.png"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
-        "arcana:auromancy_root"
+        "arcana:wandcraft_root"
       ],
       "x": -3,
       "y": -2,
@@ -218,9 +218,9 @@
       "icons": [
         "arcana:item/basicscepter.png"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
-        "arcana:auromancy_root"
+        "arcana:wandcraft_root"
       ],
       "x": -3,
       "y": 2,
@@ -237,7 +237,7 @@
       "icons": [
         "minecraft:barrier"
       ],
-      "category": "arcana:auromancy",
+      "category": "arcana:wandcraft",
       "parents": [
         "arcana:staffs",
         "arcana:scepters"

@@ -41,8 +41,14 @@
       "bg": "arcana:research/basics_bg.png",
       "requires": "arcana:wandcraft"
     },
-
-
+    {
+      "key": "arcana:wandcraft",
+      "in": "arcana:arcanum",
+      "icon": "arcana:item/basicwand.png",
+      "name": "research.arcana.category.wandcraft",
+      "bg": "arcana:research/basics_bg.png",
+      "requires": "arcana:wandcraft"
+    },
     {
       "key": "arcana:tainted_basics",
       "in": "arcana:tainted_codex",

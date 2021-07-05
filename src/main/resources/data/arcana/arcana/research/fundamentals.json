@@ -35,6 +35,7 @@
       ],
       "category": "arcana:fundamentals",
       "meta": [
+        "root",
         "square_base",
         "purple_base"
       ],
@@ -56,9 +57,9 @@
       ]
     },
     {
-      "key": "arcana:wandcraft",
-      "name": "research.arcana.wandcraft",
-      "desc": "research.arcana.wandcraft.desc",
+      "key": "arcana:basic_wand",
+      "name": "research.arcana.basic_wand",
+      "desc": "research.arcana.basic_wand.desc",
       "icons": [
         "arcana:item/basicwand.png"
       ],
@@ -74,7 +75,7 @@
       "sections": [
         {
           "type": "string",
-          "content": "research.arcana.wandcraft.stage.1"
+          "content": "research.arcana.basic_wand.stage.1"
         },
         {
           "type": "crafting",
@@ -91,10 +92,10 @@
       ],
       "category": "arcana:fundamentals",
       "parents": [
-        "arcana:wandcraft"
+        "arcana:basic_wand"
       ],
       "meta": [
-        "round_base"
+        "square_base"
       ],
       "x": -4,
       "y": 0,
@@ -124,7 +125,7 @@
       ],
       "meta": [
         "square_base",
-        "purple_base",
+        "yellow_base",
         "reverse"
       ],
       "x": -3,
@@ -148,6 +149,34 @@
       ]
     },
     {
+      "key": "arcana:wandcraft",
+      "name": "research.arcana.wandcraft",
+      "icons": [
+        "arcana:item/basicwand.png"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:goggles_of_revealing"
+      ],
+      "meta": [
+        "square_base",
+        "yellow_base",
+        "reverse"
+      ],
+      "x": -4,
+      "y": 8,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.wandcraft.stage.1"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.wandcraft.stage.2"
+        }
+      ]
+    },
+    {
       "key": "arcana:aspect_collection",
       "name": "research.arcana.aspect_collection",
       "icons": [
@@ -158,7 +187,7 @@
         "arcana:arcane_crafting"
       ],
       "meta": [
-        "round_base",
+        "square_base",
         "reverse"
       ],
       "x": -4,
@@ -344,8 +373,8 @@
       "parents": [],
       "meta": [
         "root",
-        "purple_base",
-        "spiky_base"
+        "hexagon_base",
+        "purple_base"
       ],
       "x": -6,
       "y": 6,
@@ -375,7 +404,7 @@
         "arcana:arcanium"
       ],
       "meta": [
-        "hexagon_base"
+        "square_base"
       ],
       "x": -6,
       "y": 8,
