@@ -14,6 +14,7 @@ import net.arcanamod.items.attachment.Focus;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -105,7 +106,7 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
 			this.bakery = bakery;
 		}
 
-		public IBakedModel getModelWithOverrides (@Nonnull IBakedModel originalModel, @Nonnull ItemStack stack, @Nullable World world, @Nullable LivingEntity entity) {
+		public IBakedModel getOverrideModel(@Nonnull IBakedModel originalModel, @Nonnull ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
 			// get cap
 			Cap cap = WandItem.getCap(stack);
 			// get material
