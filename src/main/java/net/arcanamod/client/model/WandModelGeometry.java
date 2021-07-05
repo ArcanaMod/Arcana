@@ -67,8 +67,9 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
 		RenderMaterial capTex = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, cap);
 
 		// get variant model
-		if(variant == null)
+		if (variant == null) {
 			variant = arcLoc("wand");
+		}
 		ResourceLocation coreLoc = new ResourceLocation(variant.getNamespace(), "item/wands/variants/" + variant.getPath());
 		IUnbakedModel coreModel = bakery.getUnbakedModel(coreLoc);
 		ItemCameraTransforms tfs = ItemCameraTransforms.DEFAULT;
@@ -79,8 +80,9 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
 			model.textures.put("core", Either.left(coreTex));
 			model.textures.put("cap", Either.left(capTex));
 			tfs = model.getAllTransforms();
-		} else
+		} else {
 			LOGGER.error("Wand model isn't a block model!");
+		}
 
 		// get focus model and texture, apply, and add
 		Random rand = new Random();
