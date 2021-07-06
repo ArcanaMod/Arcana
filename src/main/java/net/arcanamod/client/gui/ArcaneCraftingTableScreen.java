@@ -29,8 +29,7 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static net.arcanamod.Arcana.arcLoc;
 
-public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTableContainer>{
-	
+public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTableContainer> {
 	private static final ResourceLocation BG = arcLoc("textures/gui/container/arcaneworkbench.png");
 	
 	public static final int WIDTH = 187;

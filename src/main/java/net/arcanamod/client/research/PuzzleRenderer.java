@@ -23,8 +23,7 @@ import java.util.Map;
 
 import static net.minecraft.client.gui.AbstractGui.blit;
 
-public interface PuzzleRenderer<T extends Puzzle>{
-	
+public interface PuzzleRenderer<T extends Puzzle> {
 	ResourceLocation PAPER = new ResourceLocation(Arcana.MODID, "textures/gui/research/temp_puzzle_overlay.png");
 	
 	Map<String, PuzzleRenderer<?>> map = new HashMap<>();
@@ -59,7 +58,7 @@ public interface PuzzleRenderer<T extends Puzzle>{
 		blit(stack, guiLeft(screenWidth) + 141, guiTop(screenHeight) + 35, 0, 0, 214, 134, 214, 134);
 	}
 	
-	default void renderAfter(MatrixStack stack, T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player){}
+	default void renderAfter(MatrixStack stack, T puzzle, List<AspectSlot> puzzleSlots, List<Slot> puzzleItemSlots, int screenWidth, int screenHeight, int mouseX, int mouseY, PlayerEntity player) {}
 	
 	default int guiLeft(int screenWidth){
 		return (screenWidth - ResearchTableScreen.WIDTH) / 2;

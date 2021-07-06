@@ -38,8 +38,7 @@ import java.util.stream.Collectors;
 
 import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 
-public class ResearchEntryScreen extends Screen{
-	
+public class ResearchEntryScreen extends Screen {
 	public ResourceLocation bg;
 	ResearchEntry entry;
 	int index;

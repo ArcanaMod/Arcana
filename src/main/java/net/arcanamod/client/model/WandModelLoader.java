@@ -11,7 +11,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class WandModelLoader implements IModelLoader<WandModelGeometry>{
-	
 	public void onResourceManagerReload(IResourceManager resourceManager){}
 	
 	public WandModelGeometry read(JsonDeserializationContext deserializationContext, JsonObject modelContents){

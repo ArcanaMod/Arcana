@@ -20,8 +20,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AspectContainer extends Container{
-	
+public abstract class AspectContainer extends Container {
 	protected List<AspectSlot> aspectSlots = new ArrayList<>();
 	protected Aspect heldAspect = null;
 	protected boolean symbolic = false;
