@@ -1,15 +1,19 @@
 package net.arcanamod.items.attachment;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.systems.spell.Spell;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -48,6 +52,13 @@ public class FocusItem extends Item implements Focus{
 	public Spell getSpell(ItemStack stack) {
 		// Spell.fromNBT already uses .getCompound("spell"), so it's not needed here
 		return Spell.fromNBT(stack.getOrCreateTag().getCompound("focusData")); // .getCompound("spell"));
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		Logger logger = LogManager.getLogger();
+		logger.debug(playerIn.getHeldItem(handIn).getOrCreateTag().toString());
+		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 
 	public static int getColourAspect(ItemStack stack) {

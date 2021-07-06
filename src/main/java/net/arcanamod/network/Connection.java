@@ -1,10 +1,13 @@
 package net.arcanamod.network;
 
 import net.arcanamod.aspects.Aspect;
+import net.arcanamod.blocks.tiles.FociForgeTileEntity;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.systems.research.Pin;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -41,6 +44,7 @@ public class Connection{
 		INSTANCE.registerMessage(id++, PkSwapFocus.class, PkSwapFocus::encode, PkSwapFocus::decode, PkSwapFocus::handle);
 		INSTANCE.registerMessage(id++, PkFociForgeAction.class, PkFociForgeAction::encode, PkFociForgeAction::decode, PkFociForgeAction::handle);
 		INSTANCE.registerMessage(id++, PkModifyPins.class, PkModifyPins::encode, PkModifyPins::decode, PkModifyPins::handle);
+		INSTANCE.registerMessage(id++, PkWriteSpellToFoci.class, PkWriteSpellToFoci::encode, PkWriteSpellToFoci::decode, PkWriteSpellToFoci::handle);
 	}
 	
 	public static void sendTo(Object packet, ServerPlayerEntity target){
@@ -85,5 +89,9 @@ public class Connection{
 
 	public static void sendModifyPins(Pin pin, PkModifyPins.Diff diff){
 		INSTANCE.sendToServer(new PkModifyPins(diff, pin.getEntry().key(), pin.getStage()));
+	}
+
+	public static void sendWriteSpell(ItemStack focus, CompoundNBT nbt) {
+		INSTANCE.sendToServer(new PkWriteSpellToFoci(focus,nbt));
 	}
 }

@@ -11,6 +11,7 @@ import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.FocusItem;
+import net.arcanamod.network.Connection;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.modules.core.StartCircle;
 import net.minecraft.client.resources.I18n;
@@ -204,7 +205,12 @@ public class FociForgeContainer extends AspectContainer {
             te.focus().getOrCreateTag().putInt("style", style);
             //TODO Add a button in the UI to add the NBT to the focus Item
             te.focus().getOrCreateTag().put("spell", te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
+            Connection.sendWriteSpell(te.focus(), te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
         }
+    }
+
+    private void changeFociSpell(){
+
     }
 
     @Override
