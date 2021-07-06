@@ -26,7 +26,7 @@ public class ArmourCast extends Cast {
 
 	@Override
 	public ResourceLocation getId() {
-		return ArcanaVariables.arcLoc("warding");
+		return ArcanaVariables.arcLoc("armour");
 	}
 
 	@Override

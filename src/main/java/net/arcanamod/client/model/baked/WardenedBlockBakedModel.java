@@ -115,8 +115,8 @@ public class WardenedBlockBakedModel implements IBakedModel {
 	@Nonnull
 	public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction side, @Nonnull Random rand, @Nonnull IModelData extraData)
 	{
-		double l = -.005;
-		double r = 1+.005;
+		double l = -.001;
+		double r = 1+.001;
 		ArrayList<BakedQuad> ql = (ArrayList<BakedQuad>) (Object) (Object) ((ArrayList<BakedQuad>) getActualBakedModelFromIModelData(extraData).getQuads(state, side, rand)).clone(); // Casting object to object removes crashes when spell used on some blocks. but why?
 		if (extraData.hasProperty(HOLDING_SPELL)&& extraData.getData(HOLDING_SPELL)) {
 			ql.add(createQuad(v(l, r, l), v(l, r, r), v(r, r, r), v(r, r, l), modelWhenNotCamouflaged.getParticleTexture()));
