@@ -32,7 +32,7 @@ public class SwapFocusScreen extends Screen{
 	public void render(MatrixStack matricies, int mouseX, int mouseY, float partialTicks){
 		super.render(matricies, mouseX, mouseY, partialTicks);
 		ItemStack wand = getMinecraft().player.getHeldItem(hand);
-		if(wand.getItem() instanceof MagicDeviceItem && ((MagicDeviceItem)wand.getItem()).canSwapFocus()){
+		if(wand.getItem() instanceof MagicDeviceItem && ((MagicDeviceItem)wand.getItem()).canSwapFocus(getMinecraft().player)){
 			//display current focus
 			MagicDeviceItem.getFocusStack(wand).ifPresent(stack -> getMinecraft().getItemRenderer().renderItemIntoGUI(stack, width / 2 - 8, height / 2 - 8));
 			//display all foci in the inventory

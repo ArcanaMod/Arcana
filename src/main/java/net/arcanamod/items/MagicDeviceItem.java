@@ -1,5 +1,6 @@
 package net.arcanamod.items;
 
+import com.google.common.collect.Sets;
 import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
@@ -195,7 +196,7 @@ public abstract class MagicDeviceItem extends Item{
 		tooltip.add(new StringTextComponent(" " + (creative ? I18n.format("tooltip.arcana.infinity") : (int)(getCap(stack).complexity() * getComplexityModifier())) + " "+I18n.format("tooltip.arcana.complexity")).mergeStyle(TextFormatting.DARK_GREEN));
 	}
 	
-	public boolean canSwapFocus(){
-		return true;
+	public boolean canSwapFocus(PlayerEntity player){
+		return player.inventory.hasAny(Sets.newHashSet(ArcanaItems.DEFAULT_FOCUS.get())) || (getFocus(player.getHeldItem(Hand.MAIN_HAND)) != Focus.NO_FOCUS||getFocus(player.getHeldItem(Hand.OFF_HAND)) != Focus.NO_FOCUS);
 	}
 }
