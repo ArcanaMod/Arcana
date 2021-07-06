@@ -13,6 +13,7 @@ import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.FocusItem;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.modules.core.StartCircle;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -171,7 +172,7 @@ public class FociForgeContainer extends AspectContainer {
             int x = 10 + 17 * xx;
             int y = 11;
             AspectSlot slot = new AspectSlot(primals[xx], source, x, y);
-            slot.description = AspectUtils.fociForgeTooltip.get(primals[xx]);
+            slot.description = I18n.format("tooltip.arcana.fociforge."+primals[xx]);
             slot.setSymbolic(true);
             aspectSlots.add(slot);
         }
@@ -189,7 +190,7 @@ public class FociForgeContainer extends AspectContainer {
             int x = 95;
             int y = 52 + 16 * yy;
             AspectSlot slot = new AspectSlot(sins[yy], source, x, y);
-            slot.description = AspectUtils.fociForgeTooltip.get(sins[yy]);
+            slot.description = I18n.format("tooltip.arcana.fociforge."+sins[yy]);
             slot.setSymbolic(true);
             aspectSlots.add(slot);
         }

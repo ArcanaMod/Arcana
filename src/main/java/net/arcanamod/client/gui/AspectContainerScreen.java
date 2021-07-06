@@ -27,7 +27,6 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(MatrixStack matrices, int mouseX, int mouseY) {
-		super.drawGuiContainerForegroundLayer(matrices, mouseX, mouseY);
 		GlStateManager.disableLighting();
 		GlStateManager.enableBlend();
 		for (AspectSlot slot : aspectContainer.getAspectSlots()) {

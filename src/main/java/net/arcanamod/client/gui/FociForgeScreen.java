@@ -169,7 +169,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 			if (slot.getInventory().get() != null && slot.visible) {
 				if (isMouseOverSlot(mouseX, mouseY, slot)) {
 					if (slot.getAspect() != null) {
-						slot.description = "tooltip.arcana.fociforge."+slot.getAspect().name().toLowerCase();
+						slot.description = I18n.format("tooltip.arcana.fociforge."+slot.getAspect().name().toLowerCase());
 					}
 				}
 			}
