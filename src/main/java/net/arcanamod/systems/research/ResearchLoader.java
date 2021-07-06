@@ -235,7 +235,7 @@ public class ResearchLoader extends JsonReloadListener {
 							ItemTagRequirement tagReq = new ItemTagRequirement((ITag.INamedTag<Item>)itemTag);
 							tagReq.amount = amount;
 							ret.add(tagReq);
-						} catch (ClassCastException ignore){} // TODO: Minecraft never calls it when world loaded first time. But second time well...
+						} catch (ClassCastException ignore){} // TODO: Minecraft never calls it when world loaded first time. But second time well... This is temporarily fix
 					}else
 						LOGGER.error("Invalid item tag " + itemTagLoc + " found in file " + file + "!");
 				}else{
