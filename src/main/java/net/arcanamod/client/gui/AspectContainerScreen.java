@@ -15,8 +15,6 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import static net.arcanamod.aspects.Aspects.MINING;
-
 @ParametersAreNonnullByDefault
 public abstract class AspectContainerScreen<T extends AspectContainer> extends ContainerScreen<T> {
 	protected T aspectContainer;
