@@ -15,6 +15,8 @@ import net.minecraftforge.fml.client.gui.GuiUtils;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
+import static net.arcanamod.aspects.Aspects.MINING;
+
 @ParametersAreNonnullByDefault
 public abstract class AspectContainerScreen<T extends AspectContainer> extends ContainerScreen<T> {
 	protected T aspectContainer;
@@ -60,7 +62,7 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 			if (slot.getInventory().get() != null && slot.visible) {
 				if (isMouseOverSlot(mouseX, mouseY, slot)) {
 					if (slot.getAspect() != Aspects.EMPTY && slot.getAspect() != null) {
-						ClientUiUtil.drawAspectTooltip(matrices, slot.getAspect(), mouseX, mouseY, width, height);
+						ClientUiUtil.drawAspectTooltip(matrices, slot.getAspect(), slot.description, mouseX, mouseY, width, height);
 					}
 				}
 			}

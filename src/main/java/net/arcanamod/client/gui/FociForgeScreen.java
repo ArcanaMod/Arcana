@@ -164,6 +164,20 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	}
 
 	@Override
+	protected void renderHoveredTooltip(MatrixStack matrices, int mouseX, int mouseY) {
+		for (AspectSlot slot : aspectContainer.getAspectSlots()) {
+			if (slot.getInventory().get() != null && slot.visible) {
+				if (isMouseOverSlot(mouseX, mouseY, slot)) {
+					if (slot.getAspect() != null) {
+						slot.description = "tooltip.arcana.fociforge."+slot.getAspect().name().toLowerCase();
+					}
+				}
+			}
+		}
+		super.renderHoveredTooltip(matrices, mouseX, mouseY);
+	}
+
+	@Override
 	public boolean mouseScrolled(double x, double y, double bars) {
 		if (x < this.guiLeft + (WIDTH / 2.0)) {
 			int extraRows = (Aspects.getWithoutPrimalsOrSins().size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;

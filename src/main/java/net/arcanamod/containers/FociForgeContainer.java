@@ -171,6 +171,7 @@ public class FociForgeContainer extends AspectContainer {
             int x = 10 + 17 * xx;
             int y = 11;
             AspectSlot slot = new AspectSlot(primals[xx], source, x, y);
+            slot.description = AspectUtils.fociForgeTooltip.get(primals[xx]);
             slot.setSymbolic(true);
             aspectSlots.add(slot);
         }
@@ -188,6 +189,7 @@ public class FociForgeContainer extends AspectContainer {
             int x = 95;
             int y = 52 + 16 * yy;
             AspectSlot slot = new AspectSlot(sins[yy], source, x, y);
+            slot.description = AspectUtils.fociForgeTooltip.get(sins[yy]);
             slot.setSymbolic(true);
             aspectSlots.add(slot);
         }

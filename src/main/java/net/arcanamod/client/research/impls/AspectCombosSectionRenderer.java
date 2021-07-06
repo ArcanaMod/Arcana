@@ -52,15 +52,15 @@ public class AspectCombosSectionRenderer implements EntrySectionRenderer<AspectC
 			Pair<Aspect, Aspect> pair = list.get(i);
 			int dispIndex = i - pageIndex * 5;
 			if(mouseX >= x && mouseX < x + 16 && mouseY >= y + 30 * dispIndex && mouseY < y + 30 * dispIndex + 16){
-				ClientUiUtil.drawAspectTooltip(stack, pair.getFirst(), mouseX, mouseY, screenWidth, screenHeight);
+				ClientUiUtil.drawAspectTooltip(stack, pair.getFirst(), "", mouseX, mouseY, screenWidth, screenHeight);
 				break;
 			}
 			if(mouseX >= x + 40 && mouseX < x + 40 + 16 && mouseY >= y + 30 * dispIndex && mouseY < y + 30 * dispIndex + 16){
-				ClientUiUtil.drawAspectTooltip(stack, pair.getSecond(), mouseX, mouseY, screenWidth, screenHeight);
+				ClientUiUtil.drawAspectTooltip(stack, pair.getSecond(), "", mouseX, mouseY, screenWidth, screenHeight);
 				break;
 			}
 			if(mouseX >= x + 80 && mouseX < x + 80 + 16 && mouseY >= y + 30 * dispIndex && mouseY < y + 30 * dispIndex + 16){
-				ClientUiUtil.drawAspectTooltip(stack, Aspects.COMBINATIONS.get(pair), mouseX, mouseY, screenWidth, screenHeight);
+				ClientUiUtil.drawAspectTooltip(stack, Aspects.COMBINATIONS.get(pair), "", mouseX, mouseY, screenWidth, screenHeight);
 				break;
 			}
 		}

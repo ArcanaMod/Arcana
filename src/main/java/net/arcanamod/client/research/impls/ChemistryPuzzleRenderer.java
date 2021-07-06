@@ -120,7 +120,7 @@ public class ChemistryPuzzleRenderer extends AbstractGui implements PuzzleRender
 			int scX = xx + paperLeft(screenWidth) + (214 - (23 * gridWidth - 2)) / 2 + 2;
 			int scY = yy + paperTop(screenHeight) + (134 - (19 * gridHeight + 1)) / 2 + 2;
 			if(mouseX >= scX && mouseX < scX + 16 && mouseY >= scY && mouseY < scY + 16){
-				ClientUiUtil.drawAspectTooltip(stack, puzzle.getAspectInSlot(index), mouseX, mouseY, screenWidth, screenHeight);
+				ClientUiUtil.drawAspectTooltip(stack, puzzle.getAspectInSlot(index), "", mouseX, mouseY, screenWidth, screenHeight);
 				break;
 			}
 		}

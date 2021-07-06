@@ -128,4 +128,27 @@ public class AspectUtils {
 	public static List<Aspect> castContaingAspects() {
 		return Casts.castMap.values().stream().map(ICast::getSpellAspect).collect(Collectors.toList());
 	}
+
+	public static HashMap<Aspect, String> fociForgeTooltip = new HashMap<>();
+
+	static{
+		// Primal aspects
+		fociForgeTooltip.put(Aspects.AIR, "Creates Cloud (Lingering effect)\nCan not target blocks.");
+		fociForgeTooltip.put(Aspects.CHAOS, "Creates a mid ranged lightning bolt\nTargets the block / entity hit every few ticks");
+		fociForgeTooltip.put(Aspects.EARTH, "Allows the player to select a block from far away.\nCan not target entities.");
+		fociForgeTooltip.put(Aspects.FIRE, "Fires a projectiles with a long range.\nTargets the block / entity hit");
+		fociForgeTooltip.put(Aspects.ORDER, "Targets yourself");
+		fociForgeTooltip.put(Aspects.WATER, "Creates an AOE blast that targets any entity hit.\nCan not target blocks.");
+
+		// The sins
+		// I tried to make hints, yes I bad in naming things
+		// TODO make hits better
+		fociForgeTooltip.put(Aspects.ENVY,"Infects with spell targeted entities, targets nearby objects");
+		fociForgeTooltip.put(Aspects.LUST,"Targets passive mob or pets");
+		fociForgeTooltip.put(Aspects.SLOTH,"Makes a trap, spell bounces");
+		fociForgeTooltip.put(Aspects.PRIDE,"Randomness and spread");
+		fociForgeTooltip.put(Aspects.GREED,"Binds to hostile mobs, Targets underneath");
+		fociForgeTooltip.put(Aspects.WRATH,"Generates movement, Inverts working or Spell stays on you");
+		fociForgeTooltip.put(Aspects.GLUTTONY,"Accelerates more particles, Gives a lage area, Your soul goes to dropped items");
+	}
 }

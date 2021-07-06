@@ -29,6 +29,8 @@ public class AspectSlot {
 	 * and it will change to that aspect, and when fully drained it will lose its aspect.
 	 */
 	public boolean storeSlot = false;
+
+	public String description = "";
 	
 	public AspectSlot(@Nonnull Aspect aspect, @Nonnull Supplier<IAspectHandler> inventory, int x, int y) {
 		this.setAspect(aspect);

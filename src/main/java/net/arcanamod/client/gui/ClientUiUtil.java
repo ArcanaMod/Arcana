@@ -17,10 +17,12 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class ClientUiUtil {
 
@@ -75,9 +77,15 @@ public class ClientUiUtil {
         return entry == null || (from != null && from.entryStage(entry) >= entry.sections().size());
     }
 
-    public static void drawAspectTooltip(MatrixStack stack, Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight){
+    public static void drawAspectTooltip(MatrixStack stack, Aspect aspect, String descriptions, int mouseX, int mouseY, int screenWidth, int screenHeight){
         String name = AspectUtils.getLocalizedAspectDisplayName(aspect);
-        drawAspectStyleTooltip(stack, name, mouseX, mouseY, screenWidth, screenHeight);
+
+        List<ITextComponent> text = new ArrayList<>(); text.add(new StringTextComponent(name));
+        if (!descriptions.equals(""))
+            for (String description : descriptions.split("\n"))
+                text.add(new StringTextComponent(description).setStyle(Style.EMPTY.setColor(Color.fromTextFormatting(TextFormatting.GRAY))));
+
+        drawAspectStyleTooltip(stack, text, mouseX, mouseY, screenWidth, screenHeight);
 
         if(shouldShowAspectIngredients() && Screen.hasShiftDown()){
             RenderSystem.pushMatrix();
@@ -114,8 +122,8 @@ public class ClientUiUtil {
         }
     }
 
-    public static void drawAspectStyleTooltip(MatrixStack stack, String text, int mouseX, int mouseY, int screenWidth, int screenHeight){
-        GuiUtils.drawHoveringText(stack, Collections.singletonList(new StringTextComponent(text)), mouseX, mouseY, screenWidth, screenHeight, -1, GuiUtils.DEFAULT_BACKGROUND_COLOR, 0xFF00505F, 0xFF00282F, Minecraft.getInstance().fontRenderer);
+    public static void drawAspectStyleTooltip(MatrixStack stack, List<ITextComponent> text, int mouseX, int mouseY, int screenWidth, int screenHeight){
+        GuiUtils.drawHoveringText(stack, text, mouseX, mouseY, screenWidth, screenHeight, -1, GuiUtils.DEFAULT_BACKGROUND_COLOR, 0xFF00505F, 0xFF00282F, Minecraft.getInstance().fontRenderer);
     }
 
     public static void renderIcon(MatrixStack stack, Icon icon, int x, int y, int itemZLevel){
