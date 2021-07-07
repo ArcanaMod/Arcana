@@ -204,13 +204,13 @@ public class FociForgeContainer extends AspectContainer {
         if (item instanceof FocusItem) {
             te.focus().getOrCreateTag().putInt("style", style);
             //TODO Add a button in the UI to add the NBT to the focus Item
-            te.focus().getOrCreateTag().put("spell", te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
-            Connection.sendWriteSpell(te.focus(), te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
+            changeFociSpell();
         }
     }
 
-    private void changeFociSpell(){
-
+    public void changeFociSpell(){
+        te.focus().getOrCreateTag().put("spell", te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
+        Connection.sendWriteSpell(te.focus(), te.spellState.currentSpell.toNBT(new CompoundNBT()));
     }
 
     @Override
