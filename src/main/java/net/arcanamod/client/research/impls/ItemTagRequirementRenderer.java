@@ -43,7 +43,7 @@ public class ItemTagRequirementRenderer implements RequirementRenderer<ItemTagRe
 			tooltip.set(0, new TranslationTextComponent("requirement.item.num", requirement.getAmount(), tooltip.get(0)));
 		else
 			tooltip.set(0, new TranslationTextComponent("requirement.item.have", tooltip.get(0)));
-		tooltip.add(new TranslationTextComponent("requirement.tag.accepts_any", requirement.getTag().getName().toString()).mergeStyle(TextFormatting.DARK_GRAY));
+		tooltip.add(new TranslationTextComponent("requirement.tag.accepts_any", requirement.getTagName().toString()).mergeStyle(TextFormatting.DARK_GRAY));
 		return tooltip;
 	}
 	
