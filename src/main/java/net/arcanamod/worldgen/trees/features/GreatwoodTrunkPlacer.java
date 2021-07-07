@@ -37,7 +37,8 @@ public class GreatwoodTrunkPlacer extends AbstractTrunkPlacer{
 	}
 	
 	public List<FoliagePlacer.Foliage> getFoliages(IWorldGenerationReader world, Random rand, int treeHeight, BlockPos pos, Set<BlockPos> logs, MutableBoundingBox box, BaseTreeFeatureConfig config){
-		int height = rand.nextInt(3) + rand.nextInt(3) + treeHeight;
+		// todo: customisation options?
+		int height = rand.nextInt(3) + rand.nextInt(3) + /*treeHeight*/ 18;
 		int x = pos.getX();
 		int y = pos.getY();
 		int z = pos.getZ();

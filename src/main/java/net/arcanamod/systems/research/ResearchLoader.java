@@ -231,11 +231,9 @@ public class ResearchLoader extends JsonReloadListener {
 					ResourceLocation itemTagLoc = new ResourceLocation(desc.substring(1));
 					ITag<Item> itemTag = ItemTags.getCollection().get(itemTagLoc);
 					if(itemTag != null){
-						try{
-							ItemTagRequirement tagReq = new ItemTagRequirement((ITag.INamedTag<Item>)itemTag);
-							tagReq.amount = amount;
-							ret.add(tagReq);
-						} catch (ClassCastException ignore){} // TODO: Minecraft never calls it when world loaded first time. But second time well... This is temporarily fix
+						ItemTagRequirement tagReq = new ItemTagRequirement(itemTag, itemTagLoc);
+						tagReq.amount = amount;
+						ret.add(tagReq);
 					}else
 						LOGGER.error("Invalid item tag " + itemTagLoc + " found in file " + file + "!");
 				}else{

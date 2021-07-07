@@ -32,10 +32,6 @@ public class NodeCommand{
 	private static final SuggestionProvider<CommandSource> SUGGEST_TYPES = (ctx, builder) -> ISuggestionProvider.func_212476_a(NodeType.TYPES.keySet().stream(), builder);
 	
 	public static void register(CommandDispatcher<CommandSource> dispatcher){
-		// Register nodes as an argument
-		try { // Don't register it again
-			ArgumentTypes.register("node_argument", NodeArgument.class, new ArgumentSerializer<>(NodeArgument::new));
-		} catch (Exception ignore){}
 		// arcana-nodes <add|remove|modify>
 		// arcana-nodes add <type> <x> <y> <z>
 		// arcana-nodes remove <nodes>
