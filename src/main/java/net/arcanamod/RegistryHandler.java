@@ -5,9 +5,10 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrystalClusterBlock;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.items.CrystalClusterItem;
-import net.arcanamod.worldgen.ArcanaFeatures;
 import net.arcanamod.worldgen.trees.features.GreatwoodFoliagePlacer;
 import net.arcanamod.worldgen.trees.features.GreatwoodTrunkPlacer;
+import net.arcanamod.worldgen.trees.features.SilverwoodFoliagePlacer;
+import net.arcanamod.worldgen.trees.features.SilverwoodTrunkPlacer;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -63,5 +64,9 @@ public class RegistryHandler{
 		GREATWOOD_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.GREATWOOD_LEAVES.get().getDefaultState()), new GreatwoodFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 18), new GreatwoodTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
 		GREATWOOD_TREE = Feature.TREE.withConfiguration(GREATWOOD_TREE_CONFIG);
 		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, arcLoc("greatwood_tree"), GREATWOOD_TREE);
+		
+		SILVERWOOD_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new SilverwoodFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 18), new SilverwoodTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
+		SILVERWOOD_TREE = Feature.TREE.withConfiguration(SILVERWOOD_TREE_CONFIG);
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, arcLoc("silverwood_tree"), SILVERWOOD_TREE);
 	}
 }
