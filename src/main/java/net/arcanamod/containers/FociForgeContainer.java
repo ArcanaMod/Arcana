@@ -203,7 +203,6 @@ public class FociForgeContainer extends AspectContainer {
             te.setInventorySlotContents(1, new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1));
         if (item instanceof FocusItem) {
             te.focus().getOrCreateTag().putInt("style", style);
-            //TODO Add a button in the UI to add the NBT to the focus Item
             changeFociSpell();
         }
     }
