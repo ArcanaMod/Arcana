@@ -525,8 +525,20 @@
     "block.arcana.order_crystal_fragments": "Order Crystal Fragments",
     "block.arcana.chaos_crystal_fragments": "Chaos Crystal Fragments",
 
-    "_comment": "Tainted",
+    "_comment": "Tainted Blocks",
     "arcana.status.tainted": "Tainted %s",
+
+    "block.arcana.tainted_dair_sapling": "Tainted Dair Sapling",
+    "block.arcana.tainted_eucalyptus_sapling": "Tainted Eucalyptus Sapling",
+    "block.arcana.tainted_greatwood_sapling": "Tainted Greatwood Sapling",
+    "block.arcana.tainted_hawthorn_sapling": "Tainted Hawthorn Sapling",
+    "block.arcana.tainted_willow_sapling": "Tainted Willow Sapling",
+    "block.arcana.tainted_acacia_sapling": "Tainted Acacia Sapling",
+    "block.arcana.tainted_birch_sapling": "Tainted Birch Sapling",
+    "block.arcana.tainted_darkoak_sapling": "Tainted Dark Oak Sapling",
+    "block.arcana.tainted_jungle_sapling": "Tainted Jungle Sapling",
+    "block.arcana.tainted_oak_sapling": "Tainted Oak Sapling",
+    "block.arcana.tainted_spruce_sapling": "Tainted Spruce Sapling",
 
     "_comment": "Commands",
     "commands.arcana.research.invalid_entry": "Invalid entry \"%s\"!",

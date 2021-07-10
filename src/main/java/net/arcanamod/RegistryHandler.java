@@ -20,6 +20,8 @@ import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureSpread;
 import net.minecraft.world.gen.feature.TwoLayerFeature;
+import net.minecraft.world.gen.foliageplacer.BlobFoliagePlacer;
+import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -68,5 +70,13 @@ public class RegistryHandler{
 		SILVERWOOD_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new SilverwoodFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 18), new SilverwoodTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
 		SILVERWOOD_TREE = Feature.TREE.withConfiguration(SILVERWOOD_TREE_CONFIG);
 		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, arcLoc("silverwood_tree"), SILVERWOOD_TREE);
+		
+		TAINTED_GREATWOOD_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LEAVES.get().getDefaultState()), new GreatwoodFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 18), new GreatwoodTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
+		TAINTED_GREATWOOD_TREE = Feature.TREE.withConfiguration(TAINTED_GREATWOOD_TREE_CONFIG);
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, arcLoc("tainted_greatwood_tree"), TAINTED_GREATWOOD_TREE);
+		
+		TAINTED_OAK_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_OAK_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_OAK_LEAVES.get().getDefaultState()), new BlobFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 3), new StraightTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
+		TAINTED_OAK_TREE = Feature.TREE.withConfiguration(TAINTED_OAK_TREE_CONFIG);
+		Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, arcLoc("tainted_oak_tree"), TAINTED_OAK_TREE);
 	}
 }
