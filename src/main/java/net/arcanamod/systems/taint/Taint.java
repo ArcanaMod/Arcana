@@ -15,7 +15,6 @@ import net.arcanamod.fluids.ArcanaFluids;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.block.*;
-import net.minecraft.block.trees.Tree;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IShearable;
@@ -247,7 +246,8 @@ public class Taint{
 				for(int z = -3; z < 7; z++){
 					mutable.setPos(pos.getX() + x, pos.getY() + y, pos.getZ() + z);
 					try{
-						if(isTainted(world.getBlockState(mutable).getBlock()))
+						BlockState state = world.getBlockState(mutable);
+						if(isTainted(state.getBlock()) && (!state.hasProperty(UNTAINTED) || !state.get(UNTAINTED)))
 							counter++;
 					}catch(ArrayIndexOutOfBoundsException ignored){
 						// ChunkRenderCache throws this when you try to check somewhere "out-of-bounds".
