@@ -18,33 +18,36 @@ public class AuthorisationManager {
 	public enum UserPermissionLevel{
 		DEVELOPER,
 		CONTRIBUTOR,
-		PATREON_ONE
+		PATREON_ONE,
+		PLAYER
 	}
 
 	public UserPermissionLevel[] getUserLevel(String username) throws IOException {
-		UserPermissionLevel[] lvl = getUserLevelNoCached(username);
-		if (cache == null) cache = lvl;
-		return lvl;
+		if (cache == null) cache = getUserLevelNoCached(username);;
+		return cache;
 	}
 
 	private UserPermissionLevel[] getUserLevelNoCached(String username) throws IOException {
-		if (cache == null) {
 			URL url = new URL("https://dczippl.tk/arcana.php");
 			URLConnection con = url.openConnection();
 			InputStream in = con.getInputStream();
 			String encoding = con.getContentEncoding();
 			encoding = encoding == null ? "UTF-8" : encoding;
 			String body = IOUtils.toString(in, encoding);
-			String[] users = body.replace("<pre>", "").replace("</pre>", "").split("��c");
+			String[] users = body.replace("<pre>", "")
+					.replace("</pre>", "").split("\u0005");
 			for (String user : users) {
 				// TODO: Make it more precise.
 				if (user.contains(username)) {
 					UserPermissionLevel[] upr = new UserPermissionLevel[1];
-					upr[0] = UserPermissionLevel.DEVELOPER;
+					String ui = user.split("\u0004")[1];
+					upr[0] = ui.equals("1")
+							? UserPermissionLevel.DEVELOPER : ui.equals("2")
+							? UserPermissionLevel.CONTRIBUTOR : ui.equals("3")
+							? UserPermissionLevel.PATREON_ONE : UserPermissionLevel.PLAYER;
 					return upr;
 				}
 			}
 			return new UserPermissionLevel[0];
-		} else return cache;
 	}
 }
