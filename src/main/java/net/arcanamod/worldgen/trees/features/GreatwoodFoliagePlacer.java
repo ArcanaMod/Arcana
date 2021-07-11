@@ -26,7 +26,7 @@ public class GreatwoodFoliagePlacer extends FoliagePlacer{
 	public static final Codec<GreatwoodFoliagePlacer> CODEC = RecordCodecBuilder.create(a -> makeCodec(a).apply(a, GreatwoodFoliagePlacer::new));
 	
 	protected static <P extends GreatwoodFoliagePlacer> Products.P3<RecordCodecBuilder.Mu<P>, FeatureSpread, FeatureSpread, Integer> makeCodec(RecordCodecBuilder.Instance<P> builder) {
-		return func_242830_b(builder).and(Codec.intRange(0, 16).fieldOf("height").forGetter((placer) -> placer.height));
+		return func_242830_b(builder).and(Codec.intRange(0, 24).fieldOf("height").forGetter((placer) -> placer.height));
 	}
 	
 	protected final int height;

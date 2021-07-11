@@ -3,7 +3,6 @@ package net.arcanamod.worldgen;
 import net.arcanamod.Arcana;
 import net.arcanamod.worldgen.trees.features.GreatwoodFoliagePlacer;
 import net.arcanamod.worldgen.trees.features.SilverwoodFoliagePlacer;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -21,6 +20,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import static net.arcanamod.Arcana.MODID;
+import static net.arcanamod.Arcana.arcLoc;
 
 @Mod.EventBusSubscriber(modid = Arcana.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ArcanaFeatures{
@@ -64,16 +64,21 @@ public class ArcanaFeatures{
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TAINTED_MEGA_SPRUCE_TREE;
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TAINTED_MEGA_PINE_TREE;
 	
+	public static ConfiguredFeature<?, ?> MAGICAL_FOREST_BONUS_TREES;
+	public static ConfiguredFeature<?, ?> MAGICAL_FOREST_GIANT_MUSHROOMS;
+	public static ConfiguredFeature<?, ?> MAGIC_MUSHROOM_PATCH;
+	
 	public static RegistryObject<FoliagePlacerType<GreatwoodFoliagePlacer>> GREATWOOD_FOLIAGE = FOLAIGE_PLACERS.register("greatwood_foliage_placer", () -> new FoliagePlacerType<>(GreatwoodFoliagePlacer.CODEC));
 	public static RegistryObject<FoliagePlacerType<SilverwoodFoliagePlacer>> SILVERWOOD_FOLIAGE = FOLAIGE_PLACERS.register("silverwood_foliage_placer", () -> new FoliagePlacerType<>(SilverwoodFoliagePlacer.CODEC));
-	
-	public static void addMagicalForestTrees(Biome biome){
-		//biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, SILVERWOOD_TREE.withConfiguration(SILVERWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(0, 0.04f, 1))));
-		//biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, GREATWOOD_TREE.withConfiguration(GREATWOOD_TREE_CONFIG).withPlacement(Placement.COUNT_EXTRA_HEIGHTMAP.configure(new AtSurfaceWithExtraConfig(0, 0.1f, 1))));
-	}
 	
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onItemRegister(BiomeLoadingEvent event){
 		event.getGeneration().withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, ArcanaFeatures.NODE.withConfiguration(new NoFeatureConfig()).withPlacement(Placement.TOP_SOLID_HEIGHTMAP.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+		
+		if(event.getName().equals(arcLoc("magical_forest"))){
+			event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ArcanaFeatures.MAGICAL_FOREST_BONUS_TREES);
+			event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ArcanaFeatures.MAGICAL_FOREST_GIANT_MUSHROOMS);
+			event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ArcanaFeatures.MAGIC_MUSHROOM_PATCH);
+		}
 	}
 }
