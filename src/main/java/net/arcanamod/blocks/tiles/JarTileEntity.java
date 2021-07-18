@@ -61,6 +61,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 			if (label == null)
 				label = new AspectLabel(Direction.byIndex(compound.getInt("label")));
 			else label.direction = Direction.byIndex(compound.getInt("label"));
+			label.seal = AspectUtils.getAspect(compound,"seal");
 		}
 	}
 
@@ -70,6 +71,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		compound.put("aspects", aspectsNbt);
 		if (label != null) {
 			compound.putInt("label", label.direction.getIndex());
+			AspectUtils.putAspect(compound,"seal",label.seal);
 		}
 		return super.write(compound);
 	}
