@@ -16,6 +16,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.*;
 import net.minecraftforge.fml.client.gui.GuiUtils;
@@ -179,6 +180,16 @@ public class ClientUiUtil {
                 drawModalRectWithCustomSizedTexture(stack, x, y, 0, 0, meterShort, renderLen, meterLen, meterLen);
             else
                 drawModalRectWithCustomSizedTexture(stack, x, y, 0, 0, renderLen, meterShort, meterLen, meterLen);
+        }
+    }
+
+    public static void renderVisDetailInfo(MatrixStack matrices, IAspectHandler aspects) {
+        int topMargin = 0;
+        for (IAspectHolder holder : aspects.getHolders()){
+            Minecraft.getInstance().fontRenderer.drawString(matrices,
+                    I18n.format("aspect." + holder.getContainedAspect().name().toLowerCase())+": "+holder.getCurrentVis(),
+                    60,topMargin, java.awt.Color.WHITE.getRGB());
+            topMargin += 10;
         }
     }
 }
