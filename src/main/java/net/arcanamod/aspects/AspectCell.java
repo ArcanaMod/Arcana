@@ -82,6 +82,14 @@ public class AspectCell implements IAspectHolder {
 		return capacity;
 	}
 
+	public void lockWithAspect(Aspect aspect){
+		optionalWhitelist = aspect;
+	}
+
+	public void unlockCell(Aspect aspect){
+		optionalWhitelist = null;
+	}
+
 	public Set<Aspect> getAllowedAspects(){
 		// insertion order matters!
 		return optionalWhitelist == null ? new LinkedHashSet<>(Aspects.getWithoutEmpty()) : Collections.singleton(optionalWhitelist);
