@@ -92,6 +92,24 @@
       "arcana:taint/arcanataintstep4"
     ]
   },
+  "arcananodes": {
+    "subtitle": "arcana.sounds.arcananodes",
+    "sounds": [
+      "arcana:nodes/arcananodes"
+    ]
+  },
+  "arcananodesnegative": {
+    "subtitle": "arcana.sounds.arcananodesnegative",
+    "sounds": [
+      "arcana:nodes/arcananodesnegative"
+    ]
+  },
+  "arcana_hunger_node": {
+    "subtitle": "arcana.sounds.arcana_hunger_node",
+    "sounds": [
+      "arcana:nodes/arcana_hunger_node"
+    ]
+  },
   "music_arcana_theme": {
     "subtitle": "arcana.sounds.music_arcana_theme",
     "sounds": [

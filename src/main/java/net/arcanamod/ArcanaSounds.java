@@ -117,6 +117,17 @@ public class ArcanaSounds {
 
 		public static void init() {}
 
+		// Nodes
+
+		@SoundName("arcananodes")
+		public static final SoundEvent arcananodes = null;
+
+		@SoundName("arcananodesnegative")
+		public static final SoundEvent arcananodesnegative = null;
+
+		@SoundName("arcana_hunger_node")
+		public static final SoundEvent arcana_hunger_node = null;
+
 		static {
 			for (Field f : ArcanaSounds.Impl.class.getDeclaredFields()) {
 				if (f.isAnnotationPresent(SoundName.class)) {
