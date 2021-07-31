@@ -2,6 +2,7 @@ package net.arcanamod.worldgen;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.worldgen.trees.features.GreatwoodFoliagePlacer;
+import net.arcanamod.worldgen.trees.features.LargeOakFoliagePlacer;
 import net.arcanamod.worldgen.trees.features.SilverwoodFoliagePlacer;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
@@ -30,6 +31,7 @@ public class ArcanaFeatures{
 	
 	public static BaseTreeFeatureConfig GREATWOOD_TREE_CONFIG;
 	public static BaseTreeFeatureConfig SILVERWOOD_TREE_CONFIG;
+	public static BaseTreeFeatureConfig LARGE_OAK_TREE_CONFIG;
 	
 	public static BaseTreeFeatureConfig TAINTED_GREATWOOD_TREE_CONFIG;
 	
@@ -50,6 +52,7 @@ public class ArcanaFeatures{
 	public static Feature<NoFeatureConfig> NODE = new NodeFeature(NoFeatureConfig.CODEC);
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> GREATWOOD_TREE;
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> SILVERWOOD_TREE;
+	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> LARGE_OAK_TREE;
 	
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TAINTED_GREATWOOD_TREE;
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TAINTED_OAK_TREE;
@@ -70,7 +73,8 @@ public class ArcanaFeatures{
 	
 	public static RegistryObject<FoliagePlacerType<GreatwoodFoliagePlacer>> GREATWOOD_FOLIAGE = FOLAIGE_PLACERS.register("greatwood_foliage_placer", () -> new FoliagePlacerType<>(GreatwoodFoliagePlacer.CODEC));
 	public static RegistryObject<FoliagePlacerType<SilverwoodFoliagePlacer>> SILVERWOOD_FOLIAGE = FOLAIGE_PLACERS.register("silverwood_foliage_placer", () -> new FoliagePlacerType<>(SilverwoodFoliagePlacer.CODEC));
-	
+	public static RegistryObject<FoliagePlacerType<LargeOakFoliagePlacer>> LARGE_OAK_FOLIAGE = FOLAIGE_PLACERS.register("large_oak_foliage_placer", () -> new FoliagePlacerType<>(LargeOakFoliagePlacer.CODEC));
+
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onItemRegister(BiomeLoadingEvent event){
 		event.getGeneration().withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, ArcanaFeatures.NODE.withConfiguration(new NoFeatureConfig()).withPlacement(Placement.TOP_SOLID_HEIGHTMAP.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
