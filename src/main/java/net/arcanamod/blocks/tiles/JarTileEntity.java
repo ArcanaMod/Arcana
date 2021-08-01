@@ -3,9 +3,9 @@ package net.arcanamod.blocks.tiles;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.handlers.VisUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
-import net.arcanamod.systems.vis.VisUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -21,8 +21,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
-import java.util.HashSet;
-import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault

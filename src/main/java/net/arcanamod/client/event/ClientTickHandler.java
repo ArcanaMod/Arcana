@@ -1,25 +1,21 @@
 package net.arcanamod.client.event;
 
-import com.google.common.collect.Lists;
 import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
-import net.arcanamod.client.render.particles.ArcanaParticles;
 import net.arcanamod.client.render.particles.AspectParticleData;
 import net.arcanamod.client.render.particles.NumberParticleData;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.settings.GogglePriority;
 import net.arcanamod.mixin.AccessorMinecraft;
-import net.arcanamod.systems.vis.VisUtils;
 import net.arcanamod.util.LocalAxis;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
 import net.arcanamod.world.AuraView;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;

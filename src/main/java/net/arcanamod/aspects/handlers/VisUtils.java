@@ -1,4 +1,4 @@
-package net.arcanamod.systems.vis;
+package net.arcanamod.aspects.handlers;
 
 import net.arcanamod.aspects.*;
 
@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 
-// TODO: this stuff should be fine in AspectHandler but that's currently a little messy so its here rn
 public final class VisUtils{
 	
 	/** Sorts empty aspect holders after full ones. */
@@ -16,8 +15,15 @@ public final class VisUtils{
 	/** Sorts non-empty non-voiding aspect holders first, then empty aspect holders, then voiding aspect holders. */
 	public static final Comparator<IAspectHolder> INPUT_PRIORITY_SORTER = VOID_SORTER.thenComparing(EMPTY_SORTER);
 	
+	/** Sorts empty aspect holders after full ones. */
+	public static final Comparator<AspectHolder2> EMPTY_SORTER2 = (a, b) -> a.getStack().getAmount() == 0 ? (b.getStack().getAmount() == 0 ? 0 : 1) : (b.getStack().getAmount() == 0 ? -1 : 0);
+	/** Sorts voiding aspect holders after non-voiding aspect holders. */
+	public static final Comparator<AspectHolder2> VOID_SORTER2 = (a, b) -> a.voids() ? (b.voids() ? 0 : 1) : (b.voids() ? -1 : 0);
+	/** Sorts non-empty non-voiding aspect holders first, then empty aspect holders, then voiding aspect holders. */
+	public static final Comparator<AspectHolder2> INPUT_PRIORITY_SORTER2 = VOID_SORTER2.thenComparing(EMPTY_SORTER2);
+	
 	/**
-	 * Moves som eor all aspects from <code>from</code> to <code>to</code>.
+	 * Moves some or all aspects from <code>from</code> to <code>to</code>.
 	 * Iterates through every holder in <code>from</code> and tries to empty them into every holder in <code>to</code>.
 	 * If max is set to -1, up to all aspects will be moved. Otherwise, only up to max aspects will be moved.
 	 *
