@@ -9,7 +9,6 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -165,16 +164,18 @@ public class PhialItem extends Item implements IOverrideAspects {
 		stack.setTag(stack.getShareTag());
 		return stack;
 	}
-
+	
 	@Override
-	public List<AspectStack> getAspectStacks(ItemStack stack) {
+	public List<AspectStack> getAspectStacks(ItemStack stack){
 		IAspectHolder myHolder = IAspectHandler.getFrom(stack).getHolder(0);
-		if (myHolder==null) return IOverrideAspects.setSpecialOverrideType(SpecialOverrideType.DEFAULT);
- 		if (myHolder.getContainedAspect()==Aspects.EMPTY) return IOverrideAspects.setSpecialOverrideType(SpecialOverrideType.NONE);
+		if(myHolder == null)
+			return Collections.singletonList(new AspectStack(Aspect.dummy()));
+		if(myHolder.getContainedAspect() == Aspects.EMPTY)
+			return Collections.singletonList(new AspectStack(Aspects.EMPTY));
 		return Collections.singletonList(myHolder.getContainedAspectStack());
 	}
-
-	public static Aspect getAspect(ItemStack stack) {
+	
+	public static Aspect getAspect(ItemStack stack){
 		IAspectHolder myHolder = IAspectHandler.getFrom(stack).getHolder(0);
 		return myHolder.getContainedAspect();
 	}

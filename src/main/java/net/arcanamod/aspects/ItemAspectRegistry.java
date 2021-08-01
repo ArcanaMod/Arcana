@@ -60,14 +60,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 	}
 	
 	public static List<AspectStack> get(ItemStack stack){
-		List<AspectStack> itemAspects =
-				stack.getItem() instanceof IOverrideAspects
-				? !((IOverrideAspects) stack.getItem()).getAspectStacks(stack).get(0).getAspect().name().equals("dummy")
-					? ((IOverrideAspects) stack.getItem()).getAspectStacks(stack).get(0).getAspect()!=Aspects.EMPTY
-						? ((IOverrideAspects)stack.getItem()).getAspectStacks(stack)
-						: new ArrayList<>()
-					: get(stack.getItem())
-				: get(stack.getItem());
+		List<AspectStack> itemAspects = get(stack.getItem());
 		for(BiConsumer<ItemStack, List<AspectStack>> function : stackFunctions)
 			function.accept(stack, itemAspects);
 		return squish(itemAspects);
@@ -249,7 +242,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 				stacks.add(new AspectStack(Aspects.TAINT, 3));
 		});
 		stackFunctions.add((item, stacks) -> {
-			// Give any aspect handler item their aspects
+			// Give any non-IOverrideAspects aspect handler item their aspects
 			if (!(item.getItem() instanceof IOverrideAspects)) {
 				IAspectHandler.getOptional(item).ifPresent(handler -> {
 					List<AspectStack> list = new ArrayList<>();
@@ -260,6 +253,16 @@ public class ItemAspectRegistry extends JsonReloadListener{
 					}
 					stacks.addAll(list);
 				});
+			}
+		});
+		stackFunctions.add((item, stacks) -> {
+			// Apply IOverrideAspects
+			if(item.getItem() instanceof IOverrideAspects){
+				List<AspectStack> overrides = ((IOverrideAspects)item.getItem()).getAspectStacks(item);
+				if(!(overrides.get(0).isEmpty() || overrides.get(0).getAspect() == Aspects.DUMMY)){
+					stacks.clear();
+					stacks.addAll(overrides);
+				}
 			}
 		});
 	}
