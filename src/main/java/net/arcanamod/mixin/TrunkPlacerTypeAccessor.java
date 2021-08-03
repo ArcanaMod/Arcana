@@ -7,10 +7,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin(TrunkPlacerType.class)
-public interface TrunkPlacerTypeAccessor{
-	
+public interface TrunkPlacerTypeAccessor {
 	@Invoker
-	static <P extends AbstractTrunkPlacer> TrunkPlacerType<P> createTrunkPlacerType(Codec<P> codec){
+	static <P extends AbstractTrunkPlacer> TrunkPlacerType<P> createTrunkPlacerType(Codec<P> codec) {
 		throw new UnsupportedOperationException();
 	}
 }
