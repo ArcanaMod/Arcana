@@ -34,13 +34,13 @@ public class ArcanaBiomes{
 		withCommonOverworldBlocks(settings);
 		withOverworldOres(settings);
 		withDisks(settings);
+		withForestBirchTrees(settings);
 		withDefaultFlowers(settings);
 		withForestGrass(settings);
 		withNormalMushroomGeneration(settings);
 		withSugarCaneAndPumpkins(settings);
 		withLavaAndWaterSprings(settings);
-		withBirchTrees(settings);
-
+		withFrozenTopLayer(settings);
 		
 		MobSpawnInfo.Builder mobSpawnBuilder = getStandardMobSpawnBuilder()
 				.withSpawner(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityType.WOLF, 5, 4, 4))
@@ -67,7 +67,6 @@ public class ArcanaBiomes{
 		RegistryKey<Biome> key = RegistryKey.getOrCreateKey(Registry.BIOME_KEY, MAGICAL_FOREST.getId());
 		BiomeManager.addBiome(BiomeManager.BiomeType.COOL, new BiomeManager.BiomeEntry(key, 5));
 		BiomeDictionary.addTypes(key, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.OVERWORLD, BiomeDictionary.Type.MAGICAL);
-
 		
 		return biome;
 	}

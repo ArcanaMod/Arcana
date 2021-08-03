@@ -6,11 +6,11 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrystalClusterBlock;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.items.CrystalClusterItem;
-import net.arcanamod.worldgen.trees.features.*;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
+import net.arcanamod.worldgen.trees.features.GreatwoodFoliagePlacer;
+import net.arcanamod.worldgen.trees.features.GreatwoodTrunkPlacer;
+import net.arcanamod.worldgen.trees.features.SilverwoodFoliagePlacer;
+import net.arcanamod.worldgen.trees.features.SilverwoodTrunkPlacer;
 import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -63,10 +63,7 @@ public class RegistryHandler{
 		
 		SILVERWOOD_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new SilverwoodFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 15), new SilverwoodTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
 		SILVERWOOD_TREE = Feature.TREE.withConfiguration(SILVERWOOD_TREE_CONFIG);
-
-		LARGE_OAK_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(Blocks.OAK_LOG.getDefaultState()), new SimpleBlockStateProvider(Blocks.OAK_LEAVES.getDefaultState()), new LargeOakFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 15), new LargeOakTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
-		LARGE_OAK_TREE = Feature.TREE.withConfiguration(LARGE_OAK_TREE_CONFIG);
-
+		
 		TAINTED_GREATWOOD_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LEAVES.get().getDefaultState()), new GreatwoodFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 15), new GreatwoodTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
 		TAINTED_GREATWOOD_TREE = Feature.TREE.withConfiguration(TAINTED_GREATWOOD_TREE_CONFIG);
 		
@@ -75,12 +72,11 @@ public class RegistryHandler{
 		
 		MAGICAL_FOREST_BONUS_TREES = Feature.RANDOM_SELECTOR
 				.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(
-						LARGE_OAK_TREE.withChance(5 / 8f),
-						SILVERWOOD_TREE.withChance(2 / 8f),
-						GREATWOOD_TREE.withChance(2 / 8f)),
+						SILVERWOOD_TREE.withChance(2 / 7f),
+						GREATWOOD_TREE.withChance(5 / 7f)),
 						GREATWOOD_TREE)) // yes this is dumb but whatever
 				.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT)
-				.withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, 7.0f, 1)));
+				.withPlacement(Placement.COUNT_EXTRA.configure(new AtSurfaceWithExtraConfig(0, .28f, 1)));
 		
 		MAGICAL_FOREST_GIANT_MUSHROOMS = Feature.RANDOM_SELECTOR
 				.withConfiguration(new MultipleRandomFeatureConfig(ImmutableList.of(
