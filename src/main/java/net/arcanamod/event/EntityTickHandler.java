@@ -1,6 +1,7 @@
 package net.arcanamod.event;
 
 import net.arcanamod.ArcanaConfig;
+import net.arcanamod.ArcanaSounds;
 import net.arcanamod.capabilities.TaintTrackable;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.items.ArcanaItems;
@@ -9,6 +10,7 @@ import net.arcanamod.systems.spell.casts.ToggleableCast;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
+import net.arcanamod.world.NodeType;
 import net.arcanamod.world.ServerAuraView;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,6 +18,7 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
