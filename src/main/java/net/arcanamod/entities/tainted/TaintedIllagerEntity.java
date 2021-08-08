@@ -50,7 +50,6 @@ public class TaintedIllagerEntity extends AbstractIllagerEntity {
 	protected void registerGoals() {
 		super.registerGoals();
 		this.goalSelector.addGoal(0, new SwimGoal(this));
-		this.goalSelector.addGoal(1, new TaintedIllagerEntity.BreakDoorGoal(this));
 		this.goalSelector.addGoal(2, new AbstractIllagerEntity.RaidOpenDoorGoal(this));
 		this.goalSelector.addGoal(3, new AbstractRaiderEntity.FindTargetGoal(this, 10.0F));
 		this.goalSelector.addGoal(4, new TaintedIllagerEntity.AttackGoal(this));
@@ -192,38 +191,6 @@ public class TaintedIllagerEntity extends AbstractIllagerEntity {
 			} else {
 				return super.getAttackReachSqr(attackTarget);
 			}
-		}
-	}
-
-	static class BreakDoorGoal extends net.minecraft.entity.ai.goal.BreakDoorGoal {
-		public BreakDoorGoal(MobEntity p_i50578_1_) {
-			super(p_i50578_1_, 6, TaintedIllagerEntity.field_213681_b);
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
-		}
-
-		/**
-		 * Returns whether an in-progress EntityAIBase should continue executing
-		 */
-		public boolean shouldContinueExecuting() {
-			TaintedIllagerEntity vindicatorentity = (TaintedIllagerEntity)this.entity;
-			return vindicatorentity.isRaidActive() && super.shouldContinueExecuting();
-		}
-
-		/**
-		 * Returns whether execution should begin. You can also read and cache any state necessary for execution in this
-		 * method as well.
-		 */
-		public boolean shouldExecute() {
-			TaintedIllagerEntity vindicatorentity = (TaintedIllagerEntity)this.entity;
-			return vindicatorentity.isRaidActive() && vindicatorentity.rand.nextInt(10) == 0 && super.shouldExecute();
-		}
-
-		/**
-		 * Execute a one shot task or start executing a continuous task
-		 */
-		public void startExecuting() {
-			super.startExecuting();
-			this.entity.setIdleTime(0);
 		}
 	}
 }
