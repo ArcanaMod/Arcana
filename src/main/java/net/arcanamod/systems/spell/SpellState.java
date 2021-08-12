@@ -135,8 +135,8 @@ public class SpellState {
     // Called on mouse up anywhere in the gui
     public boolean mouseUp(int x, int y, int button, Aspect currentAspect, ItemStack heldItem) {
         boolean success = false;
-        int spellX = x - (int)this.x;
-        int spellY = y - (int)this.y;
+        int spellX = alignToGrid(x - (int)this.x,8);
+        int spellY = alignToGrid(y - (int)this.y,8);
         // prevent interaction if holding an item
         if (heldItem.isEmpty()) {
             if (button == 0) {
@@ -245,6 +245,10 @@ public class SpellState {
             }
         }
         return success;
+    }
+
+    private int alignToGrid(int i, int offset) {
+        return i - (i % offset);
     }
 
     // Adds all bound modules recursively to a builder.

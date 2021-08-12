@@ -7,6 +7,7 @@ import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.capabilities.TaintTrackable;
 import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;

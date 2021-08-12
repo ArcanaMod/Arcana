@@ -11,8 +11,10 @@ import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.attachment.FocusItem;
+import net.arcanamod.network.Connection;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.modules.core.StartCircle;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.IInventory;
@@ -171,6 +173,7 @@ public class FociForgeContainer extends AspectContainer {
             int x = 10 + 17 * xx;
             int y = 11;
             AspectSlot slot = new AspectSlot(primals[xx], source, x, y);
+            slot.description = I18n.format("tooltip.arcana.fociforge."+primals[xx]);
             slot.setSymbolic(true);
             aspectSlots.add(slot);
         }
@@ -188,6 +191,7 @@ public class FociForgeContainer extends AspectContainer {
             int x = 95;
             int y = 52 + 16 * yy;
             AspectSlot slot = new AspectSlot(sins[yy], source, x, y);
+            slot.description = I18n.format("tooltip.arcana.fociforge."+sins[yy]);
             slot.setSymbolic(true);
             aspectSlots.add(slot);
         }
@@ -199,9 +203,13 @@ public class FociForgeContainer extends AspectContainer {
             te.setInventorySlotContents(1, new ItemStack(ArcanaItems.DEFAULT_FOCUS.get(), 1));
         if (item instanceof FocusItem) {
             te.focus().getOrCreateTag().putInt("style", style);
-            //TODO Add a button in the UI to add the NBT to the focus Item
-            te.focus().getOrCreateTag().put("spell", te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
+            changeFociSpell();
         }
+    }
+
+    public void changeFociSpell(){
+        te.focus().getOrCreateTag().put("spell", te.spellState.currentSpell.toNBT(new CompoundNBT()).getCompound("spell"));
+        Connection.sendWriteSpell(te.focus(), te.spellState.currentSpell.toNBT(new CompoundNBT()));
     }
 
     @Override

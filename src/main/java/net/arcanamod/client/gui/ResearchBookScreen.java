@@ -40,8 +40,7 @@ import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 import static net.minecraft.util.math.MathHelper.clamp;
 import static org.lwjgl.opengl.GL11.GL_SCISSOR_TEST;
 
-public class ResearchBookScreen extends Screen{
-
+public class ResearchBookScreen extends Screen {
 	ResearchBook book;
 	List<ResearchCategory> categories;
 	ResourceLocation texture;

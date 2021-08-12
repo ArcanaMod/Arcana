@@ -98,8 +98,8 @@ public class ClientProxy extends CommonProxy{
 		
 		// there's an event for this, but putting it here seems to affect literally nothing. huh.
 		// I'm not at all surprised.
-
-		ItemModelsProperties.registerProperty(ArcanaItems.PHIAL.get(),new ResourceLocation("aspect"), (itemStack, world, livingEntity) -> {
+		
+		ItemModelsProperties.registerProperty(ArcanaItems.PHIAL.get(), new ResourceLocation("aspect"), (itemStack, world, livingEntity) -> {
 			IAspectHandler vis = IAspectHandler.getFrom(itemStack);
 			if(vis == null)
 				return -1;
@@ -109,7 +109,7 @@ public class ClientProxy extends CommonProxy{
 				return -1;
 			return vis.getHolder(0).getContainedAspect().getId() - 1;
 		});
-		ItemModelsProperties.registerProperty(ArcanaItems.ARCANUM.get(),new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
+		ItemModelsProperties.registerProperty(ArcanaItems.ARCANUM.get(), new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
 			if(!itemStack.getOrCreateTag().contains("open"))
 				return 0;
 			if(itemStack.getOrCreateTag().getBoolean("open"))
@@ -134,7 +134,7 @@ public class ClientProxy extends CommonProxy{
 						layer == 1 ? FocusItem.getColourAspect(stack) : 0xffffffff,
 				ArcanaItems.DEFAULT_FOCUS::get
 		);
-
+		
 		inst.getBlockColors().register((state, access, pos, index) ->
 						access != null && pos != null ? BiomeColors.getFoliageColor(access, pos) : -1,
 				ArcanaBlocks.GREATWOOD_LEAVES.get(),
@@ -142,7 +142,7 @@ public class ClientProxy extends CommonProxy{
 				ArcanaBlocks.EUCALYPTUS_LEAVES.get(),
 				ArcanaBlocks.DAIR_LEAVES.get()
 		);
-
+		
 		inst.getItemColors().register((stack, layer) ->
 						0x529c34,
 				ArcanaBlocks.GREATWOOD_LEAVES.get(),
@@ -155,7 +155,7 @@ public class ClientProxy extends CommonProxy{
 		
 		ClientRegistry.registerKeyBinding(SWAP_FOCUS_BINDING);
 	}
-
+	
 	@SubscribeEvent
 	// can't be private
 	public static void fireResearchChange(ResearchEvent even){
@@ -180,7 +180,7 @@ public class ClientProxy extends CommonProxy{
 		else
 			return AspectUtils.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % AspectUtils.aspectStacks.size());
 	}
-
+	
 	@SuppressWarnings("rawtypes")
 	protected void registerRenders(){
 		//Tile Entity Special Render
@@ -203,7 +203,7 @@ public class ClientProxy extends CommonProxy{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.WILLOW_SPIRIT.get(), WillowSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_CLOUD.get(), SpellCloudEntityRenderer::new);
-
+		
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_EGG.get(), SpellEggEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.BIG_SPELL_EGG.get(), SpellEggEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINT_BOTTLE.get(), TaintBottleEntityRenderer::new);
@@ -231,7 +231,7 @@ public class ClientProxy extends CommonProxy{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PILLAGER.get(), manager -> new TaintedEntityRender(manager, new IllagerModel(0.0F, 0.0F, 64, 64)));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WOLF.get(), manager -> new TaintedEntityRender(manager, new TaintedWolfModel()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ZOMBIE.get(), manager -> new TaintedEntityRender(manager, new TaintedZombieModel()));
-
+		
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_DROWNED.get(), manager -> new TaintedEntityRender(manager, new DrownedModel(0.5f, true)));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_ELDER_GUARDIAN.get(), manager -> new TaintedEntityRender(manager, new GuardianModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_GIANT.get(), manager -> new TaintedEntityRender(manager, new GiantModel()));
@@ -248,7 +248,7 @@ public class ClientProxy extends CommonProxy{
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_RAVAGER.get(), manager -> new TaintedEntityRender(manager, new RavagerModel()));
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WITHER.get(), manager -> new TaintedEntityRender(manager, new WitherModel(0.0F))); // Check this.
 		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_WITHER_SKELETON.get(), manager -> new TaintedEntityRender(manager, new SkeletonModel()));
-
+		
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_COW.get(), manager -> new TaintedEntityRender(manager, new CowModel<TaintedEntity>()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_PIG.get(), manager -> new TaintedEntityRender(manager, new PigModel<TaintedEntity>()));
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_SPIDER.get(), manager -> new TaintedEntityRender(manager, new SpiderModel<TaintedEntity>()));
@@ -304,26 +304,26 @@ public class ClientProxy extends CommonProxy{
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_MUSHROOM.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_VINE.get(), RenderType.getCutout());
 		
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SILVERWOOD_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DAIR_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.EUCALYPTUS_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.GREATWOOD_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.HAWTHORN_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WILLOW_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.SILVERWOOD_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DAIR_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.EUCALYPTUS_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.GREATWOOD_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.HAWTHORN_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WILLOW_SAPLING.get(), RenderType.getCutout());
 		
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.MAGIC_MUSHROOM.get(), RenderType.getCutout());
 		
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_DAIR_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_DAIR_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_ACACIA_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_BIRCH_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_DARKOAK_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_EUCALYPTUS_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_GREATWOOD_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_HAWTHORN_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_EUCALYPTUS_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_GREATWOOD_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_HAWTHORN_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_JUNGLE_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_OAK_SAPLING.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_SPRUCE_SAPLING.get(), RenderType.getCutout());
-//		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_WILLOW_SAPLING.get(), RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ArcanaBlocks.TAINTED_WILLOW_SAPLING.get(), RenderType.getCutout());
 		
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.DAIR_DOOR.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.EUCALYPTUS_DOOR.get(), RenderType.getCutout());
@@ -359,7 +359,7 @@ public class ClientProxy extends CommonProxy{
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.EARTH_CLUSTER.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.ORDER_CLUSTER.get(), RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ArcanaBlocks.CHAOS_CLUSTER.get(), RenderType.getCutout());
-		
+
 //		RenderTypeLookup.setRenderLayer(ArcanaBlocks.FIRE_CRYSTAL_FRAGMENTS.get(), RenderType.getCutout());
 //		RenderTypeLookup.setRenderLayer(ArcanaBlocks.WATER_CRYSTAL_FRAGMENTS.get(), RenderType.getCutout());
 //		RenderTypeLookup.setRenderLayer(ArcanaBlocks.AIR_CRYSTAL_FRAGMENTS.get(), RenderType.getCutout());

@@ -43,6 +43,9 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	public static final int SCROLL_WIDTH = 12;
 	public static final int SCROLL_HEIGHT = 15;
 	public static final int FOCI_V_COUNT = 9;
+	public static final int FOCI_APPLY_X = 338;
+	public static final int FOCI_APPLY_Y = 12;
+	public static final int APPLY_BTN_SIZE = 16;
 
 	public static final ResourceLocation BG = new ResourceLocation(Arcana.MODID, "textures/gui/container/gui_fociforge.png");
 
@@ -67,12 +70,13 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	protected void drawGuiContainerBackgroundLayer(MatrixStack stack, float partialTicks, int mouseX, int mouseY){
 		renderBackground(stack);
 		minecraft.getTextureManager().bindTexture(BG);
-		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
 		searchWidget.render(stack, mouseX, mouseY, partialTicks);
 		minecraft.getTextureManager().bindTexture(BG);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 397, 397);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft + ASPECT_SCROLL_X, guiTop + ASPECT_SCROLL_Y + (int)(ASPECT_SCROLL_HEIGHT * aspectScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft + FOCI_SCROLL_X, guiTop + FOCI_SCROLL_Y + (int)(FOCI_SCROLL_HEIGHT * fociScroll), 7, 345, SCROLL_WIDTH, SCROLL_HEIGHT, 397, 397);
+		// Foci apply btn
+		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft + FOCI_APPLY_X, guiTop + FOCI_APPLY_Y, 288, 313, APPLY_BTN_SIZE, APPLY_BTN_SIZE, 397, 397);
 		te.spellState.render(stack, guiLeft, guiTop,guiLeft + SPELL_X, guiTop + SPELL_Y, SPELL_WIDTH, SPELL_HEIGHT, mouseX, mouseY);
 	}
 
@@ -110,7 +114,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 			} else if (guiX > SPELL_X && guiX < SPELL_X + SPELL_WIDTH
 						&& guiY > SPELL_Y && guiY < SPELL_Y + SPELL_HEIGHT) {
 				spellHasFocus = true;
-			}
+			} else if (guiX >= FOCI_APPLY_X && guiY >= FOCI_APPLY_Y && guiX <= FOCI_APPLY_X + APPLY_BTN_SIZE && guiY <= FOCI_APPLY_Y + APPLY_BTN_SIZE) container.changeFociSpell();
 			te.spellState.mouseDown((int)(guiX - SPELL_X), (int)(guiY - SPELL_Y), button, aspectContainer.getHeldAspect());
 		}
 
@@ -162,6 +166,20 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 		}
 
 		return super.mouseReleased(x, y, button);
+	}
+
+	@Override
+	protected void renderHoveredTooltip(MatrixStack matrices, int mouseX, int mouseY) {
+		for (AspectSlot slot : aspectContainer.getAspectSlots()) {
+			if (slot.getInventory().get() != null && slot.visible) {
+				if (isMouseOverSlot(mouseX, mouseY, slot)) {
+					if (slot.getAspect() != null) {
+						slot.description = I18n.format("tooltip.arcana.fociforge."+slot.getAspect().name().toLowerCase());
+					}
+				}
+			}
+		}
+		super.renderHoveredTooltip(matrices, mouseX, mouseY);
 	}
 
 	@Override

@@ -227,7 +227,6 @@ public class ResearchTableContainer extends AspectContainer{
 			getAspectSlots().add(slot);
 			scrollableSlots.add(slot);
 		}
-		
 		refreshPuzzleSlots(playerInventory);
 	}
 	
@@ -257,7 +256,7 @@ public class ResearchTableContainer extends AspectContainer{
 		return itemstack;
 	}
 	
-	public void onAspectSlotChange(){
+	public void onAspectSlotChange() {
 		super.onAspectSlotChange();
 		if(!ink.isEmpty())
 			validate();

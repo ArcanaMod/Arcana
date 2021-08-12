@@ -12,7 +12,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.common.crafting.IShapedRecipe;
+
+import java.util.Collections;
 
 import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
 import static net.arcanamod.client.gui.ResearchEntryScreen.HEIGHT_OFFSET;
@@ -95,7 +98,7 @@ public class ArcaneCraftingSectionRenderer extends AbstractCraftingSectionRender
 				String displayed = stack.any ? I18n.format("aspect.any") : I18n.format("aspect." + stack.stack.getAspect().name().toLowerCase());
 				int areaX = aspectX + i * (16 + 2 * spacing) + spacing;
 				if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= aspectY && mouseY < aspectY + 16)
-					ClientUiUtil.drawAspectStyleTooltip(matrices, displayed, mouseX, mouseY, screenWidth, screenHeight);
+					ClientUiUtil.drawAspectStyleTooltip(matrices, Collections.singletonList(new StringTextComponent(displayed)), mouseX, mouseY, screenWidth, screenHeight);
 			}
 		}
 	}

@@ -118,9 +118,9 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 			matrixStack.rotate(q);
 			matrixStack.translate(xt, .5f, zt);
 			
-			q = new Quaternion(tileEntity.labelRotation,0,0,true);
+			q = new Quaternion(tileEntity.label.renderRotation,0,0,true);
 			matrixStack.rotate(q);
-			matrixStack.translate(0,0,-(tileEntity.labelRotation/200f));
+			matrixStack.translate(0,0,-(tileEntity.label.renderRotation/200f));
 
 			add(label_builder, matrixStack, Color.WHITE, 0, 1, 0, label.getMinU(), label.getMaxV(), combinedLight);
 			add(label_builder, matrixStack, Color.WHITE, 0, 0, 0, label.getMaxU(), label.getMaxV(), combinedLight);

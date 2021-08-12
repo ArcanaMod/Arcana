@@ -38,7 +38,7 @@ public abstract class MinecraftClientMixin{
 			while(ClientProxy.SWAP_FOCUS_BINDING.isPressed())
 				for(Hand hand : Hand.values())
 					if(player.getHeldItem(hand).getItem() instanceof MagicDeviceItem){
-						if(((MagicDeviceItem)player.getHeldItem(hand).getItem()).canUseSpells()){
+						if(((MagicDeviceItem)player.getHeldItem(hand).getItem()).canUseSpells() && ((MagicDeviceItem) player.getHeldItem(hand).getItem()).canSwapFocus(player)){
 							displayGuiScreen(new SwapFocusScreen(hand));
 							break;
 						}

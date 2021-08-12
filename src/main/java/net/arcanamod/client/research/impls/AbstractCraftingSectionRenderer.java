@@ -99,7 +99,7 @@ public abstract class AbstractCraftingSectionRenderer<T extends AbstractCrafting
 	
 	protected void aspectTooltipArea(MatrixStack stack, Aspect aspect, int mouseX, int mouseY, int screenWidth, int screenHeight, int areaX, int areaY){
 		if(mouseX >= areaX && mouseX < areaX + 16 && mouseY >= areaY && mouseY < areaY + 16)
-			ClientUiUtil.drawAspectTooltip(stack, aspect, mouseX, mouseY, screenWidth, screenHeight);
+			ClientUiUtil.drawAspectTooltip(stack, aspect, "", mouseX, mouseY, screenWidth, screenHeight);
 	}
 	
 	protected void tooltip(MatrixStack matricies, ItemStack stack, int mouseX, int mouseY, int screenWidth, int screenHeight){

@@ -15,8 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class CompletePuzzleToast implements IToast{
-	
+public class CompletePuzzleToast implements IToast {
 	// good thing we don't have any other research books that work }:D
 	private static final ItemStack ICON = new ItemStack(ArcanaItems.ARCANUM.get());
 	

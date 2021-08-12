@@ -1,6 +1,9 @@
 {
-  "parent": "block/cube_all",
+  "parent": "block/orientable",
   "textures": {
-    "all": "arcana:block/tainted_podzol"
+    "top": "arcana:block/tainted_podzol_top",
+    "side": "arcana:block/tainted_podzol",
+    "front": "arcana:block/tainted_podzol",
+    "bottom": "arcana:block/tainted_soil"
   }
 }

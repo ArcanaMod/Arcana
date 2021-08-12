@@ -3,10 +3,7 @@ package net.arcanamod.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.aspects.IAspectHolder;
+import net.arcanamod.aspects.*;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.client.ClientAuraHandler;
@@ -16,7 +13,6 @@ import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.settings.GogglePriority;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -31,6 +27,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,6 +74,8 @@ public final class Huds{
 					ClientUiUtil.renderVisCore(event.getMatrixStack(), core, baseX, baseY);
 					ClientUiUtil.renderVisMeter(event.getMatrixStack(), aspects, baseX, baseY);
 					MagicDeviceItem.getFocusStack(wand).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
+					if (player.isCrouching())
+						ClientUiUtil.renderVisDetailInfo(event.getMatrixStack(),aspects);
 					RenderSystem.popMatrix();
 				}
 				// flux meter GUI

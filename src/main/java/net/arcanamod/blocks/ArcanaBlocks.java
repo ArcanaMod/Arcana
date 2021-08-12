@@ -14,14 +14,7 @@ import net.arcanamod.blocks.multiblocks.taint_scrubber.TaintScrubberExtensionBlo
 import net.arcanamod.blocks.tainted.TaintedSaplingBlock;
 import net.arcanamod.util.annotations.GIM;
 import net.arcanamod.util.annotations.GLT;
-//import net.arcanamod.worldgen.trees.DummyTree;
-//import net.arcanamod.worldgen.trees.GreatwoodTree;
-//import net.arcanamod.worldgen.trees.SilverwoodTree;
-//import net.arcanamod.worldgen.trees.TaintedGreatwoodTree;
-import net.arcanamod.worldgen.trees.DummyTree;
-import net.arcanamod.worldgen.trees.GreatwoodTree;
-import net.arcanamod.worldgen.trees.SilverwoodTree;
-import net.arcanamod.worldgen.trees.TaintedGreatwoodTree;
+import net.arcanamod.worldgen.trees.*;
 import net.minecraft.block.*;
 import net.minecraft.block.PressurePlateBlock.Sensitivity;
 import net.minecraft.block.material.Material;
@@ -356,7 +349,7 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> TAINTED_OAK_LEAVES = BLOCKS.register("tainted_oak_leaves", () -> taintedOf(Blocks.OAK_LEAVES));
 	@GLT public static final RegistryObject<Block> TAINTED_OAK_LOG = BLOCKS.register("tainted_oak_log", () -> taintedOf(Blocks.OAK_LOG));
 	@GLT public static final RegistryObject<Block> TAINTED_OAK_PLANKS = BLOCKS.register("tainted_oak_planks", () -> taintedOf(Blocks.OAK_PLANKS));
-	@GLT public static final RegistryObject<Block> TAINTED_OAK_SAPLING = BLOCKS.register("tainted_oak_sapling", () -> taintedOf(Blocks.OAK_SAPLING));
+	@GLT public static final RegistryObject<Block> TAINTED_OAK_SAPLING = BLOCKS.register("tainted_oak_sapling", () -> new TaintedSaplingBlock(Blocks.OAK_SAPLING, new TaintedOakTree(), create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.PLANT)));
 	@GLT public static final RegistryObject<Block> TAINTED_OAK_SLAB = BLOCKS.register("tainted_oak_slab", () -> taintedOf(Blocks.OAK_SLAB));
 	@GLT public static final RegistryObject<Block> TAINTED_OAK_STAIRS = BLOCKS.register("tainted_oak_stairs", () -> taintedOf(Blocks.OAK_STAIRS));
 

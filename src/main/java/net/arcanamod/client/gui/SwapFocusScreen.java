@@ -20,8 +20,10 @@ import java.util.List;
 import java.util.Random;
 
 public class SwapFocusScreen extends Screen{
-	
+
 	private Hand hand;
+
+	private boolean hasClicked = false;
 	private static final Random random = new Random();
 	
 	public SwapFocusScreen(Hand hand){
@@ -32,7 +34,7 @@ public class SwapFocusScreen extends Screen{
 	public void render(MatrixStack matricies, int mouseX, int mouseY, float partialTicks){
 		super.render(matricies, mouseX, mouseY, partialTicks);
 		ItemStack wand = getMinecraft().player.getHeldItem(hand);
-		if(wand.getItem() instanceof MagicDeviceItem && ((MagicDeviceItem)wand.getItem()).canSwapFocus()){
+		if(wand.getItem() instanceof MagicDeviceItem && ((MagicDeviceItem)wand.getItem()).canSwapFocus(getMinecraft().player)){
 			//display current focus
 			MagicDeviceItem.getFocusStack(wand).ifPresent(stack -> getMinecraft().getItemRenderer().renderItemIntoGUI(stack, width / 2 - 8, height / 2 - 8));
 			//display all foci in the inventory
@@ -75,6 +77,9 @@ public class SwapFocusScreen extends Screen{
 	}
 	
 	public boolean select(double mouseX, double mouseY, boolean clicked){
+		// if player clicked on focus ignore future requests
+		hasClicked = true;
+
 		// find the nearest focus
 		// if you click the middle, you remove your focus
 		if(mouseX >= -8 + (width / 2f) && mouseX < 8 + (width / 2f) && mouseY >= -8 + (height / 2f) && mouseY < 8 + (height / 2f)){
@@ -101,13 +106,17 @@ public class SwapFocusScreen extends Screen{
 		}
 		return false;
 	}
-	
+
 	public boolean keyReleased(int keyCode, int scanCode, int modifiers){
 		// if SWAP_FOCUS_BINDING is released, close screen
 		if(!ClientProxy.SWAP_FOCUS_BINDING.isPressed()){
 			double mX = getMinecraft().mouseHelper.getMouseX() * (double)getMinecraft().getMainWindow().getScaledWidth() / (double)getMinecraft().getMainWindow().getWidth();
 			double mY = getMinecraft().mouseHelper.getMouseY() * (double)getMinecraft().getMainWindow().getScaledHeight() / (double)getMinecraft().getMainWindow().getHeight();
-			select(mX, mY, false);
+
+			// If player has clicked on foci before don't select other foci.
+			if (!hasClicked)
+				select(mX, mY, false);
+
 			Minecraft.getInstance().displayGuiScreen(null);
 			return true;
 		}

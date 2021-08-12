@@ -2,7 +2,9 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
+import net.arcanamod.aspects.AspectLabel;
 import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
@@ -42,7 +44,6 @@ import java.util.Objects;
 public class JarBlock extends WaterloggableBlock {
 	public static final BooleanProperty UP = BooleanProperty.create("up");
 	private Type type;
-
 
 	public JarBlock(Properties properties, Type type){
 		super(properties);
@@ -105,7 +106,7 @@ public class JarBlock extends WaterloggableBlock {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (placer != null && ((JarTileEntity) Objects.requireNonNull(worldIn.getTileEntity(pos))).label != null) {
-			((JarTileEntity) Objects.requireNonNull(worldIn.getTileEntity(pos))).label = getYaw(placer);
+			((JarTileEntity) Objects.requireNonNull(worldIn.getTileEntity(pos))).label.direction = getYaw(placer);
 		}
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
 	}
@@ -118,9 +119,9 @@ public class JarBlock extends WaterloggableBlock {
 				player.getHeldItem(handIn).setCount(player.getHeldItem(handIn).getCount() - 1);
 			}
 			if (hit.getFace() != Direction.UP && hit.getFace() != Direction.DOWN) {
-				jar.label = hit.getFace();
+				jar.label = new AspectLabel(hit.getFace());
 			} else {
-				jar.label = getYaw(player);
+				jar.label = new AspectLabel(getYaw(player));
 			}
 		} else if (player.getHeldItem(handIn).getItem() instanceof MagicDeviceItem && player.isCrouching()) {
 			onBlockHarvested(worldIn, pos, state, player);
@@ -139,10 +140,11 @@ public class JarBlock extends WaterloggableBlock {
 			jar.label = null;
 		} else if (jar.label != null && player.getHeldItem(handIn).getItem() instanceof MagicDeviceItem) {
 			if (hit.getFace() != Direction.UP && hit.getFace() != Direction.DOWN) {
-				jar.label = hit.getFace();
+				jar.label.direction = hit.getFace();
 			} else {
-				jar.label = getYaw(player);
+				jar.label.direction = getYaw(player);
 			}
+			jar.label.seal = Aspects.EMPTY;
 		}
 		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 	}
@@ -154,7 +156,7 @@ public class JarBlock extends WaterloggableBlock {
 			if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() == 0 && jte.label == null) {
 				te.setPos(new BlockPos(0, 0, 0));
 				if (((JarTileEntity) te).label != null) {
-					((JarTileEntity) te).label = Direction.NORTH;
+					((JarTileEntity) te).label.direction = Direction.NORTH;
 				}
 				spawnDrops(state, worldIn, pos, te, player, stack);
 			}
@@ -170,7 +172,7 @@ public class JarBlock extends WaterloggableBlock {
 				if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() != 0 || jte.label != null){
 					te.setPos(new BlockPos(0, 0, 0));
 					if (((JarTileEntity) te).label != null) {
-						((JarTileEntity) te).label = Direction.NORTH;
+						((JarTileEntity) te).label.direction = Direction.NORTH;
 					}
 					ItemEntity itementity = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), getItem(worldIn, pos, state));
 					itementity.setDefaultPickupDelay();

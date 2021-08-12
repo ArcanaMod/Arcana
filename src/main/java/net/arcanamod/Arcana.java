@@ -6,6 +6,7 @@ import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.capabilities.AuraChunkCapability;
 import net.arcanamod.capabilities.ResearcherCapability;
 import net.arcanamod.capabilities.TaintTrackableCapability;
+import net.arcanamod.commands.NodeArgument;
 import net.arcanamod.containers.ArcanaContainers;
 import net.arcanamod.effects.ArcanaEffects;
 import net.arcanamod.entities.ArcanaEntities;
@@ -27,6 +28,8 @@ import net.arcanamod.worldgen.ArcanaBiomes;
 import net.arcanamod.worldgen.ArcanaFeatures;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DispenserBlock;
+import net.minecraft.command.arguments.ArgumentSerializer;
+import net.minecraft.command.arguments.ArgumentTypes;
 import net.minecraft.dispenser.IBlockSource;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.dispenser.OptionalDispenseBehavior;
@@ -44,6 +47,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.StartupMessageManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -132,7 +136,10 @@ public class Arcana{
 		TaintTrackableCapability.init();
 		Puzzle.init();
 		Taint.init();
-		net.minecraftforge.fml.StartupMessageManager.addModMessage("Arcana: Research registration completed");
+		StartupMessageManager.addModMessage("Arcana: Research registration completed");
+		
+		// register nodes as an argument
+		ArgumentTypes.register("node_argument", NodeArgument.class, new ArgumentSerializer<>(NodeArgument::new));
 		
 		proxy.preInit(event);
 		

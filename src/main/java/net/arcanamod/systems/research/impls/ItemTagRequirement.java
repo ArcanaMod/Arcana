@@ -5,17 +5,23 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
 
 import static net.arcanamod.Arcana.arcLoc;
 
 public class ItemTagRequirement extends Requirement{
 	
-	protected ITag.INamedTag<Item> tag;
+	protected ITag<Item> tag;
+	protected ResourceLocation tagName;
 	
 	public static final ResourceLocation TYPE = arcLoc("item_tag");
 	
-	public ItemTagRequirement(ITag.INamedTag<Item> tag){
+	public ItemTagRequirement(ResourceLocation tagName){
+		this(ItemTags.getCollection().get(tagName), tagName);
+	}
+	
+	public ItemTagRequirement(ITag<Item> tag, ResourceLocation tagName){
 		this.tag = tag;
 	}
 	
@@ -33,11 +39,15 @@ public class ItemTagRequirement extends Requirement{
 	
 	public CompoundNBT data(){
 		CompoundNBT compound = new CompoundNBT();
-		compound.putString("itemTag", tag.getName().toString());
+		compound.putString("itemTag", tagName.toString());
 		return compound;
 	}
 	
-	public ITag.INamedTag<Item> getTag(){
+	public ITag<Item> getTag(){
 		return tag;
+	}
+	
+	public ResourceLocation getTagName(){
+		return tagName;
 	}
 }

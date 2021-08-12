@@ -5,8 +5,7 @@ import net.arcanamod.aspects.*;
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
-public class AspectSlot{
-	
+public class AspectSlot {
 	private Aspect aspect = Aspects.EMPTY;
 	private final Supplier<IAspectHandler> inventory;
 	
@@ -30,15 +29,17 @@ public class AspectSlot{
 	 * and it will change to that aspect, and when fully drained it will lose its aspect.
 	 */
 	public boolean storeSlot = false;
+
+	public String description = "";
 	
-	public AspectSlot(@Nonnull Aspect aspect, @Nonnull Supplier<IAspectHandler> inventory, int x, int y){
+	public AspectSlot(@Nonnull Aspect aspect, @Nonnull Supplier<IAspectHandler> inventory, int x, int y) {
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
 		this.y = y;
 	}
 	
-	public AspectSlot(@Nonnull Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y, boolean storeSlot){
+	public AspectSlot(@Nonnull Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y, boolean storeSlot) {
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
@@ -46,25 +47,27 @@ public class AspectSlot{
 		this.storeSlot = storeSlot;
 	}
 	
-	public void setSymbolic(boolean state){
+	public void setSymbolic(boolean state) {
 		symbolic = state;
 	}
 	
-	public float getAmount(){
-		if(symbolic)
+	public float getAmount() {
+		if(symbolic) {
 			return 1;
-		if(getInventory().get() != null){
+		}
+		if(getInventory().get() != null) {
 			int amount = 0;
 			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
 			for(int index : aspectIndexes){
 				amount += getInventory().get().getHolder(index).getCurrentVis();
 			}
 			return amount;
-		}else
+		} else {
 			return -1;
+		}
 	}
 	
-	public void onChange(){
+	public void onChange() {
 		if(storeSlot && getAmount() == 0)
 			aspect = Aspects.EMPTY;
 	}
@@ -73,21 +76,21 @@ public class AspectSlot{
 		return inventory;
 	}
 	
-	public Aspect getAspect(){
+	public Aspect getAspect() {
 		if(aspect == null)
 			return Aspects.EMPTY; // Quick fix. TODO: Fix null problems
 		return aspect;
 	}
 	
-	public void setAspect(@Nonnull Aspect aspect){
+	public void setAspect(@Nonnull Aspect aspect) {
 		this.aspect = aspect;
 	}
 	
-	public boolean isSymbolic(){
+	public boolean isSymbolic() {
 		return symbolic;
 	}
 	
-	public boolean shouldShowAmount(){
+	public boolean shouldShowAmount() {
 		return !symbolic;
 	}
 	
@@ -96,7 +99,7 @@ public class AspectSlot{
 	 *
 	 * @return The result of drawing from the underlying inventory.
 	 */
-	public float drain(@Nonnull Aspect aspect, float amount, boolean simulate){
+	public float drain(@Nonnull Aspect aspect, float amount, boolean simulate) {
 		float result = 0;
 		if(symbolic){
 			result = amount;
@@ -115,7 +118,7 @@ public class AspectSlot{
 	 *
 	 * @return The result of inserting into the underlying inventory.
 	 */
-	public float insert(@Nonnull Aspect aspect, float amount, boolean simulate){
+	public float insert(@Nonnull Aspect aspect, float amount, boolean simulate) {
 		float result = amount;
 		if(!symbolic){
 			if(getInventory().get() != null){
@@ -142,6 +145,6 @@ public class AspectSlot{
 		return result;
 	}
 	
-	public void onClose(){
+	public void onClose() {
 	}
 }

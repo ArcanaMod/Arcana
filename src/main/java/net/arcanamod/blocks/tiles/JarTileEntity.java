@@ -21,6 +21,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
+import java.util.HashSet;
 import java.util.Random;
 
 @ParametersAreNonnullByDefault
@@ -28,8 +29,7 @@ import java.util.Random;
 public class JarTileEntity extends TileEntity implements ITickableTileEntity, VisShareable{
 	private final JarBlock.Type jarType;
 	public AspectBattery vis = new AspectBattery(1, 100);
-	public Direction label = null;
-	public float labelRotation;
+	public AspectLabel label;
 	private double lastVis;
 	
 	private double clientVis;
@@ -41,9 +41,6 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		super(ArcanaTiles.JAR_TE.get());
 		this.jarType = type;
 		vis.getHolder(0).setIgnoreFullness(type == JarBlock.Type.VOID);
-
-		Random rand = world != null ? world.rand : new Random();
-		labelRotation = (rand.nextInt(300)-150)/10f;
 	}
 	
 	/**
@@ -61,7 +58,10 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		vis.deserializeNBT(compound.getCompound("aspects"));
 		clientVis = vis.getHolder(0).getCurrentVis();
 		if (compound.contains("label")) {
-			label = Direction.byIndex(compound.getInt("label"));
+			if (label == null)
+				label = new AspectLabel(Direction.byIndex(compound.getInt("label")));
+			else label.direction = Direction.byIndex(compound.getInt("label"));
+			label.seal = AspectUtils.getAspect(compound,"seal");
 		}
 	}
 
@@ -70,7 +70,8 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		CompoundNBT aspectsNbt = vis.serializeNBT();
 		compound.put("aspects", aspectsNbt);
 		if (label != null) {
-			compound.putInt("label", label.getIndex());
+			compound.putInt("label", label.direction.getIndex());
+			AspectUtils.putAspect(compound,"seal",label.seal);
 		}
 		return super.write(compound);
 	}
@@ -155,6 +156,10 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	
 	@Override
 	public void tick(){
+		if (label != null && (label.seal == Aspects.EMPTY && label.seal != vis.getHolder(0).getContainedAspect())) {
+			label.seal = vis.getHolder(0).getContainedAspect();
+			((AspectCell)vis.getHolder(0)).lockWithAspect(label.seal);
+		}
 		double newVis = vis.getHolder(0).getCurrentVis();
 		if(lastVis != newVis && world != null)
 			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
@@ -188,11 +193,11 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	}
 
 	public ResourceLocation getPaperAspectLocation() {
-		return new ResourceLocation(vis.getHolder(0).getContainedAspect().toResourceLocation().toString()
+		return new ResourceLocation((label != null ? label.seal : Aspects.EMPTY).toResourceLocation().toString()
 				.replace(":", ":aspect/paper/paper_"));
 	}
 
 	public @Nullable Direction getLabelSide() {
-		return label;
+		return label != null ? label.direction : null;
 	}
 }

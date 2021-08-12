@@ -14,12 +14,11 @@ public class GreatwoodTree extends BigTree{
 	
 	@Nullable
 	protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getHugeTreeFeature(Random rand){
-		System.out.println(ArcanaFeatures.GREATWOOD_TREE);
 		return ArcanaFeatures.GREATWOOD_TREE;
 	}
 	
 	@Nullable
-	protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random randomIn, boolean largeHive){
+	protected ConfiguredFeature<BaseTreeFeatureConfig, ?> getTreeFeature(Random random, boolean largeHive){
 		return null;
 	}
 }
