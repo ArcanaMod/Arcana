@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Either;
 import com.mojang.datafixers.util.Pair;
 import net.arcanamod.items.ScepterItem;
+import net.arcanamod.items.StaffItem;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
@@ -13,6 +14,7 @@ import net.arcanamod.items.attachment.Focus;
 import net.minecraft.client.renderer.model.*;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -38,49 +40,50 @@ import java.util.function.Function;
 import static net.arcanamod.Arcana.arcLoc;
 
 @SuppressWarnings({"UnstableApiUsage", "deprecation"})
-public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
-	
+public class WandModelGeometry implements IModelGeometry<WandModelGeometry> {
 	// hold onto data here
 	ResourceLocation cap;
 	ResourceLocation material;
 	ResourceLocation variant;
 	ResourceLocation focus;
-	
+
 	Logger LOGGER = LogManager.getLogger();
-	
-	public WandModelGeometry(ResourceLocation cap, ResourceLocation material, ResourceLocation variant, ResourceLocation focus){
+
+	public WandModelGeometry(ResourceLocation cap, ResourceLocation material, ResourceLocation variant, ResourceLocation focus) {
 		this.cap = cap;
 		this.material = material;
 		this.variant = variant;
 		this.focus = focus;
 	}
-	
-	public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides, ResourceLocation modelLocation){
+
+	public IBakedModel bake(IModelConfiguration owner, ModelBakery bakery, Function<RenderMaterial, TextureAtlasSprite> spriteGetter, IModelTransform modelTransform, ItemOverrideList overrides, ResourceLocation modelLocation) {
 		IModelTransform transformsFromModel = owner.getCombinedTransform();
 		ImmutableList.Builder<BakedQuad> builder = ImmutableList.builder();
 		ImmutableMap<ItemCameraTransforms.TransformType, TransformationMatrix> transformMap = PerspectiveMapWrapper.getTransforms(new ModelTransformComposition(transformsFromModel, modelTransform));
-		
+
 		// get core texture
 		RenderMaterial coreTex = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, material);
 		// get cap texture
 		RenderMaterial capTex = new RenderMaterial(AtlasTexture.LOCATION_BLOCKS_TEXTURE, cap);
-		
+
 		// get variant model
-		if(variant == null)
+		if (variant == null) {
 			variant = arcLoc("wand");
+		}
 		ResourceLocation coreLoc = new ResourceLocation(variant.getNamespace(), "item/wands/variants/" + variant.getPath());
 		IUnbakedModel coreModel = bakery.getUnbakedModel(coreLoc);
 		ItemCameraTransforms tfs = ItemCameraTransforms.DEFAULT;
-		
+
 		// they *should* be, but might as well check.
-		if(coreModel instanceof BlockModel){
+		if(coreModel instanceof BlockModel) {
 			BlockModel model = (BlockModel)coreModel;
 			model.textures.put("core", Either.left(coreTex));
 			model.textures.put("cap", Either.left(capTex));
 			tfs = model.getAllTransforms();
-		}else
+		} else {
 			LOGGER.error("Wand model isn't a block model!");
-		
+		}
+
 		// get focus model and texture, apply, and add
 		Random rand = new Random();
 		if(focus != null){
@@ -88,25 +91,24 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 			if(focusModel != null)
 				builder.addAll(focusModel.getQuads(null, null, rand));
 		}
-		
+
 		builder.addAll(coreModel.bakeModel(bakery, spriteGetter, transformsFromModel, coreLoc).getQuads(null, null, rand));
-		
+
 		return new WandBakedModel(builder.build(), spriteGetter.apply(coreTex), Maps.immutableEnumMap(transformMap), new AttachmentOverrideHandler(bakery), true, true, this, owner, modelTransform, tfs);
 	}
-	
-	public Collection<RenderMaterial> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors){
+
+	public Collection<RenderMaterial> getTextures(IModelConfiguration owner, Function<ResourceLocation, IUnbakedModel> modelGetter, Set<Pair<String, String>> missingTextureErrors) {
 		return Collections.emptyList();
 	}
-	
-	protected static final class AttachmentOverrideHandler extends ItemOverrideList{
-		
+
+	protected static final class AttachmentOverrideHandler extends ItemOverrideList {
 		private final ModelBakery bakery;
-		
+
 		public AttachmentOverrideHandler(ModelBakery bakery){
 			this.bakery = bakery;
 		}
-		
-		public IBakedModel getModelWithOverrides(@Nonnull IBakedModel originalModel, @Nonnull ItemStack stack, @Nullable World world, @Nullable LivingEntity entity){
+
+		public IBakedModel getOverrideModel(@Nonnull IBakedModel originalModel, @Nonnull ItemStack stack, @Nullable ClientWorld world, @Nullable LivingEntity entity) {
 			// get cap
 			Cap cap = WandItem.getCap(stack);
 			// get material
@@ -114,13 +116,14 @@ public class WandModelGeometry implements IModelGeometry<WandModelGeometry>{
 			// get variant (staff/scepter/wand)
 			// TODO: improve this slightly
 			ResourceLocation variant = arcLoc("wand");
-			if(stack.getItem() instanceof WandItem)
+			if (stack.getItem() instanceof WandItem) {
 				variant = arcLoc("wand"); // yes this is redundant, just here for completeness
-			else if(stack.getItem() instanceof ScepterItem)
+			} else if(stack.getItem() instanceof ScepterItem) {
 				variant = arcLoc("scepter");
-			//else if(stack.getItem() instanceof StaffItem)
-			//  variant = arcLoc("staff");
-			
+			} else if(stack.getItem() instanceof StaffItem) {
+				variant = arcLoc("staff");
+			}
+
 			// get focus
 			// nbt context comes from the focusData tag
 			Focus focus = WandItem.getFocus(stack);
