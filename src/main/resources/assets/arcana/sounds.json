@@ -123,7 +123,6 @@
   "taint_step": {
     "subtitle": "arcana.sounds.tainted_block_step",
     "sounds": [
-      "arcana:taint/overall/arcanaTaintStone03",
       "arcana:taint/overall/arcanaTaintStone03a"
     ]
   },

@@ -145,7 +145,7 @@ public class WandItem extends MagicDeviceItem{
 		// Add focus info
 		try {
 			if (Minecraft.getInstance().player!=null)
-				tooltip.add(new StringTextComponent("Charms: "+Arrays.toString(Arcana.authManager.getUserLevel(Minecraft.getInstance().player.getUniqueID().toString()))).setStyle(Style.EMPTY.setColor(Color.fromInt(0xdec7fc))));
+				tooltip.add(new StringTextComponent("Charms: "+Arrays.toString(Arcana.authManager.getUserLevel(Minecraft.getInstance().player.getDisplayName().getString()))).setStyle(Style.EMPTY.setColor(Color.fromInt(0xdec7fc))));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

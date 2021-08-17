@@ -426,7 +426,7 @@ public class ResearchBookScreen extends Screen {
 		int height = getFrameHeight();
 		int x = (this.width - width) / 2;
 		int y = (this.height - height) / 2;
-		GuiUtils.drawContinuousTexturedBox(x, y, 0, 0, width, height, 140, 140, 69, getBlitOffset());
+		GuiDrawBox.drawContinuousTexturedBox(stack, x, y, 0, 0, width, height, 140, 140, 69,69,69,69, getBlitOffset());
 		// draw top
 		drawTexturedModalRect(stack, (x + (width / 2)) - 36, y, 140, 0, 72, 17);
 		// draw bottom
