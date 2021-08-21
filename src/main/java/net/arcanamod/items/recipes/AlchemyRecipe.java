@@ -120,7 +120,7 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 			int size = buffer.readVarInt();
 			List<AspectStack> aspects = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)
-				aspects.add(new AspectStack(AspectUtils.getAspectByName(buffer.readString()), buffer.readVarInt()));
+				aspects.add(new AspectStack(AspectUtils.getAspectByName(buffer.readString()), buffer.readFloat()));
 			
 			size = buffer.readVarInt();
 			List<Parent> requiredResearch = new ArrayList<>(size);

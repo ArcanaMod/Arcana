@@ -37,7 +37,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	Button leftArrow, rightArrow;
 	TextFieldWidget searchWidget;
 
-	public ResearchTableScreen(ResearchTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){
+	public ResearchTableScreen(ResearchTableContainer screenContainer, PlayerInventory inv, ITextComponent titleIn) {
 		super(screenContainer, inv, titleIn);
 		this.te = screenContainer.te;
 		this.aspectContainer = screenContainer;
@@ -45,15 +45,15 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		ySize = HEIGHT;
 	}
 
-	protected void drawGuiContainerBackgroundLayer(@Nonnull MatrixStack stack, float partialTicks, int mouseX, int mouseY){
+	protected void drawGuiContainerBackgroundLayer(@Nonnull MatrixStack stack, float partialTicks, int mouseX, int mouseY) {
 		renderBackground(stack);
 		minecraft.getTextureManager().bindTexture(BG);
 		ClientUiUtil.drawModalRectWithCustomSizedTexture(stack, guiLeft, guiTop, 0, 0, WIDTH, HEIGHT, 378, 378);
-		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
+		if (!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()) {
 			CompoundNBT compound = te.note().getTag();
-			if(compound != null){
+			if (compound != null) {
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
-				if(puzzle != null){
+				if (puzzle != null) {
 					PuzzleRenderer.get(puzzle).render(stack, puzzle, aspectContainer.puzzleSlots, aspectContainer.puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
 					if(te.ink().isEmpty() || te.ink().getDamage() >= 100){
 						// tell them "no u cant do research without a pen"
@@ -68,13 +68,13 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		searchWidget.render(stack, mouseX, mouseY, partialTicks);
 	}
 
-	public void render(MatrixStack stack,  int mouseX, int mouseY, float partialTicks){
+	public void render(MatrixStack stack,  int mouseX, int mouseY, float partialTicks) {
 		super.render(stack, mouseX, mouseY, partialTicks);
-		if(!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()){
+		if (!te.note().isEmpty() && te.note().getItem() == ArcanaItems.RESEARCH_NOTE.get()) {
 			CompoundNBT compound = te.note().getTag();
-			if(compound != null) {
+			if (compound != null) {
 				Puzzle puzzle = ResearchBooks.puzzles.get(new ResourceLocation(compound.getString("puzzle")));
-				if(puzzle != null) {
+				if (puzzle != null) {
 					PuzzleRenderer.get(puzzle).renderAfter(stack, puzzle, aspectContainer.puzzleSlots, aspectContainer.puzzleItemSlots, width, height, mouseX, mouseY, playerInventory.player);
 				}
 			}
@@ -144,7 +144,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 	protected void refreshSlotVisibility() {
 		ResearchTableContainer container = aspectContainer;
 		List<AspectSlot> slots = container.scrollableSlots;
-		for(int i = 0; i < slots.size(); i++){
+		for (int i = 0; i < slots.size(); i++) {
 			AspectSlot slot = slots.get(i);
 			slot.visible = i >= 36 * page && i < 36 * (page + 1);
 		}
