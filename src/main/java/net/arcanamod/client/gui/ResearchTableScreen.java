@@ -43,6 +43,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		this.aspectContainer = screenContainer;
 		xSize = WIDTH;
 		ySize = HEIGHT;
+		te.batteryIsDirty = true;
 	}
 
 	protected void drawGuiContainerBackgroundLayer(@Nonnull MatrixStack stack, float partialTicks, int mouseX, int mouseY){
@@ -126,6 +127,7 @@ public class ResearchTableScreen extends AspectContainerScreen<ResearchTableCont
 		children.add(searchWidget);
 		leftArrow = addButton(new ChangeAspectPageButton(guiLeft + 11, guiTop + 183, false, this::actionPerformed));
 		rightArrow = addButton(new ChangeAspectPageButton(guiLeft + 112, guiTop + 183, true, this::actionPerformed));
+		te.batteryIsDirty = true;
 	}
 
 	protected void actionPerformed(@Nonnull Button button) {

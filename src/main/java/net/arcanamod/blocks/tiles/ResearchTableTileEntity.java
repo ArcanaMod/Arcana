@@ -40,6 +40,8 @@ public class ResearchTableTileEntity extends LockableTileEntity{
 	ArrayList<BlockPos> visContainers = new ArrayList<>();
 	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE, 100);
 
+	public boolean batteryIsDirty = true;
+
 	public ResearchTableTileEntity(){
 		super(ArcanaTiles.RESEARCH_TABLE_TE.get());
 	}
@@ -65,21 +67,24 @@ public class ResearchTableTileEntity extends LockableTileEntity{
 
 	//TODO: There is better way to do it
 	private AspectBattery getVisShareablesAsBattery() {
-		battery.clear();
-		BlockPos.getAllInBox(getPos().north(4).east(4).up(4), getPos().south(4).west(4).down(2)).forEach(blockPos -> {
-			if(world.getBlockState(blockPos).hasTileEntity()){
-				TileEntity tileEntityInBox = world.getTileEntity(blockPos);
-				if(tileEntityInBox != null)
-					if(tileEntityInBox instanceof VisShareable)
-						if(((VisShareable)tileEntityInBox).isVisShareable() && ((VisShareable)tileEntityInBox).isManual()){
-							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(tileEntityInBox);
-							if(vis != null){
-								visContainers.add(new BlockPos(blockPos)); // Removing reference
-								AspectBattery.merge(battery, vis);
+		if (batteryIsDirty) {
+			battery.clear();
+			BlockPos.getAllInBoxMutable(getPos().north(4).east(4).up(4), getPos().south(4).west(4).down(2)).forEach(blockPos -> {
+				if (world.getBlockState(blockPos).hasTileEntity()) {
+					TileEntity tileEntityInBox = world.getTileEntity(blockPos);
+					if (tileEntityInBox != null)
+						if (tileEntityInBox instanceof VisShareable)
+							if (((VisShareable) tileEntityInBox).isVisShareable() && ((VisShareable) tileEntityInBox).isManual()) {
+								AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(tileEntityInBox);
+								if (vis != null) {
+									visContainers.add(new BlockPos(blockPos)); // Removing reference
+									AspectBattery.merge(battery, vis);
+								}
 							}
-						}
-			}
-		});
+				}
+			});
+			batteryIsDirty = false;
+		}
 		return battery;
 	}
 
