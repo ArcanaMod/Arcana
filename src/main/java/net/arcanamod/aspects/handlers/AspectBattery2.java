@@ -22,7 +22,7 @@ public class AspectBattery2 implements AspectHandler2{
 	}
 	
 	public void deserializeNBT(CompoundNBT data){
-		CompoundNBT storedCells = data.getCompound("cells");
+		CompoundNBT storedCells = data.getCompound("holders");
 		int i = 0;
 		for(String s : storedCells.keySet()){
 			if(i >= holders.size())
