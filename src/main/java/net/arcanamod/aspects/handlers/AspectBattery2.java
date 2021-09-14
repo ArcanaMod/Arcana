@@ -25,11 +25,11 @@ public class AspectBattery2 implements AspectHandler2{
 		CompoundNBT storedCells = data.getCompound("cells");
 		int i = 0;
 		for(String s : storedCells.keySet()){
-			/*if(i >= holders.size())
-				holders.add(AspectCell.fromNBT(storedCells.getCompound(s)));
+			if(i >= holders.size())
+				holders.add(AspectCell2.fromNbt(storedCells.getCompound(s)));
 			else
-				holders.set(Integer.parseInt(s.replace("cell_", "")), AspectCell.fromNBT(storedCells.getCompound(s)));
-			i++;*/
+				holders.set(Integer.parseInt(s.substring(7)), AspectCell2.fromNbt(storedCells.getCompound(s)));
+			i++;
 		}
 	}
 }
