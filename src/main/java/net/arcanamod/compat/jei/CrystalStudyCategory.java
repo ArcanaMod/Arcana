@@ -48,7 +48,7 @@ public class CrystalStudyCategory implements IRecipeCategory<DummyRecipe> {
 
     @Override
     public IDrawable getIcon() {
-        return jeiHelpers.getGuiHelper().createDrawableIngredient(new ItemStack(ArcanaBlocks.FIRE_CLUSTER.get()));
+        return jeiHelpers.getGuiHelper().createDrawableIngredient(new ItemStack(ArcanaItems.AIR_CRYSTAL_SEED.get()));
     }
 
     @Override

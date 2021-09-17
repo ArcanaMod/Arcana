@@ -39,6 +39,8 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 			return arcLoc("alchemy").toString();
 		}
 	});
+
+	public static List<AlchemyRecipe> RECIPES = new ArrayList<>();
 	
 	Ingredient in;
 	ItemStack out;
@@ -52,6 +54,9 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 		this.aspectsIn = aspectsIn;
 		this.requiredResearch = requiredResearch;
 		this.id = id;
+
+		if (RECIPES.stream().allMatch(m -> m.id != this.id))
+			RECIPES.add(this);
 	}
 	
 	public boolean matches(AlchemyInventory inv, World world){

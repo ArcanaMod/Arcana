@@ -53,24 +53,24 @@ public class ArcaneCraftingCategory implements IRecipeCategory<ArcaneCraftingSha
     }
 
     @Override
-    public void setIngredients(ArcaneCraftingShapedRecipe arcaneCraftingShapedRecipe, IIngredients iIngredients) {
-        iIngredients.setInputLists(VanillaTypes.ITEM,JEIIngredientStackListBuilder.make(arcaneCraftingShapedRecipe.getIngredients().toArray(new Ingredient[arcaneCraftingShapedRecipe.getIngredients().size()])).build());
-        iIngredients.setInputIngredients(arcaneCraftingShapedRecipe.getIngredients());
-        iIngredients.setOutput(VanillaTypes.ITEM, arcaneCraftingShapedRecipe.getRecipeOutput());
+    public void setIngredients(ArcaneCraftingShapedRecipe recipe, IIngredients iIngredients) {
+        iIngredients.setInputLists(VanillaTypes.ITEM,JEIIngredientStackListBuilder.make(recipe.getIngredients().toArray(new Ingredient[recipe.getIngredients().size()])).build());
+        iIngredients.setInputIngredients(recipe.getIngredients());
+        iIngredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
     }
 
     @Override
-    public void setRecipe(IRecipeLayout iRecipeLayout, ArcaneCraftingShapedRecipe arcaneCraftingShapedRecipe, IIngredients iIngredients) {
+    public void setRecipe(IRecipeLayout iRecipeLayout, ArcaneCraftingShapedRecipe recipe, IIngredients iIngredients) {
         IGuiItemStackGroup igroup = iRecipeLayout.getItemStacks();
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                int n = (i*3)+j;
+        for (int i = 0; i < recipe.getRecipeHeight(); i++) {
+            for (int j = 0; j < recipe.getRecipeWidth(); j++) {
+                int n = (i*recipe.getRecipeWidth())+j;
                 igroup.init(n,true,22+(j*23),33+(i*23));
-                if (n < arcaneCraftingShapedRecipe.getIngredients().size())
-                    igroup.set(n, Arrays.asList(arcaneCraftingShapedRecipe.getIngredients().get(n).getMatchingStacks()));
+                if (n < recipe.getIngredients().size())
+                    igroup.set(n, Arrays.asList(recipe.getIngredients().get(n).getMatchingStacks()));
             }
         }
-        igroup.init(10,false,62,66);
-        igroup.set(10,arcaneCraftingShapedRecipe.getRecipeOutput());
+        igroup.init(10,false,107,56);
+        igroup.set(10,recipe.getRecipeOutput());
     }
 }
