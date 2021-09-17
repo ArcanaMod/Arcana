@@ -65,11 +65,12 @@ public class ArcaneCraftingCategory implements IRecipeCategory<ArcaneCraftingSha
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 int n = (i*3)+j;
-                igroup.init(n,true,8+(j*22),16+(i*22));
+                igroup.init(n,true,22+(j*23),33+(i*23));
                 if (n < arcaneCraftingShapedRecipe.getIngredients().size())
                     igroup.set(n, Arrays.asList(arcaneCraftingShapedRecipe.getIngredients().get(n).getMatchingStacks()));
             }
         }
-        igroup.init(10,false,10,20);
+        igroup.init(10,false,62,66);
+        igroup.set(10,arcaneCraftingShapedRecipe.getRecipeOutput());
     }
 }

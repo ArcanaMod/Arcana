@@ -1,4 +1,4 @@
 package net.arcanamod.compat.jei;
 
-public class CrystalClickRecipe {
+public class DummyRecipe {
 }
