@@ -15,6 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.Arrays;
+
 import static net.arcanamod.ArcanaVariables.arcLoc;
 import static net.arcanamod.compat.ArcanaJeiPlugin.ARCANE_WORKBENCH_UUID;
 
@@ -60,9 +62,14 @@ public class ArcaneCraftingCategory implements IRecipeCategory<ArcaneCraftingSha
     @Override
     public void setRecipe(IRecipeLayout iRecipeLayout, ArcaneCraftingShapedRecipe arcaneCraftingShapedRecipe, IIngredients iIngredients) {
         IGuiItemStackGroup igroup = iRecipeLayout.getItemStacks();
-        for (int i = 0; i < 10; i++) {
-            igroup.init(i,true,18+(i*12),20+(i/3*12));
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                int n = (i*3)+j;
+                igroup.init(n,true,8+(j*22),16+(i*22));
+                if (n < arcaneCraftingShapedRecipe.getIngredients().size())
+                    igroup.set(n, Arrays.asList(arcaneCraftingShapedRecipe.getIngredients().get(n).getMatchingStacks()));
+            }
         }
-        igroup.init(10,true,10,20);
+        igroup.init(10,false,10,20);
     }
 }
