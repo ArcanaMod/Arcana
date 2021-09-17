@@ -4,11 +4,9 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
-import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.items.recipes.ArcaneCraftingShapedRecipe;
 import net.minecraft.item.ItemStack;
@@ -20,7 +18,7 @@ import java.util.Arrays;
 import static net.arcanamod.ArcanaVariables.arcLoc;
 import static net.arcanamod.compat.ArcanaJeiPlugin.ARCANE_WORKBENCH_UUID;
 
-public class ArcaneCraftingCategory implements IRecipeCategory<ArcaneCraftingShapedRecipe> {
+public class CrystalClickCategory implements IRecipeCategory<CrystalClickRecipe> {
     private final IJeiHelpers jeiHelpers;
 
     public ArcaneCraftingCategory(IJeiHelpers jeiHelpers) {
