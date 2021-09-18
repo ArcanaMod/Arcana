@@ -6,6 +6,7 @@ import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.compat.jei.*;
@@ -28,6 +29,7 @@ public class ArcanaJeiPlugin implements IModPlugin {
     public static final ResourceLocation ARCANE_WORKBENCH_UUID = arcLoc("arcane_crafting_jei");
     public static final ResourceLocation ALCHEMY_UUID = arcLoc("alchemy_uuid");
     public static final ResourceLocation CRYSTAL_UUID = arcLoc("crystal_study");
+    public static final ResourceLocation ASPECT_CRYSTALLIZER_UUID = arcLoc("crystallizer_study");
 
     @Override
     public ResourceLocation getPluginUid() {
@@ -37,8 +39,13 @@ public class ArcanaJeiPlugin implements IModPlugin {
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
         IModPlugin.super.registerRecipes(registration);
+        for (Aspect aspect : Aspects.getWithoutEmpty()){
+            new AspectCrystallizerRecipeHandler(aspect);
+        }
+        
         registration.addRecipes(ArcaneCraftingShapedRecipe.RECIPES, ARCANE_WORKBENCH_UUID);
         registration.addRecipes(AlchemyRecipe.RECIPES, ALCHEMY_UUID);
+        registration.addRecipes(AspectCrystallizerRecipeHandler.RECIPES, ASPECT_CRYSTALLIZER_UUID);
         registration.addRecipes(Collections.singletonList(new DummyRecipe()), CRYSTAL_UUID);
     }
 
@@ -47,6 +54,7 @@ public class ArcanaJeiPlugin implements IModPlugin {
         IModPlugin.super.registerCategories(registration);
         registration.addRecipeCategories(new ArcaneCraftingCategory(registration.getJeiHelpers()));
         registration.addRecipeCategories(new AlchemyCategory(registration.getJeiHelpers()));
+        registration.addRecipeCategories(new AspectCrystallizerCategory(registration.getJeiHelpers()));
         registration.addRecipeCategories(new CrystalStudyCategory(registration.getJeiHelpers()));
     }
 
@@ -66,6 +74,8 @@ public class ArcanaJeiPlugin implements IModPlugin {
         IModPlugin.super.registerRecipeCatalysts(registration);
         registration.addRecipeCatalyst(new ItemStack(ArcanaBlocks.ARCANE_CRAFTING_TABLE.get()),ARCANE_WORKBENCH_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaBlocks.CRUCIBLE.get()),ALCHEMY_UUID);
+        registration.addRecipeCatalyst(new ItemStack(ArcanaBlocks.ASPECT_CRYSTALLIZER.get()),ASPECT_CRYSTALLIZER_UUID);
+        registration.addRecipeCatalyst(new ItemStack(ArcanaItems.ORDER_CRYSTAL_SEED.get()),CRYSTAL_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaItems.AIR_CRYSTAL_SEED.get()),CRYSTAL_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaItems.EARTH_CRYSTAL_SEED.get()),CRYSTAL_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaItems.FIRE_CRYSTAL_SEED.get()),CRYSTAL_UUID);

@@ -1,5 +1,6 @@
 package net.arcanamod.compat.jei;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -72,7 +73,8 @@ public class AlchemyCategory implements IRecipeCategory<AlchemyRecipe> {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 3; j++) {
 				int n = (i*3)+j;
-				agroup.init(n,true,42+(j*18),33+(i*18));
+				int sizedHeight = recipe.getAspects().size() > 3 ? 30 : 39;
+				agroup.init(n,true,42+(j*18),sizedHeight+(i*18));
 				if (n < recipe.getAspects().size())
 					agroup.set(n, AspectIngredient.fromStack(recipe.getAspects().get(n)));
 			}

@@ -49,7 +49,7 @@ public class EntityTickHandler{
 			ServerPlayerEntity playerEntity = (ServerPlayerEntity) event.getPlayer();
 			Advancement interacted = playerEntity.world.getServer().getAdvancementManager().getAdvancement(arcLoc("interacted_with_magic"));
 			Advancement gotArcanum = playerEntity.world.getServer().getAdvancementManager().getAdvancement(arcLoc("arcanum_accepted"));
-			if (playerEntity.inventory.hasAny(Sets.newHashSet(Items.PAPER)) && playerEntity.getAdvancements().getProgress(interacted).isDone() && !playerEntity.getAdvancements().getProgress(gotArcanum).isDone()){
+			if (playerEntity.inventory.hasAny(Sets.newHashSet(Items.PAPER,ArcanaItems.SCRIBBLED_NOTES.get())) && playerEntity.getAdvancements().getProgress(interacted).isDone() && !playerEntity.getAdvancements().getProgress(gotArcanum).isDone()){
 				playerEntity.getAdvancements().getProgress(gotArcanum).grantCriterion("impossible");
 				playerEntity.inventory.addItemStackToInventory(new ItemStack(ArcanaItems.SCRIBBLED_NOTES_COMPLETE.get()));
 			}
