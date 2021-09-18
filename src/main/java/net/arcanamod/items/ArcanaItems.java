@@ -136,6 +136,7 @@ public class ArcanaItems{
 	public static final RegistryObject<CapItem> SILVER_CAP = ITEMS.register("silver_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 0, 75, 2, arcLoc("silver_cap")));
 	public static final RegistryObject<CapItem> THAUMIUM_CAP = ITEMS.register("thaumium_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 25, 3, arcLoc("thaumium_cap")));
 	public static final RegistryObject<CapItem> VOID_CAP = ITEMS.register("void_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 75, 45, 3, arcLoc("void_cap")));
+	@GIM(ITEM) public static final RegistryObject<CapItem> NETHERITE_CAP = ITEMS.register("netherite_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 65, 40, 3, arcLoc("netherite_cap")));
 	@GIM(ITEM) public static final RegistryObject<CapItem> PRISMARINE_CAP = ITEMS.register("prismarine_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("prismarine_cap")));
 	@GIM(ITEM) public static final RegistryObject<CapItem> BAMBOO_CAP = ITEMS.register("bamboo_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("bamboo_cap")));
 	@GIM(ITEM) public static final RegistryObject<CapItem> AMBER_CAP = ITEMS.register("amber_cap", () -> new CapItem(new Properties().group(Arcana.ITEMS), 50, 30, 2, arcLoc("amber_cap")));

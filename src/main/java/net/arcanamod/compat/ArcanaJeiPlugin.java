@@ -75,7 +75,6 @@ public class ArcanaJeiPlugin implements IModPlugin {
         registration.addRecipeCatalyst(new ItemStack(ArcanaBlocks.ARCANE_CRAFTING_TABLE.get()),ARCANE_WORKBENCH_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaBlocks.CRUCIBLE.get()),ALCHEMY_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaBlocks.ASPECT_CRYSTALLIZER.get()),ASPECT_CRYSTALLIZER_UUID);
-        registration.addRecipeCatalyst(new ItemStack(ArcanaItems.ORDER_CRYSTAL_SEED.get()),CRYSTAL_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaItems.AIR_CRYSTAL_SEED.get()),CRYSTAL_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaItems.EARTH_CRYSTAL_SEED.get()),CRYSTAL_UUID);
         registration.addRecipeCatalyst(new ItemStack(ArcanaItems.FIRE_CRYSTAL_SEED.get()),CRYSTAL_UUID);
