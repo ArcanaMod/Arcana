@@ -63,7 +63,7 @@ public class ArcanaJeiPlugin implements IModPlugin {
         IModPlugin.super.registerIngredients(registration);
         Collection<AspectIngredient> aspectIngredients = new ArrayList<>();
         for (int i = 0; i < Aspects.getWithoutEmpty().size(); i++) {
-            aspectIngredients.add(new AspectIngredient(Aspects.getWithoutEmpty().get(i),1));
+            aspectIngredients.add(AspectIngredient.fromSingleton(Aspects.getWithoutEmpty().get(i)));
         }
     
         registration.register(AspectIngredient.TYPE, aspectIngredients, new AspectIngredient.Helper(), new AspectIngredient.Renderer());

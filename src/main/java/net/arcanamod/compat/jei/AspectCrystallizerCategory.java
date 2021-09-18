@@ -66,7 +66,7 @@ public class AspectCrystallizerCategory implements IRecipeCategory<AspectCrystal
 		IGuiItemStackGroup igroup = iRecipeLayout.getItemStacks();
 		IGuiIngredientGroup<AspectIngredient> agroup = iRecipeLayout.getIngredientsGroup(AspectIngredient.TYPE);
 		agroup.init(0,true,8,9);
-		agroup.set(0, AspectIngredient.fromStack(new AspectStack(recipe.aspect,1)));
+		agroup.set(0, AspectIngredient.fromSingleton(recipe.aspect));
 		igroup.init(0,false,67,8);
 		igroup.set(0,new ItemStack(AspectUtils.aspectCrystalItems.get(recipe.aspect),1));
 	}

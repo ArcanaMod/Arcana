@@ -17,7 +17,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 import static net.arcanamod.ArcanaVariables.arcLoc;
 import static net.arcanamod.compat.ArcanaJeiPlugin.ALCHEMY_UUID;
@@ -54,15 +57,17 @@ public class AlchemyCategory implements IRecipeCategory<AlchemyRecipe> {
 		return jeiHelpers.getGuiHelper().createDrawableIngredient(new ItemStack(ArcanaBlocks.CRUCIBLE.get()));
 	}
 
+	@SuppressWarnings("ToArrayCallWithZeroLengthArrayArgument")
 	@Override
 	public void setIngredients(AlchemyRecipe recipe, IIngredients iIngredients) {
+		iIngredients.setInputLists(AspectIngredient.TYPE, Collections.singletonList(recipe.getAspects().stream().map(AspectIngredient::fromStack).collect(Collectors.toList())));
 		iIngredients.setInputLists(VanillaTypes.ITEM,JEIIngredientStackListBuilder.make(recipe.getIngredients().toArray(new Ingredient[recipe.getIngredients().size()])).build());
 		iIngredients.setInputIngredients(recipe.getIngredients());
 		iIngredients.setOutput(VanillaTypes.ITEM, recipe.getRecipeOutput());
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayout iRecipeLayout, AlchemyRecipe recipe, IIngredients iIngredients) {
+	public void setRecipe(IRecipeLayout iRecipeLayout, AlchemyRecipe recipe, @Nonnull IIngredients iIngredients) {
 		IGuiItemStackGroup igroup = iRecipeLayout.getItemStacks();
 		IGuiIngredientGroup<AspectIngredient> agroup = iRecipeLayout.getIngredientsGroup(AspectIngredient.TYPE);
 		igroup.init(0,true,13,1);
