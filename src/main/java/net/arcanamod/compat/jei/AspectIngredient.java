@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class AspectIngredient extends AspectStack {
+public class AspectIngredient extends AspectStack implements Cloneable {
 	public static final IIngredientType<AspectIngredient> TYPE = () -> AspectIngredient.class;
 	
 	public AspectIngredient(Aspect aspect, float amount){

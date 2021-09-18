@@ -1,6 +1,6 @@
 package net.arcanamod.aspects;
 
-public class AspectStack {
+public class AspectStack implements Cloneable {
 
 	public static final AspectStack EMPTY = new AspectStack(Aspects.EMPTY, 0);
 	

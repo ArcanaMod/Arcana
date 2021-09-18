@@ -72,7 +72,7 @@ public class AlchemyCategory implements IRecipeCategory<AlchemyRecipe> {
 		for (int i = 0; i < 6; i++) {
 			for (int j = 0; j < 3; j++) {
 				int n = (i*3)+j;
-				agroup.init(n,true,42+(j*18),36+(i*18));
+				agroup.init(n,true,42+(j*18),33+(i*18));
 				if (n < recipe.getAspects().size())
 					agroup.set(n, AspectIngredient.fromStack(recipe.getAspects().get(n)));
 			}
