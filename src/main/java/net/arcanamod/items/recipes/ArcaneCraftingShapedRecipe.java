@@ -50,8 +50,8 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 		this.recipeOutput = recipeOutputIn;
 
 		this.aspectStacks = aspectStacks;
-
-		if (RECIPES.stream().allMatch(m -> m.id != this.id))
+		
+		if (RECIPES.stream().noneMatch(m -> m.id.toString().equals(this.id.toString())))
 			RECIPES.add(this);
 	}
 

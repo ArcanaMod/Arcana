@@ -54,8 +54,8 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 		this.aspectsIn = aspectsIn;
 		this.requiredResearch = requiredResearch;
 		this.id = id;
-
-		if (RECIPES.stream().allMatch(m -> m.id != this.id))
+		
+		if (RECIPES.stream().noneMatch(m -> m.id.toString().equals(this.id.toString())))
 			RECIPES.add(this);
 	}
 	

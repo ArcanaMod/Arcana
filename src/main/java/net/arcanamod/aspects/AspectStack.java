@@ -3,10 +3,10 @@ package net.arcanamod.aspects;
 public class AspectStack {
 
 	public static final AspectStack EMPTY = new AspectStack(Aspects.EMPTY, 0);
-
-	private boolean isEmpty;
-	private float amount;
-	private Aspect aspect;
+	
+	protected boolean isEmpty;
+	protected float amount;
+	protected Aspect aspect;
 
 	public boolean isEmpty() {
 		return isEmpty;

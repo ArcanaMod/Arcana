@@ -2,20 +2,21 @@ package net.arcanamod.compat;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.registration.IModIngredientRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
-import net.arcanamod.compat.jei.AlchemyCategory;
-import net.arcanamod.compat.jei.ArcaneCraftingCategory;
-import net.arcanamod.compat.jei.CrystalStudyCategory;
-import net.arcanamod.compat.jei.DummyRecipe;
+import net.arcanamod.compat.jei.*;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.recipes.AlchemyRecipe;
 import net.arcanamod.items.recipes.ArcaneCraftingShapedRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,6 +50,17 @@ public class ArcanaJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(new CrystalStudyCategory(registration.getJeiHelpers()));
     }
 
+    @Override
+    public void registerIngredients(IModIngredientRegistration registration) {
+        IModPlugin.super.registerIngredients(registration);
+        Collection<AspectIngredient> aspectIngredients = new ArrayList<>();
+        for (int i = 0; i < Aspects.getWithoutEmpty().size(); i++) {
+            aspectIngredients.add(new AspectIngredient(Aspects.getWithoutEmpty().get(i),1));
+        }
+    
+        registration.register(AspectIngredient.TYPE, aspectIngredients, new AspectIngredient.Helper(), new AspectIngredient.Renderer());
+    }
+    
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         IModPlugin.super.registerRecipeCatalysts(registration);

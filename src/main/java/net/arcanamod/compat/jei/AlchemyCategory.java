@@ -3,10 +3,12 @@ package net.arcanamod.compat.jei;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IGuiIngredientGroup;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IJeiHelpers;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.items.recipes.AlchemyRecipe;
 import net.arcanamod.items.recipes.ArcaneCraftingShapedRecipe;
@@ -61,9 +63,19 @@ public class AlchemyCategory implements IRecipeCategory<AlchemyRecipe> {
 	@Override
 	public void setRecipe(IRecipeLayout iRecipeLayout, AlchemyRecipe recipe, IIngredients iIngredients) {
 		IGuiItemStackGroup igroup = iRecipeLayout.getItemStacks();
+		IGuiIngredientGroup<AspectIngredient> agroup = iRecipeLayout.getIngredientsGroup(AspectIngredient.TYPE);
 		igroup.init(0,true,13,1);
 		igroup.set(0, Arrays.asList(recipe.getIngredients().get(0).getMatchingStacks()));
 		igroup.init(1,false,60,1);
 		igroup.set(1,recipe.getRecipeOutput());
+		
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 3; j++) {
+				int n = (i*3)+j;
+				agroup.init(n,true,42+(j*18),36+(i*18));
+				if (n < recipe.getAspects().size())
+					agroup.set(n, AspectIngredient.fromStack(recipe.getAspects().get(n)));
+			}
+		}
 	}
 }
