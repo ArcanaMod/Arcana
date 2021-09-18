@@ -15,7 +15,10 @@ import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.UndecidedAspectStack;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.items.recipes.ArcaneCraftingShapedRecipe;
+import net.arcanamod.systems.research.ResearchBooks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
@@ -71,6 +74,9 @@ public class ArcaneCraftingCategory implements IRecipeCategory<ArcaneCraftingSha
 
     @Override
     public void setRecipe(IRecipeLayout iRecipeLayout, ArcaneCraftingShapedRecipe recipe, @Nonnull IIngredients iIngredients) {
+        //Researcher.getFrom(Minecraft.getInstance().player).isPuzzleCompleted(ResearchBooks.puzzles.get(Arcana.arcLoc("flux_build_research")));
+        //recipe.
+        
         IGuiItemStackGroup igroup = iRecipeLayout.getItemStacks();
         IGuiIngredientGroup<AspectIngredient> agroup = iRecipeLayout.getIngredientsGroup(AspectIngredient.TYPE);
         for (int i = 0; i < recipe.getRecipeHeight(); i++) {
