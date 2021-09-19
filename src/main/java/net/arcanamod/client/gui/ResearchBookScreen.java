@@ -380,8 +380,10 @@ public class ResearchBookScreen extends Screen {
 			base = 0;
 		else if(entry.meta().contains("yellow_base"))
 			base = 4;
+		else if(entry.meta().contains("green_base"))
+			base = 12;
 		else if(entry.meta().contains("no_base"))
-			return 12;
+			return 16;
 
 		if(entry.meta().contains("round_base"))
 			return base + 1;

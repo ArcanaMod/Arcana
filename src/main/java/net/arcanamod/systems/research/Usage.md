@@ -91,7 +91,7 @@ Meta tags are case sensitive.
  - `"no_base"`: this entry won't display any base below it.
  - base shapes; `"round_base"`, `"square_base"`, `"hexagon_base"`, `"spiky_base"`:
   changes the texture used for this entry's base. `"square_base"` is default.
- - base colours; `"purple_base"`, `"yellow_base"`: changes the colour used for this
+ - base colours; `"purple_base"`, `"yellow_base"`, `"green_base"`: changes the colour used for this
   entry's base. This is white by default, and there isn't a corresponding meta tag for
   white.
  - `"reverse"`: display arrows leading into this entry on the other side.
