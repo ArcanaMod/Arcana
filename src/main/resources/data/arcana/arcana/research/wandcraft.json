@@ -31,7 +31,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:taint_understanding"
+				"arcana:taint_understanding"
 			],
 			"meta": [
 			],
@@ -56,7 +56,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:taint_understanding"
+				"arcana:taint_understanding"
 			],
 			"meta": [
 			],
@@ -81,7 +81,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:crimson_understanding"
+				"arcana:crimson_understanding"
 			],
 			"meta": [
 			],
@@ -106,7 +106,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:crimson_understanding"
+				"arcana:crimson_understanding"
 			],
 			"meta": [
 			],
@@ -131,7 +131,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:wandcraft_root"
+				"arcana:wandcraft_root"
 			],
 			"meta": [
 			],
@@ -156,7 +156,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:wandcraft_root"
+				"arcana:wandcraft_root"
 			],
 			"meta": [
 			],
@@ -181,7 +181,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:gold_caps"
+				"arcana:gold_caps"
 			],
 			"meta": [
 				"round_base"
@@ -207,7 +207,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:gold_caps"
+				"arcana:gold_caps"
 			],
 			"meta": [
 				"round_base"
@@ -233,7 +233,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:gold_caps"
+				"arcana:gold_caps"
 			],
 			"meta": [
 			],
@@ -258,7 +258,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:thaumium_caps"
+				"arcana:thaumium_caps"
 			],
 			"meta": [
 			],
@@ -283,7 +283,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:netherite_caps"
+				"arcana:netherite_caps"
 			],
 			"meta": [
 			],
@@ -308,7 +308,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:thaumium_caps"
+				"arcana:thaumium_caps"
 			],
 			"meta": [
 				"round_base"
@@ -334,7 +334,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:thaumium_caps"
+				"arcana:thaumium_caps"
 			],
 			"meta": [
 				"round_base"
@@ -356,7 +356,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:thaumium_caps"
+				"arcana:thaumium_caps"
 			],
 			"meta": [
 				"round_base"
@@ -382,7 +382,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:thaumium_caps"
+				"arcana:thaumium_caps"
 			],
 			"meta": [
 				"round_base"
@@ -408,7 +408,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:thaumium_caps"
+				"arcana:thaumium_caps"
 			],
 			"meta": [
 				"round_base"
@@ -434,7 +434,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:thaumium_caps"
+				"arcana:thaumium_caps"
 			],
 			"meta": [
 				"round_base"
@@ -461,7 +461,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:greatwood_wand"
+				"arcana:greatwood_wand"
 			],
 			"meta": [
 			],
@@ -490,7 +490,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:magical_wood_wands"
+				"arcana:magical_wood_wands"
 			],
 			"meta": [
 			],
@@ -511,7 +511,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:magical_wood_wands"
+				"arcana:magical_wood_wands"
 			],
 			"meta": [
 			],
@@ -540,7 +540,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:silverwood_wand"
+				"arcana:silverwood_wand"
 			],
 			"meta": [
 			],
@@ -561,7 +561,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:silverwood_wand"
+				"arcana:silverwood_wand"
 			],
 			"meta": [
 			],
@@ -586,7 +586,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:arcanium_wand"
+				"arcana:arcanium_wand"
 			],
 			"meta": [
 			],
@@ -611,7 +611,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:arcanium_wand"
+				"arcana:arcanium_wand"
 			],
 			"meta": [
 			],
@@ -632,7 +632,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:silverwood_wand"
+				"arcana:silverwood_wand"
 			],
 			"meta": [
 			],
@@ -653,7 +653,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:discount_wands"
+				"arcana:discount_wands"
 			],
 			"meta": [
 				"round_base"
@@ -679,7 +679,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:discount_wands"
+				"arcana:discount_wands"
 			],
 			"meta": [
 				"round_base"
@@ -705,7 +705,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:discount_wands"
+				"arcana:discount_wands"
 			],
 			"meta": [
 				"round_base"
@@ -731,7 +731,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:discount_wands"
+				"arcana:discount_wands"
 			],
 			"meta": [
 				"round_base"
@@ -757,7 +757,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:discount_wands"
+				"arcana:discount_wands"
 			],
 			"meta": [
 				"round_base"
@@ -783,7 +783,7 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"&arcana:discount_wands"
+				"arcana:discount_wands"
 			],
 			"meta": [
 				"round_base"
