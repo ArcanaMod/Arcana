@@ -1,7 +1,6 @@
-package net.arcanamod.blocks;
+package net.arcanamod.blocks.pipes;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -14,16 +13,16 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class AspectWindowBlock extends AspectTubeBlock{
+public class PipeWindowBlock extends TubeBlock{
 	
-	protected AspectWindowBlock(Properties properties){
+	protected PipeWindowBlock(Properties properties){
 		super(properties);
 	}
 	
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
-		return new AspectWindowTileEntity();
+		return new PipeWindowTileEntity();
 	}
 	
 	public boolean hasComparatorInputOverride(BlockState state){
@@ -32,8 +31,8 @@ public class AspectWindowBlock extends AspectTubeBlock{
 	
 	public int getComparatorInputOverride(BlockState block, World world, BlockPos pos){
 		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof AspectWindowTileEntity){
-			AspectWindowTileEntity window = (AspectWindowTileEntity)te;
+		if(te instanceof PipeWindowTileEntity){
+			PipeWindowTileEntity window = (PipeWindowTileEntity)te;
 			int elapsed = (int)(te.getWorld().getGameTime() - window.getLastTransferTime());
 			return elapsed > 12 ? 0 : 15;
 		}

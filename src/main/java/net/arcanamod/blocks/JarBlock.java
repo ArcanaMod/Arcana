@@ -6,6 +6,7 @@ import net.arcanamod.aspects.AspectLabel;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
+import net.arcanamod.blocks.pipes.TubeBlock;
 import net.arcanamod.blocks.tiles.JarTileEntity;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.MagicDeviceItem;
@@ -89,7 +90,7 @@ public class JarBlock extends WaterloggableBlock {
 
 	@Override
 	public void neighborChanged(BlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving){
-		if(worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
+		if(worldIn.getBlockState(pos.up()).getBlock() instanceof TubeBlock)
 			worldIn.setBlockState(pos, state.with(UP, true));
 		else
 			worldIn.setBlockState(pos, state.with(UP, false));
@@ -97,7 +98,7 @@ public class JarBlock extends WaterloggableBlock {
 	
 	@Override
 	public void onBlockAdded(BlockState state, World worldIn, BlockPos pos, BlockState oldState, boolean isMoving){
-		if(worldIn.getBlockState(pos.up()).getBlock() instanceof AspectTubeBlock)
+		if(worldIn.getBlockState(pos.up()).getBlock() instanceof TubeBlock)
 			worldIn.setBlockState(pos, state.with(UP, true));
 		else
 			worldIn.setBlockState(pos, state.with(UP, false));

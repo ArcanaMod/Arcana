@@ -1,7 +1,6 @@
-package net.arcanamod.blocks;
+package net.arcanamod.blocks.pipes;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.blocks.tiles.AspectValveTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -26,22 +25,22 @@ import java.util.Random;
 @SuppressWarnings("deprecation")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class AspectValveBlock extends AspectTubeBlock{
+public class ValveBlock extends TubeBlock{
 	
-	protected AspectValveBlock(Properties properties){
+	protected ValveBlock(Properties properties){
 		super(properties);
 	}
 	
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
-		return new AspectValveTileEntity();
+		return new ValveTileEntity();
 	}
 	
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult raytrace){
 		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof AspectValveTileEntity){
-			AspectValveTileEntity valve = (AspectValveTileEntity)te;
+		if(te instanceof ValveTileEntity){
+			ValveTileEntity valve = (ValveTileEntity)te;
 			valve.setEnabledAndNotify(!valve.enabledByHand());
 			return ActionResultType.SUCCESS;
 		}
@@ -52,8 +51,8 @@ public class AspectValveBlock extends AspectTubeBlock{
 		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
 		if(!world.isRemote()){
 			TileEntity te = world.getTileEntity(pos);
-			if(te instanceof AspectValveTileEntity){
-				AspectValveTileEntity valve = (AspectValveTileEntity)te;
+			if(te instanceof ValveTileEntity){
+				ValveTileEntity valve = (ValveTileEntity)te;
 				valve.setSuppressedByRedstone(world.isBlockPowered(pos));
 				valve.markDirty();
 				world.notifyBlockUpdate(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
@@ -64,7 +63,7 @@ public class AspectValveBlock extends AspectTubeBlock{
 	@OnlyIn(Dist.CLIENT)
 	public void animateTick(BlockState stateIn, World world, BlockPos pos, Random rand){
 		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof AspectValveTileEntity && ((AspectValveTileEntity)te).isSuppressedByRedstone() && rand.nextFloat() < 0.25F)
+		if(te instanceof ValveTileEntity && ((ValveTileEntity)te).isSuppressedByRedstone() && rand.nextFloat() < 0.25F)
 			addParticles(world, pos);
 	}
 	

@@ -1,9 +1,8 @@
-package net.arcanamod.blocks;
+package net.arcanamod.blocks.pipes;
 
 import com.google.common.collect.Sets;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.handlers.AspectHandlerCapability;
-import net.arcanamod.blocks.tiles.AspectTubeTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
@@ -26,9 +25,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @SuppressWarnings("deprecation")
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-public class AspectTubeBlock extends SixWayBlock{
+public class TubeBlock extends SixWayBlock{
 	
-	protected AspectTubeBlock(Properties properties){
+	protected TubeBlock(Properties properties){
 		super(.1875f, properties);
 		setDefaultState(this.stateContainer.getBaseState()
 				.with(NORTH, Boolean.FALSE)
@@ -42,7 +41,7 @@ public class AspectTubeBlock extends SixWayBlock{
 	private boolean isVisHolder(IBlockReader world, BlockPos pos){
 		Block block = world.getBlockState(pos).getBlock();
 		TileEntity tile = world.getTileEntity(pos);
-		return (tile != null && tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()) || block instanceof AspectTubeBlock;
+		return (tile != null && tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER).isPresent()) || block instanceof TubeBlock;
 	}
 	
 	// Blockstate stuff
@@ -70,7 +69,7 @@ public class AspectTubeBlock extends SixWayBlock{
 	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos){
 		boolean flag = isVisHolder(world, facingPos);
 		if(flag)
-			((AspectTubeTileEntity)world.getTileEntity(currentPos)).scan(Sets.newHashSet(currentPos));
+			((TubeTileEntity)world.getTileEntity(currentPos)).scan(Sets.newHashSet(currentPos));
 		return state.with(FACING_TO_PROPERTY_MAP.get(facing), flag);
 	}
 	
@@ -90,15 +89,15 @@ public class AspectTubeBlock extends SixWayBlock{
 	@Nullable
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
-		return new AspectTubeTileEntity();
+		return new TubeTileEntity();
 	}
 	
 	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack){
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
-		((AspectTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
+		((TubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
 	}
 	
 	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor){
-		((AspectTubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
+		((TubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
 	}
 }

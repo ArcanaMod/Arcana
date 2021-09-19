@@ -11,6 +11,9 @@ import net.arcanamod.blocks.multiblocks.research_table.ResearchTableCoreBlock;
 import net.arcanamod.blocks.multiblocks.taint_scrubber.BoosterTaintScrubberExtensionBlock;
 import net.arcanamod.blocks.multiblocks.taint_scrubber.TaintScrubberBlock;
 import net.arcanamod.blocks.multiblocks.taint_scrubber.TaintScrubberExtensionBlock;
+import net.arcanamod.blocks.pipes.PipeWindowBlock;
+import net.arcanamod.blocks.pipes.TubeBlock;
+import net.arcanamod.blocks.pipes.ValveBlock;
 import net.arcanamod.blocks.tainted.TaintedSaplingBlock;
 import net.arcanamod.util.annotations.GIM;
 import net.arcanamod.util.annotations.GLT;
@@ -111,9 +114,9 @@ public class ArcanaBlocks{
 	public static final RegistryObject<Block> ALEMBIC = BLOCKS.register("alembic", () -> new AlembicBlock(create(IRON, MaterialColor.STONE).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> PEDESTAL = BLOCKS.register("infusion_pedestal", () -> new PedestalBlock(create(ROCK).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> ASPECT_TESTER = BLOCKS.register("aspect_tester", () -> new AspectTesterBlock(create(ROCK).hardnessAndResistance(3).notSolid()));
-	@GLT public static final RegistryObject<Block> ASPECT_TUBE = BLOCKS.register("essentia_tube", () -> new AspectTubeBlock(create(IRON).hardnessAndResistance(3).notSolid()));
-	@GLT public static final RegistryObject<Block> ASPECT_VALVE = BLOCKS.register("essentia_valve", () -> new AspectValveBlock(create(IRON).hardnessAndResistance(3).notSolid()));
-	@GLT public static final RegistryObject<Block> ASPECT_WINDOW = BLOCKS.register("essentia_window", () -> new AspectWindowBlock(create(IRON).sound(SoundType.GLASS).hardnessAndResistance(3).notSolid()));
+	@GLT public static final RegistryObject<Block> ASPECT_TUBE = BLOCKS.register("essentia_tube", () -> new TubeBlock(create(IRON).hardnessAndResistance(3).notSolid()));
+	@GLT public static final RegistryObject<Block> ASPECT_VALVE = BLOCKS.register("essentia_valve", () -> new ValveBlock(create(IRON).hardnessAndResistance(3).notSolid()));
+	@GLT public static final RegistryObject<Block> ASPECT_WINDOW = BLOCKS.register("essentia_window", () -> new PipeWindowBlock(create(IRON).sound(SoundType.GLASS).hardnessAndResistance(3).notSolid()));
 	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> ASPECT_CRYSTALLIZER = BLOCKS.register("aspect_crystallizer", () -> new AspectCrystallizerBlock(create(IRON).hardnessAndResistance(3)));
 	
 	// Taint Scrubber parts

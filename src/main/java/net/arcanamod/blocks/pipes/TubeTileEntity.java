@@ -1,4 +1,4 @@
-package net.arcanamod.blocks.tiles;
+package net.arcanamod.blocks.pipes;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
@@ -9,6 +9,7 @@ import net.arcanamod.aspects.VisShareable;
 import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.aspects.handlers.AspectHandlerCapability;
 import net.arcanamod.aspects.handlers.AspectHolder;
+import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -22,18 +23,18 @@ import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Consumer;
 
-public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvider, AspectHandler{
+public class TubeTileEntity extends TileEntity implements ICapabilityProvider, AspectHandler{
 	
 	// might not work anymore but its due for replacement anyways
 	
 	List<AspectHolder> cells = new ArrayList<>();
 	transient boolean initScanned = false;
 	
-	public AspectTubeTileEntity(){
+	public TubeTileEntity(){
 		this(ArcanaTiles.ASPECT_TUBE_TE.get());
 	}
 	
-	public AspectTubeTileEntity(TileEntityType<?> type){
+	public TubeTileEntity(TileEntityType<?> type){
 		super(type);
 	}
 	
@@ -75,8 +76,8 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 					scanned.add(blockPos);
 					TileEntity tile = getWorld().getTileEntity(blockPos.pos);
 					if(tile != null){
-						if(tile instanceof AspectTubeTileEntity){
-							AspectTubeTileEntity entity = (AspectTubeTileEntity)tile;
+						if(tile instanceof TubeTileEntity){
+							TubeTileEntity entity = (TubeTileEntity)tile;
 							if(!notified.contains(blockPos.pos)){
 								entity.scan(notified);
 								notified.add(blockPos.pos);
@@ -237,8 +238,8 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 			if(!stack.isEmpty() && !simulate)
 				notifying.forEach(pos -> {
 					TileEntity entity = getWorld().getTileEntity(pos);
-					if(entity instanceof AspectTubeTileEntity)
-						((AspectTubeTileEntity)entity).notifyAspect(stack.getAspect());
+					if(entity instanceof TubeTileEntity)
+						((TubeTileEntity)entity).notifyAspect(stack.getAspect());
 				});
 		}
 		

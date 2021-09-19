@@ -7,6 +7,7 @@ import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.handlers.*;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.pipes.TubeTileEntity;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
 import net.arcanamod.world.AuraView;
 import net.minecraft.block.BlockState;
@@ -125,8 +126,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 				// then push them out into the total pipe system from sides
 				for(Direction directions : Direction.Plane.HORIZONTAL){
 					TileEntity tubeTe = world.getTileEntity(pos.offset(directions));
-					if(tubeTe instanceof AspectTubeTileEntity){
-						AspectTubeTileEntity aspectTube = (AspectTubeTileEntity)tubeTe;
+					if(tubeTe instanceof TubeTileEntity){
+						TubeTileEntity aspectTube = (TubeTileEntity)tubeTe;
 						// moveAllAspects only moves integer amounts
 						VisUtils.moveAllAspects(aspects, AspectHandler.getFrom(aspectTube), maxAspectOut);
 						break;

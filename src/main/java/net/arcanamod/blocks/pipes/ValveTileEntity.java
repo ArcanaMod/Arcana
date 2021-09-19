@@ -1,6 +1,7 @@
-package net.arcanamod.blocks.tiles;
+package net.arcanamod.blocks.pipes;
 
 import com.google.common.collect.Sets;
+import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -9,13 +10,13 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class AspectValveTileEntity extends AspectTubeTileEntity{
+public class ValveTileEntity extends TubeTileEntity{
 	
 	private boolean enabled = true;
 	private boolean suppressedByRedstone = false;
 	private long lastChangedTick = -1;
 	
-	public AspectValveTileEntity(){
+	public ValveTileEntity(){
 		super(ArcanaTiles.ASPECT_VALVE_TE.get());
 	}
 	

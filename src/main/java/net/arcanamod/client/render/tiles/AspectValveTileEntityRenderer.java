@@ -5,7 +5,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
-import net.arcanamod.blocks.tiles.AspectValveTileEntity;
+import net.arcanamod.blocks.pipes.ValveTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -26,7 +26,7 @@ import static net.minecraft.block.SixWayBlock.*;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class AspectValveTileEntityRenderer extends TileEntityRenderer<AspectValveTileEntity>{
+public class AspectValveTileEntityRenderer extends TileEntityRenderer<ValveTileEntity>{
 	
 	public static final ResourceLocation GEAR_TEX = new ResourceLocation(Arcana.MODID, "block/essentia_tube_valve");
 	private static TextureAtlasSprite gearSprite;
@@ -37,7 +37,7 @@ public class AspectValveTileEntityRenderer extends TileEntityRenderer<AspectValv
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void render(AspectValveTileEntity te, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay){
+	public void render(ValveTileEntity te, float partialTicks, MatrixStack matrixStack, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay){
 		if(gearModel == null){
 			if(gearSprite == null)
 				gearSprite = Minecraft.getInstance().getAtlasSpriteGetter(AtlasTexture.LOCATION_BLOCKS_TEXTURE).apply(GEAR_TEX);

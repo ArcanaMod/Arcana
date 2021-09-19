@@ -1,18 +1,19 @@
-package net.arcanamod.blocks.tiles;
+package net.arcanamod.blocks.pipes;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
+import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraftforge.common.util.Constants;
 
-public class AspectWindowTileEntity extends AspectTubeTileEntity implements ITickableTileEntity{
+public class PipeWindowTileEntity extends TubeTileEntity implements ITickableTileEntity{
 	
 	private Aspect lastTransferAspect = Aspects.AIR;
 	private int lastTransferTime = -11;
 	
-	public AspectWindowTileEntity(){
+	public PipeWindowTileEntity(){
 		super(ArcanaTiles.ASPECT_WINDOW_TE.get());
 	}
 	

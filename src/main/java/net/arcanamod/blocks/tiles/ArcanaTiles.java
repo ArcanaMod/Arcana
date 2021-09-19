@@ -3,6 +3,9 @@ package net.arcanamod.blocks.tiles;
 import com.google.common.collect.Sets;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.pipes.PipeWindowTileEntity;
+import net.arcanamod.blocks.pipes.TubeTileEntity;
+import net.arcanamod.blocks.pipes.ValveTileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,12 +28,12 @@ public class ArcanaTiles{
 			TES.register("aspect_tester", () -> new TileEntityType<>(AspectTesterTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_TESTER.get()), null));
 	public static final RegistryObject<TileEntityType<TaintScrubberTileEntity>> TAINT_SCRUBBER_TE =
 			TES.register("taint_scrubber", () -> new TileEntityType<>(TaintScrubberTileEntity::new, Sets.newHashSet(ArcanaBlocks.TAINT_SCRUBBER_MK1.get()), null));
-	public static final RegistryObject<TileEntityType<AspectTubeTileEntity>> ASPECT_TUBE_TE =
-			TES.register("essentia_tube", () -> new TileEntityType<>(AspectTubeTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_TUBE.get()), null));
-	public static final RegistryObject<TileEntityType<AspectValveTileEntity>> ASPECT_VALVE_TE =
-			TES.register("essentia_valve", () -> new TileEntityType<>(AspectValveTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_VALVE.get()), null));
-	public static final RegistryObject<TileEntityType<AspectWindowTileEntity>> ASPECT_WINDOW_TE =
-			TES.register("essentia_window", () -> new TileEntityType<>(AspectWindowTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_WINDOW.get()), null));
+	public static final RegistryObject<TileEntityType<TubeTileEntity>> ASPECT_TUBE_TE =
+			TES.register("essentia_tube", () -> new TileEntityType<>(TubeTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_TUBE.get()), null));
+	public static final RegistryObject<TileEntityType<ValveTileEntity>> ASPECT_VALVE_TE =
+			TES.register("essentia_valve", () -> new TileEntityType<>(ValveTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_VALVE.get()), null));
+	public static final RegistryObject<TileEntityType<PipeWindowTileEntity>> ASPECT_WINDOW_TE =
+			TES.register("essentia_window", () -> new TileEntityType<>(PipeWindowTileEntity::new, Sets.newHashSet(ArcanaBlocks.ASPECT_WINDOW.get()), null));
 	public static final RegistryObject<TileEntityType<PedestalTileEntity>> PEDESTAL_TE =
 			TES.register("pedestal", () -> new TileEntityType<>(PedestalTileEntity::new, Sets.newHashSet(ArcanaBlocks.PEDESTAL.get()), null));
 	public static final RegistryObject<TileEntityType<AlembicTileEntity>> ALEMBIC_TE =

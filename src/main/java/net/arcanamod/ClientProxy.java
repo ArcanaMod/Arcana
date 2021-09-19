@@ -3,8 +3,8 @@ package net.arcanamod;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.pipes.PipeWindowTileEntity;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
-import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
 import net.arcanamod.client.ClientUtils;
 import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
@@ -119,9 +119,9 @@ public class ClientProxy extends CommonProxy{
 		
 		Minecraft inst = Minecraft.getInstance();
 		inst.getBlockColors().register((state, access, pos, index) -> {
-					if(access == null || pos == null || access.getTileEntity(pos) == null || !(access.getTileEntity(pos) instanceof AspectWindowTileEntity))
+					if(access == null || pos == null || access.getTileEntity(pos) == null || !(access.getTileEntity(pos) instanceof PipeWindowTileEntity))
 						return 0xFF1F0D0B;
-					return ((AspectWindowTileEntity)access.getTileEntity(pos)).getColor();
+					return ((PipeWindowTileEntity)access.getTileEntity(pos)).getColor();
 				}, ArcanaBlocks.ASPECT_WINDOW.get()
 		);
 		

@@ -12,6 +12,7 @@ import net.arcanamod.aspects.handlers.AspectHandlerCapability;
 import net.arcanamod.aspects.handlers.VisUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
+import net.arcanamod.blocks.pipes.TubeTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -178,7 +179,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 			clientVis = Math.min(clientVis + visAnimationSpeed, newVis);
 		
 		TileEntity entity = world.getTileEntity(pos.up());
-		if(entity instanceof AspectTubeTileEntity)
+		if(entity instanceof TubeTileEntity)
 			if(getJarType() == JarBlock.Type.VACUUM) // pull in
 				VisUtils.moveAllAspects(AspectHandler.getFrom(entity), vis, MAX_PUSH);
 			else if(getJarType() == JarBlock.Type.PRESSURE) // push out
