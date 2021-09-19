@@ -7,11 +7,11 @@
   ],
   "key": {
     "#": {
-      "item": "minecraft:netherite_nugget"
+      "item": "arcana:netherite_nugget"
     }
   },
   "result": {
-    "item": "arcana:netherite_ingot",
+    "item": "minecraft:netherite_ingot",
     "count": 1
   }
 }
