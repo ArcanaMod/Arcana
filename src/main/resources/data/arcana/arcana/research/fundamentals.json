@@ -393,6 +393,51 @@
       ]
     },
     {
+      "key": "arcana:taint_understanding",
+      "name": "research.arcana.taint_understanding",
+      "desc": "research.arcana.taint_understanding.desc",
+      "icons": [
+        "arcana:mob_effect/tainted.png"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [
+        "arcana:flux"
+      ],
+      "meta": [
+        "yellow_base"
+      ],
+      "x": -8,
+      "y": 6,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.taint_understanding"
+        }
+      ]
+    },
+    {
+      "key": "arcana:crimson_understanding",
+      "name": "research.arcana.crimson_understanding",
+      "desc": "research.arcana.crimson_understanding.desc",
+      "icons": [
+        "arcana:mob_effect/tainted.png"
+      ],
+      "category": "arcana:fundamentals",
+      "parents": [],
+      "meta": [
+        "root",
+        "yellow_base"
+      ],
+      "x": -9,
+      "y": 6,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.crimson_understanding"
+        }
+      ]
+    },
+    {
       "key": "arcana:flux_meter",
       "name": "research.arcana.flux_meter",
       "icons": [

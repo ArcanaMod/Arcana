@@ -19,12 +19,14 @@ public class AspectCraftingInventory extends CraftingInventory{
 	private final WandSlot wandSlot;
 	private final IInventory deferred;
 	private final Container eventHandler; // just store this twice
-
-	public AspectCraftingInventory(Container eventHandler, WandSlot wandSlot, int width, int height, IInventory deferred){
+	private final PlayerEntity crafter;
+	
+	public AspectCraftingInventory(Container eventHandler, WandSlot wandSlot, int width, int height, IInventory deferred, PlayerEntity crafter){
 		super(eventHandler, width, height);
 		this.eventHandler = eventHandler;
 		this.wandSlot = wandSlot;
 		this.deferred = deferred;
+		this.crafter = crafter;
 	}
 
 	public WandSlot getWandSlot() {
@@ -90,5 +92,9 @@ public class AspectCraftingInventory extends CraftingInventory{
 	
 	public ItemStack getStackInSlot(int index){
 		return deferred.getStackInSlot(index);
+	}
+	
+	public PlayerEntity getCrafter() {
+		return crafter;
 	}
 }

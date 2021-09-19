@@ -1,255 +1,805 @@
 {
-  "entries": [
-    {
-      "key": "arcana:wandcraft_root",
-      "name": "research.arcana.wandcraft_root",
-      "icons": [
-        "arcana:item/basicwand.png"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "arcana:wandcraft"
-      ],
-      "meta": [
-        "spiky_base"
-      ],
-      "x": 0,
-      "y": 0,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.wandcraft_root.text"
-        }
-      ]
-    },
-    {
-      "key": "arcana:cores_intro",
-      "name": "research.arcana.cores_intro",
-      "icons": [
-        "arcana:greatwood_wand_core"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "&arcana:wandcraft_root"
-      ],
-      "meta": [
-        "round_base",
-        "yellow_base"
-      ],
-      "x": 0,
-      "y": 3,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.cores_intro.text"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/greatwood_wand_core"
-        }
-      ]
-    },
-    {
-      "key": "arcana:hawthorn_core",
-      "name": "research.arcana.hawthorn_core",
-      "icons": [
-        "arcana:hawthorn_wand_core"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "arcana:cores_intro"
-      ],
-      "x": 0,
-      "y": 6,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.cores_intro.text"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/hawthorn_wand_core"
-        }
-      ]
-    },
-    {
-      "key": "arcana:arcanium_core",
-      "name": "research.arcana.arcanium_core",
-      "icons": [
-        "arcana:arcanium_wand_core"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "arcana:cores_intro"
-      ],
-      "x": 2,
-      "y": 5,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.cores_intro.text"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/arcanium_wand_core"
-        }
-      ]
-    },
-    {
-      "key": "arcana:dair_core",
-      "name": "research.arcana.dair_core",
-      "icons": [
-        "arcana:dair_wand_core"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "arcana:cores_intro"
-      ],
-      "x": 3,
-      "y": 3,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.cores_intro.text"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/dair_wand_core"
-        }
-      ]
-    },
-    {
-      "key": "arcana:silverwood_core",
-      "name": "research.arcana.silverwood_core",
-      "icons": [
-        "arcana:silverwood_wand_core"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "arcana:dair_core",
-        "/arcana:hawthorn_core",
-        "/arcana:arcanium_core"
-      ],
-      "x": 4,
-      "y": 7,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.cores_intro.text"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/silverwood_wand_core"
-        }
-      ]
-    },
-    {
-      "key": "arcana:caps_intro",
-      "name": "research.arcana.caps_intro",
-      "icons": [
-        "arcana:gold_cap"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "&arcana:wandcraft_root"
-      ],
-      "meta": [
-        "round_base",
-        "yellow_base"
-      ],
-      "x": 0,
-      "y": -3,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.caps_intro.text"
-        },
-        {
-          "type": "arcane_crafting",
-          "content": "arcana:arcane_crafting/gold_cap"
-        }
-      ]
-    },
-    {
-      "key": "arcana:foci_intro",
-      "name": "research.arcana.foci_intro",
-      "icons": [
-        "arcana:focus_parts"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "&arcana:wandcraft_root"
-      ],
-      "meta": [
-        "round_base",
-        "yellow_base"
-      ],
-      "x": 3,
-      "y": 0,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.foci_intro.text"
-        }
-      ]
-    },
-    {
-      "key": "arcana:staffs",
-      "name": "research.arcana.staffs",
-      "icons": [
-        "arcana:item/basicstaff.png"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "arcana:wandcraft_root"
-      ],
-      "x": -3,
-      "y": -2,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.wip"
-        }
-      ]
-    },
-    {
-      "key": "arcana:scepters",
-      "name": "research.arcana.scepters",
-      "icons": [
-        "arcana:item/basicscepter.png"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "arcana:wandcraft_root"
-      ],
-      "x": -3,
-      "y": 2,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.wip"
-        }
-      ]
-    },
-    {
-      "key": "arcana:gauntlets",
-      "name": "research.arcana.gauntlets",
-      "icons": [
-        "minecraft:barrier"
-      ],
-      "category": "arcana:wandcraft",
-      "parents": [
-        "arcana:staffs",
-        "arcana:scepters"
-      ],
-      "x": -6,
-      "y": 0,
-      "sections": [
-        {
-          "type": "string",
-          "content": "research.arcana.wip"
-        }
-      ]
-    }
-  ]
+	"entries": [
+		{
+			"key": "arcana:wandcraft_root",
+			"name": "research.arcana.wandcraft_root",
+			"icons": [
+			"arcana:item/basicwand.png"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+			"arcana:wandcraft"
+			],
+			"meta": [
+				"spiky_base",
+				"purple_base"
+			],
+			"x": 0,
+			"y": 0,
+			"sections": [
+				{
+				"type": "string",
+				"content": "research.arcana.wandcraft_root.text"
+			}
+			]
+		},
+		{
+			"key": "arcana:taint_wand",
+			"name": "research.arcana.taint_wand",
+			"icons": [
+				"arcana:tainted_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:taint_understanding"
+			],
+			"meta": [
+			],
+			"x": 0,
+			"y": -4,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.taint_wand.text"
+			},
+			{
+				"type": "alchemy",
+				"content": "arcana:tainted_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:void_caps",
+			"name": "research.arcana.void_caps",
+			"icons": [
+				"arcana:void_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:taint_understanding"
+			],
+			"meta": [
+			],
+			"x": 0,
+			"y": -2,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.void_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/void_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:crimson_wand",
+			"name": "research.arcana.crimson_wand",
+			"icons": [
+				"arcana:eldritch_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:crimson_understanding"
+			],
+			"meta": [
+			],
+			"x": 12,
+			"y": 3,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.crimson_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/eldritch_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:crimson_cloth_caps",
+			"name": "research.arcana.crimson_cloth_caps",
+			"icons": [
+				"arcana:crimson_cloth_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:crimson_understanding"
+			],
+			"meta": [
+			],
+			"x": 12,
+			"y": 5,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.crimson_cloth_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/crimson_cloth_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:greatwood_wand",
+			"name": "research.arcana.greatwood_wand",
+			"icons": [
+				"arcana:greatwood_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:wandcraft_root"
+			],
+			"meta": [
+			],
+			"x": 2,
+			"y": -1,
+			"sections": [
+				{
+				"type": "string",
+				"content": "research.arcana.greatwood_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/greatwood_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:gold_caps",
+			"name": "research.arcana.gold_caps",
+			"icons": [
+				"arcana:gold_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:wandcraft_root"
+			],
+			"meta": [
+			],
+			"x": 2,
+			"y": 1,
+			"sections": [
+				{
+				"type": "string",
+				"content": "research.arcana.gold_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/gold_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:copper_caps",
+			"name": "research.arcana.gold_caps",
+			"icons": [
+				"arcana:copper_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:gold_caps"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 0,
+			"y": 2,
+			"sections": [
+				{
+				"type": "string",
+				"content": "research.arcana.copper_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/copper_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:silver_caps",
+			"name": "research.arcana.silver_caps",
+			"icons": [
+				"arcana:silver_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:gold_caps"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": -2,
+			"y": 2,
+			"sections": [
+				{
+				"type": "string",
+				"content": "research.arcana.silver_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/silver_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:thaumium_caps",
+			"name": "research.arcana.thaumium_caps",
+			"icons": [
+				"arcana:thaumium_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:gold_caps"
+			],
+			"meta": [
+			],
+			"x": 3,
+			"y": 5,
+			"sections": [
+				{
+				"type": "string",
+				"content": "research.arcana.thaumium_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/thaumium_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:netherite_caps",
+			"name": "research.arcana.netherite_caps",
+			"icons": [
+				"arcana:netherite_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:thaumium_caps"
+			],
+			"meta": [
+			],
+			"x": 6,
+			"y": 3,
+			"sections": [
+				{
+				"type": "string",
+				"content": "research.arcana.netherite_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/netherite_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:mechanical_caps",
+			"name": "research.arcana.mechanical_caps",
+			"icons": [
+				"arcana:mechanical_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:netherite_caps"
+			],
+			"meta": [
+			],
+			"x": 8,
+			"y": 3,
+			"sections": [
+				{
+				"type": "string",
+				"content": "research.arcana.mechanical_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/mechanical_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:order_caps",
+			"name": "research.arcana.order_caps",
+			"icons": [
+				"arcana:honey_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:thaumium_caps"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 5,
+			"y": 4,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.order_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/honey_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:chaos_caps",
+			"name": "research.arcana.chaos_caps",
+			"icons": [
+				"minecraft:barrier"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:thaumium_caps"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 7,
+			"y": 4,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.chaos_caps.text"
+			}
+			]
+		},
+		{
+			"key": "arcana:air_caps",
+			"name": "research.arcana.air_caps",
+			"icons": [
+				"arcana:bamboo_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:thaumium_caps"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 9,
+			"y": 4,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.air_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/bamboo_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:water_caps",
+			"name": "research.arcana.water_caps",
+			"icons": [
+				"arcana:prismarine_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:thaumium_caps"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 5,
+			"y": 6,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.water_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/prismarine_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:fire_caps",
+			"name": "research.arcana.fire_caps",
+			"icons": [
+				"arcana:quartz_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:thaumium_caps"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 7,
+			"y": 6,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.fire_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/quartz_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:earth_caps",
+			"name": "research.arcana.fire_caps",
+			"icons": [
+				"arcana:amber_cap"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:thaumium_caps"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 9,
+			"y": 6,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.earth_caps.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/caps/amber_cap"
+			}
+			]
+		},
+		{
+			"key": "arcana:magical_wood_wands",
+			"name": "research.arcana.magical_wood_wands",
+			"icons": [
+				"arcana:dair_wand_core",
+				"arcana:hawthorn_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:greatwood_wand"
+			],
+			"meta": [
+			],
+			"x": 4,
+			"y": -1,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.magical_wood_wands.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/dair_wand_core"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/hawthorn_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:staffs",
+			"name": "research.arcana.staffs",
+			"icons": [
+				"arcana:item/basicstaff.png"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:magical_wood_wands"
+			],
+			"meta": [
+			],
+			"x": 4,
+			"y": -3,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.staffs.text"
+			}
+			]
+		},
+		{
+			"key": "arcana:silverwood_wand",
+			"name": "research.arcana.silverwood_wand",
+			"icons": [
+				"arcana:silverwood_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:magical_wood_wands"
+			],
+			"meta": [
+			],
+			"x": 6,
+			"y": -1,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.silverwood_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/silverwood_stick"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/silverwood_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:sceptre",
+			"name": "research.arcana.sceptre",
+			"icons": [
+				"arcana:item/basicscepter.png"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:silverwood_wand"
+			],
+			"meta": [
+			],
+			"x": 5,
+			"y": 0,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.sceptre.text"
+			}
+			]
+		},
+		{
+			"key": "arcana:arcanium_wand",
+			"name": "research.arcana.arcanium_wand",
+			"icons": [
+				"arcana:arcanium_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:silverwood_wand"
+			],
+			"meta": [
+			],
+			"x": 9,
+			"y": -1,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.arcanium_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/arcanium_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:mechanical_wand",
+			"name": "research.arcana.mechanical_wand",
+			"icons": [
+				"arcana:mechanical_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:arcanium_wand"
+			],
+			"meta": [
+			],
+			"x": 10,
+			"y": 1,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.mechanical_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/mechanical_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:gauntlets",
+			"name": "research.arcana.gauntlets",
+			"icons": [
+				"arcana:gauntlet"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:arcanium_wand"
+			],
+			"meta": [
+			],
+			"x": 11,
+			"y": -1,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.gauntlets.text"
+			}
+			]
+		},
+		{
+			"key": "arcana:discount_wands",
+			"name": "research.arcana.discount_wands",
+			"icons": [
+				"arcana:item/combined_wand_core.png"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:silverwood_wand"
+			],
+			"meta": [
+			],
+			"x": 6,
+			"y": -4,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.discount_wands.text"
+			}
+			]
+		},
+		{
+			"key": "arcana:order_wand",
+			"name": "research.arcana.order_wand",
+			"icons": [
+				"arcana:arcane_stone_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:discount_wands"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 7,
+			"y": -5,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.order_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/arcane_stone_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:chaos_wand",
+			"name": "research.arcana.chaos_wand",
+			"icons": [
+				"arcana:bone_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:discount_wands"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 9,
+			"y": -5,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.chaos_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/bone_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:air_wand",
+			"name": "research.arcana.air_wand",
+			"icons": [
+				"arcana:sugar_cane_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:discount_wands"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 11,
+			"y": -5,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.air_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/sugar_cane_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:water_wand",
+			"name": "research.arcana.water_wand",
+			"icons": [
+				"arcana:ice_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:discount_wands"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 7,
+			"y": -3,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.water_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/ice_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:fire_wand",
+			"name": "research.arcana.fire_wand",
+			"icons": [
+				"arcana:blaze_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:discount_wands"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 9,
+			"y": -3,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.fire_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/blaze_wand_core"
+			}
+			]
+		},
+		{
+			"key": "arcana:earth_wand",
+			"name": "research.arcana.earth_wand",
+			"icons": [
+				"arcana:obsidian_wand_core"
+			],
+			"category": "arcana:wandcraft",
+			"parents": [
+				"&arcana:discount_wands"
+			],
+			"meta": [
+				"round_base"
+			],
+			"x": 11,
+			"y": -3,
+			"sections": [
+			{
+				"type": "string",
+				"content": "research.arcana.earth_wand.text"
+			},
+			{
+				"type": "arcane_crafting",
+				"content": "arcana:arcane_crafting/obsidian_wand_core"
+			}
+			]
+		}
+	]
 }

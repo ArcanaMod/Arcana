@@ -331,6 +331,7 @@ b16646db1ed763b85cca1ad3dc3c58a41911dcde assets/arcana/models/item/mossy_dungeon
 024037db4b8031ee2a4cf14c82769a998e47d02a assets/arcana/models/item/mossy_dungeon_bricks_wall.json
 44679f9679ea04c8a5f099ed640338dc3e2feec8 assets/arcana/models/item/movement_crystal.json
 2bfded8d2261a4e7a293164ff1eed8fd8aa80683 assets/arcana/models/item/nether_crystal.json
+418850384db9811a70a5642c82f3c88fe75f4fee assets/arcana/models/item/netherite_nugget.json
 d5f2896fb1975fdbada8633046fe54aeec6cb1b5 assets/arcana/models/item/obsidian_wand_core.json
 44f15d1621fe0d664eccebb2d9905a87d42b7a9a assets/arcana/models/item/order_crystal.json
 456747eeb0d89e707a771d54ed332b4d47f1bd7f assets/arcana/models/item/overworld_crystal.json
@@ -344,6 +345,7 @@ d642fb51eca7d07cd03e7916b64874efab7f9e00 assets/arcana/models/item/research_tabl
 ea9267fe20684ec24acc6eb91e3710cadaadd050 assets/arcana/models/item/shulker_cap.json
 09247a485d925d84be754c9c84f35aa7c835abdc assets/arcana/models/item/silver_block.json
 e21e6bba1ee68eb9c3c3009d3e4ae893cde6d37c assets/arcana/models/item/silver_ingot.json
+9c2b2dbd3299b4f567f9b71f45891c2fa86b0c62 assets/arcana/models/item/silver_nugget.json
 01e06f37f132ef0ea189ed3c9e4d579d6191329d assets/arcana/models/item/silver_ore.json
 9de209f6bbd9d890b714c1dd4b3749d167052713 assets/arcana/models/item/silverwood_fence.json
 8ebb6647dbfbeec92b55a1f5ca961eedc3f4e0b9 assets/arcana/models/item/silverwood_fence_gate.json
@@ -357,6 +359,7 @@ b4d9290168bd82600d12391c7f0af91c5d5b9c9e assets/arcana/models/item/spirit_crysta
 55e175a27111f6e3e0186ba53cb3d73730e33b5c assets/arcana/models/item/tainted_diorite.json
 e59cc2f41259877577fa9fe462851ed91b58223c assets/arcana/models/item/tainted_granite.json
 a5402782bd66c6d2792762b0a8db6ac35575e166 assets/arcana/models/item/tainted_snowball.json
+5539d83763e8fa623bc7efa9698e924928f88671 assets/arcana/models/item/thaumium_nugget.json
 da194ec6ad44f56cd6e574eca14b9e7807d1bdb0 assets/arcana/models/item/tool_crystal.json
 834a35fa4771e943e6b246f38feb2d579afef3e0 assets/arcana/models/item/tree_crystal.json
 ce7f6615bc7748ccba1b9001e03901d34483607f assets/arcana/models/item/trypophobius_fence.json

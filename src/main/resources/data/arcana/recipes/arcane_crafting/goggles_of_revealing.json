@@ -22,5 +22,8 @@
   "aspects": [],
   "result": {
     "item": "arcana:goggles_of_revealing"
-  }
+  },
+  "research": [
+    "arcana:aspect_collection"
+  ]
 }
