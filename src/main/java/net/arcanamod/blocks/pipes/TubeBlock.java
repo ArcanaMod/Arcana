@@ -1,14 +1,11 @@
 package net.arcanamod.blocks.pipes;
 
-import com.google.common.collect.Sets;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.handlers.AspectHandlerCapability;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.state.StateContainer;
 import net.minecraft.tileentity.TileEntity;
@@ -16,8 +13,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -27,7 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class TubeBlock extends SixWayBlock{
 	
-	protected TubeBlock(Properties properties){
+	public TubeBlock(Properties properties){
 		super(.1875f, properties);
 		setDefaultState(this.stateContainer.getBaseState()
 				.with(NORTH, Boolean.FALSE)
@@ -68,8 +63,6 @@ public class TubeBlock extends SixWayBlock{
 	 */
 	public BlockState updatePostPlacement(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos){
 		boolean flag = isVisHolder(world, facingPos);
-		if(flag)
-			((TubeTileEntity)world.getTileEntity(currentPos)).scan(Sets.newHashSet(currentPos));
 		return state.with(FACING_TO_PROPERTY_MAP.get(facing), flag);
 	}
 	
@@ -90,14 +83,5 @@ public class TubeBlock extends SixWayBlock{
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world){
 		return new TubeTileEntity();
-	}
-	
-	public void onBlockPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack){
-		super.onBlockPlacedBy(world, pos, state, placer, stack);
-		((TubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
-	}
-	
-	public void onNeighborChange(BlockState state, IWorldReader world, BlockPos pos, BlockPos neighbor){
-		((TubeTileEntity)world.getTileEntity(pos)).scan(Sets.newHashSet(pos));
 	}
 }

@@ -15,7 +15,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @MethodsReturnNonnullByDefault
 public class PipeWindowBlock extends TubeBlock{
 	
-	protected PipeWindowBlock(Properties properties){
+	public PipeWindowBlock(Properties properties){
 		super(properties);
 	}
 	

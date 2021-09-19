@@ -1,60 +1,34 @@
 package net.arcanamod.blocks.pipes;
 
-import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
-import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraftforge.common.util.Constants;
 
 public class PipeWindowTileEntity extends TubeTileEntity implements ITickableTileEntity{
 	
-	private Aspect lastTransferAspect = Aspects.AIR;
-	private int lastTransferTime = -11;
+	private long lastTransferTime = -1;
 	
 	public PipeWindowTileEntity(){
 		super(ArcanaTiles.ASPECT_WINDOW_TE.get());
 	}
 	
-	public int getColor(){
-		int elapsed = (int)(getWorld().getGameTime() - lastTransferTime);
-		if(elapsed > 12)
-			return 0xFFFFFF;
-		else
-			return lastTransferAspect.getColorRange().get(elapsed / 3);
-	}
-	
-	void notifyAspect(Aspect aspect){
-		lastTransferAspect = aspect;
-		lastTransferTime = (int)world.getGameTime();
-		BlockState state = world.getBlockState(getPos());
-		world.notifyBlockUpdate(pos, state, state, Constants.BlockFlags.RERENDER_MAIN_THREAD);
-		markDirty();
-	}
-	
 	public void deserializeNBT(CompoundNBT nbt){
-		lastTransferAspect = Aspects.valueOf(nbt.getString("lastTransferAspect"));
 		lastTransferTime = nbt.getInt("lastTransferTime");
 	}
 	
 	public CompoundNBT serializeNBT(){
 		// save if enabled
 		CompoundNBT nbt = new CompoundNBT();
-		nbt.putString("lastTransferAspect", lastTransferAspect.name());
-		nbt.putInt("lastTransferTime", lastTransferTime);
+		nbt.putLong("lastTransferTime", lastTransferTime);
 		return nbt;
 	}
 	
-	public void tick(){
-		int elapsed = (int)(getWorld().getGameTime() - lastTransferTime);
-		if(elapsed < 14){
-			BlockState state = world.getBlockState(getPos());
-			world.notifyBlockUpdate(pos, state, state, Constants.BlockFlags.RERENDER_MAIN_THREAD);
-		}
+	public long getLastTransferTime(){
+		return lastTransferTime;
 	}
 	
-	public int getLastTransferTime(){
-		return lastTransferTime;
+	public void addSpeck(AspectSpeck speck){
+		super.addSpeck(speck);
+		lastTransferTime = getWorld().getGameTime();
 	}
 }

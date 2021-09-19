@@ -8,7 +8,6 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.common.util.LazyOptional;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
@@ -185,13 +184,17 @@ public interface AspectHandler extends INBTSerializable<CompoundNBT>{
 	void deserializeNBT(CompoundNBT data);
 	
 	// Statics
-	static LazyOptional<AspectHandler> getOptional(@Nonnull ICapabilityProvider holder){
+	static LazyOptional<AspectHandler> getOptional(@Nullable ICapabilityProvider holder){
+		if(holder == null)
+			return LazyOptional.empty();
 		return holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null);
 	}
 	
 	@SuppressWarnings("ConstantConditions")
 	@Nullable
-	static AspectHandler getFrom(@Nonnull ICapabilityProvider holder){
+	static AspectHandler getFrom(@Nullable ICapabilityProvider holder){
+		if(holder == null)
+			return null;
 		return holder.getCapability(AspectHandlerCapability.ASPECT_HANDLER, null).orElse(null);
 	}
 }

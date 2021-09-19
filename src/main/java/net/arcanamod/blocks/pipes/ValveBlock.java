@@ -27,7 +27,7 @@ import java.util.Random;
 @MethodsReturnNonnullByDefault
 public class ValveBlock extends TubeBlock{
 	
-	protected ValveBlock(Properties properties){
+	public ValveBlock(Properties properties){
 		super(properties);
 	}
 	

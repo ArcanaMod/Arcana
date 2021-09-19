@@ -1,6 +1,5 @@
 package net.arcanamod.blocks.pipes;
 
-import com.google.common.collect.Sets;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
@@ -47,7 +46,6 @@ public class ValveTileEntity extends TubeTileEntity{
 	@SuppressWarnings("ConstantConditions")
 	private void notifyChange(){
 		lastChangedTick = world.getGameTime();
-		scan(Sets.newHashSet(getPos()));
 	}
 	
 	public long getLastChangedTick(){
