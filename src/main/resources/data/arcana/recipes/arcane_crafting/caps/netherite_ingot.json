@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+	"###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:netherite_nugget"
+    }
+  },
+  "result": {
+    "item": "arcana:netherite_ingot",
+    "count": 1
+  }
+}

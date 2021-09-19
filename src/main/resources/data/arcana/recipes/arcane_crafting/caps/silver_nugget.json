@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "arcana:silver_ingot"
+    }
+  },
+  "result": {
+    "item": "arcana:silver_nugget",
+    "count": 9
+  }
+}

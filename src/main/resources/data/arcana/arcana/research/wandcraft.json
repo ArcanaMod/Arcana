@@ -69,7 +69,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/void_cap"
+				"content": "arcana:arcane_crafting/caps/void_cap"
 			}
 			]
 		},
@@ -119,7 +119,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/crimson_cloth_cap"
+				"content": "arcana:arcane_crafting/caps/crimson_cloth_cap"
 			}
 			]
 		},
@@ -169,7 +169,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/gold_cap"
+				"content": "arcana:arcane_crafting/caps/gold_cap"
 			}
 			]
 		},
@@ -195,7 +195,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/copper_cap"
+				"content": "arcana:arcane_crafting/caps/copper_cap"
 			}
 			]
 		},
@@ -221,7 +221,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/silver_cap"
+				"content": "arcana:arcane_crafting/caps/silver_cap"
 			}
 			]
 		},
@@ -246,7 +246,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/thaumium_cap"
+				"content": "arcana:arcane_crafting/caps/thaumium_cap"
 			}
 			]
 		},
@@ -271,7 +271,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/netherite_cap"
+				"content": "arcana:arcane_crafting/caps/netherite_cap"
 			}
 			]
 		},
@@ -296,7 +296,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/mechanical_cap"
+				"content": "arcana:arcane_crafting/caps/mechanical_cap"
 			}
 			]
 		},
@@ -322,7 +322,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/honey_cap"
+				"content": "arcana:arcane_crafting/caps/honey_cap"
 			}
 			]
 		},
@@ -370,7 +370,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/bamboo_cap"
+				"content": "arcana:arcane_crafting/caps/bamboo_cap"
 			}
 			]
 		},
@@ -396,7 +396,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/prismarine_cap"
+				"content": "arcana:arcane_crafting/caps/prismarine_cap"
 			}
 			]
 		},
@@ -422,7 +422,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/quartz_cap"
+				"content": "arcana:arcane_crafting/caps/quartz_cap"
 			}
 			]
 		},
@@ -448,7 +448,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/amber_cap"
+				"content": "arcana:arcane_crafting/caps/amber_cap"
 			}
 			]
 		},
