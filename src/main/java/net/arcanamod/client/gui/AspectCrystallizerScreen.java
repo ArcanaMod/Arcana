@@ -30,8 +30,8 @@ public class AspectCrystallizerScreen extends ContainerScreen<AspectCrystallizer
         int pixHeight = 0;
         int pixProgress = 0;
         if (container.te != null) {
-            pixHeight = (int) ((container.te.vis.getHolder(0).getCurrentVis() / 100f) * 52);
-            aspect = container.te.vis.getHolder(0).getContainedAspect();
+            pixHeight = (int) ((container.te.vis.getHolder(0).getStack().getAmount() / 100f) * 52);
+            aspect = container.te.vis.getHolder(0).getStack().getAspect();
             pixProgress = (int) (((float) container.te.progress / AspectCrystallizerTileEntity.MAX_PROGRESS) * 22);
         }
         int colour = aspect.getColorRange().get(1);

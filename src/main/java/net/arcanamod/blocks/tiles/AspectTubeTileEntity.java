@@ -2,7 +2,13 @@ package net.arcanamod.blocks.tiles;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.DelegatingAspectCell;
+import net.arcanamod.aspects.VisShareable;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -11,14 +17,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
-import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
 import java.util.*;
+import java.util.function.Consumer;
 
-public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvider, IAspectHandler{
+public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvider, AspectHandler{
 	
-	List<IAspectHolder> cells = new ArrayList<>();
+	// might not work anymore but its due for replacement anyways
+	
+	List<AspectHolder> cells = new ArrayList<>();
 	transient boolean initScanned = false;
 	
 	public AspectTubeTileEntity(){
@@ -86,10 +94,10 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		// then we just expose all of the endAspectHandler's cells
 		cells.clear();
 		for(ScanStack handler : endAspectHandlers){
-			IAspectHandler handle = IAspectHandler.getFrom(getWorld().getTileEntity(handler.pos));
+			AspectHandler handle = AspectHandler.getFrom(getWorld().getTileEntity(handler.pos));
 			if(handle != null)
 				//cells.addAll(handle.getHolders());
-				for(IAspectHolder holder : handle.getHolders())
+				for(AspectHolder holder : handle.getHolders())
 					cells.add(new NotifyingHolder(holder, handler.to));
 		}
 	}
@@ -119,87 +127,29 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 			scan(Sets.newHashSet(getPos()));
 	}
 	
-	public int getHoldersAmount(){
+	public int countHolders(){
 		checkScan();
 		return cells.size();
 	}
 	
-	public List<IAspectHolder> getHolders(){
+	public List<AspectHolder> getHolders(){
 		checkScan();
 		return new ArrayList<>(cells);
 	}
 	
-	public IAspectHolder getHolder(int index){
+	public float insert(Aspect in, float amount){
 		checkScan();
-		return cells.get(index);
+		return AspectHandler.super.insert(in, amount);
 	}
 	
-	public boolean exist(int index){
+	public float drain(Aspect aspect, float amount){
 		checkScan();
-		return cells.size() > index;
+		return AspectHandler.super.drain(aspect, amount);
 	}
 	
-	public void createCell(IAspectHolder cell){
-		throw new UnsupportedOperationException("Tried to add a new aspect cell to a pipe!");
-	}
-	
-	public void deleteCell(IAspectHolder cell){
-		throw new UnsupportedOperationException("Tried to remove an aspect cell from a pipe!");
-	}
-	
-	public void deleteCell(int index){
-		throw new UnsupportedOperationException("Tried to remove an aspect cell from a pipe!");
-	}
-	
-	public void setCellSizes(){
-		throw new UnsupportedOperationException("Tried to modify pipe aspect cell data!");
-	}
-	
-	public float insert(int holder, AspectStack resource, boolean simulate){
-		// if an exception occurs, it's your fault
+	public AspectStack drainAny(float amount){
 		checkScan();
-		return cells.get(holder).insert(resource, simulate);
-	}
-	
-	public float insert(int holder, int maxInsert, boolean simulate){
-		// if an exception occurs, it's your fault
-		checkScan();
-		return cells.get(holder).insert(new AspectStack(cells.get(holder).getContainedAspect(), maxInsert), simulate);
-	}
-	
-	public float drain(int holder, AspectStack resource, boolean simulate){
-		checkScan();
-		if(holder >= cells.size())
-			return 0;
-		return cells.get(holder).drain(resource, simulate);
-	}
-	
-	public float drain(int holder, int maxDrain, boolean simulate){
-		checkScan();
-		if(holder >= cells.size())
-			return 0;
-		return cells.get(holder).drain(new AspectStack(cells.get(holder).getContainedAspect(), maxDrain), simulate);
-	}
-	
-	public void clear(){
-		throw new UnsupportedOperationException("Tried to clear an aspect pipe!");
-	}
-	
-	public IAspectHolder findAspectInHolders(Aspect aspect){
-		checkScan();
-		for(IAspectHolder cell : cells)
-			if(cell.getContainedAspect() == aspect)
-				return cell;
-		return null;
-	}
-	
-	public int[] findIndexesFromAspectInHolders(Aspect aspect){
-		checkScan();
-		List<Integer> indexes = new ArrayList<>();
-		for(IAspectHolder cell : cells)
-			if(cell.getContainedAspect() == aspect)
-				indexes.add(cells.indexOf(cell));
-		return ArrayUtils.toPrimitive(indexes.toArray(new Integer[0]));
+		return AspectHandler.super.drainAny(amount);
 	}
 	
 	public void deserializeNBT(CompoundNBT nbt){
@@ -273,80 +223,14 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 		}
 	}
 	
-	private class NotifyingHolder implements IAspectHolder, DelegatingAspectCell{
+	private class NotifyingHolder implements AspectHolder, DelegatingAspectCell{
 		
-		private IAspectHolder cell;
+		private AspectHolder cell;
 		private Collection<BlockPos> notifying;
 		
-		public NotifyingHolder(IAspectHolder cell, Collection<BlockPos> notifying){
+		public NotifyingHolder(AspectHolder cell, Collection<BlockPos> notifying){
 			this.cell = cell;
 			this.notifying = notifying;
-		}
-		
-		public float insert(AspectStack stack, boolean simulate){
-			tryNotify(stack, simulate);
-			return cell.insert(stack, simulate);
-		}
-		
-		public float drain(AspectStack stack, boolean simulate){
-			tryNotify(stack, simulate);
-			return cell.drain(stack, simulate);
-		}
-		
-		public float getCurrentVis(){
-			return cell.getCurrentVis();
-		}
-		
-		public boolean canInsert(Aspect aspect){
-			return cell.canInsert(aspect);
-		}
-		
-		public boolean canStore(Aspect aspect){
-			return cell.canStore(aspect);
-		}
-		
-		public float getCapacity(Aspect aspect){
-			return cell.getCapacity(aspect);
-		}
-		
-		public float getCapacity(){
-			return cell.getCapacity();
-		}
-		
-		public Set<Aspect> getAllowedAspects(){
-			return cell.getAllowedAspects();
-		}
-		
-		public AspectStack getContainedAspectStack(){
-			return cell.getContainedAspectStack();
-		}
-		
-		public Aspect getContainedAspect(){
-			return cell.getContainedAspect();
-		}
-		
-		public void setCapacity(float defaultCellSize){
-			cell.setCapacity(defaultCellSize);
-		}
-
-		public void clear(){
-			cell.clear();
-		}
-
-		public boolean isIgnoringFullness(){
-			return cell.isIgnoringFullness();
-		}
-
-		public void setIgnoreFullness(boolean ignoreFullness){
-			cell.setIgnoreFullness(ignoreFullness);
-		}
-		
-		public boolean canInput(){
-			return cell.canInput();
-		}
-		
-		public void setCanInput(boolean canInput){
-			cell.setCanInput(canInput);
 		}
 		
 		private void tryNotify(AspectStack stack, boolean simulate){
@@ -358,8 +242,74 @@ public class AspectTubeTileEntity extends TileEntity implements ICapabilityProvi
 				});
 		}
 		
-		public IAspectHolder underlying(){
+		public AspectHolder underlying(){
 			return cell;
+		}
+		
+		public float insert(float amount, boolean simulate){
+			tryNotify(new AspectStack(cell.getStack().getAspect(), amount), simulate);
+			return cell.insert(amount, simulate);
+		}
+		
+		public float drain(float amount, boolean simulate){
+			tryNotify(new AspectStack(cell.getStack().getAspect(), amount), simulate);
+			return cell.drain(amount, simulate);
+		}
+		
+		public AspectStack getStack(){
+			return cell.getStack();
+		}
+		
+		public float getCapacity(){
+			return cell.getCapacity();
+		}
+		
+		public List<Aspect> getWhitelist(){
+			return cell.getWhitelist();
+		}
+		
+		public boolean voids(){
+			return cell.voids();
+		}
+		
+		public boolean canInsert(){
+			return cell.canInsert();
+		}
+		
+		public Consumer<Float> overfillingCallback(){
+			return cell.overfillingCallback();
+		}
+		
+		public void setStack(AspectStack stack){
+			cell.setStack(stack);
+		}
+		
+		public void setCapacity(float capacity){
+			cell.setCapacity(capacity);
+		}
+		
+		public void setWhitelist(List<Aspect> whitelist){
+			cell.setWhitelist(whitelist);
+		}
+		
+		public void setVoids(boolean voids){
+			cell.setVoids(voids);
+		}
+		
+		public void setCanInsert(boolean canInsert){
+			cell.setCanInsert(canInsert);
+		}
+		
+		public void setOverfillingCallback(Consumer<Float> callback){
+			cell.setOverfillingCallback(callback);
+		}
+		
+		public CompoundNBT serializeNBT(){
+			return cell.serializeNBT();
+		}
+		
+		public void deserializeNBT(CompoundNBT data){
+			cell.deserializeNBT(data);
 		}
 	}
 

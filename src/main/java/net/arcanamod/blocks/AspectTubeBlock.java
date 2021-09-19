@@ -2,7 +2,7 @@ package net.arcanamod.blocks;
 
 import com.google.common.collect.Sets;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.AspectHandlerCapability;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
 import net.arcanamod.blocks.tiles.AspectTubeTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

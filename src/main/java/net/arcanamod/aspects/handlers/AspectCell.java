@@ -8,7 +8,7 @@ import net.minecraft.nbt.CompoundNBT;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class AspectCell2 implements AspectHolder2{
+public class AspectCell implements AspectHolder{
 	
 	private AspectStack stored = AspectStack.EMPTY;
 	private float capacity;
@@ -17,11 +17,11 @@ public class AspectCell2 implements AspectHolder2{
 	private Consumer<Float> overfillingCallback = __ -> {};
 	private List<Aspect> whitelist = null;
 	
-	public AspectCell2(){
+	public AspectCell(){
 		this(100);
 	}
 	
-	public AspectCell2(float capacity){
+	public AspectCell(float capacity){
 		this.capacity = capacity;
 	}
 	
@@ -93,8 +93,8 @@ public class AspectCell2 implements AspectHolder2{
 		setStack(new AspectStack(aspect, amount));
 	}
 	
-	public static AspectCell2 fromNbt(CompoundNBT data){
-		AspectCell2 ret = new AspectCell2();
+	public static AspectCell fromNbt(CompoundNBT data){
+		AspectCell ret = new AspectCell();
 		ret.deserializeNBT(data);
 		return ret;
 	}

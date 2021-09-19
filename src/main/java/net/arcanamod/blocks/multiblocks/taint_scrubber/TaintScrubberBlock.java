@@ -1,10 +1,10 @@
 package net.arcanamod.blocks.multiblocks.taint_scrubber;
 
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.VisShareable;
-import net.arcanamod.systems.taint.Taint;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.tiles.TaintScrubberTileEntity;
+import net.arcanamod.systems.taint.Taint;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -90,10 +90,10 @@ public class TaintScrubberBlock extends Block implements ITaintScrubberExtension
 					if(te instanceof VisShareable){
 						VisShareable shareable = ((VisShareable)te);
 						if(shareable.isVisShareable() && !shareable.isSecure()){
-							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(te);
+							AspectBattery vis = (AspectBattery)AspectHandler.getFrom(te);
 							if(vis != null){
-								if(vis.getHoldersAmount() != 0)
-									vis.drain(RANDOM.nextInt(vis.getHoldersAmount()), 8, false);
+								if(vis.countHolders() != 0)
+									vis.getHolder(RANDOM.nextInt(vis.countHolders())).drain(8, false);
 							}
 						}
 						break;

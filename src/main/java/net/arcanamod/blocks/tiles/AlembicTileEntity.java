@@ -2,8 +2,10 @@ package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.*;
-import net.arcanamod.aspects.handlers.VisUtils;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.handlers.*;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
 import net.arcanamod.world.AuraView;
@@ -29,7 +31,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	
 	// 50 of 5 aspects
 	// TODO: see usage of ALEMBIC_BASE_DISTILL_EFFICIENCY
-	public AspectBattery aspects = new AspectBattery(5, 50);
+	public AspectBattery aspects = new AspectBattery(/*5, 50*/);
 	int crucibleLevel = -1;
 	boolean stacked = false;
 	
@@ -39,11 +41,9 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	
 	public AlembicTileEntity(){
 		super(ArcanaTiles.ALEMBIC_TE.get());
-		// why isn't this done by default :(
 		for(int i = 0; i < 5; i++){
-			AspectCell cell = new AspectCell(50);
-			cell.setCanInput(false);
-			aspects.createCell(cell);
+			aspects.initHolders(50, 5);
+			aspects.getHolders().forEach(h -> h.setCanInsert(false));
 		}
 	}
 	
@@ -92,11 +92,11 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 				if(te != null && te.getAspectStackMap().size() > 0){
 					Aspect aspect = EMPTY;
 					// find an aspect stack we can actually pull
-					IAspectHolder adding = null;
-					for(IAspectHolder holder : aspects.getHolders()){
-						if(holder.getCapacity() - holder.getCurrentVis() > 0){
+					AspectHolder adding = null;
+					for(AspectHolder holder : aspects.getHolders()){
+						if(holder.getCapacity() - holder.getStack().getAmount() > 0){
 							adding = holder;
-							Aspect maybe = te.getAspectStackMap().values().stream().filter(stack1 -> stack1.getAspect() == holder.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY).findFirst().map(AspectStack::getAspect).orElse(EMPTY);
+							Aspect maybe = te.getAspectStackMap().values().stream().filter(stack1 -> stack1.getAspect() == holder.getStack().getAspect() || holder.getStack().getAspect() == Aspects.EMPTY).findFirst().map(AspectStack::getAspect).orElse(EMPTY);
 							if(maybe != EMPTY){
 								aspect = maybe;
 								break;
@@ -128,7 +128,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 					if(tubeTe instanceof AspectTubeTileEntity){
 						AspectTubeTileEntity aspectTube = (AspectTubeTileEntity)tubeTe;
 						// moveAllAspects only moves integer amounts
-						VisUtils.moveAllAspects(aspects, IAspectHandler.getFrom(aspectTube), maxAspectOut);
+						VisUtils.moveAllAspects(aspects, AspectHandler.getFrom(aspectTube), maxAspectOut);
 						break;
 					}
 				}

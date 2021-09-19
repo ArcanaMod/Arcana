@@ -1,7 +1,10 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.containers.AspectCrystallizerContainer;
 import net.arcanamod.items.CrystalItem;
 import net.minecraft.block.BlockState;
@@ -37,7 +40,7 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 	
 	public static final int MAX_PROGRESS = 80;
 	
-	public AspectBattery vis = new AspectBattery(1, 100);
+	public AspectBattery vis = new AspectBattery(/*1, 100*/);
 	public int progress = 0;
 	
 	public AspectCrystallizerTileEntity(){
@@ -45,17 +48,17 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 	}
 	
 	public void tick(){
-		IAspectHolder holder = vis.getHolder(0);
-		if(holder.getCurrentVis() > 0
-				&& ((getStackInSlot(0).getItem() instanceof CrystalItem && ((CrystalItem)getStackInSlot(0).getItem()).aspect == holder.getContainedAspect() && getStackInSlot(0).getCount() < 64)
+		AspectHolder holder = vis.getHolder(0);
+		if(holder.getStack().getAmount() > 0
+				&& ((getStackInSlot(0).getItem() instanceof CrystalItem && ((CrystalItem)getStackInSlot(0).getItem()).aspect == holder.getStack().getAspect() && getStackInSlot(0).getCount() < 64)
 				|| ((getStackInSlot(0).isEmpty())))){
 			if(progress >= MAX_PROGRESS){
 				progress = 0;
 				if(getStackInSlot(0).isEmpty())
-					setInventorySlotContents(0, new ItemStack(AspectUtils.aspectCrystalItems.get(holder.getContainedAspect())));
+					setInventorySlotContents(0, new ItemStack(AspectUtils.aspectCrystalItems.get(holder.getStack().getAspect())));
 				else
 					getStackInSlot(0).grow(1);
-				holder.drain(new AspectStack(holder.getContainedAspect(), 1), false);
+				holder.drain(1, false);
 			}
 			progress++;
 		}else if(progress > 0)

@@ -9,7 +9,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import java.util.List;
 import java.util.function.Consumer;
 
-public interface AspectHolder2 extends INBTSerializable<CompoundNBT>{
+public interface AspectHolder extends INBTSerializable<CompoundNBT>{
 	
 	// Returns the stored stack.
 	AspectStack getStack();
@@ -97,6 +97,17 @@ public interface AspectHolder2 extends INBTSerializable<CompoundNBT>{
 			else
 				return ret;
 		}
+	}
+	default float insert(float amount, Aspect aspect, boolean simulate){
+		Aspect old = getStack().getAspect();
+		getStack().setAspect(aspect);
+		float ret = insert(amount, simulate);
+		if(simulate)
+			getStack().setAspect(old);
+		return ret;
+	}
+	default float insert(AspectStack stack, boolean simulate){
+		return insert(stack.getAmount(), stack.getAspect(), simulate);
 	}
 	
 	// Serialization

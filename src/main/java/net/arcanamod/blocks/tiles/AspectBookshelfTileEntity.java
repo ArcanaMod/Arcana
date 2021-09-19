@@ -1,7 +1,11 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.VisShareable;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.items.PhialItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerInventory;
@@ -24,13 +28,12 @@ import net.minecraftforge.common.util.LazyOptional;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Objects;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class AspectBookshelfTileEntity extends LockableLootTileEntity implements ITickableTileEntity, VisShareable{
 	private NonNullList<ItemStack> stacks = NonNullList.withSize(9, ItemStack.EMPTY);
-	AspectBattery vis = new AspectBattery(9, 8);
+	AspectBattery vis = new AspectBattery(/*9, 8*/);
 	private double lastVis;
 	public Direction rotation;
 	
@@ -50,11 +53,9 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 	
 	public int getVisTotal(){
 		int vis = 0;
-		for(ItemStack stack : stacks){
-			if(stack.getItem() instanceof PhialItem){
+		for(ItemStack stack : stacks)
+			if(stack.getItem() instanceof PhialItem)
 				vis += ((PhialItem)stack.getItem()).getAspectStacks(stack).get(0).getAmount();
-			}
-		}
 		return vis;
 	}
 	
@@ -90,7 +91,7 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 	
 	@Override
 	public void tick(){
-		double newVis = vis.getHoldersAmount();
+		double newVis = vis.countHolders();
 		if(world != null && lastVis != newVis && !world.isRemote){
 			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
 		}
@@ -117,19 +118,16 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 	}
 	
 	public AspectBattery updateBatteryAndReturn(){
-		for(int i = 0; i < stacks.size(); i++){
+		for(int i = stacks.size() - 1; i >= 0; i--){
 			if(stacks.get(i).getItem() instanceof PhialItem){
-				AspectBattery aspectBattery = (AspectBattery)IAspectHandler.getFrom(stacks.get(i));
-				IAspectHolder target;
+				AspectBattery aspectBattery = (AspectBattery)AspectHandler.getFrom(stacks.get(i));
+				AspectHolder target;
 				if(aspectBattery != null){
 					target = aspectBattery.getHolder(0);
-					vis.setCellAtIndex(i, (AspectCell)target);
+					vis.getHolders().set(i, target);
 				}
-			}else{
-				if(vis.exist(i)){
-					vis.deleteCell(i);
-				}
-			}
+			}else if(vis.hasHolder(i))
+				vis.getHolders().remove(i);
 		}
 		return vis;
 	}

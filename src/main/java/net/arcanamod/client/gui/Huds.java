@@ -3,7 +3,10 @@ package net.arcanamod.client.gui;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.client.ClientAuraHandler;
@@ -27,7 +30,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.common.Mod;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +64,7 @@ public final class Huds{
 			// wand GUI (high render priority)
 			if(wand != ItemStack.EMPTY){
 				Core core = MagicDeviceItem.getCore(wand);
-				IAspectHandler aspects = IAspectHandler.getFrom(wand);
+				AspectHandler aspects = AspectHandler.getFrom(wand);
 				if(aspects != null){
 					int offX = ArcanaConfig.WAND_HUD_X.get().intValue();
 					int offY = ArcanaConfig.WAND_HUD_Y.get().intValue();
@@ -70,12 +72,12 @@ public final class Huds{
 					int baseX = (int)(ArcanaConfig.WAND_HUD_LEFT.get() ? offX / scale : (event.getWindow().getScaledWidth() - offX) / scale - 49);
 					int baseY = (int)(ArcanaConfig.WAND_HUD_TOP.get() ? offY / scale : (event.getWindow().getScaledHeight() - offY) / scale - 49);
 					RenderSystem.pushMatrix();
-					RenderSystem.scalef(scale,scale,2);
+					RenderSystem.scalef(scale, scale, 2);
 					ClientUiUtil.renderVisCore(event.getMatrixStack(), core, baseX, baseY);
 					ClientUiUtil.renderVisMeter(event.getMatrixStack(), aspects, baseX, baseY);
 					MagicDeviceItem.getFocusStack(wand).ifPresent(item -> Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(item, baseX + 1, baseY + 1));
-					if (player.isCrouching())
-						ClientUiUtil.renderVisDetailInfo(event.getMatrixStack(),aspects);
+					if(player.isCrouching())
+						ClientUiUtil.renderVisDetailInfo(event.getMatrixStack(), aspects);
 					RenderSystem.popMatrix();
 				}
 				// flux meter GUI
@@ -131,15 +133,15 @@ public final class Huds{
 				if(priority == GogglePriority.SHOW_NODE || priority == GogglePriority.SHOW_ASPECTS){
 					AspectBattery stacks = alembic.aspects;
 					int size = 20;
-					int baseX = (event.getWindow().getScaledWidth() - stacks.getHoldersAmount() * size) / 2;
+					int baseX = (event.getWindow().getScaledWidth() - stacks.countHolders() * size) / 2;
 					int baseY = (event.getWindow().getScaledHeight() - size) / 2 - (ArcanaConfig.BLOCK_HUDS_TOP.get() ? 10 : -10);
-					for(int i = 0, stacksSize = stacks.getHoldersAmount(); i < stacksSize; i++){
-						IAspectHolder aspStack = stacks.getHolder(i);
+					for(int i = 0, stacksSize = stacks.countHolders(); i < stacksSize; i++){
+						AspectHolder aspStack = stacks.getHolder(i);
 						int x = baseX + i * size;
 						int y = baseY - 10;
 						if(i % 2 == 0)
 							y += 8;
-						AspectStack stack1 = aspStack.getContainedAspectStack();
+						AspectStack stack1 = aspStack.getStack();
 						if(!stack1.isEmpty())
 							ClientUiUtil.renderAspectStack(event.getMatrixStack(), stack1, x, y);
 					}

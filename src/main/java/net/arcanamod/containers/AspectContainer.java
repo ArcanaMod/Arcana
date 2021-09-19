@@ -2,7 +2,7 @@ package net.arcanamod.containers;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.client.gui.AspectContainerScreen;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.slots.AspectStoreSlot;
@@ -97,10 +97,10 @@ public abstract class AspectContainer extends Container {
 	 *
 	 * @return A list containing all open AspectHandlers.
 	 */
-	public abstract List<IAspectHandler> getOpenHandlers();
+	public abstract List<AspectHandler> getOpenHandlers();
 	
-	public List<IAspectHandler> getAllOpenHandlers(){
-		List<IAspectHandler> handlers = new ArrayList<>(getOpenHandlers());
+	public List<AspectHandler> getAllOpenHandlers(){
+		List<AspectHandler> handlers = new ArrayList<>(getOpenHandlers());
 		for(AspectSlot slot : aspectSlots)
 			if(slot instanceof AspectStoreSlot)
 				handlers.add(((AspectStoreSlot)slot).getHolder());

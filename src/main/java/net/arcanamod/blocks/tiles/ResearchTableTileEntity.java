@@ -2,10 +2,10 @@ package net.arcanamod.blocks.tiles;
 
 import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.AspectHandlerCapability;
-import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.VisShareable;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.minecraft.block.BlockState;
@@ -38,7 +38,7 @@ import static net.arcanamod.blocks.multiblocks.research_table.ResearchTableCoreB
 @MethodsReturnNonnullByDefault
 public class ResearchTableTileEntity extends LockableTileEntity{
 	ArrayList<BlockPos> visContainers = new ArrayList<>();
-	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE, 100);
+	AspectBattery battery = new AspectBattery(/*Integer.MAX_VALUE, 100*/);
 
 	public ResearchTableTileEntity(){
 		super(ArcanaTiles.RESEARCH_TABLE_TE.get());
@@ -72,7 +72,7 @@ public class ResearchTableTileEntity extends LockableTileEntity{
 				if(tileEntityInBox != null)
 					if(tileEntityInBox instanceof VisShareable)
 						if(((VisShareable)tileEntityInBox).isVisShareable() && ((VisShareable)tileEntityInBox).isManual()){
-							AspectBattery vis = (AspectBattery)IAspectHandler.getFrom(tileEntityInBox);
+							AspectBattery vis = (AspectBattery)AspectHandler.getFrom(tileEntityInBox);
 							if(vis != null){
 								visContainers.add(new BlockPos(blockPos)); // Removing reference
 								AspectBattery.merge(battery, vis);

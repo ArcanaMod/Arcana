@@ -2,7 +2,7 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.IAspectHolder;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.world.AuraView;
 import net.minecraft.block.Block;
@@ -73,9 +73,9 @@ public class AlembicBlock extends Block{
 		if(te instanceof AlembicTileEntity && player.getHeldItem(hand).isEmpty() && player.isCrouching()){
 			AlembicTileEntity alembic = (AlembicTileEntity)te;
 			// get rid of the content of the alembic
-			for(IAspectHolder holder : ((AlembicTileEntity)te).aspects.getHolders()){
-				AuraView.getSided(world).addFluxAt(pos, (float)(holder.getCurrentVis() * ArcanaConfig.ASPECT_DUMPING_WASTE.get()));
-				holder.drain(holder.getContainedAspectStack(), false);
+			for(AspectHolder holder : ((AlembicTileEntity)te).aspects.getHolders()){
+				AuraView.getSided(world).addFluxAt(pos, (float)(holder.getStack().getAmount() * ArcanaConfig.ASPECT_DUMPING_WASTE.get()));
+				holder.drain(holder.getStack().getAmount(), false);
 				// TODO: flux particles
 			}
 			alembic.markDirty();

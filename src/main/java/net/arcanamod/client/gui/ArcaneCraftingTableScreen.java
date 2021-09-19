@@ -3,9 +3,9 @@ package net.arcanamod.client.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.aspects.IAspectHolder;
 import net.arcanamod.aspects.UndecidedAspectStack;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.client.ClientUtils;
 import net.arcanamod.containers.ArcaneCraftingTableContainer;
 import net.arcanamod.items.ArcanaItems;
@@ -103,17 +103,17 @@ public class ArcaneCraftingTableScreen extends ContainerScreen<ArcaneCraftingTab
 						boolean anySatisfied = false;
 						boolean hasAny = false;
 						float amount = stack.stack.getAmount();
-						IAspectHandler handler = IAspectHandler.getFrom(container.craftMatrix.getWandSlot().getStack());
-						if(handler == null || handler.getHoldersAmount() == 0)
+						AspectHandler handler = AspectHandler.getFrom(container.craftMatrix.getWandSlot().getStack());
+						if(handler == null || handler.countHolders() == 0)
 							satisfied = false;
-						else for (IAspectHolder holder : handler.getHolders()){
+						else for (AspectHolder holder : handler.getHolders()){
 							if (stack.any){
 								hasAny = true;
-								if (holder.getCurrentVis() >= stack.stack.getAmount())
+								if (holder.getStack().getAmount() >= stack.stack.getAmount())
 									anySatisfied = true;
 							}
-							else if (holder.getContainedAspect() == stack.stack.getAspect()){
-								if (holder.getCurrentVis() < stack.stack.getAmount())
+							else if (holder.getStack().getAspect() == stack.stack.getAspect()){
+								if (holder.getStack().getAmount() < stack.stack.getAmount())
 									satisfied = false;
 							}
 						}

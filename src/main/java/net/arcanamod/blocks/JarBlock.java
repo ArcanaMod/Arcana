@@ -153,7 +153,7 @@ public class JarBlock extends WaterloggableBlock {
 	public void harvestBlock(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
 		if (te instanceof JarTileEntity) {
 			JarTileEntity jte = (JarTileEntity) te;
-			if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() == 0 && jte.label == null) {
+			if (!worldIn.isRemote && jte.vis.getHolder(0).getStack().getAmount() == 0 && jte.label == null) {
 				te.setPos(new BlockPos(0, 0, 0));
 				if (((JarTileEntity) te).label != null) {
 					((JarTileEntity) te).label.direction = Direction.NORTH;
@@ -169,7 +169,7 @@ public class JarBlock extends WaterloggableBlock {
 			TileEntity te = worldIn.getTileEntity(pos);
 			if (te instanceof JarTileEntity) {
 				JarTileEntity jte = (JarTileEntity)te;
-				if (!worldIn.isRemote && jte.vis.getHolder(0).getCurrentVis() != 0 || jte.label != null){
+				if (!worldIn.isRemote && jte.vis.getHolder(0).getStack().getAmount() != 0 || jte.label != null){
 					te.setPos(new BlockPos(0, 0, 0));
 					if (((JarTileEntity) te).label != null) {
 						((JarTileEntity) te).label.direction = Direction.NORTH;
@@ -220,7 +220,7 @@ public class JarBlock extends WaterloggableBlock {
 		TileEntity te = world.getTileEntity(pos);
 		if(te instanceof JarTileEntity){
 			JarTileEntity jar = (JarTileEntity)te;
-			return (int)Math.ceil((jar.vis.getHolder(0).getContainedAspectStack().getAmount() / 100f) * 15);
+			return (int)Math.ceil((jar.vis.getHolder(0).getStack().getAmount() / 100f) * 15);
 		}
 		return 0;
 	}

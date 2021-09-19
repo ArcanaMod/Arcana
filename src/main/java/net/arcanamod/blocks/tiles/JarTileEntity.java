@@ -2,7 +2,13 @@ package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.AspectLabel;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.VisShareable;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
 import net.arcanamod.aspects.handlers.VisUtils;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.JarBlock;
@@ -21,12 +27,13 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.awt.*;
+import java.util.Collections;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class JarTileEntity extends TileEntity implements ITickableTileEntity, VisShareable{
 	private final JarBlock.Type jarType;
-	public AspectBattery vis = new AspectBattery(1, 100);
+	public AspectBattery vis = new AspectBattery(/*1, 100*/);
 	public AspectLabel label;
 	private double lastVis;
 	
@@ -38,7 +45,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	public JarTileEntity(JarBlock.Type type){
 		super(ArcanaTiles.JAR_TE.get());
 		this.jarType = type;
-		vis.getHolder(0).setIgnoreFullness(type == JarBlock.Type.VOID);
+		vis.getHolder(0).setVoids(type == JarBlock.Type.VOID);
 	}
 	
 	/**
@@ -49,27 +56,28 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		super(ArcanaTiles.JAR_TE.get());
 		this.jarType = JarBlock.Type.BASIC;
 	}
-
+	
 	@Override
 	public void read(BlockState state, CompoundNBT compound){
 		super.read(state, compound);
 		vis.deserializeNBT(compound.getCompound("aspects"));
-		clientVis = vis.getHolder(0).getCurrentVis();
-		if (compound.contains("label")) {
-			if (label == null)
+		clientVis = vis.getHolder(0).getStack().getAmount();
+		if(compound.contains("label")){
+			if(label == null)
 				label = new AspectLabel(Direction.byIndex(compound.getInt("label")));
-			else label.direction = Direction.byIndex(compound.getInt("label"));
-			label.seal = AspectUtils.getAspect(compound,"seal");
+			else
+				label.direction = Direction.byIndex(compound.getInt("label"));
+			label.seal = AspectUtils.getAspect(compound, "seal");
 		}
 	}
-
+	
 	@Override
 	public CompoundNBT write(CompoundNBT compound){
 		CompoundNBT aspectsNbt = vis.serializeNBT();
 		compound.put("aspects", aspectsNbt);
-		if (label != null) {
+		if(label != null){
 			compound.putInt("label", label.direction.getIndex());
-			AspectUtils.putAspect(compound,"seal",label.seal);
+			AspectUtils.putAspect(compound, "seal", label.seal);
 		}
 		return super.write(compound);
 	}
@@ -78,7 +86,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		if(this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.ASPECT_TESTER.get())
 			return getCreativeJarColor();
 		else
-			return vis.getHolder(0).getContainedAspect() != Aspects.EMPTY ? new Color(vis.getHolder(0).getContainedAspect().getColorRange().get(2)) : Color.WHITE;
+			return vis.getHolder(0).getStack().getAspect() != Aspects.EMPTY ? new Color(vis.getHolder(0).getStack().getAspect().getColorRange().get(2)) : Color.WHITE;
 	}
 	
 	public int nextColor = 0;
@@ -136,12 +144,12 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	public void handleUpdateTag(BlockState state, CompoundNBT tag){
 		this.read(state, tag);
 	}
-
+	
 	@Override
 	public boolean isVisShareable(){
 		return true;
 	}
-
+	
 	@Override
 	public boolean isManual(){
 		return false;
@@ -154,16 +162,16 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	
 	@Override
 	public void tick(){
-		if (label != null && (label.seal == Aspects.EMPTY && label.seal != vis.getHolder(0).getContainedAspect())) {
-			label.seal = vis.getHolder(0).getContainedAspect();
-			((AspectCell)vis.getHolder(0)).lockWithAspect(label.seal);
+		if(label != null && (label.seal == Aspects.EMPTY && label.seal != vis.getHolder(0).getStack().getAspect())){
+			label.seal = vis.getHolder(0).getStack().getAspect();
+			vis.getHolder(0).setWhitelist(Collections.singletonList(label.seal));
 		}
-		double newVis = vis.getHolder(0).getCurrentVis();
+		double newVis = vis.getHolder(0).getStack().getAmount();
 		if(lastVis != newVis && world != null)
 			world.updateComparatorOutputLevel(pos, world.getBlockState(pos).getBlock());
 		lastVis = newVis;
 		if(!getJarType().equals(JarBlock.Type.SECURED))
-			vis.getHolder(0).getContainedAspect().aspectTick(this);
+			vis.getHolder(0).getStack().getAspect().aspectTick(this);
 		if(clientVis > newVis)
 			clientVis = Math.max(clientVis - visAnimationSpeed, newVis);
 		else if(clientVis < newVis)
@@ -172,13 +180,13 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		TileEntity entity = world.getTileEntity(pos.up());
 		if(entity instanceof AspectTubeTileEntity)
 			if(getJarType() == JarBlock.Type.VACUUM) // pull in
-				VisUtils.moveAllAspects(IAspectHandler.getFrom(entity), vis, MAX_PUSH);
+				VisUtils.moveAllAspects(AspectHandler.getFrom(entity), vis, MAX_PUSH);
 			else if(getJarType() == JarBlock.Type.PRESSURE) // push out
-				VisUtils.moveAllAspects(vis, IAspectHandler.getFrom(entity), MAX_PUSH);
+				VisUtils.moveAllAspects(vis, AspectHandler.getFrom(entity), MAX_PUSH);
 	}
 	
 	public double getClientVis(float partialTicks){
-		float newVis = vis.getHolder(0).getCurrentVis();
+		float newVis = vis.getHolder(0).getStack().getAmount();
 		if(clientVis > newVis)
 			return Math.max(clientVis - (visAnimationSpeed * partialTicks), newVis);
 		else if(clientVis < newVis)
@@ -189,13 +197,14 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	public JarBlock.Type getJarType(){
 		return jarType;
 	}
-
-	public ResourceLocation getPaperAspectLocation() {
+	
+	public ResourceLocation getPaperAspectLocation(){
 		return new ResourceLocation((label != null ? label.seal : Aspects.EMPTY).toResourceLocation().toString()
 				.replace(":", ":aspect/paper/paper_"));
 	}
-
-	public @Nullable Direction getLabelSide() {
+	
+	public @Nullable
+	Direction getLabelSide(){
 		return label != null ? label.direction : null;
 	}
 }

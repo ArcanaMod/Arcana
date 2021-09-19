@@ -1,12 +1,12 @@
 package net.arcanamod.systems.research;
 
 import com.google.gson.JsonObject;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.containers.ResearchTableContainer;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.systems.research.impls.Chemistry;
 import net.arcanamod.systems.research.impls.Fieldwork;
 import net.arcanamod.systems.research.impls.Guesswork;
-import net.arcanamod.containers.slots.AspectSlot;
-import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.systems.research.impls.Thaumaturgy;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
@@ -89,7 +89,7 @@ public abstract class Puzzle{
 	
 	public abstract List<SlotInfo> getItemSlotLocations(PlayerEntity player);
 	
-	public abstract List<AspectSlot> getAspectSlots(Supplier<IAspectHandler> returnInv);
+	public abstract List<AspectSlot> getAspectSlots(Supplier<AspectHandler> returnInv);
 	
 	public abstract boolean validate(List<AspectSlot> aspectSlots, List<Slot> itemSlots, PlayerEntity player, ResearchTableContainer container);
 	

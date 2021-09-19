@@ -1,7 +1,7 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
@@ -100,14 +100,14 @@ public class ClientProxy extends CommonProxy{
 		// I'm not at all surprised.
 		
 		ItemModelsProperties.registerProperty(ArcanaItems.PHIAL.get(), new ResourceLocation("aspect"), (itemStack, world, livingEntity) -> {
-			IAspectHandler vis = IAspectHandler.getFrom(itemStack);
+			AspectHandler vis = AspectHandler.getFrom(itemStack);
 			if(vis == null)
 				return -1;
-			if(vis.getHoldersAmount() == 0)
+			if(vis.countHolders() == 0)
 				return -1;
 			if(vis.getHolder(0) == null)
 				return -1;
-			return vis.getHolder(0).getContainedAspect().getId() - 1;
+			return vis.getHolder(0).getStack().getAspect().getId() - 1;
 		});
 		ItemModelsProperties.registerProperty(ArcanaItems.ARCANUM.get(), new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
 			if(!itemStack.getOrCreateTag().contains("open"))

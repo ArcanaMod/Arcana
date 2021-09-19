@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaVariables;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.AspectItem;
 import net.arcanamod.items.CrystalItem;
@@ -19,7 +20,10 @@ import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -35,7 +39,6 @@ public class AspectUtils {
 	public static final Aspect[] sinAspects = new Aspect[]{Aspects.ENVY, Aspects.LUST, Aspects.SLOTH, Aspects.PRIDE, Aspects.GREED, Aspects.WRATH, Aspects.GLUTTONY};
 	public static List<ItemStack> aspectStacks;
 
-	@SuppressWarnings("deprecation")
 	public static void register(){
 		// Automatically register all aspects' items
 		// Addons should be able to create an assets/arcana/... directory and declare their own model & textures, I think.
@@ -89,8 +92,8 @@ public class AspectUtils {
 		return ArcanaVariables.arcLoc("textures/aspect/" + aspect.name().toLowerCase() + ".png");
 	}
 
-	public static int getEmptyCell(IAspectHandler handler) {
-		return handler.findIndexesFromAspectInHolders(Aspects.EMPTY)[0];
+	public static int getEmptyCell(AspectHandler handler) {
+		return handler.getHolders().indexOf(handler.findFirstHolderMatching(h -> h.getStack().isEmpty()));
 	}
 	
 	public static String getLocalizedAspectDisplayName(@Nonnull Aspect aspect) {
@@ -105,7 +108,7 @@ public class AspectUtils {
 		return Aspect.fromResourceLocation(new ResourceLocation(compound.getString(key)));
 	}
 
-	public static String aspectHandlerToJson(IAspectHandler handler) {
+	public static String aspectHandlerToJson(AspectHandler handler) {
 		Gson gson = new GsonBuilder()
 				.setPrettyPrinting()
 				.create();
@@ -125,7 +128,7 @@ public class AspectUtils {
 		return StreamUtils.partialReduce(unSquished, AspectStack::getAspect, (left, right) -> new AspectStack(left.getAspect(), left.getAmount() + right.getAmount()));
 	}
 
-	public static List<Aspect> castContaingAspects() {
+	public static List<Aspect> castContainingAspects() {
 		return Casts.castMap.values().stream().map(ICast::getSpellAspect).collect(Collectors.toList());
 	}
 }

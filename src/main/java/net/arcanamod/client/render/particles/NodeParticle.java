@@ -46,11 +46,11 @@ public class NodeParticle extends SpriteTexturedParticle{
 	}
 	
 	public void renderParticle(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks){
-		if(node != null && time > 0 && node.getAspects().getHoldersAmount() > 0){
+		if(node != null && time > 0 && node.getAspects().countHolders() > 0){
 			// get current and next aspect
 			try{
-				Aspect current = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time) % node.getAspects().getHoldersAmount()).getContainedAspect();
-				Aspect next = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time + 1) % node.getAspects().getHoldersAmount()).getContainedAspect();
+				Aspect current = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time) % node.getAspects().countHolders()).getStack().getAspect();
+				Aspect next = node.getAspects().getHolder(((int)(world.getGameTime() + partialTicks) / time + 1) % node.getAspects().countHolders()).getStack().getAspect();
 				// get progress between them
 				float progress = (((int)world.getGameTime() + partialTicks) / (float)time) % 1;
 				// set colour to blended

@@ -5,7 +5,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrystalClusterBlock;
 import net.arcanamod.capabilities.AuraChunk;
@@ -61,7 +61,7 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 		NodeType type = rand.nextInt(100) < ArcanaConfig.SPECIAL_NODE_CHANCE.get() ? new ArrayList<>(SPECIAL_TYPES).get(rand.nextInt(SPECIAL_TYPES.size())) : DEFAULT;
 		if(rand.nextInt(100) < ArcanaConfig.NODE_CHANCE.get()){
 			WorldTickHandler.onTick.add(newWorld -> {
-				IAspectHandler aspects = type.genBattery(newPos, newWorld, rand);
+				AspectHandler aspects = type.genBattery(newPos, newWorld, rand);
 				requireNonNull(AuraChunk.getFrom((Chunk)newWorld.getChunk(newPos))).addNode(new Node(aspects, type, newPos.getX(), newPos.getY(), newPos.getZ(), 0));
 				// Add some crystal clusters around here too
 				int successes = 0;
@@ -74,7 +74,7 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 						for(Direction value : Direction.values())
 							if(newWorld.getBlockState(pointer.offset(value)).isSolid()){
 								// Place a crystal,
-								newWorld.setBlockState(pointer, CRYSTAL_CLUSTERS_FROM_ASPECTS.get(aspects.getHolder(rand.nextInt(aspects.getHoldersAmount())).getContainedAspect()).get().getDefaultState().with(CrystalClusterBlock.FACING, value.getOpposite()).with(CrystalClusterBlock.AGE, 3).with(CrystalClusterBlock.WATERLOGGED, newWorld.getBlockState(pointer).getFluidState().isTagged(FluidTags.WATER)));
+								newWorld.setBlockState(pointer, CRYSTAL_CLUSTERS_FROM_ASPECTS.get(aspects.getHolder(rand.nextInt(aspects.countHolders())).getStack().getAspect()).get().getDefaultState().with(CrystalClusterBlock.FACING, value.getOpposite()).with(CrystalClusterBlock.AGE, 3).with(CrystalClusterBlock.WATERLOGGED, newWorld.getBlockState(pointer).getFluidState().isTagged(FluidTags.WATER)));
 								// Increment successes
 								successes++;
 							}

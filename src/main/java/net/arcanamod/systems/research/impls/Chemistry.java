@@ -8,7 +8,7 @@ import com.google.gson.JsonObject;
 import net.arcanamod.Arcana;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.containers.slots.AspectStoreSlot;
@@ -89,7 +89,7 @@ public class Chemistry extends Puzzle{
 		return new Chemistry(nodes);
 	}
 	
-	private List<AspectSlot> genHexGrid(int gridWidth, int gridHeight, Supplier<IAspectHandler> returnInv){
+	private List<AspectSlot> genHexGrid(int gridWidth, int gridHeight, Supplier<AspectHandler> returnInv){
 		List<AspectSlot> grid = new ArrayList<>();
 		for(int y = 0; y < gridHeight; y++){
 			for(int x = 0; x < gridWidth; x++){
@@ -110,7 +110,7 @@ public class Chemistry extends Puzzle{
 		return Collections.emptyList();
 	}
 	
-	public List<AspectSlot> getAspectSlots(Supplier<IAspectHandler> returnInv){
+	public List<AspectSlot> getAspectSlots(Supplier<AspectHandler> returnInv){
 		return genHexGrid(gWidth, gHeight, returnInv).stream().peek(slot -> slot.x += 2).peek(slot -> slot.y += 2).collect(Collectors.toList());
 	}
 	
