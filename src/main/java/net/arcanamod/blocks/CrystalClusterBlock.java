@@ -55,10 +55,10 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 	}
 	
 	@Nonnull
-	public BlockState getStateForPlacement(BlockItemUseContext context){
-		// Placement = the block item, which you get with silk touch, so fully grown
-		return super.getStateForPlacement(context).with(AGE, 3).with(FACING, context.getFace());
-	}
+		public BlockState getStateForPlacement(BlockItemUseContext context){
+			// Placement = the block item, which you get with silk touch, so fully grown
+			return super.getStateForPlacement(context).with(AGE, 3).with(FACING, context.getFace());
+		}
 
 	@Override
 	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {

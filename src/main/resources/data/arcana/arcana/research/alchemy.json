@@ -32,7 +32,7 @@
       "parents": [
         "arcana:alchemy_root"
       ],
-      "x": 5,
+      "x": 3,
       "y": 0,
       "sections": [
         {
@@ -79,7 +79,7 @@
       "parents": [
         "arcana:alchemy_root"
       ],
-      "x": -2,
+      "x": -1,
       "y": 2,
       "sections": [
         {
@@ -133,7 +133,7 @@
       "parents": [
         "arcana:alchemy_root"
       ],
-      "x": 2,
+      "x": 1,
       "y": 2,
       "sections": [
         {
@@ -193,7 +193,7 @@
         "hexagon_base"
       ],
       "x": 0,
-      "y": 2,
+      "y": 5,
       "sections": [
         {
           "type": "string",
@@ -227,7 +227,7 @@
       "meta": [
         "hexagon_base"
       ],
-      "x": 4,
+      "x": 3,
       "y": 2,
       "sections": [
         {
@@ -257,7 +257,7 @@
       "parents": [
         "arcana:alchemy_root"
       ],
-      "x": 0,
+      "x": -1,
       "y": -2,
       "sections": [
         {
@@ -314,7 +314,7 @@
       "parents": [
         "arcana:alchemical_glass"
       ],
-      "x": 0,
+      "x": -1,
       "y": -4,
       "sections": [
         {
