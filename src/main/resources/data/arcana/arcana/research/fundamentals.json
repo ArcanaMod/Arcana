@@ -57,6 +57,282 @@
 			]
 		},
 		{
+			"key": "arcana:ores",
+			"name": "research.arcana.ores",
+			"desc": "research.arcana.ores.desc",
+			"icons": [
+				"arcana:amber_ore",
+				"arcana:silver_ore"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"root",
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -9,
+			"y": 2,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.ores.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.ores.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:fire_bat",
+			"name": "research.arcana.fire_bat",
+			"desc": "research.arcana.fire_bat.desc",
+			"icons": [
+				"arcana:gui/research/unknown_icon.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"root",
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -10,
+			"y": 2,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.fire_bat.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.fire_bat.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:the_crimson",
+			"name": "research.arcana.the_crimson",
+			"desc": "research.arcana.the_crimson.desc",
+			"icons": [
+				"arcana:research/crimson_basics.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"root",
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -11,
+			"y": 2,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.the_crimson.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.the_crimson.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:the_crimson_rites",
+			"name": "research.arcana.the_crimson_rites",
+			"desc": "research.arcana.the_crimson_rites.desc",
+			"icons": [
+				"arcana:research/crimson_basics.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"root",
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -13,
+			"y": 4,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.the_crimson_rites.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.the_crimson_rites.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:crystals",
+			"name": "research.arcana.crystals",
+			"desc": "research.arcana.crystals.desc",
+			"icons": [
+				"arcana:air_crystal",
+				"arcana:fire_crystal",
+				"arcana:water_crystal",
+				"arcana:earth_crystal",
+				"arcana:order_crystal",
+				"arcana:chaos_crystal",
+				"arcana:armour_crystal",
+				"arcana:aura_crystal",
+				"arcana:beast_crystal",
+				"arcana:crafting_crystal",
+				"arcana:creation_crystal",
+				"arcana:crystal_crystal",
+				"arcana:darkness_crystal",
+				"arcana:death_crystal",
+				"arcana:eldritch_crystal",
+				"arcana:ender_crystal",
+				"arcana:energy_crystal",
+				"arcana:envy_crystal",
+				"arcana:exchange_crystal",
+				"arcana:fabric_crystal",
+				"arcana:flesh_crystal",
+				"arcana:flight_crystal",
+				"arcana:gluttony_crystal",
+				"arcana:greed_crystal",
+				"arcana:harvest_crystal",
+				"arcana:human_crystal",
+				"arcana:ice_crystal",
+				"arcana:imprison_crystal",
+				"arcana:journey_crystal",
+				"arcana:life_crystal",
+				"arcana:light_crystal",
+				"arcana:lust_crystal",
+				"arcana:machine_crystal",
+				"arcana:mana_crystal",
+				"arcana:metal_crystal",
+				"arcana:mining_crystal",
+				"arcana:mind_crystal",
+				"arcana:movement_crystal",
+				"arcana:nether_crystal",
+				"arcana:overworld_crystal",
+				"arcana:plant_crystal",
+				"arcana:pride_crystal",
+				"arcana:seeds_crystal",
+				"arcana:senses_crystal",
+				"arcana:slime_crystal",
+				"arcana:sloth_crystal",
+				"arcana:spirit_crystal",
+				"arcana:strength_crystal",
+				"arcana:taint_crystal",
+				"arcana:tool_crystal",
+				"arcana:tree_crystal",
+				"arcana:undead_crystal",
+				"arcana:vacuum_crystal",
+				"arcana:venom_crystal",
+				"arcana:weapon_crystal",
+				"arcana:wind_crystal",
+				"arcana:wrath_crystal"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"root",
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -13,
+			"y": 2,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.crystals.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.crystals.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:greatwood",
+			"name": "research.arcana.greatwood",
+			"desc": "research.arcana.greatwood.desc",
+			"icons": [
+				"arcana:greatwood_log"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"root",
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -13,
+			"y": 0,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.greatwood.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.greatwood.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:silverwood",
+			"name": "research.arcana.silverwood",
+			"desc": "research.arcana.silverwood.desc",
+			"icons": [
+				"arcana:silverwood_log"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"root",
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -12,
+			"y": 0,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.silverwood.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.silverwood.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:magicalwoods",
+			"name": "research.arcana.magicalwoods",
+			"desc": "research.arcana.magicalwoods.desc",
+			"icons": [
+				"arcana:dair_log",
+				"arcana:eucalyptus_log",
+				"arcana:hawthorn_log",
+				"arcana:willow_log"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"root",
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -12,
+			"y": 0,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.magicalwoods.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.magicalwoods.stage.2"
+				}
+			]
+		},
+		{
 			"key": "arcana:basic_wand",
 			"name": "research.arcana.basic_wand",
 			"desc": "research.arcana.basic_wand.desc",
@@ -130,6 +406,34 @@
 			]
 		},
 		{
+			"key": "arcana:artifice",
+			"name": "research.arcana.artifice",
+			"icons": [
+				"arcana:gui/research/unknown_icon.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [
+				"arcana:goggles_of_revealing"
+			],
+			"meta": [
+				"square_base",
+				"yellow_base",
+				"reverse"
+			],
+			"x": -6,
+			"y": 3,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.artifice.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.artifice.stage.2"
+				}
+			]
+		},
+		{
 			"key": "arcana:wandcraft",
 			"name": "research.arcana.wandcraft",
 			"icons": [
@@ -193,7 +497,7 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:basicwand"
+				"arcana:basic_wand"
 			],
 			"meta": [
 				"square_base",
@@ -301,10 +605,7 @@
 				},
 				{
 					"type": "crafting",
-					"content": "arcana:aspect_bookshelf",
-					"requirements": [
-						"arcana::puzzle{arcana:gw_enchanting_table}"
-					]
+					"content": "arcana:aspect_bookshelf"
 				},
 				{
 					"type": "string",
@@ -313,12 +614,11 @@
 			]
 		},
 		{
-			"key":
-			"arcana:research_chemistry",
+			"key": "arcana:research_chemistry",
 			"name": "research.arcana.research_chemistry",
 			"desc": "research.arcana.research_chemistry.desc",
 			"icons": [
-				"arcana:research/empty_flask.png"
+				"arcana:gui/research/empty_flask.png"
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
@@ -327,8 +627,8 @@
 			"meta": [
 				"square_base"
 			],
-			"x": 1,
-			"y": 2,
+			"x": -1,
+			"y": 3,
 			"sections": [
 				{
 					"type": "string",
@@ -340,6 +640,90 @@
 					"requirements": [
 						"arcana::puzzle{arcana:chemistry_intro_puzzle}"
 					]
+				}
+			]
+		},
+		{
+			"key": "arcana:research_wispmon",
+			"name": "research.arcana.research_wispmon",
+			"desc": "research.arcana.research_wispmon.desc",
+			"icons": [
+				"arcana:gui/research/empty_questionmark.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [
+				"arcana:research"
+			],
+			"meta": [
+				"square_base"
+			],
+			"x": 0,
+			"y": 3,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.research_wispmon.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.research_wispmon.stage.2",
+					"requirements": [
+						"arcana::puzzle{arcana:gw_enchanting_table}"
+					]
+				}
+			]
+		},
+		{
+			"key": "arcana:research_picross",
+			"name": "research.arcana.research_picross",
+			"desc": "research.arcana.research_picross.desc",
+			"icons": [
+				"arcana:gui/research/unknown_icon.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [
+				"arcana:research"
+			],
+			"meta": [
+				"square_base"
+			],
+			"x": 2,
+			"y": 3,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.research_picross.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.research_picross.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:research_pipes",
+			"name": "research.arcana.research_pipes",
+			"desc": "research.arcana.research_pipes.desc",
+			"icons": [
+				"arcana:gui/research/empty_pipe.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [
+				"arcana:research"
+			],
+			"meta": [
+				"square_base"
+			],
+			"x": 3,
+			"y": 3,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.research_pipes.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.research_pipes.stage.2"
 				}
 			]
 		},
@@ -415,8 +799,8 @@
 				"hexagon_base",
 				"purple_base"
 			],
-			"x": -6,
-			"y": 6,
+			"x": -12,
+			"y": 8,
 			"sections": [
 				{
 					"type": "string",
@@ -432,6 +816,35 @@
 			]
 		},
 		{
+			"key": "arcana:flux_storm",
+			"name": "research.arcana.flux_storm",
+			"desc": "research.arcana.flux_storm.desc",
+			"icons": [
+				"arcana:mob_effect/tainted.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["arcana:flux"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -10,
+			"y": 8,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.flux_storm.stage.1",
+					"requirements": [
+						"arcana::puzzle{arcana:flux_storm_research}"
+					]
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.flux_storm.stage.2"
+				}
+			]
+		},
+		{
 			"key": "arcana:taint_understanding",
 			"name": "research.arcana.taint_understanding",
 			"desc": "research.arcana.taint_understanding.desc",
@@ -440,13 +853,13 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:flux"
+				"arcana:flux_storm"
 			],
 			"meta": [
 				"yellow_base"
 			],
-			"x": -8,
-			"y": 6,
+			"x": -9,
+			"y": 5,
 			"sections": [
 				{
 					"type": "string",
@@ -459,15 +872,14 @@
 			"name": "research.arcana.crimson_understanding",
 			"desc": "research.arcana.crimson_understanding.desc",
 			"icons": [
-				"arcana:mob_effect/tainted.png"
+				"arcana:research/crimson_basics.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": [],
+			"parents": ["arcana:the_crimson","arcana:the_crimson_rites"],
 			"meta": [
-				"root",
 				"yellow_base"
 			],
-			"x": -9,
+			"x": -11,
 			"y": 6,
 			"sections": [
 				{
@@ -490,8 +902,8 @@
 			"meta": [
 				"square_base"
 			],
-			"x": -6,
-			"y": 8,
+			"x": -12,
+			"y": 10,
 			"sections": [
 				{
 					"type": "string",
