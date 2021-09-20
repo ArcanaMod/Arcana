@@ -175,7 +175,7 @@
 		},
 		{
 			"key": "arcana:copper_caps",
-			"name": "research.arcana.gold_caps",
+			"name": "research.arcana.copper_caps",
 			"icons": [
 				"arcana:copper_cap"
 			],
