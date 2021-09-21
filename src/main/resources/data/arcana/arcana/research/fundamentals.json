@@ -30,6 +30,27 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
+			"parents": ["arcana:pre_locked"],
+			"meta": [
+				"no_base"
+			],
+			"x": 0,
+			"y": -3,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.locked.text"
+				}
+			]
+		},
+		{
+			"key": "arcana:pre_locked",
+			"name": "research.arcana.locked",
+			"desc": "research.arcana.locked.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
 			"parents": [],
 			"meta": [
 				"no_base"

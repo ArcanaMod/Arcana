@@ -330,7 +330,7 @@
 			"key": "arcana:chaos_caps",
 			"name": "research.arcana.chaos_caps",
 			"icons": [
-				"minecraft:gui/research/locked_entry.png"
+				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
