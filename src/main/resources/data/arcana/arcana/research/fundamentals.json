@@ -301,10 +301,7 @@
 				},
 				{
 					"type": "crafting",
-					"content": "arcana:aspect_bookshelf",
-					"requirements": [
-						"arcana::puzzle{arcana:gw_enchanting_table}"
-					]
+					"content": "arcana:aspect_bookshelf"
 				},
 				{
 					"type": "string",
@@ -313,8 +310,7 @@
 			]
 		},
 		{
-			"key":
-			"arcana:research_chemistry",
+			"key": "arcana:research_chemistry",
 			"name": "research.arcana.research_chemistry",
 			"desc": "research.arcana.research_chemistry.desc",
 			"icons": [
