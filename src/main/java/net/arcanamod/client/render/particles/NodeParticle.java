@@ -1,5 +1,6 @@
 package net.arcanamod.client.render.particles;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
@@ -12,8 +13,12 @@ import net.minecraft.client.particle.IParticleRenderType;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteTexturedParticle;
 import net.minecraft.client.renderer.ActiveRenderInfo;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -42,7 +47,7 @@ public class NodeParticle extends SpriteTexturedParticle{
 	}
 	
 	public IParticleRenderType getRenderType(){
-		return IParticleRenderType.TERRAIN_SHEET;
+		return PASSTHROUGH_TERRAIN_SHEET;
 	}
 	
 	public void renderParticle(IVertexBuilder buffer, ActiveRenderInfo renderInfo, float partialTicks){
@@ -69,6 +74,27 @@ public class NodeParticle extends SpriteTexturedParticle{
 		// fullbright
 		return 0xf000f0;
 	}
+	
+	public static final IParticleRenderType PASSTHROUGH_TERRAIN_SHEET = new IParticleRenderType() {
+		public void beginRender(BufferBuilder bufferBuilder, TextureManager textureManager) {
+			RenderSystem.enableBlend();
+			RenderSystem.defaultBlendFunc();
+			RenderSystem.depthMask(false);
+			RenderSystem.disableDepthTest();
+			textureManager.bindTexture(AtlasTexture.LOCATION_BLOCKS_TEXTURE);
+			bufferBuilder.begin(7, DefaultVertexFormats.PARTICLE_POSITION_TEX_COLOR_LMAP);
+		}
+		
+		public void finishRender(Tessellator tesselator) {
+			tesselator.draw();
+			RenderSystem.enableDepthTest();
+			RenderSystem.depthMask(true);
+		}
+		
+		public String toString() {
+			return "arcana:PASSTHROUGH_TERRAIN_SHEET";
+		}
+	};
 	
 	@OnlyIn(Dist.CLIENT)
 	@ParametersAreNonnullByDefault

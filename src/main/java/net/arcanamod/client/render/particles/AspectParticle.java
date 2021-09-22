@@ -29,7 +29,7 @@ public class AspectParticle extends SpriteTexturedParticle{
 	}
 	
 	public IParticleRenderType getRenderType(){
-		return IParticleRenderType.TERRAIN_SHEET;
+		return NodeParticle.PASSTHROUGH_TERRAIN_SHEET;
 	}
 	
 	protected int getBrightnessForRender(float partialTick){
