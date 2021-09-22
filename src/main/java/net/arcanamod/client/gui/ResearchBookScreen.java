@@ -420,7 +420,7 @@ public class ResearchBookScreen extends Screen {
 					boolean addedUnknown = false;
 					for(Pair<ResearchEntry, Parent> parent : entry.parents().stream().map(p -> new Pair<>(book.getEntry(p.getEntry()), p)).collect(Collectors.toList())){
 						if(parentStyle(parent.getFirst(), parent.getSecond()) != PageStyle.NONE)
-							lines.add("§7- " + I18n.format(parent.getFirst().name()) + "§r");
+							lines.add(TextFormatting.GRAY.toString()+"- " + I18n.format(parent.getFirst().name())+TextFormatting.RESET.toString());
 						else if(!addedUnknown){
 							lines.add(I18n.format("researchBook.unknown"));
 							addedUnknown = true;

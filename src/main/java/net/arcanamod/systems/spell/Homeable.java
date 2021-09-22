@@ -21,7 +21,7 @@ public interface Homeable {
                 List<Entity> entitiesWithinBox = toHome.world.getEntitiesWithinAABB((Class<? extends Entity>) homeTarget,box,Entity::isAlive);
                 if (entitiesWithinBox.size() > 0){
                     for (Entity entity : entitiesWithinBox){
-                        entity.move(MoverType.PLAYER,getVecDistance(toHome,entity,0.1f));
+                        entity.move(MoverType.PLAYER,getVecDistance(toHome,entity,0.6f));
                     }
                 }
             }

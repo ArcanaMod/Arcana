@@ -52,7 +52,7 @@ public class SpellCloudEntity extends Entity implements Homeable{
 	private List<Class<? extends Entity>> homeTargets = new ArrayList<>();
 
 	public void enableHoming(Class<? extends Entity>... targets) {
-		homeTargets = Lists.newArrayList(targets);
+		this.homeTargets = Lists.newArrayList(targets);
 	}
 
 	@Override
