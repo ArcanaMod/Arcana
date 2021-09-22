@@ -102,7 +102,7 @@
 			"key": "arcana:crimson_cloth_caps",
 			"name": "research.arcana.crimson_cloth_caps",
 			"icons": [
-				"arcana:crimson_cloth_cap"
+				"arcana:eldritch_cloth_cap"
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
@@ -119,7 +119,7 @@
 			},
 			{
 				"type": "arcane_crafting",
-				"content": "arcana:arcane_crafting/caps/crimson_cloth_cap"
+				"content": "arcana:arcane_crafting/caps/eldritch_cloth_cap"
 			}
 			]
 		},
@@ -330,11 +330,12 @@
 			"key": "arcana:chaos_caps",
 			"name": "research.arcana.chaos_caps",
 			"icons": [
-				"minecraft:barrier"
+				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"arcana:thaumium_caps"
+				"arcana:thaumium_caps",
+				"~arcana:locked"
 			],
 			"meta": [
 				"round_base"

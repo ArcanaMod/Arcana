@@ -115,7 +115,7 @@ public class ArcanaItems{
 	
 	public static final RegistryObject<Item> SILVERWOOD_STICK = ITEMS.register("silverwood_stick", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> AMBER = ITEMS.register("amber", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
-	public static final RegistryObject<Item> ELDRITCH_CLOTH = ITEMS.register("eldritch_cloth", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
+	@GIM(ITEM) public static final RegistryObject<Item> ELDRITCH_CLOTH = ITEMS.register("eldritch_cloth", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));
 	
 	public static final RegistryObject<Item> PURIFIED_IRON = ITEMS.register("purified_iron", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> PURIFIED_GOLD = ITEMS.register("purified_gold", () -> new Item(new Properties().group(Arcana.ITEMS)));

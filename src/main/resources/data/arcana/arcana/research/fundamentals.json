@@ -23,6 +23,27 @@
 			]
 		},
 		{
+			"key": "arcana:locked",
+			"name": "research.arcana.locked",
+			"desc": "research.arcana.locked.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"no_base"
+			],
+			"x": 0,
+			"y": -3,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.locked.text"
+				}
+			]
+		},
+		{
 			"key": "arcana:aspects",
 			"name": "research.arcana.aspects",
 			"icons": [
@@ -89,12 +110,11 @@
 			"name": "research.arcana.fire_bat",
 			"desc": "research.arcana.fire_bat.desc",
 			"icons": [
-				"arcana:gui/research/unknown_icon.png"
+				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": [],
+			"parents": ["~arcana:locked"],
 			"meta": [
-				"root",
 				"hexagon_base",
 				"purple_base"
 			],
@@ -108,6 +128,32 @@
 				{
 					"type": "string",
 					"content": "research.arcana.fire_bat.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:the_eldritch",
+			"name": "research.arcana.the_eldritch",
+			"desc": "research.arcana.the_eldritch.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["~arcana:locked"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -12,
+			"y": 2,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.the_eldritch.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.the_eldritch.stage.2"
 				}
 			]
 		},
@@ -319,7 +365,7 @@
 				"hexagon_base",
 				"purple_base"
 			],
-			"x": -12,
+			"x": -11,
 			"y": 0,
 			"sections": [
 				{
@@ -329,6 +375,188 @@
 				{
 					"type": "string",
 					"content": "research.arcana.magicalwoods.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:magic_forest",
+			"name": "research.arcana.magic_forest",
+			"desc": "research.arcana.magic_forest.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["~arcana:locked"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -10,
+			"y": 0,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.magic_forest.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.magic_forest.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:the_pech",
+			"name": "research.arcana.the_pech",
+			"desc": "research.arcana.the_pech.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["~arcana:locked"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -9,
+			"y": 0,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.the_pech.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.the_pech.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:obsidian_obelisks",
+			"name": "research.arcana.obsidian_obelisks",
+			"desc": "research.arcana.obsidian_obelisks.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["~arcana:locked"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -13,
+			"y": 1,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.obsidian_obelisks.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.obsidian_obelisks.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:dungeons",
+			"name": "research.arcana.dungeons",
+			"desc": "research.arcana.dungeons.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["~arcana:locked"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -12,
+			"y": 1,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.dungeons.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.dungeons.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:villager_trading",
+			"name": "research.arcana.villager_trading",
+			"desc": "research.arcana.villager_trading.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["~arcana:locked"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -11,
+			"y": 1,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.villager_trading.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.villager_trading.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:wisps",
+			"name": "research.arcana.wisps",
+			"desc": "research.arcana.wisps.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["~arcana:locked"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -10,
+			"y": 1,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.wisps.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.wisps.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:magical_creatures",
+			"name": "research.arcana.magical_creatures",
+			"desc": "research.arcana.magical_creatures.desc",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["~arcana:locked"],
+			"meta": [
+				"hexagon_base",
+				"purple_base"
+			],
+			"x": -9,
+			"y": 1,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.magical_creatures.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.magical_creatures.stage.2"
 				}
 			]
 		},
@@ -409,11 +637,12 @@
 			"key": "arcana:artifice",
 			"name": "research.arcana.artifice",
 			"icons": [
-				"arcana:gui/research/unknown_icon.png"
+				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:goggles_of_revealing"
+				"arcana:goggles_of_revealing",
+				"~arcana:locked"
 			],
 			"meta": [
 				"square_base",
@@ -430,6 +659,35 @@
 				{
 					"type": "string",
 					"content": "research.arcana.artifice.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:golemancy",
+			"name": "research.arcana.golemancy",
+			"icons": [
+				"arcana:gui/research/locked_entry.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [
+				"arcana:artifice",
+				"~arcana:locked"
+			],
+			"meta": [
+				"square_base",
+				"yellow_base",
+				"reverse"
+			],
+			"x": -6,
+			"y": 5,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.golemancy.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.golemancy.stage.2"
 				}
 			]
 		},
@@ -678,11 +936,12 @@
 			"name": "research.arcana.research_picross",
 			"desc": "research.arcana.research_picross.desc",
 			"icons": [
-				"arcana:gui/research/unknown_icon.png"
+				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:research"
+				"arcana:research",
+				"~arcana:locked"
 			],
 			"meta": [
 				"square_base"
@@ -820,7 +1079,7 @@
 			"name": "research.arcana.flux_storm",
 			"desc": "research.arcana.flux_storm.desc",
 			"icons": [
-				"arcana:mob_effect/tainted.png"
+				"arcana:gui/research/flux_storm.png"
 			],
 			"category": "arcana:fundamentals",
 			"parents": ["arcana:flux"],
