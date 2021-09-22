@@ -6,6 +6,7 @@ import net.arcanamod.entities.SpellCloudEntity;
 import net.arcanamod.entities.SpellEggEntity;
 import net.arcanamod.entities.SpellTrapEntity;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.systems.spell.Homeable;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.entity.CreatureEntity;
@@ -40,6 +41,7 @@ import static net.arcanamod.aspects.Aspects.*;
 /**
  * ISpell class but it self registers.
  */
+@SuppressWarnings("unchecked")
 public abstract class Cast implements ICast {
 
 	public CompoundNBT data = new CompoundNBT();
@@ -87,21 +89,23 @@ public abstract class Cast implements ICast {
 					// enemies killed by the cloud spawn another smaller cloud
 				} else if (cast.getSecond() == LUST) {
 					// slowly moves towards the closest player / passive mob
+					createSpellCloud(player,world,player.getPositionVec(),1,1.8f,PlayerEntity.class, CreatureEntity.class);
 				} else if (cast.getSecond() == SLOTH) {
 					// the cloud last longer
+					createSpellCloud(player,world,player.getPositionVec(),1,1.8f);
 				} else if (cast.getSecond() == PRIDE) {
 					// cloud splits and disopates
 				} else if (cast.getSecond() == GREED) {
 					// slowly moves towards the closest hostile mob
+					createSpellCloud(player,world,player.getPositionVec(),1,1.8f,MobEntity.class);
 				} else if (cast.getSecond() == GLUTTONY) {
 					// the cloud is bigger
-					createSpellCloud(player,world,player.getPositionVec(),1);
+					createSpellCloud(player,world,player.getPositionVec(),1,0.8f);
 				} else if (cast.getSecond() == WRATH) {
-					// creates a trap that creates a cloud when triggered
-					createSpellCloudTrap(new SpellCloudEntity.CloudVariableGrid(player,world,player.getPositionVec(),0));
+					// creates tornado
 				} else {
 					// Default AIR SPELL
-					createSpellCloud(player,world,player.getPositionVec(),0);
+					createSpellCloud(player,world,player.getPositionVec(),0,1f);
 				}
 			}
 			if (cast.getFirst() == WATER) {
@@ -166,12 +170,16 @@ public abstract class Cast implements ICast {
 						eggentity.enableHoming(MobEntity.class);
 						world.addEntity(eggentity);
 					} else if (cast.getSecond() == GLUTTONY) {
-						// the projectile is bigger
-						BigSpellEggEntity eggentity = new BigSpellEggEntity(world, player, this);
-						eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
-						eggentity.shoot(player.getLookVec().getX(), player.getLookVec().getY(), player.getLookVec().getZ(), 1.5F, 1.0F);
-						eggentity.setPosition(eggentity.getPosX(),eggentity.getPosY()-0.5,eggentity.getPosZ());
-						world.addEntity(eggentity);
+						// acts a flame thrower
+						for (int i = 0; i < 100; i++) {
+							SpellEggEntity eggentity = new SpellEggEntity(world, player, this);
+							eggentity.setItem(new ItemStack(ArcanaItems.AMBER.get()));
+							eggentity.shoot(player.getLookVec().getX(), player.getLookVec().getY(), player.getLookVec().getZ(), 1.5F, 1.0F);
+							eggentity.setPosition(eggentity.getPosX(), eggentity.getPosY() - 0.5, eggentity.getPosZ());
+							eggentity.setLifespan(80);
+							world.addEntity(eggentity);
+						}
+
 					} else if (cast.getSecond() == WRATH) {
 						// fires a long range beam, longer range than the a lightning bolt but ticks slower
 					} else {
@@ -228,8 +236,8 @@ public abstract class Cast implements ICast {
 						useOnBlock(player, world,entity.getPosition());
 					}
 				} else if (cast.getSecond() == GLUTTONY) {
-					// selects a 3 * 3 * 3 area
-					BlockPos.getAllInBoxMutable(pos.add(-1, -1, -1), pos.add(1, 1, 1)).forEach(blockPos -> useOnBlock(player, world, blockPos));
+					// selects a 7 * 7 * 7 area
+					BlockPos.getAllInBoxMutable(pos.add(-3, -3, -3), pos.add(3, 3, 3)).forEach(blockPos -> useOnBlock(player, world, blockPos));
 				} else if (cast.getSecond() == WRATH) {
 					// Allows you to target entities instead
 					List<Entity> entities = RayTraceUtils.rayTraceEntities(world,player.getPositionVec(),player.getLookVec(),Optional.empty(),Entity.class);
@@ -268,8 +276,8 @@ public abstract class Cast implements ICast {
 					for (PlayerEntity target : targetsP)
 						useOnPlayer(target);
 				} else if (cast.getSecond() == SLOTH) {
-					// invalid Spell
-					player.sendStatusMessage(new TranslationTextComponent("status.arcana.invalid_spell"), true);
+					// lays a mine
+					createSpellCloudTrap(new SpellCloudEntity.CloudVariableGrid(player,world,player.getPositionVec(),0));
 				} else if (cast.getSecond() == PRIDE) {
 					// targets random nearby entities
 					List<Entity> targetsE = world.getEntitiesWithinAABB(Entity.class,
@@ -332,14 +340,26 @@ public abstract class Cast implements ICast {
 		SpellTrapEntity trap = new SpellTrapEntity(variableGrid);
 	}
 
-	private void createSpellCloud(PlayerEntity player, World world, Vector3d area, int rMultP) {
+	private void createSpellCloud(PlayerEntity player, World world, Vector3d area, int rMultP, float durMultP) {
 		SpellCloudEntity cloud = new SpellCloudEntity(world, area);
 		cloud.setOwner(player);
-		cloud.setDuration(800);
+		cloud.setDuration((int)((float)(800)*(float)(durMultP)));
 		cloud.setRadius(3.0F*(rMultP+1));
 		cloud.setRadiusOnUse(-0.5F);
 		cloud.setWaitTime(10);
 		cloud.setRadiusPerTick(-cloud.getRadius() / (float)cloud.getDuration());
+		cloud.setSpell(this);
+		world.addEntity(cloud);
+	}
+	private void createSpellCloud(PlayerEntity player, World world, Vector3d area, int rMultP, float durMultP, Class<? extends Entity>... targets) {
+		SpellCloudEntity cloud = new SpellCloudEntity(world, area);
+		cloud.setOwner(player);
+		cloud.setDuration((int)((float)(800)*(float)(durMultP)));
+		cloud.setRadius(3.0F*(rMultP+1));
+		cloud.setRadiusOnUse(-0.5F);
+		cloud.setWaitTime(10);
+		cloud.setRadiusPerTick(-cloud.getRadius() / (float)cloud.getDuration());
+		cloud.enableHoming(targets);
 		cloud.setSpell(this);
 		world.addEntity(cloud);
 	}

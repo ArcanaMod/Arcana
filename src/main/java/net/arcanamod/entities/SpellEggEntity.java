@@ -3,6 +3,7 @@ package net.arcanamod.entities;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import net.arcanamod.items.ArcanaItems;
+import net.arcanamod.systems.spell.Homeable;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.util.FluidRaytraceHelper;
 import net.minecraft.block.Blocks;
@@ -31,14 +32,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
-public class SpellEggEntity extends ProjectileItemEntity {
+public class SpellEggEntity extends ProjectileItemEntity implements Homeable {
 	private Cast cast;
 	private PlayerEntity caster;
 
-	private List<Class<?>> homeTargets = new ArrayList<>();
+	private List<Class<? extends Entity>> homeTargets = new ArrayList<>();
 
 	private int ignoreTime;
 	private Entity ignoreEntity;
+	private int lifespan = ((int)Short.MAX_VALUE) + 1;
 
 	public SpellEggEntity(EntityType<? extends SpellEggEntity> type, World world) {
 		super(type, world);
@@ -111,6 +113,10 @@ public class SpellEggEntity extends ProjectileItemEntity {
 			}
 		}
 
+		if (ticksExisted > lifespan){
+			this.remove();
+		}
+
 		RayTraceResult raytraceresult = FluidRaytraceHelper.rayTrace(this, axisalignedbb, (p_213880_1_) -> {
 			return !p_213880_1_.isSpectator() && p_213880_1_.canBeCollidedWith() && p_213880_1_ != this.ignoreEntity;
 		}, RayTraceContext.BlockMode.OUTLINE, true);
@@ -132,10 +138,6 @@ public class SpellEggEntity extends ProjectileItemEntity {
 		double d2 = this.getPosZ() + vec3d.z;
 		float f = MathHelper.sqrt(horizontalMag(vec3d));
 		this.rotationYaw = (float)(MathHelper.atan2(vec3d.x, vec3d.z) * (double)(180F / (float)Math.PI));
-
-		for(this.rotationPitch = (float)(MathHelper.atan2(vec3d.y, (double)f) * (double)(180F / (float)Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F) {
-			;
-		}
 
 		while(this.rotationPitch - this.prevRotationPitch >= 180.0F) {
 			this.prevRotationPitch += 360.0F;
@@ -164,10 +166,6 @@ public class SpellEggEntity extends ProjectileItemEntity {
 		}
 
 		this.setMotion(vec3d.scale((double)f1));
-		if (!this.hasNoGravity()) {
-			Vector3d vec3d1 = this.getMotion();
-			this.setMotion(vec3d1.x, vec3d1.y - (double)this.getGravityVelocity(), vec3d1.z);
-		}
 
 		this.setPosition(d0, d1, d2);
 
@@ -177,19 +175,9 @@ public class SpellEggEntity extends ProjectileItemEntity {
 
 		this.baseTick();
 
-		/*int s = 15; // size of box
-		if (homeTargets.size() > 0){
-			AxisAlignedBB box = new AxisAlignedBB(getPosX()-s,getPosY()-s,getPosZ()-s,getPosX()+s,getPosY()+s,getPosZ()+s);
-			for (Class<?> homeTarget : homeTargets){
-				List<Entity> entitiesWithinBox = world.getEntitiesWithinAABB((Class<Entity>) homeTarget,box,Entity::isAlive);
-				if (entitiesWithinBox.size() > 0){
-					Entity firstEntity = entitiesWithinBox.get(0);
-					//setMotion();
-				}
-			}
-		}
+		Homeable.startHoming(this);
 
-		super.tick();*/
+		super.tick();
 	}
 
 	public void setCast(PlayerEntity caster, Cast cast){
@@ -207,7 +195,16 @@ public class SpellEggEntity extends ProjectileItemEntity {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
-	public final void enableHoming(Class<?>... targets) {
+	public final void enableHoming(Class<? extends Entity>... targets) {
 		homeTargets = Lists.newArrayList(targets);
+	}
+
+    public void setLifespan(int time) {
+		lifespan = time;
+    }
+
+	@Override
+	public List<Class<? extends Entity>> getHomeables() {
+		return homeTargets;
 	}
 }

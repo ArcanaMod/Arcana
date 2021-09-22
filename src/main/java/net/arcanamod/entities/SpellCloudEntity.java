@@ -1,8 +1,10 @@
 package net.arcanamod.entities;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.arcanamod.systems.spell.Homeable;
 import net.arcanamod.systems.spell.casts.Cast;
 import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.spell.casts.ICast;
@@ -27,12 +29,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nullable;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-public class SpellCloudEntity extends Entity {
+public class SpellCloudEntity extends Entity implements Homeable{
 	private static final Logger PRIVATE_LOGGER = LogManager.getLogger();
 	private static final DataParameter<Float> RADIUS;
 	private static final DataParameter<Integer> COLOR;
@@ -49,6 +48,17 @@ public class SpellCloudEntity extends Entity {
 	private float radiusPerTick;
 	private LivingEntity owner;
 	private UUID ownerUniqueId;
+
+	private List<Class<? extends Entity>> homeTargets = new ArrayList<>();
+
+	public void enableHoming(Class<? extends Entity>... targets) {
+		homeTargets = Lists.newArrayList(targets);
+	}
+
+	@Override
+	public List<Class<? extends Entity>> getHomeables() {
+		return homeTargets;
+	}
 
 	public static class CloudVariableGrid{
 		public PlayerEntity player;
@@ -184,6 +194,8 @@ public class SpellCloudEntity extends Entity {
 					}
 				}
 			} else {
+				Homeable.startHoming(this);
+
 				float lvt_4_2_ = 3.1415927F * radius * radius;
 
 				for (int lvt_5_2_ = 0; (float) lvt_5_2_ < lvt_4_2_; ++lvt_5_2_) {
