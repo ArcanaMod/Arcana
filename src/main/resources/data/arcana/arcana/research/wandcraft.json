@@ -334,11 +334,11 @@
 			],
 			"category": "arcana:wandcraft",
 			"parents": [
-				"arcana:thaumium_caps",
-				"~arcana:locked"
+				"arcana:thaumium_caps"
 			],
 			"meta": [
-				"round_base"
+				"round_base",
+				"locked"
 			],
 			"x": 7,
 			"y": 4,

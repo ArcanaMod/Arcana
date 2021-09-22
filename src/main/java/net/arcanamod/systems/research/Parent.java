@@ -79,6 +79,10 @@ public class Parent{
 	
 	public boolean satisfiedBy(Researcher r){
 		ResearchEntry entry = ResearchBooks.getEntry(getEntry());
-		return entry == null || (stage == -1 ? r.entryStage(entry) >= entry.sections().size() : r.entryStage(entry) >= stage);
+		if(entry == null)
+			return true;
+		if(entry.meta().contains("locked"))
+			return false;
+		return stage == -1 ? r.entryStage(entry) >= entry.sections().size() : r.entryStage(entry) >= stage;
 	}
 }

@@ -23,27 +23,6 @@
 			]
 		},
 		{
-			"key": "arcana:locked",
-			"name": "research.arcana.locked",
-			"desc": "research.arcana.locked.desc",
-			"icons": [
-				"arcana:gui/research/locked_entry.png"
-			],
-			"category": "arcana:fundamentals",
-			"parents": [],
-			"meta": [
-				"no_base"
-			],
-			"x": 0,
-			"y": -3,
-			"sections": [
-				{
-					"type": "string",
-					"content": "research.arcana.locked.text"
-				}
-			]
-		},
-		{
 			"key": "arcana:aspects",
 			"name": "research.arcana.aspects",
 			"icons": [
@@ -113,10 +92,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -10,
 			"y": 2,
@@ -139,10 +118,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -12,
 			"y": 2,
@@ -386,10 +365,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -10,
 			"y": 0,
@@ -412,10 +391,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -9,
 			"y": 0,
@@ -438,10 +417,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -13,
 			"y": 1,
@@ -464,10 +443,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -12,
 			"y": 1,
@@ -490,10 +469,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -11,
 			"y": 1,
@@ -516,10 +495,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -10,
 			"y": 1,
@@ -542,10 +521,10 @@
 				"arcana:gui/research/locked_entry.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": ["~arcana:locked"],
 			"meta": [
 				"hexagon_base",
-				"purple_base"
+				"purple_base",
+				"locked"
 			],
 			"x": -9,
 			"y": 1,
@@ -641,13 +620,13 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:goggles_of_revealing",
-				"~arcana:locked"
+				"arcana:goggles_of_revealing"
 			],
 			"meta": [
 				"square_base",
 				"yellow_base",
-				"reverse"
+				"reverse",
+				"locked"
 			],
 			"x": -6,
 			"y": 3,
@@ -670,13 +649,13 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:artifice",
-				"~arcana:locked"
+				"arcana:artifice"
 			],
 			"meta": [
 				"square_base",
 				"yellow_base",
-				"reverse"
+				"reverse",
+				"locked"
 			],
 			"x": -6,
 			"y": 5,
@@ -940,11 +919,11 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:research",
-				"~arcana:locked"
+				"arcana:research"
 			],
 			"meta": [
-				"square_base"
+				"square_base",
+				"locked"
 			],
 			"x": 2,
 			"y": 3,

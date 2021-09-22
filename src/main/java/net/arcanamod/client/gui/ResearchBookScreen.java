@@ -24,12 +24,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -172,7 +174,7 @@ public class ResearchBookScreen extends Screen {
 				if(style == PageStyle.IN_PROGRESS)
 					mult = (float)abs(sin((getMinecraft().player.ticksExisted + partialTicks) / 5f) * 0.75f) + .25f;
 				else if(style == PageStyle.PENDING)
-					mult = 0.1f;
+					mult = 0.2f;
 				RenderSystem.color4f(mult, mult, mult, 1f);
 				//noinspection IntegerDivisionInFloatingPointContext
 				drawTexturedModalRect(stack, (int)((entry.x() * 30 + getXOffset() + 2)), (int)((entry.y() * 30 + getYOffset() + 2)), base % 4 * 26, base / 4 * 26, 26, 26);
@@ -322,6 +324,9 @@ public class ResearchBookScreen extends Screen {
 	}
 
 	public PageStyle style(ResearchEntry entry){
+		// locked entries are always locked
+		if(entry.meta().contains("locked"))
+			return PageStyle.PENDING;
 		// if the page is at full progress, its complete.
 		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) >= entry.sections().size())
@@ -403,6 +408,26 @@ public class ResearchBookScreen extends Screen {
 				if(entry.description() != null && !entry.description().equals(""))
 					lines.add(TextFormatting.GRAY + I18n.format(entry.description()));
 				GuiUtils.drawHoveringText(stack, lines.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
+				RenderHelper.disableStandardItemLighting();
+				break;
+			}else if(style == PageStyle.PENDING){ // style will be null if not hovering
+				if(entry.meta().contains("locked")){
+					// display "locked"
+					GuiUtils.drawHoveringText(stack, Arrays.asList(new TranslationTextComponent("researchBook.locked"), new TranslationTextComponent("researchBook.locked.desc").mergeStyle(TextFormatting.GRAY)), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
+				}else{
+					// show known required research + "???" if there's unknown research
+					List<String> lines = Lists.newArrayList(I18n.format("researchBook.missing_research"));
+					boolean addedUnknown = false;
+					for(Pair<ResearchEntry, Parent> parent : entry.parents().stream().map(p -> new Pair<>(book.getEntry(p.getEntry()), p)).collect(Collectors.toList())){
+						if(parentStyle(parent.getFirst(), parent.getSecond()) != PageStyle.NONE)
+							lines.add("§7- " + I18n.format(parent.getFirst().name()) + "§r");
+						else if(!addedUnknown){
+							lines.add(I18n.format("researchBook.unknown"));
+							addedUnknown = true;
+						}
+					}
+					GuiUtils.drawHoveringText(stack, lines.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
+				}
 				RenderHelper.disableStandardItemLighting();
 				break;
 			}
@@ -678,7 +703,7 @@ public class ResearchBookScreen extends Screen {
 
 		public void renderAfter(MatrixStack stack, int mouseX, int mouseY){
 			if(isHovered){
-				int completion = (category.entries().size() > 0) ? ((category.streamEntries().mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / category.entries().size()) : 100;
+				int completion = (category.entries().size() > 0) ? ((category.streamEntries().filter(x -> !x.meta().contains("locked")).mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / (int)category.entries().stream().filter(x -> !x.meta().contains("locked")).count()) : 100;
 				GuiUtils.drawHoveringText(stack, Lists.newArrayList(new StringTextComponent(I18n.format(category.name()).trim() + " (" + completion + "%)")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
 		}
