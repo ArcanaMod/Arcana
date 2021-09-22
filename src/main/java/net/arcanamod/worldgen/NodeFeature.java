@@ -13,6 +13,8 @@ import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.world.Node;
 import net.arcanamod.world.NodeType;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
@@ -71,13 +73,19 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 					pointer.setPos(pos).move(rand.nextInt(7) - rand.nextInt(7), rand.nextInt(5) - rand.nextInt(5), rand.nextInt(7) - rand.nextInt(7));
 					if(newWorld.getBlockState(pointer).isAir() || newWorld.getBlockState(pointer).getMaterial().isReplaceable()){
 						// If it has at least one open side,
-						for(Direction value : Direction.values())
-							if(newWorld.getBlockState(pointer.offset(value)).isSolid()){
+						for(Direction value : Direction.values()){
+							BlockState state = newWorld.getBlockState(pointer.offset(value));
+							boolean replace = false;
+							if(state.isOpaqueCube(newWorld, pointer.offset(value)) || (replace = state.getBlock() == Blocks.SNOW)){
+								if(replace)
+									pointer.move(value);
 								// Place a crystal,
 								newWorld.setBlockState(pointer, CRYSTAL_CLUSTERS_FROM_ASPECTS.get(aspects.getHolder(rand.nextInt(aspects.getHoldersAmount())).getContainedAspect()).get().getDefaultState().with(CrystalClusterBlock.FACING, value.getOpposite()).with(CrystalClusterBlock.AGE, 3).with(CrystalClusterBlock.WATERLOGGED, newWorld.getBlockState(pointer).getFluidState().isTagged(FluidTags.WATER)));
 								// Increment successes
 								successes++;
 							}
+							break;
+						}
 					}
 				}
 			});
