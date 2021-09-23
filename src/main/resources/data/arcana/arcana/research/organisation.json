@@ -68,7 +68,35 @@
       "in": "arcana:illustrious_grimoire",
       "icon": "arcana:research/illustrious_basics.png",
       "name": "research.arcana.category.illustrious",
-      "bg": "arcana:research/colourvoid_bg.png"
+      "bg": "arcana:research/nightsky/nightsky_1.png",
+      "bgs": [
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky_0",
+          "speed": 0.25
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky_1",
+          "speed": 0.25
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky_4",
+          "speed": 0.4
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky_3",
+          "speed": 0.7
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky_2",
+          "speed": 1.2,
+          "vanishZoom": 0.9
+        }
+      ]
     }
   ]
 }

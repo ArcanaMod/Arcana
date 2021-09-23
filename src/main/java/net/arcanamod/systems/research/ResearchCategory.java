@@ -3,6 +3,7 @@ package net.arcanamod.systems.research;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.util.Constants;
 
 import java.util.*;
 import java.util.function.Function;
@@ -18,6 +19,7 @@ public class ResearchCategory{
 	private ResourceLocation key, icon, bg, requirement;
 	private ResearchBook in;
 	private String name;
+	private List<BackgroundLayer> bgs = new ArrayList<>();
 	
 	protected int serializationIndex = 0;
 	
@@ -63,6 +65,10 @@ public class ResearchCategory{
 		return bg;
 	}
 	
+	public List<BackgroundLayer> getBgs(){
+		return bgs;
+	}
+	
 	int serializationIndex(){
 		return serializationIndex;
 	}
@@ -79,9 +85,14 @@ public class ResearchCategory{
 		nbt.putString("requirement", requirement != null ? requirement.toString() : "null");
 		nbt.putString("name", name);
 		nbt.putInt("index", index);
+		
 		ListNBT list = new ListNBT();
 		entries.forEach((location, entry) -> list.add(entry.serialize(location)));
 		nbt.put("entries", list);
+		
+		ListNBT bgsList = new ListNBT();
+		bgs.forEach(layer -> bgsList.add(layer.getPassData()));
+		nbt.put("bgs", bgsList);
 		return nbt;
 	}
 	
@@ -98,8 +109,9 @@ public class ResearchCategory{
 		category.serializationIndex = nbt.getInt("index");
 		
 		Map<ResourceLocation, ResearchEntry> entries = entriesList.stream().map(CompoundNBT.class::cast).map((CompoundNBT nbt1) -> ResearchEntry.deserialize(nbt1, category)).collect(Collectors.toMap(ResearchEntry::key, Function.identity(), (a, b) -> a));
-		
 		c.putAll(entries);
+		
+		category.bgs = nbt.getList("bgs", Constants.NBT.TAG_COMPOUND).stream().map(CompoundNBT.class::cast).map(BackgroundLayer::deserialize).collect(Collectors.toList());
 		return category;
 	}
 	

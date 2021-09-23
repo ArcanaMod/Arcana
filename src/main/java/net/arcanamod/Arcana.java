@@ -16,10 +16,7 @@ import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.items.recipes.ArcanaRecipes;
 import net.arcanamod.network.Connection;
-import net.arcanamod.systems.research.EntrySection;
-import net.arcanamod.systems.research.Puzzle;
-import net.arcanamod.systems.research.Requirement;
-import net.arcanamod.systems.research.ResearchLoader;
+import net.arcanamod.systems.research.*;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.AuthorisationManager;
 import net.arcanamod.world.NodeType;
@@ -136,6 +133,7 @@ public class Arcana{
 		TaintTrackableCapability.init();
 		Puzzle.init();
 		Taint.init();
+		BackgroundLayer.init();
 		StartupMessageManager.addModMessage("Arcana: Research registration completed");
 		
 		// register nodes as an argument

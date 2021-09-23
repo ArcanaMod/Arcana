@@ -56,7 +56,7 @@ public class ResearchBookScreen extends Screen {
 	public static final String SUFFIX_RESIZABLE = "_menu_resizable.png";
 	public static final ResourceLocation ARROWS_AND_BASES = new ResourceLocation(Arcana.MODID, "textures/gui/research/research_bases.png");
 
-	private static final int MAX_PAN = 512;
+	public static final int MAX_PAN = 512;
 	private static final int ZOOM_MULTIPLIER = 2;
 
 	// drawing helper
@@ -165,9 +165,16 @@ public class ResearchBookScreen extends Screen {
 		float scale = Math.max(xScale, yScale);
 		// minValue = 512 - (minValue + fHeight + variance)
 		// 2*minValue = 512 - (fHeight + 1024 / scale)
-		float xOffset = xScale == scale ? 0 : (512 - (getFrameWidth() - 32 + 1024 / scale)) / 2;
-		float yOffset = yScale == scale ? 0 : (512 - (getFrameHeight() - 34 + 1024 / scale)) / 2;
-		drawModalRectWithCustomSizedTexture(stack, (width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / scale + xOffset, (yPan + MAX_PAN) / scale + yOffset, getFrameWidth() - 32, getFrameHeight() - 34, MAX_PAN, MAX_PAN);
+		int width = getFrameWidth() - 32;
+		float xOffset = xScale == scale ? 0 : (512 - (width + 1024 / scale)) / 2;
+		int height = getFrameHeight() - 34;
+		float yOffset = yScale == scale ? 0 : (512 - (height + 1024 / scale)) / 2;
+		int x = (this.width - getFrameWidth()) / 2 + 16;
+		int y = (this.height - getFrameHeight()) / 2 + 17;
+		if(!categories.get(tab).getBgs().isEmpty())
+			categories.get(tab).getBgs().forEach(layer -> layer.render(stack, x, y, width, height, xPan, yPan, scale, xOffset, yOffset, zoom));
+		else
+			drawModalRectWithCustomSizedTexture(stack, x, y, (-xPan + MAX_PAN) / scale + xOffset, (yPan + MAX_PAN) / scale + yOffset, width, height, MAX_PAN, MAX_PAN);
 	}
 
 	private void renderEntries(MatrixStack stack, float partialTicks){

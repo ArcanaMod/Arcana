@@ -1,6 +1,5 @@
 package net.arcanamod.systems.research;
 
-import net.arcanamod.Arcana;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class ResearchBooks{
 	}
 
 	static {
-		disabled.add(Arcana.arcLoc("illustrious_grimoire"));
+		//disabled.add(Arcana.arcLoc("illustrious_grimoire"));
 		//disabled.add(Arcana.arcLoc("tainted_codex"));
 		//disabled.add(Arcana.arcLoc("crimson_rites"));
 	}
