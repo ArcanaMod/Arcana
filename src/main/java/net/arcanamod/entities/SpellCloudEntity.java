@@ -194,8 +194,6 @@ public class SpellCloudEntity extends Entity implements Homeable{
 					}
 				}
 			} else {
-				Homeable.startHoming(this);
-
 				float lvt_4_2_ = 3.1415927F * radius * radius;
 
 				for (int lvt_5_2_ = 0; (float) lvt_5_2_ < lvt_4_2_; ++lvt_5_2_) {
@@ -215,6 +213,8 @@ public class SpellCloudEntity extends Entity implements Homeable{
 				}
 			}
 		} else {
+			Homeable.startHoming(this);
+			
 			if (this.ticksExisted >= this.waitTime + this.duration) {
 				this.remove();
 				return;

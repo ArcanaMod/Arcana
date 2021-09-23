@@ -19,6 +19,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ActionResultType;
@@ -26,10 +28,12 @@ import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -362,5 +366,53 @@ public abstract class Cast implements ICast {
 		cloud.enableHoming(targets);
 		cloud.setSpell(this);
 		world.addEntity(cloud);
+	}
+	
+	public static void createAOEBlast(PlayerEntity player, World world, BlockPos epicentre, float radius, boolean modified){
+		//BlastEmitterEntity emitter = new BlastEmitterEntity(world,radius);
+		//world.addEntity(emitter);
+		Random rand = new Random();
+		IParticleData particle = ParticleTypes.ENTITY_EFFECT;
+		float surface = 3.1415927F * radius * radius;
+		float randomizedPi;
+		float spread;
+		float offsetX;
+		int color;
+		int r;
+		int g;
+		
+		if (modified){
+			for (int lvt_5_2_ = 0; (float) lvt_5_2_ < surface; ++lvt_5_2_) {
+				randomizedPi = rand.nextFloat() * 6.2831855F;
+				spread = 0.8f * radius;
+				offsetX = MathHelper.cos(randomizedPi) * spread;
+				float offsetZ = MathHelper.sin(randomizedPi) * spread;
+				if (particle.getType() == ParticleTypes.ENTITY_EFFECT) {
+					color = Color.CYAN.getRGB();
+					r = color >> 16 & 255;
+					g = color >> 8 & 255;
+					int b = color & 255;
+					world.addOptionalParticle(particle, epicentre.getX() + (double) offsetX, epicentre.getY(), epicentre.getZ() + (double) offsetZ, (double) ((float) r / 255.0F), (double) ((float) g / 255.0F), (double) ((float) b / 255.0F));
+				} else {
+					world.addOptionalParticle(particle, epicentre.getX() + (double) offsetX, epicentre.getY(), epicentre.getZ() + (double) offsetZ, (0.5D - rand.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - rand.nextDouble()) * 0.15D);
+				}
+			}
+		}else{
+			for (int lvt_5_2_ = 0; (float) lvt_5_2_ < surface; ++lvt_5_2_) {
+				randomizedPi = rand.nextFloat() * 6.2831855F;
+				spread = MathHelper.sqrt(rand.nextFloat()) * radius;
+				offsetX = MathHelper.cos(randomizedPi) * spread;
+				float offsetZ = MathHelper.sin(randomizedPi) * spread;
+				if (particle.getType() == ParticleTypes.ENTITY_EFFECT) {
+					color = Color.CYAN.getRGB();
+					r = color >> 16 & 255;
+					g = color >> 8 & 255;
+					int b = color & 255;
+					world.addOptionalParticle(particle, epicentre.getX() + (double) offsetX, epicentre.getY(), epicentre.getZ() + (double) offsetZ, (double) ((float) r / 255.0F), (double) ((float) g / 255.0F), (double) ((float) b / 255.0F));
+				} else {
+					world.addOptionalParticle(particle, epicentre.getX() + (double) offsetX, epicentre.getY(), epicentre.getZ() + (double) offsetZ, (0.5D - rand.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - rand.nextDouble()) * 0.15D);
+				}
+			}
+		}
 	}
 }
