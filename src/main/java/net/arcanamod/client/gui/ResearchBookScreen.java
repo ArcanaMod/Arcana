@@ -159,7 +159,15 @@ public class ResearchBookScreen extends Screen {
 
 	private void renderResearchBackground(MatrixStack stack){
 		getMinecraft().getTextureManager().bindTexture(categories.get(tab).bg());
-		drawModalRectWithCustomSizedTexture(stack, (width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, getFrameWidth() - 32, getFrameHeight() - 34, (int)(width*1.2f), (int)(width*1.2f));
+		// please don't ask
+		float xScale = 1024f / (512 + 32 - getFrameWidth());
+		float yScale = 1024f / (512 + 34 - getFrameHeight());
+		float scale = Math.max(xScale, yScale);
+		// minValue = 512 - (minValue + fHeight + variance)
+		// 2*minValue = 512 - (fHeight + 1024 / scale)
+		float xOffset = xScale == scale ? 0 : (512 - (getFrameWidth() - 32 + 1024 / scale)) / 2;
+		float yOffset = yScale == scale ? 0 : (512 - (getFrameHeight() - 34 + 1024 / scale)) / 2;
+		drawModalRectWithCustomSizedTexture(stack, (width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / scale + xOffset, (yPan + MAX_PAN) / scale + yOffset, getFrameWidth() - 32, getFrameHeight() - 34, MAX_PAN, MAX_PAN);
 	}
 
 	private void renderEntries(MatrixStack stack, float partialTicks){
@@ -465,7 +473,11 @@ public class ResearchBookScreen extends Screen {
 			textStack.translate(0.0D, 0.0D, 299);
 			Matrix4f textLocation = textStack.getLast().getMatrix();
 			IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-			minecraft.fontRenderer.renderString("Zoom: " + zoom, x + 22, y + 5, -1, false, textLocation, renderType, false, 0, 15728880);
+			minecraft.fontRenderer.renderString("Zoom: " + zoom, x + 22, y + 5, -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("XPan: " + xPan, x + 22, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("YPan: " + yPan, x + 112, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("FWidth: " + getFrameWidth(), x + 212, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("FHeight: " + getFrameHeight(), x + 272, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
 			renderType.finish();
 			RenderSystem.enableDepthTest();
 		}
