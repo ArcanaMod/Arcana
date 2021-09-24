@@ -72,27 +72,27 @@
       "bgs": [
         {
           "type": "arcana:image",
-          "image": "arcana:research/nightsky_0",
+          "image": "arcana:research/nightsky/nightsky_0",
           "speed": 0.25
         },
         {
           "type": "arcana:image",
-          "image": "arcana:research/nightsky_1",
+          "image": "arcana:research/nightsky/nightsky_1",
           "speed": 0.25
         },
         {
           "type": "arcana:image",
-          "image": "arcana:research/nightsky_4",
+          "image": "arcana:research/nightsky/nightsky_4",
           "speed": 0.4
         },
         {
           "type": "arcana:image",
-          "image": "arcana:research/nightsky_3",
+          "image": "arcana:research/nightsky/nightsky_3",
           "speed": 0.7
         },
         {
           "type": "arcana:image",
-          "image": "arcana:research/nightsky_2",
+          "image": "arcana:research/nightsky/nightsky_2",
           "speed": 1.2,
           "vanishZoom": 0.9
         }

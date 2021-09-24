@@ -41,9 +41,10 @@ public class ImageLayer extends BackgroundLayer{
 	public void load(JsonObject data, ResourceLocation file){
 		JsonPrimitive imagePrim = data.getAsJsonPrimitive("image");
 		if(imagePrim != null)
-			if(imagePrim.isString())
-				image = new ResourceLocation(imagePrim.getAsString());
-			else
+			if(imagePrim.isString()){
+				ResourceLocation base = new ResourceLocation(imagePrim.getAsString());
+				image = new ResourceLocation(base.getNamespace(), "textures/" + base.getPath() + ".png");
+			}else
 				LOGGER.error("Field \"image\" for an image background layer was not a string, in " + file + "!");
 		else
 			LOGGER.error("Field \"image\" for an image background layer was not defined, in " + file + "!");
@@ -51,7 +52,7 @@ public class ImageLayer extends BackgroundLayer{
 	
 	public void render(MatrixStack stack, int x, int y, int width, int height, float xPan, float yPan, float parallax, float xOff, float yOff, float zoom){
 		float parallax1 = parallax * 2 * speed();
-		Minecraft.getInstance().getTextureManager().bindTexture(new ResourceLocation(image.getNamespace(), "textures/research/nightsky/nightsky_" + image.getPath().substring(18) + ".png"));
+		Minecraft.getInstance().getTextureManager().bindTexture(image);
 		if(vanishZoom() == -1 || vanishZoom() > zoom)
 			drawModalRectWithCustomSizedTexture(stack, x, y, (-xPan + MAX_PAN) / parallax1 + xOff, (yPan + MAX_PAN) / parallax1 + yOff, width, height, 512, 512);
 	}
