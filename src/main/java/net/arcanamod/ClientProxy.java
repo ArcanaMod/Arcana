@@ -17,6 +17,7 @@ import net.arcanamod.client.render.*;
 import net.arcanamod.client.render.particles.ArcanaParticles;
 import net.arcanamod.client.render.tainted.*;
 import net.arcanamod.client.render.tiles.*;
+import net.arcanamod.client.research.BackgroundLayerRenderers;
 import net.arcanamod.client.research.EntrySectionRenderer;
 import net.arcanamod.client.research.PuzzleRenderer;
 import net.arcanamod.client.research.RequirementRenderer;
@@ -95,6 +96,7 @@ public class ClientProxy extends CommonProxy{
 		EntrySectionRenderer.init();
 		RequirementRenderer.init();
 		PuzzleRenderer.init();
+		BackgroundLayerRenderers.init();
 		
 		// there's an event for this, but putting it here seems to affect literally nothing. huh.
 		// I'm not at all surprised.

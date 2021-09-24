@@ -4,21 +4,18 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.systems.research.BackgroundLayer;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import static net.arcanamod.Arcana.arcLoc;
-import static net.arcanamod.client.gui.ClientUiUtil.drawModalRectWithCustomSizedTexture;
-import static net.arcanamod.client.gui.ResearchBookScreen.MAX_PAN;
 
 public class ImageLayer extends BackgroundLayer{
 	
 	public static final ResourceLocation TYPE = arcLoc("image");
 	
-	ResourceLocation image;
+	public ResourceLocation image;
 	
 	private static final Logger LOGGER = LogManager.getLogger();
 	
@@ -51,9 +48,6 @@ public class ImageLayer extends BackgroundLayer{
 	}
 	
 	public void render(MatrixStack stack, int x, int y, int width, int height, float xPan, float yPan, float parallax, float xOff, float yOff, float zoom){
-		float parallax1 = parallax * 2 * speed();
-		Minecraft.getInstance().getTextureManager().bindTexture(image);
-		if(vanishZoom() == -1 || vanishZoom() > zoom)
-			drawModalRectWithCustomSizedTexture(stack, x, y, (-xPan + MAX_PAN) / parallax1 + xOff, (yPan + MAX_PAN) / parallax1 + yOff, width, height, 512, 512);
+	
 	}
 }

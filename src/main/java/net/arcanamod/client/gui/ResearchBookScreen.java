@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.client.research.BackgroundLayerRenderers;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkModifyPins;
 import net.arcanamod.systems.research.*;
@@ -172,7 +173,7 @@ public class ResearchBookScreen extends Screen {
 		int x = (this.width - getFrameWidth()) / 2 + 16;
 		int y = (this.height - getFrameHeight()) / 2 + 17;
 		if(!categories.get(tab).getBgs().isEmpty())
-			categories.get(tab).getBgs().forEach(layer -> layer.render(stack, x, y, width, height, xPan, yPan, scale, xOffset, yOffset, zoom));
+			categories.get(tab).getBgs().forEach(/*layer -> layer.render(stack, x, y, width, height, xPan, yPan, scale, xOffset, yOffset, zoom)*/layer -> BackgroundLayerRenderers.render(layer, stack, x, y, width, height, xPan, yPan, scale, xOffset, yOffset, zoom));
 		else
 			drawModalRectWithCustomSizedTexture(stack, x, y, (-xPan + MAX_PAN) / scale + xOffset, (yPan + MAX_PAN) / scale + yOffset, width, height, MAX_PAN, MAX_PAN);
 	}
