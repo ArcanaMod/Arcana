@@ -1,13 +1,17 @@
 package net.arcanamod.items;
 
 import com.google.common.collect.Sets;
+import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
 import net.arcanamod.aspects.*;
+import net.arcanamod.capabilities.Researcher;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
 import net.arcanamod.items.attachment.Focus;
 import net.arcanamod.items.attachment.FocusItem;
+import net.arcanamod.systems.research.ResearchBooks;
+import net.arcanamod.systems.research.ResearchEntry;
 import net.arcanamod.systems.spell.MDModifier;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.casts.ICast;
@@ -107,8 +111,16 @@ public abstract class MagicDeviceItem extends Item{
 		AuraView view = AuraView.SIDED_FACTORY.apply(world);
 		Optional<Node> nodeOptional = view.raycast(player.getEyePosition(0), player.getAttribute(ForgeMod.REACH_DISTANCE.get()).getValue(), player);
 		if(nodeOptional.isPresent()){
-			final int ASPECT_DRAIN_AMOUNT = 2;
-			final int ASPECT_DRAIN_WAIT = 3;
+			int ASPECT_DRAIN_AMOUNT = 2;
+			int ASPECT_DRAIN_WAIT = 6;
+			ResearchEntry channelingEntry = ResearchBooks.getEntry(Arcana.arcLoc("node_channeling"));
+			ResearchEntry channeling2Entry = ResearchBooks.getEntry(Arcana.arcLoc("node_channeling_2"));
+			if(Researcher.getFrom((PlayerEntity)player).entryStage(channeling2Entry) >= channelingEntry.sections().size())
+				ASPECT_DRAIN_WAIT = 3;
+			else if(Researcher.getFrom((PlayerEntity)player).entryStage(channelingEntry) >= channelingEntry.sections().size()){
+				ASPECT_DRAIN_WAIT = 2;
+				ASPECT_DRAIN_AMOUNT = 3;
+			}
 			// drain
 			IAspectHandler wandHolder = IAspectHandler.getFrom(stack);
 			// TODO: non-destructive node draining?

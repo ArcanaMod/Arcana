@@ -958,6 +958,18 @@
     "research.arcana.gauntlets": "Gauntlets",
     "research.arcana.wip": "actual content coming... when its implemented. same for icon.",
 
+    "research.arcana.nodes": "Nodes",
+    "research.arcana.nodes.stage.1": "At the start of my journey, I was given a glimpse of knowledge from a source of magic. These sources of magic - nodes, as I have come to know them - seem to be scattered across the world, and constantly create new energy.{~sep}I should spend some time studying these properly, to best use them to my advantage.",
+    "research.arcana.nodes.stage.2": "Nodes don't seem to be quite uniform. Different nodes are attuned to different primal aspects, and only create those. Some nodes create magic at a greater rate, or store a larger amount of them.{~sep}A few of them seem to act... strangely. Sucking in terrain, repelling taint, or emitting a constant sense of dread...",
+
+    "research.arcana.node_channeling": "Node Channeling",
+    "research.arcana.node_channeling.stage.1": "Filling my wand is currently a slow and repetitive process. I should find some way to draw faster...",
+    "research.arcana.node_channeling.stage.2": "I can draw twice as fast now :3",
+
+    "research.arcana.node_channeling_2": "Greater Node Channeling",
+    "research.arcana.node_channeling_2.stage.1": "even faster.",
+    "research.arcana.node_channeling_2.stage.2": "three times as fast :3 and also drawing more at once",
+
     "_comment": "Messages",
     "message.arcana.disabled": "This book is currently disabled.",
 

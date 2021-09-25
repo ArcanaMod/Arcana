@@ -1152,6 +1152,76 @@
 					"content": "arcana:arcane_crafting/flux_meter"
 				}
 			]
+		},
+		{
+			"key": "arcana:nodes",
+			"name": "research.arcana.nodes",
+			"icons": [
+				"arcana:research/nodes_icon.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": [],
+			"meta": [
+				"square_base",
+				"yellow_base",
+				"root"
+			],
+			"x": -4,
+			"y": 9,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.nodes.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.nodes.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:node_channeling",
+			"name": "research.arcana.node_channeling",
+			"icons": [
+				"arcana:research/node_channeling_icon.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["arcana:nodes"],
+			"meta": [],
+			"x": -2,
+			"y": 9,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.node_channeling.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.node_channeling.stage.2"
+				}
+			]
+		},
+		{
+			"key": "arcana:node_channeling_2",
+			"name": "research.arcana.node_channeling_2",
+			"icons": [
+				"arcana:research/node_channeling_2_icon.png"
+			],
+			"category": "arcana:fundamentals",
+			"parents": ["arcana:node_channeling"],
+			"meta": [],
+			"x": 0,
+			"y": 9,
+			"sections": [
+				{
+					"type": "string",
+					"content": "research.arcana.node_channeling_2.stage.1"
+				},
+				{
+					"type": "string",
+					"content": "research.arcana.node_channeling_2.stage.2"
+				}
+			]
 		}
 	],
 	"puzzles": [
