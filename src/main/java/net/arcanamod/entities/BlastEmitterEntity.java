@@ -1,9 +1,12 @@
 package net.arcanamod.entities;
 
 import net.arcanamod.systems.spell.casts.Cast;
+import net.arcanamod.systems.spell.casts.ICast;
+import net.arcanamod.util.Pair;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
@@ -19,20 +22,26 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("unchecked") // Yes IntelliJ I checked that don't scream at me
 public class BlastEmitterEntity extends Entity {
 	private static final DataParameter<Float> RADIUS;
 	private static final DataParameter<Float> CURRENT_RADIUS;
 	private static final DataParameter<Integer> COOLDOWN;
 	
-	private List<LivingEntity> wasDamaged = new ArrayList<>();
+	private final List<LivingEntity> wasDamaged = new ArrayList<>();
 	private int cooldown = 0;
+	private ICast spell;
+	private PlayerEntity caster;
+	private Pair<Boolean, Class<? extends LivingEntity>[]> blackWhiteTargetList = Pair.of(true,new Class[]{LivingEntity.class});
 	
-	public BlastEmitterEntity(World worldIn, float radius) {
+	public BlastEmitterEntity(World worldIn,PlayerEntity caster, float radius) {
 		super(ArcanaEntities.BLAST_EMITTER.get(), worldIn);
 		this.setRadius(radius);
+		this.setCaster(caster);
 	}
 	
 	public BlastEmitterEntity(EntityType<BlastEmitterEntity> type, World worldIn) {
@@ -44,6 +53,14 @@ public class BlastEmitterEntity extends Entity {
 		this.getDataManager().register(RADIUS, 0.8F);
 		this.getDataManager().register(CURRENT_RADIUS, 0.0F);
 		this.getDataManager().register(COOLDOWN, 0);
+	}
+	
+	public void setSpell(ICast spell) {
+		this.spell = spell;
+	}
+	
+	public void setCaster(PlayerEntity caster) {
+		this.caster = caster;
 	}
 	
 	@Override
@@ -81,14 +98,11 @@ public class BlastEmitterEntity extends Entity {
 					}
 				}
 			} else {
-				if (currRadius < getRadius()) {
-					List<LivingEntity> entities = world.getEntitiesWithinAABB(LivingEntity.class, new AxisAlignedBB(getPosX() - currRadius, getPosY() - currRadius, getPosZ() - currRadius, getPosX() + currRadius, getPosY() + currRadius, getPosZ() + currRadius), LivingEntity::isAlive);
-					for (LivingEntity leInBox : entities) {
-						if (!wasDamaged.contains(leInBox)) {
-							leInBox.attackEntityFrom(DamageSource.MAGIC, 0.6f);
-							wasDamaged.add(leInBox);
-						}
-					}
+				if (currRadius < getRadius()){
+					if (blackWhiteTargetList.getFirst())
+					for (Class<? extends LivingEntity> selEntity : blackWhiteTargetList.getSecond()){
+						executeSpellOnEntitiesInAABB(currRadius,selEntity);
+					} else executeSpellOnEntitiesInAABB(currRadius,LivingEntity.class);
 				}
 				if (currRadius > (getRadius() * 2))
 					this.remove();
@@ -97,6 +111,21 @@ public class BlastEmitterEntity extends Entity {
 		cooldown++;
 		if (cooldown >= Short.MAX_VALUE)
 			this.remove();
+	}
+	
+	private void executeSpellOnEntitiesInAABB(float currRadius,Class<? extends LivingEntity> selEntity) {
+		List<LivingEntity> entities = world.getEntitiesWithinAABB(selEntity,
+				new AxisAlignedBB(getPosX() - currRadius, getPosY() - currRadius, getPosZ() - currRadius, getPosX() + currRadius, getPosY() + currRadius, getPosZ() + currRadius),
+				LivingEntity::isAlive
+		);
+		for (LivingEntity leInBox : entities) {
+			if (blackWhiteTargetList.getFirst() || Arrays.stream(blackWhiteTargetList.getSecond()).noneMatch(streamed -> streamed == leInBox.getClass()))
+				if (!wasDamaged.contains(leInBox)) {
+					leInBox.attackEntityFrom(DamageSource.MAGIC, 0.6f);
+					((Cast)spell).useOnEntity(caster,leInBox);
+					wasDamaged.add(leInBox);
+				}
+		}
 	}
 	
 	/**
@@ -165,5 +194,10 @@ public class BlastEmitterEntity extends Entity {
 		RADIUS = EntityDataManager.createKey(BlastEmitterEntity.class, DataSerializers.FLOAT);
 		CURRENT_RADIUS = EntityDataManager.createKey(BlastEmitterEntity.class, DataSerializers.FLOAT);
 		COOLDOWN = EntityDataManager.createKey(BlastEmitterEntity.class, DataSerializers.VARINT);
+	}
+	
+	@SafeVarargs
+	public final void makeBlackWhiteList(boolean whitelistMode, Class<? extends LivingEntity>... targets) {
+		blackWhiteTargetList = Pair.of(whitelistMode,targets);
 	}
 }

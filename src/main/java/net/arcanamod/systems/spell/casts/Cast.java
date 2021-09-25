@@ -371,11 +371,14 @@ public abstract class Cast implements ICast {
 		world.addEntity(cloud);
 	}
 	
-	public static void createAOEBlast(PlayerEntity player, World world, BlockPos epicentre, float radius, boolean whitelistMode, int waves, @Nullable Class<? extends LivingEntity>... targets){
+	public void createAOEBlast(PlayerEntity player, World world, BlockPos epicentre, float radius, boolean whitelistMode, int waves, @Nullable Class<? extends LivingEntity>... targets){
 		for (int i = 0; i < waves; i++) {
-			BlastEmitterEntity emitter = new BlastEmitterEntity(world,radius);
+			BlastEmitterEntity emitter = new BlastEmitterEntity(world,player,radius);
 			emitter.setPosition(emitter.getPosX(),epicentre.getY()+0.5f,epicentre.getZ());
 			emitter.setCooldown(15*i);
+			emitter.setSpell(this);
+			emitter.setCaster(player);
+			emitter.makeBlackWhiteList(whitelistMode,targets);
 			world.addEntity(emitter);
 		}
 	}

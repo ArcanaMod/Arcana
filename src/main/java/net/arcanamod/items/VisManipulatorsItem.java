@@ -6,6 +6,7 @@ import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.casts.Cast;
+import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.util.Pair;
@@ -77,9 +78,9 @@ public class VisManipulatorsItem extends Item{
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		BlockPos pos = RayTraceUtils.getTargetBlockPos(playerIn,worldIn,80);
 		if (worldIn.getBlockState(pos).getBlock()== ArcanaBlocks.SMOKEY_GLASS.get()){
-			Cast.createAOEBlast(playerIn,worldIn,pos.up(),8,false, 3);
+			((Cast)Casts.ICE_CAST).createAOEBlast(playerIn,worldIn,pos.up(),8,false, 3);
 		}else if (worldIn.getBlockState(pos).getBlock()== ArcanaBlocks.HARDENED_GLASS.get()){
-			Cast.createAOEBlast(playerIn,worldIn,pos.up(),8,true, 1);
+			((Cast)Casts.ICE_CAST).createAOEBlast(playerIn,worldIn,pos.up(),8,true, 1);
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
