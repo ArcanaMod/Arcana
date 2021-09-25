@@ -2,8 +2,8 @@
   "entries": [
     {
       "key": "arcana:tainted_trailing",
-      "name": "research.arcana.tainted",
-      "desc": "research.arcana.tainted.desc",
+      "name": "research.arcana.tainted_trailing",
+      "desc": "research.arcana.tainted_trailing.desc",
       "icons": [
         "arcana:tainted_codex",
         "arcana:tainted_wand_core",
@@ -12,6 +12,9 @@
       "category": "arcana:tainted_basics",
       "parents": [
         "arcana:root"
+      ],
+      "meta": [
+      "locked"
       ],
       "x": 1,
       "y": 1,

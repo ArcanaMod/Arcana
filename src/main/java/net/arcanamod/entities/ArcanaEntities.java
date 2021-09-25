@@ -43,9 +43,9 @@ public class ArcanaEntities{
 	public static final RegistryObject<EntityType<SpellEggEntity>> SPELL_EGG = ENTITY_TYPES
 			.register("spell_egg", () -> EntityType.Builder.<SpellEggEntity>create(SpellEggEntity::new, EntityClassification.MISC)
 					.immuneToFire().size(.4f, .4f).build(arcLoc("spell_egg").toString()));
-	public static final RegistryObject<EntityType<SpellEggEntity>> BIG_SPELL_EGG = ENTITY_TYPES
-			.register("big_spell_egg", () -> EntityType.Builder.<SpellEggEntity>create(SpellEggEntity::new, EntityClassification.MISC)
-					.immuneToFire().size(.6f, .6f).build(arcLoc("big_spell_egg").toString()));
+	public static final RegistryObject<EntityType<BlastEmitterEntity>> BLAST_EMITTER = ENTITY_TYPES
+			.register("spell_core", () -> EntityType.Builder.<BlastEmitterEntity>create(BlastEmitterEntity::new, EntityClassification.MISC)
+					.immuneToFire().size(.6f, .6f).build(arcLoc("spell_core").toString()));
 
 	public static final RegistryObject<EntityType<TaintBottleEntity>> TAINT_BOTTLE = ENTITY_TYPES
 			.register("taint_in_a_bottle", () -> EntityType.Builder.<TaintBottleEntity>create(TaintBottleEntity::new, EntityClassification.MISC)

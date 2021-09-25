@@ -1,10 +1,7 @@
 package net.arcanamod.systems.spell.casts;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.entities.BigSpellEggEntity;
-import net.arcanamod.entities.SpellCloudEntity;
-import net.arcanamod.entities.SpellEggEntity;
-import net.arcanamod.entities.SpellTrapEntity;
+import net.arcanamod.entities.*;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.systems.spell.Homeable;
 import net.arcanamod.util.Pair;
@@ -369,8 +366,9 @@ public abstract class Cast implements ICast {
 	}
 	
 	public static void createAOEBlast(PlayerEntity player, World world, BlockPos epicentre, float radius, boolean modified){
-		//BlastEmitterEntity emitter = new BlastEmitterEntity(world,radius);
-		//world.addEntity(emitter);
+		BlastEmitterEntity emitter = new BlastEmitterEntity(world,radius);
+		emitter.setPosition(emitter.getPosX(),epicentre.getY()+0.5f,epicentre.getZ());
+		world.addEntity(emitter);
 		Random rand = new Random();
 		IParticleData particle = ParticleTypes.ENTITY_EFFECT;
 		float surface = 3.1415927F * radius * radius;
@@ -381,23 +379,7 @@ public abstract class Cast implements ICast {
 		int r;
 		int g;
 		
-		if (modified){
-			for (int lvt_5_2_ = 0; (float) lvt_5_2_ < surface; ++lvt_5_2_) {
-				randomizedPi = rand.nextFloat() * 6.2831855F;
-				spread = 0.8f * radius;
-				offsetX = MathHelper.cos(randomizedPi) * spread;
-				float offsetZ = MathHelper.sin(randomizedPi) * spread;
-				if (particle.getType() == ParticleTypes.ENTITY_EFFECT) {
-					color = Color.CYAN.getRGB();
-					r = color >> 16 & 255;
-					g = color >> 8 & 255;
-					int b = color & 255;
-					world.addOptionalParticle(particle, epicentre.getX() + (double) offsetX, epicentre.getY(), epicentre.getZ() + (double) offsetZ, (double) ((float) r / 255.0F), (double) ((float) g / 255.0F), (double) ((float) b / 255.0F));
-				} else {
-					world.addOptionalParticle(particle, epicentre.getX() + (double) offsetX, epicentre.getY(), epicentre.getZ() + (double) offsetZ, (0.5D - rand.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - rand.nextDouble()) * 0.15D);
-				}
-			}
-		}else{
+		if (!modified){
 			for (int lvt_5_2_ = 0; (float) lvt_5_2_ < surface; ++lvt_5_2_) {
 				randomizedPi = rand.nextFloat() * 6.2831855F;
 				spread = MathHelper.sqrt(rand.nextFloat()) * radius;

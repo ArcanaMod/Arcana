@@ -205,9 +205,10 @@ public class ClientProxy extends CommonProxy{
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.DAIR_SPIRIT.get(), DairSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.WILLOW_SPIRIT.get(), WillowSpiritRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_CLOUD.get(), SpellCloudEntityRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.BLAST_EMITTER.get(), BlastEmitterEntityRenderer::new);
 		
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.SPELL_EGG.get(), SpellEggEntityRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.BIG_SPELL_EGG.get(), SpellEggEntityRenderer::new);
+		//RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.BLAST_EMITTER.get(), SpellEggEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINT_BOTTLE.get(), TaintBottleEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BAT.get(), TaintedBatRender::new);
 		RenderingRegistry.registerEntityRenderingHandler(ArcanaEntities.TAINTED_BEE.get(), manager -> new TaintedEntityRender(manager, new BeeModel()));

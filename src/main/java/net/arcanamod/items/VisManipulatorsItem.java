@@ -87,9 +87,4 @@ public class VisManipulatorsItem extends Item{
 	public ICast getSpell(){
 		return null;
 	}
-
-	@Override
-	public int getUseDuration(ItemStack stack) {
-		return getSpell().getSpellDuration();
-	}
 }

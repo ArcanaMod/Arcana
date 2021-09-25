@@ -21,7 +21,7 @@ public interface Homeable {
                 List<Entity> entitiesWithinBox = toHome.world.getEntitiesWithinAABB((Class<? extends Entity>) homeTarget,box,Entity::isAlive);
                 if (entitiesWithinBox.size() > 0){
                     for (Entity entity : entitiesWithinBox){
-                        entity.move(MoverType.PLAYER,getVecDistance(toHome,entity,0.6f));
+                        toHome.move(MoverType.PLAYER,getVecDistance(entity, toHome,10f));
                     }
                 }
             }
@@ -32,7 +32,7 @@ public interface Homeable {
     /*private */static <E extends Entity> Vector3d getVecDistance(E homing, E entity, float pDM){
         return new Vector3d(
                 (homing.getPosX()-entity.getPosX())/pDM,
-                (homing.getPosY()-entity.getPosY())/pDM,
+                0,
                 (homing.getPosZ()-entity.getPosZ())/pDM
         );
     }
