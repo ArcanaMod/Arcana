@@ -7,6 +7,7 @@ import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.client.gui.ClientUiUtil;
 import net.arcanamod.client.gui.ResearchEntryScreen;
+import net.arcanamod.client.research.impls.StringSectionRenderer;
 import net.arcanamod.mixin.FontRendererAccessor;
 import net.arcanamod.mixin.ModContainerAccessor;
 import net.arcanamod.systems.research.ResearchBooks;
@@ -23,7 +24,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.*;
+import net.minecraft.util.text.Style;
 import net.minecraftforge.fml.ModList;
 
 import javax.annotation.Nullable;
@@ -34,14 +35,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static net.arcanamod.client.gui.ClientUiUtil.drawTexturedModalRect;
-import static net.arcanamod.client.gui.ResearchEntryScreen.TEXT_SCALING;
 
 public final class TextFormatter{
 	
 	private TextFormatter(){
 	}
 	
-	private static final float TEXT_WIDTH = ResearchEntryScreen.PAGE_WIDTH / TEXT_SCALING;
+	private static float getTextWidth(){
+		return ResearchEntryScreen.PAGE_WIDTH / StringSectionRenderer.textScaling();
+	}
 	
 	public interface Span{
 		
@@ -159,7 +161,7 @@ public final class TextFormatter{
 			float curLineHeight = 0;
 			for(int i = 0; i < spans.size(); i++){
 				Span span = spans.get(i);
-				if((curLineWidth + span.getWidth()) < TEXT_WIDTH){
+				if((curLineWidth + span.getWidth()) < getTextWidth()){
 					lines.get(curLine).add(span);
 					curLineWidth += span.getWidth() + 5;
 					curLineHeight = Math.max(curLineHeight, (span.getHeight() + 1));
@@ -169,7 +171,7 @@ public final class TextFormatter{
 					curLineWidth = 0;
 					height += curLineHeight;
 					curLineHeight = 0;
-					if(span.getWidth() < TEXT_WIDTH)
+					if(span.getWidth() < getTextWidth())
 						// make sure this span gets added to the next line instead
 						i--;
 					else
@@ -192,7 +194,7 @@ public final class TextFormatter{
 				float lineWidth = (float)line.stream().mapToDouble(value -> value.getWidth() + 2).sum();
 				float lineHeight = (float)line.stream().mapToDouble(Span::getHeight).max().orElse(1);
 				if(centred)
-					curX = (TEXT_WIDTH - lineWidth) / 2;
+					curX = (getTextWidth() - lineWidth) / 2;
 				for(Span span : line){
 					span.render(stack, (int)(x + curX), (int)(y + curY + (lineHeight - span.getHeight()) / 2));
 					curX += span.getWidth() + 5;
@@ -210,7 +212,7 @@ public final class TextFormatter{
 		
 		public void render(MatrixStack stack, int x, int y, float scale){
 			Minecraft.getInstance().getTextureManager().bindTexture(((ResearchEntryScreen)(Minecraft.getInstance().currentScreen)).bg);
-			drawTexturedModalRect(stack, (int)(x + (TEXT_WIDTH - 86) / 2), y + 3, 29, 184, 86, 3);
+			drawTexturedModalRect(stack, (int)(x + (getTextWidth() - 86) / 2), y + 3, 29, 184, 86, 3);
 		}
 		
 		public float getHeight(){
