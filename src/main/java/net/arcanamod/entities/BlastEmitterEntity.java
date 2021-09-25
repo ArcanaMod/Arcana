@@ -34,12 +34,12 @@ public class BlastEmitterEntity extends Entity {
 	private static final DataParameter<Integer> COOLDOWN;
 	
 	private final List<LivingEntity> wasDamaged = new ArrayList<>();
-	private final List<Consumer<DamageSource>> onDeathHandler = new ArrayList<>();
 	private int cooldown = 0;
 	private ICast spell;
 	private PlayerEntity caster;
 	private Pair<Boolean, Class<? extends LivingEntity>[]> blackWhiteTargetList = Pair.of(true,new Class[]{LivingEntity.class});
 	private int autodestructionCooldown = 0;
+	private boolean extendable = false;
 	
 	public BlastEmitterEntity(World worldIn,PlayerEntity caster, float radius) {
 		super(ArcanaEntities.BLAST_EMITTER.get(), worldIn);
@@ -128,8 +128,9 @@ public class BlastEmitterEntity extends Entity {
 		for (LivingEntity leInBox : entities) {
 			if (blackWhiteTargetList.getFirst() || Arrays.stream(blackWhiteTargetList.getSecond()).noneMatch(streamed -> streamed == leInBox.getClass()))
 				if (!wasDamaged.contains(leInBox)) {
-					onDeathHandler.add(leInBox::onDeath);
 					leInBox.attackEntityFrom(DamageSource.MAGIC, 0.6f);
+					if (extendable)
+						setRadius(getRadius()+0.4f);
 					((Cast)spell).useOnEntity(caster,leInBox);
 					wasDamaged.add(leInBox);
 				}
@@ -157,6 +158,10 @@ public class BlastEmitterEntity extends Entity {
 	@Override
 	public IPacket<?> createSpawnPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
+	}
+	
+	public void allowToExtend() {
+		extendable = true;
 	}
 	
 	public float getRadius() {

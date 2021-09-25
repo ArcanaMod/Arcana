@@ -78,9 +78,9 @@ public class VisManipulatorsItem extends Item{
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
 		BlockPos pos = RayTraceUtils.getTargetBlockPos(playerIn,worldIn,80);
 		if (worldIn.getBlockState(pos).getBlock()== ArcanaBlocks.SMOKEY_GLASS.get()){
-			((Cast)Casts.ICE_CAST).createAOEBlast(playerIn,worldIn,pos.up(),8,true, 3);
+			((Cast)Casts.ICE_CAST).createAOEBlast(playerIn,worldIn,pos.up(),8,true, false, 3);
 		}else if (worldIn.getBlockState(pos).getBlock()== ArcanaBlocks.HARDENED_GLASS.get()){
-			((Cast)Casts.ICE_CAST).createAOEBlast(playerIn,worldIn,pos.up(),8,true, 1);
+			((Cast)Casts.ICE_CAST).createAOEBlast(playerIn,worldIn,pos.up(),8,true, false, 1);
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}

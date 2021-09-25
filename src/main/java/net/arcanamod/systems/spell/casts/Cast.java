@@ -117,25 +117,26 @@ public abstract class Cast implements ICast {
 				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, world, raytraceDistance);
 				if (cast.getSecond() == ENVY) {
 					// the effect grows the more entities it hits
+					createAOEBlast(player,world,pos,16.0f,true,true, 1);
 				} else if (cast.getSecond() == LUST) {
 					// cant target hostile mobs
-					createAOEBlast(player,world,pos,8.0f,false, 1, MobEntity.class);
+					createAOEBlast(player,world,pos,8.0f,false,false, 1, MobEntity.class);
 				} else if (cast.getSecond() == SLOTH) {
 					// the AOE slows to a crawl allowing entities to be hit multiple times
 				} else if (cast.getSecond() == PRIDE) {
 					// creates multiple AOE waves in an AOE
-					createAOEBlast(player,world,pos,8.0f,true, 3);
+					createAOEBlast(player,world,pos,8.0f,true,false, 3);
 				} else if (cast.getSecond() == GREED) {
 					// can only target hostile mobs
-					createAOEBlast(player,world,pos,8.0f,true, 1, MobEntity.class);
+					createAOEBlast(player,world,pos,8.0f,true,false, 1, MobEntity.class);
 				} else if (cast.getSecond() == GLUTTONY) {
 					// the AOE effect is bigger
-					createAOEBlast(player,world,pos,16.0f,true, 1);
+					createAOEBlast(player,world,pos,16.0f,true,false, 1);
 				} else if (cast.getSecond() == WRATH) {
 					// the AOE effect becomes diectional wave with a longer range
 				} else {
 					// Default WATER SPELL
-					createAOEBlast(player,world,pos,8.0f,true, 1);
+					createAOEBlast(player,world,pos,8.0f,true,false, 1);
 				}
 			}
 			if (cast.getFirst() == FIRE) {
@@ -371,7 +372,7 @@ public abstract class Cast implements ICast {
 		world.addEntity(cloud);
 	}
 	
-	public void createAOEBlast(PlayerEntity player, World world, BlockPos epicentre, float radius, boolean whitelistMode, int waves, @Nullable Class<? extends LivingEntity>... targets){
+	public void createAOEBlast(PlayerEntity player, World world, BlockPos epicentre, float radius, boolean whitelistMode, boolean canExtend, int waves, @Nullable Class<? extends LivingEntity>... targets){
 		for (int i = 0; i < waves; i++) {
 			BlastEmitterEntity emitter = new BlastEmitterEntity(world,player,radius);
 			emitter.setPosition(emitter.getPosX(),epicentre.getY()+0.5f,epicentre.getZ());
