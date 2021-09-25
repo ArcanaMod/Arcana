@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unchecked") // Yes IntelliJ I checked that don't scream at me
 public class BlastEmitterEntity extends Entity {
@@ -33,10 +34,12 @@ public class BlastEmitterEntity extends Entity {
 	private static final DataParameter<Integer> COOLDOWN;
 	
 	private final List<LivingEntity> wasDamaged = new ArrayList<>();
+	private final List<Consumer<DamageSource>> onDeathHandler = new ArrayList<>();
 	private int cooldown = 0;
 	private ICast spell;
 	private PlayerEntity caster;
 	private Pair<Boolean, Class<? extends LivingEntity>[]> blackWhiteTargetList = Pair.of(true,new Class[]{LivingEntity.class});
+	private int autodestructionCooldown = 0;
 	
 	public BlastEmitterEntity(World worldIn,PlayerEntity caster, float radius) {
 		super(ArcanaEntities.BLAST_EMITTER.get(), worldIn);
@@ -80,32 +83,36 @@ public class BlastEmitterEntity extends Entity {
 			int color;
 			int r;
 			int g;
-			
-			if (world.isRemote) {
-				for (int i = 0; (float) i < surface; ++i) {
-					randomizedPi = rand.nextFloat() * 6.2831855F;
-					spread = 0.8f * currRadius;
-					offsetX = MathHelper.cos(randomizedPi) * spread;
-					float offsetZ = MathHelper.sin(randomizedPi) * spread;
-					if (particle.getType() == ParticleTypes.ENTITY_EFFECT) {
-						color = Color.CYAN.getRGB();
-						r = color >> 16 & 255;
-						g = color >> 8 & 255;
-						int b = color & 255;
-						world.addOptionalParticle(particle, getPosX() + (double) offsetX, getPosY(), getPosZ() + (double) offsetZ, (double) ((float) r / 255.0F), (double) ((float) g / 255.0F), (double) ((float) b / 255.0F));
-					} else {
-						world.addOptionalParticle(particle, getPosX() + (double) offsetX, getPosY(), getPosZ() + (double) offsetZ, (0.5D - rand.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - rand.nextDouble()) * 0.15D);
+			if (currRadius < (getRadius() * 2)) {
+				if (world.isRemote) {
+					for (int i = 0; (float) i < surface; ++i) {
+						randomizedPi = rand.nextFloat() * 6.2831855F;
+						spread = 0.8f * currRadius;
+						offsetX = MathHelper.cos(randomizedPi) * spread;
+						float offsetZ = MathHelper.sin(randomizedPi) * spread;
+						if (particle.getType() == ParticleTypes.ENTITY_EFFECT) {
+							color = Color.CYAN.getRGB();
+							r = color >> 16 & 255;
+							g = color >> 8 & 255;
+							int b = color & 255;
+							world.addOptionalParticle(particle, getPosX() + (double) offsetX, getPosY(), getPosZ() + (double) offsetZ, (double) ((float) r / 255.0F), (double) ((float) g / 255.0F), (double) ((float) b / 255.0F));
+						} else {
+							world.addOptionalParticle(particle, getPosX() + (double) offsetX, getPosY(), getPosZ() + (double) offsetZ, (0.5D - rand.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - rand.nextDouble()) * 0.15D);
+						}
+					}
+				} else {
+					if (currRadius < getRadius()) {
+						if (blackWhiteTargetList.getFirst())
+							for (Class<? extends LivingEntity> selEntity : blackWhiteTargetList.getSecond()) {
+								executeSpellOnEntitiesInAABB(currRadius, selEntity);
+							}
+						else executeSpellOnEntitiesInAABB(currRadius, LivingEntity.class);
 					}
 				}
 			} else {
-				if (currRadius < getRadius()){
-					if (blackWhiteTargetList.getFirst())
-					for (Class<? extends LivingEntity> selEntity : blackWhiteTargetList.getSecond()){
-						executeSpellOnEntitiesInAABB(currRadius,selEntity);
-					} else executeSpellOnEntitiesInAABB(currRadius,LivingEntity.class);
-				}
-				if (currRadius > (getRadius() * 2))
+				if (autodestructionCooldown >= 160)
 					this.remove();
+				else autodestructionCooldown++;
 			}
 		}
 		cooldown++;
@@ -121,11 +128,15 @@ public class BlastEmitterEntity extends Entity {
 		for (LivingEntity leInBox : entities) {
 			if (blackWhiteTargetList.getFirst() || Arrays.stream(blackWhiteTargetList.getSecond()).noneMatch(streamed -> streamed == leInBox.getClass()))
 				if (!wasDamaged.contains(leInBox)) {
+					onDeathHandler.add(leInBox::onDeath);
 					leInBox.attackEntityFrom(DamageSource.MAGIC, 0.6f);
 					((Cast)spell).useOnEntity(caster,leInBox);
 					wasDamaged.add(leInBox);
 				}
 		}
+	}
+	
+	private static void onCloudhDeath() {
 	}
 	
 	/**
