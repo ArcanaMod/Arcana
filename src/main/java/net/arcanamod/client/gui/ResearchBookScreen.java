@@ -66,6 +66,7 @@ public class ResearchBookScreen extends Screen {
 	static float xPan = 0;
 	static float yPan = 0;
 	static float zoom = 0.7f;
+	static float targetZoom = 0.7f;
 	static boolean showZoom = false;
 
 	public ResearchBookScreen(ResearchBook book, Screen parentScreen, ItemStack sender){
@@ -86,6 +87,7 @@ public class ResearchBookScreen extends Screen {
 			// has a valid requirement - check if unlocked
 			return Researcher.getFrom(player).entryStage(entry) >= entry.sections().size();
 		}).collect(Collectors.toList());
+		zoom = targetZoom;
 	}
 
 	public float getXOffset(){
@@ -95,12 +97,17 @@ public class ResearchBookScreen extends Screen {
 	public float getYOffset(){
 		return ((height / 2f) * (1 / zoom)) - (yPan / 2f);
 	}
-
-	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks){
+	
+	public void render(@Nonnull MatrixStack stack, int mouseX, int mouseY, float partialTicks){
+		if(ArcanaConfig.BOOK_SMOOTH_ZOOM.get()){
+			float diff = targetZoom - zoom;
+			zoom = zoom + Math.min(partialTicks * (2 / 3f), 1) * diff;
+		}else
+			zoom = targetZoom;
 		renderBackground(stack);
 		RenderSystem.enableBlend();
 		super.render(stack, mouseX, mouseY, partialTicks);
-
+		
 		// draw stuff
 		// 224x196 viewing area
 		int scale = (int)getMinecraft().getMainWindow().getGuiScaleFactor();
@@ -109,18 +116,18 @@ public class ResearchBookScreen extends Screen {
 		GL11.glScissor(x * scale, y * scale, visibleWidth * scale, visibleHeight * scale);
 		GL11.glEnable(GL_SCISSOR_TEST);
 		// scissors on
-
+		
 		renderResearchBackground(stack);
 		renderEntries(stack, partialTicks);
-
+		
 		// scissors off
 		GL11.glDisable(GL_SCISSOR_TEST);
-
+		
 		setBlitOffset(299);
 		renderFrame(stack);
 		setBlitOffset(0);
 		renderEntryTooltip(stack, mouseX, mouseY);
-
+		
 		tooltipButtons.forEach(pin -> pin.renderAfter(stack, mouseX, mouseY));
 		RenderSystem.enableBlend();
 	}
@@ -173,7 +180,7 @@ public class ResearchBookScreen extends Screen {
 		int x = (this.width - getFrameWidth()) / 2 + 16;
 		int y = (this.height - getFrameHeight()) / 2 + 17;
 		if(!categories.get(tab).getBgs().isEmpty())
-			categories.get(tab).getBgs().forEach(/*layer -> layer.render(stack, x, y, width, height, xPan, yPan, scale, xOffset, yOffset, zoom)*/layer -> BackgroundLayerRenderers.render(layer, stack, x, y, width, height, xPan, yPan, scale, xOffset, yOffset, zoom));
+			categories.get(tab).getBgs().forEach(layer -> BackgroundLayerRenderers.render(layer, stack, x, y, width, height, xPan, yPan, scale, xOffset, yOffset, zoom));
 		else
 			drawModalRectWithCustomSizedTexture(stack, x, y, (-xPan + MAX_PAN) / scale + xOffset, (yPan + MAX_PAN) / scale + yOffset, width, height, MAX_PAN, MAX_PAN);
 	}
@@ -481,7 +488,7 @@ public class ResearchBookScreen extends Screen {
 			textStack.translate(0.0D, 0.0D, 299);
 			Matrix4f textLocation = textStack.getLast().getMatrix();
 			IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-			minecraft.fontRenderer.renderString("Zoom: " + zoom, x + 22, y + 5, -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("Zoom: " + zoom + " (" + targetZoom + ")", x + 22, y + 5, -1, false, textLocation, renderType, false, 0, 0xf000f0);
 			minecraft.fontRenderer.renderString("XPan: " + xPan, x + 22, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
 			minecraft.fontRenderer.renderString("YPan: " + yPan, x + 112, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
 			minecraft.fontRenderer.renderString("FWidth: " + getFrameWidth(), x + 212, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
@@ -534,10 +541,10 @@ public class ResearchBookScreen extends Screen {
 
 	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
 		float amnt = 1.2f;
-		if((scroll < 0 && zoom > 0.5) || (scroll > 0 && zoom < 1))
-			zoom *= scroll > 0 ? amnt : 1 / amnt;
-		if(zoom > 1f)
-			zoom = 1f;
+		if((scroll < 0 && targetZoom > 0.5) || (scroll > 0 && targetZoom < 1))
+			targetZoom *= scroll > 0 ? amnt : 1 / amnt;
+		if(targetZoom > 1f)
+			targetZoom = 1f;
 		return super.mouseScrolled(mouseX, mouseY, scroll);
 	}
 

@@ -168,14 +168,17 @@ public class ArcanaConfig{
 		BOOK_TEXT_SCALING = CLIENT_BUILDER
 				.comment("Text scaling for the research entry GUI.", "0.7 by default")
 				.define("ResearchBookTextScaling", 0.7);
+		BOOK_SMOOTH_ZOOM = CLIENT_BUILDER
+				.comment("Whether the research book should smoothly change zoom level, or snap to new zoom levels.", "False by default.")
+				.define("ResearchBookSmoothZoom", false);
 		WAND_HUD_SCALING = CLIENT_BUILDER
-				.comment("Texture scaling for the wand HUD.", "1.5 by default")
+				.comment("Texture scaling for the wand HUD.", "1.5 by default.")
 				.define("WandHudScaling", 1.5);
 		WAND_HUD_X = CLIENT_BUILDER
-				.comment("Distance of Wand HUD from the horizontal edge.", "5 by default")
+				.comment("Distance of Wand HUD from the horizontal edge.", "5 by default.")
 				.define("WandHrznOffset", 5d);
 		WAND_HUD_Y = CLIENT_BUILDER
-				.comment("Distance of Wand HUD from the vertical edge.", "5 by default")
+				.comment("Distance of Wand HUD from the vertical edge.", "5 by default.")
 				.define("WandVertOffset", 5d);
 		WAND_HUD_LEFT = CLIENT_BUILDER
 				.comment("Whether the wand HUD should display on the left of the screen (true) or the right (false).", "True by default.")
@@ -262,6 +265,7 @@ public class ArcanaConfig{
 	public static ConfigValue<Integer> CUSTOM_BOOK_WIDTH; // -1
 	public static ConfigValue<Integer> CUSTOM_BOOK_HEIGHT; // -1
 	public static ConfigValue<Double> BOOK_TEXT_SCALING; // 0.8
+	public static ConfigValue<Boolean> BOOK_SMOOTH_ZOOM; // false
 	public static ConfigValue<Double> WAND_HUD_SCALING; // 2.0
 	public static ConfigValue<Double> WAND_HUD_X; // 5
 	public static ConfigValue<Double> WAND_HUD_Y; // 5
