@@ -6,10 +6,7 @@ import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.systems.spell.Homeable;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -30,6 +27,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.List;
 import java.util.Optional;
@@ -83,30 +81,31 @@ public abstract class Cast implements ICast {
 				- Targets Entities inside
 				- Lingering effect
 				 */
-				int raytraceDistance = 10;
+				int raytraceDistance = 24;
 
  				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, world, raytraceDistance);
+ 				Vector3d vec = new Vector3d(pos.getX(),pos.getY(),pos.getZ()).add(0,0.51,0);
 				if (cast.getSecond() == ENVY) {
 					// enemies killed by the cloud spawn another smaller cloud
 				} else if (cast.getSecond() == LUST) {
 					// slowly moves towards the closest player / passive mob
-					createSpellCloud(player,world,player.getPositionVec(),1,1.8f,PlayerEntity.class, CreatureEntity.class);
+					createSpellCloud(player,world,vec,1,1.8f,PlayerEntity.class, CreatureEntity.class);
 				} else if (cast.getSecond() == SLOTH) {
 					// the cloud last longer
-					createSpellCloud(player,world,player.getPositionVec(),1,1.8f);
+					createSpellCloud(player,world,vec,1,1.8f);
 				} else if (cast.getSecond() == PRIDE) {
 					// cloud splits and disopates
 				} else if (cast.getSecond() == GREED) {
 					// slowly moves towards the closest hostile mob
-					createSpellCloud(player,world,player.getPositionVec(),1,1.8f,MobEntity.class);
+					createSpellCloud(player,world,vec,1,1.8f,MobEntity.class);
 				} else if (cast.getSecond() == GLUTTONY) {
 					// the cloud is bigger
-					createSpellCloud(player,world,player.getPositionVec(),1,0.8f);
+					createSpellCloud(player,world,vec,1,0.8f);
 				} else if (cast.getSecond() == WRATH) {
 					// creates tornado
 				} else {
 					// Default AIR SPELL
-					createSpellCloud(player,world,player.getPositionVec(),0,1f);
+					createSpellCloud(player,world,vec,0,1f);
 				}
 			}
 			if (cast.getFirst() == WATER) {
@@ -114,22 +113,30 @@ public abstract class Cast implements ICast {
 				- Creates an AOE blast
 				- Targets any entity hit
 				 */
+				int raytraceDistance = 24;
+				BlockPos pos = RayTraceUtils.getTargetBlockPos(player, world, raytraceDistance);
 				if (cast.getSecond() == ENVY) {
 					// the effect grows the more entities it hits
+					createAOEBlast(player,world,pos,16.0f,true,true, 1);
 				} else if (cast.getSecond() == LUST) {
 					// cant target hostile mobs
+					createAOEBlast(player,world,pos,8.0f,false,false, 1, MobEntity.class);
 				} else if (cast.getSecond() == SLOTH) {
 					// the AOE slows to a crawl allowing entities to be hit multiple times
 				} else if (cast.getSecond() == PRIDE) {
 					// creates multiple AOE waves in an AOE
+					createAOEBlast(player,world,pos,8.0f,true,false, 3);
 				} else if (cast.getSecond() == GREED) {
 					// can only target hostile mobs
+					createAOEBlast(player,world,pos,8.0f,true,false, 1, MobEntity.class);
 				} else if (cast.getSecond() == GLUTTONY) {
 					// the AOE effect is bigger
+					createAOEBlast(player,world,pos,16.0f,true,false, 1);
 				} else if (cast.getSecond() == WRATH) {
 					// the AOE effect becomes diectional wave with a longer range
 				} else {
 					// Default WATER SPELL
+					createAOEBlast(player,world,pos,8.0f,true,false, 1);
 				}
 			}
 			if (cast.getFirst() == FIRE) {
@@ -365,36 +372,15 @@ public abstract class Cast implements ICast {
 		world.addEntity(cloud);
 	}
 	
-	public static void createAOEBlast(PlayerEntity player, World world, BlockPos epicentre, float radius, boolean modified){
-		BlastEmitterEntity emitter = new BlastEmitterEntity(world,radius);
-		emitter.setPosition(emitter.getPosX(),epicentre.getY()+0.5f,epicentre.getZ());
-		world.addEntity(emitter);
-		Random rand = new Random();
-		IParticleData particle = ParticleTypes.ENTITY_EFFECT;
-		float surface = 3.1415927F * radius * radius;
-		float randomizedPi;
-		float spread;
-		float offsetX;
-		int color;
-		int r;
-		int g;
-		
-		if (!modified){
-			for (int lvt_5_2_ = 0; (float) lvt_5_2_ < surface; ++lvt_5_2_) {
-				randomizedPi = rand.nextFloat() * 6.2831855F;
-				spread = MathHelper.sqrt(rand.nextFloat()) * radius;
-				offsetX = MathHelper.cos(randomizedPi) * spread;
-				float offsetZ = MathHelper.sin(randomizedPi) * spread;
-				if (particle.getType() == ParticleTypes.ENTITY_EFFECT) {
-					color = Color.CYAN.getRGB();
-					r = color >> 16 & 255;
-					g = color >> 8 & 255;
-					int b = color & 255;
-					world.addOptionalParticle(particle, epicentre.getX() + (double) offsetX, epicentre.getY(), epicentre.getZ() + (double) offsetZ, (double) ((float) r / 255.0F), (double) ((float) g / 255.0F), (double) ((float) b / 255.0F));
-				} else {
-					world.addOptionalParticle(particle, epicentre.getX() + (double) offsetX, epicentre.getY(), epicentre.getZ() + (double) offsetZ, (0.5D - rand.nextDouble()) * 0.15D, 0.009999999776482582D, (0.5D - rand.nextDouble()) * 0.15D);
-				}
-			}
+	public void createAOEBlast(PlayerEntity player, World world, BlockPos epicentre, float radius, boolean whitelistMode, boolean canExtend, int waves, @Nullable Class<? extends LivingEntity>... targets){
+		for (int i = 0; i < waves; i++) {
+			BlastEmitterEntity emitter = new BlastEmitterEntity(world,player,radius);
+			emitter.setPosition(emitter.getPosX(),epicentre.getY()+0.5f,epicentre.getZ());
+			emitter.setCooldown(15*i);
+			emitter.setSpell(this);
+			emitter.setCaster(player);
+			emitter.makeBlackWhiteList(whitelistMode,targets);
+			world.addEntity(emitter);
 		}
 	}
 }

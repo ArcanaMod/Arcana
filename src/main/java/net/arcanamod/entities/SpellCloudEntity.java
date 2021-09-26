@@ -117,7 +117,6 @@ public class SpellCloudEntity extends Entity implements Homeable{
 		if (!this.colorSet) {
 			this.updateFixedColor();
 		}
-
 	}
 
 	private void updateFixedColor() {
@@ -126,7 +125,6 @@ public class SpellCloudEntity extends Entity implements Homeable{
 		} else {
 			this.getDataManager().set(COLOR, this.spell.getSpellAspect().getColorRange().get(3));
 		}
-
 	}
 
 	public int getColor() {
