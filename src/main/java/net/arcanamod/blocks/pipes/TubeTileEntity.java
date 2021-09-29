@@ -1,19 +1,29 @@
 package net.arcanamod.blocks.pipes;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SixWayBlock;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.util.Constants;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 	
 	protected static final int MAX_SPECKS = 1000;
@@ -62,7 +72,7 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 					if(tube.enabled()){
 						toRemove.add(speck);
 						tube.addSpeck(speck);
-						speck.pos = 0;
+						speck.pos = speck.pos % 1;
 					}
 				}else if(AspectHandler.getOptional(te).isPresent()){
 					toRemove.add(speck);
@@ -100,5 +110,40 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 	
 	public boolean enabled(){
 		return true;
+	}
+	
+	public CompoundNBT write(CompoundNBT compound){
+		CompoundNBT tag = super.write(compound);
+		ListNBT specks = new ListNBT();
+		for(AspectSpeck speck : this.specks)
+			specks.add(speck.toNbt());
+		tag.put("specks", specks);
+		return tag;
+	}
+	
+	public void read(BlockState state, CompoundNBT nbt){
+		super.read(state, nbt);
+		ListNBT specksList = nbt.getList("specks", Constants.NBT.TAG_COMPOUND);
+		specks.clear();
+		for(INBT speckInbt : specksList){
+			CompoundNBT speckTag = (CompoundNBT)speckInbt;
+			specks.add(AspectSpeck.fromNbt(speckTag));
+		}
+	}
+	
+	public CompoundNBT getUpdateTag(){
+		return write(new CompoundNBT());
+	}
+	
+	public void handleUpdateTag(BlockState state, CompoundNBT tag){
+		read(state, tag);
+	}
+	
+	public SUpdateTileEntityPacket getUpdatePacket(){
+		return new SUpdateTileEntityPacket(pos, -1, getUpdateTag());
+	}
+	
+	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+		handleUpdateTag(getBlockState(), pkt.getNbtCompound());
 	}
 }

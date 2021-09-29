@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.blocks.pipes.AspectSpeck;
-import net.arcanamod.blocks.pipes.PipeWindowTileEntity;
+import net.arcanamod.blocks.pipes.TubeTileEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
@@ -15,13 +15,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class AspectWindowTileEntityRenderer extends TileEntityRenderer<PipeWindowTileEntity>{
+public class PipeTileEntityRenderer extends TileEntityRenderer<TubeTileEntity>{
 	
-	public AspectWindowTileEntityRenderer(TileEntityRendererDispatcher dispatcher){
+	public PipeTileEntityRenderer(TileEntityRendererDispatcher dispatcher){
 		super(dispatcher);
 	}
 	
-	public void render(PipeWindowTileEntity te, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int light, int overlay){
+	public void render(TubeTileEntity te, float partialTicks, MatrixStack stack, IRenderTypeBuffer buffer, int light, int overlay){
 		for(AspectSpeck speck : te.getSpecks()){
 			stack.push();
 			// so
@@ -34,7 +34,8 @@ public class AspectWindowTileEntityRenderer extends TileEntityRenderer<PipeWindo
 			// move by -dir*0.5
 			stack.translate(-speck.direction.getXOffset() * 0.5, -speck.direction.getYOffset() * 0.5, -speck.direction.getZOffset() * 0.5);
 			// move the speck by its progress
-			stack.translate(speck.pos * speck.direction.getXOffset(), speck.pos * speck.direction.getYOffset(), speck.pos * speck.direction.getZOffset());
+			float pos = speck.pos + partialTicks * speck.speed / 20f;
+			stack.translate(pos * speck.direction.getXOffset(), pos * speck.direction.getYOffset(), pos * speck.direction.getZOffset());
 			// debugging
 			stack.translate(0, .25, 0);
 			stack.scale(0.5f, 0.5f, 0.5f);

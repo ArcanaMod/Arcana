@@ -72,7 +72,7 @@ public class ValveTileEntity extends TubeTileEntity{
 		return nbt;
 	}
 	
-	public void handleUpdateTag(BlockState state, CompoundNBT tag){
+	public void handleUpdateTag(@Nonnull BlockState state, @Nonnull CompoundNBT tag){
 		super.handleUpdateTag(state, tag);
 		setSuppressedByRedstone(tag.getBoolean("suppressed"));
 	}
@@ -82,7 +82,7 @@ public class ValveTileEntity extends TubeTileEntity{
 		return new SUpdateTileEntityPacket(pos, -1, getUpdateTag());
 	}
 	
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+	public void onDataPacket(@Nonnull NetworkManager net, @Nonnull SUpdateTileEntityPacket pkt){
 		handleUpdateTag(getBlockState(), pkt.getNbtCompound());
 	}
 }
