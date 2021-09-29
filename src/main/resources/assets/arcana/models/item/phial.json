@@ -4,6 +4,7 @@
     "layer0": "arcana:item/empty_phial"
   },
   "overrides": [
+    { "predicate": { "aspect": -2 }, "model": "arcana:item/empty_phial" },
     { "predicate": { "aspect": -1 }, "model": "arcana:item/empty_phial" },
     { "predicate": { "aspect": 0 }, "model": "arcana:item/air_phial" },
     { "predicate": { "aspect": 1 }, "model": "arcana:item/chaos_phial" },

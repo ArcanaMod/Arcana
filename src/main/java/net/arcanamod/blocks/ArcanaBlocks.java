@@ -12,6 +12,7 @@ import net.arcanamod.blocks.multiblocks.taint_scrubber.BoosterTaintScrubberExten
 import net.arcanamod.blocks.multiblocks.taint_scrubber.TaintScrubberBlock;
 import net.arcanamod.blocks.multiblocks.taint_scrubber.TaintScrubberExtensionBlock;
 import net.arcanamod.blocks.pipes.PipeWindowBlock;
+import net.arcanamod.blocks.pipes.PumpBlock;
 import net.arcanamod.blocks.pipes.TubeBlock;
 import net.arcanamod.blocks.pipes.ValveBlock;
 import net.arcanamod.blocks.tainted.TaintedSaplingBlock;
@@ -117,6 +118,7 @@ public class ArcanaBlocks{
 	@GLT public static final RegistryObject<Block> ASPECT_TUBE = BLOCKS.register("essentia_tube", () -> new TubeBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> ASPECT_VALVE = BLOCKS.register("essentia_valve", () -> new ValveBlock(create(IRON).hardnessAndResistance(3).notSolid()));
 	@GLT public static final RegistryObject<Block> ASPECT_WINDOW = BLOCKS.register("essentia_window", () -> new PipeWindowBlock(create(IRON).sound(SoundType.GLASS).hardnessAndResistance(3).notSolid()));
+	@GLT public static final RegistryObject<Block> ASPECT_PUMP = BLOCKS.register("essentia_pump", () -> new PumpBlock(create(IRON).sound(SoundType.GLASS).hardnessAndResistance(3).notSolid()));
 	@GLT @GIM(BLOCK_REF) public static final RegistryObject<Block> ASPECT_CRYSTALLIZER = BLOCKS.register("aspect_crystallizer", () -> new AspectCrystallizerBlock(create(IRON).hardnessAndResistance(3)));
 	
 	// Taint Scrubber parts

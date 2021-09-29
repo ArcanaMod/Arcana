@@ -12,7 +12,7 @@ public class AspectCell implements AspectHolder{
 	
 	private AspectStack stored = AspectStack.EMPTY;
 	private float capacity;
-	private boolean voids = false, canInsert = false;
+	private boolean voids = false, canInsert = true;
 	// not serialized, set these yourself
 	private Consumer<Float> overfillingCallback = __ -> {};
 	private List<Aspect> whitelist = null;

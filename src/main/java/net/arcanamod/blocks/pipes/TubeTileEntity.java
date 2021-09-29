@@ -16,7 +16,7 @@ import java.util.Optional;
 
 public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 	
-	private static final int MAX_SPECKS = 1000;
+	protected static final int MAX_SPECKS = 1000;
 	
 	List<AspectSpeck> specks = new ArrayList<>();
 	

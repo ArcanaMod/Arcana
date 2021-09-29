@@ -94,7 +94,9 @@ public class PhialItem extends Item implements IOverrideAspects {
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
-		return new AspectBattery(/*1, 8*/);
+		AspectBattery battery = new AspectBattery(/*1, 8*/);
+		battery.initHolders(8, 1);
+		return battery;
 	}
 	
 	@Override

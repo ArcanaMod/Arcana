@@ -46,6 +46,8 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 	public JarTileEntity(JarBlock.Type type){
 		super(ArcanaTiles.JAR_TE.get());
 		this.jarType = type;
+		vis = new AspectBattery();
+		vis.initHolders(100, 1);
 		vis.getHolder(0).setVoids(type == JarBlock.Type.VOID);
 	}
 	

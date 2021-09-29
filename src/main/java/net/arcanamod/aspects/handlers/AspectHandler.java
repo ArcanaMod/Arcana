@@ -132,7 +132,7 @@ public interface AspectHandler extends INBTSerializable<CompoundNBT>{
 							transferred += toInsert;
 							amount -= toInsert;
 						}
-						toHolder.insert(toInsert, false);
+						toHolder.insert(toInsert, in, false);
 					}
 			}
 		}
@@ -171,7 +171,10 @@ public interface AspectHandler extends INBTSerializable<CompoundNBT>{
 	 If every holder is empty, returns an empty stack.
 	*/
 	default AspectStack drainAny(float amount){
-		Aspect aspect = findFirstFullHolder().getStack().getAspect();
+		AspectHolder holder = findFirstFullHolder();
+		if(holder == null)
+			return AspectStack.EMPTY;
+		Aspect aspect = holder.getStack().getAspect();
 		return new AspectStack(aspect, drain(aspect, amount));
 	}
 	

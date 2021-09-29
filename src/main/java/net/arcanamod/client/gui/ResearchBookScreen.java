@@ -31,6 +31,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -348,6 +349,7 @@ public class ResearchBookScreen extends Screen {
 
 	public PageStyle parentStyle(ResearchEntry entry, Parent parent){
 		// if the parent is greater than required, consider it complete
+		Objects.requireNonNull(entry, "Tried to get the stage of a parent entry that doesn't exist: " + parent.getEntry().toString() + " (from " + parent.asString() + ")");
 		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(parent.getStage() == -1){
 			if(r.entryStage(entry) >= entry.sections().size())
