@@ -78,7 +78,7 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 					toRemove.add(speck);
 					AspectHandler.getFrom(te).insert(speck.payload);
 				}else{
-					if(state.get(SixWayBlock.DOWN))
+					if(state.get(SixWayBlock.DOWN) && dir != Direction.UP)
 						speck.direction = Direction.DOWN;
 					else if(state.get(SixWayBlock.NORTH) || state.get(SixWayBlock.SOUTH) || state.get(SixWayBlock.EAST) || state.get(SixWayBlock.WEST)){
 						List<Direction> directions = new ArrayList<>();

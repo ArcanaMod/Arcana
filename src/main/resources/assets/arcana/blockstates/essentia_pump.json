@@ -1,0 +1,44 @@
+{
+  "multipart": [
+
+    {   "when": { "north": true, "facing": "north" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_target_side" }
+    },
+    {   "when": { "east": true, "facing": "east" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "y": 90, "uvlock": true }
+    },
+    {   "when": { "south": true, "facing": "south" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "y": 180, "uvlock": true }
+    },
+    {   "when": { "west": true, "facing": "west" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "y": 270, "uvlock": true }
+    },
+    {   "when": { "up": true, "facing": "up" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "x": 270, "uvlock": true }
+    },
+    {   "when": { "down": true, "facing": "down" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_target_side", "x": 90, "uvlock": true }
+    },
+
+    {   "when": { "north": true, "facing": "east|south|west|up|down" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_side" }
+    },
+    {   "when": { "east": true, "facing": "north|south|west|up|down" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_side", "y": 90, "uvlock": true }
+    },
+    {   "when": { "south": true, "facing": "north|east|west|up|down" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_side", "y": 180, "uvlock": true }
+    },
+    {   "when": { "west": true, "facing": "north|east|south|up|down" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_side", "y": 270, "uvlock": true }
+    },
+    {   "when": { "up": true, "facing": "north|east|south|west|down" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_side", "x": 270, "uvlock": true }
+    },
+    {   "when": { "down": true, "facing": "north|south|east|west|up" },
+      "apply": { "model": "arcana:block/tubes/essentia_pump_side", "x": 90, "uvlock": true }
+    },
+
+    { "apply": { "model": "arcana:block/tubes/essentia_pump_middle" }}
+  ]
+}
