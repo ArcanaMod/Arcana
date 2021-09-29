@@ -10,7 +10,7 @@ public class PumpTileEntity extends TubeTileEntity{
 	
 	protected static int PULL_AMOUNT = 3;
 	protected static int PULL_TIME = 5;
-	protected static float SPECK_SPEED = 0.03f;
+	protected static float SPECK_SPEED = 0.5f;
 	
 	Direction direction;
 	

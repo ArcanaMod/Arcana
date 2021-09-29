@@ -45,7 +45,7 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 		for(AspectSpeck speck : specks){
 			Direction dir = speck.direction;
 			speck.pos += speck.speed / 20f;
-			float max = 0.75f;
+			float max = 0.5f;
 			BlockState state = getWorld().getBlockState(pos);
 			boolean connected = state.get(SixWayBlock.FACING_TO_PROPERTY_MAP.get(dir));
 			if(connected)
@@ -76,6 +76,7 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 						if(state.get(SixWayBlock.SOUTH)) directions.add(Direction.SOUTH);
 						if(state.get(SixWayBlock.EAST)) directions.add(Direction.EAST);
 						if(state.get(SixWayBlock.WEST)) directions.add(Direction.WEST);
+						if(directions.size() > 1) directions.remove(dir.getOpposite()); // don't bounce back if possible
 						speck.direction = directions.get(getWorld().rand.nextInt(directions.size()));
 					}else if(state.get(SixWayBlock.UP))
 						speck.direction = Direction.UP;
@@ -91,6 +92,10 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 	
 	public void addSpeck(AspectSpeck speck){
 		specks.add(speck);
+	}
+	
+	public List<AspectSpeck> getSpecks(){
+		return specks;
 	}
 	
 	public boolean enabled(){
