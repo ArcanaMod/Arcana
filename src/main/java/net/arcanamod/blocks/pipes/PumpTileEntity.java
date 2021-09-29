@@ -1,11 +1,17 @@
 package net.arcanamod.blocks.pipes;
 
+import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Optional;
+
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
 public class PumpTileEntity extends TubeTileEntity{
 	
 	protected static int PULL_AMOUNT = 3;
@@ -37,5 +43,9 @@ public class PumpTileEntity extends TubeTileEntity{
 					addSpeck(new AspectSpeck(stack, SPECK_SPEED, direction, 0));
 			}
 		}
+	}
+	
+	protected Optional<Direction> redirect(AspectSpeck speck, boolean canPass){
+		return Optional.of(direction);
 	}
 }
