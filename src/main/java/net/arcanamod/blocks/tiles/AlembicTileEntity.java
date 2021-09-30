@@ -4,9 +4,11 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.handlers.*;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.arcanamod.blocks.pipes.AspectSpeck;
 import net.arcanamod.blocks.pipes.TubeTileEntity;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
 import net.arcanamod.world.AuraView;
@@ -44,10 +46,11 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 		super(ArcanaTiles.ALEMBIC_TE.get());
 		for(int i = 0; i < 5; i++){
 			aspects.initHolders(50, 5);
-			aspects.getHolders().forEach(h -> h.setCanInsert(false));
+			//aspects.getHolders().forEach(h -> h.setCanInsert(false));
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void tick(){
 		if(isOn() && world != null){
 			// scan for boiling crucibles
@@ -97,7 +100,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 					for(AspectHolder holder : aspects.getHolders()){
 						if(holder.getCapacity() - holder.getStack().getAmount() > 0){
 							adding = holder;
-							Aspect maybe = te.getAspectStackMap().values().stream().filter(stack1 -> stack1.getAspect() == holder.getStack().getAspect() || holder.getStack().getAspect() == Aspects.EMPTY).findFirst().map(AspectStack::getAspect).orElse(EMPTY);
+							Aspect maybe = te.getAspectStackMap().values().stream().filter(stack1 -> stack1.getAspect() == holder.getStack().getAspect() || holder.getStack().isEmpty()).findFirst().map(AspectStack::getAspect).orElse(EMPTY);
 							if(maybe != EMPTY){
 								aspect = maybe;
 								break;
@@ -124,15 +127,16 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 					}
 				}
 				// then push them out into the total pipe system from sides
-				for(Direction directions : Direction.Plane.HORIZONTAL){
-					TileEntity tubeTe = world.getTileEntity(pos.offset(directions));
-					if(tubeTe instanceof TubeTileEntity){
-						TubeTileEntity aspectTube = (TubeTileEntity)tubeTe;
-						// moveAllAspects only moves integer amounts
-						VisUtils.moveAllAspects(aspects, AspectHandler.getFrom(aspectTube), maxAspectOut);
-						break;
+				if(world.getGameTime() % 5 == 0)
+					for(Direction dir : Direction.Plane.HORIZONTAL){
+						TileEntity tubeTe = world.getTileEntity(pos.offset(dir));
+						if(tubeTe instanceof TubeTileEntity){
+							TubeTileEntity aspectTube = (TubeTileEntity)tubeTe;
+							AspectStack speck = aspects.drainAny(maxAspectOut);
+							if(!speck.isEmpty())
+								aspectTube.addSpeck(new AspectSpeck(speck, 0.7f, dir, 0));
+						}
 					}
-				}
 				// aspects can be pulled from the top when pulling becomes a thing but that doesn't matter here
 			}
 		}

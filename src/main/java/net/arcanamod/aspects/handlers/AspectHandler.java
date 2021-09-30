@@ -2,7 +2,6 @@ package net.arcanamod.aspects.handlers;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.Aspects;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -120,7 +119,7 @@ public interface AspectHandler extends INBTSerializable<CompoundNBT>{
 			for(AspectHolder toHolder : holders){
 				if(amount == 0)
 					break;
-				if((toHolder.getStack().getAspect() == in || toHolder.getStack().getAspect() == Aspects.EMPTY) && toHolder.canStore(in))
+				if((toHolder.getStack().getAspect() == in || toHolder.getStack().isEmpty()) && toHolder.canStore(in))
 					if(toHolder.canInsert() && (toHolder.getCapacity() > toHolder.getStack().getAmount() || toHolder.voids())){
 						float toInsert = (float)Math.floor(amount);
 						if(!toHolder.voids())

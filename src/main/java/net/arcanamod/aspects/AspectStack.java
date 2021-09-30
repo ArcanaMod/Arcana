@@ -14,7 +14,7 @@ public class AspectStack{
 	private Aspect aspect;
 	
 	public boolean isEmpty(){
-		return isEmpty;
+		return amount == 0 || aspect == Aspects.EMPTY;
 	}
 	
 	public void setAspect(Aspect aspect){
@@ -27,6 +27,8 @@ public class AspectStack{
 	
 	public void setAmount(float amount){
 		this.amount = amount;
+		if(amount <= 0)
+			this.amount = 0;
 	}
 	
 	public Aspect getAspect(){

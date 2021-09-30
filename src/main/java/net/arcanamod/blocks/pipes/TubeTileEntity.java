@@ -1,6 +1,7 @@
 package net.arcanamod.blocks.pipes;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.minecraft.block.BlockState;
@@ -76,8 +77,14 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 						speck.pos = speck.pos % 1;
 					}
 				}else if(AspectHandler.getOptional(te).isPresent()){
-					toRemove.add(speck);
-					AspectHandler.getFrom(te).insert(speck.payload);
+					float inserted = AspectHandler.getFrom(te).insert(speck.payload);
+					if(inserted >= speck.payload.getAmount())
+						toRemove.add(speck);
+					else{
+						speck.payload = new AspectStack(speck.payload.getAspect(), speck.payload.getAmount() - inserted);
+						speck.direction = speck.direction.getOpposite();
+						speck.pos = 1 - speck.pos;
+					}
 				}else if(!forcedDir.isPresent()){ // random bounce
 					if(state.get(SixWayBlock.DOWN) && dir != Direction.UP)
 						speck.direction = Direction.DOWN;
@@ -103,6 +110,7 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 			}
 		}
 		specks.removeAll(toRemove);
+		world.getServer().func_241755_D_().sendQuittingDisconnectingPacket();
 	}
 	
 	protected Optional<Direction> redirect(AspectSpeck speck, boolean canPass){
