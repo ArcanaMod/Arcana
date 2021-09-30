@@ -55,6 +55,7 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 		for(AspectSpeck speck : specks){
 			Direction dir = speck.direction;
 			speck.pos += speck.speed / 20f;
+			speck.stuck = false;
 			float max = 0.5f;
 			BlockState state = getWorld().getBlockState(pos);
 			boolean connected = state.get(SixWayBlock.FACING_TO_PROPERTY_MAP.get(dir));
@@ -77,7 +78,7 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 				}else if(AspectHandler.getOptional(te).isPresent()){
 					toRemove.add(speck);
 					AspectHandler.getFrom(te).insert(speck.payload);
-				}else{
+				}else if(!forcedDir.isPresent()){ // random bounce
 					if(state.get(SixWayBlock.DOWN) && dir != Direction.UP)
 						speck.direction = Direction.DOWN;
 					else if(state.get(SixWayBlock.NORTH) || state.get(SixWayBlock.SOUTH) || state.get(SixWayBlock.EAST) || state.get(SixWayBlock.WEST)){
@@ -90,6 +91,14 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 						speck.direction = directions.get(getWorld().rand.nextInt(directions.size()));
 					}else if(state.get(SixWayBlock.UP))
 						speck.direction = Direction.UP;
+				}else // forced direction
+					if(state.get(SixWayBlock.FACING_TO_PROPERTY_MAP.get(forcedDir.get())))
+						speck.direction = forcedDir.get();
+				
+				if(!toRemove.contains(speck) && speck.direction == dir){
+					// We can't output or redirect it
+					speck.pos = 0.5f;
+					speck.stuck = true;
 				}
 			}
 		}

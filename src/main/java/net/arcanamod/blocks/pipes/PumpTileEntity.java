@@ -34,7 +34,7 @@ public class PumpTileEntity extends TubeTileEntity{
 	public void tick(){
 		super.tick();
 		// pull new specks
-		if(specks.size() < MAX_SPECKS && getWorld().getGameTime() % PULL_TIME == 0){
+		if(specks.size() < 10 && getWorld().getGameTime() % PULL_TIME == 0){
 			TileEntity from = getWorld().getTileEntity(getPos().offset(direction.getOpposite()));
 			AspectHandler handler = AspectHandler.getFrom(from);
 			if(handler != null){

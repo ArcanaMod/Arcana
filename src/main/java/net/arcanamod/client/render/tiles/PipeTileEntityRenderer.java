@@ -12,10 +12,13 @@ import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Random;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class PipeTileEntityRenderer extends TileEntityRenderer<TubeTileEntity>{
+	
+	private static final Random shakeRng = new Random();
 	
 	public PipeTileEntityRenderer(TileEntityRendererDispatcher dispatcher){
 		super(dispatcher);
@@ -38,6 +41,9 @@ public class PipeTileEntityRenderer extends TileEntityRenderer<TubeTileEntity>{
 			stack.translate(pos * speck.direction.getXOffset(), pos * speck.direction.getYOffset(), pos * speck.direction.getZOffset());
 			// debugging
 			stack.translate(0, .25, 0);
+			// shake specks that are stuck
+			if(speck.stuck)
+				stack.translate(shakeRng.nextFloat() / 16f, shakeRng.nextFloat() / 16f, shakeRng.nextFloat() / 16f);
 			stack.scale(0.5f, 0.5f, 0.5f);
 			// render
 			Minecraft.getInstance().getItemRenderer().renderItem(AspectUtils.getItemStackForAspect(speck.payload.getAspect()), ItemCameraTransforms.TransformType.GROUND, light, overlay, stack, buffer);

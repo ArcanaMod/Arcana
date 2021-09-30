@@ -13,6 +13,8 @@ public class AspectSpeck{
 	public Direction direction;    // The direction the speck is moving.
 	public float pos;              // The position of the speck along the tube.
 	
+	public boolean stuck = false;  // Whether the speck if forced to move in a direction it can't. Not saved.
+	
 	public AspectSpeck(AspectStack payload, float speed, Direction direction, float pos){
 		this.payload = payload;
 		this.speed = speed;
