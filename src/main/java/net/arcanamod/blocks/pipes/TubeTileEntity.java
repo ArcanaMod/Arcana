@@ -110,7 +110,6 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 			}
 		}
 		specks.removeAll(toRemove);
-		world.getServer().func_241755_D_().sendQuittingDisconnectingPacket();
 	}
 	
 	protected Optional<Direction> redirect(AspectSpeck speck, boolean canPass){
