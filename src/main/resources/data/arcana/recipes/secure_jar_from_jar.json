@@ -1,14 +1,18 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "group": "arcana:secure_jar",
-  "ingredients": [
-    {
-      "item": "arcana:jar"
-    },
-    {
-      "item": "arcana:imprison_crystal"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "B B",
+    "BJB",
+    "BBB"
   ],
+  "key": {
+    "B": {
+      "item": "minecraft:iron_bars"
+    },
+    "J": {
+      "item": "arcana:jar"
+    }
+  },
   "result": {
     "item": "arcana:secure_jar"
   }

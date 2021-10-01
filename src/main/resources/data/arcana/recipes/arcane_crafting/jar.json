@@ -1,19 +1,16 @@
 {
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
-    " WA",
+    "GWG",
     "G G",
-    " G "
+    "GGG"
   ],
   "key": {
     "W": {
-      "tag": "minecraft:planks"
+      "tag": "minecraft:wooden_slabs"
     },
     "G": {
-      "tag": "forge:glass"
-    },
-    "A": {
-      "item": "arcana:amber"
+      "tag": "forge:glass_panes"
     }
   },
   "aspects": [

@@ -1,23 +1,16 @@
 {
   "type": "arcana:arcane_crafting_shaped",
-  "group": "arcana:secure_jar",
   "pattern": [
-    " WA",
-    "GCG",
-    " G "
+    "GWG",
+    "G G",
+    "GGG"
   ],
   "key": {
     "W": {
-      "tag": "minecraft:planks"
+      "tag": "minecraft:wooden_slabs"
     },
     "G": {
-      "tag": "forge:glass"
-    },
-    "A": {
-      "item": "arcana:amber"
-    },
-    "C": {
-      "item": "arcana:imprison_crystal"
+      "item": "minecraft:iron_bars"
     }
   },
   "aspects": [
