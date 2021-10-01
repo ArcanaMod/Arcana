@@ -1,39 +1,18 @@
 {
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
-    "s  ",
-    "app",
-    "www"
+    "l ",
+    "tt"
   ],
   "key": {
-    "w": [
-      {
-        "item": "arcana:greatwood_planks"
-      },
-      {
-        "item": "arcana:silverwood_planks"
-      }
-    ],
-    "p": {
-      "item": "minecraft:paper"
+    "l": {
+      "item": "minecraft:leather"
     },
-    "a": {
-      "item": "arcana:amber"
-    },
-    "s": {
-      "item": "minecraft:diamond"
+    "t": {
+      "item": "arcana:table"
     }
   },
-  "aspects": [
-    {
-      "aspect": "arcana:order",
-      "amount": 12
-    },
-    {
-      "aspect": "arcana:chaos",
-      "amount": 8
-    }
-  ],
+  "aspects": [],
   "result": {
     "item": "arcana:research_table_item"
   }

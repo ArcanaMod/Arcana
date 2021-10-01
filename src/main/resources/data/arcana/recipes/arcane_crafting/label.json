@@ -1,0 +1,24 @@
+{
+	"type": "arcana:arcane_crafting_shaped",
+	"pattern": [
+		"s",
+		"p"
+	],
+	"key": {
+		"s": {
+			"item": "minecraft:slime_ball"
+		},
+		"p": {
+			"item": "minecraft:paper"
+		}
+	},
+	"aspects": [
+		{
+			"aspect": "arcana:order",
+			"amount": 1
+		}
+	],
+	"result": {
+		"item": "arcana:label"
+	}
+}

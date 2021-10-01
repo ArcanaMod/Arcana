@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "www",
-    "s s",
+    "sss",
     "www"
   ],
   "key": {
@@ -19,6 +19,6 @@
     }
   },
   "result": {
-    "item": "arcana:aspect_bookshelf"
+    "item": "arcana:aspect_bookshelf_block"
   }
 }

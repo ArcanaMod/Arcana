@@ -11,10 +11,6 @@
   },
   "aspects": [
     {
-      "aspect": "arcana:any",
-      "amount": 2
-    },
-    {
       "aspect": "arcana:earth",
       "amount": 2
     },

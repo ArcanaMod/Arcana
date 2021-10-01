@@ -2,7 +2,7 @@
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
     "gag",
-    "wcw",
+    "wfw",
     "gag"
   ],
   "key": {
@@ -20,22 +20,22 @@
     "a": {
       "item": "arcana:amber"
     },
-    "c": {
-      "tag": "arcana:crystals"
+    "f": {
+      "item": "minecraft:furnace"
     }
   },
   "aspects": [
     {
       "aspect": "arcana:air",
-      "amount": 5
+      "amount": 4
     },
     {
       "aspect": "arcana:order",
-      "amount": 10
+      "amount": 8
     },
     {
       "aspect": "arcana:chaos",
-      "amount": 10
+      "amount": 8
     }
   ],
   "result": {

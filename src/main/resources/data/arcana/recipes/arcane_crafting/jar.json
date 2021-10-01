@@ -19,11 +19,11 @@
   "aspects": [
     {
       "aspect": "arcana:water",
-      "amount": 5
+      "amount": 4
     },
     {
       "aspect": "arcana:order",
-      "amount": 10
+      "amount": 8
     }
   ],
   "result": {

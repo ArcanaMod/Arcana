@@ -1,0 +1,38 @@
+{
+  "type": "arcana:arcane_crafting_shaped",
+  "pattern": [
+    "gtg",
+    "qpq",
+    "sss"
+  ],
+  "key": {
+    "p": {
+      "item": "arcana:phial"
+    },
+    "g": {
+      "tag": "forge:ingots/gold"
+    },
+    "s": {
+      "item": "arcana:arcane_stone"
+    },
+    "q": {
+      "item": "minecraft:quartz"
+    },
+    "t": {
+      "item": "arcana:essentia_tube"
+    }
+  },
+  "aspects": [
+    {
+      "aspect": "arcana:earth",
+      "amount": 2
+    },
+    {
+      "aspect": "arcana:order",
+      "amount": 6
+    }
+  ],
+  "result": {
+    "item": "arcana:aspect_crystallizer"
+  }
+}

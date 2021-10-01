@@ -11,10 +11,6 @@
 	},
 	"aspects": [
 		{
-			"aspect": "arcana:any",
-			"amount": 2
-		},
-		{
 			"aspect": "arcana:earth",
 			"amount": 2
 		},
@@ -24,6 +20,6 @@
 		}
 	],
 	"result": {
-		"item": "arcana:eldritch_cap"
+		"item": "arcana:eldritch_cloth_cap"
 	}
 }

@@ -171,7 +171,7 @@ public class Aspects{
 	 * @return ALL aspects.
 	 */
 	public static List<Aspect> getWithoutEmpty(){
-		Aspect[] modifiedValues = Arrays.copyOfRange(values(), 1, values().length);
+		Aspect[] modifiedValues = Arrays.copyOfRange(values(), 2, values().length);
 		return Arrays.asList(modifiedValues);
 	}
 	

@@ -112,6 +112,7 @@ public class ArcanaItems{
 	@GIM(ITEM) public static final RegistryObject<Item> NETHERITE_NUGGET = ITEMS.register("netherite_nugget", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	@GIM(ITEM) public static final RegistryObject<Item> SILVER_NUGGET = ITEMS.register("silver_nugget", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	@GIM(ITEM) public static final RegistryObject<Item> THAUMIUM_NUGGET = ITEMS.register("thaumium_nugget", () -> new Item(new Properties().group(Arcana.ITEMS)));
+	@GIM(ITEM) public static final RegistryObject<Item> ARCANIUM_NUGGET = ITEMS.register("arcanium_nugget", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	
 	public static final RegistryObject<Item> SILVERWOOD_STICK = ITEMS.register("silverwood_stick", () -> new Item(new Properties().group(Arcana.ITEMS)));
 	public static final RegistryObject<Item> AMBER = ITEMS.register("amber", () -> new Item(new Item.Properties().group(Arcana.ITEMS)));

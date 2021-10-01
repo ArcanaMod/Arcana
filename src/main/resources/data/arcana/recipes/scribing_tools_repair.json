@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "tag": "forge:dyes"
+      "item": "minecraft:ink_sac"
     },
     {
       "item": "arcana:scribing_tools"

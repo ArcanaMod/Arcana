@@ -1,9 +1,9 @@
 {
   "type": "arcana:arcane_crafting_shaped",
   "pattern": [
-    "wdw",
-    "sgs",
-    "wcw"
+    "  A",
+    " rw",
+    "ssi"
   ],
   "key": {
     "w": [
@@ -14,46 +14,46 @@
         "item": "arcana:silverwood_planks"
       }
     ],
-    "g": {
-      "item": "arcana:luminiferous_glass"
+    "r": {
+      "item": "arcana:research_table_item"
     },
-    "c": {
-      "item": "arcana:aura_crystal"
-    },
-    "d": {
-      "tag": "forge:gems/diamond"
+    "A": {
+      "item": "arcana:amber"
     },
     "s": {
-      "tag": "forge:ingots/silver"
+      "item": "arcana:arcane_stone"
+    },
+    "i": {
+      "item": "arcana:infusion_arcane_stone"
     }
   },
   "aspects": [
     {
       "aspect": "arcana:fire",
-      "amount": 10
+      "amount": 2
     },
     {
       "aspect": "arcana:water",
-      "amount": 10
+      "amount": 2
     },
     {
       "aspect": "arcana:earth",
-      "amount": 10
+      "amount": 2
     },
     {
       "aspect": "arcana:air",
-      "amount": 10
+      "amount": 2
     },
     {
       "aspect": "arcana:order",
-      "amount": 20
+      "amount": 2
     },
     {
       "aspect": "arcana:chaos",
-      "amount": 10
+      "amount": 2
     }
   ],
   "result": {
-    "item": "arcana:taint_scrubber_mk2"
+    "item": "arcana:foci_forge_item"
   }
 }

@@ -30,23 +30,23 @@
   "aspects": [
     {
       "aspect": "arcana:fire",
-      "amount": 10
+      "amount": 16
     },
     {
       "aspect": "arcana:water",
-      "amount": 10
+      "amount": 16
     },
     {
       "aspect": "arcana:earth",
-      "amount": 10
+      "amount": 16
     },
     {
       "aspect": "arcana:air",
-      "amount": 10
+      "amount": 16
     },
     {
       "aspect": "arcana:order",
-      "amount": 10
+      "amount": 16
     },
     {
       "aspect": "arcana:chaos",

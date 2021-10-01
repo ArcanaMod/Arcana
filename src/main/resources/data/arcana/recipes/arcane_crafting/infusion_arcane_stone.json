@@ -1,0 +1,33 @@
+{
+	"type": "arcana:arcane_crafting_shaped",
+	"pattern": [
+		" s ",
+		"sns",
+		" s "
+	],
+	"key": {
+		"s": {
+			"item": "arcana:arcane_stone"
+		},
+		"n": {
+			"item": "arcana:arcanium_nugget"
+		}
+	},
+	"aspects": [
+		{
+			"aspect": "arcana:order",
+			"amount": 4
+		},
+		{
+			"aspect": "arcana:fire",
+			"amount": 4
+		}
+	],
+	"requirements": [
+		"arcana:research_intro"
+	],
+	"result": {
+		"item": "arcana:infusion_arcane_stone",
+		"count": 4
+	}
+}

@@ -27,11 +27,11 @@
   "aspects": [
     {
       "aspect": "arcana:air",
-      "amount": 3
+      "amount": 6
     },
     {
       "aspect": "arcana:order",
-      "amount": 3
+      "amount": 6
     }
   ],
   "result": {

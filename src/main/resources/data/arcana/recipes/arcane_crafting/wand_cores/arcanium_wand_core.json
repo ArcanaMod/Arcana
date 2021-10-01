@@ -11,10 +11,6 @@
   },
   "aspects": [
     {
-      "aspect": "arcana:any",
-      "amount": 5
-    },
-    {
       "aspect": "arcana:order",
       "amount": 10
     },
