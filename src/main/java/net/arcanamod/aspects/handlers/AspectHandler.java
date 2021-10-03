@@ -172,7 +172,7 @@ public interface AspectHandler extends INBTSerializable<CompoundNBT>{
 	default AspectStack drainAny(float amount){
 		AspectHolder holder = findFirstFullHolder();
 		if(holder == null)
-			return AspectStack.EMPTY;
+			return new AspectStack();
 		Aspect aspect = holder.getStack().getAspect();
 		return new AspectStack(aspect, drain(aspect, amount));
 	}

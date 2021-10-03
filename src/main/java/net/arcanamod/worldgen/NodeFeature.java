@@ -74,7 +74,9 @@ public class NodeFeature extends Feature<NoFeatureConfig>{
 						for(Direction value : Direction.values())
 							if(newWorld.getBlockState(pointer.offset(value)).isSolid()){
 								// Place a crystal,
-								newWorld.setBlockState(pointer, CRYSTAL_CLUSTERS_FROM_ASPECTS.get(aspects.getHolder(rand.nextInt(aspects.countHolders())).getStack().getAspect()).get().getDefaultState().with(CrystalClusterBlock.FACING, value.getOpposite()).with(CrystalClusterBlock.AGE, 3).with(CrystalClusterBlock.WATERLOGGED, newWorld.getBlockState(pointer).getFluidState().isTagged(FluidTags.WATER)));
+								Aspect aspect = aspects.getHolder(rand.nextInt(aspects.countHolders())).getStack().getAspect();
+								System.out.println(aspect);
+								newWorld.setBlockState(pointer, CRYSTAL_CLUSTERS_FROM_ASPECTS.get(aspect).get().getDefaultState().with(CrystalClusterBlock.FACING, value.getOpposite()).with(CrystalClusterBlock.AGE, 3).with(CrystalClusterBlock.WATERLOGGED, newWorld.getBlockState(pointer).getFluidState().isTagged(FluidTags.WATER)));
 								// Increment successes
 								successes++;
 							}

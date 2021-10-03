@@ -66,21 +66,27 @@ public class ResearchTableTileEntity extends LockableTileEntity{
 	//TODO: There is better way to do it
 	private AspectBattery getVisShareablesAsBattery() {
 		battery.clear();
-		BlockPos.getAllInBox(getPos().north(4).east(4).up(4), getPos().south(4).west(4).down(2)).forEach(blockPos -> {
-			System.out.println(blockPos);
-			if(world.getBlockState(blockPos).hasTileEntity()){
-				TileEntity tileEntityInBox = world.getTileEntity(blockPos);
-				if(tileEntityInBox != null)
-					if(tileEntityInBox instanceof VisShareable)
-						if(((VisShareable)tileEntityInBox).isVisShareable() && ((VisShareable)tileEntityInBox).isManual()){
-							AspectBattery vis = (AspectBattery)AspectHandler.getFrom(tileEntityInBox);
-							if(vis != null){
-								visContainers.add(new BlockPos(blockPos)); // Removing reference
-								AspectBattery.merge(battery, vis);
-							}
-						}
+		BlockPos.Mutable blockPos = new BlockPos.Mutable(pos.getX(), pos.getY(), pos.getZ());
+		for(int x = 0; x < 9; x++){
+			for(int y = 0; y < 7; y++){
+				for(int z = 0; z < 9; z++){
+					blockPos.setPos(getPos());
+					blockPos.move(x - 4, y - 2, z - 4);
+					if(world.getBlockState(blockPos).hasTileEntity()){
+						TileEntity tileEntityInBox = world.getTileEntity(blockPos);
+						if(tileEntityInBox != null)
+							if(tileEntityInBox instanceof VisShareable)
+								if(((VisShareable)tileEntityInBox).isVisShareable() && ((VisShareable)tileEntityInBox).isManual()){
+									AspectBattery vis = (AspectBattery)AspectHandler.getFrom(tileEntityInBox);
+									if(vis != null){
+										visContainers.add(new BlockPos(blockPos)); // Removing reference
+										AspectBattery.merge(battery, vis);
+									}
+								}
+					}
+				}
 			}
-		});
+		}
 		return battery;
 	}
 

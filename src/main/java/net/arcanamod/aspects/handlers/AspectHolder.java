@@ -55,7 +55,7 @@ public interface AspectHolder extends INBTSerializable<CompoundNBT>{
 	
 	// Empties this holder, setting the aspect to empty and the amount to 0.
 	default void empty(){
-		setStack(AspectStack.EMPTY);
+		setStack(new AspectStack());
 	}
 	// Removes the whitelist, allowing any aspect to be inserted.
 	default void removeWhitelist(){
@@ -98,13 +98,11 @@ public interface AspectHolder extends INBTSerializable<CompoundNBT>{
 		}
 	}
 	default float insert(float amount, Aspect aspect, boolean simulate){
-		//Aspect old = getStack().getAspect();
-		//getStack().setAspect(aspect);
-		AspectStack old = getStack();
-		setStack(new AspectStack(aspect, old.getAmount()));
+		Aspect old = getStack().getAspect();
+		getStack().setAspect(aspect);
 		float ret = insert(amount, simulate);
 		if(simulate)
-			setStack(old);
+			getStack().setAspect(old);
 		return ret;
 	}
 	default float insert(AspectStack stack, boolean simulate){

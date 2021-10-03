@@ -204,7 +204,7 @@ public class ClientTickHandler{
 						if(world.isRemote()){
 							CrucibleTileEntity crte = (CrucibleTileEntity)te;
 							List<AspectStack> reducedStacks = AspectUtils.squish(new ArrayList<>(crte.getAspectStackMap().values()));
-							reducedStacks.remove(AspectStack.EMPTY);
+							reducedStacks.remove(new AspectStack());
 							renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()),1.4f);
 						}
 					}

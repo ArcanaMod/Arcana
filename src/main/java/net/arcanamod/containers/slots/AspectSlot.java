@@ -54,15 +54,11 @@ public class AspectSlot {
 	}
 	
 	public float getAmount() {
-		if(symbolic) {
+		if(symbolic)
 			return 1;
-		}
-		if(getInventory().get() != null) {
-			/*int amount = 0;
-			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-			for(int index : aspectIndexes)
-				amount += getInventory().get().getHolder(index).getCurrentVis();*/
-			return (float)getInventory().get().streamAllHoldersContaining(aspect)
+		AspectHandler handler = getInventory().get();
+		if(handler != null) {
+			return (float)handler.streamAllHoldersContaining(aspect)
 					.mapToDouble(holder -> holder.getStack().getAmount())
 					.sum();
 		} else {
@@ -104,15 +100,12 @@ public class AspectSlot {
 	 */
 	public float drain(@Nonnull Aspect aspect, float amount) {
 		float result = 0;
-		if(symbolic){
+		if(symbolic)
 			result = amount;
-		}else{
-			if(getInventory().get() != null){
-				/*int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-				result = getInventory().get().drain(aspectIndexes[0], new AspectStack(aspect, amount), simulate);*//*
-				getInventory().get().findFirstHolderContaining(getAspect()).drain(amount, simulate);*/
-				result = getInventory().get().drain(aspect, amount);
-			}
+		else{
+			AspectHandler handler = getInventory().get();
+			if(handler != null)
+				result = handler.drain(aspect, amount);
 			onChange();
 		}
 		return result;
@@ -126,25 +119,9 @@ public class AspectSlot {
 	public float insert(@Nonnull Aspect aspect, float amount) {
 		float result = amount;
 		if(!symbolic){
-			if(getInventory().get() != null){
-				/*List<AspectHolder> holders = getInventory().get().getAllHoldersContaining(getAspect());
-				boolean isInserted = false;
-				if(holders.size() == 0){
-					AspectHolder holder = getInventory().get().findFirstEmptyHolder();
-					result = holder.insert(amount, aspect, false);
-					isInserted = true;
-				}
-				for(AspectHolder holder : holders){
-					if(holder.getStack().getAmount() < holder.getCapacity()){
-						result = holder.insert(amount, aspect, false);
-						isInserted = true;
-						break;
-					}
-				}
-				if(!isInserted)
-					result = getInventory().get().findFirstEmptyHolder().insert(amount, aspect, false);*/
-				result = getInventory().get().insert(aspect, amount);
-			}
+			AspectHandler handler = getInventory().get();
+			if(handler != null)
+				result = handler.insert(aspect, amount);
 			onChange();
 		}
 		return result;

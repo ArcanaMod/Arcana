@@ -4,13 +4,13 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class AspectStack{
 	
 	// TODO: replace with a method that creates a new one, or make AspectStack immutable
 	public static final AspectStack EMPTY = new AspectStack(Aspects.EMPTY, 0);
 	
-	private boolean isEmpty;
 	private float amount;
 	private Aspect aspect;
 	
@@ -20,8 +20,6 @@ public class AspectStack{
 	
 	public void setAspect(Aspect aspect){
 		this.aspect = aspect;
-		if(this == EMPTY)
-			throw new IllegalArgumentException("Tried to modify the empty AspectStack!");
 	}
 	
 	public float getAmount(){
@@ -32,8 +30,6 @@ public class AspectStack{
 		this.amount = amount;
 		if(amount <= 0)
 			this.amount = 0;
-		if(this == EMPTY)
-			throw new IllegalArgumentException("Tried to modify the empty AspectStack!");
 	}
 	
 	public Aspect getAspect(){
@@ -49,7 +45,7 @@ public class AspectStack{
 	}
 	
 	public AspectStack(Aspect aspect, float amount){
-		this.isEmpty = amount <= 0 || aspect == Aspects.EMPTY;
+		boolean isEmpty = amount <= 0 || aspect == Aspects.EMPTY;
 		
 		this.aspect = isEmpty ? Aspects.EMPTY : aspect;
 		this.amount = isEmpty ? 0 : amount;
@@ -74,5 +70,19 @@ public class AspectStack{
 	@Nonnull
 	public static AspectStack fromNbt(@Nonnull CompoundNBT tag){
 		return new AspectStack(Aspects.ASPECTS.get(new ResourceLocation(tag.getString("aspect"))), tag.getFloat("amount"));
+	}
+	
+	public boolean equals(Object o){
+		if(this == o)
+			return true;
+		if(o == null || getClass() != o.getClass())
+			return false;
+		AspectStack stack = (AspectStack)o;
+		return Float.compare(stack.amount, amount) == 0 &&
+				Objects.equals(aspect, stack.aspect);
+	}
+	
+	public int hashCode(){
+		return Objects.hash(amount, aspect);
 	}
 }

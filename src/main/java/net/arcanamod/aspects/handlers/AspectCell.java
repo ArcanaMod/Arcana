@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 public class AspectCell implements AspectHolder{
 	
-	private AspectStack stored = AspectStack.EMPTY;
+	private AspectStack stored = new AspectStack();
 	private float capacity;
 	private boolean voids = false, canInsert = true;
 	// not serialized, set these yourself
