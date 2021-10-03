@@ -2,6 +2,7 @@ package net.arcanamod.containers.slots;
 
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.handlers.AspectBattery;
 import net.arcanamod.aspects.handlers.AspectHandler;
 
@@ -14,14 +15,14 @@ public class AspectStoreSlot extends AspectSlot{
 	AspectHandler holder;
 	
 	public AspectStoreSlot(Supplier<AspectHandler> returnInv, int x, int y){
-		super(null, null, x, y, true);
+		super(Aspects.EMPTY, null, x, y, true);
 		this.returnInv = returnInv;
 		holder = new AspectBattery();
 		holder.initHolders(100, 1);
 	}
 	
 	public AspectStoreSlot(Supplier<AspectHandler> returnInv, int x, int y, int capacity){
-		super(null, null, x, y, true);
+		super(Aspects.EMPTY, null, x, y, true);
 		this.returnInv = returnInv;
 		holder = new AspectBattery();
 		holder.initHolders(capacity, 1);

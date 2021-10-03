@@ -59,6 +59,7 @@ public abstract class AspectContainer extends Container {
 	}
 	
 	public void setHeldCount(float heldCount){
+		if(heldCount <= 0) heldAspect = Aspects.EMPTY;
 		this.heldCount = heldCount;
 	}
 	
@@ -114,7 +115,7 @@ public abstract class AspectContainer extends Container {
 			for(AspectSlot slot : aspectSlots){
 				if(slot.getAspect() == heldAspect){
 					while(heldCount > 0){
-						heldCount = slot.insert(heldAspect, heldCount, false);
+						heldCount = slot.insert(heldAspect, heldCount);
 					}
 					break;
 				}

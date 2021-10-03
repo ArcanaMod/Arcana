@@ -45,6 +45,7 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 	
 	public AspectCrystallizerTileEntity(){
 		super(ArcanaTiles.ASPECT_CRYSTALLIZER_TE.get());
+		vis.initHolders(100, 1);
 	}
 	
 	public void tick(){

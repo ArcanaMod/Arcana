@@ -39,11 +39,13 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 	
 	public AspectBookshelfTileEntity(){
 		super(ArcanaTiles.ASPECT_SHELF_TE.get());
+		vis.initHolders(8, 9);
 	}
 	
 	public AspectBookshelfTileEntity(Direction rotation){
 		super(ArcanaTiles.ASPECT_SHELF_TE.get());
 		this.rotation = rotation;
+		vis.initHolders(8, 9);
 	}
 	
 	@Override
@@ -118,6 +120,7 @@ public class AspectBookshelfTileEntity extends LockableLootTileEntity implements
 	}
 	
 	public AspectBattery updateBatteryAndReturn(){
+		vis.initHolders(8, 9);
 		for(int i = stacks.size() - 1; i >= 0; i--){
 			if(stacks.get(i).getItem() instanceof PhialItem){
 				AspectBattery aspectBattery = (AspectBattery)AspectHandler.getFrom(stacks.get(i));

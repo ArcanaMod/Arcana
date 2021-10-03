@@ -33,7 +33,6 @@ public class Aspects{
 	
 	public static final Aspect
 			EMPTY = Aspect.create("empty", create(0x0, 0x0, 0x0, 0x0, 0x0), null),
-			DUMMY = Aspect.create("dummy", ColorRange.create(0x0, 0x0, 0x0, 0x0, 0x0), null),
 	
 	AIR = Aspect.create("air", create(0x7c554b, 0xa7846a, 0xe8d2a0, 0xf4f0c4, 0xfdffe5), null),
 			CHAOS = Aspect.create("chaos", create(0x90909, 0x1e1e1f, 0x4d4d4d, 0x757377, 0x9a979c), null),

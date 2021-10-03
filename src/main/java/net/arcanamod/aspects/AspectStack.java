@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 
 public class AspectStack{
 	
+	// TODO: replace with a method that creates a new one, or make AspectStack immutable
 	public static final AspectStack EMPTY = new AspectStack(Aspects.EMPTY, 0);
 	
 	private boolean isEmpty;
@@ -19,6 +20,8 @@ public class AspectStack{
 	
 	public void setAspect(Aspect aspect){
 		this.aspect = aspect;
+		if(this == EMPTY)
+			throw new IllegalArgumentException("Tried to modify the empty AspectStack!");
 	}
 	
 	public float getAmount(){
@@ -29,6 +32,8 @@ public class AspectStack{
 		this.amount = amount;
 		if(amount <= 0)
 			this.amount = 0;
+		if(this == EMPTY)
+			throw new IllegalArgumentException("Tried to modify the empty AspectStack!");
 	}
 	
 	public Aspect getAspect(){

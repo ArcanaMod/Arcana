@@ -68,7 +68,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 				}else{
 					// insert to block
 					for(AspectHolder holder : tileHandle.getHolders())
-						if((holder.getCapacity() - holder.getStack().getAmount() > 0 || holder.voids()) && (holder.getStack().getAspect() == myHandle.getStack().getAspect() || holder.getStack().getAspect() == Aspects.EMPTY)){
+						if((holder.getCapacity() - holder.getStack().getAmount() > 0 || holder.voids()) && (holder.getStack().getAspect() == myHandle.getStack().getAspect() || holder.getStack().isEmpty())){
 							float inserted = holder.insert(new AspectStack(myHandle.getStack().getAspect(), myHandle.getStack().getAmount()), false);
 							playPhialCorkpopSound(context.getPlayer());
 							if(inserted != 0){
@@ -103,7 +103,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 	public ITextComponent getDisplayName(ItemStack stack){
 		AspectHandler aspectHandler = AspectHandler.getFrom(stack);
 		if(aspectHandler != null && aspectHandler.getHolder(0) != null){
-			if(aspectHandler.getHolder(0).getStack().getAspect() != Aspects.EMPTY){
+			if(!aspectHandler.getHolder(0).getStack().isEmpty()){
 				String aspectName = AspectUtils.getLocalizedAspectDisplayName(aspectHandler.getHolder(0).getStack().getAspect());
 				return new TranslationTextComponent("item.arcana.phial", aspectName).mergeStyle(Rarity.RARE.color);
 			}
@@ -116,7 +116,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 		AspectBattery vis = (AspectBattery)AspectHandler.getFrom(stack);
 		if(vis != null){
 			if(vis.getHolder(0) != null){
-				if(vis.getHolder(0).getStack().getAspect() != Aspects.EMPTY){
+				if(!vis.getHolder(0).getStack().isEmpty()){
 					AspectStack aspectStack = vis.getHolder(0).getStack();
 					tooltip.add(new TranslationTextComponent("tooltip.contains_aspect",
 							aspectStack.getAspect().name().toLowerCase().substring(0, 1).toUpperCase() + aspectStack.getAspect().name().toLowerCase().substring(1), (int)aspectStack.getAmount()));
@@ -174,9 +174,7 @@ public class PhialItem extends Item implements IOverrideAspects {
 	@Override
 	public List<AspectStack> getAspectStacks(ItemStack stack){
 		AspectHolder myHolder = AspectHandler.getFrom(stack).getHolder(0);
-		if(myHolder == null)
-			return Collections.singletonList(new AspectStack(Aspect.dummy()));
-		if(myHolder.getStack().getAspect() == Aspects.EMPTY)
+		if(myHolder == null || myHolder.getStack().isEmpty())
 			return Collections.singletonList(new AspectStack(Aspects.EMPTY));
 		return Collections.singletonList(myHolder.getStack());
 	}

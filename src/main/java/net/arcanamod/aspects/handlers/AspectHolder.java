@@ -40,7 +40,7 @@ public interface AspectHolder extends INBTSerializable<CompoundNBT>{
 	// Returns whether this holder can contain that aspect.
 	// False if the aspect is empty or dummy, or if this holder has a whitelist that doesn't contain that aspect.
 	default boolean canStore(Aspect aspect){
-		if(aspect == Aspects.EMPTY || aspect == Aspects.DUMMY)
+		if(aspect == Aspects.EMPTY)
 			return false;
 		return getWhitelist() == null || getWhitelist().contains(aspect);
 	}
@@ -55,8 +55,7 @@ public interface AspectHolder extends INBTSerializable<CompoundNBT>{
 	
 	// Empties this holder, setting the aspect to empty and the amount to 0.
 	default void empty(){
-		getStack().setAmount(0);
-		getStack().setAspect(Aspects.EMPTY);
+		setStack(AspectStack.EMPTY);
 	}
 	// Removes the whitelist, allowing any aspect to be inserted.
 	default void removeWhitelist(){
@@ -99,11 +98,13 @@ public interface AspectHolder extends INBTSerializable<CompoundNBT>{
 		}
 	}
 	default float insert(float amount, Aspect aspect, boolean simulate){
-		Aspect old = getStack().getAspect();
-		getStack().setAspect(aspect);
+		//Aspect old = getStack().getAspect();
+		//getStack().setAspect(aspect);
+		AspectStack old = getStack();
+		setStack(new AspectStack(aspect, old.getAmount()));
 		float ret = insert(amount, simulate);
 		if(simulate)
-			getStack().setAspect(old);
+			setStack(old);
 		return ret;
 	}
 	default float insert(AspectStack stack, boolean simulate){

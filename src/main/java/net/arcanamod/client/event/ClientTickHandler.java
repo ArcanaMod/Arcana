@@ -3,7 +3,6 @@ package net.arcanamod.client.event;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
@@ -153,7 +152,7 @@ public class ClientTickHandler{
 						if(world.isRemote()){
 							JarTileEntity jte = (JarTileEntity)te;
 							// If player has googles show particle
-							if(jte.vis.getHolder(0).getStack().getAspect() != Aspects.EMPTY){
+							if(!jte.vis.getHolder(0).getStack().isEmpty()){
 								// track player head rotation
 								double srx = (-Math.sin(Math.toRadians(player.rotationYaw)));
 								double crx = (Math.cos(Math.toRadians(player.rotationYaw)));
@@ -177,7 +176,7 @@ public class ClientTickHandler{
 								// Get all stacks from phialshelf
 								ArrayList<AspectStack> stacks = new ArrayList<>();
 								for(int i = 0; i < vis.countHolders(); i++)
-									if(vis.getHolder(i).getStack().getAspect() != Aspects.EMPTY)
+									if(!vis.getHolder(i).getStack().isEmpty())
 										stacks.add(vis.getHolder(i).getStack());
 								// Squish aspect stacks in to reducedStacks
 								List<AspectStack> reducedStacks = AspectUtils.squish(stacks);

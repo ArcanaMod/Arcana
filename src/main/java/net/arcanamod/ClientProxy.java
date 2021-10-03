@@ -106,7 +106,7 @@ public class ClientProxy extends CommonProxy{
 				return -1;
 			if(vis.getHolder(0) == null)
 				return -1;
-			return vis.getHolder(0).getStack().getAspect().getId() - 2;
+			return vis.getHolder(0).getStack().getAspect().getId() - 1;
 		});
 		ItemModelsProperties.registerProperty(ArcanaItems.ARCANUM.get(), new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
 			if(!itemStack.getOrCreateTag().contains("open"))

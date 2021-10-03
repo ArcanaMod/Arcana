@@ -3,14 +3,12 @@ package net.arcanamod.containers.slots;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.handlers.AspectHandler;
-import net.arcanamod.aspects.handlers.AspectHolder;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 import java.util.function.Supplier;
 
 public class AspectSlot {
-	private Aspect aspect = Aspects.EMPTY;
+	protected Aspect aspect = Aspects.EMPTY;
 	private final Supplier<AspectHandler> inventory;
 	
 	public int x, y;
@@ -64,7 +62,7 @@ public class AspectSlot {
 			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
 			for(int index : aspectIndexes)
 				amount += getInventory().get().getHolder(index).getCurrentVis();*/
-			return (float)getInventory().get().streamAllHoldersContaining(getAspect())
+			return (float)getInventory().get().streamAllHoldersContaining(aspect)
 					.mapToDouble(holder -> holder.getStack().getAmount())
 					.sum();
 		} else {
@@ -83,7 +81,7 @@ public class AspectSlot {
 	
 	public Aspect getAspect() {
 		if(aspect == null)
-			return Aspects.EMPTY; // Quick fix. TODO: Fix null problems
+			return Aspects.EMPTY;
 		return aspect;
 	}
 	
@@ -104,15 +102,16 @@ public class AspectSlot {
 	 *
 	 * @return The result of drawing from the underlying inventory.
 	 */
-	public float drain(@Nonnull Aspect aspect, float amount, boolean simulate) {
+	public float drain(@Nonnull Aspect aspect, float amount) {
 		float result = 0;
 		if(symbolic){
 			result = amount;
 		}else{
 			if(getInventory().get() != null){
 				/*int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-				result = getInventory().get().drain(aspectIndexes[0], new AspectStack(aspect, amount), simulate);*/
-				getInventory().get().findFirstHolderContaining(getAspect()).drain(amount, simulate);
+				result = getInventory().get().drain(aspectIndexes[0], new AspectStack(aspect, amount), simulate);*//*
+				getInventory().get().findFirstHolderContaining(getAspect()).drain(amount, simulate);*/
+				result = getInventory().get().drain(aspect, amount);
 			}
 			onChange();
 		}
@@ -124,26 +123,27 @@ public class AspectSlot {
 	 *
 	 * @return The result of inserting into the underlying inventory.
 	 */
-	public float insert(@Nonnull Aspect aspect, float amount, boolean simulate) {
+	public float insert(@Nonnull Aspect aspect, float amount) {
 		float result = amount;
 		if(!symbolic){
 			if(getInventory().get() != null){
-				List<AspectHolder> holders = getInventory().get().getAllHoldersContaining(getAspect());
+				/*List<AspectHolder> holders = getInventory().get().getAllHoldersContaining(getAspect());
 				boolean isInserted = false;
 				if(holders.size() == 0){
 					AspectHolder holder = getInventory().get().findFirstEmptyHolder();
-					result = holder.insert(amount, aspect, simulate);
+					result = holder.insert(amount, aspect, false);
 					isInserted = true;
 				}
 				for(AspectHolder holder : holders){
 					if(holder.getStack().getAmount() < holder.getCapacity()){
-						result = holder.insert(amount, aspect, simulate);
+						result = holder.insert(amount, aspect, false);
 						isInserted = true;
 						break;
 					}
 				}
 				if(!isInserted)
-					result = getInventory().get().findFirstEmptyHolder().insert(amount, aspect, simulate);
+					result = getInventory().get().findFirstEmptyHolder().insert(amount, aspect, false);*/
+				result = getInventory().get().insert(aspect, amount);
 			}
 			onChange();
 		}

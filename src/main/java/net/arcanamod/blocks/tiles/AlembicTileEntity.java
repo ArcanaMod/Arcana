@@ -46,7 +46,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 		super(ArcanaTiles.ALEMBIC_TE.get());
 		for(int i = 0; i < 5; i++){
 			aspects.initHolders(50, 5);
-			//aspects.getHolders().forEach(h -> h.setCanInsert(false));
+			aspects.getHolders().forEach(h -> h.setCanInsert(false));
 		}
 	}
 	
@@ -121,7 +121,9 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 							else
 								te.getAspectStackMap().remove(aspect);
 							
+							adding.setCanInsert(true);
 							adding.insert(new AspectStack(aspectStack.getAspect(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_DISTILL_EFFICIENCY.get())), false);
+							adding.setCanInsert(false);
 							AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_FLUX_RATE.get()));
 						}
 					}

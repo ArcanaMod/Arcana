@@ -50,8 +50,6 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	FociForgeTileEntity te;
 	float aspectScroll = 0, fociScroll = 0;
 	boolean isScrollingAspect = false, isScrollingFoci = false, spellHasFocus = false;
-
-
 	TextFieldWidget searchWidget;
 
 	public FociForgeScreen(FociForgeContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){

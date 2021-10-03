@@ -67,6 +67,7 @@ public class ResearchTableTileEntity extends LockableTileEntity{
 	private AspectBattery getVisShareablesAsBattery() {
 		battery.clear();
 		BlockPos.getAllInBox(getPos().north(4).east(4).up(4), getPos().south(4).west(4).down(2)).forEach(blockPos -> {
+			System.out.println(blockPos);
 			if(world.getBlockState(blockPos).hasTileEntity()){
 				TileEntity tileEntityInBox = world.getTileEntity(blockPos);
 				if(tileEntityInBox != null)

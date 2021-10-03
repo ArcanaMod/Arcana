@@ -47,10 +47,10 @@ public class PkClientSlotDrain {
 					AspectSlot slot = container.getAspectSlots().get(msg.slotId);
 					if((msg.type == PkAspectClick.ClickType.TAKE || msg.type == PkAspectClick.ClickType.TAKE_ALL) && (container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0){
 						float drain = msg.type == PkAspectClick.ClickType.TAKE_ALL ? slot.getAmount() : 1;
-						slot.drain(slot.getAspect(), drain, false);
+						slot.drain(slot.getAspect(), drain);
 					}else if((msg.type == PkAspectClick.ClickType.PUT || msg.type == PkAspectClick.ClickType.PUT_ALL) && container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == null)){
 						float drain = msg.type == PkAspectClick.ClickType.PUT_ALL ? container.getHeldCount() : 1;
-						slot.insert(slot.getAspect(), drain, false);
+						slot.insert(slot.getAspect(), drain);
 					}
 				}else{
 					LOGGER.error(String.format("Tried to click on invalid aspect slot; out of bounds! (size: %d, slot index: %d).", container.getAspectSlots().size(), msg.slotId));

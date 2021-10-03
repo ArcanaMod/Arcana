@@ -14,6 +14,6 @@ public class UndecidedAspectStack{
 	}
 
 	public static UndecidedAspectStack createAny(int amount){
-		return new UndecidedAspectStack(new AspectStack(Aspect.dummy(),amount), true);
+		return new UndecidedAspectStack(new AspectStack(Aspects.AIR, amount), true);
 	}
 }

@@ -89,7 +89,7 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		if(this.getWorld().getBlockState(this.getPos().down()).getBlock() == ArcanaBlocks.ASPECT_TESTER.get())
 			return getCreativeJarColor();
 		else
-			return vis.getHolder(0).getStack().getAspect() != Aspects.EMPTY ? new Color(vis.getHolder(0).getStack().getAspect().getColorRange().get(2)) : Color.WHITE;
+			return !vis.getHolder(0).getStack().isEmpty() ? new Color(vis.getHolder(0).getStack().getAspect().getColorRange().get(2)) : Color.WHITE;
 	}
 	
 	public int nextColor = 0;

@@ -261,7 +261,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			// Apply IOverrideAspects
 			if(item.getItem() instanceof IOverrideAspects){
 				List<AspectStack> overrides = ((IOverrideAspects)item.getItem()).getAspectStacks(item);
-				if(!(overrides.get(0).isEmpty() || overrides.get(0).getAspect() == Aspects.DUMMY)){
+				if(!(overrides.get(0).isEmpty())){
 					stacks.clear();
 					stacks.addAll(overrides);
 				}

@@ -57,7 +57,7 @@ public class PkAspectClick{
 					if(msg.type == ClickType.TAKE || msg.type == ClickType.TAKE_ALL){
 						if(slot.isSymbolic()){
 							container.setHeldAspect(msg.expectedAspect);
-						}else if((container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0){
+						}else if((container.getHeldAspect() == Aspects.EMPTY || container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0){
 							container.setHeldAspect(slot.getAspect());
 							float drain = msg.type == ClickType.TAKE_ALL ? slot.getAmount() : 1;
 							container.setHeldCount(container.getHeldCount() + syncAndGet(slot, drain, msg.windowId, msg.slotId, msg.type, spe, true));
@@ -69,7 +69,7 @@ public class PkAspectClick{
 						if(slot.isSymbolic()){
 							container.setHeldCount(0);
 							container.setHeldAspect(null);
-						}else if(container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == Aspects.EMPTY)){
+						}else if(container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == Aspects.EMPTY || slot.getAmount() == 0)){
 							float drain = msg.type == ClickType.PUT_ALL ? container.getHeldCount() : 1;
 							if(slot.getAspect() == Aspects.EMPTY && slot.storeSlot)
 								slot.setAspect(container.getHeldAspect());
@@ -92,7 +92,7 @@ public class PkAspectClick{
 	}
 	
 	private static float syncAndGet(AspectSlot s, float d, int windowId, int slotId, ClickType type, ServerPlayerEntity spe, boolean isDrain){
-		float temp = isDrain ? s.drain(s.getAspect(), d, false) : s.insert(s.getAspect(), d, false);
+		float temp = isDrain ? s.drain(s.getAspect(), d) : s.insert(s.getAspect(), d);
 		Connection.sendClientSlotDrain(windowId, slotId, type, spe);
 		return temp;
 	}
