@@ -193,8 +193,9 @@ public class ClientTickHandler{
 							AspectHandler vis = AspectHandler.getFrom(alte);
 							if(vis != null){
 								// Squish aspect stacks in to reducedStacks
-								List<AspectStack> reducedStacks = AspectUtils.squish(vis.getHolders().stream().map(AspectHolder::getStack).collect(Collectors.toList()));
-								renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()), 1.4f);
+								// FIXME: There's no dot particle, and numbers are misaligned with aspects
+								//List<AspectStack> reducedStacks = AspectUtils.squish(vis.getHolders().stream().map(AspectHolder::getStack).collect(Collectors.toList()));
+								//renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()), 1.4f);
 							}
 						}
 					}
@@ -218,6 +219,7 @@ public class ClientTickHandler{
 	}
 
 	protected static void renderAspectAndNumberParticlesInCircle(World world, Vector3d pos, ClientPlayerEntity player, List<Pair<Aspect, Float>> aspectStacks, float ringReduceSize){
+		//aspectStacks.removeIf(x -> x.getFirst() == null || x.getFirst() == Aspects.EMPTY);
 		float[] v = spreadVertices(aspectStacks.size(), 32);
 		for(int i = 0; i < aspectStacks.size(); i++){
 			double centerSpread = v[i];

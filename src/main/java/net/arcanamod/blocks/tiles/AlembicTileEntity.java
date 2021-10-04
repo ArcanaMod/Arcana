@@ -134,9 +134,13 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 						TileEntity tubeTe = world.getTileEntity(pos.offset(dir));
 						if(tubeTe instanceof TubeTileEntity){
 							TubeTileEntity aspectTube = (TubeTileEntity)tubeTe;
-							AspectStack speck = aspects.drainAny(maxAspectOut);
-							if(!speck.isEmpty())
-								aspectTube.addSpeck(new AspectSpeck(speck, 0.7f, dir, 0));
+							AspectHolder holder = aspects.findFirstFullHolder();
+							// try not to add specks that can't transfer
+							if(aspectTube.getSpecks().size() < 6 && holder != null && holder.getStack().getAmount() >= 0.5){
+								AspectStack speck = aspects.drainAny(ArcanaConfig.MAX_ALEMBIC_ASPECT_OUT.get());
+								if(!speck.isEmpty())
+									aspectTube.addSpeck(new AspectSpeck(speck, 0.8f, dir, 0));
+							}
 						}
 					}
 				// aspects can be pulled from the top when pulling becomes a thing but that doesn't matter here

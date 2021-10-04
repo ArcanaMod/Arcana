@@ -29,6 +29,7 @@ public class PipeWindowTileEntity extends TubeTileEntity implements ITickableTil
 	
 	public void addSpeck(AspectSpeck speck){
 		super.addSpeck(speck);
-		lastTransferTime = getWorld().getGameTime();
+		if(!speck.payload.isEmpty())
+			lastTransferTime = getWorld().getGameTime();
 	}
 }

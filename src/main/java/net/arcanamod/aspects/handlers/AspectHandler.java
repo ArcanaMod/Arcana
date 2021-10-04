@@ -111,7 +111,7 @@ public interface AspectHandler extends INBTSerializable<CompoundNBT>{
 	 Parts of the input stack may be inserted into different holders.
 	 */
 	default float insert(Aspect in, float amount){
-		int transferred = 0;
+		float transferred = 0;
 		if(amount > 0){
 			List<AspectHolder> holders = new ArrayList<>(getHolders());
 			// move void cells, then empty cells to the end
@@ -121,7 +121,7 @@ public interface AspectHandler extends INBTSerializable<CompoundNBT>{
 					break;
 				if((toHolder.getStack().getAspect() == in || toHolder.getStack().isEmpty()) && toHolder.canStore(in))
 					if(toHolder.canInsert() && (toHolder.getCapacity() > toHolder.getStack().getAmount() || toHolder.voids())){
-						float toInsert = (float)Math.floor(amount);
+						float toInsert = Math.round(amount);
 						if(!toHolder.voids())
 							toInsert = Math.min(toInsert, toHolder.getCapacity() - toHolder.getStack().getAmount());
 						if(toInsert >= amount){

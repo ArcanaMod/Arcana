@@ -44,7 +44,8 @@ public class PipeTileEntityRenderer extends TileEntityRenderer<TubeTileEntity>{
 			// shake specks that are stuck
 			if(speck.stuck)
 				stack.translate(shakeRng.nextFloat() / 16f, shakeRng.nextFloat() / 16f, shakeRng.nextFloat() / 16f);
-			stack.scale(0.5f, 0.5f, 0.5f);
+			float v = /*speck.payload.getAmount() / 3f*/1;
+			stack.scale(0.5f * v, 0.5f * v, 0.5f * v);
 			// render
 			Minecraft.getInstance().getItemRenderer().renderItem(AspectUtils.getItemStackForAspect(speck.payload.getAspect()), ItemCameraTransforms.TransformType.GROUND, light, overlay, stack, buffer);
 			stack.pop();

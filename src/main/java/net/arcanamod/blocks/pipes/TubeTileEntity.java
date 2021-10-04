@@ -84,6 +84,8 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 						speck.payload = new AspectStack(speck.payload.getAspect(), speck.payload.getAmount() - inserted);
 						speck.direction = speck.direction.getOpposite();
 						speck.pos = 1 - speck.pos;
+						if(speck.payload.getAmount() < 0.5) // remove specks that can't output
+							toRemove.add(speck);
 					}
 				}else if(!forcedDir.isPresent()){ // random bounce
 					if(state.get(SixWayBlock.DOWN) && dir != Direction.UP)
@@ -117,7 +119,9 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 	}
 	
 	public void addSpeck(AspectSpeck speck){
-		specks.add(speck);
+		// don't add specks that can't transfer
+		if(speck.payload.getAmount() >= 0.5)
+			specks.add(speck);
 	}
 	
 	public List<AspectSpeck> getSpecks(){

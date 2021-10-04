@@ -71,8 +71,6 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 		if(aspectContainer.getHeldAspect() != null && aspectContainer.getHeldAspect() != Aspects.EMPTY) {
 			float temp = itemRenderer.zLevel;
 			itemRenderer.zLevel = 500;
-			/*itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 4);
-			itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 7, aspectContainer.isSymbolic() ? "" : String.valueOf(aspectContainer.getHeldCount()));*/
 			matrices.push();
 			matrices.translate(0, 0, 500);
 			ClientUiUtil.renderAspectStack(matrices, aspectContainer.getHeldAspect(), aspectContainer.getHeldCount(), mouseX + 9, mouseY + 4, -1);
