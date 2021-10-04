@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "arcana:block/greatwood_planks",
+    "bottom": "arcana:block/greatwood_planks",
+    "top": "arcana:block/greatwood_planks"
+  }
+}
