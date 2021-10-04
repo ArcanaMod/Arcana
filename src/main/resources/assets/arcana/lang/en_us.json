@@ -181,6 +181,15 @@
     "item.arcana.tainted_beetroot": "Tainted Beetroot",
     "item.arcana.tainted_snowball": "Tainted Snowball",
 
+    "_comment": "Filters",
+    "item.arcana.arcanium_filter": "Enchanted Arcanium Filter",
+    "item.arcana.silverwood_filter": "Enchanted Silverwood Filter",
+    "item.arcana.greatwood_filter": "Enchanted Greatwood Filter",
+    "item.arcana.hawthorn_filter": "Enchanted Hawthorn Filter",
+    "item.arcana.dair_filter": "Enchanted Dair Filter",
+    "item.arcana.willow_filter": "Enchanted Willow Filter",
+    "item.arcana.eucalyptus_filter": "Enchanted Eucalyptus Filter",
+
     "_comment": "Creative Only",
     "item.arcana.cheaters_arcanum": "Cheaters Arcanum",
     "item.arcana.cheaters_arcanum.desc": "For the lazy",
