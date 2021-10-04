@@ -52,7 +52,7 @@ public class ClientUiUtil{
 		// render amount
 		MatrixStack matrixstack = new MatrixStack();
 		// if there is a fractional part, round it
-		String s = (amount % 1 > 0) ? String.format("%.1f", amount) : String.format("%.0f", amount);
+		String s = (amount % 1 > 0.1) ? String.format("%.1f", amount) : String.format("%.0f", amount);
 		matrixstack.translate(0, 0, mc.getItemRenderer().zLevel + 200.0F);
 		IRenderTypeBuffer.Impl impl = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
 		mc.fontRenderer.renderString(s, x + 19 - mc.fontRenderer.getStringWidth(s), y + 10, colour, true, matrixstack.getLast().getMatrix(), impl, false, 0, 0xf000f0);
