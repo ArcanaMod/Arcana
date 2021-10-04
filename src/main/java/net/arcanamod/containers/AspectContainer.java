@@ -114,9 +114,8 @@ public abstract class AspectContainer extends Container {
 		if(heldCount != 0){
 			for(AspectSlot slot : aspectSlots){
 				if(slot.getAspect() == heldAspect){
-					while(heldCount > 0){
-						heldCount = slot.insert(heldAspect, heldCount);
-					}
+					while(heldCount > 0)
+						heldCount -= slot.insert(heldAspect, heldCount);
 					break;
 				}
 			}

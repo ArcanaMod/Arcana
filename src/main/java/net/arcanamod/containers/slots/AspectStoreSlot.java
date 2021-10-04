@@ -1,7 +1,6 @@
 package net.arcanamod.containers.slots;
 
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.handlers.AspectBattery;
 import net.arcanamod.aspects.handlers.AspectHandler;
@@ -44,7 +43,7 @@ public class AspectStoreSlot extends AspectSlot{
 	
 	public void setAspect(@Nonnull Aspect aspect){
 		if(holder != null)
-			holder.getHolder(0).setStack(new AspectStack(aspect, holder.getHolder(0).getStack().getAmount()));
+			holder.getHolder(0).getStack().setAspect(aspect);/*.setStack(new AspectStack(aspect, holder.getHolder(0).getStack().getAmount()))*/;
 	}
 	
 	public float getAmount(){

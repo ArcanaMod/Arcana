@@ -73,7 +73,7 @@ public class PkAspectClick{
 							float drain = msg.type == ClickType.PUT_ALL ? container.getHeldCount() : 1;
 							if(slot.getAspect() == Aspects.EMPTY && slot.storeSlot)
 								slot.setAspect(container.getHeldAspect());
-							container.setHeldCount(container.getHeldCount() - (drain - syncAndGet(slot, drain, msg.windowId, msg.slotId, msg.type, spe, false)));
+							container.setHeldCount(container.getHeldCount() - (syncAndGet(slot, drain, msg.windowId, msg.slotId, msg.type, spe, false)));
 							if(container.getHeldCount() <= 0){
 								container.setHeldCount(0);
 								container.setHeldAspect(null);
