@@ -134,7 +134,7 @@ public class ArcanaBlocks{
 	// Dair Wood
 	public static final RegistryObject<Block> DAIR_LEAVES = BLOCKS.register("dair_leaves", () -> new LeavesBlock(create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid()));
 	@GLT public static final RegistryObject<Block> DAIR_LOG = BLOCKS.register("dair_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	@GLT public static final RegistryObject<Block> STRIPPED_DAIR_LOG = BLOCKS.register("stripped_dair_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> STRIPPED_DAIR_LOG = BLOCKS.register("stripped_dair_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> STRIPPED_DAIR_WOOD = BLOCKS.register("stripped_dair_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> DAIR_WOOD = BLOCKS.register("dair_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> DAIR_PLANKS = BLOCKS.register("dair_planks", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
@@ -151,7 +151,7 @@ public class ArcanaBlocks{
 
 	public static final RegistryObject<Block> TAINTED_DAIR_LEAVES = BLOCKS.register("tainted_dair_leaves", () -> taintedOf(ArcanaBlocks.DAIR_LEAVES.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_DAIR_LOG = BLOCKS.register("tainted_dair_log", () -> taintedOf(ArcanaBlocks.DAIR_LOG.get()));
-	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_DAIR_LOG = BLOCKS.register("tainted_stripped_dair_log", () -> taintedOf(ArcanaBlocks.STRIPPED_DAIR_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_STRIPPED_DAIR_LOG = BLOCKS.register("tainted_stripped_dair_log", () -> taintedOf(ArcanaBlocks.STRIPPED_DAIR_LOG.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_DAIR_WOOD = BLOCKS.register("tainted_stripped_dair_wood", () -> taintedOf(ArcanaBlocks.STRIPPED_DAIR_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_DAIR_WOOD = BLOCKS.register("tainted_dair_wood", () -> taintedOf(ArcanaBlocks.DAIR_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_DAIR_PLANKS = BLOCKS.register("tainted_dair_planks", () -> taintedOf(ArcanaBlocks.DAIR_PLANKS.get()));
@@ -162,7 +162,7 @@ public class ArcanaBlocks{
 	// Eucalyptus Wood
 	public static final RegistryObject<Block> EUCALYPTUS_LEAVES = BLOCKS.register("eucalyptus_leaves", () -> new LeavesBlock(create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid()));
 	@GLT public static final RegistryObject<Block> EUCALYPTUS_LOG = BLOCKS.register("eucalyptus_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	@GLT public static final RegistryObject<Block> STRIPPED_EUCALYPTUS_LOG = BLOCKS.register("stripped_eucalyptus_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> STRIPPED_EUCALYPTUS_LOG = BLOCKS.register("stripped_eucalyptus_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> STRIPPED_EUCALYPTUS_WOOD = BLOCKS.register("stripped_eucalyptus_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> EUCALYPTUS_WOOD = BLOCKS.register("eucalyptus_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> EUCALYPTUS_PLANKS = BLOCKS.register("eucalyptus_planks", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
@@ -178,7 +178,7 @@ public class ArcanaBlocks{
 
 	public static final RegistryObject<Block> TAINTED_EUCALYPTUS_LEAVES = BLOCKS.register("tainted_eucalyptus_leaves", () -> taintedOf(ArcanaBlocks.EUCALYPTUS_LEAVES.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_EUCALYPTUS_LOG = BLOCKS.register("tainted_eucalyptus_log", () -> taintedOf(ArcanaBlocks.EUCALYPTUS_LOG.get()));
-	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_EUCALYPTUS_LOG = BLOCKS.register("tainted_stripped_eucalyptus_log", () -> taintedOf(ArcanaBlocks.STRIPPED_EUCALYPTUS_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_STRIPPED_EUCALYPTUS_LOG = BLOCKS.register("tainted_stripped_eucalyptus_log", () -> taintedOf(ArcanaBlocks.STRIPPED_EUCALYPTUS_LOG.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_EUCALYPTUS_WOOD = BLOCKS.register("tainted_stripped_eucalyptus_wood", () -> taintedOf(ArcanaBlocks.STRIPPED_EUCALYPTUS_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_EUCALYPTUS_WOOD = BLOCKS.register("tainted_eucalyptus_wood", () -> taintedOf(ArcanaBlocks.EUCALYPTUS_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_EUCALYPTUS_PLANKS = BLOCKS.register("tainted_eucalyptus_planks", () -> taintedOf(ArcanaBlocks.EUCALYPTUS_PLANKS.get()));
@@ -189,7 +189,7 @@ public class ArcanaBlocks{
 	// Greatwood
 	public static final RegistryObject<Block> GREATWOOD_LEAVES = BLOCKS.register("greatwood_leaves", () -> new LeavesBlock(create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid()));
 	@GLT public static final RegistryObject<Block> GREATWOOD_LOG = BLOCKS.register("greatwood_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	@GLT public static final RegistryObject<Block> STRIPPED_GREATWOOD_LOG = BLOCKS.register("stripped_greatwood_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> STRIPPED_GREATWOOD_LOG = BLOCKS.register("stripped_greatwood_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> STRIPPED_GREATWOOD_WOOD = BLOCKS.register("stripped_greatwood_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> GREATWOOD_WOOD = BLOCKS.register("greatwood_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> GREATWOOD_PLANKS = BLOCKS.register("greatwood_planks", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
@@ -205,7 +205,7 @@ public class ArcanaBlocks{
 
 	public static final RegistryObject<Block> TAINTED_GREATWOOD_LEAVES = BLOCKS.register("tainted_greatwood_leaves", () -> taintedOf(ArcanaBlocks.GREATWOOD_LEAVES.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_GREATWOOD_LOG = BLOCKS.register("tainted_greatwood_log", () -> taintedOf(ArcanaBlocks.GREATWOOD_LOG.get()));
-	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_GREATWOOD_LOG = BLOCKS.register("tainted_stripped_greatwood_log", () -> taintedOf(ArcanaBlocks.STRIPPED_GREATWOOD_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_STRIPPED_GREATWOOD_LOG = BLOCKS.register("tainted_stripped_greatwood_log", () -> taintedOf(ArcanaBlocks.STRIPPED_GREATWOOD_LOG.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_GREATWOOD_WOOD = BLOCKS.register("tainted_stripped_greatwood_wood", () -> taintedOf(ArcanaBlocks.STRIPPED_GREATWOOD_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_GREATWOOD_WOOD = BLOCKS.register("tainted_greatwood_wood", () -> taintedOf(ArcanaBlocks.GREATWOOD_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_GREATWOOD_PLANKS = BLOCKS.register("tainted_greatwood_planks", () -> taintedOf(ArcanaBlocks.GREATWOOD_PLANKS.get()));
@@ -216,7 +216,7 @@ public class ArcanaBlocks{
 	// Hawthorn Wood
 	public static final RegistryObject<Block> HAWTHORN_LEAVES = BLOCKS.register("hawthorn_leaves", () -> new LeavesBlock(create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid()));
 	@GLT public static final RegistryObject<Block> HAWTHORN_LOG = BLOCKS.register("hawthorn_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	@GLT public static final RegistryObject<Block> STRIPPED_HAWTHORN_LOG = BLOCKS.register("stripped_hawthorn_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> STRIPPED_HAWTHORN_LOG = BLOCKS.register("stripped_hawthorn_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> STRIPPED_HAWTHORN_WOOD = BLOCKS.register("stripped_hawthorn_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> HAWTHORN_WOOD = BLOCKS.register("hawthorn_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> HAWTHORN_PLANKS = BLOCKS.register("hawthorn_planks", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
@@ -232,7 +232,7 @@ public class ArcanaBlocks{
 
 	public static final RegistryObject<Block> TAINTED_HAWTHORN_LEAVES = BLOCKS.register("tainted_hawthorn_leaves", () -> taintedOf(ArcanaBlocks.HAWTHORN_LEAVES.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_HAWTHORN_LOG = BLOCKS.register("tainted_hawthorn_log", () -> taintedOf(ArcanaBlocks.HAWTHORN_LOG.get()));
-	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_HAWTHORN_LOG = BLOCKS.register("tainted_stripped_hawthorn_log", () -> taintedOf(ArcanaBlocks.STRIPPED_HAWTHORN_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_STRIPPED_HAWTHORN_LOG = BLOCKS.register("tainted_stripped_hawthorn_log", () -> taintedOf(ArcanaBlocks.STRIPPED_HAWTHORN_LOG.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_HAWTHORN_WOOD = BLOCKS.register("tainted_stripped_hawthorn_wood", () -> taintedOf(ArcanaBlocks.STRIPPED_HAWTHORN_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_HAWTHORN_WOOD = BLOCKS.register("tainted_hawthorn_wood", () -> taintedOf(ArcanaBlocks.HAWTHORN_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_HAWTHORN_PLANKS = BLOCKS.register("tainted_hawthorn_planks", () -> taintedOf(ArcanaBlocks.HAWTHORN_PLANKS.get()));
@@ -243,7 +243,7 @@ public class ArcanaBlocks{
 	// Silverwood
 	public static final RegistryObject<Block> SILVERWOOD_LEAVES = BLOCKS.register("silverwood_leaves", () -> new LeavesBlock(create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid()));
 	@GLT public static final RegistryObject<Block> SILVERWOOD_LOG = BLOCKS.register("silverwood_log", () -> new RotatedPillarBlock(create(WOOD, SAND).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	@GLT public static final RegistryObject<Block> STRIPPED_SILVERWOOD_LOG = BLOCKS.register("stripped_silverwood_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> STRIPPED_SILVERWOOD_LOG = BLOCKS.register("stripped_silverwood_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> STRIPPED_SILVERWOOD_WOOD = BLOCKS.register("stripped_silverwood_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> SILVERWOOD_WOOD = BLOCKS.register("silverwood_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> SILVERWOOD_PLANKS = BLOCKS.register("silverwood_planks", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
@@ -260,9 +260,9 @@ public class ArcanaBlocks{
 	// Willow Wood
 	public static final RegistryObject<Block> WILLOW_LEAVES = BLOCKS.register("willow_leaves", () -> new LeavesBlock(create(Material.LEAVES).hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid()));
 	@GLT public static final RegistryObject<Block> WILLOW_LOG = BLOCKS.register("willow_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	@GLT public static final RegistryObject<Block> STRIPPED_WILLOW_LOG = BLOCKS.register("stripped_willow_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	public static final RegistryObject<Block> STRIPPED_WILLOW_LOG = BLOCKS.register("stripped_willow_log", () -> new RotatedPillarBlock(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> STRIPPED_WILLOW_WOOD = BLOCKS.register("stripped_willow_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
-	@GLT public static final RegistryObject<Block> WILLOW_WOOD = BLOCKS.register("silverwood_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
+	@GLT public static final RegistryObject<Block> WILLOW_WOOD = BLOCKS.register("willow_wood", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> WILLOW_PLANKS = BLOCKS.register("willow_planks", () -> new Block(create(WOOD).hardnessAndResistance(2).sound(SoundType.WOOD)));
 	@GLT public static final RegistryObject<Block> WILLOW_DOOR = BLOCKS.register("willow_door", () -> new ADoorBlock(create(WOOD).hardnessAndResistance(3).sound(SoundType.WOOD).notSolid()));
 	@GLT public static final RegistryObject<Block> WILLOW_TRAPDOOR = BLOCKS.register("willow_trapdoor", () -> new ATrapDoorBlock(create(WOOD).hardnessAndResistance(3).sound(SoundType.WOOD).notSolid()));
@@ -276,7 +276,7 @@ public class ArcanaBlocks{
 
 	public static final RegistryObject<Block> TAINTED_WILLOW_LEAVES = BLOCKS.register("tainted_willow_leaves", () -> taintedOf(ArcanaBlocks.WILLOW_LEAVES.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_WILLOW_LOG = BLOCKS.register("tainted_willow_log", () -> taintedOf(ArcanaBlocks.WILLOW_LOG.get()));
-	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_WILLOW_LOG = BLOCKS.register("tainted_stripped_willow_log", () -> taintedOf(ArcanaBlocks.STRIPPED_WILLOW_LOG.get()));
+	public static final RegistryObject<Block> TAINTED_STRIPPED_WILLOW_LOG = BLOCKS.register("tainted_stripped_willow_log", () -> taintedOf(ArcanaBlocks.STRIPPED_WILLOW_LOG.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_STRIPPED_WILLOW_WOOD = BLOCKS.register("tainted_stripped_willow_wood", () -> taintedOf(ArcanaBlocks.STRIPPED_WILLOW_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_WILLOW_WOOD = BLOCKS.register("tainted_willow_wood", () -> taintedOf(ArcanaBlocks.WILLOW_WOOD.get()));
 	@GLT public static final RegistryObject<Block> TAINTED_WILLOW_PLANKS = BLOCKS.register("tainted_willow_planks", () -> taintedOf(ArcanaBlocks.WILLOW_PLANKS.get()));
