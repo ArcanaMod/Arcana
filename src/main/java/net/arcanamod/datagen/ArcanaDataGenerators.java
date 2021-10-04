@@ -11,6 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import java.util.Map;
 
 import static com.google.common.collect.Maps.newHashMap;
+import static net.arcanamod.ArcanaVariables.arcLoc;
 
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class ArcanaDataGenerators{
@@ -42,6 +43,15 @@ public class ArcanaDataGenerators{
 		LIVING_WOODS.put("greatwood", GREATWOOD);
 		LIVING_WOODS.put("silverwood", SILVERWOOD);
 		LIVING_WOODS.put("willow", WILLOW);
+		LIVING_WOODS.put("tainted_oak", arcLoc("block/tainted_oak_planks"));
+		LIVING_WOODS.put("tainted_birch", arcLoc("block/tainted_birch_planks"));
+		LIVING_WOODS.put("tainted_spruce", arcLoc("block/tainted_spruce_planks"));
+		LIVING_WOODS.put("tainted_dair", arcLoc("block/tainted_dair_planks"));
+		LIVING_WOODS.put("tainted_eucalyptus", arcLoc("block/tainted_eucalyptus_planks"));
+		LIVING_WOODS.put("tainted_hawthorn", arcLoc("block/tainted_hawthorn_planks"));
+		LIVING_WOODS.put("tainted_greatwood", arcLoc("block/tainted_greatwood_planks"));
+		LIVING_WOODS.put("tainted_silverwood", arcLoc("block/tainted_silverwood_planks"));
+		LIVING_WOODS.put("tainted_willow", arcLoc("block/tainted_willow_planks"));
 		WOODS.putAll(LIVING_WOODS);
 		WOODS.put("trypophobius", TRYPOPHOBIUS);
 		WOODS.put("dead", DEAD);

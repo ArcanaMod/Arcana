@@ -16,6 +16,9 @@ public class BlockModels extends BlockModelProvider{
 	
 	protected void registerModels(){
 		ArcanaDataGenerators.WOODS.forEach((name, texture) -> {
+			cubeAll("stripped_"+name+"_wood", new ResourceLocation(texture.getNamespace(),"stripped_"+texture.getPath().replace("_planks","")));
+			cubeAll(name+"_wood", new ResourceLocation(texture.getNamespace(),texture.getPath().replace("planks","log")));
+			cubeAll(name, texture);
 			slab(name + "_slab", texture, texture, texture);
 			slabTop(name + "_slab_top", texture, texture, texture);
 			stairs(name + "_stairs", texture, texture, texture);
