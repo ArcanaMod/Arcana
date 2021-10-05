@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_inventory",
+  "textures": {
+    "texture": "arcana:block/tainted_eucalyptus_planks"
+  }
+}

@@ -50,7 +50,7 @@ public class ArcanaDataGenerators{
 		LIVING_WOODS.put("tainted_eucalyptus", arcLoc("block/tainted_eucalyptus_planks"));
 		LIVING_WOODS.put("tainted_hawthorn", arcLoc("block/tainted_hawthorn_planks"));
 		LIVING_WOODS.put("tainted_greatwood", arcLoc("block/tainted_greatwood_planks"));
-		LIVING_WOODS.put("tainted_silverwood", arcLoc("block/tainted_silverwood_planks"));
+		//LIVING_WOODS.put("tainted_silverwood", arcLoc("block/tainted_silverwood_planks"));
 		LIVING_WOODS.put("tainted_willow", arcLoc("block/tainted_willow_planks"));
 		WOODS.putAll(LIVING_WOODS);
 		WOODS.put("trypophobius", TRYPOPHOBIUS);

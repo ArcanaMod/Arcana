@@ -3,11 +3,14 @@ package net.arcanamod.datagen;
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
+import static net.arcanamod.ArcanaVariables.arcLoc;
 import static net.arcanamod.blocks.ArcanaBlocks.*;
 import static net.arcanamod.datagen.ArcanaDataGenerators.*;
 
@@ -21,6 +24,11 @@ public class Blockstates extends BlockStateProvider{
 	}
 	
 	protected void registerStatesAndModels(){
+		ArcanaDataGenerators.LIVING_WOODS.forEach((name, texture) -> {
+			simpleBlock(ForgeRegistries.BLOCKS.getValue(arcLoc("stripped_" + name + "_wood")));
+			simpleBlock(ForgeRegistries.BLOCKS.getValue(arcLoc(name+"_wood")));
+		});
+		
 		fenceBlock(DAIR_FENCE.get(), DAIR);
 		fenceBlock(DEAD_FENCE.get(), DEAD);
 		fenceBlock(EUCALYPTUS_FENCE.get(), EUCALYPTUS);
@@ -45,7 +53,6 @@ public class Blockstates extends BlockStateProvider{
 		simpleBlock(ArcanaBlocks.CRACKED_DUNGEON_BRICKS.get());
 		simpleBlock(ArcanaBlocks.MOSSY_DUNGEON_BRICKS.get());
 		
-
 		simpleBlock(ArcanaBlocks.TAINTED_GRANITE.get());
 		simpleBlock(ArcanaBlocks.TAINTED_DIORITE.get());
 		simpleBlock(ArcanaBlocks.TAINTED_ANDESITE.get());

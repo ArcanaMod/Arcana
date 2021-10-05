@@ -21,9 +21,11 @@ public class ItemModels extends ItemModelProvider{
 	}
 	
 	protected void registerModels(){
-		ArcanaDataGenerators.WOODS.forEach((name, texture) -> {
-			withExistingParent("stripped_"+name+"_wood",arcBlockLoc("stripped_"+name+"_wood"));
+		ArcanaDataGenerators.LIVING_WOODS.forEach((name, texture) -> {
+			withExistingParent("stripped_" + name + "_wood", arcBlockLoc("stripped_" + name + "_wood"));
 			withExistingParent(name+"_wood",arcBlockLoc(name+"_wood"));
+		});
+		ArcanaDataGenerators.WOODS.forEach((name, texture) -> {
 			withExistingParent(name + "_fence", arcBlockLoc(name + "_fence_inventory"));
 			withExistingParent(name + "_fence_gate", arcBlockLoc(name + "_fence_gate"));
 		});
