@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "arcana:block/stripped_tainted_spruce"
+    "all": "arcana:block/stripped_tainted_spruce_wood"
   }
 }

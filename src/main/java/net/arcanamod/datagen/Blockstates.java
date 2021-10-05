@@ -2,6 +2,7 @@ package net.arcanamod.datagen;
 
 import net.arcanamod.Arcana;
 import net.arcanamod.blocks.ArcanaBlocks;
+import net.minecraft.block.Blocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -25,8 +26,10 @@ public class Blockstates extends BlockStateProvider{
 	
 	protected void registerStatesAndModels(){
 		ArcanaDataGenerators.LIVING_WOODS.forEach((name, texture) -> {
+			if (ForgeRegistries.BLOCKS.getValue(arcLoc("stripped_" + name + "_wood")) != Blocks.AIR){
 			simpleBlock(ForgeRegistries.BLOCKS.getValue(arcLoc("stripped_" + name + "_wood")));
 			simpleBlock(ForgeRegistries.BLOCKS.getValue(arcLoc(name+"_wood")));
+			}
 		});
 		
 		fenceBlock(DAIR_FENCE.get(), DAIR);
