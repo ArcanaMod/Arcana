@@ -12,6 +12,7 @@ import net.arcanamod.blocks.pipes.AspectSpeck;
 import net.arcanamod.blocks.pipes.TubeTileEntity;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
 import net.arcanamod.containers.AlembicContainer;
+import net.arcanamod.items.EnchantedFilterItem;
 import net.arcanamod.world.AuraView;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -135,7 +136,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 							if(!stacked)
 								world.addParticle(new AspectHelixParticleData(aspect, 20 * airs + 15, world.rand.nextInt(180), new Vector3d(0, 1, 0)), cruciblePos.getX() + .5 + world.rand.nextFloat() * .1, cruciblePos.getY() + .7, cruciblePos.getZ() + .5 + world.rand.nextFloat() * .1, 0, 0, 0);
 							// pick a random aspect, take from it, and store them in our actual aspect handler
-							if(world.getGameTime() % ArcanaConfig.ALEMBIC_DISTILL_TIME.get() == 0){
+							int freeTicks = filter().isEmpty() ? 0 : ((EnchantedFilterItem)filter().getItem()).speedBoost;
+							if(world.getGameTime() % (ArcanaConfig.ALEMBIC_DISTILL_TIME.get() - freeTicks * 2) == 0){
 								float diff = Math.min(aspectStack.getAmount(), 1);
 								AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - 1);
 								if(!newStack.isEmpty())
@@ -143,10 +145,28 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 								else
 									te.getAspectStackMap().remove(aspect);
 								
+								int efficiencyBoost = filter().isEmpty() ? 0 : ((EnchantedFilterItem)filter().getItem()).efficiencyBoost;
+								// -1: 0.6 multiplier, 0.4 flux
+								// +0: 0.7 multiplier, 0.3 flux
+								// +1: 0.8 multiplier, 0.3 flux
+								// +2: 0.8 multiplier, 0.2 flux
+								// +3: 0.9 multiplier, 0.1 flux
+								float effMultiplier = 0.7f;
+								float fluxMultiplier = 0.3f;
+								switch(efficiencyBoost){
+									case -1:
+										effMultiplier = 0.6f; fluxMultiplier = 0.4f; break;
+									case 1:
+										effMultiplier = 0.8f; fluxMultiplier = 0.3f; break;
+									case 2:
+										effMultiplier = 0.8f; fluxMultiplier = 0.2f; break;
+									case 3:
+										effMultiplier = 0.9f; fluxMultiplier = 0.1f; break;
+								}
 								adding.setCanInsert(true);
-								adding.insert(new AspectStack(aspectStack.getAspect(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_DISTILL_EFFICIENCY.get())), false);
+								adding.insert(new AspectStack(aspectStack.getAspect(), diff * effMultiplier), false);
 								adding.setCanInsert(false);
-								AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_FLUX_RATE.get()));
+								AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), diff * fluxMultiplier);
 							}
 						}
 					}
