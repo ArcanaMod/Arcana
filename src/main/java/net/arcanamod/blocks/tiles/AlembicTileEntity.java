@@ -11,16 +11,26 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.pipes.AspectSpeck;
 import net.arcanamod.blocks.pipes.TubeTileEntity;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
+import net.arcanamod.containers.AlembicContainer;
 import net.arcanamod.world.AuraView;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,17 +40,16 @@ import static net.arcanamod.aspects.Aspects.EMPTY;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-public class AlembicTileEntity extends TileEntity implements ITickableTileEntity{
+public class AlembicTileEntity extends TileEntity implements ITickableTileEntity, INamedContainerProvider{
 	
 	// 50 of 5 aspects
 	// TODO: see usage of ALEMBIC_BASE_DISTILL_EFFICIENCY
 	public AspectBattery aspects = new AspectBattery(/*5, 50*/);
-	int crucibleLevel = -1;
-	boolean stacked = false;
-	
 	public boolean suppressedByRedstone = false;
+	public ItemStackHandler inventory = new ItemStackHandler(2);
 	
-	public static int maxAspectOut = ArcanaConfig.MAX_ALEMBIC_ASPECT_OUT.get();
+	protected int crucibleLevel = -1;
+	protected boolean stacked = false;
 	
 	public AlembicTileEntity(){
 		super(ArcanaTiles.ALEMBIC_TE.get());
@@ -156,20 +165,42 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 		super.read(state, compound);
 		aspects.deserializeNBT(compound.getCompound("aspects"));
 		suppressedByRedstone = compound.getBoolean("suppressed");
+		inventory.deserializeNBT(compound.getCompound("items"));
 	}
 	
 	public CompoundNBT write(CompoundNBT compound){
 		CompoundNBT nbt = super.write(compound);
 		nbt.put("aspects", aspects.serializeNBT());
 		nbt.putBoolean("suppressed", suppressedByRedstone);
+		nbt.put("items", inventory.serializeNBT());
 		return nbt;
 	}
 	
+	public ItemStack filter(){
+		return inventory.getStackInSlot(0);
+	}
+	
+	public ItemStack fuel(){
+		return inventory.getStackInSlot(1);
+	}
+	
+	@SuppressWarnings("unchecked") // bad generics checkers
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side){
 		if(cap == AspectHandlerCapability.ASPECT_HANDLER)
 			return aspects.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
+		if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			return (LazyOptional<T>)LazyOptional.of(() -> inventory);
 		return LazyOptional.empty();
+	}
+	
+	public ITextComponent getDisplayName(){
+		return new TranslationTextComponent("block.arcana.alembic");
+	}
+	
+	@Nullable
+	public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player){
+		return new AlembicContainer(id, this, inventory);
 	}
 }
