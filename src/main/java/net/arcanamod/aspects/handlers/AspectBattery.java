@@ -32,6 +32,7 @@ public class AspectBattery implements AspectHandler, ICapabilityProvider{
 	
 	public void deserializeNBT(CompoundNBT data){
 		ListNBT cells = data.getList("holders", Constants.NBT.TAG_COMPOUND);
+		holders.clear();
 		for(INBT icell : cells){
 			AspectCell cell = AspectCell.fromNbt((CompoundNBT)icell);
 			holders.add(cell);

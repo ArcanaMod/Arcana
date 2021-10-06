@@ -15,8 +15,6 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.Direction;
@@ -149,28 +147,7 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 		return index == 0;
 	}
 	
-	@Override
-	@Nullable
-	public SUpdateTileEntityPacket getUpdatePacket(){
-		CompoundNBT compound = new CompoundNBT();
-		compound.put("aspects", vis.serializeNBT());
-		return new SUpdateTileEntityPacket(pos, -1, compound);
-	}
-	
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-		vis.deserializeNBT(pkt.getNbtCompound().getCompound("aspects"));
-	}
-	
-	@Override
 	public CompoundNBT getUpdateTag(){
-		CompoundNBT compound = super.getUpdateTag();
-		compound.put("aspects", vis.serializeNBT());
-		return compound;
-	}
-	
-	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag){
-		this.read(state, tag);
+		return write(new CompoundNBT());
 	}
 }

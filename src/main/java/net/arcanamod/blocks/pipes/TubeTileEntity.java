@@ -9,8 +9,6 @@ import net.minecraft.block.SixWayBlock;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
@@ -153,17 +151,5 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 	
 	public CompoundNBT getUpdateTag(){
 		return write(new CompoundNBT());
-	}
-	
-	public void handleUpdateTag(BlockState state, CompoundNBT tag){
-		read(state, tag);
-	}
-	
-	public SUpdateTileEntityPacket getUpdatePacket(){
-		return new SUpdateTileEntityPacket(pos, -1, getUpdateTag());
-	}
-	
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-		handleUpdateTag(getBlockState(), pkt.getNbtCompound());
 	}
 }

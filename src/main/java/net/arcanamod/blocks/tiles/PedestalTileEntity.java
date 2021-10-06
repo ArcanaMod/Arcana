@@ -48,14 +48,7 @@ public class PedestalTileEntity extends TileEntity{
 	}
 	
 	public CompoundNBT getUpdateTag(){
-		CompoundNBT nbt = super.getUpdateTag();
-		nbt.put("items", items.serializeNBT());
-		return nbt;
-	}
-	
-	public void handleUpdateTag(BlockState state, CompoundNBT tag){
-		super.handleUpdateTag(state, tag);
-		items.deserializeNBT(tag.getCompound("items"));
+		return write(new CompoundNBT());
 	}
 	
 	public AxisAlignedBB getRenderBoundingBox(){

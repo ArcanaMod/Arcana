@@ -15,8 +15,6 @@ import net.arcanamod.blocks.JarBlock;
 import net.arcanamod.blocks.pipes.TubeTileEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Direction;
@@ -121,31 +119,8 @@ public class JarTileEntity extends TileEntity implements ITickableTileEntity, Vi
 		return getCapability(cap);
 	}
 	
-	@Override
-	@Nullable
-	public SUpdateTileEntityPacket getUpdatePacket(){
-		CompoundNBT nbtTagCompound = new CompoundNBT();
-		write(nbtTagCompound);
-		return new SUpdateTileEntityPacket(pos, -1, nbtTagCompound);
-	}
-	
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-		read(getBlockState(), pkt.getNbtCompound());
-	}
-	
-	/* Creates a tag containing all of the TileEntity information, used by vanilla to transmit from server to client */
-	@Override
 	public CompoundNBT getUpdateTag(){
-		CompoundNBT nbtTagCompound = new CompoundNBT();
-		write(nbtTagCompound);
-		return nbtTagCompound;
-	}
-	
-	/* Populates this TileEntity with information from the tag, used by vanilla to transmit from server to client */
-	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag){
-		this.read(state, tag);
+		return write(new CompoundNBT());
 	}
 	
 	@Override

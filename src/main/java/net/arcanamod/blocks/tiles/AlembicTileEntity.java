@@ -203,4 +203,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player){
 		return new AlembicContainer(id, this, inventory);
 	}
+	
+	public CompoundNBT getUpdateTag(){
+		return write(new CompoundNBT());
+	}
 }
