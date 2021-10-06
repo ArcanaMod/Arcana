@@ -51,7 +51,26 @@ public class AlembicContainer extends Container{
 			addSlot(new Slot(playerInventory, k, 8 + k * 18, 198));
 	}
 	
-	public ItemStack transferStackInSlot(PlayerEntity playerIn, int index){
-		return super.transferStackInSlot(playerIn, index);
+	public ItemStack transferStackInSlot(PlayerEntity player, int index) {
+		ItemStack itemstack = ItemStack.EMPTY;
+		Slot slot = inventorySlots.get(index);
+		if(slot != null && slot.getHasStack()){
+			ItemStack itemstack1 = slot.getStack();
+			itemstack = itemstack1.copy();
+			if(index < 9){
+				if(!mergeItemStack(itemstack1, 2, 37, true))
+					return ItemStack.EMPTY;
+			}else if(!mergeItemStack(itemstack1, 0, 2, false))
+				return ItemStack.EMPTY;
+			if(itemstack1.isEmpty())
+				slot.putStack(ItemStack.EMPTY);
+			else
+				slot.onSlotChanged();
+			if(itemstack1.getCount() == itemstack.getCount())
+				return ItemStack.EMPTY;
+			slot.onTake(player, itemstack1);
+		}
+		
+		return itemstack;
 	}
 }

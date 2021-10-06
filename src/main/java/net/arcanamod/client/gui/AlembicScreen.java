@@ -50,6 +50,10 @@ public class AlembicScreen extends ContainerScreen<AlembicContainer>{
 				RenderSystem.color3f(1, 1, 1);
 			}
 		}
+		if(container.te.burnTicks > 0){
+			int fuelHeight = (int)(52 * (container.te.burnTicks / (float)container.te.maxBurnTicks));
+			drawTexturedModalRect(matrices, 12, 44 + (52 - fuelHeight), 176, 52 - fuelHeight, 20, fuelHeight);
+		}
 		matrices.pop();
 	}
 	

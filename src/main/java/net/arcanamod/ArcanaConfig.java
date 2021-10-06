@@ -89,8 +89,8 @@ public class ArcanaConfig{
 				.comment("The chance of an aura node being a special (hungry, eldritch, bright, or pale) node, out of 100.", "15 by default.")
 				.define("SpecialNodeChance", 15);
 		ALEMBIC_DISTILL_TIME = COMMON_BUILDER
-				.comment("The number of ticks required to distill one aspect.", "4 by default.")
-				.define("AlembicDistillTime", 4);
+				.comment("The number of ticks required to distill one aspect.", "12 by default.")
+				.define("AlembicDistillTime", 12);
 		MAX_ALEMBIC_ASPECT_OUT = COMMON_BUILDER
 				.comment("The maximum amount of aspects a single alembic can output to pipes per tick.", "3 by default.")
 				.define("MaxAlembicAspectOut", 3);
@@ -231,7 +231,7 @@ public class ArcanaConfig{
 
 	public static ConfigValue<Integer> NODE_CHANCE; // 1
 	public static ConfigValue<Integer> SPECIAL_NODE_CHANCE; // 15
-	public static ConfigValue<Integer> ALEMBIC_DISTILL_TIME; // 4
+	public static ConfigValue<Integer> ALEMBIC_DISTILL_TIME; // 12
 	public static ConfigValue<Integer> MAX_ALEMBIC_ASPECT_OUT; // 3
 	public static ConfigValue<Integer> MAX_ALEMBIC_AIR; // 4
 	public static ConfigValue<Integer> MAX_ALEMBIC_STACK; // 3

@@ -27,6 +27,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -47,6 +48,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 	public AspectBattery aspects = new AspectBattery(/*5, 50*/);
 	public boolean suppressedByRedstone = false;
 	public ItemStackHandler inventory = new ItemStackHandler(2);
+	public int burnTicks = 0;
+	public int maxBurnTicks = 0;
 	
 	protected int crucibleLevel = -1;
 	protected boolean stacked = false;
@@ -100,59 +103,72 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 			}
 			stacked = stack > 0;
 			if(crucibleLevel != -1){
-				BlockPos cruciblePos = new BlockPos(getPos().getX(), crucibleLevel, getPos().getZ());
-				CrucibleTileEntity te = (CrucibleTileEntity)world.getTileEntity(cruciblePos);
-				if(te != null && te.getAspectStackMap().size() > 0){
-					Aspect aspect = EMPTY;
-					// find an aspect stack we can actually pull
-					AspectHolder adding = null;
-					for(AspectHolder holder : aspects.getHolders()){
-						if(holder.getCapacity() - holder.getStack().getAmount() > 0){
-							adding = holder;
-							Aspect maybe = te.getAspectStackMap().values().stream().filter(stack1 -> stack1.getAspect() == holder.getStack().getAspect() || holder.getStack().isEmpty()).findFirst().map(AspectStack::getAspect).orElse(EMPTY);
-							if(maybe != EMPTY){
-								aspect = maybe;
-								break;
-							}
-						}
-					}
-					
-					if(aspect != EMPTY){
-						AspectStack aspectStack = te.getAspectStackMap().get(aspect);
-						if(!stacked)
-							world.addParticle(new AspectHelixParticleData(aspect, 20 * airs + 15, world.rand.nextInt(180), new Vector3d(0, 1, 0)), cruciblePos.getX() + .5 + world.rand.nextFloat() * .1, cruciblePos.getY() + .7, cruciblePos.getZ() + .5 + world.rand.nextFloat() * .1, 0, 0, 0);
-						// pick a random aspect, take from it, and store them in our actual aspect handler
-						if(world.getGameTime() % ArcanaConfig.ALEMBIC_DISTILL_TIME.get() == 0){
-							float diff = Math.min(aspectStack.getAmount(), 1);
-							AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - 1);
-							if(!newStack.isEmpty())
-								te.getAspectStackMap().put(aspect, newStack);
-							else
-								te.getAspectStackMap().remove(aspect);
-							
-							adding.setCanInsert(true);
-							adding.insert(new AspectStack(aspectStack.getAspect(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_DISTILL_EFFICIENCY.get())), false);
-							adding.setCanInsert(false);
-							AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_FLUX_RATE.get()));
-						}
+				if(burnTicks == 0){
+					int newTicks = ForgeHooks.getBurnTime(fuel()) / 2; //furnaces need significantly longer to work
+					if(newTicks > 0){
+						burnTicks = newTicks;
+						maxBurnTicks = newTicks;
+						inventory.setStackInSlot(1, fuel().getContainerItem());
+						markDirty();
 					}
 				}
-				// then push them out into the total pipe system from sides
-				if(world.getGameTime() % 5 == 0)
-					for(Direction dir : Direction.Plane.HORIZONTAL){
-						TileEntity tubeTe = world.getTileEntity(pos.offset(dir));
-						if(tubeTe instanceof TubeTileEntity){
-							TubeTileEntity aspectTube = (TubeTileEntity)tubeTe;
-							AspectHolder holder = aspects.findFirstFullHolder();
-							// try not to add specks that can't transfer
-							if(aspectTube.getSpecks().size() < 6 && holder != null && holder.getStack().getAmount() >= 0.5){
-								AspectStack speck = aspects.drainAny(ArcanaConfig.MAX_ALEMBIC_ASPECT_OUT.get());
-								if(!speck.isEmpty())
-									aspectTube.addSpeck(new AspectSpeck(speck, 0.8f, dir, 0));
+				if(burnTicks > 0){
+					BlockPos cruciblePos = new BlockPos(getPos().getX(), crucibleLevel, getPos().getZ());
+					CrucibleTileEntity te = (CrucibleTileEntity)world.getTileEntity(cruciblePos);
+					if(te != null && te.getAspectStackMap().size() > 0){
+						Aspect aspect = EMPTY;
+						// find an aspect stack we can actually pull
+						AspectHolder adding = null;
+						for(AspectHolder holder : aspects.getHolders()){
+							if(holder.getCapacity() - holder.getStack().getAmount() > 0){
+								adding = holder;
+								Aspect maybe = te.getAspectStackMap().values().stream().filter(stack1 -> stack1.getAspect() == holder.getStack().getAspect() || holder.getStack().isEmpty()).findFirst().map(AspectStack::getAspect).orElse(EMPTY);
+								if(maybe != EMPTY){
+									aspect = maybe;
+									break;
+								}
+							}
+						}
+						
+						if(aspect != EMPTY){
+							AspectStack aspectStack = te.getAspectStackMap().get(aspect);
+							if(!stacked)
+								world.addParticle(new AspectHelixParticleData(aspect, 20 * airs + 15, world.rand.nextInt(180), new Vector3d(0, 1, 0)), cruciblePos.getX() + .5 + world.rand.nextFloat() * .1, cruciblePos.getY() + .7, cruciblePos.getZ() + .5 + world.rand.nextFloat() * .1, 0, 0, 0);
+							// pick a random aspect, take from it, and store them in our actual aspect handler
+							if(world.getGameTime() % ArcanaConfig.ALEMBIC_DISTILL_TIME.get() == 0){
+								float diff = Math.min(aspectStack.getAmount(), 1);
+								AspectStack newStack = new AspectStack(aspectStack.getAspect(), aspectStack.getAmount() - 1);
+								if(!newStack.isEmpty())
+									te.getAspectStackMap().put(aspect, newStack);
+								else
+									te.getAspectStackMap().remove(aspect);
+								
+								adding.setCanInsert(true);
+								adding.insert(new AspectStack(aspectStack.getAspect(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_DISTILL_EFFICIENCY.get())), false);
+								adding.setCanInsert(false);
+								AuraView.SIDED_FACTORY.apply(world).addFluxAt(getPos(), (float)(diff * ArcanaConfig.ALEMBIC_BASE_FLUX_RATE.get()));
 							}
 						}
 					}
-				// aspects can be pulled from the top when pulling becomes a thing but that doesn't matter here
+					// then push them out into the total pipe system from sides
+					if(world.getGameTime() % 5 == 0)
+						for(Direction dir : Direction.Plane.HORIZONTAL){
+							TileEntity tubeTe = world.getTileEntity(pos.offset(dir));
+							if(tubeTe instanceof TubeTileEntity){
+								TubeTileEntity aspectTube = (TubeTileEntity)tubeTe;
+								AspectHolder holder = aspects.findFirstFullHolder();
+								// try not to add specks that can't transfer
+								if(aspectTube.getSpecks().size() < 6 && holder != null && holder.getStack().getAmount() >= 0.5){
+									AspectStack speck = aspects.drainAny(ArcanaConfig.MAX_ALEMBIC_ASPECT_OUT.get());
+									if(!speck.isEmpty())
+										aspectTube.addSpeck(new AspectSpeck(speck, 0.8f, dir, 0));
+								}
+							}
+						}
+					// aspects can be pulled from the top when pulling becomes a thing but that doesn't matter here
+				}
+				if(burnTicks > 0)
+					burnTicks--;
 			}
 		}
 	}
@@ -166,6 +182,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 		aspects.deserializeNBT(compound.getCompound("aspects"));
 		suppressedByRedstone = compound.getBoolean("suppressed");
 		inventory.deserializeNBT(compound.getCompound("items"));
+		burnTicks = compound.getInt("burnTicks");
+		maxBurnTicks = compound.getInt("maxBurnTicks");
 	}
 	
 	public CompoundNBT write(CompoundNBT compound){
@@ -173,6 +191,8 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 		nbt.put("aspects", aspects.serializeNBT());
 		nbt.putBoolean("suppressed", suppressedByRedstone);
 		nbt.put("items", inventory.serializeNBT());
+		nbt.putInt("burnTicks", burnTicks);
+		nbt.putInt("maxBurnTicks", maxBurnTicks);
 		return nbt;
 	}
 	
