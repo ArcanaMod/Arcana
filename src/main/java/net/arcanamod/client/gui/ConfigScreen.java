@@ -2,19 +2,19 @@ package net.arcanamod.client.gui;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.arcanamod.ArcanaConfig;
-import net.minecraft.client.gui.AbstractGui;
+import net.minecraft.client.GameSettings;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.SettingsScreen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.gui.widget.list.OptionsRowList;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.BooleanOption;
 import net.minecraft.client.settings.SliderPercentageOption;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 
 import static net.minecraft.util.text.ITextComponent.getTextComponentOrEmpty;
 
-public final class ConfigScreen extends Screen {
+public final class ConfigScreen extends SettingsScreen {
 
     private static final int TITLE_HEIGHT = 8;
 
@@ -26,13 +26,10 @@ public final class ConfigScreen extends Screen {
     private static final int BUTTON_HEIGHT = 20;
     private static final int DONE_BUTTON_TOP_OFFSET = 26;
 
-    private final Screen parentScreen;
-
     private OptionsRowList optionsRowList;
 
-    public ConfigScreen(Screen parentScreen) {
-        super(new StringTextComponent("Arcana Config"));
-        this.parentScreen = parentScreen;
+    public ConfigScreen(Screen parentScreen, GameSettings settings) {
+        super(parentScreen, settings, new StringTextComponent("Arcana Config"));
     }
 
     @Override
@@ -129,7 +126,7 @@ public final class ConfigScreen extends Screen {
                 this.height - DONE_BUTTON_TOP_OFFSET,
                 BUTTON_WIDTH, BUTTON_HEIGHT,
                 getTextComponentOrEmpty(I18n.format("gui.done")),
-                button -> this.onClose()
+                button -> this.closeScreen()
         ));
     }
 
@@ -140,10 +137,5 @@ public final class ConfigScreen extends Screen {
         drawCenteredString(stack, this.font, this.title.getString(),
                 this.width / 2, TITLE_HEIGHT, 0xFFFFFF);
         super.render(stack, mouseX, mouseY, partialTicks);
-    }
-
-    @Override
-    public void onClose() {
-        this.minecraft.displayGuiScreen(this.parentScreen);
     }
 }

@@ -69,7 +69,7 @@ public class ClientProxy extends CommonProxy{
 		super.construct();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ArcanaConfig.CLIENT_SPEC);
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY,
-				() -> (mc, screen) -> new ConfigScreen(screen));
+				() -> (mc, screen) -> new ConfigScreen(screen, mc.gameSettings));
 		IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
 		bus.addListener(TextureStitchHandler::onTextureStitch);
 		bus.addListener(BakeEventHandler::onModelBake);
