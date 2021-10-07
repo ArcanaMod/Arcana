@@ -208,13 +208,13 @@ public class ArcanaItems{
 	public static final RegistryObject<Item> COOKED_CAT_MEAT = ITEMS.register("cooked_cat_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(1).saturation(0.1f).build())));
 
 	// Filters
-	public static final RegistryObject<Item> ARCANIUM_FILTER = ITEMS.register("arcanium_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS), 1, 1));
-	public static final RegistryObject<Item> SILVERWOOD_FILTER = ITEMS.register("silverwood_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS), 2, 0));
-	public static final RegistryObject<Item> GREATWOOD_FILTER = ITEMS.register("greatwood_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS), 0, 2));
-	public static final RegistryObject<Item> HAWTHORN_FILTER = ITEMS.register("hawthorn_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS), 3, -1));
-	public static final RegistryObject<Item> DAIR_FILTER = ITEMS.register("dair_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS), 3, -1));
-	public static final RegistryObject<Item> WILLOW_FILTER = ITEMS.register("willow_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS), -1, 3));
-	public static final RegistryObject<Item> EUCALYPTUS_FILTER = ITEMS.register("eucalyptus_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS), -1, 3));
+	public static final RegistryObject<Item> ARCANIUM_FILTER = ITEMS.register("arcanium_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 1, 1));
+	public static final RegistryObject<Item> SILVERWOOD_FILTER = ITEMS.register("silverwood_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 2, 0));
+	public static final RegistryObject<Item> GREATWOOD_FILTER = ITEMS.register("greatwood_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 0, 2));
+	public static final RegistryObject<Item> HAWTHORN_FILTER = ITEMS.register("hawthorn_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 3, -1));
+	public static final RegistryObject<Item> DAIR_FILTER = ITEMS.register("dair_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 3, -1));
+	public static final RegistryObject<Item> WILLOW_FILTER = ITEMS.register("willow_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), -1, 3));
+	public static final RegistryObject<Item> EUCALYPTUS_FILTER = ITEMS.register("eucalyptus_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), -1, 3));
 
 	// Creative Only
 	public static final RegistryObject<Item> CHEATERS_ARCANUM = ITEMS.register("cheaters_arcanum", () -> new CheatersResearchBookItem(new Properties().group(Arcana.ITEMS).maxStackSize(1).rarity(Rarity.EPIC), new ResourceLocation(MODID, "arcanum")));

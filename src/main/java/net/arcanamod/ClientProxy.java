@@ -272,6 +272,7 @@ public class ClientProxy extends CommonProxy{
 		ScreenManager.registerFactory(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), ArcaneCraftingTableScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ASPECT_CRYSTALLIZER.get(), AspectCrystallizerScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ALEMBIC.get(), AlembicScreen::new);
+		ScreenManager.registerFactory(ArcanaContainers.PUMP.get(), PumpScreen::new);
 	}
 	
 	protected void setRenderLayers(){

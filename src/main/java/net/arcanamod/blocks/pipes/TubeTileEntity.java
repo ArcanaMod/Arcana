@@ -63,7 +63,9 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 			Optional<Direction> forcedDir = redirect(speck, connected);
 			if(forcedDir.isPresent() && speck.pos >= .5f && speck.pos <= max){
 				speck.direction = forcedDir.get();
+				markDirty();
 			}else if(speck.pos > max){
+				markDirty();
 				// transfer, pass, or bounce
 				BlockPos dest = pos.offset(dir);
 				TileEntity te = world.getTileEntity(dest);

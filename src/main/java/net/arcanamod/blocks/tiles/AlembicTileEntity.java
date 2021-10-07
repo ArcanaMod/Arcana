@@ -105,11 +105,15 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 			stacked = stack > 0;
 			if(crucibleLevel != -1){
 				if(burnTicks == 0){
-					int newTicks = ForgeHooks.getBurnTime(fuel()) / 2; //furnaces need significantly longer to work
+					ItemStack fuel = fuel();
+					int newTicks = ForgeHooks.getBurnTime(fuel) / 2; //furnaces need significantly longer to work
 					if(newTicks > 0){
 						burnTicks = newTicks;
 						maxBurnTicks = newTicks;
-						inventory.setStackInSlot(1, fuel().getContainerItem());
+						if(fuel.getCount() == 1)
+							inventory.setStackInSlot(1, fuel.getContainerItem());
+						else
+							fuel.setCount(fuel.getCount() - 1);
 						markDirty();
 					}
 				}
@@ -232,7 +236,7 @@ public class AlembicTileEntity extends TileEntity implements ITickableTileEntity
 			return aspects.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		if(cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			return (LazyOptional<T>)LazyOptional.of(() -> inventory);
-		return LazyOptional.empty();
+		return super.getCapability(cap, side);
 	}
 	
 	public ITextComponent getDisplayName(){
