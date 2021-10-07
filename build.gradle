@@ -19,7 +19,7 @@ apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '0.0.6b'
+version = '0.0.7'
 group = 'net.arcanamod.arcana'
 archivesBaseName = 'arcana'
 

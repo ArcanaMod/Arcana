@@ -1,16 +1,11 @@
 package net.arcanamod.entities.tainted;
 
-import com.google.common.collect.Maps;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.entity.monster.AbstractRaiderEntity;
 import net.minecraft.entity.monster.RavagerEntity;
-import net.minecraft.entity.monster.VindicatorEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -26,16 +21,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.raid.Raid;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
-import java.util.EnumSet;
-import java.util.Map;
 import java.util.function.Predicate;
 
 public class TaintedIllagerEntity extends AbstractIllagerEntity {
@@ -159,24 +148,6 @@ public class TaintedIllagerEntity extends AbstractIllagerEntity {
 
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return SoundEvents.ENTITY_VINDICATOR_HURT;
-	}
-
-	public void func_213660_a(int p_213660_1_, boolean p_213660_2_) {
-		ItemStack itemstack = new ItemStack(Items.IRON_AXE);
-		Raid raid = this.getRaid();
-		int i = 1;
-		if (p_213660_1_ > raid.getWaves(Difficulty.NORMAL)) {
-			i = 2;
-		}
-
-		boolean flag = this.rand.nextFloat() <= raid.getEnchantOdds();
-		if (flag) {
-			Map<Enchantment, Integer> map = Maps.newHashMap();
-			map.put(Enchantments.SHARPNESS, i);
-			EnchantmentHelper.setEnchantments(map, itemstack);
-		}
-
-		this.setItemStackToSlot(EquipmentSlotType.MAINHAND, itemstack);
 	}
 
 	class AttackGoal extends MeleeAttackGoal {
