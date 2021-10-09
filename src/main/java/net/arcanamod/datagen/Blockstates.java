@@ -29,6 +29,7 @@ public class Blockstates extends BlockStateProvider{
 			if (ForgeRegistries.BLOCKS.getValue(arcLoc("stripped_" + name + "_wood")) != Blocks.AIR){
 			simpleBlock(ForgeRegistries.BLOCKS.getValue(arcLoc("stripped_" + name + "_wood")));
 			simpleBlock(ForgeRegistries.BLOCKS.getValue(arcLoc(name+"_wood")));
+			simpleBlock(ForgeRegistries.BLOCKS.getValue(arcLoc("stripped_" + name + "_log")));
 			}
 		});
 		

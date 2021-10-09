@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "arcana:block/tainted_hawthorn_wood",
+    "end": "arcana:block/tainted_hawthorn_log"
+  }
+}
