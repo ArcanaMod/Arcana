@@ -1,7 +1,9 @@
 package net.arcanamod.blocks.pipes;
 
 import mcp.MethodsReturnNonnullByDefault;
+import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.containers.PumpContainer;
@@ -51,6 +53,7 @@ public class PumpTileEntity extends TubeTileEntity implements INamedContainerPro
 		this.direction = direction;
 	}
 	
+	@SuppressWarnings("ConstantConditions")
 	public void tick(){
 		super.tick();
 		// pull new specks
@@ -60,7 +63,11 @@ public class PumpTileEntity extends TubeTileEntity implements INamedContainerPro
 			if(handler != null){
 				boolean hasFilter = !filter().isEmpty() && filter().getItem() instanceof EnchantedFilterItem;
 				int effBoost = hasFilter ? ((EnchantedFilterItem)filter().getItem()).efficiencyBoost : 0;
-				AspectStack stack = handler.drainAny(PULL_AMOUNT + effBoost);
+				AspectStack stack;
+				if(filteredTo() == Aspects.EMPTY)
+					stack = handler.drainAny(PULL_AMOUNT + effBoost);
+				else
+					stack = new AspectStack(filteredTo(), handler.drain(filteredTo(), PULL_AMOUNT + effBoost));
 				if(!stack.isEmpty()){
 					int speedBoost = hasFilter ? ((EnchantedFilterItem)filter().getItem()).speedBoost : 0;
 					addSpeck(new AspectSpeck(stack, SPECK_SPEED + speedBoost * 0.1f, direction, 0));
@@ -70,8 +77,7 @@ public class PumpTileEntity extends TubeTileEntity implements INamedContainerPro
 	}
 	
 	protected Optional<Direction> redirect(AspectSpeck speck, boolean canPass){
-		return (!suppressedByRedstone && (crystal().isEmpty() ||
-				(crystal().getItem() instanceof CrystalItem && ((CrystalItem)crystal().getItem()).aspect == speck.payload.getAspect())))
+		return (!suppressedByRedstone && (crystal().isEmpty() || filteredTo() == speck.payload.getAspect()))
 				? Optional.of(direction)
 				: Optional.empty();
 	}
@@ -82,6 +88,10 @@ public class PumpTileEntity extends TubeTileEntity implements INamedContainerPro
 	
 	public ItemStack crystal(){
 		return inventory.getStackInSlot(1);
+	}
+	
+	public Aspect filteredTo(){
+		return crystal().getItem() instanceof CrystalItem ? ((CrystalItem)crystal().getItem()).aspect : Aspects.EMPTY;
 	}
 	
 	@SuppressWarnings("unchecked")

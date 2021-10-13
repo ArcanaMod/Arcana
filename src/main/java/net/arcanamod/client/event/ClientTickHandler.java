@@ -176,7 +176,7 @@ public class ClientTickHandler{
 								// Get all stacks from phialshelf
 								ArrayList<AspectStack> stacks = new ArrayList<>();
 								for(int i = 0; i < vis.countHolders(); i++)
-									if(!vis.getHolder(i).getStack().isEmpty())
+									if(vis.getHolder(i) != null && !vis.getHolder(i).getStack().isEmpty())
 										stacks.add(vis.getHolder(i).getStack());
 								// Squish aspect stacks in to reducedStacks
 								List<AspectStack> reducedStacks = AspectUtils.squish(stacks);
