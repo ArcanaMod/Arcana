@@ -55,11 +55,23 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 			Direction dir = speck.direction;
 			speck.pos += speck.speed / 20f;
 			speck.stuck = false;
-			float max = 0.5f;
 			BlockState state = getWorld().getBlockState(pos);
 			boolean connected = state.get(SixWayBlock.FACING_TO_PROPERTY_MAP.get(dir));
-			if(connected)
-				max = 1;
+			if(connected){
+				TileEntity target = world.getTileEntity(pos.offset(dir));
+				if(target instanceof TubeTileEntity){
+					TubeTileEntity tube = (TubeTileEntity)target;
+					if(!tube.enabled())
+						connected = false;
+				}else if(target != null){
+					AspectHandler vis = AspectHandler.getFrom(target);
+					// add up the available space (capacity - amount) of all holders
+					// voiding holders are always considered to have 1 space available - we only check == 0 anyways
+					if(vis != null && vis.getHolders().stream().mapToDouble(holder -> holder.voids() ? 1 : holder.getCapacity() - holder.getStack().getAmount()).sum() == 0)
+						connected = false;
+				}
+			}
+			float max = connected ? 1 : .5f;
 			Optional<Direction> forcedDir = redirect(speck, connected);
 			if(forcedDir.isPresent() && speck.pos >= .5f && speck.pos <= max){
 				speck.direction = forcedDir.get();
@@ -69,14 +81,14 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 				// transfer, pass, or bounce
 				BlockPos dest = pos.offset(dir);
 				TileEntity te = world.getTileEntity(dest);
-				if(te instanceof TubeTileEntity){
+				if(te instanceof TubeTileEntity && connected){
 					TubeTileEntity tube = (TubeTileEntity)te;
 					if(tube.enabled()){
 						toRemove.add(speck);
 						tube.addSpeck(speck);
 						speck.pos = speck.pos % 1;
 					}
-				}else if(AspectHandler.getOptional(te).isPresent()){
+				}else if(AspectHandler.getOptional(te).isPresent() && connected){
 					float inserted = AspectHandler.getFrom(te).insert(speck.payload);
 					if(inserted >= speck.payload.getAmount())
 						toRemove.add(speck);
@@ -96,6 +108,10 @@ public class TubeTileEntity extends TileEntity implements ITickableTileEntity{
 						if(state.get(SixWayBlock.SOUTH)) directions.add(Direction.SOUTH);
 						if(state.get(SixWayBlock.EAST)) directions.add(Direction.EAST);
 						if(state.get(SixWayBlock.WEST)) directions.add(Direction.WEST);
+						// TODO: don't consider any full targets
+						// move connected code to separate method
+						// this causes them to sometimes jitter and bounce back on the next tick if they try to enter an adjacent full container
+						if(!connected) directions.remove(dir); // if the target is full, don't consider it
 						if(directions.size() > 1) directions.remove(dir.getOpposite()); // don't bounce back if possible
 						speck.direction = directions.get(getWorld().rand.nextInt(directions.size()));
 					}else if(state.get(SixWayBlock.UP))
