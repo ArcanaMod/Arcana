@@ -28,7 +28,7 @@ public class TaintedFishEntity extends AbstractGroupFishEntity {
 
 	public TaintedFishEntity(EntityType<AbstractGroupFishEntity> type, World worldIn) {
 		super(type, worldIn);
-		this.bucket = new ItemStack(ArcanaItems.TAINTED_COD_BUCKED.get());
+		this.bucket = new ItemStack(ArcanaItems.TAINTED_SALMON_BUCKED.get());
 	}
 
 	@Override
