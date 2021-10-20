@@ -6,10 +6,7 @@ import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.CrystalClusterBlock;
 import net.arcanamod.blocks.bases.GroupedBlock;
 import net.arcanamod.items.CrystalClusterItem;
-import net.arcanamod.worldgen.trees.features.GreatwoodFoliagePlacer;
-import net.arcanamod.worldgen.trees.features.GreatwoodTrunkPlacer;
-import net.arcanamod.worldgen.trees.features.SilverwoodFoliagePlacer;
-import net.arcanamod.worldgen.trees.features.SilverwoodTrunkPlacer;
+import net.arcanamod.worldgen.trees.features.*;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -63,6 +60,9 @@ public class RegistryHandler{
 		
 		SILVERWOOD_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.SILVERWOOD_LEAVES.get().getDefaultState()), new SilverwoodFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 15), new SilverwoodTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
 		SILVERWOOD_TREE = Feature.TREE.withConfiguration(SILVERWOOD_TREE_CONFIG);
+		
+		WILLOW_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.WILLOW_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.WILLOW_LEAVES.get().getDefaultState()), new WillowFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 15), new StraightTrunkPlacer(6, 2, 3), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
+		WILLOW_TREE = Feature.TREE.withConfiguration(WILLOW_TREE_CONFIG);
 		
 		TAINTED_GREATWOOD_TREE_CONFIG = (new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LOG.get().getDefaultState()), new SimpleBlockStateProvider(ArcanaBlocks.TAINTED_GREATWOOD_LEAVES.get().getDefaultState()), new GreatwoodFoliagePlacer(FeatureSpread.create(2), FeatureSpread.create(0), 15), new GreatwoodTrunkPlacer(4, 2, 0), new TwoLayerFeature(1, 0, 1))).setIgnoreVines().build();
 		TAINTED_GREATWOOD_TREE = Feature.TREE.withConfiguration(TAINTED_GREATWOOD_TREE_CONFIG);

@@ -3,6 +3,7 @@ package net.arcanamod.worldgen;
 import net.arcanamod.Arcana;
 import net.arcanamod.worldgen.trees.features.GreatwoodFoliagePlacer;
 import net.arcanamod.worldgen.trees.features.SilverwoodFoliagePlacer;
+import net.arcanamod.worldgen.trees.features.WillowFoliagePlacer;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.BaseTreeFeatureConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -30,6 +31,7 @@ public class ArcanaFeatures{
 	
 	public static BaseTreeFeatureConfig GREATWOOD_TREE_CONFIG;
 	public static BaseTreeFeatureConfig SILVERWOOD_TREE_CONFIG;
+	public static BaseTreeFeatureConfig WILLOW_TREE_CONFIG;
 	
 	public static BaseTreeFeatureConfig TAINTED_GREATWOOD_TREE_CONFIG;
 	
@@ -50,6 +52,7 @@ public class ArcanaFeatures{
 	public static Feature<NoFeatureConfig> NODE = new NodeFeature(NoFeatureConfig.CODEC);
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> GREATWOOD_TREE;
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> SILVERWOOD_TREE;
+	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> WILLOW_TREE;
 	
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TAINTED_GREATWOOD_TREE;
 	public static ConfiguredFeature<BaseTreeFeatureConfig, ?> TAINTED_OAK_TREE;
@@ -70,12 +73,13 @@ public class ArcanaFeatures{
 	
 	public static RegistryObject<FoliagePlacerType<GreatwoodFoliagePlacer>> GREATWOOD_FOLIAGE = FOLAIGE_PLACERS.register("greatwood_foliage_placer", () -> new FoliagePlacerType<>(GreatwoodFoliagePlacer.CODEC));
 	public static RegistryObject<FoliagePlacerType<SilverwoodFoliagePlacer>> SILVERWOOD_FOLIAGE = FOLAIGE_PLACERS.register("silverwood_foliage_placer", () -> new FoliagePlacerType<>(SilverwoodFoliagePlacer.CODEC));
+	public static RegistryObject<FoliagePlacerType<WillowFoliagePlacer>> WILLOW_FOLIAGE = FOLAIGE_PLACERS.register("willow_foliage_placer", () -> new FoliagePlacerType<>(WillowFoliagePlacer.CODEC));
 	
 	@SubscribeEvent(priority = EventPriority.HIGH)
 	public static void onItemRegister(BiomeLoadingEvent event){
 		event.getGeneration().withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, ArcanaFeatures.NODE.withConfiguration(new NoFeatureConfig()).withPlacement(Placement.TOP_SOLID_HEIGHTMAP.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)));
 		
-		if(event.getName().equals(arcLoc("magical_forest"))){
+		if(arcLoc("magical_forest").equals(event.getName())){
 			event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ArcanaFeatures.MAGICAL_FOREST_BONUS_TREES);
 			event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ArcanaFeatures.MAGICAL_FOREST_GIANT_MUSHROOMS);
 			event.getGeneration().withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ArcanaFeatures.MAGIC_MUSHROOM_PATCH);
