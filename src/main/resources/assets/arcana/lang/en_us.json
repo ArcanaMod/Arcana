@@ -885,6 +885,11 @@
     "research.arcana.arcanium.stage.1": "Mundane materials just aren't cutting it anymore. Tools break much too fast, armour doesn't protect my well enough, and these simple materials aren't as conductive to arcane crafts as I would like.\nTexts from ancient alchemists describe a material named {i}Thaumium{r}, created by infusing iron with magic itself alchemically. I don't know how reputable of a source they are, given the lack of documentation on taint or silver, but there's no reason not to try myself.",
     "research.arcana.arcanium.stage.2": "This isn't thaumium. At least, not how they described it. It's similar, but much too bright, and its constantly giving off some of its infused magic. Perhaps I overshot a little...\nEither way, its stronger than most of the materials I have in plentiful supply, and much more conductive to aspects than any.\nBlocks can be converted at once, using 9 times as much Praecantatio.",
 
+    "research.arcana.magical_woods": "Magical Forestry",
+    "research.arcana.magical_woods.stage.1": "Greatwood and Silverwood trees, while incredibly useful magical materials, are far and few between. Creating my own supply of magical wood seems like a worthwhile endeavour.",
+    "research.arcana.magical_woods.stage.2": "They're... not {i}quite{r} what I was expecting. These wood types don't quite replace the natural ones... but are certainly magical in their own right. Perhaps these could come in handy later?",
+    "research.arcana.magical_woods.stage.3": "While modifying the wood and leaves itself wasn't too difficult, saplings modified in this way seemed unable to grow.",
+
     "research.arcana.transmutation": "Transmutation",
     "research.arcana.transmutation.stage.1": "A popular magical concept is one of alchemists attempting to create the valuable from the mundane. They knew neither chemistry nor magic; I know both. I think I may be able to do better, if only by a little, at the transmutation of metals, given my newfound knowledge.",
     "research.arcana.transmutation.stage.2": "Upgrading iron into silver isn't the most exciting advancement I've made, although the alchemy behind this transmutation {i}does{r} prompt more study into the metal's properties. No, gold is my target. Though silver may make a useful stepping stone...",

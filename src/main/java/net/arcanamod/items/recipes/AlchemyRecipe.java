@@ -109,7 +109,7 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AlchemyRecipe>{
 		
 		public AlchemyRecipe read(ResourceLocation recipeId, JsonObject json){
-			Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "in"));
+			Ingredient ingredient = Ingredient.deserialize(json.get("in"));
 			ItemStack out = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "out"));
 			List<AspectStack> aspects = ItemAspectRegistry.parseAspectStackList(recipeId, JSONUtils.getJsonArray(json, "aspects")).orElseThrow(() -> new JsonSyntaxException("Missing aspects in " + recipeId + "!"));
 			List<Parent> research = StreamUtils.toStream(JSONUtils.getJsonArray(json, "research", null))

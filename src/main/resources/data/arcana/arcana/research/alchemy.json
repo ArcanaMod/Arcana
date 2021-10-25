@@ -68,6 +68,73 @@
       ]
     },
     {
+      "key": "arcana:magical_woods",
+      "name": "research.arcana.magical_woods",
+      "icons": [
+        "arcana:silverwood_log",
+        "arcana:hawthorn_log",
+        "arcana:greatwood_log",
+        "arcana:eucalyptus_log",
+        "arcana:silverwood_log",
+        "arcana:dair_log",
+        "arcana:greatwood_log",
+        "arcana:willow_log"
+      ],
+      "category": "arcana:alchemy",
+      "parents": [ "arcana:arcanium" ],
+      "x": 4,
+      "y": -1,
+      "sections": [
+        {
+          "type": "string",
+          "content": "research.arcana.magical_woods.stage.1",
+          "requirements": [
+            "arcana:silverwood_log", "arcana:greatwood_log", "minecraft:oak_log", "minecraft:spruce_log", "minecraft:birch_log", "minecraft:acacia_log"
+          ]
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.magical_woods.stage.2"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/wood/logs/dair_log"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/wood/leaves/dair_leaves"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/wood/logs/hawthorn_log"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/wood/leaves/hawthorn_leaves"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/wood/logs/willow_log"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/wood/leaves/willow_leaves"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/wood/logs/eucalyptus_log"
+        },
+        {
+          "type": "alchemy",
+          "content": "arcana:alchemy/wood/leaves/eucalyptus_leaves"
+        },
+        {
+          "type": "string",
+          "content": "research.arcana.magical_woods.stage.3"
+        }
+      ]
+    },
+    {
       "key": "arcana:transmutation",
       "name": "research.arcana.transmutation",
       "icons": [
