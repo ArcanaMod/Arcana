@@ -18,7 +18,7 @@ public class BackgroundLayerRenderers{
 	
 	public static void init(){
 		RENDERERS.put(ImageLayer.TYPE, (ImageLayer layer, MatrixStack stack, int x, int y, int width, int height, float xPan, float yPan, float parallax, float xOff, float yOff, float zoom) -> {
-			float parallax1 = parallax * 2 * layer.speed();
+			float parallax1 = parallax / layer.speed();
 			Minecraft.getInstance().getTextureManager().bindTexture(layer.image);
 			if(layer.vanishZoom() == -1 || layer.vanishZoom() > zoom)
 				drawModalRectWithCustomSizedTexture(stack, x, y, (-xPan + MAX_PAN) / parallax1 + xOff, (yPan + MAX_PAN) / parallax1 + yOff, width, height, 512, 512);
