@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:spruce_log"
+  },
+  "out": {
+    "item": "arcana:willow_log"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 2
+    },
+    {
+      "aspect": "darkness",
+      "amount": 2
+    }
+  ]
+}

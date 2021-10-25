@@ -1,0 +1,24 @@
+{
+  "type": "arcana:alchemy",
+  "in": [
+    {
+      "item": "minecraft:jungle_leaves"
+    },
+    {
+      "item": "minecraft:acacia_leaves"
+    }
+  ],
+  "out": {
+    "item": "arcana:eucalyptus_leaves"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 1
+    },
+    {
+      "aspect": "senses",
+      "amount": 1
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "type": "arcana:alchemy",
+  "in": [
+    {
+      "item": "minecraft:jungle_log"
+    },
+    {
+      "item": "minecraft:acacia_log"
+    }
+  ],
+  "out": {
+    "item": "arcana:eucalyptus_log"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 2
+    },
+    {
+      "aspect": "senses",
+      "amount": 2
+    }
+  ]
+}

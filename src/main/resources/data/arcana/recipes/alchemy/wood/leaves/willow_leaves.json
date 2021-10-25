@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:spruce_leaves"
+  },
+  "out": {
+    "item": "arcana:willow_leaves"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 1
+    },
+    {
+      "aspect": "darkness",
+      "amount": 1
+    }
+  ]
+}

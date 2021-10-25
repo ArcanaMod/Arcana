@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:birch_leaves"
+  },
+  "out": {
+    "item": "arcana:hawthorn_leaves"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 1
+    },
+    {
+      "aspect": "order",
+      "amount": 1
+    }
+  ]
+}
