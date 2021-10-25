@@ -271,16 +271,7 @@ public class Taint{
 		float w = entity.getSize().width, h = entity.getSize().height;
 
 		EntityType.IFactory<?> factoryIn =
-				entity == EntityType.BAT
-						? TaintedBatEntity::new
-						: entity == EntityType.EVOKER
-						|| entity == EntityType.ILLUSIONER
-						|| entity == EntityType.VINDICATOR
-						|| entity == EntityType.PILLAGER
-						? TaintedIllagerEntity::new
-						: entity == EntityType.CREEPER
-						? TaintedCreeperEntity::new
-						: entity == EntityType.SQUID
+				entity == EntityType.SQUID
 						? TaintedSquidEntity::new
 						: entity == EntityType.GHAST
 						? TaintedGhastEntity::new
@@ -288,10 +279,6 @@ public class Taint{
 						? TaintedCaveSpiderEntity::new
 						: entity == EntityType.SKELETON
 						? TaintedSkeletonEntity::new
-						: entity == EntityType.SLIME
-						? TaintedSlimeEntity::new
-						: entity == EntityType.BEE
-						? TaintedBeeEntity::new
 						: entity == EntityType.PANDA
 						? TaintedPandaEntity::new
 						: entity == EntityType.SNOW_GOLEM
@@ -302,17 +289,21 @@ public class Taint{
 						? TaintedPolarBearEntity::new
 						: entity == EntityType.DONKEY
 						? TaintedDonkeyEntity::new
-						: entity == EntityType.CAT
-						? TaintedCatEntity::new
-						: entity == EntityType.LLAMA
+						: entity == EntityType.SLIME
+						|| entity == EntityType.EVOKER
+						|| entity == EntityType.ILLUSIONER
+						|| entity == EntityType.VINDICATOR
+						|| entity == EntityType.PILLAGER
+						|| entity == EntityType.CREEPER
+						|| entity == EntityType.BEE
+						|| entity == EntityType.CAT
+						|| entity == EntityType.LLAMA
 						|| entity == EntityType.TRADER_LLAMA
-						? TaintedLlamaEntity::new
-						: entity == EntityType.PUFFERFISH
-						? TaintedPufferfishEntity::new
-						: entity == EntityType.PARROT
-						? TaintedParrotEntity::new
-						: entity == EntityType.HORSE
-						? TaintedHorseEntity::new
+						|| entity == EntityType.PUFFERFISH
+						|| entity == EntityType.PARROT
+						|| entity == EntityType.HORSE
+						|| entity == EntityType.BAT
+						? TaintedSlimeEntity::new
 						: (type, world) -> new TaintedEntity(type, world, entity);
 		tainted = EntityType.Builder.create(factoryIn, MONSTER).size(w, h).build(id);
 

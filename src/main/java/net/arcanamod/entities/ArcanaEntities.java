@@ -58,7 +58,7 @@ public class ArcanaEntities{
 	public static final RegistryObject<EntityType<TaintedRabbitEntity>> TAINTED_RABBIT = T_ENTITY_TYPES.register("tainted_rabbit", () -> Taint.taintedEntityOf(EntityType.RABBIT));
 	public static final RegistryObject<EntityType<TaintedSnowGolemEntity>> TAINTED_SNOW_GOLEM = T_ENTITY_TYPES.register("tainted_snow_golem", () -> Taint.taintedEntityOf(EntityType.SNOW_GOLEM));
 	public static final RegistryObject<EntityType<TaintedCaveSpiderEntity>> TAINTED_CAVE_SPIDER = T_ENTITY_TYPES.register("tainted_cave_spider", () -> Taint.taintedEntityOf(EntityType.CAVE_SPIDER));
-	public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_ILLUSIONER = T_ENTITY_TYPES.register("tainted_illusioner", () -> Taint.taintedEntityOf(EntityType.ILLUSIONER));
+	//public static final RegistryObject<EntityType<TaintedIllagerEntity>> TAINTED_ILLUSIONER = T_ENTITY_TYPES.register("tainted_illusioner", () -> Taint.taintedEntityOf(EntityType.ILLUSIONER));
 	public static final RegistryObject<EntityType<TaintedPandaEntity>> TAINTED_PANDA = T_ENTITY_TYPES.register("tainted_panda", () -> Taint.taintedEntityOf(EntityType.PANDA));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_FOX = T_ENTITY_TYPES.register("tainted_fox", () -> Taint.taintedEntityOf(EntityType.FOX));
 	public static final RegistryObject<EntityType<TaintedSkeletonEntity>> TAINTED_SKELETON = T_ENTITY_TYPES.register("tainted_skeleton", () -> Taint.taintedEntityOf(EntityType.SKELETON));
@@ -72,7 +72,6 @@ public class ArcanaEntities{
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_CHICKEN = T_ENTITY_TYPES.register("tainted_chicken", () -> Taint.taintedEntityOf(EntityType.CHICKEN));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_MOOSHROOM = T_ENTITY_TYPES.register("tainted_mooshroom", () -> Taint.taintedEntityOf(EntityType.MOOSHROOM));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_OCELOT = T_ENTITY_TYPES.register("tainted_ocelot", () -> Taint.taintedEntityOf(EntityType.OCELOT));
-	public static final RegistryObject<EntityType<TaintedFishEntity>> TAINTED_SALMON = T_ENTITY_TYPES.register("tainted_salmon", () -> Taint.taintedEntityOf(EntityType.SALMON));
 	public static final RegistryObject<EntityType<TaintedSquidEntity>> TAINTED_SQUID = T_ENTITY_TYPES.register("tainted_squid", () -> Taint.taintedEntityOf(EntityType.SQUID));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_VILLAGER = T_ENTITY_TYPES.register("tainted_villager", () -> Taint.taintedEntityOf(EntityType.VILLAGER));
 	public static final RegistryObject<EntityType<TaintedEntity>> TAINTED_WANDERING_TRADER = T_ENTITY_TYPES.register("tainted_wandering_trader", () -> Taint.taintedEntityOf(EntityType.WANDERING_TRADER));
