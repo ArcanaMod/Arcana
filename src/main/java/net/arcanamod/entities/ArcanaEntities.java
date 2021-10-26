@@ -3,7 +3,6 @@ package net.arcanamod.entities;
 import net.arcanamod.Arcana;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.entities.tainted.*;
-import net.arcanamod.entities.tainted.group.TaintedFishEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraftforge.fml.RegistryObject;

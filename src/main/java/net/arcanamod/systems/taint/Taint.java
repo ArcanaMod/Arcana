@@ -289,23 +289,35 @@ public class Taint{
 						? TaintedPolarBearEntity::new
 						: entity == EntityType.DONKEY
 						? TaintedDonkeyEntity::new
-						: entity == EntityType.SLIME
-						|| entity == EntityType.EVOKER
-						|| entity == EntityType.ILLUSIONER
-						|| entity == EntityType.VINDICATOR
-						|| entity == EntityType.PILLAGER
-						|| entity == EntityType.CREEPER
-						|| entity == EntityType.BEE
-						|| entity == EntityType.CAT
-						|| entity == EntityType.LLAMA
-						|| entity == EntityType.TRADER_LLAMA
-						|| entity == EntityType.PUFFERFISH
-						|| entity == EntityType.PARROT
-						|| entity == EntityType.HORSE
-						|| entity == EntityType.BAT
-						? TaintedSlimeEntity::new
-						: (type, world) -> new TaintedEntity(type, world, entity);
+						: entity == EntityType.FOX
+						|| entity == EntityType.WANDERING_TRADER
+						|| entity == EntityType.WITCH
+						|| entity == EntityType.VILLAGER
+						|| entity == EntityType.OCELOT
+						|| entity == EntityType.MOOSHROOM
+						|| entity == EntityType.CHICKEN
+						|| entity == EntityType.BLAZE
+						|| entity == EntityType.SPIDER
+						|| entity == EntityType.PIG
+						|| entity == EntityType.COW
+						|| entity == EntityType.ZOMBIE
+						? (type, world) -> new TaintedEntity(type, world, entity)
+						: TaintedSlimeEntity::new;
 		tainted = EntityType.Builder.create(factoryIn, MONSTER).size(w, h).build(id);
+		/*
+		* FOX
+		* WANDERING_TRADER
+		* WITCH
+		* VILLAGER
+		* OCELOT
+		* MOOSHROOM
+		* CHICKEN
+		* BLAZE
+		* SPIDER
+		* PIG
+		* COW
+		* ZOMBIE
+		* */
 
 		entityTaintMap.put(entity, tainted);
 		return tainted;
