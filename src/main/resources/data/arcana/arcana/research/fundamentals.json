@@ -562,18 +562,14 @@
 				},
 				{
 					"type": "crafting",
-					"content": "arcana:iron_cap"
-				},
-				{
-					"type": "string",
-					"content": "research.arcana.arcane_crafting.stage.1",
+					"content": "arcana:iron_cap",
 					"requirements": [
 						"0*arcana:arcane_crafting_table"
 					]
 				},
 				{
 					"type": "string",
-					"content": "research.arcana.arcane_crafting.stage.2"
+					"content": "research.arcana.basic_wand.stage.2"
 				}
 			]
 		},
@@ -691,10 +687,6 @@
 				{
 					"type": "string",
 					"content": "research.arcana.wandcraft.stage.1"
-				},
-				{
-					"type": "string",
-					"content": "research.arcana.wandcraft.stage.2"
 				}
 			]
 		},
@@ -1160,11 +1152,12 @@
 				"arcana:research/nodes_icon.png"
 			],
 			"category": "arcana:fundamentals",
-			"parents": [],
+			"parents": [
+				"~basic_wand"
+			],
 			"meta": [
 				"square_base",
-				"yellow_base",
-				"root"
+				"yellow_base"
 			],
 			"x": -4,
 			"y": 9,

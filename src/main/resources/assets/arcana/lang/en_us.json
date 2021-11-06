@@ -809,7 +809,11 @@
 
     "research.arcana.root": "Arcana",
     "research.arcana.root.desc": "The Start of Something Amazing",
-    "research.arcana.root.text": "That was an... odd experience. That sudden burst of inspiration... I can't blame it on anything mundane. No, this is something magical.\nI'll write down my notes in this book: the Arcanum, and read through those scribbled notes ones more time. I might just keep them here, for future reference.\nFormatting test: {i}italic{i}, {b}bold{b}, {s}strikethrough{s}, {u}underlined{u}, {o}obfuscated{o}, {w}wavy{w}, {sh}shadowed{sh}, {i}{b}{s}{u}{w}{sh}many{r}.\nMore formatting: {size:2}b i g{size:1}, {colour:110011}custom colour{r}, {c0}0{c1}1{c2}2{c3}3{c4}4{c5}5{c6}6{c7}7{c8}8{c9}9{ca}a{cb}b{cc}c{cd}d{ce}e{cf}f{r}.\nEven more: E=mc{super}2{r}, ln(x)=log{sub}e{r}(x)",
+    "research.arcana.root.text": "That was an... odd experience. That sudden burst of inspiration... I can't blame it on anything mundane. No, this is something magical.\nI'll write down my notes in this book: the Arcanum, and read through those scribbled notes ones more time. I might just keep them here, for future reference.",
+
+    "research.arcana.basic_wand": "Basic Equipment",
+    "research.arcana.basic_wand.stage.1": "To continue any further, I'll need to be able to directly manipulate aspects. The standard tools once used for this were wands, used in tandem with a specialized crafting table, though {i}some{r} notes instead describe some kind of glove.\nThe basic wand design is much simpler to create, so I'll be going with that. All it seems to need is some metal wand caps for channeling vis, and living wood core to store it.\nCrafting this wand simply requires placing a wand cap, a stick, and another wand cap of the same kind diagonally in a crafting table.\nAfterwards, I should be able to use the aspects in the wand as part of crafting, by right clicking a crafting table with it.",
+    "research.arcana.basic_wand.stage.2": "Arcane crafting tables are just as good as their mundane counterparts for crafting regular recipes, but come with the additional ability to make magical items.\nAlmost all magical recipes require the use of aspects from within the wand. To collect aspects, I'll need to visit a source of magic - a node - and drain some of its power. To view them, I'll need to use a specialized pair of goggles that make vis itself visible. I'll write more on nodes in a separate entry.\nI can check the Arcanum while at an arcane crafting table, if I have one on me. It may be useful for me to pin common recipes for quick reference.",
 
     "research.arcana.locked": "Locked entries",
     "research.arcana.locked.desc": "Don't worry. They will be unlocked in next alphas!",
@@ -829,7 +833,7 @@
 
     "research.arcana.wandcraft": "Wandcraft",
     "research.arcana.wandcraft.desc": "Tools of the trade",
-    "research.arcana.wandcraft.stage.1": "To continue any further, I'll need to be able to directly manipulate aspects in some form. The standard tools once used for this were wands or variations of such, though some notes instead describe some kind of glove.\nThe basic wand design is much simpler to create, so I'll be going with that. All it seems to need is some metal wand caps for channeling vis, and living wood core to store vis.\nCrafting this wand simply requires placing a wand cap, a stick, and another wand cap diagonally in a crafting table.",
+    "research.arcana.wandcraft.stage.1": "The basic iron-and-wood design is incredibly limited. The mundane materials used make it difficult to control the flow of vis, not to mention the low vis capacity...\nSome improvements are in order.",
 
     "research.arcana.arcane_crafting": "Arcane Crafting",
     "research.arcana.arcane_crafting.desc": "Not your regular crafting table",
@@ -965,7 +969,7 @@
 
     "research.arcana.nodes": "Nodes",
     "research.arcana.nodes.stage.1": "At the start of my journey, I was given a glimpse of knowledge from a source of magic. These sources of magic - nodes, as I have come to know them - seem to be scattered across the world, and constantly create new energy.{~sep}I should spend some time studying these properly, to best use them to my advantage.",
-    "research.arcana.nodes.stage.2": "Nodes don't seem to be quite uniform. Different nodes are attuned to different primal aspects, and only create those. Some nodes create magic at a greater rate, or store a larger amount of them.{~sep}A few of them seem to act... strangely. Sucking in terrain, repelling taint, or emitting a constant sense of dread...",
+    "research.arcana.nodes.stage.2": "Nodes don't seem to be quite uniform. Different nodes are attuned to different primal aspects, and only create those. Some nodes create magic at a greater rate, or store a larger amount of them. Draining a node too much seems to sometimes damage them, lowering their capacity and making them paler.{~sep}A few of them seem to act... strangely. Sucking in terrain, repelling taint, or emitting a constant sense of dread...",
 
     "research.arcana.node_channeling": "Node Channeling",
     "research.arcana.node_channeling.stage.1": "Filling my wand is currently a slow and repetitive process. I should find some way to draw faster...",
