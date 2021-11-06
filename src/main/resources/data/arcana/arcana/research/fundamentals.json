@@ -13,7 +13,7 @@
 				"spiky_base",
 				"purple_base"
 			],
-			"x": 0,
+			"x": -3,
 			"y": 0,
 			"sections": [
 				{
@@ -544,7 +544,9 @@
 			"name": "research.arcana.basic_wand",
 			"desc": "research.arcana.basic_wand.desc",
 			"icons": [
-				"arcana:item/basicwand.png"
+				"arcana:item/basicwand.png",
+				"arcana:arcane_crafting_table",
+				"arcana:goggles_of_revealing"
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
@@ -553,8 +555,8 @@
 			"meta": [
 				"square_base"
 			],
-			"x": -2,
-			"y": 0,
+			"x": -5,
+			"y": 2,
 			"sections": [
 				{
 					"type": "string",
@@ -570,6 +572,10 @@
 				{
 					"type": "string",
 					"content": "research.arcana.basic_wand.stage.2"
+				},
+				{
+					"type": "arcane_crafting",
+					"content": "arcana:arcane_crafting/goggles_of_revealing"
 				}
 			]
 		},
@@ -581,7 +587,7 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:goggles_of_revealing"
+				"arcana:basic_wand"
 			],
 			"meta": [
 				"square_base",
@@ -616,7 +622,7 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:goggles_of_revealing"
+				"arcana:basic_wand"
 			],
 			"meta": [
 				"square_base",
@@ -674,7 +680,7 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:goggles_of_revealing"
+				"arcana:basic_wand"
 			],
 			"meta": [
 				"square_base",
@@ -726,14 +732,13 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:basic_wand"
+				"arcana:alchemy"
 			],
 			"meta": [
-				"square_base",
-				"reverse"
+				"square_base"
 			],
-			"x": -4,
-			"y": 0,
+			"x": -2,
+			"y": 2,
 			"sections": [
 				{
 					"type": "string",
@@ -768,35 +773,6 @@
 			]
 		},
 		{
-			"key": "arcana:goggles_of_revealing",
-			"name": "research.arcana.goggles_of_revealing",
-			"desc": "research.arcana.goggles_of_revealing.desc",
-			"icons": [
-				"arcana:goggles_of_revealing"
-			],
-			"category": "arcana:fundamentals",
-			"parents": [
-				"arcana:aspect_collection"
-			],
-			"meta": [],
-			"x": -5,
-			"y": 1,
-			"sections": [
-				{
-					"type": "string",
-					"content": "research.arcana.goggles_of_revealing.1"
-				},
-				{
-					"type": "arcane_crafting",
-					"content": "arcana:arcane_crafting/goggles_of_revealing"
-				},
-				{
-					"type": "string",
-					"content": "research.arcana.goggles_of_revealing.2"
-				}
-			]
-		},
-		{
 			"key": "arcana:research",
 			"name": "research.arcana.research",
 			"desc": "research.arcana.research.desc",
@@ -805,13 +781,13 @@
 			],
 			"category": "arcana:fundamentals",
 			"parents": [
-				"arcana:root"
+				"arcana:aspect_collection"
 			],
 			"meta": [
 				"square_base"
 			],
-			"x": 1,
-			"y": 2,
+			"x": 0,
+			"y": 4,
 			"sections": [
 				{
 					"type": "string",
@@ -856,8 +832,8 @@
 			"meta": [
 				"square_base"
 			],
-			"x": -1,
-			"y": 3,
+			"x": -2,
+			"y": 5,
 			"sections": [
 				{
 					"type": "string",
@@ -886,8 +862,8 @@
 			"meta": [
 				"square_base"
 			],
-			"x": 0,
-			"y": 3,
+			"x": -1,
+			"y": 5,
 			"sections": [
 				{
 					"type": "string",
@@ -917,8 +893,8 @@
 				"square_base",
 				"locked"
 			],
-			"x": 2,
-			"y": 3,
+			"x": 1,
+			"y": 5,
 			"sections": [
 				{
 					"type": "string",
@@ -944,8 +920,8 @@
 			"meta": [
 				"square_base"
 			],
-			"x": 3,
-			"y": 3,
+			"x": 2,
+			"y": 5,
 			"sections": [
 				{
 					"type": "string",
@@ -971,8 +947,8 @@
 			"meta": [
 				"round_base"
 			],
-			"x": 1,
-			"y": 5,
+			"x": 0,
+			"y": 7,
 			"sections": [
 				{
 					"type": "string",
@@ -1002,8 +978,8 @@
 				"round_base",
 				"reverse"
 			],
-			"x": 1,
-			"y": 7,
+			"x": 0,
+			"y": 9,
 			"sections": [
 				{
 					"type": "string",
@@ -1159,7 +1135,7 @@
 				"square_base",
 				"yellow_base"
 			],
-			"x": -4,
+			"x": -6,
 			"y": 9,
 			"sections": [
 				{
@@ -1181,7 +1157,7 @@
 			"category": "arcana:fundamentals",
 			"parents": ["arcana:nodes"],
 			"meta": [],
-			"x": -2,
+			"x": -4,
 			"y": 9,
 			"sections": [
 				{
@@ -1203,7 +1179,7 @@
 			"category": "arcana:fundamentals",
 			"parents": ["arcana:node_channeling"],
 			"meta": [],
-			"x": 0,
+			"x": -2,
 			"y": 9,
 			"sections": [
 				{

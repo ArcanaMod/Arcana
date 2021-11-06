@@ -275,7 +275,7 @@ public class ResearchBookScreen extends Screen {
 												arrows.drawRightArrow(stack, entry.x() - 1, entry.y());
 										}else{
 											// rd
-											arrows.drawRdCurve(stack, entry.x() - 1, parentEntry.y() - 1);
+											arrows.drawRdCurve(stack, entry.x() - 1, entry.y());
 											if(parent.shouldShowArrowhead())
 												arrows.drawRightArrow(stack, entry.x() - 1, entry.y());
 										}

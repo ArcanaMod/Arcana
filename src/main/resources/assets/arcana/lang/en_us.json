@@ -796,13 +796,13 @@
     "puzzle.arcana.luminiferous_glass": "Try to fill glass with light",
     "puzzle.arcana.smokey_glass": "Try to give glass an impossible opacity",
 
-    "_comment": "Old Research",
+    "_comment": "Unused Research",
     "research.arcana.tome_of_sharing": "Tome of Sharing",
     "research.arcana.tome_of_sharing.desc": "Sharing is caring",
     "research.arcana.tome_of_sharing.stage.1": "It's quite useful to have my knowledge bound to myself, rather than any specific copy of the this book, but it can also be limiting when trying to share my discoveries with friends. Teaching them everything manually is irritating and time-consuming. Perhaps a modified version of this book could teach them instead?",
     "research.arcana.tome_of_sharing.stage.2": "By combining this book with an eye of ender, I can link it to my knowledge specifically, taking advantage of what seems to be similar to the mechanism behind ender chests. Anyone else reading it will gain access to my knowledge.",
 
-    "_comment": "New Research",
+    "_comment": "Updated Research",
     "research.arcana.category.fundamentals": "Fundamentals",
     "research.arcana.category.alchemy": "Alchemy",
     "research.arcana.category.auromancy": "Auromancy",
@@ -814,6 +814,8 @@
     "research.arcana.basic_wand": "Basic Equipment",
     "research.arcana.basic_wand.stage.1": "To continue any further, I'll need to be able to directly manipulate aspects. The standard tools once used for this were wands, used in tandem with a specialized crafting table, though {i}some{r} notes instead describe some kind of glove.\nThe basic wand design is much simpler to create, so I'll be going with that. All it seems to need is some metal wand caps for channeling vis, and living wood core to store it.\nCrafting this wand simply requires placing a wand cap, a stick, and another wand cap of the same kind diagonally in a crafting table.\nAfterwards, I should be able to use the aspects in the wand as part of crafting, by right clicking a crafting table with it.",
     "research.arcana.basic_wand.stage.2": "Arcane crafting tables are just as good as their mundane counterparts for crafting regular recipes, but come with the additional ability to make magical items.\nAlmost all magical recipes require the use of aspects from within the wand. To collect aspects, I'll need to visit a source of magic - a node - and drain some of its power. To view them, I'll need to use a specialized pair of goggles that make vis itself visible. I'll write more on nodes in a separate entry.\nI can check the Arcanum while at an arcane crafting table, if I have one on me. It may be useful for me to pin common recipes for quick reference.",
+
+    "_comment": "Old Research",
 
     "research.arcana.locked": "Locked entries",
     "research.arcana.locked.desc": "Don't worry. They will be unlocked in next alphas!",
