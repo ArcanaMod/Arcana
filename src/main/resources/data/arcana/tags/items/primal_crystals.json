@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "arcana:air_crystal",
+    "arcana:fire_crystal",
+    "arcana:water_crystal",
+    "arcana:earth_crystal",
+    "arcana:order_crystal",
+    "arcana:chaos_crystal"
+  ]
+}

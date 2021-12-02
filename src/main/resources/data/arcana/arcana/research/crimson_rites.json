@@ -2,8 +2,8 @@
   "entries": [
     {
       "key": "arcana:crimson_trailing",
-      "name": "research.arcana.crimson",
-      "desc": "research.arcana.crimson.desc",
+      "name": "research.arcana.crimson_trailing",
+      "desc": "research.arcana.crimson_trailing.desc",
       "icons": [
         "arcana:crimson_rites",
         "arcana:void_cap",
@@ -15,7 +15,8 @@
       ],
       "meta": [
         "purple_base",
-        "spiky_base"
+        "spiky_base",
+        "locked"
       ],
       "x": 0,
       "y": 0,
@@ -38,7 +39,8 @@
         "arcana:crimson_trailing"
       ],
       "meta": [
-        "purple_base"
+        "purple_base",
+        "locked"
       ],
       "x": 2,
       "y": -2,

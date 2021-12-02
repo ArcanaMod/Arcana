@@ -1,0 +1,24 @@
+{
+  "type": "arcana:alchemy",
+  "in": [
+    {
+      "item": "minecraft:oak_log"
+    },
+    {
+      "item": "minecraft:dark_oak_log"
+    }
+  ],
+  "out": {
+    "item": "arcana:dair_log"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 2
+    },
+    {
+      "aspect": "earth",
+      "amount": 2
+    }
+  ]
+}

@@ -39,6 +39,8 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 			return arcLoc("alchemy").toString();
 		}
 	});
+
+	public static List<AlchemyRecipe> RECIPES = new ArrayList<>();
 	
 	Ingredient in;
 	ItemStack out;
@@ -52,6 +54,9 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 		this.aspectsIn = aspectsIn;
 		this.requiredResearch = requiredResearch;
 		this.id = id;
+		
+		if (RECIPES.stream().noneMatch(m -> m.id.toString().equals(this.id.toString())))
+			RECIPES.add(this);
 	}
 	
 	public boolean matches(AlchemyInventory inv, World world){
@@ -104,7 +109,7 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 	public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<AlchemyRecipe>{
 		
 		public AlchemyRecipe read(ResourceLocation recipeId, JsonObject json){
-			Ingredient ingredient = Ingredient.deserialize(JSONUtils.getJsonObject(json, "in"));
+			Ingredient ingredient = Ingredient.deserialize(json.get("in"));
 			ItemStack out = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "out"));
 			List<AspectStack> aspects = ItemAspectRegistry.parseAspectStackList(recipeId, JSONUtils.getJsonArray(json, "aspects")).orElseThrow(() -> new JsonSyntaxException("Missing aspects in " + recipeId + "!"));
 			List<Parent> research = StreamUtils.toStream(JSONUtils.getJsonArray(json, "research", null))
@@ -120,7 +125,7 @@ public class AlchemyRecipe implements IRecipe<AlchemyInventory>, AspectInfluenci
 			int size = buffer.readVarInt();
 			List<AspectStack> aspects = new ArrayList<>(size);
 			for(int i = 0; i < size; i++)
-				aspects.add(new AspectStack(AspectUtils.getAspectByName(buffer.readString()), buffer.readVarInt()));
+				aspects.add(new AspectStack(AspectUtils.getAspectByName(buffer.readString()), buffer.readFloat()));
 			
 			size = buffer.readVarInt();
 			List<Parent> requiredResearch = new ArrayList<>(size);

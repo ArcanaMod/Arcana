@@ -1,0 +1,24 @@
+{
+  "type": "arcana:alchemy",
+  "in": [
+    {
+      "item": "minecraft:oak_leaves"
+    },
+    {
+      "item": "minecraft:dark_oak_leaves"
+    }
+  ],
+  "out": {
+    "item": "arcana:dair_leaves"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 1
+    },
+    {
+      "aspect": "earth",
+      "amount": 1
+    }
+  ]
+}

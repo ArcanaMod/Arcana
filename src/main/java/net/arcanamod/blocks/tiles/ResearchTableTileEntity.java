@@ -40,6 +40,8 @@ public class ResearchTableTileEntity extends LockableTileEntity{
 	ArrayList<BlockPos> visContainers = new ArrayList<>();
 	AspectBattery battery = new AspectBattery(/*Integer.MAX_VALUE, 100*/);
 
+	public boolean batteryIsDirty = true;
+
 	public ResearchTableTileEntity(){
 		super(ArcanaTiles.RESEARCH_TABLE_TE.get());
 	}

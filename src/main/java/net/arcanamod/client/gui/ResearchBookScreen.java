@@ -6,6 +6,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
 import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.client.research.BackgroundLayerRenderers;
 import net.arcanamod.network.Connection;
 import net.arcanamod.network.PkModifyPins;
 import net.arcanamod.systems.research.*;
@@ -24,12 +25,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import org.lwjgl.opengl.GL11;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -55,7 +58,7 @@ public class ResearchBookScreen extends Screen {
 	public static final String SUFFIX_RESIZABLE = "_menu_resizable.png";
 	public static final ResourceLocation ARROWS_AND_BASES = new ResourceLocation(Arcana.MODID, "textures/gui/research/research_bases.png");
 
-	private static final int MAX_PAN = 512;
+	public static final int MAX_PAN = 512;
 	private static final int ZOOM_MULTIPLIER = 2;
 
 	// drawing helper
@@ -64,6 +67,7 @@ public class ResearchBookScreen extends Screen {
 	static float xPan = 0;
 	static float yPan = 0;
 	static float zoom = 0.7f;
+	static float targetZoom = 0.7f;
 	static boolean showZoom = false;
 
 	public ResearchBookScreen(ResearchBook book, Screen parentScreen, ItemStack sender){
@@ -84,6 +88,7 @@ public class ResearchBookScreen extends Screen {
 			// has a valid requirement - check if unlocked
 			return Researcher.getFrom(player).entryStage(entry) >= entry.sections().size();
 		}).collect(Collectors.toList());
+		zoom = targetZoom;
 	}
 
 	public float getXOffset(){
@@ -93,12 +98,17 @@ public class ResearchBookScreen extends Screen {
 	public float getYOffset(){
 		return ((height / 2f) * (1 / zoom)) - (yPan / 2f);
 	}
-
-	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks){
+	
+	public void render(@Nonnull MatrixStack stack, int mouseX, int mouseY, float partialTicks){
+		if(ArcanaConfig.BOOK_SMOOTH_ZOOM.get()){
+			float diff = targetZoom - zoom;
+			zoom = zoom + Math.min(partialTicks * (2 / 3f), 1) * diff;
+		}else
+			zoom = targetZoom;
 		renderBackground(stack);
 		RenderSystem.enableBlend();
 		super.render(stack, mouseX, mouseY, partialTicks);
-
+		
 		// draw stuff
 		// 224x196 viewing area
 		int scale = (int)getMinecraft().getMainWindow().getGuiScaleFactor();
@@ -107,18 +117,18 @@ public class ResearchBookScreen extends Screen {
 		GL11.glScissor(x * scale, y * scale, visibleWidth * scale, visibleHeight * scale);
 		GL11.glEnable(GL_SCISSOR_TEST);
 		// scissors on
-
+		
 		renderResearchBackground(stack);
 		renderEntries(stack, partialTicks);
-
+		
 		// scissors off
 		GL11.glDisable(GL_SCISSOR_TEST);
-
+		
 		setBlitOffset(299);
 		renderFrame(stack);
 		setBlitOffset(0);
 		renderEntryTooltip(stack, mouseX, mouseY);
-
+		
 		tooltipButtons.forEach(pin -> pin.renderAfter(stack, mouseX, mouseY));
 		RenderSystem.enableBlend();
 	}
@@ -158,7 +168,22 @@ public class ResearchBookScreen extends Screen {
 
 	private void renderResearchBackground(MatrixStack stack){
 		getMinecraft().getTextureManager().bindTexture(categories.get(tab).bg());
-		drawModalRectWithCustomSizedTexture(stack, (width - getFrameWidth()) / 2 + 16, (height - getFrameHeight()) / 2 + 17, (-xPan + MAX_PAN) / 4f, (yPan + MAX_PAN) / 4f, getFrameWidth() - 32, getFrameHeight() - 34, (int)(width*1.2f), (int)(width*1.2f));
+		// please don't ask
+		float xScale = 1024f / (512 + 32 - getFrameWidth());
+		float yScale = 1024f / (512 + 34 - getFrameHeight());
+		float scale = Math.max(xScale, yScale);
+		// minValue = 512 - (minValue + fHeight + variance)
+		// 2*minValue = 512 - (fHeight + 1024 / scale)
+		int width = getFrameWidth() - 32;
+		float xOffset = xScale == scale ? 0 : (512 - (width + 1024 / scale)) / 2;
+		int height = getFrameHeight() - 34;
+		float yOffset = yScale == scale ? 0 : (512 - (height + 1024 / scale)) / 2;
+		int x = (this.width - getFrameWidth()) / 2 + 16;
+		int y = (this.height - getFrameHeight()) / 2 + 17;
+		if(!categories.get(tab).getBgs().isEmpty())
+			categories.get(tab).getBgs().forEach(layer -> BackgroundLayerRenderers.render(layer, stack, x, y, width, height, xPan, yPan, scale, xOffset, yOffset, zoom));
+		else
+			drawModalRectWithCustomSizedTexture(stack, x, y, (-xPan + MAX_PAN) / scale + xOffset, (yPan + MAX_PAN) / scale + yOffset, width, height, MAX_PAN, MAX_PAN);
 	}
 
 	private void renderEntries(MatrixStack stack, float partialTicks){
@@ -173,7 +198,7 @@ public class ResearchBookScreen extends Screen {
 				if(style == PageStyle.IN_PROGRESS)
 					mult = (float)abs(sin((getMinecraft().player.ticksExisted + partialTicks) / 5f) * 0.75f) + .25f;
 				else if(style == PageStyle.PENDING)
-					mult = 0.1f;
+					mult = 0.2f;
 				RenderSystem.color4f(mult, mult, mult, 1f);
 				//noinspection IntegerDivisionInFloatingPointContext
 				drawTexturedModalRect(stack, (int)((entry.x() * 30 + getXOffset() + 2)), (int)((entry.y() * 30 + getYOffset() + 2)), base % 4 * 26, base / 4 * 26, 26, 26);
@@ -251,7 +276,7 @@ public class ResearchBookScreen extends Screen {
 												arrows.drawRightArrow(stack, entry.x() - 1, entry.y());
 										}else{
 											// rd
-											arrows.drawRdCurve(stack, entry.x() - 1, parentEntry.y() - 1);
+											arrows.drawRdCurve(stack, entry.x() - 1, entry.y());
 											if(parent.shouldShowArrowhead())
 												arrows.drawRightArrow(stack, entry.x() - 1, entry.y());
 										}
@@ -323,6 +348,9 @@ public class ResearchBookScreen extends Screen {
 	}
 
 	public PageStyle style(ResearchEntry entry){
+		// locked entries are always locked
+		if(entry.meta().contains("locked"))
+			return PageStyle.PENDING;
 		// if the page is at full progress, its complete.
 		Researcher r = Researcher.getFrom(getMinecraft().player);
 		if(r.entryStage(entry) >= entry.sections().size())
@@ -407,6 +435,26 @@ public class ResearchBookScreen extends Screen {
 				GuiUtils.drawHoveringText(stack, lines.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
 				RenderHelper.disableStandardItemLighting();
 				break;
+			}else if(style == PageStyle.PENDING){ // style will be null if not hovering
+				if(entry.meta().contains("locked")){
+					// display "locked"
+					GuiUtils.drawHoveringText(stack, Arrays.asList(new TranslationTextComponent("researchBook.locked"), new TranslationTextComponent("researchBook.locked.desc").mergeStyle(TextFormatting.GRAY)), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
+				}else{
+					// show known required research + "???" if there's unknown research
+					List<String> lines = Lists.newArrayList(I18n.format("researchBook.missing_research"));
+					boolean addedUnknown = false;
+					for(Pair<ResearchEntry, Parent> parent : entry.parents().stream().map(p -> new Pair<>(book.getEntry(p.getEntry()), p)).collect(Collectors.toList())){
+						if(parentStyle(parent.getFirst(), parent.getSecond()) != PageStyle.NONE)
+							lines.add(TextFormatting.GRAY.toString()+"- " + I18n.format(parent.getFirst().name())+TextFormatting.RESET.toString());
+						else if(!addedUnknown){
+							lines.add(I18n.format("researchBook.unknown"));
+							addedUnknown = true;
+						}
+					}
+					GuiUtils.drawHoveringText(stack, lines.stream().map(StringTextComponent::new).collect(Collectors.toList()), mouseX, mouseY, width, height, -1, getMinecraft().fontRenderer);
+				}
+				RenderHelper.disableStandardItemLighting();
+				break;
 			}
 		}
 	}
@@ -428,7 +476,7 @@ public class ResearchBookScreen extends Screen {
 		int height = getFrameHeight();
 		int x = (this.width - width) / 2;
 		int y = (this.height - height) / 2;
-		GuiUtils.drawContinuousTexturedBox(x, y, 0, 0, width, height, 140, 140, 69, getBlitOffset());
+		GuiDrawBox.drawContinuousTexturedBox(stack, x, y, 0, 0, width, height, 140, 140, 69,69,69,69, getBlitOffset());
 		// draw top
 		drawTexturedModalRect(stack, (x + (width / 2)) - 36, y, 140, 0, 72, 17);
 		// draw bottom
@@ -442,7 +490,11 @@ public class ResearchBookScreen extends Screen {
 			textStack.translate(0.0D, 0.0D, 299);
 			Matrix4f textLocation = textStack.getLast().getMatrix();
 			IRenderTypeBuffer.Impl renderType = IRenderTypeBuffer.getImpl(Tessellator.getInstance().getBuffer());
-			minecraft.fontRenderer.renderString("Zoom: " + zoom, x + 22, y + 5, -1, false, textLocation, renderType, false, 0, 15728880);
+			minecraft.fontRenderer.renderString("Zoom: " + zoom + " (" + targetZoom + ")", x + 22, y + 5, -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("XPan: " + xPan, x + 22, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("YPan: " + yPan, x + 112, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("FWidth: " + getFrameWidth(), x + 212, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
+			minecraft.fontRenderer.renderString("FHeight: " + getFrameHeight(), x + 272, y - 13 + getFrameHeight(), -1, false, textLocation, renderType, false, 0, 0xf000f0);
 			renderType.finish();
 			RenderSystem.enableDepthTest();
 		}
@@ -491,10 +543,10 @@ public class ResearchBookScreen extends Screen {
 
 	public boolean mouseScrolled(double mouseX, double mouseY, double scroll){
 		float amnt = 1.2f;
-		if((scroll < 0 && zoom > 0.5) || (scroll > 0 && zoom < 1))
-			zoom *= scroll > 0 ? amnt : 1 / amnt;
-		if(zoom > 1f)
-			zoom = 1f;
+		if((scroll < 0 && targetZoom > 0.5) || (scroll > 0 && targetZoom < 1))
+			targetZoom *= scroll > 0 ? amnt : 1 / amnt;
+		if(targetZoom > 1f)
+			targetZoom = 1f;
 		return super.mouseScrolled(mouseX, mouseY, scroll);
 	}
 
@@ -680,7 +732,7 @@ public class ResearchBookScreen extends Screen {
 
 		public void renderAfter(MatrixStack stack, int mouseX, int mouseY){
 			if(isHovered){
-				int completion = (category.entries().size() > 0) ? ((category.streamEntries().mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / category.entries().size()) : 100;
+				int completion = (category.entries().size() > 0) ? ((category.streamEntries().filter(x -> !x.meta().contains("locked")).mapToInt(x -> Researcher.getFrom(getMinecraft().player).entryStage(x) >= x.sections().size() ? 1 : 0).sum() * 100) / (int)category.entries().stream().filter(x -> !x.meta().contains("locked")).count()) : 100;
 				GuiUtils.drawHoveringText(stack, Lists.newArrayList(new StringTextComponent(I18n.format(category.name()).trim() + " (" + completion + "%)")), mouseX, mouseY, ResearchBookScreen.this.width, ResearchBookScreen.this.height, -1, Minecraft.getInstance().fontRenderer);
 			}
 		}

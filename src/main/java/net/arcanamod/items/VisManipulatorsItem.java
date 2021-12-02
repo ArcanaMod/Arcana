@@ -5,16 +5,25 @@ import net.arcanamod.ArcanaVariables;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.systems.spell.Spell;
+import net.arcanamod.systems.spell.casts.Cast;
+import net.arcanamod.systems.spell.casts.Casts;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.systems.spell.casts.ICast;
 import net.arcanamod.util.Pair;
+import net.arcanamod.util.RayTraceUtils;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
+import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -64,13 +73,19 @@ public class VisManipulatorsItem extends Item{
 		}
 		return super.onItemUseFirst(stack, context);
 	}
-
+	
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
+		BlockPos pos = RayTraceUtils.getTargetBlockPos(playerIn,worldIn,80);
+		if (worldIn.getBlockState(pos).getBlock()== ArcanaBlocks.SMOKEY_GLASS.get()){
+			((Cast)Casts.ICE_CAST).createAOEBlast(playerIn,worldIn,pos.up(),8,true, false, 3);
+		}else if (worldIn.getBlockState(pos).getBlock()== ArcanaBlocks.HARDENED_GLASS.get()){
+			((Cast)Casts.ICE_CAST).createAOEBlast(playerIn,worldIn,pos.up(),8,true, false, 1);
+		}
+		return super.onItemRightClick(worldIn, playerIn, handIn);
+	}
+	
 	public ICast getSpell(){
 		return null;
-	}
-
-	@Override
-	public int getUseDuration(ItemStack stack) {
-		return getSpell().getSpellDuration();
 	}
 }

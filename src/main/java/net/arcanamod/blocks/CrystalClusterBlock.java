@@ -4,6 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
+import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
 import net.arcanamod.world.ServerAuraView;
@@ -13,13 +14,17 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.state.DirectionProperty;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
@@ -49,11 +54,21 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 	}
 	
 	@Nonnull
-	public BlockState getStateForPlacement(BlockItemUseContext context){
-		// Placement = the block item, which you get with silk touch, so fully grown
-		return super.getStateForPlacement(context).with(AGE, 3).with(FACING, context.getFace());
+		public BlockState getStateForPlacement(BlockItemUseContext context){
+			// Placement = the block item, which you get with silk touch, so fully grown
+			return super.getStateForPlacement(context).with(AGE, 3).with(FACING, context.getFace());
+		}
+
+	@Override
+	public ActionResultType onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
+		ItemStack stack = player.getHeldItem(handIn);
+		if (stack.getItem() == Items.WRITABLE_BOOK){
+			stack.setCount(stack.getCount()-1);
+			player.inventory.addItemStackToInventory(new ItemStack(ArcanaItems.ARCANUM.get()));
+		}
+		return super.onBlockActivated(state, worldIn, pos, player, handIn, hit);
 	}
-	
+
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder){
 		builder.add(FACING, WATERLOGGED, AGE);
 	}

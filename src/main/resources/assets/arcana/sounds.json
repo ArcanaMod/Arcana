@@ -68,28 +68,96 @@
 
     ]
   },
+  "crystal_break_negative": {
+    "subtitle": "arcana.sounds.crystal_break_negative",
+    "sounds": [
+      "arcana:crystal/arcanacrystal_break1negative",
+      "arcana:crystal/arcanacrystal_break2negative",
+      "arcana:crystal/arcanacrystal_break3negative"
+
+    ]
+  },
+  "crystal_place_negative": {
+    "subtitle": "arcana.sounds.crystal_place_negative",
+    "sounds": [
+      "arcana:crystal/arcanacrystal_place1negative",
+      "arcana:crystal/arcanacrystal_place2negative",
+      "arcana:crystal/arcanacrystal_place3negative",
+      "arcana:crystal/arcanacrystal_place4negative"
+
+    ]
+  },
+  "arcanainfusionpart1d": {
+    "subtitle": "arcana.sounds.arcanainfusionpart1d",
+    "sounds": [
+      "arcana:ambience/arcanainfusionpart1d"
+    ]
+  },
+  "arcanainfusionpart4de": {
+    "subtitle": "arcana.sounds.arcanainfusionpart4de",
+    "sounds": [
+      "arcana:ambience/arcanainfusionpart4de"
+    ]
+  },
+  "arcana_taint_portal_extended": {
+    "subtitle": "arcana.sounds.arcana_taint_portal_extended",
+    "sounds": [
+      "arcana:blocks/arcana_taint_portal_extended"
+    ]
+  },
   "taint_break": {
     "subtitle": "arcana.sounds.tainted_block_break",
     "sounds": [
-      "arcana:taint/arcanataintbreak1",
-      "arcana:taint/arcanataintbreak2",
-      "arcana:taint/arcanataintbreak3fix",
-      "arcana:taint/arcanataintbreak4"
+      "arcana:taint/overall/arcanataintbreak1",
+      "arcana:taint/overall/arcanataintbreak2",
+      "arcana:taint/overall/arcanataintbreak3fix",
+      "arcana:taint/overall/arcanataintbreak4"
     ]
   },
   "taint_place": {
     "subtitle": "arcana.sounds.tainted_block_place",
     "sounds": [
-      "arcana:taint/arcanataintbreakv2"
+      "arcana:taint/overall/arcanataintbreakv2"
     ]
   },
   "taint_step": {
     "subtitle": "arcana.sounds.tainted_block_step",
     "sounds": [
-      "arcana:taint/arcanataintstep1",
-      "arcana:taint/arcanataintstep2",
-      "arcana:taint/arcanataintstep3",
-      "arcana:taint/arcanataintstep4"
+      "arcana:taint/overall/arcanaTaintStone03a"
+    ]
+  },
+  "taint_stone_break": {
+    "subtitle": "arcana.sounds.tainted_block_break",
+    "sounds": [
+      "arcana:taint/stone/arcanaTaintStone02",
+      "arcana:taint/stone/arcanaTaintStone02a",
+      "arcana:taint/stone/arcanaTaintStone04",
+      "arcana:taint/stone/arcanaTaintStone04a",
+      "arcana:taint/stone/arcanaTaintStone05",
+      "arcana:taint/stone/arcanaTaintStone05a",
+      "arcana:taint/stone/arcanaTaintStoneBreak01"
+    ]
+  },
+  "taint_stone_place": {
+    "subtitle": "arcana.sounds.tainted_block_place",
+    "sounds": [
+      "arcana:taint/stone/arcanaTaintStone01",
+      "arcana:taint/stone/arcanaTaintStone01a"
+    ]
+  },
+  "taint_stone_step": {
+    "subtitle": "arcana.sounds.tainted_block_step",
+    "sounds": [
+      "arcana:taint/stone/arcanataintstep1",
+      "arcana:taint/stone/arcanataintstep2",
+      "arcana:taint/stone/arcanataintstep3",
+      "arcana:taint/stone/arcanataintstep4"
+    ]
+  },
+  "arcana_mana_creeper": {
+    "subtitle": "arcana.sounds.arcana_mana_creeper",
+    "sounds": [
+      "arcana:entities/arcana_mana_creeper"
     ]
   },
   "arcananodes": {

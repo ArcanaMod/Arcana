@@ -37,7 +37,7 @@ public abstract class EntrySection{
 	public static EntrySection deserialze(CompoundNBT passData){
 		String type = passData.getString("type");
 		CompoundNBT data = passData.getCompound("data");
-		List<Requirement> requirements = streamAndApply(passData.getList("requirements", 10), CompoundNBT.class, Requirement::deserialze).collect(Collectors.toList());
+		List<Requirement> requirements = streamAndApply(passData.getList("requirements", 10), CompoundNBT.class, Requirement::deserialize).collect(Collectors.toList());
 		if(deserializers.get(type) != null){
 			EntrySection section = deserializers.get(type).apply(data);
 			requirements.forEach(section::addRequirement);

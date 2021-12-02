@@ -225,13 +225,18 @@ public class Spell implements ISpell {
 			CastCircle castCircle = new CastCircle();
 			doubleModifierCircle.firstAspect = Aspects.AIR;
 			doubleModifierCircle.secondAspect = Aspects.FIRE;
-			castCircle.cast = Casts.ARMOUR_CAST;
+			castCircle.cast = Casts.LIFE_CAST;
+			
+			CastMethodSin castMethodSin = new CastMethodSin();
+			castMethodSin.aspect = Aspects.GREED;
+			castMethodSin.bindModule(castMethodToCastCircle_connector);
+			
 			castCircle.bindModule(doubleModifierCircle);
 			castMethodToCastCircle_connector.bindModule(castCircle);
 
 			CastMethod castMethod = new CastMethod();
-			castMethod.aspect = Aspects.EARTH;
-			castMethod.bindModule(castMethodToCastCircle_connector);
+			castMethod.aspect = Aspects.AIR;
+			castMethod.bindModule(castMethodSin);
 
 			startToCastMethod_connector.bindModule(castMethod);
 			Spell spell = new Spell(new StartCircle());

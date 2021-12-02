@@ -1,5 +1,6 @@
 {
+  "parent": "minecraft:block/cross",
   "textures": {
-    "particle": "arcana:item/nitor"
+    "cross": "arcana:particle/nitore"
   }
 }

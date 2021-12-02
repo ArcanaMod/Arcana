@@ -21,10 +21,7 @@ import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.WandItem;
 import net.arcanamod.items.recipes.ArcanaRecipes;
 import net.arcanamod.network.Connection;
-import net.arcanamod.systems.research.EntrySection;
-import net.arcanamod.systems.research.Puzzle;
-import net.arcanamod.systems.research.Requirement;
-import net.arcanamod.systems.research.ResearchLoader;
+import net.arcanamod.systems.research.*;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.AuthorisationManager;
 import net.arcanamod.world.NodeType;
@@ -48,7 +45,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.extensions.IForgeBlockState;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -64,6 +64,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
+
+import static net.minecraft.block.RotatedPillarBlock.AXIS;
 
 /**
  * Base Arcana Class
@@ -121,8 +123,61 @@ public class Arcana{
 		ArcanaFluids.FLUIDS.register(bus);
 		
 		MinecraftForge.EVENT_BUS.addListener(WorldLoadEvent::serverAboutToStart);
+		MinecraftForge.EVENT_BUS.addListener(this::toolInteractionEvent);
 		
 		proxy.construct();
+	}
+	
+	public void toolInteractionEvent(BlockEvent.BlockToolInteractEvent event){
+		if (event.getToolType() == ToolType.AXE){
+			if (event.getState().getBlock()==ArcanaBlocks.SILVERWOOD_LOG.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_SILVERWOOD_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.DAIR_LOG.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_DAIR_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.GREATWOOD_LOG.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_GREATWOOD_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.EUCALYPTUS_LOG.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_EUCALYPTUS_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.HAWTHORN_LOG.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_HAWTHORN_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.WILLOW_LOG.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_WILLOW_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_DAIR_LOG.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_DAIR_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_GREATWOOD_LOG.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_GREATWOOD_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_EUCALYPTUS_LOG.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_EUCALYPTUS_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_HAWTHORN_LOG.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_HAWTHORN_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_WILLOW_LOG.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_WILLOW_LOG.get().getDefaultState().with(AXIS, event.getState().get(AXIS)));
+			
+			if (event.getState().getBlock()==ArcanaBlocks.SILVERWOOD_WOOD.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_SILVERWOOD_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.DAIR_WOOD.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_DAIR_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.GREATWOOD_WOOD.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_GREATWOOD_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.EUCALYPTUS_WOOD.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_EUCALYPTUS_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.HAWTHORN_WOOD.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_HAWTHORN_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.WILLOW_WOOD.get())
+				event.setFinalState(ArcanaBlocks.STRIPPED_WILLOW_WOOD.get().getDefaultState());
+			
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_DAIR_WOOD.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_DAIR_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_GREATWOOD_WOOD.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_GREATWOOD_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_EUCALYPTUS_WOOD.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_EUCALYPTUS_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_HAWTHORN_WOOD.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_HAWTHORN_WOOD.get().getDefaultState());
+			if (event.getState().getBlock()==ArcanaBlocks.TAINTED_WILLOW_WOOD.get())
+				event.setFinalState(ArcanaBlocks.TAINTED_STRIPPED_WILLOW_WOOD.get().getDefaultState());
+		}
 	}
 	
 	public static ResourceLocation arcLoc(String path){
@@ -141,6 +196,7 @@ public class Arcana{
 		TaintTrackableCapability.init();
 		Puzzle.init();
 		Taint.init();
+		BackgroundLayer.init();
 		StartupMessageManager.addModMessage("Arcana: Research registration completed");
 		
 		// register nodes as an argument

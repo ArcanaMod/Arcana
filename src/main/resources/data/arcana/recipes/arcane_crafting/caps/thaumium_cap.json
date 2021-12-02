@@ -1,0 +1,29 @@
+{
+	"type": "arcana:arcane_crafting_shaped",
+	"pattern": [
+		"AAA",
+		"A A"
+	],
+	"key": {
+		"A": {
+			"item": "arcana:thaumium_nugget"
+		}
+	},
+	"aspects": [
+		{
+			"aspect": "arcana:any",
+			"amount": 2
+		},
+		{
+			"aspect": "arcana:earth",
+			"amount": 2
+		},
+		{
+			"aspect": "arcana:fire",
+			"amount": 2
+		}
+	],
+	"result": {
+		"item": "arcana:thaumium_cap"
+	}
+}

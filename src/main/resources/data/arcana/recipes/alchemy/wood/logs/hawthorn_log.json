@@ -1,0 +1,19 @@
+{
+  "type": "arcana:alchemy",
+  "in": {
+    "item": "minecraft:birch_log"
+  },
+  "out": {
+    "item": "arcana:hawthorn_log"
+  },
+  "aspects": [
+    {
+      "aspect": "mana",
+      "amount": 2
+    },
+    {
+      "aspect": "order",
+      "amount": 2
+    }
+  ]
+}

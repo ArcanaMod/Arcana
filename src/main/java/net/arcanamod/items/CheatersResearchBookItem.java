@@ -33,7 +33,7 @@ public class CheatersResearchBookItem extends ResearchBookItem{
 		if(!world.isRemote() && player instanceof ServerPlayerEntity)
 			ResearchBooks.streamEntries().forEach(entry -> {
 				Researcher from = Researcher.getFrom(player);
-				if(from != null){
+				if(from != null && !entry.meta().contains("locked")){
 					from.completeEntry(entry);
 					Connection.sendModifyResearch(PkModifyResearch.Diff.complete, entry.key(), (ServerPlayerEntity)player);
 				}

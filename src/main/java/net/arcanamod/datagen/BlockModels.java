@@ -15,7 +15,19 @@ public class BlockModels extends BlockModelProvider{
 	}
 	
 	protected void registerModels(){
+		ArcanaDataGenerators.LIVING_WOODS.forEach((name, texture) -> {
+			cubeAll("stripped_" + name + "_wood", new ResourceLocation(texture.getNamespace(), texture.getPath().replace("block/", "block/stripped_").replace("_planks", "_wood")));
+			cubeAll(name + "_wood", new ResourceLocation(texture.getNamespace(), texture.getPath().replace("planks", "log")));
+			cubeColumn("stripped_"+name+"_log", new ResourceLocation(texture.getNamespace(), texture.getPath().replace("planks", "wood")),new ResourceLocation(texture.getNamespace(), texture.getPath().replace("planks", "log")));
+		});
 		ArcanaDataGenerators.WOODS.forEach((name, texture) -> {
+			slab(name + "_slab", texture, texture, texture);
+			slabTop(name + "_slab_top", texture, texture, texture);
+			stairs(name + "_stairs", texture, texture, texture);
+			stairsInner(name + "_stairs_inner", texture, texture, texture);
+			stairsOuter(name + "_stairs_outer", texture, texture, texture);
+			pressurePlate(name, texture);
+			
 			fenceInventory(name + "_fence_inventory", texture);
 			fencePost(name + "_fence", texture);
 			fenceSide(name + "_fence", texture);
@@ -38,21 +50,7 @@ public class BlockModels extends BlockModelProvider{
 			wallPost(name + "_wall_post", texture);
 			wallSide(name + "_wall_side", texture);
 		});
-
-		cubeAll("rough_limestone", new ResourceLocation(Arcana.MODID, "block/rough_limestone"));
-		cubeAll("smooth_limestone", new ResourceLocation(Arcana.MODID, "block/smooth_limestone"));
-		cubeAll("pridestone_bricks", new ResourceLocation(Arcana.MODID, "block/pridestone_bricks"));
-		cubeAll("pridestone_small_bricks", new ResourceLocation(Arcana.MODID, "block/pridestone_small_bricks"));
-		cubeAll("wet_pridestone", new ResourceLocation(Arcana.MODID, "block/wet_pridestone"));
-		cubeAll("wet_smooth_pridestone", new ResourceLocation(Arcana.MODID, "block/wet_smooth_pridestone"));
-		cubeAll("pridestone", new ResourceLocation(Arcana.MODID, "block/pridestone"));
-		cubeAll("smooth_pridestone", new ResourceLocation(Arcana.MODID, "block/smooth_pridestone"));
-		cubeAll("prideclay", new ResourceLocation(Arcana.MODID, "block/prideclay"));
-		cubeAll("gilded_prideclay", new ResourceLocation(Arcana.MODID, "block/gilded_prideclay"));
-		cubeAll("chiseled_prideful_gold_block", new ResourceLocation(Arcana.MODID, "block/chiseled_prideful_gold_block"));
-		cubeAll("carved_prideful_gold_block", new ResourceLocation(Arcana.MODID, "block/carved_prideful_gold_block"));
-		cubeAll("prideful_gold_block", new ResourceLocation(Arcana.MODID, "block/prideful_gold_block"));
-		cubeAll("prideful_gold_tile", new ResourceLocation(Arcana.MODID, "block/prideful_gold_tile"));
+		
 		cubeAll("tainted_granite",new ResourceLocation(Arcana.MODID, "block/tainted_granite"));
 		cubeAll("tainted_diorite",new ResourceLocation(Arcana.MODID, "block/tainted_diorite"));
 		cubeAll("tainted_andesite",new ResourceLocation(Arcana.MODID, "block/tainted_andesite"));

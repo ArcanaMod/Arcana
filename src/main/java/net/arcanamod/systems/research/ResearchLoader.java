@@ -64,7 +64,7 @@ public class ResearchLoader extends JsonReloadListener {
 				LOGGER.error("Non-object found in categories array in " + rl + "!");
 			else{
 				JsonObject category = categoryElement.getAsJsonObject();
-				// expecting key, in, icon, (later) background
+				// expecting key, in, icon, bg, optionally bgs
 				ResourceLocation key = new ResourceLocation(category.get("key").getAsString());
 				ResourceLocation bg = new ResourceLocation(category.get("bg").getAsString());
 				bg = new ResourceLocation(bg.getNamespace(), "textures/" + bg.getPath());
@@ -74,6 +74,20 @@ public class ResearchLoader extends JsonReloadListener {
 				ResourceLocation requirement = category.has("requires") ? new ResourceLocation(category.get("requires").getAsString()) : null;
 				ResearchBook in = ResearchBooks.books.get(new ResourceLocation(category.get("in").getAsString()));
 				ResearchCategory categoryObject = new ResearchCategory(new LinkedHashMap<>(), key, icon, bg, requirement, name, in);
+				if(category.has("bgs")){
+					JsonArray layers = category.getAsJsonArray("bgs");
+					for(JsonElement layerElem : layers){
+						JsonObject layerObj = layerElem.getAsJsonObject();
+						BackgroundLayer layer = BackgroundLayer.makeLayer(
+								new ResourceLocation(layerObj.getAsJsonPrimitive("type").getAsString()),
+								layerObj,
+								rl,
+								layerObj.getAsJsonPrimitive("speed").getAsFloat(),
+								layerObj.has("vanishZoom") ? layerObj.getAsJsonPrimitive("vanishZoom").getAsFloat() : -1);
+						if(layer != null)
+							categoryObject.getBgs().add(layer);
+					}
+				}
 				in.categories.putIfAbsent(key, categoryObject);
 			}
 		}
@@ -213,7 +227,7 @@ public class ResearchLoader extends JsonReloadListener {
 					desc = param_parts[0];
 					params = Arrays.asList(param_parts[1].substring(0, param_parts[1].length() - 1).split(", "));
 				}
-				// If this has "::" it is a custom requirement
+				// If this has "::" it's a custom requirement
 				if(desc.contains("::")){
 					String[] parts = desc.split("::");
 					if(parts.length != 2)

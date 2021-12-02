@@ -26,7 +26,7 @@ public abstract class Requirement{
 			return null;
 	}
 	
-	public static Requirement deserialze(CompoundNBT passData){
+	public static Requirement deserialize(CompoundNBT passData){
 		ResourceLocation type = new ResourceLocation(passData.getString("type"));
 		CompoundNBT data = passData.getCompound("data");
 		int amount = passData.getInt("amount");

@@ -271,16 +271,7 @@ public class Taint{
 		float w = entity.getSize().width, h = entity.getSize().height;
 
 		EntityType.IFactory<?> factoryIn =
-				entity == EntityType.BAT
-						? TaintedBatEntity::new
-						: entity == EntityType.EVOKER
-						|| entity == EntityType.ILLUSIONER
-						|| entity == EntityType.VINDICATOR
-						|| entity == EntityType.PILLAGER
-						? TaintedIllagerEntity::new
-						: entity == EntityType.CREEPER
-						? TaintedCreeperEntity::new
-						: entity == EntityType.SQUID
+				entity == EntityType.SQUID
 						? TaintedSquidEntity::new
 						: entity == EntityType.GHAST
 						? TaintedGhastEntity::new
@@ -288,10 +279,6 @@ public class Taint{
 						? TaintedCaveSpiderEntity::new
 						: entity == EntityType.SKELETON
 						? TaintedSkeletonEntity::new
-						: entity == EntityType.SLIME
-						? TaintedSlimeEntity::new
-						: entity == EntityType.BEE
-						? TaintedBeeEntity::new
 						: entity == EntityType.PANDA
 						? TaintedPandaEntity::new
 						: entity == EntityType.SNOW_GOLEM
@@ -302,19 +289,35 @@ public class Taint{
 						? TaintedPolarBearEntity::new
 						: entity == EntityType.DONKEY
 						? TaintedDonkeyEntity::new
-						: entity == EntityType.CAT
-						? TaintedCatEntity::new
-						: entity == EntityType.LLAMA
-						|| entity == EntityType.TRADER_LLAMA
-						? TaintedLlamaEntity::new
-						: entity == EntityType.PUFFERFISH
-						? TaintedPufferfishEntity::new
-						: entity == EntityType.PARROT
-						? TaintedParrotEntity::new
-						: entity == EntityType.HORSE
-						? TaintedHorseEntity::new
-						: (type, world) -> new TaintedEntity(type, world, entity);
+						: entity == EntityType.FOX
+						|| entity == EntityType.WANDERING_TRADER
+						|| entity == EntityType.WITCH
+						|| entity == EntityType.VILLAGER
+						|| entity == EntityType.OCELOT
+						|| entity == EntityType.MOOSHROOM
+						|| entity == EntityType.CHICKEN
+						|| entity == EntityType.BLAZE
+						|| entity == EntityType.SPIDER
+						|| entity == EntityType.PIG
+						|| entity == EntityType.COW
+						|| entity == EntityType.ZOMBIE
+						? (type, world) -> new TaintedEntity(type, world, entity)
+						: TaintedSlimeEntity::new;
 		tainted = EntityType.Builder.create(factoryIn, MONSTER).size(w, h).build(id);
+		/*
+		* FOX
+		* WANDERING_TRADER
+		* WITCH
+		* VILLAGER
+		* OCELOT
+		* MOOSHROOM
+		* CHICKEN
+		* BLAZE
+		* SPIDER
+		* PIG
+		* COW
+		* ZOMBIE
+		* */
 
 		entityTaintMap.put(entity, tainted);
 		return tainted;

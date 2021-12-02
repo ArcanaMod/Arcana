@@ -47,7 +47,24 @@
       "icon": "arcana:item/basicwand.png",
       "name": "research.arcana.category.wandcraft",
       "bg": "arcana:research/basics_bg.png",
-      "requires": "arcana:wandcraft"
+      "requires": "arcana:wandcraft",
+      "bgs": [
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/flow/base",
+          "speed": 0.7
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/flow/1",
+          "speed": 1.0
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/flow/2",
+          "speed": 1.4
+        }
+      ]
     },
     {
       "key": "arcana:tainted_basics",
@@ -68,7 +85,35 @@
       "in": "arcana:illustrious_grimoire",
       "icon": "arcana:research/illustrious_basics.png",
       "name": "research.arcana.category.illustrious",
-      "bg": "arcana:research/colourvoid_bg.png"
+      "bg": "arcana:research/nightsky/nightsky_1.png",
+      "bgs": [
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky/nightsky_0",
+          "speed": 0.65
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky/nightsky_1",
+          "speed": 0.65
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky/nightsky_4",
+          "speed": 0.8
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky/nightsky_3",
+          "speed": 0.9
+        },
+        {
+          "type": "arcana:image",
+          "image": "arcana:research/nightsky/nightsky_2",
+          "speed": 1.0,
+          "vanishZoom": 0.9
+        }
+      ]
     }
   ]
 }

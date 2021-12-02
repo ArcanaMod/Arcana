@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "arcana:block/wet_smooth_pridestone"
-  }
-}

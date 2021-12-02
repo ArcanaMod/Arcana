@@ -39,11 +39,7 @@ public class ResearcherImpl implements Researcher{
 		MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.ADVANCE));
 		// if this research is being completed, advance all children too,
 		if(entryStage(entry) >= entry.sections().size())
-			ResearchBooks.streamChildrenOf(entry)
-				.filter(x -> x.parents().stream().allMatch(parent -> parent.satisfiedBy(this))) // if all of their parents are complete,
-				.filter(x -> x.sections().get(0).getRequirements().isEmpty()) // and their first stage has no requirements,
-				.filter(x -> entryStage(x) == 0) // and they are on their first stage
-				.forEach(this::advanceEntry);
+			checkChildren(entry);
 	}
 	
 	public void completePuzzle(Puzzle puzzle){
@@ -60,6 +56,10 @@ public class ResearcherImpl implements Researcher{
 			MinecraftForge.EVENT_BUS.post(new ResearchEvent(getPlayer(), this, entry, ResearchEvent.Type.COMPLETE));
 		}
 		// advance children too
+		checkChildren(entry);
+	}
+	
+	private void checkChildren(ResearchEntry entry){
 		ResearchBooks.streamChildrenOf(entry)
 				.filter(x -> x.parents().stream().allMatch(parent -> parent.satisfiedBy(this))) // if all of their parents are complete,
 				.filter(x -> x.sections().get(0).getRequirements().isEmpty()) // and their first stage has no requirements,

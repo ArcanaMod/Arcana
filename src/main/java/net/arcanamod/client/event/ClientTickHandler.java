@@ -18,11 +18,14 @@ import net.arcanamod.util.LocalAxis;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
 import net.arcanamod.world.AuraView;
+import net.arcanamod.world.Node;
+import net.arcanamod.world.NodeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -35,6 +38,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -120,9 +124,21 @@ public class ClientTickHandler{
 				TileEntity te = world.getTileEntity(pos);
 				GogglePriority priority = GogglePriority.getClientGogglePriority();
 
+				AuraView view = AuraView.SIDED_FACTORY.apply(player.world);
+				Collection<Node> nodes = view.getNodesWithinAABB(player.getBoundingBox().grow(8));
+				// Play node sounds
+				if (!nodes.isEmpty()) {
+					NodeType type = ((Node) nodes.toArray()[0]).type();
+					if (type == NodeType.HUNGRY)
+						ArcanaSounds.playSoundOnce(player, ArcanaSounds.Impl.arcana_hunger_node, SoundCategory.AMBIENT, 0.4f, 1.0f);
+					else if (type == NodeType.NORMAL || type == NodeType.BRIGHT || type == NodeType.PURE || type == NodeType.PALE)
+						ArcanaSounds.playSoundOnce(player, ArcanaSounds.Impl.arcananodes, SoundCategory.AMBIENT, 0.4f, 1.0f);
+					else
+						ArcanaSounds.playSoundOnce(player, ArcanaSounds.Impl.arcananodesnegative, SoundCategory.AMBIENT, 0.4f, 1.0f);
+				}
+
 				// Render aspect particle around Node
 				if(priority == GogglePriority.SHOW_ASPECTS){
-					AuraView view = AuraView.SIDED_FACTORY.apply(player.world);
 					Vector3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
 					view.raycast(position, reach, player).ifPresent(node -> {
 						List<AspectHolder> holders = node.getAspects().getHolders();

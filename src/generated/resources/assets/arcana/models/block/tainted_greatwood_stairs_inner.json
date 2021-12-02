@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "side": "arcana:block/tainted_greatwood_planks",
+    "bottom": "arcana:block/tainted_greatwood_planks",
+    "top": "arcana:block/tainted_greatwood_planks"
+  }
+}

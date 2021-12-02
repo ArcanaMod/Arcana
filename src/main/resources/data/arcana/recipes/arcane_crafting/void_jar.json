@@ -1,20 +1,16 @@
 {
   "type": "arcana:arcane_crafting_shaped",
-  "group": "arcana:void_jar",
   "pattern": [
-    " WA",
+    "GWG",
     "GCG",
-    " G "
+    "GGG"
   ],
   "key": {
     "W": {
-      "tag": "minecraft:planks"
+      "tag": "minecraft:wooden_slabs"
     },
     "G": {
-      "tag": "forge:glass"
-    },
-    "A": {
-      "item": "arcana:amber"
+      "tag": "forge:glass_panes"
     },
     "C": {
       "item": "arcana:vacuum_crystal"
