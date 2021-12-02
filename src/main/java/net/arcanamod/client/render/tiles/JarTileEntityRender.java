@@ -54,7 +54,7 @@ public class JarTileEntityRender extends TileEntityRenderer<JarTileEntity>{
 		IVertexBuilder label_builder = buffer.getBuffer(RenderType.getCutout());
 		
 		// 0-100
-		float visAmount = ArcanaConfig.NO_JAR_ANIMATION.get() ? tileEntity.vis.getHolder(0).getCurrentVis() : (float) tileEntity.getClientVis(partialTicks);
+		float visAmount = ArcanaConfig.NO_JAR_ANIMATION.get() ? tileEntity.vis.getHolder(0).getStack().getAmount() : (float) tileEntity.getClientVis(partialTicks);
 		Color aspectColor = tileEntity.getAspectColor();
 		Direction labelSide = tileEntity.getLabelSide();
 		

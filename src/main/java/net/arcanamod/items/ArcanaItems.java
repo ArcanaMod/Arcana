@@ -201,15 +201,25 @@ public class ArcanaItems{
 	
 	//public static final RegistryObject<Item> TAINTED_SALMON_BUCKED = ITEMS.register("tainted_salmon_bucket",() -> new FishBucketItem(ArcanaEntities.TAINTED_SALMON, ()->Fluids.WATER,new Item.Properties().maxStackSize(1)));
 
-	// Multiblock Items
+	// Multi-block placers
 	@GIM(ITEM) public static final RegistryObject<Item> RESEARCH_TABLE_ITEM = ITEMS.register("research_table_item", () -> new BlockItem(ArcanaBlocks.RESEARCH_TABLE.get(), new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 	@GIM(ITEM) public static final RegistryObject<Item> FOCI_FORGE_ITEM = ITEMS.register("foci_forge_item", () -> new BlockItem(ArcanaBlocks.FOCI_FORGE.get(), new Properties().group(Arcana.ITEMS).maxStackSize(1)));
 
-	//Food
+	// Food
+	// TODO: Remove?
 	public static final RegistryObject<Item> RAW_DOG_MEAT = ITEMS.register("raw_dog_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(7).saturation(0.6f).build())));
 	public static final RegistryObject<Item> RAW_CAT_MEAT = ITEMS.register("raw_cat_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(5).saturation(0.4f).build())));
 	public static final RegistryObject<Item> COOKED_DOG_MEAT = ITEMS.register("cooked_dog_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(2).saturation(0.2f).build())));
 	public static final RegistryObject<Item> COOKED_CAT_MEAT = ITEMS.register("cooked_cat_meat", () -> new Item(new Properties().group(Arcana.ITEMS).food(new Food.Builder().hunger(1).saturation(0.1f).build())));
+
+	// Filters
+	public static final RegistryObject<Item> ARCANIUM_FILTER = ITEMS.register("arcanium_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 1, 1));
+	public static final RegistryObject<Item> SILVERWOOD_FILTER = ITEMS.register("silverwood_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 2, 0));
+	public static final RegistryObject<Item> GREATWOOD_FILTER = ITEMS.register("greatwood_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 0, 2));
+	public static final RegistryObject<Item> HAWTHORN_FILTER = ITEMS.register("hawthorn_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 3, -1));
+	public static final RegistryObject<Item> DAIR_FILTER = ITEMS.register("dair_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), 3, -1));
+	public static final RegistryObject<Item> WILLOW_FILTER = ITEMS.register("willow_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), -1, 3));
+	public static final RegistryObject<Item> EUCALYPTUS_FILTER = ITEMS.register("eucalyptus_filter", () -> new EnchantedFilterItem(new Properties().group(Arcana.ITEMS).maxStackSize(1), -1, 3));
 
 	// Creative Only
 	public static final RegistryObject<Item> CHEATERS_ARCANUM = ITEMS.register("cheaters_arcanum", () -> new CheatersResearchBookItem(new Properties().group(Arcana.ITEMS).maxStackSize(1).rarity(Rarity.EPIC), new ResourceLocation(MODID, "arcanum")));

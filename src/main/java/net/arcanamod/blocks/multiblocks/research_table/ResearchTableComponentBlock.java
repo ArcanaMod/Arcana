@@ -26,7 +26,6 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -100,10 +99,6 @@ public class ResearchTableComponentBlock extends WaterloggableBlock implements S
 		if (world.getBlockState(corePos).getBlock() != ArcanaBlocks.RESEARCH_TABLE.get())
 			world.destroyBlock(pos, false);
 		super.neighborChanged(state, world, pos, block, fromPos, isMoving);
-	}
-
-	public boolean isNormalCube(BlockState state, IBlockReader world, BlockPos pos) {
-		return false;
 	}
 
 	public ItemGroup getGroup() {

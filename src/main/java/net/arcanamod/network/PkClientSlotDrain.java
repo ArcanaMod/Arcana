@@ -1,6 +1,7 @@
 package net.arcanamod.network;
 
 import net.arcanamod.Arcana;
+import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -45,12 +46,12 @@ public class PkClientSlotDrain {
 				AspectContainer container = (AspectContainer)epm.openContainer;
 				if(container.getAspectSlots().size() > msg.slotId){
 					AspectSlot slot = container.getAspectSlots().get(msg.slotId);
-					if((msg.type == PkAspectClick.ClickType.TAKE || msg.type == PkAspectClick.ClickType.TAKE_ALL) && (container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0){
+					if((msg.type == PkAspectClick.ClickType.TAKE || msg.type == PkAspectClick.ClickType.TAKE_ALL) && (container.getHeldAspect() == Aspects.EMPTY || container.getHeldAspect() == null || container.getHeldAspect() == slot.getAspect()) && slot.getAmount() > 0){
 						float drain = msg.type == PkAspectClick.ClickType.TAKE_ALL ? slot.getAmount() : 1;
-						slot.drain(slot.getAspect(), drain, false);
-					}else if((msg.type == PkAspectClick.ClickType.PUT || msg.type == PkAspectClick.ClickType.PUT_ALL) && container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == null)){
+						slot.drain(slot.getAspect(), drain);
+					}else if((msg.type == PkAspectClick.ClickType.PUT || msg.type == PkAspectClick.ClickType.PUT_ALL) && container.getHeldAspect() != null && container.getHeldCount() > 0 && (slot.getAspect() == container.getHeldAspect() || slot.getAspect() == null || slot.getAspect() == Aspects.EMPTY)){
 						float drain = msg.type == PkAspectClick.ClickType.PUT_ALL ? container.getHeldCount() : 1;
-						slot.insert(slot.getAspect(), drain, false);
+						slot.insert(slot.getAspect(), drain);
 					}
 				}else{
 					LOGGER.error(String.format("Tried to click on invalid aspect slot; out of bounds! (size: %d, slot index: %d).", container.getAspectSlots().size(), msg.slotId));

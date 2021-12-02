@@ -1,10 +1,9 @@
 package net.arcanamod;
 
 import net.arcanamod.aspects.AspectUtils;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
-import net.arcanamod.blocks.tiles.AspectWindowTileEntity;
 import net.arcanamod.client.ClientUtils;
 import net.arcanamod.client.event.*;
 import net.arcanamod.client.gui.*;
@@ -102,14 +101,14 @@ public class ClientProxy extends CommonProxy{
 		// I'm not at all surprised.
 		
 		ItemModelsProperties.registerProperty(ArcanaItems.PHIAL.get(), new ResourceLocation("aspect"), (itemStack, world, livingEntity) -> {
-			IAspectHandler vis = IAspectHandler.getFrom(itemStack);
+			AspectHandler vis = AspectHandler.getFrom(itemStack);
 			if(vis == null)
 				return -1;
-			if(vis.getHoldersAmount() == 0)
+			if(vis.countHolders() == 0)
 				return -1;
 			if(vis.getHolder(0) == null)
 				return -1;
-			return vis.getHolder(0).getContainedAspect().getId() - 1;
+			return vis.getHolder(0).getStack().getAspect().getId() - 1;
 		});
 		ItemModelsProperties.registerProperty(ArcanaItems.ARCANUM.get(), new ResourceLocation("open"), (itemStack, world, livingEntity) -> {
 			if(!itemStack.getOrCreateTag().contains("open"))
@@ -120,12 +119,6 @@ public class ClientProxy extends CommonProxy{
 		});
 		
 		Minecraft inst = Minecraft.getInstance();
-		inst.getBlockColors().register((state, access, pos, index) -> {
-					if(access == null || pos == null || access.getTileEntity(pos) == null || !(access.getTileEntity(pos) instanceof AspectWindowTileEntity))
-						return 0xFF1F0D0B;
-					return ((AspectWindowTileEntity)access.getTileEntity(pos)).getColor();
-				}, ArcanaBlocks.ASPECT_WINDOW.get()
-		);
 		
 		inst.getBlockColors().register((state, access, pos, index) ->
 						access != null && pos != null ? BiomeColors.getWaterColor(access, pos) : -1,
@@ -183,7 +176,7 @@ public class ClientProxy extends CommonProxy{
 			return AspectUtils.aspectStacks.get((Minecraft.getInstance().player.ticksExisted / 20) % AspectUtils.aspectStacks.size());
 	}
 	
-	@SuppressWarnings("rawtypes")
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	protected void registerRenders(){
 		//Tile Entity Special Render
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.JAR_TE.get(), JarTileEntityRender::new);
@@ -191,6 +184,8 @@ public class ClientProxy extends CommonProxy{
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.VACUUM_TE.get(), VacuumTileEntityRender::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.PEDESTAL_TE.get(), PedestalTileEntityRenderer::new);
 		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_VALVE_TE.get(), AspectValveTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_WINDOW_TE.get(), PipeTileEntityRenderer::new);
+		ClientRegistry.bindTileEntityRenderer(ArcanaTiles.ASPECT_PUMP_TE.get(), PipeTileEntityRenderer::new);
 		
 		//Special Render
 		ModelLoader.addSpecialModel(new ResourceLocation(MODID, "item/phial"));
@@ -242,6 +237,8 @@ public class ClientProxy extends CommonProxy{
 		ScreenManager.registerFactory(ArcanaContainers.RESEARCH_TABLE.get(), ResearchTableScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ARCANE_CRAFTING_TABLE.get(), ArcaneCraftingTableScreen::new);
 		ScreenManager.registerFactory(ArcanaContainers.ASPECT_CRYSTALLIZER.get(), AspectCrystallizerScreen::new);
+		ScreenManager.registerFactory(ArcanaContainers.ALEMBIC.get(), AlembicScreen::new);
+		ScreenManager.registerFactory(ArcanaContainers.PUMP.get(), PumpScreen::new);
 	}
 	
 	protected void setRenderLayers(){

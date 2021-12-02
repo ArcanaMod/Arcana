@@ -3,8 +3,11 @@ package net.arcanamod.items;
 import com.google.common.collect.Sets;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaSounds;
-import net.arcanamod.aspects.*;
-import net.arcanamod.capabilities.Researcher;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.handlers.*;
 import net.arcanamod.client.render.particles.AspectHelixParticleData;
 import net.arcanamod.items.attachment.Cap;
 import net.arcanamod.items.attachment.Core;
@@ -15,7 +18,6 @@ import net.arcanamod.systems.research.ResearchEntry;
 import net.arcanamod.systems.spell.MDModifier;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.casts.ICast;
-import net.arcanamod.systems.vis.VisUtils;
 import net.arcanamod.world.AuraView;
 import net.arcanamod.world.Node;
 import net.minecraft.client.resources.I18n;
@@ -41,6 +43,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
@@ -94,9 +97,12 @@ public abstract class MagicDeviceItem extends Item{
 	
 	@Nullable
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt){
-		AspectBattery battery = new AspectBattery(6, 0);
-		for(Aspect aspect : AspectUtils.primalAspects)
-			battery.createCell(new AspectCell((int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier()), aspect));
+		AspectBattery battery = new AspectBattery(/*6, 0*/);
+		for(Aspect aspect : AspectUtils.primalAspects){
+			AspectCell e = new AspectCell((int)((getCore(stack).maxVis() + getCap(stack).visStorage()) * getVisModifier()));
+			e.setWhitelist(Collections.singletonList(aspect));
+			battery.getHolders().add(e);
+		}
 		return battery;
 	}
 	
@@ -122,16 +128,16 @@ public abstract class MagicDeviceItem extends Item{
 				ASPECT_DRAIN_AMOUNT = 3;
 			}
 			// drain
-			IAspectHandler wandHolder = IAspectHandler.getFrom(stack);
+			AspectHandler wandHolder = AspectHandler.getFrom(stack);
 			// TODO: non-destructive node draining?
 			// with research, of course
 			if(wandHolder != null)
 				if(world.getGameTime() % (ASPECT_DRAIN_WAIT + 1 + world.rand.nextInt(3)) == 0){
 					Node node = nodeOptional.get();
-					IAspectHandler aspects = node.getAspects();
-					IAspectHolder holder = aspects.getHolder(world.rand.nextInt(aspects.getHoldersAmount()));
-					Aspect aspect = holder.getContainedAspect();
-					boolean moved = holder.getCurrentVis() > 0;
+					AspectHandler aspects = node.getAspects();
+					AspectHolder holder = aspects.getHolder(world.rand.nextInt(aspects.countHolders()));
+					Aspect aspect = holder.getLabelAspect();
+					boolean moved = !holder.getStack().isEmpty();
 					VisUtils.moveAspects(holder, wandHolder, ASPECT_DRAIN_AMOUNT + world.rand.nextInt(1));
 					if(moved){
 						// spawn aspect helix particles
@@ -159,17 +165,18 @@ public abstract class MagicDeviceItem extends Item{
 			if(focus != Focus.NO_FOCUS){
 				Spell spell = focus.getSpell(player.getHeldItem(hand));
 				if(spell != null && spell.mainModule != null){
-					IAspectHandler handler = IAspectHandler.getFrom(player.getHeldItem(hand));
+					AspectHandler handler = AspectHandler.getFrom(player.getHeldItem(hand));
 					// oh my god this code is terrible // YES, I know Xd.
 					// time for more VisUtils I guess
-					if(spell.getSpellCosts().toList().stream().allMatch(stack -> findAspectInHoldersOrEmpty(handler, stack.getAspect()).getCurrentVis() >= stack.getAmount()) ||
-							spell.getSpellCosts().toList().stream().allMatch(stack -> stack.getAspect() == Aspects.EMPTY)){
-						Spell.runSpell(spell, world, player, player.getHeldItem(hand), player.isCrouching() ? ICast.Action.SPECIAL : ICast.Action.USE);
-						// remove aspects from wand if spell successes.
-						for(AspectStack cost : spell.getSpellCosts().toList())
-							if(cost.getAspect() != Aspects.EMPTY)
-								handler.findAspectInHolders(cost.getAspect()).drain(cost, false);
-					}
+					if(handler != null)
+						if(spell.getSpellCosts().toList().stream().allMatch(stack -> handler.findFirstHolderContaining(stack.getAspect()).getStack().getAmount() >= stack.getAmount()) ||
+								spell.getSpellCosts().toList().stream().allMatch(stack -> stack.isEmpty())){
+							Spell.runSpell(spell, world, player, player.getHeldItem(hand), player.isCrouching() ? ICast.Action.SPECIAL : ICast.Action.USE);
+							// remove aspects from wand if spell successes.
+							for(AspectStack cost : spell.getSpellCosts().toList())
+								if(cost.getAspect() != Aspects.EMPTY)
+									handler.findFirstHolderContaining(cost.getAspect()).drain(cost.getAmount(), false);
+						}
 				}else
 					player.sendStatusMessage(new TranslationTextComponent("status.arcana.null_spell"), true);
 			}
@@ -182,11 +189,6 @@ public abstract class MagicDeviceItem extends Item{
 			ret.set(ActionResult.resultConsume(itemstack));
 		});
 		return ret.get();
-	}
-	
-	private IAspectHolder findAspectInHoldersOrEmpty(IAspectHandler handler, Aspect aspect){
-		@Nullable IAspectHolder nullableHolder = handler.findAspectInHolders(aspect);
-		return nullableHolder != null ? nullableHolder : new AspectCell();
 	}
 	
 	@Nonnull

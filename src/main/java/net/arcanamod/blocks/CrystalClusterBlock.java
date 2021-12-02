@@ -2,8 +2,7 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
-import net.arcanamod.aspects.AspectStack;
-import net.arcanamod.aspects.IAspectHolder;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.bases.WaterloggableBlock;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.world.AuraView;
@@ -107,10 +106,10 @@ public class CrystalClusterBlock extends WaterloggableBlock{
 			// For each node in range,
 			for(Node node : nodes){
 				// If it has more than 4 of our aspect,
-				IAspectHolder holder = node.getAspects().findAspectInHolders(aspect);
-				if(holder != null && holder.getCurrentVis() > 4){
+				AspectHolder holder = node.getAspects().findFirstHolderContaining(aspect);
+				if(holder != null && holder.getStack().getAmount() > 4){
 					// Take 2-4 of the aspect,
-					holder.drain(new AspectStack(aspect, world.rand.nextInt(3) + 2), false);
+					holder.drain(world.rand.nextInt(3) + 2, false);
 					// Sync the node,
 					view.sendChunkToClients(node);
 					// Increment out growth stage,

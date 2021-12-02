@@ -1,7 +1,7 @@
 package net.arcanamod.world;
 
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.minecraft.dispenser.IPosition;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Node implements IPosition{
 	
 	/** The aspects contained in the node. */
-	IAspectHandler aspects;
+	AspectHandler aspects;
 	/** The type of node this is. */
 	NodeType type;
 	/** The position of this node. */
@@ -26,7 +26,7 @@ public class Node implements IPosition{
 	/** Any extra data, used by the node type (e.g. hungry nodes). */
 	CompoundNBT data = new CompoundNBT();
 	
-	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge){
+	public Node(AspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge){
 		this.aspects = aspects;
 		this.type = type;
 		this.x = x;
@@ -35,7 +35,7 @@ public class Node implements IPosition{
 		this.timeUntilRecharge = timeUntilRecharge;
 	}
 	
-	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge, CompoundNBT data){
+	public Node(AspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge, CompoundNBT data){
 		this.aspects = aspects;
 		this.type = type;
 		this.x = x;
@@ -45,7 +45,7 @@ public class Node implements IPosition{
 		this.data = data;
 	}
 	
-	public Node(IAspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge, UUID nodeUniqueId, CompoundNBT data){
+	public Node(AspectHandler aspects, NodeType type, double x, double y, double z, int timeUntilRecharge, UUID nodeUniqueId, CompoundNBT data){
 		this.aspects = aspects;
 		this.type = type;
 		this.x = x;
@@ -74,7 +74,7 @@ public class Node implements IPosition{
 	}
 	
 	public static Node fromNBT(CompoundNBT nbt){
-		IAspectHandler aspects = new AspectBattery();
+		AspectHandler aspects = new AspectBattery();
 		aspects.deserializeNBT(nbt.getCompound("aspects"));
 		NodeType type = NodeType.TYPES.get(new ResourceLocation(nbt.getString("type")));
 		double x = nbt.getDouble("x"), y = nbt.getDouble("y"), z = nbt.getDouble("z");
@@ -87,7 +87,7 @@ public class Node implements IPosition{
 		return new Vector3d(x, y, z);
 	}
 	
-	public IAspectHandler getAspects(){
+	public AspectHandler getAspects(){
 		return aspects;
 	}
 	

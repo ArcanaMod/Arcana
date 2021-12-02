@@ -5,14 +5,15 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.*;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.*;
-import net.arcanamod.capabilities.Researcher;
-import net.arcanamod.systems.research.Parent;
-import net.arcanamod.systems.research.Puzzle;
-import net.arcanamod.util.StreamUtils;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.UndecidedAspectStack;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.IRecipeSerializer;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
@@ -103,7 +104,22 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 	}
 	
 	public boolean matches(AspectCraftingInventory inv, World world, boolean considerAspects){
-		if (requiredResearch.stream().allMatch(parent -> parent.satisfiedBy(Researcher.getFrom(inv.getCrafter())))){
+		if(considerAspects && aspectStacks.length != 0){
+			if(inv.getWandSlot() == null)
+				return false;
+			if(inv.getWandSlot().getStack() == ItemStack.EMPTY)
+				return false;
+			AspectHandler handler = AspectHandler.getFrom(inv.getWandSlot().getStack());
+			if(!this.checkAspectMatch(inv, handler))
+				return false;
+		}
+		for(int i = 0; i <= inv.getWidth() - this.recipeWidth; ++i){
+			for(int j = 0; j <= inv.getHeight() - this.recipeHeight; ++j){
+				if(this.checkMatch(inv, i, j, true))
+					return true;
+				if(this.checkMatch(inv, i, j, false))
+					return true;
+		/*if (requiredResearch.stream().allMatch(parent -> parent.satisfiedBy(Researcher.getFrom(inv.getCrafter())))){
 			if(considerAspects && aspectStacks.length != 0){
 				if(inv.getWandSlot() == null)
 					return false;
@@ -119,7 +135,7 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 						return true;
 					if(this.checkMatch(inv, i, j, false))
 						return true;
-				}
+				}*/
 			}
 		}
 		return false;
@@ -133,22 +149,22 @@ public class ArcaneCraftingShapedRecipe implements IArcaneCraftingRecipe, IShape
 		return matches(inv, world, false);
 	}
 
-	private boolean checkAspectMatch(AspectCraftingInventory inv, @Nullable IAspectHandler handler) {
-		if(handler == null || handler.getHoldersAmount() == 0)
+	private boolean checkAspectMatch(AspectCraftingInventory inv, @Nullable AspectHandler handler) {
+		if(handler == null || handler.countHolders() == 0)
 			return false;
 
 		boolean satisfied = true;
 		boolean anySatisfied = false;
 		boolean hasAny = false;
-		for (IAspectHolder holder : handler.getHolders()){
+		for (AspectHolder holder : handler.getHolders()){
 			for (UndecidedAspectStack stack : aspectStacks){
 				if (stack.any){
 					hasAny = true;
-					if (holder.getCurrentVis() >= stack.stack.getAmount())
+					if (holder.getStack().getAmount() >= stack.stack.getAmount())
 						anySatisfied = true;
 				}
-				else if (holder.getContainedAspect() == stack.stack.getAspect()){
-					if (holder.getCurrentVis() < stack.stack.getAmount())
+				else if (holder.getStack().getAspect() == stack.stack.getAspect()){
+					if (holder.getStack().getAmount() < stack.stack.getAmount())
 						satisfied = false;
 				}
 			}

@@ -4,7 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.tiles.FociForgeTileEntity;
 import net.arcanamod.client.gui.FociForgeScreen;
 import net.arcanamod.containers.slots.AspectSlot;
@@ -167,7 +167,7 @@ public class FociForgeContainer extends AspectContainer {
     protected void addAspectSlots(IInventory playerInventory){
         Aspect[] primals = AspectUtils.primalAspects;
         Aspect[] sins = AspectUtils.sinAspects;
-        Supplier<IAspectHandler> source = () -> IAspectHandler.getFrom(te);
+        Supplier<AspectHandler> source = () -> AspectHandler.getFrom(te);
 
         for (int xx = 0; xx < primals.length; xx++) {
             int x = 10 + 17 * xx;
@@ -253,7 +253,7 @@ public class FociForgeContainer extends AspectContainer {
      *
      * @return A list containing all open AspectHandlers.
      */
-    public List<IAspectHandler> getOpenHandlers(){
-        return Collections.singletonList(IAspectHandler.getFrom(te));
+    public List<AspectHandler> getOpenHandlers(){
+        return Collections.singletonList(AspectHandler.getFrom(te));
     }
 }

@@ -1,6 +1,11 @@
 package net.arcanamod;
 
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.ItemAspectRegistry;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.arcanamod.capabilities.AuraChunkCapability;
@@ -216,6 +221,8 @@ public class Arcana{
 			}
 		});
 		// and phial usage
+		// TODO: replace this all with standard vis transfer code.
+		// bleh
 		DispenserBlock.registerDispenseBehavior(ArcanaItems.PHIAL.get(), new OptionalDispenseBehavior(){
 			// copypasta from PhialItem
 			// needs some reworking for readability...
@@ -227,18 +234,18 @@ public class Arcana{
 				TileEntity tile = world.getTileEntity(pos);
 				DispenserTileEntity dispenser = source.getBlockTileEntity();
 				if(tile != null){
-					LazyOptional<IAspectHandler> cap = tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER);
+					LazyOptional<AspectHandler> cap = tile.getCapability(AspectHandlerCapability.ASPECT_HANDLER);
 					if(cap.isPresent()){
 						//noinspection ConstantConditions
-						IAspectHandler tileHandle = cap.orElse(null);
-						IAspectHolder myHandle = IAspectHandler.getFrom(stack).getHolder(0);
-						if(myHandle.getCurrentVis() <= 0){
-							for(IAspectHolder holder : tileHandle.getHolders())
-								if(holder.getCurrentVis() > 0){
-									float min = Math.min(holder.getCurrentVis(), 8);
-									Aspect aspect = holder.getContainedAspect();
+						AspectHandler tileHandle = cap.orElse(null);
+						AspectHolder myHandle = AspectHandler.getFrom(stack).getHolder(0);
+						if(myHandle.getStack().getAmount() <= 0){
+							for(AspectHolder holder : tileHandle.getHolders())
+								if(holder.getStack().getAmount() > 0){
+									float min = Math.min(holder.getStack().getAmount(), 8);
+									Aspect aspect = holder.getStack().getAspect();
 									ItemStack cappedItemStack = new ItemStack(ArcanaItems.PHIAL.get());
-									IAspectHandler.getFrom(cappedItemStack).insert(0, new AspectStack(aspect, min), false);
+									AspectHandler.getFrom(cappedItemStack).insert(aspect, min);//.insert(0, new AspectStack(aspect, min), false);
 									if(cappedItemStack.getTag() == null)
 										cappedItemStack.setTag(cappedItemStack.getShareTag());
 									stack.shrink(1);
@@ -248,20 +255,20 @@ public class Arcana{
 											IPosition iposition = DispenserBlock.getDispensePosition(source);
 											doDispense(source.getWorld(), stack, 6, direction, iposition);
 										}
-									holder.drain(new AspectStack(aspect, min), false);
+									holder.drain(min, false);
 									//successful = true;
 									world.notifyBlockUpdate(pos, state, state, 2);
 									return cappedItemStack;
 								}
 						}else{
-							for(IAspectHolder holder : tileHandle.getHolders())
-								if((holder.getCapacity() - holder.getCurrentVis() > 0 || holder.isIgnoringFullness()) && (holder.getContainedAspect() == myHandle.getContainedAspect() || holder.getContainedAspect() == Aspects.EMPTY)){
-									float inserted = holder.insert(new AspectStack(myHandle.getContainedAspect(), myHandle.getCurrentVis()), false);
+							for(AspectHolder holder : tileHandle.getHolders())
+								if((holder.getCapacity() - holder.getStack().getAmount() > 0 || holder.voids()) && (holder.getStack().getAspect() == myHandle.getStack().getAspect() || holder.getStack().getAspect() == Aspects.EMPTY)){
+									float inserted = holder.insert(myHandle.getStack().getAmount(), false);
 									if(inserted != 0){
 										ItemStack newPhial = new ItemStack(ArcanaItems.PHIAL.get(), 1);
-										IAspectHolder oldHolder = IAspectHandler.getFrom(stack).getHolder(0);
-										IAspectHolder newHolder = IAspectHandler.getFrom(newPhial).getHolder(0);
-										newHolder.insert(new AspectStack(oldHolder.getContainedAspect(), inserted), false);
+										AspectHolder oldHolder = AspectHandler.getFrom(stack).getHolder(0);
+										AspectHolder newHolder = AspectHandler.getFrom(newPhial).getHolder(0);
+										newHolder.insert(inserted, false);
 										newPhial.setTag(newPhial.getShareTag());
 										world.notifyBlockUpdate(pos, state, state, 2);
 										return newPhial;

@@ -1,4 +1,4 @@
-package net.arcanamod.aspects;
+package net.arcanamod.aspects.handlers;
 
 import net.arcanamod.Arcana;
 import net.minecraft.nbt.CompoundNBT;
@@ -13,23 +13,23 @@ import javax.annotation.Nullable;
 
 public class AspectHandlerCapability {
 
-	@CapabilityInject(IAspectHandler.class)
-	public static Capability<IAspectHandler> ASPECT_HANDLER = null;
+	@CapabilityInject(AspectHandler.class)
+	public static Capability<AspectHandler> ASPECT_HANDLER = null;
 
 	public static final ResourceLocation KEY = new ResourceLocation(Arcana.MODID, "new_aspect_handler_capability");
 
 	public static void init(){
-		CapabilityManager.INSTANCE.register(IAspectHandler.class, new Storage(), AspectBattery::new);
+		CapabilityManager.INSTANCE.register(AspectHandler.class, new Storage(), AspectBattery::new);
 	}
 
-	private static class Storage implements Capability.IStorage<IAspectHandler>{
+	private static class Storage implements Capability.IStorage<AspectHandler>{
 
 		@Nullable
-		public INBT writeNBT(Capability<IAspectHandler> capability, IAspectHandler instance, Direction side){
+		public INBT writeNBT(Capability<AspectHandler> capability, AspectHandler instance, Direction side){
 			return instance.serializeNBT();
 		}
 
-		public void readNBT(Capability<IAspectHandler> capability, IAspectHandler instance, Direction side, INBT nbt){
+		public void readNBT(Capability<AspectHandler> capability, AspectHandler instance, Direction side, INBT nbt){
 			instance.deserializeNBT((CompoundNBT)nbt);
 		}
 	}

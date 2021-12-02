@@ -1,13 +1,15 @@
 package net.arcanamod.containers.slots;
 
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.Aspects;
+import net.arcanamod.aspects.handlers.AspectHandler;
 
 import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public class AspectSlot {
-	private Aspect aspect = Aspects.EMPTY;
-	private final Supplier<IAspectHandler> inventory;
+	protected Aspect aspect = Aspects.EMPTY;
+	private final Supplier<AspectHandler> inventory;
 	
 	public int x, y;
 	
@@ -32,14 +34,14 @@ public class AspectSlot {
 
 	public String description = "";
 	
-	public AspectSlot(@Nonnull Aspect aspect, @Nonnull Supplier<IAspectHandler> inventory, int x, int y) {
+	public AspectSlot(@Nonnull Aspect aspect, @Nonnull Supplier<AspectHandler> inventory, int x, int y) {
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
 		this.y = y;
 	}
 	
-	public AspectSlot(@Nonnull Aspect aspect, Supplier<IAspectHandler> inventory, int x, int y, boolean storeSlot) {
+	public AspectSlot(@Nonnull Aspect aspect, Supplier<AspectHandler> inventory, int x, int y, boolean storeSlot) {
 		this.setAspect(aspect);
 		this.inventory = inventory;
 		this.x = x;
@@ -52,16 +54,13 @@ public class AspectSlot {
 	}
 	
 	public float getAmount() {
-		if(symbolic) {
+		if(symbolic)
 			return 1;
-		}
-		if(getInventory().get() != null) {
-			int amount = 0;
-			int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-			for(int index : aspectIndexes){
-				amount += getInventory().get().getHolder(index).getCurrentVis();
-			}
-			return amount;
+		AspectHandler handler = getInventory().get();
+		if(handler != null) {
+			return (float)handler.streamAllHoldersContaining(aspect)
+					.mapToDouble(holder -> holder.getStack().getAmount())
+					.sum();
 		} else {
 			return -1;
 		}
@@ -72,13 +71,13 @@ public class AspectSlot {
 			aspect = Aspects.EMPTY;
 	}
 	
-	public Supplier<IAspectHandler> getInventory(){
+	public Supplier<AspectHandler> getInventory(){
 		return inventory;
 	}
 	
 	public Aspect getAspect() {
 		if(aspect == null)
-			return Aspects.EMPTY; // Quick fix. TODO: Fix null problems
+			return Aspects.EMPTY;
 		return aspect;
 	}
 	
@@ -99,15 +98,14 @@ public class AspectSlot {
 	 *
 	 * @return The result of drawing from the underlying inventory.
 	 */
-	public float drain(@Nonnull Aspect aspect, float amount, boolean simulate) {
+	public float drain(@Nonnull Aspect aspect, float amount) {
 		float result = 0;
-		if(symbolic){
+		if(symbolic)
 			result = amount;
-		}else{
-			if(getInventory().get() != null){
-				int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-				result = getInventory().get().drain(aspectIndexes[0], new AspectStack(aspect, amount), simulate);
-			}
+		else{
+			AspectHandler handler = getInventory().get();
+			if(handler != null)
+				result = handler.drain(aspect, amount);
 			onChange();
 		}
 		return result;
@@ -118,28 +116,12 @@ public class AspectSlot {
 	 *
 	 * @return The result of inserting into the underlying inventory.
 	 */
-	public float insert(@Nonnull Aspect aspect, float amount, boolean simulate) {
+	public float insert(@Nonnull Aspect aspect, float amount) {
 		float result = amount;
 		if(!symbolic){
-			if(getInventory().get() != null){
-				
-				int[] aspectIndexes = getInventory().get().findIndexesFromAspectInHolders(getAspect());
-				
-				boolean isInserted = false;
-				if(aspectIndexes.length == 0){
-					result = getInventory().get().insert(AspectUtils.getEmptyCell(getInventory().get()), new AspectStack(aspect, amount), simulate);
-					isInserted = true;
-				}
-				for(int index : aspectIndexes){
-					if(getInventory().get().getHolder(index).getCurrentVis() < getInventory().get().getHolder(index).getCapacity()){
-						result = getInventory().get().insert(index, new AspectStack(aspect, amount), simulate);
-						isInserted = true;
-						break;
-					}
-				}
-				if(!isInserted)
-					result = getInventory().get().insert(AspectUtils.getEmptyCell(getInventory().get()), new AspectStack(aspect, amount), simulate);
-			}
+			AspectHandler handler = getInventory().get();
+			if(handler != null)
+				result = handler.insert(aspect, amount);
 			onChange();
 		}
 		return result;

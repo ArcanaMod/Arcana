@@ -1,6 +1,6 @@
-package net.arcanamod.blocks.tiles;
+package net.arcanamod.blocks.pipes;
 
-import com.google.common.collect.Sets;
+import net.arcanamod.blocks.tiles.ArcanaTiles;
 import net.minecraft.block.BlockState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
@@ -9,13 +9,13 @@ import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class AspectValveTileEntity extends AspectTubeTileEntity{
+public class ValveTileEntity extends TubeTileEntity{
 	
 	private boolean enabled = true;
 	private boolean suppressedByRedstone = false;
 	private long lastChangedTick = -1;
 	
-	public AspectValveTileEntity(){
+	public ValveTileEntity(){
 		super(ArcanaTiles.ASPECT_VALVE_TE.get());
 	}
 	
@@ -46,7 +46,6 @@ public class AspectValveTileEntity extends AspectTubeTileEntity{
 	@SuppressWarnings("ConstantConditions")
 	private void notifyChange(){
 		lastChangedTick = world.getGameTime();
-		scan(Sets.newHashSet(getPos()));
 	}
 	
 	public long getLastChangedTick(){
@@ -73,7 +72,7 @@ public class AspectValveTileEntity extends AspectTubeTileEntity{
 		return nbt;
 	}
 	
-	public void handleUpdateTag(BlockState state, CompoundNBT tag){
+	public void handleUpdateTag(@Nonnull BlockState state, @Nonnull CompoundNBT tag){
 		super.handleUpdateTag(state, tag);
 		setSuppressedByRedstone(tag.getBoolean("suppressed"));
 	}
@@ -83,7 +82,7 @@ public class AspectValveTileEntity extends AspectTubeTileEntity{
 		return new SUpdateTileEntityPacket(pos, -1, getUpdateTag());
 	}
 	
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
+	public void onDataPacket(@Nonnull NetworkManager net, @Nonnull SUpdateTileEntityPacket pkt){
 		handleUpdateTag(getBlockState(), pkt.getNbtCompound());
 	}
 }

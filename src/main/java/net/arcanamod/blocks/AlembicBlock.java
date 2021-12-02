@@ -2,12 +2,14 @@ package net.arcanamod.blocks;
 
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.IAspectHolder;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.world.AuraView;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -19,6 +21,7 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -70,17 +73,23 @@ public class AlembicBlock extends Block{
 	
 	public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit){
 		TileEntity te = world.getTileEntity(pos);
-		if(te instanceof AlembicTileEntity && player.getHeldItem(hand).isEmpty() && player.isCrouching()){
-			AlembicTileEntity alembic = (AlembicTileEntity)te;
-			// get rid of the content of the alembic
-			for(IAspectHolder holder : ((AlembicTileEntity)te).aspects.getHolders()){
-				AuraView.getSided(world).addFluxAt(pos, (float)(holder.getCurrentVis() * ArcanaConfig.ASPECT_DUMPING_WASTE.get()));
-				holder.drain(holder.getContainedAspectStack(), false);
-				// TODO: flux particles
+		if(te instanceof AlembicTileEntity)
+			if(player.getHeldItem(hand).isEmpty() && player.isCrouching()){
+				AlembicTileEntity alembic = (AlembicTileEntity)te;
+				// get rid of the content of the alembic
+				for(AspectHolder holder : ((AlembicTileEntity)te).aspects.getHolders()){
+					AuraView.getSided(world).addFluxAt(pos, (float)(holder.getStack().getAmount() * ArcanaConfig.ASPECT_DUMPING_WASTE.get()));
+					holder.drain(holder.getStack().getAmount(), false);
+					// TODO: flux particles
+				}
+				alembic.markDirty();
+				world.notifyBlockUpdate(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
+			}else{
+				if(world.isRemote())
+					return ActionResultType.SUCCESS;
+				NetworkHooks.openGui((ServerPlayerEntity)player, (INamedContainerProvider)te, buffer -> buffer.writeBlockPos(pos));
+				return ActionResultType.SUCCESS;
 			}
-			alembic.markDirty();
-			world.notifyBlockUpdate(pos, state, state, Constants.BlockFlags.BLOCK_UPDATE);
-		}
 		return super.onBlockActivated(state, world, pos, player, hand, hit);
 	}
 }

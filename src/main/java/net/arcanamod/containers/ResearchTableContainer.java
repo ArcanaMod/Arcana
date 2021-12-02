@@ -4,7 +4,7 @@ import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.aspects.Aspect;
 import net.arcanamod.aspects.AspectStack;
 import net.arcanamod.aspects.Aspects;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.blocks.tiles.ResearchTableTileEntity;
 import net.arcanamod.client.gui.ResearchTableScreen;
 import net.arcanamod.containers.slots.AspectSlot;
@@ -148,7 +148,7 @@ public class ResearchTableContainer extends AspectContainer{
 		getFromNote().ifPresent(puzzle -> {
 			if(!ink.isEmpty() && ink.getDamage() < ink.getMaxDamage() - 1)
 				if(note.getItem() == ArcanaItems.RESEARCH_NOTE.get()){
-					for(AspectSlot slot : puzzle.getAspectSlots(() -> IAspectHandler.getFrom(te))){
+					for(AspectSlot slot : puzzle.getAspectSlots(() -> AspectHandler.getFrom(te))){
 						puzzleSlots.add(slot);
 						aspectSlots.add(slot);
 					}
@@ -187,7 +187,7 @@ public class ResearchTableContainer extends AspectContainer{
 						if(puzzleSlots.size() > index){
 							AspectSlot slot1 = puzzleSlots.get(index);
 							if(slot1 instanceof AspectStoreSlot)
-								((AspectStoreSlot)slot1).getHolder().getHolder(0).insert(new AspectStack(aspect, 1), false);
+								((AspectStoreSlot)slot1).getHolder().insert(new AspectStack(aspect, 1));
 						}
 					}
 				}
@@ -207,7 +207,7 @@ public class ResearchTableContainer extends AspectContainer{
 	
 	protected void addAspectSlots(IInventory playerInventory){
 		Aspect[] values = (Aspect[]) Aspects.getWithoutEmpty().toArray();
-		Supplier<IAspectHandler> table = () -> IAspectHandler.getFrom(te);
+		Supplier<AspectHandler> table = () -> AspectHandler.getFrom(te);
 		for(int i = 0; i < values.length; i++){
 			Aspect aspect = values[i];
 			int yy = i / 6;
@@ -327,11 +327,11 @@ public class ResearchTableContainer extends AspectContainer{
 	 *
 	 * @return A list containing all open AspectHandlers.
 	 */
-	public List<IAspectHandler> getOpenHandlers(){
-		IAspectHandler item = IAspectHandler.getFrom(te.visItem());
+	public List<AspectHandler> getOpenHandlers(){
+		AspectHandler item = AspectHandler.getFrom(te.visItem());
 		if(item != null)
-			return Arrays.asList(IAspectHandler.getFrom(te), item);
+			return Arrays.asList(AspectHandler.getFrom(te), item);
 		else
-			return Collections.singletonList(IAspectHandler.getFrom(te));
+			return Collections.singletonList(AspectHandler.getFrom(te));
 	}
 }

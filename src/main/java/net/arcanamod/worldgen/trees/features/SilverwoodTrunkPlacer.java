@@ -6,7 +6,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
 import net.arcanamod.ArcanaConfig;
-import net.arcanamod.aspects.IAspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.capabilities.AuraChunk;
 import net.arcanamod.event.WorldTickHandler;
 import net.arcanamod.mixin.TrunkPlacerTypeAccessor;
@@ -102,7 +102,7 @@ public class SilverwoodTrunkPlacer extends AbstractTrunkPlacer{
 			if(rand.nextInt(100) < ArcanaConfig.SILVERWOOD_NODE_CHANCE.get())
 				WorldTickHandler.onTick.add(w -> {
 					NodeType type = NodeType.PURE;
-					IAspectHandler aspects = type.genBattery(pos, w, rand);
+					AspectHandler aspects = type.genBattery(pos, w, rand);
 					requireNonNull(AuraChunk.getFrom((Chunk)w.getChunk(pos))).addNode(new Node(aspects, type, x, y + height / 2f, z, 0));
 				});
 			

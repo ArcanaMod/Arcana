@@ -89,8 +89,8 @@ public class ArcanaConfig{
 				.comment("The chance of an aura node being a special (hungry, eldritch, bright, or pale) node, out of 100.", "15 by default.")
 				.define("SpecialNodeChance", 15);
 		ALEMBIC_DISTILL_TIME = COMMON_BUILDER
-				.comment("The number of ticks required to distill one aspect.", "4 by default.")
-				.define("AlembicDistillTime", 4);
+				.comment("The number of ticks required to distill one aspect.", "12 by default.")
+				.define("AlembicDistillTime", 12);
 		MAX_ALEMBIC_ASPECT_OUT = COMMON_BUILDER
 				.comment("The maximum amount of aspects a single alembic can output to pipes per tick.", "3 by default.")
 				.define("MaxAlembicAspectOut", 3);
@@ -100,12 +100,12 @@ public class ArcanaConfig{
 		MAX_ALEMBIC_STACK = COMMON_BUILDER
 				.comment("The maximum amount of alembics that can be stacked.", "3 by default.")
 				.define("MaxAlembicStack", 3);
-		ALEMBIC_BASE_DISTILL_EFFICIENCY = COMMON_BUILDER
+		/*ALEMBIC_BASE_DISTILL_EFFICIENCY = COMMON_BUILDER
 				.comment("The efficiency of an unfiltered alembic at distilling aspects from a crucible.", "Setting this value to 0.7, the default, for example, will cause an alembic drawing 4 aspects from a crucible to create (int)(4 * 0.7) = 2 aspects. The value is rounded down, but always at least 1", "Since this rounding is currently done every tick, and MaxAlembicAspectDistill tends to be small, an incorrectly large amount of essentia is lost.")
 				.define("AlembicBaseDistillEfficiency", .7);
 		ALEMBIC_BASE_FLUX_RATE = COMMON_BUILDER
 				.comment("The amount of flux per aspect created by an unfiltered alembic distilling aspects from a crucible.", "0.2 by default.")
-				.define("AlembicBaseFluxRate", .2);
+				.define("AlembicBaseFluxRate", .2);*/
 
 		ASPECT_DUMPING_WASTE = COMMON_BUILDER
 				.comment("The amount of flux per aspect created when emptying an alembic or crucible by hand.", "0.5 by default.")
@@ -234,12 +234,12 @@ public class ArcanaConfig{
 
 	public static ConfigValue<Integer> NODE_CHANCE; // 1
 	public static ConfigValue<Integer> SPECIAL_NODE_CHANCE; // 15
-	public static ConfigValue<Integer> ALEMBIC_DISTILL_TIME; // 4
+	public static ConfigValue<Integer> ALEMBIC_DISTILL_TIME; // 12
 	public static ConfigValue<Integer> MAX_ALEMBIC_ASPECT_OUT; // 3
 	public static ConfigValue<Integer> MAX_ALEMBIC_AIR; // 4
 	public static ConfigValue<Integer> MAX_ALEMBIC_STACK; // 3
-	public static ConfigValue<Double> ALEMBIC_BASE_DISTILL_EFFICIENCY; // .7
-	public static ConfigValue<Double> ALEMBIC_BASE_FLUX_RATE; // .2
+	// public static ConfigValue<Double> ALEMBIC_BASE_DISTILL_EFFICIENCY; // .7
+	// public static ConfigValue<Double> ALEMBIC_BASE_FLUX_RATE; // .2
 
 	public static ConfigValue<Double> ASPECT_DUMPING_WASTE;
 

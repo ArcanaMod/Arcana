@@ -2,9 +2,9 @@ package net.arcanamod.systems.research.impls;
 
 import com.google.gson.JsonObject;
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.IAspectHandler;
-import net.arcanamod.containers.slots.AspectSlot;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.containers.ResearchTableContainer;
+import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.systems.research.Puzzle;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.Slot;
@@ -52,7 +52,7 @@ public class Thaumaturgy extends Puzzle {
 	}
 
 	@Override
-	public List<AspectSlot> getAspectSlots(Supplier<IAspectHandler> returnInv) {
+	public List<AspectSlot> getAspectSlots(Supplier<AspectHandler> returnInv) {
 		return Collections.emptyList();
 	}
 

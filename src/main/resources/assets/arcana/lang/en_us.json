@@ -181,6 +181,18 @@
     "item.arcana.tainted_beetroot": "Tainted Beetroot",
     "item.arcana.tainted_snowball": "Tainted Snowball",
 
+    "_comment": "Filters",
+    "item.arcana.arcanium_filter": "Enchanted Arcanium Filter",
+    "item.arcana.silverwood_filter": "Enchanted Silverwood Filter",
+    "item.arcana.greatwood_filter": "Enchanted Greatwood Filter",
+    "item.arcana.hawthorn_filter": "Enchanted Hawthorn Filter",
+    "item.arcana.dair_filter": "Enchanted Dair Filter",
+    "item.arcana.willow_filter": "Enchanted Willow Filter",
+    "item.arcana.eucalyptus_filter": "Enchanted Eucalyptus Filter",
+
+    "item.arcana.enchanted_filter.efficiency_desc": "%sEfficiency",
+    "item.arcana.enchanted_filter.speed_desc": "%sSpeed",
+
     "_comment": "Creative Only",
     "item.arcana.cheaters_arcanum": "Cheaters Arcanum",
     "item.arcana.cheaters_arcanum.desc": "For the lazy",
@@ -357,6 +369,7 @@
     "block.arcana.essentia_tube": "Aspect Tube",
     "block.arcana.essentia_valve": "Aspect Valve",
     "block.arcana.essentia_window": "Aspect Window",
+    "block.arcana.essentia_pump": "Aspect Pump",
     "block.arcana.aspect_crystallizer": "Aspect Crystallizer",
     "block.arcana.nitor": "Nitor",
 
@@ -730,7 +743,7 @@
     "tooltip.arcana.fociforge.ice": "Freezing: freezes water and enteties",
     "tooltip.arcana.fociforge.life": "Heal: heals entities\n[WIP] It maybe doesn't work yet!",
     "tooltip.arcana.fociforge.death": "Curese: Massively wakens enimies\n[WIP] It doesn't work yet!",
-    "tooltip.arcana.fociforge.journey": "Blink: teleports the player and entities\n[WIP] It doesn't work yet!",
+    ".arcana.fociforge.journey": "Blink: teleports the player and entities\n[WIP] It doesn't work yet!",
     "status.get_complete_note": "You hear whispers coming from this archaic source, and gain a font of inspiration.\nMaybe you should look at those notes again.",
     "status.arcana.null_spell": "Null spell!",
     "status.arcana.invalid_spell": "Invalid spell!",

@@ -5,7 +5,10 @@ import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.handlers.AspectHandler;
 import net.arcanamod.items.MagicDeviceItem;
 import net.arcanamod.items.PhialItem;
 import net.minecraft.command.CommandSource;
@@ -45,7 +48,7 @@ public class FillAspectCommand {
 		AtomicInteger ret = new AtomicInteger();
 		EntityArgument.getPlayers(ctx, "targets").forEach(serverPlayerEntity -> {
 			ItemStack is = serverPlayerEntity.getHeldItemMainhand();
-			IAspectHandler vis = IAspectHandler.getFrom(is);
+			AspectHandler vis = AspectHandler.getFrom(is);
 			ResourceLocation aspect_name = ResourceLocationArgument.getResourceLocation(ctx, "aspect");
 			int amount = IntegerArgumentType.getInteger(ctx, "amount");
 			if(vis != null){

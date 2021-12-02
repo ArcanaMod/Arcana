@@ -1,19 +1,19 @@
 package net.arcanamod.client.event;
 
-import com.google.common.collect.Lists;
-import net.arcanamod.ArcanaSounds;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.Aspect;
+import net.arcanamod.aspects.AspectStack;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.blocks.tiles.AlembicTileEntity;
 import net.arcanamod.blocks.tiles.AspectBookshelfTileEntity;
 import net.arcanamod.blocks.tiles.CrucibleTileEntity;
 import net.arcanamod.blocks.tiles.JarTileEntity;
-import net.arcanamod.client.render.particles.ArcanaParticles;
 import net.arcanamod.client.render.particles.AspectParticleData;
 import net.arcanamod.client.render.particles.NumberParticleData;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.settings.GogglePriority;
 import net.arcanamod.mixin.AccessorMinecraft;
-import net.arcanamod.systems.vis.VisUtils;
 import net.arcanamod.util.LocalAxis;
 import net.arcanamod.util.Pair;
 import net.arcanamod.util.RayTraceUtils;
@@ -22,7 +22,6 @@ import net.arcanamod.world.Node;
 import net.arcanamod.world.NodeType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
@@ -142,10 +141,10 @@ public class ClientTickHandler{
 				if(priority == GogglePriority.SHOW_ASPECTS){
 					Vector3d position = player.getEyePosition(Minecraft.getInstance().getRenderPartialTicks());
 					view.raycast(position, reach, player).ifPresent(node -> {
-						List<IAspectHolder> holders = node.getAspects().getHolders();
+						List<AspectHolder> holders = node.getAspects().getHolders();
 						ArrayList<Pair<Aspect, Float>> stacks = new ArrayList<>();
-						for(IAspectHolder holder : holders)
-							stacks.add(Pair.of(holder.getContainedAspect(), holder.getCurrentVis()));
+						for(AspectHolder holder : holders)
+							stacks.add(Pair.of(holder.getStack().getAspect(), holder.getStack().getAmount()));
 
 						for(int i = 0, size = stacks.size(); i < size; i++){
 							Pair<Aspect, Float> stack = stacks.get(i);
@@ -169,14 +168,14 @@ public class ClientTickHandler{
 						if(world.isRemote()){
 							JarTileEntity jte = (JarTileEntity)te;
 							// If player has googles show particle
-							if(jte.vis.getHolder(0).getContainedAspect() != Aspects.EMPTY){
+							if(!jte.vis.getHolder(0).getStack().isEmpty()){
 								// track player head rotation
 								double srx = (-Math.sin(Math.toRadians(player.rotationYaw)));
 								double crx = (Math.cos(Math.toRadians(player.rotationYaw)));
 								// Add Aspect Particle
-								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getContainedAspect()).toString().replace("textures/", "").replace(".png", ""))),
+								world.addParticle(new AspectParticleData(new ResourceLocation(AspectUtils.getAspectTextureLocation(jte.vis.getHolder(0).getStack().getAspect()).toString().replace("textures/", "").replace(".png", ""))),
 										pos.getX() + 0.5D + ((-srx) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx) / 2), 0, 0, 0);
-								float currVis = jte.vis.getHolder(0).getCurrentVis();
+								float currVis = jte.vis.getHolder(0).getStack().getAmount();
 								// Add Number Particles
 								// If you change Y, particle is no more good aligned with particle
 								renderNumberParticles(pos.getX() + 0.5D + ((-srx * 1.01) / 2), pos.getY() + 0.8D, pos.getZ() + 0.5D + ((-crx * 1.01) / 2), player.rotationYaw, currVis, world);
@@ -188,13 +187,13 @@ public class ClientTickHandler{
 						if(world.isRemote()){
 							AspectBookshelfTileEntity abte = (AspectBookshelfTileEntity)te;
 							// If player has googles show particle
-							IAspectHandler vis = IAspectHandler.getFrom(abte);
+							AspectHandler vis = AspectHandler.getFrom(abte);
 							if(vis != null){
 								// Get all stacks from phialshelf
 								ArrayList<AspectStack> stacks = new ArrayList<>();
-								for(int i = 0; i < vis.getHoldersAmount(); i++)
-									if(vis.getHolder(i).getContainedAspect() != Aspects.EMPTY)
-										stacks.add(vis.getHolder(i).getContainedAspectStack());
+								for(int i = 0; i < vis.countHolders(); i++)
+									if(vis.getHolder(i) != null && !vis.getHolder(i).getStack().isEmpty())
+										stacks.add(vis.getHolder(i).getStack());
 								// Squish aspect stacks in to reducedStacks
 								List<AspectStack> reducedStacks = AspectUtils.squish(stacks);
 								renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()),2);
@@ -205,13 +204,14 @@ public class ClientTickHandler{
 					// Render aspect particle around CrucibleTileEntity and AlembicTileEntity
 					if(te instanceof AlembicTileEntity){
 						if(world.isRemote()){
-							TileEntity alte = (TileEntity)te;
+							TileEntity alte = te;
 							// If player has googles show particle
-							IAspectHandler vis = IAspectHandler.getFrom(alte);
+							AspectHandler vis = AspectHandler.getFrom(alte);
 							if(vis != null){
 								// Squish aspect stacks in to reducedStacks
-								List<AspectStack> reducedStacks = AspectUtils.squish(vis.getHolders().stream().map(h->h.getContainedAspectStack()).collect(Collectors.toList()));
-								renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()),1.4f);
+								// FIXME: There's no dot particle, and numbers are misaligned with aspects
+								//List<AspectStack> reducedStacks = AspectUtils.squish(vis.getHolders().stream().map(AspectHolder::getStack).collect(Collectors.toList()));
+								//renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()), 1.4f);
 							}
 						}
 					}
@@ -221,7 +221,7 @@ public class ClientTickHandler{
 						if(world.isRemote()){
 							CrucibleTileEntity crte = (CrucibleTileEntity)te;
 							List<AspectStack> reducedStacks = AspectUtils.squish(new ArrayList<>(crte.getAspectStackMap().values()));
-							reducedStacks.remove(AspectStack.EMPTY);
+							reducedStacks.remove(new AspectStack());
 							renderAspectAndNumberParticlesInCircle(world, new Vector3d(pos.getX(), pos.getY(), pos.getZ()), player, reducedStacks.stream().map(stack -> Pair.of(stack.getAspect(), stack.getAmount())).collect(Collectors.toList()),1.4f);
 						}
 					}
@@ -235,6 +235,7 @@ public class ClientTickHandler{
 	}
 
 	protected static void renderAspectAndNumberParticlesInCircle(World world, Vector3d pos, ClientPlayerEntity player, List<Pair<Aspect, Float>> aspectStacks, float ringReduceSize){
+		//aspectStacks.removeIf(x -> x.getFirst() == null || x.getFirst() == Aspects.EMPTY);
 		float[] v = spreadVertices(aspectStacks.size(), 32);
 		for(int i = 0; i < aspectStacks.size(); i++){
 			double centerSpread = v[i];

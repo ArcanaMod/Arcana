@@ -3,13 +3,11 @@ package net.arcanamod.blocks.tiles;
 import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
 import net.arcanamod.Arcana;
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.AspectHandlerCapability;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
 import net.arcanamod.containers.FociForgeContainer;
-import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.systems.spell.Spell;
 import net.arcanamod.systems.spell.SpellState;
-import net.arcanamod.systems.spell.modules.SpellModule;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -30,7 +28,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Map;
 import java.util.UUID;
 
 @MethodsReturnNonnullByDefault
@@ -132,7 +129,7 @@ public class FociForgeTileEntity extends LockableTileEntity{
 	@Nonnull
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing){
 		if(capability == AspectHandlerCapability.ASPECT_HANDLER) {
-			AspectBattery battery = new AspectBattery(0, 0);
+			AspectBattery battery = new AspectBattery(/*0, 0*/);
 			return battery.getCapability(AspectHandlerCapability.ASPECT_HANDLER).cast();
 		}
 		return super.getCapability(capability, facing).cast();

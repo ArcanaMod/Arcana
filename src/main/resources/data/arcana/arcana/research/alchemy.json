@@ -490,8 +490,7 @@
       "category": "arcana:alchemy",
       "parents": [
         "arcana:taint_in_a_bottle",
-        "~arcana:arcanium",
-        "arcana:variant_jars"
+        "~arcana:arcanium"
       ],
       "x": -6,
       "y": -2,

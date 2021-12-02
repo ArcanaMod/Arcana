@@ -2,10 +2,10 @@ package net.arcanamod.blocks.tiles;
 
 import io.netty.buffer.Unpooled;
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.AspectBattery;
-import net.arcanamod.aspects.AspectHandlerCapability;
-import net.arcanamod.aspects.IAspectHandler;
 import net.arcanamod.aspects.VisShareable;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
 import net.arcanamod.blocks.ArcanaBlocks;
 import net.arcanamod.containers.ResearchTableContainer;
 import net.minecraft.block.BlockState;
@@ -38,7 +38,7 @@ import static net.arcanamod.blocks.multiblocks.research_table.ResearchTableCoreB
 @MethodsReturnNonnullByDefault
 public class ResearchTableTileEntity extends LockableTileEntity{
 	ArrayList<BlockPos> visContainers = new ArrayList<>();
-	AspectBattery battery = new AspectBattery(Integer.MAX_VALUE, 100);
+	AspectBattery battery = new AspectBattery(/*Integer.MAX_VALUE, 100*/);
 
 	public boolean batteryIsDirty = true;
 
@@ -67,23 +67,27 @@ public class ResearchTableTileEntity extends LockableTileEntity{
 
 	//TODO: There is better way to do it
 	private AspectBattery getVisShareablesAsBattery() {
-		if (batteryIsDirty) {
-			battery.clear();
-			BlockPos.getAllInBoxMutable(getPos().north(4).east(4).up(4), getPos().south(4).west(4).down(2)).forEach(blockPos -> {
-				if (world.getBlockState(blockPos).hasTileEntity()) {
-					TileEntity tileEntityInBox = world.getTileEntity(blockPos);
-					if (tileEntityInBox != null)
-						if (tileEntityInBox instanceof VisShareable)
-							if (((VisShareable) tileEntityInBox).isVisShareable() && ((VisShareable) tileEntityInBox).isManual()) {
-								AspectBattery vis = (AspectBattery) IAspectHandler.getFrom(tileEntityInBox);
-								if (vis != null) {
-									visContainers.add(new BlockPos(blockPos)); // Removing reference
-									AspectBattery.merge(battery, vis);
+		battery.clear();
+		BlockPos.Mutable blockPos = new BlockPos.Mutable(pos.getX(), pos.getY(), pos.getZ());
+		for(int x = 0; x < 9; x++){
+			for(int y = 0; y < 7; y++){
+				for(int z = 0; z < 9; z++){
+					blockPos.setPos(getPos());
+					blockPos.move(x - 4, y - 2, z - 4);
+					if(world.getBlockState(blockPos).hasTileEntity()){
+						TileEntity tileEntityInBox = world.getTileEntity(blockPos);
+						if(tileEntityInBox != null)
+							if(tileEntityInBox instanceof VisShareable)
+								if(((VisShareable)tileEntityInBox).isVisShareable() && ((VisShareable)tileEntityInBox).isManual()){
+									AspectBattery vis = (AspectBattery)AspectHandler.getFrom(tileEntityInBox);
+									if(vis != null){
+										visContainers.add(new BlockPos(blockPos)); // Removing reference
+										AspectBattery.merge(battery, vis);
+									}
 								}
-							}
+					}
 				}
-			});
-			batteryIsDirty = false;
+			}
 		}
 		return battery;
 	}

@@ -225,7 +225,7 @@ public class Taint{
 			JarTileEntity jar = (JarTileEntity)sender;
 			if(!((VisShareable)jar).isSecure()){
 				if(jar.getWorld().rand.nextInt(20) == 2)
-					jar.vis.drain(0, 1, false);
+					jar.vis.getHolder(0).drain(1, false);
 				if(jar.getWorld().isRemote)
 					return;
 				ServerAuraView auraView = new ServerAuraView((ServerWorld)jar.getWorld());

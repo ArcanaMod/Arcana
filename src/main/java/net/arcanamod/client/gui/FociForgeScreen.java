@@ -10,11 +10,9 @@ import net.arcanamod.containers.FociForgeContainer;
 import net.arcanamod.containers.slots.AspectSlot;
 import net.arcanamod.items.ArcanaItems;
 import net.arcanamod.items.attachment.FocusItem;
-import net.arcanamod.systems.spell.SpellState;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.AirItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -52,8 +50,6 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	FociForgeTileEntity te;
 	float aspectScroll = 0, fociScroll = 0;
 	boolean isScrollingAspect = false, isScrollingFoci = false, spellHasFocus = false;
-
-
 	TextFieldWidget searchWidget;
 
 	public FociForgeScreen(FociForgeContainer screenContainer, PlayerInventory inv, ITextComponent titleIn){
@@ -212,7 +208,7 @@ public class FociForgeScreen extends AspectContainerScreen<FociForgeContainer> {
 	}
 
 	public void scrollAspectTo(float pos) {
-		List<Aspect> searchAspects = AspectUtils.castContaingAspects();
+		List<Aspect> searchAspects = AspectUtils.castContainingAspects();
 		int extraRows = (searchAspects.size() + ASPECT_H_COUNT - 1) / ASPECT_H_COUNT - ASPECT_V_COUNT;
 		int scroll = Math.max(0, Math.round(pos * extraRows));
 

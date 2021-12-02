@@ -1,7 +1,10 @@
 package net.arcanamod.blocks.tiles;
 
 import mcp.MethodsReturnNonnullByDefault;
-import net.arcanamod.aspects.*;
+import net.arcanamod.aspects.AspectUtils;
+import net.arcanamod.aspects.handlers.AspectBattery;
+import net.arcanamod.aspects.handlers.AspectHandlerCapability;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.containers.AspectCrystallizerContainer;
 import net.arcanamod.items.CrystalItem;
 import net.minecraft.block.BlockState;
@@ -12,8 +15,6 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.LockableTileEntity;
 import net.minecraft.util.Direction;
@@ -37,25 +38,26 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 	
 	public static final int MAX_PROGRESS = 80;
 	
-	public AspectBattery vis = new AspectBattery(1, 100);
+	public AspectBattery vis = new AspectBattery(/*1, 100*/);
 	public int progress = 0;
 	
 	public AspectCrystallizerTileEntity(){
 		super(ArcanaTiles.ASPECT_CRYSTALLIZER_TE.get());
+		vis.initHolders(100, 1);
 	}
 	
 	public void tick(){
-		IAspectHolder holder = vis.getHolder(0);
-		if(holder.getCurrentVis() > 0
-				&& ((getStackInSlot(0).getItem() instanceof CrystalItem && ((CrystalItem)getStackInSlot(0).getItem()).aspect == holder.getContainedAspect() && getStackInSlot(0).getCount() < 64)
+		AspectHolder holder = vis.getHolder(0);
+		if(holder.getStack().getAmount() > 0
+				&& ((getStackInSlot(0).getItem() instanceof CrystalItem && ((CrystalItem)getStackInSlot(0).getItem()).aspect == holder.getStack().getAspect() && getStackInSlot(0).getCount() < 64)
 				|| ((getStackInSlot(0).isEmpty())))){
 			if(progress >= MAX_PROGRESS){
 				progress = 0;
 				if(getStackInSlot(0).isEmpty())
-					setInventorySlotContents(0, new ItemStack(AspectUtils.aspectCrystalItems.get(holder.getContainedAspect())));
+					setInventorySlotContents(0, new ItemStack(AspectUtils.aspectCrystalItems.get(holder.getStack().getAspect())));
 				else
 					getStackInSlot(0).grow(1);
-				holder.drain(new AspectStack(holder.getContainedAspect(), 1), false);
+				holder.drain(1, false);
 			}
 			progress++;
 		}else if(progress > 0)
@@ -145,28 +147,7 @@ public class AspectCrystallizerTileEntity extends LockableTileEntity implements 
 		return index == 0;
 	}
 	
-	@Override
-	@Nullable
-	public SUpdateTileEntityPacket getUpdatePacket(){
-		CompoundNBT compound = new CompoundNBT();
-		compound.put("aspects", vis.serializeNBT());
-		return new SUpdateTileEntityPacket(pos, -1, compound);
-	}
-	
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt){
-		vis.deserializeNBT(pkt.getNbtCompound().getCompound("aspects"));
-	}
-	
-	@Override
 	public CompoundNBT getUpdateTag(){
-		CompoundNBT compound = super.getUpdateTag();
-		compound.put("aspects", vis.serializeNBT());
-		return compound;
-	}
-	
-	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag){
-		this.read(state, tag);
+		return write(new CompoundNBT());
 	}
 }

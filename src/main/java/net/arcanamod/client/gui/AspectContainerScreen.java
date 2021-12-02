@@ -3,11 +3,9 @@ package net.arcanamod.client.gui;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.arcanamod.aspects.AspectUtils;
 import net.arcanamod.aspects.Aspects;
 import net.arcanamod.containers.AspectContainer;
 import net.arcanamod.containers.slots.AspectSlot;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.util.text.ITextComponent;
@@ -70,11 +68,13 @@ public abstract class AspectContainerScreen<T extends AspectContainer> extends C
 	public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrices, mouseX, mouseY, partialTicks);
 		renderHoveredTooltip(matrices, mouseX, mouseY);
-		if(aspectContainer.getHeldAspect() != null) {
+		if(aspectContainer.getHeldAspect() != null && aspectContainer.getHeldAspect() != Aspects.EMPTY) {
 			float temp = itemRenderer.zLevel;
 			itemRenderer.zLevel = 500;
-			itemRenderer.renderItemAndEffectIntoGUI(AspectUtils.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 4);
-			itemRenderer.renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, AspectUtils.getItemStackForAspect(aspectContainer.getHeldAspect()), mouseX + 9, mouseY + 7, aspectContainer.isSymbolic() ? "" : String.valueOf(aspectContainer.getHeldCount()));
+			matrices.push();
+			matrices.translate(0, 0, 500);
+			ClientUiUtil.renderAspectStack(matrices, aspectContainer.getHeldAspect(), aspectContainer.getHeldCount(), mouseX + 9, mouseY + 4, -1);
+			matrices.pop();
 			itemRenderer.zLevel = temp;
 		}
 	}

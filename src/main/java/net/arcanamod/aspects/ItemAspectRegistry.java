@@ -1,6 +1,8 @@
 package net.arcanamod.aspects;
 
 import com.google.gson.*;
+import net.arcanamod.aspects.handlers.AspectHandler;
+import net.arcanamod.aspects.handlers.AspectHolder;
 import net.arcanamod.items.CrystalItem;
 import net.arcanamod.systems.taint.Taint;
 import net.arcanamod.util.Pair;
@@ -244,10 +246,10 @@ public class ItemAspectRegistry extends JsonReloadListener{
 		stackFunctions.add((item, stacks) -> {
 			// Give any non-IOverrideAspects aspect handler item their aspects
 			if (!(item.getItem() instanceof IOverrideAspects)) {
-				IAspectHandler.getOptional(item).ifPresent(handler -> {
+				AspectHandler.getOptional(item).ifPresent(handler -> {
 					List<AspectStack> list = new ArrayList<>();
-					for (IAspectHolder holder : handler.getHolders()) {
-						AspectStack stack = holder.getContainedAspectStack();
+					for (AspectHolder holder : handler.getHolders()) {
+						AspectStack stack = holder.getStack();
 						if (!stack.isEmpty())
 							list.add(stack);
 					}
@@ -259,7 +261,7 @@ public class ItemAspectRegistry extends JsonReloadListener{
 			// Apply IOverrideAspects
 			if(item.getItem() instanceof IOverrideAspects){
 				List<AspectStack> overrides = ((IOverrideAspects)item.getItem()).getAspectStacks(item);
-				if(!(overrides.get(0).isEmpty() || overrides.get(0).getAspect() == Aspects.DUMMY)){
+				if(!(overrides.get(0).isEmpty())){
 					stacks.clear();
 					stacks.addAll(overrides);
 				}

@@ -74,10 +74,6 @@ public class Aspect {
 				.findAny().orElse(Aspects.EMPTY);
 	}
 
-	public static Aspect dummy() {
-		return Aspects.DUMMY;
-	}
-
 	public ResourceLocation toResourceLocation() {
 		return Aspects.ASPECTS.inverse().get(this);
 	}
